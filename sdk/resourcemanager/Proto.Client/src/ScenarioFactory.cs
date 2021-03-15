@@ -38,6 +38,7 @@ namespace Proto.Client
         GetByContainers,
         GetByContainersAsync,
         CheckResourceGroupOpsAsync,
+        TenantResource,
         CheckResourceGroupContainerAsync
     }
 

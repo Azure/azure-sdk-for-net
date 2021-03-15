@@ -9,7 +9,7 @@ This package contains common code for Azure Communication Service libraries.
 Install the Azure Communication Common client library for .NET with [NuGet][nuget].
 
 ```Powershell
-dotnet add package Azure.Communication.Common --version 1.0.0-beta.4
+dotnet add package Azure.Communication.Common --version 1.0.0-beta.5
 ```
 
 ### Prerequisites

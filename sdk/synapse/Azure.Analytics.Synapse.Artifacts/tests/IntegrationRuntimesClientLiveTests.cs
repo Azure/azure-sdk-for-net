@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private IntegrationRuntimesClient CreateClient()
         {
             return InstrumentClient(new IntegrationRuntimesClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));

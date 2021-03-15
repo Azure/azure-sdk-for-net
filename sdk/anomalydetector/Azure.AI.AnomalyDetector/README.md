@@ -39,7 +39,7 @@ Once you have the value for the API key, create an `AzureKeyCredential`.  With t
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
 var credential = new AzureKeyCredential(apiKey);
-var client = new AnomalyDetectorClient(endpoint, credential);
+var client = new AnomalyDetectorClient(new Uri(endpoint), credential);
 ```
 
 #### Create AnomalyDetectorClient with Azure Active Directory Credential
@@ -58,7 +58,7 @@ Set the values of the client ID, tenant ID, and client secret of the AAD applica
 
 ```
 string endpoint = "<endpoint>";
-var client = new AnomalyDetectorClient(endpoint, new DefaultAzureCredential());
+var client = new AnomalyDetectorClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Key concepts

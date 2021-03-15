@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(MapsGeofenceGeometryConverter))]
     public partial class MapsGeofenceGeometry
     {
         internal static MapsGeofenceGeometry DeserializeMapsGeofenceGeometry(JsonElement element)
@@ -72,19 +69,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MapsGeofenceGeometry(deviceId.Value, Optional.ToNullable(distance), geometryId.Value, Optional.ToNullable(nearestLat), Optional.ToNullable(nearestLon), udId.Value);
-        }
-
-        internal partial class MapsGeofenceGeometryConverter : JsonConverter<MapsGeofenceGeometry>
-        {
-            public override void Write(Utf8JsonWriter writer, MapsGeofenceGeometry model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override MapsGeofenceGeometry Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeMapsGeofenceGeometry(document.RootElement);
-            }
         }
     }
 }

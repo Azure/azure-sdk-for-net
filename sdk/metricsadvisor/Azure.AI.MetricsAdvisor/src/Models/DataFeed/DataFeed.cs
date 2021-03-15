@@ -210,7 +210,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 ?? new DataFeedDetailPatch();
 
             patch.DataFeedName = Name;
-            patch.Status = Status.HasValue ? new DataFeedDetailPatchStatus(Status.ToString()) : default(DataFeedDetailPatchStatus?);
+            patch.Status = Status;
 
             if (Schema != null)
             {
@@ -228,19 +228,19 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             patch.DataFeedDescription = Description;
             patch.ActionLinkTemplate = ActionLinkTemplate;
-            patch.ViewMode = AccessMode.HasValue == true ? new DataFeedDetailPatchViewMode(AccessMode.ToString()) : default(DataFeedDetailPatchViewMode?);
+            patch.ViewMode = AccessMode;
 
             if (RollupSettings != null)
             {
                 patch.AllUpIdentification = RollupSettings.AlreadyRollupIdentificationValue;
-                patch.NeedRollup = RollupSettings.RollupType.HasValue ? new DataFeedDetailPatchNeedRollup(RollupSettings.RollupType.ToString()) : default(DataFeedDetailPatchNeedRollup?);
-                patch.RollUpMethod = RollupSettings.RollupMethod.HasValue ? new DataFeedDetailPatchRollUpMethod(RollupSettings.RollupMethod.ToString()) : default(DataFeedDetailPatchRollUpMethod?);
+                patch.NeedRollup = RollupSettings.RollupType;
+                patch.RollUpMethod = RollupSettings.RollupMethod;
                 patch.RollUpColumns = RollupSettings.AutoRollupGroupByColumnNames;
             }
 
             if (MissingDataPointFillSettings != null)
             {
-                patch.FillMissingPointType = MissingDataPointFillSettings.FillType.HasValue ? new DataFeedDetailPatchFillMissingPointType(MissingDataPointFillSettings.FillType.ToString()) : default(DataFeedDetailPatchFillMissingPointType?);
+                patch.FillMissingPointType = MissingDataPointFillSettings.FillType;
                 patch.FillMissingPointValue = MissingDataPointFillSettings.CustomFillValue;
             }
 

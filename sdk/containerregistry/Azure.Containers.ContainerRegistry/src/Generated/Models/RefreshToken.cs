@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The RefreshToken. </summary>
-    public partial class RefreshToken
+    internal partial class RefreshToken
     {
         /// <summary> Initializes a new instance of RefreshToken. </summary>
         internal RefreshToken()

@@ -1,4 +1,7 @@
-﻿using Azure.ResourceManager.Authorization;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Core;
 using System.Threading;
 using System.Threading.Tasks;

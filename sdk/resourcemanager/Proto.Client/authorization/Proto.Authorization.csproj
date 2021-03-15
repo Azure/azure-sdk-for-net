@@ -4,8 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Proto.Authorization</RootNamespace>
     <LangVersion>latest</LangVersion>
-    <CodeAnalysisRuleSet>..\stylecop.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>obj\docs.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,5 +24,8 @@
     <ProjectReference Include="..\..\Azure.ResourceManager.Core\src\Azure.ResourceManager.Core.csproj" />
     <ProjectReference Include="Azure.ResourceManager.Authorization\Azure.ResourceManager.Authorization.csproj" />
   </ItemGroup>
-
+  <PropertyGroup>
+    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->
+    <NoWarn>$(NoWarn);AZC0001;CA1303;SA0001;SA1629; SA1101;SA1200;SA1208;SA1309;SA1633;</NoWarn>
+  </PropertyGroup>
 </Project>

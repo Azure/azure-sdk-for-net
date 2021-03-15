@@ -86,6 +86,7 @@ pr:
     - sdk/logic/Microsoft.Azure.Management.Logic
     - sdk/machinelearning/Microsoft.Azure.Management.MachineLearning
     - sdk/machinelearningcompute/Microsoft.Azure.Management.MachineLearningCompute
+    - sdk/machinelearningservices/Microsoft.Azure.Management.MachineLearningServices
     - sdk/maintenance/Microsoft.Azure.Management.Maintenance
     - sdk/managednetwork/Microsoft.Azure.Management.ManagedNetwork
     - sdk/managedserviceidentity/Microsoft.Azure.Management.ManagedServiceIdentity
@@ -153,15 +154,15 @@ pr:
     - sdk/websites/Microsoft.Azure.Management.WebSites
     - sdk/workloadmonitor/Microsoft.Azure.Management.WorkloadMonitor
 variables:
-  - template: templates/variables/globals.yml
-  - name: msBuildLogDir
-    value: msbuildlogs
-  - name: loggingArgs
-    value: /clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log
-  - name: RPScopeArgs
-    value: /p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id) /p:CIBuildId=$(OfficialBuildId)
-  - name: timeoutInMinutes
-    value: 120
+- template: templates/variables/globals.yml
+- name: msBuildLogDir
+  value: msbuildlogs
+- name: loggingArgs
+  value: /clp:ShowtimeStamp /flp:LogFile=$(msBuildLogDir)/msbuild.normal.log;Verbosity=normal /flp1:Summary;Verbosity=minimal;LogFile=$(msBuildLogDir)/msbuild.sum.log /flp2:warningsonly;logfile=$(msBuildLogDir)/msbuild.wrn.log /flp3:errorsonly;logfile=$(msBuildLogDir)/msbuild.err.log
+- name: RPScopeArgs
+  value: /p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id) /p:CIBuildId=$(OfficialBuildId)
+- name: timeoutInMinutes
+  value: 120
 jobs:
 - template: templates/jobs/archetype-sdk-mgmt.yml
   parameters:

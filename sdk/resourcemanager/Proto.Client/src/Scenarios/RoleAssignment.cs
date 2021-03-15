@@ -3,6 +3,7 @@ using Proto.Authorization;
 using Proto.Compute;
 using Proto.Network;
 using System;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -10,7 +11,7 @@ namespace Proto.Client
     {
         public override void Execute()
         {
-            var client = new AzureResourceManagerClient();
+            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
 
             // Create Resource Group

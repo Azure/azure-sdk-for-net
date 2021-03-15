@@ -1,4 +1,5 @@
-﻿using Azure.ResourceManager.Core;
+﻿using Azure.Identity;
+using Azure.ResourceManager.Core;
 using Proto.Compute;
 using Proto.Network;
 
@@ -11,7 +12,7 @@ namespace Proto.Client
             var createVm = new CreateSingleVmExample(Context);
             createVm.Execute();
 
-            var client = new AzureResourceManagerClient();
+            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
 
             var resourceGroup = subscription.GetResourceGroupOperations(Context.RgName).Get().Value;

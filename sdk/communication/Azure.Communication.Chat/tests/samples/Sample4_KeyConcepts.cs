@@ -127,7 +127,7 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetParticipants_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_RemoveParticipant_KeyConcepts
-            chatThreadClient.RemoveParticipant(user: participantIdentifier);
+            chatThreadClient.RemoveParticipant(identifier: participantIdentifier);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_RemoveParticipant_KeyConcepts
         }
     }

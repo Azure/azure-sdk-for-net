@@ -377,202 +377,6 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateGetByNumberRequest(string phoneNumber)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/phoneNumbers/", false);
-            uri.AppendPath(phoneNumber, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Gets the details of the given acquired phone number. </summary>
-        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public async Task<Response<AcquiredPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
-        {
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
-
-            using var message = CreateGetByNumberRequest(phoneNumber);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AcquiredPhoneNumber value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AcquiredPhoneNumber.DeserializeAcquiredPhoneNumber(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets the details of the given acquired phone number. </summary>
-        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public Response<AcquiredPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
-        {
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
-
-            using var message = CreateGetByNumberRequest(phoneNumber);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AcquiredPhoneNumber value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AcquiredPhoneNumber.DeserializeAcquiredPhoneNumber(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateReleasePhoneNumberRequest(string phoneNumber)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/phoneNumbers/", false);
-            uri.AppendPath(phoneNumber, true);
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Releases an acquired phone number. </summary>
-        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders>> ReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
-        {
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
-
-            using var message = CreateReleasePhoneNumberRequest(phoneNumber);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new PhoneNumbersReleasePhoneNumberHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Releases an acquired phone number. </summary>
-        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders> ReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
-        {
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
-
-            using var message = CreateReleasePhoneNumberRequest(phoneNumber);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new PhoneNumbersReleasePhoneNumberHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListPhoneNumbersRequest(int? skip, int? top)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
-            uri.AppendPath("/phoneNumbers", false);
-            if (skip != null)
-            {
-                uri.AppendQuery("skip", skip.Value, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
-            }
-            uri.AppendQuery("api-version", apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Gets the list of all acquired phone numbers. </summary>
-        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
-        /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<AcquiredPhoneNumbers>> ListPhoneNumbersAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListPhoneNumbersRequest(skip, top);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AcquiredPhoneNumbers value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AcquiredPhoneNumbers.DeserializeAcquiredPhoneNumbers(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Gets the list of all acquired phone numbers. </summary>
-        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
-        /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<AcquiredPhoneNumbers> ListPhoneNumbers(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateListPhoneNumbersRequest(skip, top);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AcquiredPhoneNumbers value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AcquiredPhoneNumbers.DeserializeAcquiredPhoneNumbers(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateUpdateCapabilitiesRequest(string phoneNumber, PhoneNumberCapabilityType? calling, PhoneNumberCapabilityType? sms)
         {
             var message = _pipeline.CreateMessage();
@@ -648,6 +452,202 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
+        internal HttpMessage CreateGetByNumberRequest(string phoneNumber)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/phoneNumbers/", false);
+            uri.AppendPath(phoneNumber, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets the details of the given purchased phone number. </summary>
+        /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        public async Task<Response<PurchasedPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        {
+            if (phoneNumber == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumber));
+            }
+
+            using var message = CreateGetByNumberRequest(phoneNumber);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PurchasedPhoneNumber value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets the details of the given purchased phone number. </summary>
+        /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        public Response<PurchasedPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
+        {
+            if (phoneNumber == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumber));
+            }
+
+            using var message = CreateGetByNumberRequest(phoneNumber);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PurchasedPhoneNumber value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = PurchasedPhoneNumber.DeserializePurchasedPhoneNumber(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateReleasePhoneNumberRequest(string phoneNumber)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/phoneNumbers/", false);
+            uri.AppendPath(phoneNumber, true);
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Releases a purchased phone number. </summary>
+        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders>> ReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        {
+            if (phoneNumber == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumber));
+            }
+
+            using var message = CreateReleasePhoneNumberRequest(phoneNumber);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new PhoneNumbersReleasePhoneNumberHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Releases a purchased phone number. </summary>
+        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        public ResponseWithHeaders<PhoneNumbersReleasePhoneNumberHeaders> ReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
+        {
+            if (phoneNumber == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumber));
+            }
+
+            using var message = CreateReleasePhoneNumberRequest(phoneNumber);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new PhoneNumbersReleasePhoneNumberHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListPhoneNumbersRequest(int? skip, int? top)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(endpoint, false);
+            uri.AppendPath("/phoneNumbers", false);
+            if (skip != null)
+            {
+                uri.AppendQuery("skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Gets the list of all purchased phone numbers. </summary>
+        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
+        /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<Response<PurchasedPhoneNumbers>> ListPhoneNumbersAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListPhoneNumbersRequest(skip, top);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PurchasedPhoneNumbers value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = PurchasedPhoneNumbers.DeserializePurchasedPhoneNumbers(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> Gets the list of all purchased phone numbers. </summary>
+        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
+        /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public Response<PurchasedPhoneNumbers> ListPhoneNumbers(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListPhoneNumbersRequest(skip, top);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PurchasedPhoneNumbers value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = PurchasedPhoneNumbers.DeserializePurchasedPhoneNumbers(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListPhoneNumbersNextPageRequest(string nextLink, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -661,13 +661,13 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        /// <summary> Gets the list of all acquired phone numbers. </summary>
+        /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<AcquiredPhoneNumbers>> ListPhoneNumbersNextPageAsync(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PurchasedPhoneNumbers>> ListPhoneNumbersNextPageAsync(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -680,9 +680,9 @@ namespace Azure.Communication.PhoneNumbers
             {
                 case 200:
                     {
-                        AcquiredPhoneNumbers value = default;
+                        PurchasedPhoneNumbers value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AcquiredPhoneNumbers.DeserializeAcquiredPhoneNumbers(document.RootElement);
+                        value = PurchasedPhoneNumbers.DeserializePurchasedPhoneNumbers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -690,13 +690,13 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        /// <summary> Gets the list of all acquired phone numbers. </summary>
+        /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<AcquiredPhoneNumbers> ListPhoneNumbersNextPage(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public Response<PurchasedPhoneNumbers> ListPhoneNumbersNextPage(string nextLink, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
@@ -709,9 +709,9 @@ namespace Azure.Communication.PhoneNumbers
             {
                 case 200:
                     {
-                        AcquiredPhoneNumbers value = default;
+                        PurchasedPhoneNumbers value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AcquiredPhoneNumbers.DeserializeAcquiredPhoneNumbers(document.RootElement);
+                        value = PurchasedPhoneNumbers.DeserializePurchasedPhoneNumbers(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

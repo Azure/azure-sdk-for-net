@@ -1,5 +1,6 @@
 ﻿using Azure.ResourceManager.Core;
 using System;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -7,7 +8,7 @@ namespace Proto.Client
     {
         public override void Execute()
         {
-            var client = new AzureResourceManagerClient();
+            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
             if(client.GetSubscriptionContainer().DoesExist(Context.SubscriptionId))
             {
                 Console.WriteLine($"Found {Context.SubscriptionId}");
