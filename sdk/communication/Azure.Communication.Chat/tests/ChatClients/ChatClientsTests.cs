@@ -205,9 +205,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("", new List<ChatParticipant>() { chatParticipant });
 
             //assert
-            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThreadProperties.CreatedBy).CommunicationUser.Id);
-            Assert.AreEqual("Topic for testing success", createChatThreadResult.ChatThreadProperties.Topic);
-            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThreadProperties.Id);
+            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).CommunicationUser.Id);
+            Assert.AreEqual("Topic for testing success", createChatThreadResult.ChatThread.Topic);
+            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
         }
 
         [Test]
@@ -397,12 +397,12 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatClient chatClient = CreateMockChatClient(200, GetThreadsApiResponsePayload);
 
             //act
-            AsyncPageable<ChatThreadItem> chatThreadsInfo = chatClient.GetChatThreadsAsync();
+            AsyncPageable<ChatThreadItem> chatThreads = chatClient.GetChatThreadsAsync();
 
             //assert
 
             int idCounter = 0;
-            await foreach (ChatThreadItem chatThread in chatThreadsInfo)
+            await foreach (ChatThreadItem chatThread in chatThreads)
             {
                 idCounter++;
                 Assert.AreEqual($"{idCounter}", chatThread.Id);
@@ -504,9 +504,9 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "404"), "Not found", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677");
 
             Assert.AreEqual(3, createChatThreadResult.InvalidParticipants.Count);
-            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThreadProperties.CreatedBy).RawId);
-            Assert.AreEqual("Topic for testing errors", createChatThreadResult.ChatThreadProperties.Topic);
-            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThreadProperties.Id);
+            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).RawId);
+            Assert.AreEqual("Topic for testing errors", createChatThreadResult.ChatThread.Topic);
+            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
         }
 
         [Test]

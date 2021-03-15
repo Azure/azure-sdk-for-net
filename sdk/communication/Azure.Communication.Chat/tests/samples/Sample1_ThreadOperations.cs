@@ -35,7 +35,7 @@ namespace Azure.Communication.Chat.Tests.samples
                 DisplayName = "Kim"
             };
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
-            string threadId = createChatThreadResult.ChatThreadProperties.Id;
+            string threadId = createChatThreadResult.ChatThread.Id;
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
 
@@ -44,8 +44,8 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
-            AsyncPageable<ChatThreadItem> chatThreadsInfo = chatClient.GetChatThreadsAsync();
-            await foreach (ChatThreadItem chatThreadItem in chatThreadsInfo)
+            AsyncPageable<ChatThreadItem> chatThreadItems = chatClient.GetChatThreadsAsync();
+            await foreach (ChatThreadItem chatThreadItem in chatThreadItems)
             {
                 Console.WriteLine($"{ chatThreadItem.Id}");
             }

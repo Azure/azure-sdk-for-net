@@ -154,7 +154,7 @@ namespace Azure.Communication.Chat
     public partial class CreateChatThreadResult
     {
         internal CreateChatThreadResult() { }
-        public Azure.Communication.Chat.ChatThreadProperties ChatThreadProperties { get { throw null; } }
+        public Azure.Communication.Chat.ChatThreadProperties ChatThread { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.Chat.ChatError> InvalidParticipants { get { throw null; } }
     }
     public partial class SendChatMessageResult

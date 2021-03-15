@@ -36,7 +36,7 @@ namespace Azure.Communication.Chat.Tests.samples
                 ShareHistoryTime = DateTime.MinValue
             };
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
-            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThreadProperties.Id);
+            ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetParticipants
             AsyncPageable<ChatParticipant> allParticipants = chatThreadClient.GetParticipantsAsync();

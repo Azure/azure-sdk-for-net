@@ -389,12 +389,17 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.AddChatParticipantsAsync(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken).ConfigureAwait(false);
+                Response<AddChatParticipantsResult> addChatParticipantsResult = await _chatThreadRestClient.AddChatParticipantsAsync(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken).ConfigureAwait(false);
+                if (addChatParticipantsResult.Value.InvalidParticipants.Count > 0)
+                {
+                    throw _clientDiagnostics.CreateRequestFailedException(addChatParticipantsResult.GetRawResponse());
+                }
+                return addChatParticipantsResult;
             }
-            catch (RequestFailedException requestFailedException)
+            catch (Exception ex)
             {
-                scope.Failed(requestFailedException);
-                throw requestFailedException;
+                scope.Failed(ex);
+                throw;
             }
         }
 
@@ -408,12 +413,17 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatThreadRestClient.AddChatParticipants(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken);
+                Response<AddChatParticipantsResult> addChatParticipantsResult = _chatThreadRestClient.AddChatParticipants(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken);
+                if (addChatParticipantsResult.Value.InvalidParticipants.Count > 0)
+                {
+                    throw _clientDiagnostics.CreateRequestFailedException(addChatParticipantsResult.GetRawResponse());
+                }
+                return addChatParticipantsResult;
             }
-            catch (RequestFailedException requestFailedException)
+            catch (Exception ex)
             {
-                scope.Failed(requestFailedException);
-                throw requestFailedException;
+                scope.Failed(ex);
+                throw;
             }
         }
 
