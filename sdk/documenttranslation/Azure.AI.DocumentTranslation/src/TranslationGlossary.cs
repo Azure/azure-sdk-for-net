@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     [CodeGenModel("Glossary")]
     public partial class TranslationGlossary
@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentTranslation.Models
         /// If the translation language pair is not present in the glossary, it will not be applied.
         /// </summary>
         [CodeGenMember("GlossaryUrl")]
-        public Uri GlossaryUrl { get; }
+        public Uri GlossaryUri { get; }
 
         /// <summary> Storage Source. </summary>
         [CodeGenMember("StorageSource")]

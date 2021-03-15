@@ -4,22 +4,21 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     [CodeGenModel("DocumentStatusDetail")]
     public partial class DocumentStatusDetail
     {
         /// <summary> Document Id. </summary>
         [CodeGenMember("Id")]
-        public string Id { get; }
-
+        public string DocumentId { get; }
         /// <summary> Location of the document or folder. </summary>
         [CodeGenMember("Path")]
-        public Uri Url { get; }
+        public Uri LocationUri { get; }
 
         /// <summary> Progress of the translation if available. </summary>
         [CodeGenMember("Progress")]
-        public float TranslationProgress { get; }
+        public float TranslationProgressPercentage { get; }
 
         /// <summary> To language. </summary>
         [CodeGenMember("To")]

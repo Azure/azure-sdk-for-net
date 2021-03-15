@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     /// <summary> List of possible statuses for job or document. </summary>
     public readonly partial struct TranslationStatus : IEquatable<TranslationStatus>

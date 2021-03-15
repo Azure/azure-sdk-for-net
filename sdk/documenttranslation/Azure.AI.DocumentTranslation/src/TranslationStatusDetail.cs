@@ -2,16 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.AI.DocumentTranslation.Models;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     [CodeGenModel("BatchStatusDetail")]
     public partial class TranslationStatusDetail
     {
         /// <summary> Id of the operation. </summary>
         [CodeGenMember("Id")]
-        public string Id { get; }
+        public string TranslationId { get; }
 
         /// <summary> Operation created date time. </summary>
         [CodeGenMember("CreatedDateTimeUtc")]

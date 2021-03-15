@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.DocumentTranslation;
 using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation.Models
