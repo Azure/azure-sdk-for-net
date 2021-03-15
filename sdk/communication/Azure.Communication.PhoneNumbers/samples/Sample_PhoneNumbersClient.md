@@ -45,14 +45,14 @@ while (!purchaseOperation.HasCompleted)
 }
 ```
 
-## Listing acquired phone numbers
+## Listing purchased phone numbers
 
 You can list all phone numbers that have been acquired for your resource.
 
-```C# Snippet:ListAcquiredPhoneNumbers
-var acquiredPhoneNumbers = client.GetPhoneNumbers();
+```C# Snippet:GetPurchasedPhoneNumbers
+var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbers();
 
-foreach (var phoneNumber in acquiredPhoneNumbers)
+foreach (var phoneNumber in purchasedPhoneNumbers)
 {
     Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, monthly cost: {phoneNumber.Cost}");
 }
@@ -63,7 +63,7 @@ foreach (var phoneNumber in acquiredPhoneNumbers)
 Phone number's capabilities can be updated by started by `StartUpdateCapabilities` function.
 
 ```C# Snippet:UpdateCapabilitiesNumbers
-var updateCapabilitiesOperation = client.StartUpdateCapabilities(acquiredPhoneNumber, calling:PhoneNumberCapabilityType.Outbound, sms:PhoneNumberCapabilityType.InboundOutbound);
+var updateCapabilitiesOperation = client.StartUpdateCapabilities(purchasedPhoneNumber, calling:PhoneNumberCapabilityType.Outbound, sms:PhoneNumberCapabilityType.InboundOutbound);
 
 while (!updateCapabilitiesOperation.HasCompleted)
 {
@@ -77,8 +77,8 @@ while (!updateCapabilitiesOperation.HasCompleted)
 If you no longer need a phone number you can release it.
 
 ```C# Snippet:ReleasePhoneNumbers
-var acquiredPhoneNumber = "<acquired_phone_number>";
-var releaseOperation = client.StartReleasePhoneNumber(acquiredPhoneNumber);
+var purchasedPhoneNumber = "<purchased_phone_number>";
+var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber);
 
 while (!releaseOperation.HasCompleted)
 {

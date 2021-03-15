@@ -1,0 +1,1711 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Azure Communication Chat Service",
+        "description": "Azure Communication Chat Service",
+        "version": "2021-01-27-preview4"
+    },
+    "paths": {
+        "/chat/threads/{chatThreadId}/readReceipts": {
+            "get": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Gets chat message read receipts for a thread.",
+                "operationId": "ChatThread_ListChatReadReceipts",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "Thread id to get the chat message read receipts for.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "maxPageSize",
+                        "description": "The maximum number of chat message read receipts to be returned per page.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "query",
+                        "name": "skip",
+                        "description": "Skips chat message read receipts up to a specified position in response.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful. The action returns the requested `ChatMessageReadReceipt` resources.",
+                        "schema": {
+                            "$ref": "#/definitions/ChatMessageReadReceiptsCollection"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Get thread read receipts with pagination (max page size)": {
+                        "$ref": "./examples/Conversations_ListChatReadReceiptsWithPageSize.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            },
+            "post": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Sends a read receipt event to a thread, on behalf of a user.",
+                "operationId": "ChatThread_SendChatReadReceipt",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "Thread id to send the read receipt event to.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "sendReadReceiptRequest",
+                        "description": "Read receipt details.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SendReadReceiptRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful."
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Send read receipt": {
+                        "$ref": "./examples/Conversations_SendChatReadReceipt.json"
+                    }
+                }
+            }
+        },
+        "/chat/threads/{chatThreadId}/messages": {
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Sends a message to a thread.",
+                "operationId": "ChatThread_SendChatMessage",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "The thread id to send the message to.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "sendChatMessageRequest",
+                        "description": "Details of the message to send.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SendChatMessageRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Message sent, the `Location` header contains the URL for the newly sent message.",
+                        "schema": {
+                            "$ref": "#/definitions/SendChatMessageResult"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Send Message": {
+                        "$ref": "./examples/Messages_SendChatMessage.json"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Gets a list of messages from a thread.",
+                "operationId": "ChatThread_ListChatMessages",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "The thread id of the message.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "maxPageSize",
+                        "description": "The maximum number of messages to be returned per page.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "query",
+                        "name": "startTime",
+                        "description": "The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/ChatMessagesCollection"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Get messages with pagination (max page size)": {
+                        "$ref": "./examples/Messages_ListChatMessagesWithPageSize.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        },
+        "/chat/threads/{chatThreadId}/messages/{chatMessageId}": {
+            "get": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Gets a message by id.",
+                "operationId": "ChatThread_GetChatMessage",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "The thread id to which the message was sent.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "chatMessageId",
+                        "description": "The message id.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful. The action returns a `Message` resource.",
+                        "schema": {
+                            "$ref": "#/definitions/ChatMessage"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Get Message": {
+                        "$ref": "./examples/Messages_GetChatMessage.json"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Updates a message.",
+                "operationId": "ChatThread_UpdateChatMessage",
+                "consumes": [
+                    "application/merge-patch+json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "The thread id to which the message was sent.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "chatMessageId",
+                        "description": "The message id.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "updateChatMessageRequest",
+                        "description": "Details of the request to update the message.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateChatMessageRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Message is successfully updated."
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Update message content": {
+                        "$ref": "./examples/Messages_UpdateChatMessage.json"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Deletes a message.",
+                "operationId": "ChatThread_DeleteChatMessage",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "The thread id to which the message was sent.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "chatMessageId",
+                        "description": "The message id.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Request successful."
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Delete message": {
+                        "$ref": "./examples/Messages_DeleteChatMessage.json"
+                    }
+                }
+            }
+        },
+        "/chat/threads/{chatThreadId}/typing": {
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Posts a typing event to a thread, on behalf of a user.",
+                "operationId": "ChatThread_SendTypingNotification",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "Id of the thread.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful."
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Post typing event to a thread": {
+                        "$ref": "./examples/Messages_SendTypingNotification.json"
+                    }
+                }
+            }
+        },
+        "/chat/threads/{chatThreadId}/participants": {
+            "get": {
+                "tags": [
+                    "Participants"
+                ],
+                "summary": "Gets the participants of a thread.",
+                "operationId": "ChatThread_ListChatParticipants",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "Thread id to get participants for.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "maxPageSize",
+                        "description": "The maximum number of participants to be returned per page.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "query",
+                        "name": "skip",
+                        "description": "Skips participants up to a specified position in response.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful. The action returns the participants of a thread.",
+                        "schema": {
+                            "$ref": "#/definitions/ChatParticipantsCollection"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Get participants with pagination (max page size)": {
+                        "$ref": "./examples/Participants_ListChatParticipantsWithPageSize.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        },
+        "/chat/threads/{chatThreadId}/participants/:remove": {
+            "post": {
+                "tags": [
+                    "Participants"
+                ],
+                "summary": "Remove a participant from a thread.",
+                "operationId": "ChatThread_RemoveChatParticipant",
+                "consumes": [
+                    "application/json",
+                    "application/merge-patch+json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "Thread id to remove the participant from.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "participantCommunicationIdentifier",
+                        "description": "Id of the thread participant to remove from the thread.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CommunicationIdentifierModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Request successful."
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Remove participant": {
+                        "$ref": "./examples/Participants_RemoveChatParticipant.json"
+                    }
+                }
+            }
+        },
+        "/chat/threads/{chatThreadId}/participants/:add": {
+            "post": {
+                "tags": [
+                    "Participants"
+                ],
+                "summary": "Adds thread participants to a thread. If participants already exist, no change occurs.",
+                "operationId": "ChatThread_AddChatParticipants",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "Id of the thread to add participants to.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "addChatParticipantsRequest",
+                        "description": "Thread participants to be added to the thread.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/AddChatParticipantsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "The participants were successfully added.",
+                        "schema": {
+                            "$ref": "#/definitions/AddChatParticipantsResult"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Add participants": {
+                        "$ref": "./examples/Participants_AddChatParticipants.json"
+                    }
+                }
+            }
+        },
+        "/chat/threads": {
+            "post": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Creates a chat thread.",
+                "operationId": "Chat_CreateChatThread",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "repeatability-Request-Id",
+                        "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs.",
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "createChatThreadRequest",
+                        "description": "Request payload for creating a chat thread.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CreateChatThreadRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Thread created, the `Location` header would contain the URL for the newly created thread.",
+                        "schema": {
+                            "$ref": "#/definitions/CreateChatThreadResult"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Create chat thread": {
+                        "$ref": "./examples/Threads_CreateChatThread.json"
+                    },
+                    "Create chat thread with repeatability request id header": {
+                        "$ref": "./examples/Threads_CreateChatThreadWithRepeatabilityRequestId.json"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Gets the list of chat threads of a user.",
+                "operationId": "Chat_ListChatThreads",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "maxPageSize",
+                        "description": "The maximum number of chat threads returned per page.",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "query",
+                        "name": "startTime",
+                        "description": "The earliest point in time to get chat threads up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful. The action returns a `GetThreadsResponse` resource.",
+                        "schema": {
+                            "$ref": "#/definitions/ChatThreadsInfoCollection"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Get threads with pagination (Max Page Size)": {
+                        "$ref": "./examples/Threads_ListChatThreadsWithPageSize.json"
+                    }
+                },
+                "x-ms-pageable": {
+                    "nextLinkName": "nextLink",
+                    "itemName": "value"
+                }
+            }
+        },
+        "/chat/threads/{chatThreadId}": {
+            "patch": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Updates a thread's properties.",
+                "operationId": "ChatThread_UpdateChatThread",
+                "consumes": [
+                    "application/merge-patch+json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "The id of the thread to update.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    },
+                    {
+                        "in": "body",
+                        "name": "updateChatThreadRequest",
+                        "description": "Request payload for updating a chat thread.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/UpdateChatThreadRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Thread was successfully updated."
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Update chat thread topic": {
+                        "$ref": "./examples/Threads_UpdateChatThreadTopic.json"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Gets a chat thread.",
+                "operationId": "Chat_GetChatThread",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "Id of the thread.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successful. The action returns a chat thread.",
+                        "schema": {
+                            "$ref": "#/definitions/ChatThread"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Get chat thread": {
+                        "$ref": "./examples/Threads_GetChatThread.json"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Threads"
+                ],
+                "summary": "Deletes a thread.",
+                "operationId": "Chat_DeleteChatThread",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "chatThreadId",
+                        "description": "Id of the thread to be deleted.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "$ref": "#/parameters/ApiVersionParameter"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Request successful."
+                    },
+                    "401": {
+                        "description": "Unauthorized.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "403": {
+                        "description": "Forbidden.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "429": {
+                        "description": "Too many requests.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    },
+                    "503": {
+                        "description": "Service unavailable.",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        },
+                        "x-ms-error-response": true
+                    }
+                },
+                "x-ms-examples": {
+                    "Delete chat thread": {
+                        "$ref": "./examples/Threads_DeleteChatThread.json"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "CommunicationUserIdentifierModel": {
+            "$ref": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationUserIdentifierModel"
+        },
+        "CommunicationCloudEnvironment": {
+            "$ref": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationCloudEnvironmentModel"
+        },
+        "MicrosoftTeamsUserIdentifierModel": {
+            "$ref": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/MicrosoftTeamsUserIdentifierModel"
+        },
+        "CommunicationIdentifierModel": {
+            "$ref": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationIdentifierModel"
+        },
+        "ChatMessageReadReceipt": {
+            "description": "A chat message read receipt indicates the time a chat message was read by a recipient.",
+            "required": [
+                "chatMessageId",
+                "readOn",
+                "senderCommunicationIdentifier"
+            ],
+            "type": "object",
+            "properties": {
+                "senderCommunicationIdentifier": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel"
+                },
+                "chatMessageId": {
+                    "description": "Id of the chat message that has been read. This id is generated by the server.",
+                    "type": "string",
+                    "example": "1591137790240"
+                },
+                "readOn": {
+                    "format": "date-time",
+                    "description": "The time at which the message was read. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`.",
+                    "type": "string",
+                    "example": "2020-10-30T10:50:50Z"
+                }
+            }
+        },
+        "ChatMessageReadReceiptsCollection": {
+            "description": "A paged collection of chat message read receipts.",
+            "required": [
+                "value"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "Collection of chat message read receipts.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ChatMessageReadReceipt"
+                    }
+                },
+                "nextLink": {
+                    "description": "If there are more chat message read receipts that can be retrieved, the next link will be populated.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "Error": {
+            "$ref": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationError"
+        },
+        "ErrorResponse": {
+            "$ref": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationErrorResponse"
+        },
+        "SendReadReceiptRequest": {
+            "description": "Request payload for sending a read receipt.",
+            "required": [
+                "chatMessageId"
+            ],
+            "type": "object",
+            "properties": {
+                "chatMessageId": {
+                    "description": "Id of the latest chat message read by the user.",
+                    "type": "string",
+                    "example": "1592435762364"
+                }
+            }
+        },
+        "ChatMessageType": {
+            "description": "The chat message type.",
+            "enum": [
+                "text",
+                "html",
+                "topicUpdated",
+                "participantAdded",
+                "participantRemoved"
+            ],
+            "type": "string",
+            "x-ms-enum": {
+                "name": "ChatMessageType",
+                "modelAsString": true
+            }
+        },
+        "SendChatMessageRequest": {
+            "description": "Details of the message to send.",
+            "required": [
+                "content"
+            ],
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "Chat message content.",
+                    "type": "string",
+                    "example": "Come one guys, lets go for lunch together."
+                },
+                "senderDisplayName": {
+                    "description": "The display name of the chat message sender. This property is used to populate sender name for push notifications.",
+                    "type": "string",
+                    "example": "Bob Admin"
+                },
+                "type": {
+                    "$ref": "#/definitions/ChatMessageType"
+                }
+            }
+        },
+        "SendChatMessageResult": {
+            "description": "Result of the send message operation.",
+            "required": [
+                "id"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "A server-generated message id.",
+                    "type": "string",
+                    "example": "123456789"
+                }
+            }
+        },
+        "ChatParticipant": {
+            "description": "A participant of the chat thread.",
+            "required": [
+                "communicationIdentifier"
+            ],
+            "type": "object",
+            "properties": {
+                "communicationIdentifier": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel"
+                },
+                "displayName": {
+                    "description": "Display name for the chat participant.",
+                    "type": "string",
+                    "example": "Bob"
+                },
+                "shareHistoryTime": {
+                    "format": "date-time",
+                    "description": "Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`.",
+                    "type": "string",
+                    "example": "2020-10-30T10:50:50Z"
+                }
+            }
+        },
+        "ChatMessageContent": {
+            "description": "Content of a chat message.",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "description": "Chat message content for messages of types text or html.",
+                    "type": "string",
+                    "example": "Come one guys, lets go for lunch together."
+                },
+                "topic": {
+                    "description": "Chat message content for messages of type topicUpdated.",
+                    "type": "string",
+                    "example": "Lunch Chat thread"
+                },
+                "participants": {
+                    "description": "Chat message content for messages of types participantAdded or participantRemoved.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ChatParticipant"
+                    }
+                },
+                "initiatorCommunicationIdentifier": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel"
+                }
+            }
+        },
+        "ChatMessage": {
+            "description": "Chat message.",
+            "required": [
+                "createdOn",
+                "id",
+                "sequenceId",
+                "type",
+                "version"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "The id of the chat message. This id is server generated.",
+                    "type": "string",
+                    "example": "123456789"
+                },
+                "type": {
+                    "$ref": "#/definitions/ChatMessageType"
+                },
+                "sequenceId": {
+                    "description": "Sequence of the chat message in the conversation.",
+                    "type": "string"
+                },
+                "version": {
+                    "description": "Version of the chat message.",
+                    "type": "string"
+                },
+                "content": {
+                    "$ref": "#/definitions/ChatMessageContent"
+                },
+                "senderDisplayName": {
+                    "description": "The display name of the chat message sender. This property is used to populate sender name for push notifications.",
+                    "type": "string",
+                    "example": "Jane"
+                },
+                "createdOn": {
+                    "format": "date-time",
+                    "description": "The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`.",
+                    "type": "string",
+                    "example": "2020-10-30T10:50:50Z"
+                },
+                "senderCommunicationIdentifier": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel"
+                },
+                "deletedOn": {
+                    "format": "date-time",
+                    "description": "The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`.",
+                    "type": "string",
+                    "example": "2020-10-30T10:50:50Z"
+                },
+                "editedOn": {
+                    "format": "date-time",
+                    "description": "The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`.",
+                    "type": "string",
+                    "example": "2020-10-30T10:50:50Z"
+                }
+            }
+        },
+        "ChatMessagesCollection": {
+            "description": "Collection of chat messages for a particular chat thread.",
+            "required": [
+                "value"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "Collection of chat messages.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ChatMessage"
+                    }
+                },
+                "nextLink": {
+                    "description": "If there are more chat messages that can be retrieved, the next link will be populated.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "UpdateChatMessageRequest": {
+            "description": "Request payload for updating a chat message.",
+            "type": "object",
+            "properties": {
+                "content": {
+                    "description": "Chat message content.",
+                    "type": "string",
+                    "example": "Let's go for lunch together."
+                }
+            }
+        },
+        "ChatParticipantsCollection": {
+            "description": "Collection of participants belong to a particular thread.",
+            "required": [
+                "value"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "Chat participants.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ChatParticipant"
+                    }
+                },
+                "nextLink": {
+                    "description": "If there are more chat participants that can be retrieved, the next link will be populated.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "AddChatParticipantsRequest": {
+            "description": "Participants to be added to the thread.",
+            "required": [
+                "participants"
+            ],
+            "type": "object",
+            "properties": {
+                "participants": {
+                    "description": "Participants to add to a chat thread.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ChatParticipant"
+                    }
+                }
+            }
+        },
+        "AddChatParticipantsErrors": {
+            "description": "Errors encountered during the addition of the chat participant to the chat thread.",
+            "required": [
+                "invalidParticipants"
+            ],
+            "type": "object",
+            "properties": {
+                "invalidParticipants": {
+                    "description": "The participants that failed to be added to the chat thread.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Error"
+                    }
+                }
+            }
+        },
+        "AddChatParticipantsResult": {
+            "description": "Result of the add chat participants operation.",
+            "type": "object",
+            "properties": {
+                "errors": {
+                    "$ref": "#/definitions/AddChatParticipantsErrors"
+                }
+            }
+        },
+        "CreateChatThreadRequest": {
+            "description": "Request payload for creating a chat thread.",
+            "required": [
+                "participants",
+                "topic"
+            ],
+            "type": "object",
+            "properties": {
+                "topic": {
+                    "description": "The chat thread topic.",
+                    "type": "string",
+                    "example": "Lunch Thread"
+                },
+                "participants": {
+                    "description": "Participants to be added to the chat thread.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ChatParticipant"
+                    }
+                }
+            }
+        },
+        "ChatThread": {
+            "description": "Chat thread.",
+            "required": [
+                "createdByCommunicationIdentifier",
+                "createdOn",
+                "id",
+                "topic"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Chat thread id.",
+                    "type": "string",
+                    "example": "19:uni01_uy5ucb66ugp3lrhe7pxso6xx4hsmm3dl6eyjfefv2n6x3rrurpea@thread.v2"
+                },
+                "topic": {
+                    "description": "Chat thread topic.",
+                    "type": "string",
+                    "example": "Lunch Chat thread"
+                },
+                "createdOn": {
+                    "format": "date-time",
+                    "description": "The timestamp when the chat thread was created. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`.",
+                    "type": "string",
+                    "example": "2020-10-30T10:50:50Z"
+                },
+                "createdByCommunicationIdentifier": {
+                    "$ref": "#/definitions/CommunicationIdentifierModel"
+                },
+                "deletedOn": {
+                    "format": "date-time",
+                    "description": "The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`.",
+                    "type": "string",
+                    "example": "2020-10-30T10:50:50Z"
+                }
+            }
+        },
+        "CreateChatThreadErrors": {
+            "description": "Errors encountered during the creation of the chat thread.",
+            "type": "object",
+            "properties": {
+                "invalidParticipants": {
+                    "description": "The participants that failed to be added to the chat thread.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Error"
+                    },
+                    "readOnly": true
+                }
+            }
+        },
+        "CreateChatThreadResult": {
+            "description": "Result of the create chat thread operation.",
+            "type": "object",
+            "properties": {
+                "chatThread": {
+                    "$ref": "#/definitions/ChatThread"
+                },
+                "errors": {
+                    "$ref": "#/definitions/CreateChatThreadErrors"
+                }
+            }
+        },
+        "ChatThreadInfo": {
+            "description": "Summary information of a chat thread.",
+            "required": [
+                "id",
+                "topic"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "Chat thread id.",
+                    "type": "string",
+                    "example": "19:uni01_uy5ucb66ugp3lrhe7pxso6xx4hsmm3dl6eyjfefv2n6x3rrurpea@thread.v2"
+                },
+                "topic": {
+                    "description": "Chat thread topic.",
+                    "type": "string",
+                    "example": "Lunch Chat thread"
+                },
+                "deletedOn": {
+                    "format": "date-time",
+                    "description": "The timestamp when the chat thread was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`.",
+                    "type": "string",
+                    "example": "2020-10-30T10:50:50Z"
+                },
+                "lastMessageReceivedOn": {
+                    "format": "date-time",
+                    "description": "The timestamp when the last message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`.",
+                    "type": "string",
+                    "readOnly": true,
+                    "example": "2020-10-30T10:50:50Z"
+                }
+            }
+        },
+        "ChatThreadsInfoCollection": {
+            "description": "Collection of chat threads.",
+            "required": [
+                "value"
+            ],
+            "type": "object",
+            "properties": {
+                "value": {
+                    "description": "Collection of chat threads.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ChatThreadInfo"
+                    }
+                },
+                "nextLink": {
+                    "description": "If there are more chat threads that can be retrieved, the next link will be populated.",
+                    "type": "string",
+                    "readOnly": true
+                }
+            }
+        },
+        "UpdateChatThreadRequest": {
+            "description": "Request payload for updating a chat thread.",
+            "type": "object",
+            "properties": {
+                "topic": {
+                    "description": "Chat thread topic.",
+                    "type": "string",
+                    "example": "Lunch Thread"
+                }
+            }
+        }
+    },
+    "parameters": {
+        "ApiVersionParameter": {
+            "in": "query",
+            "name": "api-version",
+            "description": "Version of API to invoke.",
+            "required": true,
+            "type": "string",
+            "x-ms-parameter-location": "method"
+        },
+        "Endpoint": {
+            "in": "path",
+            "name": "endpoint",
+            "description": "The endpoint of the Azure Communication resource.",
+            "required": true,
+            "type": "string",
+            "x-ms-skip-url-encoding": true,
+            "x-ms-parameter-location": "client"
+        }
+    },
+    "securityDefinitions": {
+        "Authorization": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "An ACS (Azure Communication Services) user access token."
+        }
+    },
+    "security": [
+        {
+            "Authorization": []
+        }
+    ],
+    "x-ms-parameterized-host": {
+        "hostTemplate": "{endpoint}",
+        "useSchemePrefix": false,
+        "parameters": [
+            {
+                "$ref": "#/parameters/Endpoint"
+            }
+        ]
+    }
+}

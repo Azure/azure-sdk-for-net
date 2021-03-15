@@ -11,7 +11,13 @@
     <PackageReference Include="Microsoft.Azure.Management.Network" Version="[14.0.0-preview,16.0)" />
     <ProjectReference Include="..\src\Microsoft.Azure.Management.CosmosDB.csproj" />
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <None Update="TestData\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -6,7 +6,7 @@ string dataFlowName = "Test-DataFlow";
 ```
 
 ```C# Snippet:CreateDataFlowClient
-DataFlowClient client = new DataFlowClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+DataFlowClient client = new DataFlowClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 ```
 
 ```C# Snippet:CreateDataFlow

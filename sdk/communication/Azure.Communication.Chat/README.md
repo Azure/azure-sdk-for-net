@@ -1,8 +1,8 @@
 # Azure Communication Chat client library for .NET
 
-> Server - Chat Api Version:  2020-11-01-preview3
+> Server - Chat Api Version:  2021-01-27-preview4
 
-> Client - Chat SDK Version:  1.0.0-beta.4
+> Client - Chat SDK Version:  1.0.0-beta.5
 
 This package contains a C# SDK for Azure Communication Services for chat.
 
@@ -15,7 +15,7 @@ This package contains a C# SDK for Azure Communication Services for chat.
 Install the Azure Communication Chat client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Chat --version 1.0.0-beta.4
+dotnet add package Azure.Communication.Chat --version 1.0.0-beta.5
 ``` 
 
 ### Prerequisites
@@ -122,7 +122,7 @@ chatThreadClient.AddParticipants(participants: new[] { new ChatParticipant(parti
 ```
 ### Remove a participant
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_RemoveParticipant_KeyConcepts
-chatThreadClient.RemoveParticipant(user: participantIdentifier);
+chatThreadClient.RemoveParticipant(identifier: participantIdentifier);
 ```
 ### Send a typing notification
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendTypingNotification_KeyConcepts
@@ -179,7 +179,7 @@ ChatClient chatClient = new ChatClient(
     new CommunicationTokenCredential(userToken));
 ```
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-var chatParticipant = new ChatParticipant(communicationIdentifier: kimberly)
+var chatParticipant = new ChatParticipant(identifier: kimberly)
 {
     DisplayName = "Kim"
 };
@@ -258,7 +258,7 @@ Use `GetMessages` to retrieve all messages for the chat thread.
 AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
 await foreach (ChatMessage message in allMessages)
 {
-    Console.WriteLine($"{message.Id}:{message.Content}");
+    Console.WriteLine($"{message.Id}:{message.Content.Message}");
 }
 ```
 ### Update a message

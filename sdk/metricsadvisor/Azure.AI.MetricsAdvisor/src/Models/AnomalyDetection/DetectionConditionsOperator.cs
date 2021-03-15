@@ -9,7 +9,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// The operator to be applied between conditions in the same <see cref="MetricWholeSeriesDetectionCondition"/>
     /// instance.
     /// </summary>
-    [CodeGenModel("WholeMetricConfigurationConditionOperator")]
+    [CodeGenModel("AnomalyDetectionConfigurationLogicType")]
     public readonly partial struct DetectionConditionsOperator
     {
         /// <summary>

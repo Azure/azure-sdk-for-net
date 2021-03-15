@@ -1,5 +1,7 @@
 # Azure Monitor Exporter client library for .NET
 
+
+
 The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet) exporters which send [telemetry data](https://docs.microsoft.com/azure/azure-monitor/app/data-model) to [Azure Monitor](https://docs.microsoft.com/azure/azure-monitor/app/app-insights-overview) following the [OpenTelemetry Specification](https://github.com/open-telemetry/opentelemetry-specification).
 
 ## Getting started
@@ -11,11 +13,18 @@ The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet)
 
 ### Install the package
 
-Install the Azure Monitor Exporter for OpenTelemetry .NET with NuGet:
+Latest Version: [![Nuget](https://img.shields.io/nuget/vpre/Azure.Monitor.OpenTelemetry.Exporter.svg)](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/)  
 
-```shell
-dotnet add package Azure.Monitor.OpenTelemetry.Exporter
-```
+Install the Azure Monitor Exporter for OpenTelemetry .NET with NuGet:
+- via Package Manager: 
+   ```
+   Install-Package Azure.Monitor.OpenTelemetry.Exporter
+   ```
+- via .NET CLI: 
+   ```
+   dotnet add package Azure.Monitor.OpenTelemetry.Exporter
+   ```
+
 ### Authenticate the client
 
 Exporter does not use authentication. 
