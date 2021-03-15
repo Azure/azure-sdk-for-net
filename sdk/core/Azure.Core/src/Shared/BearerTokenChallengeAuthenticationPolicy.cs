@@ -165,13 +165,65 @@ namespace Azure.Core.Pipeline
                 bool getTokenFromCredential;
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
                 TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs;
-                (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context);
-                HeaderValueInfo info;
+                bool hasRetriedDueToCancellation = false;
 
-                if (getTokenFromCredential)
+                while (true)
                 {
-                    if (backgroundUpdateTcs != null)
+                    (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context);
+                    HeaderValueInfo info;
+                    if (getTokenFromCredential)
                     {
+                        if (backgroundUpdateTcs != null)
+                        {
+                            if (async)
+                            {
+                                info = await headerValueTcs.Task.ConfigureAwait(false);
+                            }
+                            else
+                            {
+#pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                                info = headerValueTcs.Task.EnsureCompleted();
+#pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                            }
+                            _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, context, async));
+                            return info.HeaderValue;
+                        }
+
+                        try
+                        {
+                            info = await GetHeaderValueFromCredentialAsync(context, async, message.CancellationToken).ConfigureAwait(false);
+                            headerValueTcs.SetResult(info);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            headerValueTcs.SetCanceled();
+                            throw;
+                        }
+                        catch (Exception exception)
+                        {
+                            headerValueTcs.SetException(exception);
+                            throw;
+                        }
+                    }
+
+                    var headerValueTask = headerValueTcs.Task;
+                    try
+                    {
+                        if (!headerValueTask.IsCompleted)
+                        {
+                            if (async)
+                            {
+                                await headerValueTask.AwaitWithCancellation(message.CancellationToken);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    headerValueTask.Wait(message.CancellationToken);
+                                }
+                                catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
+                            }
+                        }
                         if (async)
                         {
                             info = await headerValueTcs.Task.ConfigureAwait(false);
@@ -182,55 +234,24 @@ namespace Azure.Core.Pipeline
                             info = headerValueTcs.Task.EnsureCompleted();
 #pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
                         }
-                        _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, context, async));
+
                         return info.HeaderValue;
                     }
+                    catch (TaskCanceledException)
+                    {
+                        // We were waiting on a previous headerValueTcs operation which was canceled.
 
-                    try
-                    {
-                        info = await GetHeaderValueFromCredentialAsync(context, async, message.CancellationToken).ConfigureAwait(false);
-                        headerValueTcs.SetResult(info);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        headerValueTcs.SetCanceled();
-                        throw;
-                    }
-                    catch (Exception exception)
-                    {
-                        headerValueTcs.SetException(exception);
-                        throw;
-                    }
-                }
-
-                var headerValueTask = headerValueTcs.Task;
-                if (!headerValueTask.IsCompleted)
-                {
-                    if (async)
-                    {
-                        await headerValueTask.AwaitWithCancellation(message.CancellationToken);
-                    }
-                    else
-                    {
-                        try
+                        // If we have already retired once, throw.
+                        if (hasRetriedDueToCancellation)
                         {
-                            headerValueTask.Wait(message.CancellationToken);
+                            throw;
                         }
-                        catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
+
+                        //Retry the call to GetTaskCompletionSources.
+                        hasRetriedDueToCancellation = true;
+                        continue;
                     }
                 }
-                if (async)
-                {
-                    info = await headerValueTcs.Task.ConfigureAwait(false);
-                }
-                else
-                {
-#pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
-                    info = headerValueTcs.Task.EnsureCompleted();
-#pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
-                }
-
-                return info.HeaderValue;
             }
 
             private (TaskCompletionSource<HeaderValueInfo>, TaskCompletionSource<HeaderValueInfo>?, bool) GetTaskCompletionSources(TokenRequestContext context)
