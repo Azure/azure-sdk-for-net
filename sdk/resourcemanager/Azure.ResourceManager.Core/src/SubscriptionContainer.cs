@@ -17,11 +17,9 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class.
         /// </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="baseUri"> The base URI of the service. </param>
-        internal SubscriptionContainer(AzureResourceManagerClientOptions options, TokenCredential credential, Uri baseUri)
-            : base(options, null, credential, baseUri)
+        /// <param name="clientContext"></param>
+        internal SubscriptionContainer(IClientContext clientContext)
+            : base(clientContext, null)
         {
         }
 
@@ -34,10 +32,10 @@ namespace Azure.ResourceManager.Core
         /// Gets the operations that can be performed on the container.
         /// </summary>
         private SubscriptionsOperations Operations => new ResourcesManagementClient(
-            BaseUri,
+            ((IClientContext)this).BaseUri,
             Guid.NewGuid().ToString(),
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
 
         /// <summary>
         /// Lists all subscriptions in the current container.
@@ -82,12 +80,12 @@ namespace Azure.ResourceManager.Core
         /// <returns> An instance of <see cref="ResourceOperationsBase{Subscription}"/>. </returns>
         protected override ResourceOperationsBase<Subscription> GetOperation(string subscriptionGuid)
         {
-            return new SubscriptionOperations(ClientOptions, subscriptionGuid, Credential, BaseUri);
+            return new SubscriptionOperations((IClientContext)this, subscriptionGuid);
         }
 
         private Func<ResourceManager.Resources.Models.Subscription, Subscription> Converter()
         {
-            return s => new Subscription(new SubscriptionOperations(ClientOptions, s.SubscriptionId, Credential, BaseUri), new SubscriptionData(s));
+            return s => new Subscription(new SubscriptionOperations(((IClientContext)this), s.SubscriptionId), new SubscriptionData(s));
         }
     }
 }

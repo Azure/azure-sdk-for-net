@@ -134,10 +134,10 @@ namespace Proto.Compute
         }
 
         private AvailabilitySetsOperations Operations => new ComputeManagementClient(
-            BaseUri,
+            ((IClientContext)this).BaseUri,
             Id.Subscription,
-            Credential,
-            ClientOptions.Convert<ComputeManagementClientOptions>()).AvailabilitySets;
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<ComputeManagementClientOptions>()).AvailabilitySets;
 
 
         /// <inheritdoc />

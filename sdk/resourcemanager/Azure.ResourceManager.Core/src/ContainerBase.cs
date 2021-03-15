@@ -17,12 +17,10 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerBase{TOperations}"/> class.
         /// </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
+        /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="baseUri"> The base URI of the service. </param>
-        protected ContainerBase(AzureResourceManagerClientOptions options, ResourceIdentifier id, TokenCredential credential, Uri baseUri)
-            : base(options, id, credential, baseUri)
+        internal ContainerBase(IClientContext clientContext, ResourceIdentifier id)
+            : base(clientContext, id)
         {
         }
 
@@ -31,7 +29,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         protected ContainerBase(ResourceOperationsBase parent)
-            : base(parent.ClientOptions, parent.Id, parent.Credential, parent.BaseUri)
+            : this(parent, parent.Id)
         {
             Parent = parent;
         }

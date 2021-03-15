@@ -44,9 +44,9 @@ namespace Proto.Network
 
         internal NetworkInterfacesOperations Operations => new NetworkManagementClient(
             Id.Subscription,
-            BaseUri,
-            Credential,
-            ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkInterfaces;
+            ((IClientContext)this).BaseUri,
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkInterfaces;
 
         /// <summary>
         /// Deletes a <see cref="NetworkInterface"/>.

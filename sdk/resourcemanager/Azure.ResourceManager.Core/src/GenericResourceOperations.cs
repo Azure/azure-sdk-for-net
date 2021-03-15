@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Core
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
         private ResourcesOperations Operations => new ResourcesManagementClient(
-            BaseUri,
+            ((IClientContext)this).BaseUri,
             Id.Subscription,
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>()).Resources;
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<ResourcesManagementClientOptions>()).Resources;
 
         /// <summary>
         /// Delete the resource.

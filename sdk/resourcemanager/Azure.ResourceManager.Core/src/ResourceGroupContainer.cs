@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Core
         protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
 
         private ResourceGroupsOperations Operations => new ResourcesManagementClient(
-            BaseUri,
+            ((IClientContext)this).BaseUri,
             Id.Subscription,
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>()).ResourceGroups;
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<ResourcesManagementClientOptions>()).ResourceGroups;
 
         /// <summary>
         /// Constructs an object used to create a resource group.

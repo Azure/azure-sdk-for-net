@@ -26,9 +26,9 @@ namespace Proto.Network
 
         private SubnetsOperations Operations => new NetworkManagementClient(
             Id.Subscription,
-            BaseUri,
-            Credential,
-            ClientOptions.Convert<NetworkManagementClientOptions>()).Subnets;
+            ((IClientContext)this).BaseUri,
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<NetworkManagementClientOptions>()).Subnets;
 
         /// <inheritdoc/>
         public override ArmResponse<Subnet> CreateOrUpdate(string name, SubnetData resourceDetails)

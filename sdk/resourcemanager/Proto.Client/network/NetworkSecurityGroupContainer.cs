@@ -42,9 +42,9 @@ namespace Proto.Network
 
         private NetworkSecurityGroupsOperations Operations => new NetworkManagementClient(
             Id.Subscription,
-            BaseUri,
-            Credential,
-            ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkSecurityGroups;
+            ((IClientContext)this).BaseUri,
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkSecurityGroups;
 
         /// <inheritdoc />
         public override ArmResponse<NetworkSecurityGroup> CreateOrUpdate(string name, NetworkSecurityGroupData resourceDetails)

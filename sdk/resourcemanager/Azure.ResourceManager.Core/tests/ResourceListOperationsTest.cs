@@ -92,12 +92,11 @@ namespace Azure.ResourceManager.Core.Tests
 
         private static ResourceGroupOperations GetResourceGroupOperations()
         {
+            var clientContext = new ClientContextImplementation();
             var rgOp = new ResourceGroupOperations(
                             new SubscriptionOperations(
-                                new AzureResourceManagerClientOptions(),
-                                Guid.Empty.ToString(),
-                                new DefaultAzureCredential(), //should make a fake credential creation
-                                new Uri("http://foo.com")),
+                                clientContext,
+                                Guid.Empty.ToString()),
                             "rgName");
             return rgOp;
         }

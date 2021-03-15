@@ -52,10 +52,10 @@ namespace Proto.Compute
         protected override ResourceType ValidResourceType => ResourceType;
 
         private AvailabilitySetsOperations Operations => new ComputeManagementClient(
-            BaseUri,
+            ((IClientContext)this).BaseUri,
             Id.Subscription,
-            Credential,
-            ClientOptions.Convert<ComputeManagementClientOptions>()).AvailabilitySets;
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<ComputeManagementClientOptions>()).AvailabilitySets;
 
         /// <summary>
         /// The operation to delete an availability set. 

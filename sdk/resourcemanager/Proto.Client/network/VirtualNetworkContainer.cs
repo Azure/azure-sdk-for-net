@@ -32,9 +32,9 @@ namespace Proto.Network
 
         private VirtualNetworksOperations Operations => new NetworkManagementClient(
             Id.Subscription,
-            BaseUri,
-            Credential,
-            ClientOptions.Convert<NetworkManagementClientOptions>()).VirtualNetworks;
+            ((IClientContext)this).BaseUri,
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<NetworkManagementClientOptions>()).VirtualNetworks;
 
         /// <inheritdoc/>
         public override ArmResponse<VirtualNetwork> CreateOrUpdate(string name, VirtualNetworkData resourceDetails)

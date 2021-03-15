@@ -16,4 +16,8 @@
     <ProjectReference Include="..\..\Azure.ResourceManager.Core\src\Azure.ResourceManager.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="../../../../common/ManagementCoreShared/**/*.cs" Link="Shared/Management/%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
 </Project>

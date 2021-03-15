@@ -54,10 +54,10 @@ namespace Proto.Compute
         protected override ResourceType ValidResourceType => ResourceType;
 
         private VirtualMachinesOperations Operations => new ComputeManagementClient(
-            BaseUri,
+            ((IClientContext)this).BaseUri,
             Id.Subscription,
-            Credential,
-            ClientOptions.Convert<ComputeManagementClientOptions>()).VirtualMachines;
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<ComputeManagementClientOptions>()).VirtualMachines;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineOperations"/> class from a <see cref="GenericResourceOperations"/>.

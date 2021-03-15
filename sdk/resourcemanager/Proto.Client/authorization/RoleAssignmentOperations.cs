@@ -41,8 +41,8 @@ namespace Proto.Authorization
 
         private RoleAssignmentsOperations Operations => new AuthorizationManagementClient(
             Id.Subscription,
-            BaseUri,
-            Credential).RoleAssignments;
+            ((IClientContext)this).BaseUri,
+            ((IClientContext)this).Credential).RoleAssignments;
 
         /// <summary>
         /// Delete a role assignment. This operation may involve multiple blocking calls to the service.

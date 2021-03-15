@@ -19,9 +19,9 @@ namespace Proto.Network
         {
             return new NetworkManagementClient(
                 subscription.Id.Subscription,
-                subscription.BaseUri,
-                subscription.Credential,
-                subscription.ClientOptions.Convert<NetworkManagementClientOptions>());
+                ((IClientContext)subscription).BaseUri,
+                ((IClientContext)subscription).Credential,
+                ((IClientContext)subscription).ClientOptions.Convert<NetworkManagementClientOptions>());
         }
 
         /// <summary>

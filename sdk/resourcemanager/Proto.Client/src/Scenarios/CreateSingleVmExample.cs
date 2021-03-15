@@ -23,7 +23,7 @@ namespace Proto.Client
 
             // Create AvailabilitySet
             Console.WriteLine("--------Start create AvailabilitySet--------");
-            var aset = resourceGroup.GetAvailabilitySetContainer().Construct("Aligned").CreateOrUpdate(Context.VmName + "_aSet").Value;
+            //var aset = resourceGroup.GetAvailabilitySetContainer().Construct("Aligned").CreateOrUpdate(Context.VmName + "_aSet").Value;
 
             // Create VNet
             Console.WriteLine("--------Start create VNet--------");
@@ -44,9 +44,9 @@ namespace Proto.Client
 
             // Create VM
             Console.WriteLine("--------Start create VM--------");
-            var vm = resourceGroup.GetVirtualMachineContainer().Construct(Context.Hostname, "admin-user", "!@#$%asdfA", nic.Id, aset.Id).CreateOrUpdate(Context.VmName).Value;
+            //var vm = resourceGroup.GetVirtualMachineContainer().Construct(Context.Hostname, "admin-user", "!@#$%asdfA", nic.Id, aset.Id).CreateOrUpdate(Context.VmName).Value;
 
-            Console.WriteLine("VM ID: " + vm.Id);
+            //Console.WriteLine("VM ID: " + vm.Id);
             Console.WriteLine("--------Done create VM--------");
             
         }

@@ -31,10 +31,10 @@ namespace Proto.Compute
         private static ComputeManagementClient GetComputeClient(SubscriptionOperations subscription)
         {
             return new ComputeManagementClient(
-                subscription.BaseUri,
+                ((IClientContext)subscription).BaseUri,
                 subscription.Id.Subscription,
-                subscription.Credential,
-                subscription.ClientOptions.Convert<ComputeManagementClientOptions>());
+                ((IClientContext)subscription).Credential,
+                ((IClientContext)subscription).ClientOptions.Convert<ComputeManagementClientOptions>());
         }
 
         /// <summary>

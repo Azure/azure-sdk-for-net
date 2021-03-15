@@ -23,12 +23,10 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.
         /// </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="subscriptionId"> The Id of the subscription. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="baseUri"> The base URI of the service. </param>
-        internal SubscriptionOperations(AzureResourceManagerClientOptions options, string subscriptionId, TokenCredential credential, Uri baseUri)
-            : base(options, $"/subscriptions/{subscriptionId}", credential, baseUri)
+        /// <param name="clientContext"></param>
+        /// <param name="subscriptionGuid"> The Guid of the subscription. </param>
+        internal SubscriptionOperations(IClientContext clientContext, string subscriptionGuid)
+            : base(clientContext, $"/subscriptions/{subscriptionGuid}")
         {
         }
 
@@ -38,7 +36,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="subscription"> The subscription operations to copy client options from. </param>
         /// <param name="id"> The identifier of the subscription. </param>
         protected SubscriptionOperations(SubscriptionOperations subscription, ResourceIdentifier id)
-            : base(subscription.ClientOptions, id, subscription.Credential, subscription.BaseUri)
+            : base(subscription, id)
         {
         }
 
@@ -48,10 +46,10 @@ namespace Azure.ResourceManager.Core
         protected override ResourceType ValidResourceType => ResourceType;
 
         private SubscriptionsOperations SubscriptionsClient => new ResourcesManagementClient(
-            BaseUri,
+            ((IClientContext)this).BaseUri,
             Guid.NewGuid().ToString(),
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
 
         /// <summary>
         /// Gets the resource group operations for a given resource group.

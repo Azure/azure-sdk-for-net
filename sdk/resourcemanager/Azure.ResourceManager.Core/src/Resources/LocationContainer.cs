@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="subscriptionOperations"> The subscription that this location container belongs to. </param>
         internal LocationContainer(SubscriptionOperations subscriptionOperations)
-            : base(subscriptionOperations.ClientOptions, subscriptionOperations.Id, subscriptionOperations.Credential, subscriptionOperations.BaseUri)
+            : base(subscriptionOperations, subscriptionOperations.Id)
         {
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Subscription container. </returns>
         public SubscriptionContainer GetSubscriptionContainer()
         {
-            return new SubscriptionContainer(ClientOptions, Credential, BaseUri);
+            return new SubscriptionContainer(this);
         }
 
         /// <summary>

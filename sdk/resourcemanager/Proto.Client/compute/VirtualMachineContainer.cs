@@ -25,10 +25,10 @@ namespace Proto.Compute
         }
 
         private VirtualMachinesOperations Operations => new ComputeManagementClient(
-            BaseUri,
+            ((IClientContext)this).BaseUri,
             Id.Subscription,
-            Credential,
-            ClientOptions.Convert<ComputeManagementClientOptions>()).VirtualMachines;
+            ((IClientContext)this).Credential,
+            ((IClientContext)this).ClientOptions.Convert<ComputeManagementClientOptions>()).VirtualMachines;
 
         /// <summary>
         /// Gets the valid resource type for this object
