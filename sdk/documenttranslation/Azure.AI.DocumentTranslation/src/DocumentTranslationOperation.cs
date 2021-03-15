@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.DocumentTranslation
 {
-    /// <summary> The DocumentTranslationOperation class for LRO. </summary>
+    /// <summary> Tracks the status of a long-running operation for translating documents. </summary>
     public class DocumentTranslationOperation : PageableOperation<DocumentStatusDetail>
     {
         /// <summary>Provides communication with the Translator Cognitive Service through its REST API.</summary>
@@ -21,37 +21,37 @@ namespace Azure.AI.DocumentTranslation
         private readonly ClientDiagnostics _diagnostics;
 
         /// <summary>
-        /// Operation created date time.
+        /// Operation created time.
         /// </summary>
         public DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
-        /// Date time in which the operation&apos;s status has been updated.
+        /// Time at which the operation's status has been updated.
         /// </summary>
         public DateTimeOffset LastModified => _lastModified;
 
         /// <summary>
-        /// List of possible statuses for job or document.
+        /// The current status of the operation.
         /// </summary>
         public TranslationStatus Status => _status;
 
         /// <summary>
-        /// Total number of documents in the operation.
+        /// Total number of documents.
         /// </summary>
         public int DocumentsTotal => _documentsTotal;
 
         /// <summary>
-        /// Number of documents failed to translate in the operation.
+        /// Number of documents failed to translate.
         /// </summary>
         public int DocumentsFailed => _documentsFailed;
 
         /// <summary>
-        /// Number of documents translated successfully in the operation.
+        /// Number of documents translated successfully.
         /// </summary>
         public int DocumentsSucceeded => _documentsSucceeded;
 
         /// <summary>
-        /// Number of documents in progress in the operation.
+        /// Number of documents in progress.
         /// </summary>
         public int DocumentsInProgress => _documentsInProgress;
 
@@ -125,11 +125,11 @@ namespace Azure.AI.DocumentTranslation
         /// <summary>
         /// Initializes a new instance of the <see cref="DocumentTranslationOperation"/> class.
         /// </summary>
-        /// <param name="operationId">The ID of this operation.</param>
+        /// <param name="translationId">The translation ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
-        public DocumentTranslationOperation(string operationId, DocumentTranslationClient client)
+        public DocumentTranslationOperation(string translationId, DocumentTranslationClient client)
         {
-            Id = operationId;
+            Id = translationId;
             _serviceClient = client._serviceRestClient;
             _diagnostics = client._clientDiagnostics;
         }
@@ -394,7 +394,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Cancel the batch translation operation.
+        /// Cancel a running translation operation.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
         public virtual void Cancel(CancellationToken cancellationToken)
@@ -415,7 +415,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Cancel the batch translation operation.
+        /// Cancel a running translation operation.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
         public virtual async Task CancelAsync(CancellationToken cancellationToken)

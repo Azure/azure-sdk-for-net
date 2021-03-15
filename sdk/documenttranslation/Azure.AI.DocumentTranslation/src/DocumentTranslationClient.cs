@@ -164,7 +164,7 @@ namespace Azure.AI.DocumentTranslation
         /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview#supported-glossary-formats"/>.</param>
+        /// <see cref="GetGlossaryFormats(CancellationToken)"/>.</param>
         /// <param name="options">Set translation options including source language and custom translation category.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual DocumentTranslationOperation StartTranslation(Uri sourceBlobContainerSas, Uri targetBlobContainerSas, string targetLanguageCode, TranslationGlossary glossary = default, TranslationOperationOptions options = default, CancellationToken cancellationToken = default)
@@ -175,14 +175,16 @@ namespace Azure.AI.DocumentTranslation
                 Filter = options?.Filter
             };
 
-            var glossaries = glossary == null ? new List<TranslationGlossary>() : new List<TranslationGlossary> { glossary };
+            var target = new TranslationTarget(targetBlobContainerSas, targetLanguageCode)
+            {
+                Category = options?.Category
+            };
+
+            target.Glossaries.Add(glossary);
 
             var targets = new List<TranslationTarget>
             {
-                new TranslationTarget(targetBlobContainerSas, targetLanguageCode, glossaries)
-                {
-                    Category = options?.Category
-                }
+               target
             };
 
             var request = new BatchSubmissionRequest(new List<TranslationConfiguration>
@@ -218,7 +220,7 @@ namespace Azure.AI.DocumentTranslation
         /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview#supported-glossary-formats"/>.</param>
+        /// <see cref="GetGlossaryFormats(CancellationToken)"/>.</param>
         /// <param name="options">Set translation options including source language and custom translation category.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(Uri sourceBlobContainerSas, Uri targetBlobContainerSas, string targetLanguageCode, TranslationGlossary glossary = default, TranslationOperationOptions options = default, CancellationToken cancellationToken = default)
@@ -229,14 +231,16 @@ namespace Azure.AI.DocumentTranslation
                 Filter = options?.Filter
             };
 
-            var glossaries = glossary == null ? new List<TranslationGlossary>() : new List<TranslationGlossary> { glossary };
+            var target = new TranslationTarget(targetBlobContainerSas, targetLanguageCode)
+            {
+                Category = options?.Category
+            };
+
+            target.Glossaries.Add(glossary);
 
             var targets = new List<TranslationTarget>
             {
-                new TranslationTarget(targetBlobContainerSas, targetLanguageCode, glossaries)
-                {
-                    Category = options?.Category
-                }
+               target
             };
 
             var request = new BatchSubmissionRequest(new List<TranslationConfiguration>
@@ -426,40 +430,6 @@ namespace Azure.AI.DocumentTranslation
             try
             {
                 var response = await _serviceRestClient.GetDocumentFormatsAsync(cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal virtual Response<IReadOnlyList<StorageSource>> GetSupportedStorageSources(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedStorageSources)}");
-            scope.Start();
-
-            try
-            {
-                var response = _serviceRestClient.GetDocumentStorageSource(cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        internal virtual async Task<Response<IReadOnlyList<StorageSource>>> GetSupportedStorageSourcesAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedStorageSourcesAsync)}");
-            scope.Start();
-
-            try
-            {
-                var response = await _serviceRestClient.GetDocumentStorageSourceAsync(cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
             catch (Exception e)

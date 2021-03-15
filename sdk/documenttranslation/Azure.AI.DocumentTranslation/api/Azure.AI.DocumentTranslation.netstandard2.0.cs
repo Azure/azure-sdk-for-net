@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentTranslation
     public partial class DocumentTranslationOperation : Azure.AI.DocumentTranslation.PageableOperation<Azure.AI.DocumentTranslation.Models.DocumentStatusDetail>
     {
         protected DocumentTranslationOperation() { }
-        public DocumentTranslationOperation(string operationId, Azure.AI.DocumentTranslation.DocumentTranslationClient client) { }
+        public DocumentTranslationOperation(string translationId, Azure.AI.DocumentTranslation.DocumentTranslationClient client) { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public int DocumentsCancelled { get { throw null; } }
         public int DocumentsFailed { get { throw null; } }
@@ -177,7 +177,6 @@ namespace Azure.AI.DocumentTranslation.Models
     public partial class TranslationConfiguration
     {
         public TranslationConfiguration(Azure.AI.DocumentTranslation.Models.TranslationSource source, System.Collections.Generic.IEnumerable<Azure.AI.DocumentTranslation.Models.TranslationTarget> targets) { }
-        public TranslationConfiguration(Azure.AI.DocumentTranslation.Models.TranslationSource source, System.Collections.Generic.IEnumerable<Azure.AI.DocumentTranslation.Models.TranslationTarget> targets, Azure.AI.DocumentTranslation.Models.StorageType storageType) { }
         public Azure.AI.DocumentTranslation.Models.TranslationSource Source { get { throw null; } }
         public Azure.AI.DocumentTranslation.Models.StorageType? StorageType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.DocumentTranslation.Models.TranslationTarget> Targets { get { throw null; } }
@@ -246,7 +245,6 @@ namespace Azure.AI.DocumentTranslation.Models
     public partial class TranslationTarget
     {
         public TranslationTarget(System.Uri targetUri, string languageCode) { }
-        public TranslationTarget(System.Uri targetUri, string languageCode, System.Collections.Generic.IList<Azure.AI.DocumentTranslation.Models.TranslationGlossary> glossaries) { }
         public string Category { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.DocumentTranslation.Models.TranslationGlossary> Glossaries { get { throw null; } }
         public string LanguageCode { get { throw null; } }
