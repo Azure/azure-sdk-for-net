@@ -137,23 +137,6 @@ namespace Azure.AI.DocumentTranslation
         public abstract Azure.AsyncPageable<T> GetValuesAsync();
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct StorageSource : System.IEquatable<Azure.AI.DocumentTranslation.StorageSource>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public StorageSource(string value) { throw null; }
-        public static Azure.AI.DocumentTranslation.StorageSource AzureBlob { get { throw null; } }
-        public bool Equals(Azure.AI.DocumentTranslation.StorageSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.DocumentTranslation.StorageSource left, Azure.AI.DocumentTranslation.StorageSource right) { throw null; }
-        public static implicit operator Azure.AI.DocumentTranslation.StorageSource (string value) { throw null; }
-        public static bool operator !=(Azure.AI.DocumentTranslation.StorageSource left, Azure.AI.DocumentTranslation.StorageSource right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageType : System.IEquatable<Azure.AI.DocumentTranslation.StorageType>
     {
         private readonly object _dummy;
@@ -242,7 +225,7 @@ namespace Azure.AI.DocumentTranslation
     public partial class TranslationTarget
     {
         public TranslationTarget(System.Uri targetUri, string languageCode) { }
-        public string Category { get { throw null; } set { } }
+        public string CategoryId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.DocumentTranslation.TranslationGlossary> Glossaries { get { throw null; } }
         public string LanguageCode { get { throw null; } }
         public System.Uri TargetUri { get { throw null; } }

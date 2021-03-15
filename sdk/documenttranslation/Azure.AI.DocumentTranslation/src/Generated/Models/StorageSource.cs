@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.DocumentTranslation.Models
 {
     /// <summary> Storage Source. </summary>
-    public readonly partial struct StorageSource : IEquatable<StorageSource>
+    internal readonly partial struct StorageSource : IEquatable<StorageSource>
     {
         private readonly string _value;
 

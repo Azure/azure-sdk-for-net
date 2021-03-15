@@ -17,10 +17,10 @@ namespace Azure.AI.DocumentTranslation
             writer.WriteStartObject();
             writer.WritePropertyName("targetUrl");
             writer.WriteStringValue(TargetUri.AbsoluteUri);
-            if (Optional.IsDefined(Category))
+            if (Optional.IsDefined(CategoryId))
             {
                 writer.WritePropertyName("category");
-                writer.WriteStringValue(Category);
+                writer.WriteStringValue(CategoryId);
             }
             writer.WritePropertyName("language");
             writer.WriteStringValue(LanguageCode);

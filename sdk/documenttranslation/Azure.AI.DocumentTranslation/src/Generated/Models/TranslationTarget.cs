@@ -33,8 +33,6 @@ namespace Azure.AI.DocumentTranslation
             LanguageCode = languageCode;
             Glossaries = new ChangeTrackingList<TranslationGlossary>();
         }
-        /// <summary> Category / custom system for translation request. </summary>
-        public string Category { get; set; }
         /// <summary> List of Glossary. </summary>
         public IList<TranslationGlossary> Glossaries { get; }
     }
