@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
-namespace Azure.Iot.ModelsRepository
+namespace Azure.IoT.ModelsRepository
 {
     /// <summary>
     /// The ModelsRepositoryClient class supports operations against DTDL model repositories following the
@@ -26,7 +26,8 @@ namespace Azure.Iot.ModelsRepository
         /// with the model dependency resolution option of TryFromExpanded.
         /// </summary>
         public ModelsRepositoryClient() : this(new Uri(ModelsRepositoryConstants.DefaultModelsRepository),
-            new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.TryFromExpanded)) { }
+            new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.TryFromExpanded))
+        { }
 
         /// <summary>
         /// Initializes the ModelsRepositoryClient with custom client <paramref name="options"/> while pointing to
@@ -36,7 +37,8 @@ namespace Azure.Iot.ModelsRepository
         /// ModelsRepositoryClientOptions to configure model dependency resolution and client behavior.
         /// </param>
         public ModelsRepositoryClient(ModelsRepositoryClientOptions options) :
-            this(new Uri(ModelsRepositoryConstants.DefaultModelsRepository), options) { }
+            this(new Uri(ModelsRepositoryConstants.DefaultModelsRepository), options)
+        { }
 
         /// <summary>
         /// Initializes the ModelsRepositoryClient with custom client <paramref name="options"/> while pointing to

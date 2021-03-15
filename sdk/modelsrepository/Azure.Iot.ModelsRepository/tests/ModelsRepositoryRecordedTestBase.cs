@@ -6,7 +6,7 @@ using System.Net;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Iot.ModelsRepository.Tests
+namespace Azure.IoT.ModelsRepository.Tests
 {
     public class ModelsRepositoryRecordedTestBase : RecordedTestBase<ModelsRepositoryTestEnvironment>
     {

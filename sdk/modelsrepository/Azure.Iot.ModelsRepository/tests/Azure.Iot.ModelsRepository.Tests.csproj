@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
-    <ProjectReference Include="..\src\Azure.Iot.ModelsRepository.csproj" />
+    <ProjectReference Include="..\src\Azure.IoT.ModelsRepository.csproj" />
   </ItemGroup>
 
   <ItemGroup>

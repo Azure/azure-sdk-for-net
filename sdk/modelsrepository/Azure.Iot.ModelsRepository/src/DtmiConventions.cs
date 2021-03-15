@@ -5,7 +5,7 @@ using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Azure.Iot.ModelsRepository
+namespace Azure.IoT.ModelsRepository
 {
     /// <summary>
     /// DtmiConventions implements the core aspects of the IoT model repo conventions

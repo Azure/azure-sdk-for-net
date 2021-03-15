@@ -3,14 +3,14 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Iot.ModelsRepository.Fetchers;
+using Azure.IoT.ModelsRepository.Fetchers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Iot.ModelsRepository
+namespace Azure.IoT.ModelsRepository
 {
     internal class RepositoryHandler
     {

@@ -10,7 +10,7 @@ using System.Threading;
 using System.Globalization;
 using Azure.Core.Pipeline;
 
-namespace Azure.Iot.ModelsRepository.Fetchers
+namespace Azure.IoT.ModelsRepository.Fetchers
 {
     /// <summary>
     /// The FileModelFetcher is an implementation of IModelFetcher

@@ -5,7 +5,7 @@ using Azure.Core.Diagnostics;
 using System;
 using System.Diagnostics.Tracing;
 
-namespace Azure.Iot.ModelsRepository
+namespace Azure.IoT.ModelsRepository
 {
     [EventSource(Name = EventSourceName)]
     internal sealed class ModelsRepositoryEventSource : EventSource

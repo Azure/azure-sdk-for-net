@@ -8,7 +8,7 @@ using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace Azure.Iot.ModelsRepository.Samples
+namespace Azure.IoT.ModelsRepository.Samples
 {
     internal class ModelResolutionSamples
     {

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace Azure.Iot.ModelsRepository
+namespace Azure.IoT.ModelsRepository
 {
     /// <summary>
     /// The ModelQuery class is responsible for parsing DTDL v2 models to produce key metadata.

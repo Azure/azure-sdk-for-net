@@ -12,7 +12,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Iot.ModelsRepository.Fetchers
+namespace Azure.IoT.ModelsRepository.Fetchers
 {
     /// <summary>
     /// The HttpModelFetcher is an implementation of IModelFetcher

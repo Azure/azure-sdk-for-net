@@ -4,7 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 
-namespace Azure.Iot.ModelsRepository
+namespace Azure.IoT.ModelsRepository
 {
     /// <summary>
     /// Options that allow configuration of requests sent to the ModelRepositoryService.

@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Iot.ModelsRepository.Fetchers
+namespace Azure.IoT.ModelsRepository.Fetchers
 {
     /// <summary>
     /// The IModelFetcher is an abstraction that supports fetching

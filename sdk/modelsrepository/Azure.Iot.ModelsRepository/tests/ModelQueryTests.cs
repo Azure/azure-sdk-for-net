@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Azure.Iot.ModelsRepository.Tests
+namespace Azure.IoT.ModelsRepository.Tests
 {
     public class ModelQueryTests : ModelsRepositoryTestBase
     {

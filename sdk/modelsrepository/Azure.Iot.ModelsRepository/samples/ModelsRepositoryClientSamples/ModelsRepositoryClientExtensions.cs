@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Azure.Iot.ModelsRepository.Samples
+namespace Azure.IoT.ModelsRepository.Samples
 {
     internal static class ModelsRepositoryClientExtensions
     {

@@ -7,7 +7,7 @@ using System;
 using System.Diagnostics.Tracing;
 using System.Runtime.InteropServices;
 
-namespace Azure.Iot.ModelsRepository.Tests
+namespace Azure.IoT.ModelsRepository.Tests
 {
     public class ClientTests : ModelsRepositoryTestBase
     {

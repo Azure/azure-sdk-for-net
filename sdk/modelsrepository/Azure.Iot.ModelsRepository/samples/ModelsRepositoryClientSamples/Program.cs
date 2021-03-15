@@ -6,7 +6,7 @@ using System;
 using System.Diagnostics.Tracing;
 using System.Threading.Tasks;
 
-namespace Azure.Iot.ModelsRepository.Samples
+namespace Azure.IoT.ModelsRepository.Samples
 {
     public class Program
     {

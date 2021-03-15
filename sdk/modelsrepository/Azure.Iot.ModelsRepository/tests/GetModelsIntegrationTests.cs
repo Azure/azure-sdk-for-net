@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Azure.Iot.ModelsRepository.Tests
+namespace Azure.IoT.ModelsRepository.Tests
 {
     public class GetModelsIntegrationTests : ModelsRepositoryRecordedTestBase
     {

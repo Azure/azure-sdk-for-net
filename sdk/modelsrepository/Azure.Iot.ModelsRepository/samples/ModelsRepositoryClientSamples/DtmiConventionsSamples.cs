@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Iot.ModelsRepository.Samples
+namespace Azure.IoT.ModelsRepository.Samples
 {
     internal class DtmiConventionsSamples
     {
@@ -27,12 +27,12 @@ namespace Azure.Iot.ModelsRepository.Samples
             #region Snippet:ModelsRepositorySamplesDtmiConventionsGetModelUri
 
             // This snippet shows obtaining a fully qualified path to a model file.
-            
+
             // Local repository example
             Uri localRepositoryUri = new Uri("file:///path/to/repository/");
-            string fullyQualifiedModelPath = 
+            string fullyQualifiedModelPath =
                 DtmiConventions.GetModelUri("dtmi:com:example:Thermostat;1", localRepositoryUri).AbsolutePath;
-            
+
             // Prints '/path/to/repository/dtmi/com/example/thermostat-1.json'
             Console.WriteLine(fullyQualifiedModelPath);
 

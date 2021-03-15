@@ -154,7 +154,7 @@ DtmiConventions.IsValidDtmi("dtmi:com:example:Thermostat");
 
 // Local repository example
 Uri localRepositoryUri = new Uri("file:///path/to/repository/");
-string fullyQualifiedModelPath = 
+string fullyQualifiedModelPath =
     DtmiConventions.GetModelUri("dtmi:com:example:Thermostat;1", localRepositoryUri).AbsolutePath;
 
 // Prints '/path/to/repository/dtmi/com/example/thermostat-1.json'
@@ -171,8 +171,8 @@ Console.WriteLine(fullyQualifiedModelPath);
 
 <!-- LINKS -->
 [modelsrepository_github_repo]: https://github.com/Azure/iot-plugandplay-models
-[modelsrepository_sample_extension]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.Iot.ModelsRepository/samples/ModelsRepositoryClientSamples/ModelsRepositoryClientExtensions.cs
-[modelsrepository_clientoptions]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.Iot.ModelsRepository/src/ModelsRepositoryClientOptions.cs
+[modelsrepository_sample_extension]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.IoT.ModelsRepository/samples/ModelsRepositoryClientSamples/ModelsRepositoryClientExtensions.cs
+[modelsrepository_clientoptions]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.IoT.ModelsRepository/src/ModelsRepositoryClientOptions.cs
 [modelsrepository_msdocs]: https://docs.microsoft.com/azure/iot-pnp/concepts-model-repository
 [modelsrepository_publish_msdocs]: https://docs.microsoft.com/azure/iot-pnp/concepts-model-repository#publish-a-model
 [modelsrepository_iot_endpoint]: https://devicemodels.azure.com/

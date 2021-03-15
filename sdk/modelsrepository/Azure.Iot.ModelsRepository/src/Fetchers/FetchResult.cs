@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Iot.ModelsRepository.Fetchers
+namespace Azure.IoT.ModelsRepository.Fetchers
 {
     /// <summary>
     /// The FetchResult class has the purpose of containing key elements of

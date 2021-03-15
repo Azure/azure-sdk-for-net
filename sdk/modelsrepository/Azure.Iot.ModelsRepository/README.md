@@ -15,7 +15,7 @@ For the best development experience, developers should use the official Microsof
 Install the Azure IoT Models Repository client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-Install-Package Azure.Iot.ModelsRepository
+Install-Package Azure.IoT.ModelsRepository
 ```
 
 View the package details at nuget.org.
@@ -80,14 +80,14 @@ For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or conta
 <!-- LINKS -->
 [microsoft_sdk_download]: https://azure.microsoft.com/downloads/?sdk=net
 [azure_sdk_target_frameworks]: https://github.com/azure/azure-sdk-for-net#target-frameworks
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/modelsrepository/Azure.Iot.ModelsRepository/src
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/modelsrepository/Azure.IoT.ModelsRepository/src
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [nuget]: https://www.nuget.org/
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core
 [modelsrepository_conventions]: https://github.com/Azure/iot-plugandplay-models-tools/wiki
 [modelsrepository_iot_endpoint]: https://devicemodels.azure.com/
-[modelsrepository_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.Iot.ModelsRepository/samples
+[modelsrepository_samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/modelsrepository/Azure.IoT.ModelsRepository/samples
 [thread_safety_guideline]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety
 [json_ld_reference]: https://json-ld.org
 [dtdlv2_reference]: https://github.com/Azure/opendigitaltwins-dtdl/blob/master/DTDL/v2/dtdlv2.md

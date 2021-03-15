@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace Azure.Iot.ModelsRepository.Samples
+namespace Azure.IoT.ModelsRepository.Samples
 {
     internal class ParserIntegrationSamples
     {

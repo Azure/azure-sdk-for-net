@@ -6,7 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Runtime.InteropServices;
 
-namespace Azure.Iot.ModelsRepository.Tests
+namespace Azure.IoT.ModelsRepository.Tests
 {
     public class DtmiConventionsTests : ModelsRepositoryTestBase
     {
