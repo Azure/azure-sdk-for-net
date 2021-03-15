@@ -12,10 +12,10 @@ namespace Azure.Core.Pipeline
     {
         private const int RuntimeDefaultConnectionLimit = 2;
         private const int IncreasedConnectionLimit = 50;
+        private const int IncreasedConnectionLeaseTimeout = 300 * 1000;
 
 #if NETFRAMEWORK || NETSTANDARD
         private const int DefaultConnectionLeaseTimeout = Timeout.Infinite;
-        private const int IncreasedConnectionLeaseTimeout = 300 * 1000;
 
         public static void SetLimits(ServicePoint requestServicePoint)
         {
@@ -41,7 +41,7 @@ namespace Azure.Core.Pipeline
         }
 #else // NETCOREAPP +
         private static TimeSpan DefaultConnectionLeaseTimeoutTimeSpan = Timeout.InfiniteTimeSpan;
-        private static TimeSpan IncreasedConnectionLeaseTimeoutTimeSpan = TimeSpan.FromSeconds(300);
+        private static TimeSpan IncreasedConnectionLeaseTimeoutTimeSpan = TimeSpan.FromMilliseconds(IncreasedConnectionLeaseTimeout);
 
         public static void SetLimits(SocketsHttpHandler socketsHttpHandler)
         {
