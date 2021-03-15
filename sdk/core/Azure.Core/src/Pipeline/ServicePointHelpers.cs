@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -14,13 +13,9 @@ namespace Azure.Core.Pipeline
         private const int RuntimeDefaultConnectionLimit = 2;
         private const int IncreasedConnectionLimit = 50;
 
+#if NETFRAMEWORK || NETSTANDARD
         private const int DefaultConnectionLeaseTimeout = Timeout.Infinite;
         private const int IncreasedConnectionLeaseTimeout = 300 * 1000;
-
-#if !NETFRAMEWORK
-        private static TimeSpan DefaultConnectionLeaseTimeoutTimeSpan = Timeout.InfiniteTimeSpan;
-        private static TimeSpan IncreasedConnectionLeaseTimeoutTimeSpan = TimeSpan.FromMilliseconds(IncreasedConnectionLeaseTimeout);
-#endif
 
         public static void SetLimits(ServicePoint requestServicePoint)
         {
@@ -36,7 +31,6 @@ namespace Azure.Core.Pipeline
             }
         }
 
-#if NETFRAMEWORK || NETSTANDARD
         public static void SetLimits(HttpClientHandler httpClientHandler)
         {
             // Only change when the default runtime limit is used
@@ -45,7 +39,10 @@ namespace Azure.Core.Pipeline
                 httpClientHandler.MaxConnectionsPerServer = IncreasedConnectionLimit;
             }
         }
-#else
+#else // NETCOREAPP +
+        private static TimeSpan DefaultConnectionLeaseTimeoutTimeSpan = Timeout.InfiniteTimeSpan;
+        private static TimeSpan IncreasedConnectionLeaseTimeoutTimeSpan = TimeSpan.FromSeconds(300);
+
         public static void SetLimits(SocketsHttpHandler socketsHttpHandler)
         {
             if (socketsHttpHandler.MaxConnectionsPerServer == RuntimeDefaultConnectionLimit)

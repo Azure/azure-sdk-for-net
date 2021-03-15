@@ -128,19 +128,19 @@ namespace Azure.Core.Pipeline
         private static HttpClient CreateDefaultClient()
         {
 #if NETFRAMEWORK || NETSTANDARD
-            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            HttpClientHandler httpMessageHandler = new HttpClientHandler();
 #else
 
-            SocketsHttpHandler httpClientHandler = new SocketsHttpHandler();
+            SocketsHttpHandler httpMessageHandler = new SocketsHttpHandler();
 #endif
             if (HttpEnvironmentProxy.TryCreate(out IWebProxy webProxy))
             {
-                httpClientHandler.Proxy = webProxy;
+                httpMessageHandler.Proxy = webProxy;
             }
 
-            ServicePointHelpers.SetLimits(httpClientHandler);
+            ServicePointHelpers.SetLimits(httpMessageHandler);
 
-            return new HttpClient(httpClientHandler)
+            return new HttpClient(httpMessageHandler)
             {
                 // Timeouts are handled by the pipeline
                 Timeout = Timeout.InfiniteTimeSpan
