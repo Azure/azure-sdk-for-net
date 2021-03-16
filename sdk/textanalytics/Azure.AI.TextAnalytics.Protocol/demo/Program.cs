@@ -19,8 +19,8 @@ namespace DemoApp
         /// </summary>
         static async Task Task1()
         {
-            var request = client.GetSentimentRequest();
-            var documents = request.Body.SetEmptyArray("documents");
+            var requestBody = new JsonData();
+            var documents = requestBody.SetEmptyArray("documents");
 
             int i = 0;
             foreach (string review in ReadReviewsFromJson().Take(10))
@@ -30,18 +30,19 @@ namespace DemoApp
                 document["text"] = review;
             }
 
-            DynamicResponse response = await request.SendAsync();
+            Response response = await client.GetSentimentAsync(RequestContent.Create(requestBody));
+            var responseBody = JsonData.FromBytes(response.Content.ToMemory());
 
             if (response.Status == 200)
             {
-                foreach (var document in response.Body["documents"].Items)
+                foreach (var document in responseBody["documents"].Items)
                 {
                     Console.WriteLine($"{document["id"]} is {document["sentiment"]}");
                 }
             }
             else
             {
-                Console.Error.WriteLine(response.Body["error"]);
+                Console.Error.WriteLine(responseBody["error"]);
             }
         }
 
@@ -52,8 +53,8 @@ namespace DemoApp
         /// <returns></returns>
         static async Task Task2()
         {
-            var request = client.GetEntitiesRequest();
-            var documents = request.Body.SetEmptyArray("documents");
+            var requestBody = new JsonData();
+            var documents = requestBody.SetEmptyArray("documents");
 
             int i = 0;
             foreach (string review in ReadReviewsFromJson().Take(5))
@@ -63,11 +64,12 @@ namespace DemoApp
                 document["text"] = review;
             }
 
-            DynamicResponse response = await request.SendAsync();
+            Response response = await client.GetEntitiesAsync(RequestContent.Create(requestBody));
+            var responseBody = JsonData.FromBytes(response.Content.ToMemory());
 
             if (response.Status == 200)
             {
-                foreach (var document in response.Body["documents"].Items)
+                foreach (var document in responseBody["documents"].Items)
                 {
                     foreach (var entity in document["entities"].Items)
                     {
@@ -84,7 +86,7 @@ namespace DemoApp
             }
             else
             {
-                Console.Error.WriteLine(response.Body["error"]);
+                Console.Error.WriteLine(responseBody["error"]);
             }
         }
 
@@ -107,22 +109,25 @@ namespace DemoApp
             }
 
             // Get all the persons:
-            var response = await client.GetEntitiesAsync(body);
+            var response = await client.GetEntitiesAsync(RequestContent.Create(body));
+            var responseBody = JsonData.FromBytes(response.Content.ToMemory());
+
             if (response.Status != 200)
             {
-                Console.Error.WriteLine(response.Body["error"]);
+                Console.Error.WriteLine(responseBody["error"]);
                 return;
             }
 
-            var people = response.Body["documents"].Items.SelectMany(x => x["entities"].Items.Where(e => e["category"] == "Person").Select(e => e["text"])).Distinct();
+            var people = responseBody["documents"].Items.SelectMany(x => x["entities"].Items.Where(e => e["category"] == "Person").Select(e => e["text"])).Distinct();
 
             // Now, get the links
-            response = await client.GetLinkedEntitiesAsync(body);
+            response = await client.GetLinkedEntitiesAsync(RequestContent.Create(body));
+            responseBody = JsonData.FromBytes(response.Content.ToMemory());
 
             // For any links, if they are about people in our list, print them.
             if (response.Status == 200)
             {
-                foreach (var document in response.Body["documents"].Items)
+                foreach (var document in responseBody["documents"].Items)
                 {
                     foreach (var entity in document["entities"].Items)
                     {
@@ -135,7 +140,7 @@ namespace DemoApp
             }
             else
             {
-                Console.Error.WriteLine(response.Body["error"]);
+                Console.Error.WriteLine(responseBody["error"]);
             }
         }
 
@@ -161,16 +166,17 @@ namespace DemoApp
             }
 
             // Get languages.
-            var response = await client.GetLanguagesAsync(body);
+            var response = await client.GetLanguagesAsync(RequestContent.Create(body));
+            var responseBody = JsonData.FromBytes(response.Content.ToMemory());
 
             if (response.Status != 200)
             {
-                Console.Error.WriteLine(response.Body["error"]);
+                Console.Error.WriteLine(responseBody["error"]);
                 return;
             }
 
             // Build a map of DocumentID -> Language Name from the response.
-            var languageMap = new Dictionary<JsonData, JsonData>(response.Body["documents"].Items.Select(e =>
+            var languageMap = new Dictionary<JsonData, JsonData>(responseBody["documents"].Items.Select(e =>
             {
                 return new KeyValuePair<JsonData, JsonData>(e["id"], e["detectedLanguage"]["iso6391Name"]);
             }));
@@ -181,11 +187,12 @@ namespace DemoApp
                 document["language"] = languageMap[document["id"]];
             }
 
-            response = await client.GetEntitiesPiiAsync(body);
+            response = await client.GetEntitiesPiiAsync(RequestContent.Create(body));
+            responseBody = JsonData.FromBytes(response.Content.ToMemory());
 
             if (response.Status == 200)
             {
-                foreach (var document in response.Body["documents"].Items)
+                foreach (var document in responseBody["documents"].Items)
                 {
                     foreach (var entity in document["entities"].Items)
                     {
@@ -195,7 +202,7 @@ namespace DemoApp
             }
             else
             {
-                Console.Error.WriteLine(response.Body["error"]);
+                Console.Error.WriteLine(responseBody["error"]);
             }
         }
 
