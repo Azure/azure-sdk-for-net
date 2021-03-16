@@ -32,7 +32,7 @@ namespace Azure.AI.DocumentTranslation
         [CodeGenMember("LastActionDateTimeUtc")]
         public DateTimeOffset LastModified { get; }
 
-        /// <summary> Returns true if the document translation is completed. </summary>
+        /// <summary> Returns true if the translation on the document is completed, independent if it succeeded or failed. </summary>
         public bool HasCompleted => Status == TranslationStatus.Succeeded
                                     || Status == TranslationStatus.Failed
                                     || Status == TranslationStatus.Cancelled
