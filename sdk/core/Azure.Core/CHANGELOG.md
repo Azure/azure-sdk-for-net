@@ -2,6 +2,7 @@
 
 ## 1.11.0-beta.1 (Unreleased)
 
+- `ETag` now returns `string.Empty` if it is constructed with a null value.
 
 ## 1.10.0 (2021-03-09)
 
