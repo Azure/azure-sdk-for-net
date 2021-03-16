@@ -4813,7 +4813,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual Response<BlobImmutabilityPolicy> SetImmutabilityPolicy(
             BlobImmutabilityPolicy immutabilityPolicy,
-            BlobRequestConditions conditions,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             SetImmutabilityPolicyInternal(
                 immutabilityPolicy: immutabilityPolicy,
@@ -4847,7 +4847,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         public virtual async Task<Response<BlobImmutabilityPolicy>> SetImmutabilityPolicyAsync(
             BlobImmutabilityPolicy immutabilityPolicy,
-            BlobRequestConditions conditions,
+            BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await SetImmutabilityPolicyInternal(
                 immutabilityPolicy: immutabilityPolicy,

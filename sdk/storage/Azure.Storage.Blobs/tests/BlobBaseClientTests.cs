@@ -18,6 +18,9 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Microsoft.Azure.Management.Storage;
+using Microsoft.Identity.Client;
+using Microsoft.Rest;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -7121,6 +7124,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
+            await EnableVersionLevelWorm(test.Container);
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
@@ -7135,6 +7139,35 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.AreEqual(immutabilityPolicy.ExpiriesOn, response.Value.ExpiriesOn);
             Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
+        }
+
+        // TODO how do we record this??
+        public async Task EnableVersionLevelWorm(BlobContainerClient containerClient)
+        {
+            // TODO move this to TestConfiguration.xml
+            string subscriptionId = "ba45b233-e2ef-4169-8808-49eb0d8eba0d";
+            string token = await GetAuthToken();
+            TokenCredentials tokenCredentials = new TokenCredentials(token);
+            StorageManagementClient storageManagementClient = new StorageManagementClient(tokenCredentials) { SubscriptionId = subscriptionId };
+            await storageManagementClient.BlobContainers.VersionLevelWormMethodAsync(
+                // TODO
+                resourceGroupName: "XStore",
+                accountName: TestConfigOAuth.AccountName,
+                containerName: containerClient.Name);
+        }
+
+        private async Task<string> GetAuthToken()
+        {
+            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(TestConfigOAuth.ActiveDirectoryApplicationId)
+                .WithAuthority(AzureCloudInstance.AzurePublic, TestConfigOAuth.ActiveDirectoryTenantId)
+                .WithClientSecret(TestConfigOAuth.ActiveDirectoryApplicationSecret)
+                .Build();
+
+            string[] scopes = new string[] { $"{TestConfigOAuth.BlobServiceEndpoint}/.default" };
+
+            AcquireTokenForClientParameterBuilder result = application.AcquireTokenForClient(scopes);
+            AuthenticationResult authenticationResult = await result.ExecuteAsync();
+            return authenticationResult.AccessToken;
         }
 
         public IEnumerable<AccessConditionParameters> AccessConditions_Data
