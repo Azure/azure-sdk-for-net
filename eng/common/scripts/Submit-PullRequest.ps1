@@ -114,7 +114,7 @@ else {
     Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp.number)"
 
     # ensure that the user that was used to create the PR is not attempted to add as a reviewer
-    $cleanedUsers = (SplitParameterArray -members $TeamReviewers) | ? { $_ -ne $prOwnerUser }
+    $cleanedUsers = (SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser }
     $cleanedTeamReviewers = (SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser }
 
     if ($cleanedUsers -or $cleanedTeamReviewers) {
