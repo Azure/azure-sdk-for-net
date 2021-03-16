@@ -25,7 +25,7 @@ The labels added to the PRs. Multple labels seperated by comma, e.g "bug, servic
 User reviewers to request after opening the PR. Users should be a comma-
 separated list with no preceeding `@` symbol (e.g. "user1,usertwo,user3")
 .PARAMETER TeamReviewers
-TODO
+List of github teams to add as reviewers
 .PARAMETER Assignees
 Users to assign to the PR after opening. Users should be a comma-separated list
 with no preceeding `@` symbol (e.g. "user1,usertwo,user3")
