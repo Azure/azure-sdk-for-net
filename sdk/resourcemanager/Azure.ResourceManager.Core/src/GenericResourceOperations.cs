@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Core
         internal GenericResourceOperations(ResourceOperationsBase operations, ResourceIdentifier id)
             : base(operations, id)
         {
-            _apiVersion = ClientOptions.ApiVersions.GetApiVersion(id.Type.ToString());
+            _apiVersion = ClientOptions.ApiVersions.TryGetApiVersion(id.Type.ToString());
         }
 
         /// <inheritdoc/>

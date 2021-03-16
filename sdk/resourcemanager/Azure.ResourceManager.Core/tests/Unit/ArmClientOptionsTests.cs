@@ -40,19 +40,19 @@ namespace Azure.ResourceManager.Core.Tests
             AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
 
             options.FakeRestApiVersions().FakeResourceVersion = FakeResourceApiVersions.V2019_12_01;
-            var result = options.ApiVersions.GetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
+            var result = options.ApiVersions.TryGetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
             Assert.True(result.Equals(FakeResourceApiVersions.V2019_12_01));
 
             options.FakeRestApiVersions().FakeResourceVersion = FakeResourceApiVersions.Default;
-            result = options.ApiVersions.GetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
+            result = options.ApiVersions.TryGetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
             Assert.True(result.Equals(FakeResourceApiVersions.Default));
 
             options.ApiVersions.SetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString(), "2021-01-01-beta");
-            result = options.ApiVersions.GetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
+            result = options.ApiVersions.TryGetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
             Assert.True(result.Equals("2021-01-01-beta"));
 
             options.FakeRestApiVersions().FakeResourceVersion = FakeResourceApiVersions.V2019_12_01;
-            result = options.ApiVersions.GetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
+            result = options.ApiVersions.TryGetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
             Assert.True(result.Equals(FakeResourceApiVersions.V2019_12_01));
             
         }
@@ -63,14 +63,21 @@ namespace Azure.ResourceManager.Core.Tests
             var apiVersions = "2019-10-01";
             AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
             options.ApiVersions.SetApiVersion("Microsoft.Logic/LogicApps", apiVersions);
-            var result = options.ApiVersions.GetApiVersion("Microsoft.Logic/LogicApps");
+            var result = options.ApiVersions.TryGetApiVersion("Microsoft.Logic/LogicApps");
             Assert.True(result.Equals(apiVersions));
 
             apiVersions = "2021-02-01";
             options.ApiVersions.SetApiVersion("Microsoft.Logic/LogicApps", apiVersions);
-            result = options.ApiVersions.GetApiVersion("Microsoft.Logic/LogicApps");
+            result = options.ApiVersions.TryGetApiVersion("Microsoft.Logic/LogicApps");
             Assert.True(result.Equals(apiVersions));
         }
 
+        [TestCase]
+        public void TestKeyDoesNotExist()
+        {
+            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            var result = options.ApiVersions.TryGetApiVersion("Microsoft.Logic/LogicApps");
+            Assert.Null(result);
+        }
     }
 }

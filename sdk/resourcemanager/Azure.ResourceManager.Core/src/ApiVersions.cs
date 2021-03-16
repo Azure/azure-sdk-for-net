@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the API version give a resource ID if it exist, else will return null.
         /// </summary>
         /// <returns> API version string. </returns>
-        public string GetApiVersion(string resourceId)
+        public string TryGetApiVersion(string resourceId)
         {
             (PropertyInfo, object) tuple;
             if (_loadedResourceToApiVersions.TryGetValue(resourceId, out tuple))
