@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void ToDateTimeOffsetTests()
         {
             Assert.AreEqual(
@@ -63,7 +63,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 BlobChangeFeedExtensions.ToDateTimeOffset(((string)null)));
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void RoundDownToNearestHourTests()
         {
             Assert.AreEqual(
@@ -77,7 +77,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 ((DateTimeOffset?)null).RoundDownToNearestHour());
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void RoundUpToNearestHourTests()
         {
             Assert.AreEqual(
@@ -97,7 +97,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 ((DateTimeOffset?)null).RoundUpToNearestHour());
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void RoundDownToNearestYearTests()
         {
             Assert.AreEqual(
@@ -111,7 +111,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 ((DateTimeOffset?)null).RoundDownToNearestYear());
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task GetSegmentsInYearTest()
         {
             // Arrange

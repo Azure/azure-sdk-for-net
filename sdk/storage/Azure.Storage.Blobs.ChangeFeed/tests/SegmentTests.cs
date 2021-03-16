@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Test building a Segment with a SegmentCursor, and then calling Segment.GetCursor().
         /// </summary>
-       [RecordedTest]
+        [RecordedTest]
         public async Task GetCursor()
         {
             // Arrange
@@ -136,7 +136,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We are round-robining the Shards, so we will return the events for
         /// the shards indexes: 0 1 2 0 1.
         /// </summary>
-       [RecordedTest]
+        [RecordedTest]
         public async Task GetPage()
         {
             // Arrange

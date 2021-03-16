@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task GetYearPathsTest()
         {
             // Arrange

@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         {
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public void Test()
         {
