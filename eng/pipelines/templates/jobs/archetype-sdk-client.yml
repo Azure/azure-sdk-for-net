@@ -145,7 +145,7 @@ jobs:
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
 
-  - template: /eng/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+  - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:
       JobTemplatePath: /eng/pipelines/templates/jobs/archetype-sdk-client-test.yml
       MatrixConfigs: ${{ parameters.MatrixConfigs }}
