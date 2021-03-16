@@ -9,7 +9,7 @@ parameters:
   TargetDocRepoName: ''
   TargetDocRepoOwner: ''
   PRBranchName: 'master-rdme'
-  SourceBranchName: 'master'
+  SourceBranchName: $(DefaultBranch)
   PRLabels: 'auto-merge'
   ArtifactName: ''
   Language: ''
@@ -23,6 +23,7 @@ parameters:
   RemoteName: 'origin'
 
 steps:
+- template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 - pwsh: |
     if ($IsWindows) {
       REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem /f /v LongPathsEnabled /t REG_DWORD /d 1
@@ -85,7 +86,7 @@ steps:
 
 - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
   parameters:
-    PRBranchName: 'master'
+    PRBranchName: $(DefaultBranch)
     CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
     RepoName: ${{ parameters.TargetDocRepoName }}
     RepoOwner: ${{ parameters.TargetDocRepoOwner }}
@@ -136,7 +137,7 @@ steps:
       GH_TOKEN: $(azuresdk-github-pat)
   - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
     parameters:
-      PRBranchName: 'master'
+      PRBranchName: $(DefaultBranch)
       CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
       RepoName: ${{ parameters.TargetDocRepoName }}
       RepoOwner: ${{ parameters.TargetDocRepoOwner }}
