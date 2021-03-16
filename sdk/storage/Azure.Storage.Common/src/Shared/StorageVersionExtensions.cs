@@ -34,6 +34,7 @@ namespace Azure.Storage
         /// </summary>
         public const ServiceVersion LatestVersion =
 #if BlobSDK || QueueSDK || FileSDK || DataLakeSDK
+            // TODO https://github.com/Azure/azure-sdk-for-net/issues/19575 - prepare for STG 77 beta release.
             ServiceVersion.V2020_06_12;
 #else
             ERROR_STORAGE_SERVICE_NOT_DEFINED;
