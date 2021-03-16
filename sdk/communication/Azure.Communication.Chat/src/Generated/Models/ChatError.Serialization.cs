@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class CommunicationError
+    public partial class ChatError
     {
-        internal static CommunicationError DeserializeCommunicationError(JsonElement element)
+        internal static ChatError DeserializeChatError(JsonElement element)
         {
             string code = default;
             string message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<CommunicationError>> details = default;
-            Optional<CommunicationError> innererror = default;
+            Optional<IReadOnlyList<ChatError>> details = default;
+            Optional<ChatError> innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"))
@@ -44,10 +44,10 @@ namespace Azure.Communication.Chat
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CommunicationError> array = new List<CommunicationError>();
+                    List<ChatError> array = new List<ChatError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeCommunicationError(item));
+                        array.Add(DeserializeChatError(item));
                     }
                     details = array;
                     continue;
@@ -59,11 +59,11 @@ namespace Azure.Communication.Chat
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innererror = DeserializeCommunicationError(property.Value);
+                    innererror = DeserializeChatError(property.Value);
                     continue;
                 }
             }
-            return new CommunicationError(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new ChatError(code, message, target.Value, Optional.ToList(details), innererror.Value);
         }
     }
 }
