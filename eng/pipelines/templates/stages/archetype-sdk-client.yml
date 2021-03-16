@@ -39,7 +39,7 @@ parameters:
 - name: MatrixConfigs
   type: object
   default:
-    - Name: NET_live_test_base
+    - Name: NET_ci_test_base
       Path: eng/pipelines/templates/stages/platform-matrix.json
       Selection: sparse
       NonSparseParameters: AdditionalTestArguments
