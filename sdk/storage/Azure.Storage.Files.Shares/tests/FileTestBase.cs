@@ -45,7 +45,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public ShareClientOptions GetOptions()
         {
-            var options = new ShareClientOptions
+            var options = new ShareClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =

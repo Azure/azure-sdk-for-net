@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         public DataLakeClientOptions GetOptions(bool parallelRange = false)
         {
-            var options = new DataLakeClientOptions
+            var options = new DataLakeClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
