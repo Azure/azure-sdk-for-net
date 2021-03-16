@@ -4265,7 +4265,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Stream outputStream = await file.OpenReadAsync().ConfigureAwait(false);
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => outputStream.Seek(-10, SeekOrigin.Begin),
-                new ArgumentException("New offset cannot be less than 0.  Value was -10"));
+                new ArgumentException("New offset cannot be less than 0.  Value was -10", "offset"));
         }
 
         [RecordedTest]
@@ -4288,7 +4288,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Stream outputStream = await file.OpenReadAsync(options: options).ConfigureAwait(false);
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => outputStream.Seek(size + 10, SeekOrigin.Begin),
-                new ArgumentException("You cannot seek past the last known length of the underlying blob or file."));
+                new ArgumentException("You cannot seek past the last known length of the underlying blob or file.", "offset"));
 
             Assert.AreEqual(size, outputStream.Length);
         }

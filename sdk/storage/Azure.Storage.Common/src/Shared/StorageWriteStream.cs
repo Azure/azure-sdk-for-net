@@ -183,7 +183,7 @@ namespace Azure.Storage.Shared
         {
             if (buffer == null)
             {
-                throw new ArgumentNullException($"{nameof(buffer)}", $"{nameof(buffer)} cannot be null.");
+                throw new ArgumentNullException(nameof(buffer), $"{nameof(buffer)} cannot be null.");
             }
 
             if (offset < 0)

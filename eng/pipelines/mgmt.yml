@@ -71,6 +71,7 @@ pr:
     - sdk/frontdoor/Microsoft.Azure.Management.FrontDoor
     - sdk/guestconfiguration/Microsoft.Azure.Management.GuestConfiguration
     - sdk/hdinsight/Microsoft.Azure.Management.HDInsight
+    - sdk/healthbot/Microsoft.Azure.Management.Healthbot
     - sdk/healthcareapis/Microsoft.Azure.Management.HealthcareApis
     - sdk/hybridcompute/Microsoft.Azure.Management.HybridCompute
     - sdk/hybriddatamanager/Microsoft.Azure.Management.HybridDataManager

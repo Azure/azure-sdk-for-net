@@ -17,12 +17,12 @@ namespace Azure.Iot.TimeSeriesInsights
 
         /// <summary> Initializes a new instance of TsiError. </summary>
         /// <param name="error"> A particular API error with an error code and a message. </param>
-        internal TsiError(InstancesOperationError error)
+        internal TsiError(TimeSeriesOperationError error)
         {
             Error = error;
         }
 
         /// <summary> A particular API error with an error code and a message. </summary>
-        public InstancesOperationError Error { get; }
+        public TimeSeriesOperationError Error { get; }
     }
 }

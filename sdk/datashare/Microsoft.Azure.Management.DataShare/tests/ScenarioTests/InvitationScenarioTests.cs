@@ -62,7 +62,9 @@ namespace DataShare.Tests.ScenarioTests
 
         internal static Invitation GetExpectedInvitation()
         {
-            return new Invitation();
+            string servPrincipal = "9c1d7b62-8746-48cf-b7d8-f1bda6d9efd0";
+
+            return new Invitation(targetActiveDirectoryId: tenantId, targetObjectId: servPrincipal);
         }
     }
 }
