@@ -114,12 +114,12 @@ else {
     Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp.number)"
 
     # ensure that the user that was used to create the PR is not attempted to add as a reviewer
-    $usersCleaned = ($UserReviewers -split "," | % { $_.Trim() } | ? { $_ -ne $prOwnerUser })  -join ","
-    $teamReviewersCleaned = ($TeamReviewers -split "," | % { $_.Trim() } | ? { $_ -ne $prOwnerUser}) -join ","
+    $cleanedUsers = (SplitParameterArray -members $TeamReviewers) | ? { $_ -ne $prOwnerUser }
+    $cleanedTeamReviewers = (SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser }
 
-    if ($UserReviewers -or $TeamReviewers) {
+    if ($cleanedUsers -or $cleanedTeamReviewers) {
       Add-GitHubPullRequestReviewers -RepoOwner $RepoOwner -RepoName $RepoName -PrNumber $resp.number `
-      -Users $usersCleaned -Teams $teamReviewersCleaned -AuthToken $AuthToken
+      -Users $cleanedUsers -Teams $cleanedTeamReviewers -AuthToken $AuthToken
     }
 
     if ($CloseAfterOpenForTesting) {
