@@ -7,5 +7,6 @@ using Azure.Communication.Tests;
 namespace Azure.Communication.PhoneNumbers.Tests
 {
     public class PhoneNumbersClientTestEnvironment : CommunicationTestEnvironment
-    {}
+    {
+    }
 }
