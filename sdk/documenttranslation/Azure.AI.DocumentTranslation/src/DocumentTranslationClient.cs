@@ -155,6 +155,62 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
+        /// Starts a translation operation.
+        /// For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
+        /// </summary>
+        /// <param name="configuration">Sets the configurations for the translation operation
+        /// including source and target storage for documents to be translated. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
+        public virtual DocumentTranslationOperation StartTranslation(TranslationConfiguration configuration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(configuration, nameof(configuration));
+            var request = new BatchSubmissionRequest(new List<TranslationConfiguration> { configuration });
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<DocumentTranslationSubmitBatchRequestHeaders> job = _serviceRestClient.SubmitBatchRequest(request, cancellationToken);
+                return new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts a translation operation
+        /// For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
+        /// </summary>
+        /// <param name="configuration">Sets the configurations for the translation operation
+        /// including source and target storage for documents to be translated. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
+        public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(TranslationConfiguration configuration, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(configuration, nameof(configuration));
+            var request = new BatchSubmissionRequest(new List<TranslationConfiguration> { configuration });
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslationAsync)}");
+            scope.Start();
+
+            try
+            {
+                ResponseWithHeaders<DocumentTranslationSubmitBatchRequestHeaders> job = await _serviceRestClient.SubmitBatchRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                return new DocumentTranslationOperation(_serviceRestClient, _clientDiagnostics, job.Headers.OperationLocation);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Starts a translation operation for documents in an Azure Blob Container.
         /// For document length limits, maximum batch size, and supported document formats, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
