@@ -19,7 +19,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> createdTime = default;
             Optional<string> lastUpdateTime = default;
             Optional<bool> signed = default;
-            Optional<ChangeableAttributes> changeableAttributes = default;
+            Optional<ContentProperties> changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -59,7 +59,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    changeableAttributes = ChangeableAttributes.DeserializeChangeableAttributes(property.Value);
+                    changeableAttributes = ContentProperties.DeserializeContentProperties(property.Value);
                     continue;
                 }
             }

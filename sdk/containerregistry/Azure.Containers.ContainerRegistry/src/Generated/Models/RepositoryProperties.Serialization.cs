@@ -5,22 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class RepositoryAttributes
+    public partial class RepositoryProperties
     {
-        internal static RepositoryAttributes DeserializeRepositoryAttributes(JsonElement element)
+        internal static RepositoryProperties DeserializeRepositoryProperties(JsonElement element)
         {
             Optional<string> registry = default;
             Optional<string> imageName = default;
-            Optional<string> createdTime = default;
-            Optional<string> lastUpdateTime = default;
+            Optional<DateTimeOffset> createdTime = default;
+            Optional<DateTimeOffset> lastUpdateTime = default;
             Optional<int> manifestCount = default;
             Optional<int> tagCount = default;
-            Optional<ChangeableAttributes> changeableAttributes = default;
+            Optional<ContentProperties> changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"))
@@ -35,12 +36,22 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("createdTime"))
                 {
-                    createdTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    createdTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("lastUpdateTime"))
                 {
-                    lastUpdateTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastUpdateTime = property.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (property.NameEquals("manifestCount"))
@@ -70,11 +81,11 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    changeableAttributes = ChangeableAttributes.DeserializeChangeableAttributes(property.Value);
+                    changeableAttributes = ContentProperties.DeserializeContentProperties(property.Value);
                     continue;
                 }
             }
-            return new RepositoryAttributes(registry.Value, imageName.Value, createdTime.Value, lastUpdateTime.Value, Optional.ToNullable(manifestCount), Optional.ToNullable(tagCount), changeableAttributes.Value);
+            return new RepositoryProperties(registry.Value, imageName.Value, createdTime, lastUpdateTime, manifestCount, tagCount, changeableAttributes.Value);
         }
     }
 }

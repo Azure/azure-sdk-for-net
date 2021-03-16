@@ -211,7 +211,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateUpdateAttributesRequest(string name, string reference, ChangeableAttributes value)
+        internal HttpMessage CreateUpdateAttributesRequest(string name, string reference, ContentProperties value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -240,7 +240,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public async Task<Response> UpdateAttributesAsync(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAttributesAsync(string name, string reference, ContentProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -268,7 +268,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="reference"/> is null. </exception>
-        public Response UpdateAttributes(string name, string reference, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public Response UpdateAttributes(string name, string reference, ContentProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
