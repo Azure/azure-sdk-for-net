@@ -59,7 +59,9 @@ namespace Azure.Storage.Blobs.Models
             [EditorBrowsable(EditorBrowsableState.Never)]
             public override bool Equals(object obj) => obj is RangeUnit other && Equals(other);
 
-            /// <inheritdoc/>
+            /// <summary>
+            /// Indicates whether this instance and a specified <see cref="RangeUnit"/> are equal
+            /// </summary>
             public bool Equals(RangeUnit other) => string.Equals(_value, other._value, StringComparison.Ordinal);
 
             /// <inheritdoc/>

@@ -29,8 +29,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             IConfiguration configuration,
             AzureComponentFactory componentFactory,
             IOptions<EventHubOptions> options,
-            INameResolver nameResolver)
+            INameResolver nameResolver,
+            AzureEventSourceLogForwarder forwarder)
         {
+            forwarder.Start();
             _configuration = configuration;
             _componentFactory = componentFactory;
             _options = options.Value;

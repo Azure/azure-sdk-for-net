@@ -37,7 +37,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var client = CreateClient();
 
-            var numbersPagable = client.GetPhoneNumbersAsync();
+            var numbersPagable = client.GetPurchasedPhoneNumbersAsync();
             var numbers = await numbersPagable.ToEnumerableAsync();
 
             Assert.IsNotNull(numbers);

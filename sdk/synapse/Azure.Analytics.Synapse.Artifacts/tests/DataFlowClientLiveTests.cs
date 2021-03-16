@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private DataFlowClient CreateClient()
         {
             return InstrumentClient(new DataFlowClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));

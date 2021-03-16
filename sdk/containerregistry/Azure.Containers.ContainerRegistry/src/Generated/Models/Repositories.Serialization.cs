@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class Repositories
+    internal partial class Repositories
     {
         internal static Repositories DeserializeRepositories(JsonElement element)
         {

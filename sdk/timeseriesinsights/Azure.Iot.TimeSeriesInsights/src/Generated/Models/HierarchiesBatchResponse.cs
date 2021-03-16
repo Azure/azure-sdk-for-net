@@ -18,14 +18,14 @@ namespace Azure.Iot.TimeSeriesInsights
         {
             Get = new ChangeTrackingList<TimeSeriesHierarchyOrError>();
             Put = new ChangeTrackingList<TimeSeriesHierarchyOrError>();
-            Delete = new ChangeTrackingList<TsiErrorBody>();
+            Delete = new ChangeTrackingList<TimeSeriesOperationError>();
         }
 
         /// <summary> Initializes a new instance of HierarchiesBatchResponse. </summary>
         /// <param name="get"> List of hierarchy or error objects corresponding by position to the &quot;get&quot; array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="put"> List of hierarchy or error object corresponding by position to the &quot;put&quot; array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="delete"> List of error objects corresponding by position to the &quot;delete&quot; array in the request - null when the operation is successful. </param>
-        internal HierarchiesBatchResponse(IReadOnlyList<TimeSeriesHierarchyOrError> @get, IReadOnlyList<TimeSeriesHierarchyOrError> put, IReadOnlyList<TsiErrorBody> delete)
+        internal HierarchiesBatchResponse(IReadOnlyList<TimeSeriesHierarchyOrError> @get, IReadOnlyList<TimeSeriesHierarchyOrError> put, IReadOnlyList<TimeSeriesOperationError> delete)
         {
             Get = @get;
             Put = put;
@@ -37,6 +37,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary> List of hierarchy or error object corresponding by position to the &quot;put&quot; array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
         public IReadOnlyList<TimeSeriesHierarchyOrError> Put { get; }
         /// <summary> List of error objects corresponding by position to the &quot;delete&quot; array in the request - null when the operation is successful. </summary>
-        public IReadOnlyList<TsiErrorBody> Delete { get; }
+        public IReadOnlyList<TimeSeriesOperationError> Delete { get; }
     }
 }

@@ -1,8 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace Azure.Iot.TimeSeriesInsights.Tests
@@ -54,6 +59,39 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     TestEnvironment.TimeSeriesInsightsHostname,
                     new FakeTokenCredential(),
                     InstrumentClientOptions(new TimeSeriesInsightsClientOptions())));
+        }
+
+        protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsClient tsiClient, int numOfIdKeys)
+        {
+            numOfIdKeys.Should().BeInRange(1, 3);
+
+            for (int tryNumber = 0; tryNumber < MaxTries; ++tryNumber)
+            {
+                var id = new List<string>();
+                for (int i = 0; i < numOfIdKeys; i++)
+                {
+                    id.Add(Recording.GenerateAlphaNumericId(string.Empty, 5));
+                }
+
+                TimeSeriesId tsId = numOfIdKeys switch
+                {
+                    1 => new TimeSeriesId(id[0]),
+                    2 => new TimeSeriesId(id[0], id[1]),
+                    3 => new TimeSeriesId(id[0], id[1], id[2]),
+                    _ => throw new Exception($"Invalid number of Time Series Insights Id properties."),
+                };
+
+                Response<InstancesOperationResult[]> getInstancesResult = await tsiClient
+                    .GetInstancesAsync(new List<TimeSeriesId> { tsId })
+                    .ConfigureAwait(false);
+
+                if (getInstancesResult.Value?.First()?.Error != null)
+                {
+                    return tsId;
+                }
+            }
+
+            throw new Exception($"Unique Id could not be found");
         }
     }
 }

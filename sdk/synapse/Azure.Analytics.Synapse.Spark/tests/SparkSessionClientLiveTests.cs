@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
         private SparkSessionClient CreateClient()
         {
             return InstrumentClient(new SparkSessionClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.SparkPoolName,
                 TestEnvironment.Credential,
                 options: InstrumentClientOptions(new SparkClientOptions())

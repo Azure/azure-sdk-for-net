@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Tag attribute details. </summary>
-    public partial class TagAttributesBase
+    internal partial class TagAttributesBase
     {
         /// <summary> Initializes a new instance of TagAttributesBase. </summary>
         internal TagAttributesBase()

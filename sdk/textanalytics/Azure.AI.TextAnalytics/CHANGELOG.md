@@ -1,5 +1,8 @@
 # Release History
 
+## 5.1.0-beta.6 (Unreleased)
+
+
 ## 5.1.0-beta.5 (2021-03-09)
 ### New features
 - Added ability to filter the categories returned in a Personally Identifiable Information recognition with the optional parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions`.

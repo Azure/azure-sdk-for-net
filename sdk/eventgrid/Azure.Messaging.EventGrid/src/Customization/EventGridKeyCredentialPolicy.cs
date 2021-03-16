@@ -8,16 +8,13 @@ namespace Azure.Messaging.EventGrid
 {
     internal class EventGridKeyCredentialPolicy : HttpPipelineSynchronousPolicy
     {
-        private readonly string _name;
         private readonly AzureKeyCredential _credential;
         public const string SystemPublisherKey = "AzureSystemPublisher";
 
-        public EventGridKeyCredentialPolicy(AzureKeyCredential credential, string name)
+        public EventGridKeyCredentialPolicy(AzureKeyCredential credential)
         {
             Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
             _credential = credential;
-            _name = name;
         }
 
         public override void OnSendingRequest(HttpMessage message)
@@ -29,7 +26,7 @@ namespace Azure.Messaging.EventGrid
             // in the request in this case.
             if (_credential.Key != SystemPublisherKey)
             {
-                message.Request.Headers.SetValue(_name, _credential.Key);
+                message.Request.Headers.SetValue(Constants.SasKeyName, _credential.Key);
             }
         }
     }
