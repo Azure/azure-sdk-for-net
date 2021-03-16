@@ -5,17 +5,12 @@ extends:
   parameters:
     ServiceDirectory: keyvault
     TimeoutInMinutes: 180
+    AdditionalMatrixConfigs:
+      - Name: keyvault_test_matrix_addons
+        Path: sdk/keyvault/platform-matrix.json
+        Selection: sparse
+        GenerateVMJobs: true
     EnvVars:
       # Runs samples with live tests.
       # THIS VARIABLE IS A ONE-OFF WORKAROUND FOR KEYVAULT TESTS SPECIFICALLY, DON'T COPY IT
       AZURE_KEYVAULT_TEST_MODE: Live
-
-    # Managed HSMs can be allocated 1 per subscription per region.
-    # Declare a custom platform to limit test runs to a single HSM.
-    # TODO: Enable once https://github.com/Azure/azure-sdk-for-net/issues/18501 is resolved
-    # AdditionalPlatforms:
-    #   Linux_HSM:
-    #     OSVmImage: ubuntu-18.04
-    #     TestTargetFramework: netcoreapp2.1
-    #     ArmTemplateParameters: "@{enableHsm = $true}"
-    #     SupportedClouds: Public,UsGov
