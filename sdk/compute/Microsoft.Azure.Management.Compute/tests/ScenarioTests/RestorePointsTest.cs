@@ -33,7 +33,6 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
-                string subId = m_CrpClient.SubscriptionId;
                 string location = ComputeManagementTestUtilities.DefaultLocation;
                 var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -243,24 +242,24 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         // Verify disk exclusion by verifying that the returned restore point contains the id of the 
         // excluded disk in 'ExcludeDisks' property and did not create diskRestorePoint
         // of the excluded data disk.
-        void VerifyRestorePointDetails(RestorePoint rp, string rpName, OSDisk osDisk,
+        void VerifyRestorePointDetails(RestorePoint restorePoint, string restorePointName, OSDisk osDisk,
             int excludeDisksCount, string excludeDiskId, string vmSize)
         {
-            Assert.Equal(rpName, rp.Name);
-            Assert.NotNull(rp.Id);
-            Assert.NotNull(rp.ProvisioningDetails.CreationTime);
-            Assert.NotNull(rp.ProvisioningDetails.StatusCode);
-            Assert.NotNull(rp.ProvisioningDetails.StatusMessage);
-            Assert.NotNull(rp.ProvisioningDetails.TotalUsedSizeInBytes);
-            Assert.Equal(ProvisioningState.Succeeded.ToString(), rp.ProvisioningState);
-            Assert.Equal(ConsistencyModeTypes.ApplicationConsistent, rp.ConsistencyMode);
-            RestorePointSourceVMStorageProfile storageProfile = rp.SourceMetadata.StorageProfile;
+            Assert.Equal(restorePointName, restorePoint.Name);
+            Assert.NotNull(restorePoint.Id);
+            Assert.NotNull(restorePoint.ProvisioningDetails.CreationTime);
+            Assert.NotNull(restorePoint.ProvisioningDetails.StatusCode);
+            Assert.NotNull(restorePoint.ProvisioningDetails.StatusMessage);
+            Assert.NotNull(restorePoint.ProvisioningDetails.TotalUsedSizeInBytes);
+            Assert.Equal(ProvisioningState.Succeeded.ToString(), restorePoint.ProvisioningState);
+            Assert.Equal(ConsistencyModeTypes.ApplicationConsistent, restorePoint.ConsistencyMode);
+            RestorePointSourceVMStorageProfile storageProfile = restorePoint.SourceMetadata.StorageProfile;
             Assert.Equal(osDisk.Name, storageProfile.OsDisk.Name, ignoreCase: true);
             Assert.Equal(osDisk.ManagedDisk.Id, storageProfile.OsDisk.ManagedDisk.Id, ignoreCase: true);
-            Assert.Equal(excludeDisksCount, rp.ExcludeDisks.Count);
-            Assert.Equal(excludeDiskId, rp.ExcludeDisks[0].Id, ignoreCase: true);
-            Assert.NotNull(rp.SourceMetadata.VmId);
-            Assert.Equal(vmSize, rp.SourceMetadata.HardwareProfile.VmSize);
+            Assert.Equal(excludeDisksCount, restorePoint.ExcludeDisks.Count);
+            Assert.Equal(excludeDiskId, restorePoint.ExcludeDisks[0].Id, ignoreCase: true);
+            Assert.NotNull(restorePoint.SourceMetadata.VmId);
+            Assert.Equal(vmSize, restorePoint.SourceMetadata.HardwareProfile.VmSize);
         }
 
         private RestorePointCollection CreateRpc(string sourceVMId, string rpcName,
