@@ -24,7 +24,8 @@ namespace Microsoft.Azure.Management.Compute
     public static partial class RestorePointCollectionsOperationsExtensions
     {
             /// <summary>
-            /// The operation to create or update the restore point collection.
+            /// The operation to create or update the restore point collection. Please
+            /// refer to https://aka.ms/RestorePoints for more details.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -45,7 +46,8 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// The operation to create or update the restore point collection.
+            /// The operation to create or update the restore point collection. Please
+            /// refer to https://aka.ms/RestorePoints for more details.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -86,7 +88,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='parameters'>
             /// Parameters supplied to the Update restore point collection operation.
             /// </param>
-            public static RestorePointCollection Update(this IRestorePointCollectionsOperations operations, string resourceGroupName, string restorePointCollectionName, RestorePointCollection parameters)
+            public static RestorePointCollection Update(this IRestorePointCollectionsOperations operations, string resourceGroupName, string restorePointCollectionName, RestorePointCollectionUpdate parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, restorePointCollectionName, parameters).GetAwaiter().GetResult();
             }
@@ -109,7 +111,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RestorePointCollection> UpdateAsync(this IRestorePointCollectionsOperations operations, string resourceGroupName, string restorePointCollectionName, RestorePointCollection parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RestorePointCollection> UpdateAsync(this IRestorePointCollectionsOperations operations, string resourceGroupName, string restorePointCollectionName, RestorePointCollectionUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -169,11 +171,11 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the restore point collection.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. If true, server would
-            /// return all contained restore points in response. Possible values include:
-            /// 'restorePoints'
+            /// The expand expression to apply on the operation. If expand=restorePoints,
+            /// server will return all contained restore points in the
+            /// restorePointCollection. Possible values include: 'restorePoints'
             /// </param>
-            public static RestorePointCollection Get(this IRestorePointCollectionsOperations operations, string resourceGroupName, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default(RestorePointCollectionExpandOptions?))
+            public static RestorePointCollection Get(this IRestorePointCollectionsOperations operations, string resourceGroupName, string restorePointCollectionName, string expand = default(string))
             {
                 return operations.GetAsync(resourceGroupName, restorePointCollectionName, expand).GetAwaiter().GetResult();
             }
@@ -191,14 +193,14 @@ namespace Microsoft.Azure.Management.Compute
             /// The name of the restore point collection.
             /// </param>
             /// <param name='expand'>
-            /// The expand expression to apply on the operation. If true, server would
-            /// return all contained restore points in response. Possible values include:
-            /// 'restorePoints'
+            /// The expand expression to apply on the operation. If expand=restorePoints,
+            /// server will return all contained restore points in the
+            /// restorePointCollection. Possible values include: 'restorePoints'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RestorePointCollection> GetAsync(this IRestorePointCollectionsOperations operations, string resourceGroupName, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default(RestorePointCollectionExpandOptions?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RestorePointCollection> GetAsync(this IRestorePointCollectionsOperations operations, string resourceGroupName, string restorePointCollectionName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, expand, null, cancellationToken).ConfigureAwait(false))
                 {

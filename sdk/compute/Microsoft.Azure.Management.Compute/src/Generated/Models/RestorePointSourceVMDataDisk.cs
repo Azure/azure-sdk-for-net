@@ -31,15 +31,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the RestorePointSourceVMDataDisk
         /// class.
         /// </summary>
-        /// <param name="lun">Gets or sets the logical unit number.</param>
-        /// <param name="name">Gets or sets the disk name.</param>
-        /// <param name="caching">Gets or sets the caching type. Possible
-        /// values include: 'None', 'ReadOnly', 'ReadWrite'</param>
-        /// <param name="diskSizeGB">Gets or sets the initial disk size in GB
-        /// for blank data disks, and the new desired size for existing OS and
-        /// Data disks.</param>
+        /// <param name="lun">Gets the logical unit number.</param>
+        /// <param name="name">Gets the disk name.</param>
+        /// <param name="caching">Gets the caching type. Possible values
+        /// include: 'None', 'ReadOnly', 'ReadWrite'</param>
+        /// <param name="diskSizeGB">Gets the initial disk size in GB for blank
+        /// data disks, and the new desired size for existing OS and Data
+        /// disks.</param>
         /// <param name="managedDisk">Gets the managed disk details</param>
-        /// <param name="diskRestorePoint">Gets or sets the disk restore point
+        /// <param name="diskRestorePoint">Gets the disk restore point
         /// Id.</param>
         public RestorePointSourceVMDataDisk(int? lun = default(int?), string name = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), ApiEntityReference diskRestorePoint = default(ApiEntityReference))
         {
@@ -58,27 +58,27 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the logical unit number.
+        /// Gets the logical unit number.
         /// </summary>
         [JsonProperty(PropertyName = "lun")]
         public int? Lun { get; set; }
 
         /// <summary>
-        /// Gets or sets the disk name.
+        /// Gets the disk name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the caching type. Possible values include: 'None',
-        /// 'ReadOnly', 'ReadWrite'
+        /// Gets the caching type. Possible values include: 'None', 'ReadOnly',
+        /// 'ReadWrite'
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
 
         /// <summary>
-        /// Gets or sets the initial disk size in GB for blank data disks, and
-        /// the new desired size for existing OS and Data disks.
+        /// Gets the initial disk size in GB for blank data disks, and the new
+        /// desired size for existing OS and Data disks.
         /// </summary>
         [JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public ManagedDiskParameters ManagedDisk { get; set; }
 
         /// <summary>
-        /// Gets or sets the disk restore point Id.
+        /// Gets the disk restore point Id.
         /// </summary>
         [JsonProperty(PropertyName = "diskRestorePoint")]
         public ApiEntityReference DiskRestorePoint { get; set; }

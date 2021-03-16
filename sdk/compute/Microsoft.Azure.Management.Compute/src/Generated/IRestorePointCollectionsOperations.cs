@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.Compute
     {
         /// <summary>
         /// The operation to create or update the restore point collection.
+        /// Please refer to https://aka.ms/RestorePoints for more details.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -80,7 +81,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RestorePointCollection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, RestorePointCollection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RestorePointCollection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to delete the restore point collection. This
         /// operation will also delete all the contained restore points.
@@ -114,9 +115,10 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the restore point collection.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation. If true, server
-        /// would return all contained restore points in response. Possible
-        /// values include: 'restorePoints'
+        /// The expand expression to apply on the operation. If
+        /// expand=restorePoints, server will return all contained restore
+        /// points in the restorePointCollection. Possible values include:
+        /// 'restorePoints'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -133,7 +135,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RestorePointCollection>> GetWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default(RestorePointCollectionExpandOptions?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RestorePointCollection>> GetWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of restore point collections in a resource group.
         /// </summary>

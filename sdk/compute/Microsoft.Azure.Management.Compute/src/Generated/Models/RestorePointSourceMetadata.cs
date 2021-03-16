@@ -14,8 +14,10 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes the properties of a Virtual Machine from which the restore
-    /// point was created.
+    /// Describes the properties of the Virtual Machine for which the restore
+    /// point was created. The properties provided are a subset and the
+    /// snapshot of the overall Virtual Machine properties captured at the time
+    /// of the restore point creation.
     /// </summary>
     public partial class RestorePointSourceMetadata
     {

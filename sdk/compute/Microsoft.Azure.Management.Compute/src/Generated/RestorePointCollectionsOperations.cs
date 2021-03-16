@@ -51,7 +51,8 @@ namespace Microsoft.Azure.Management.Compute
         public ComputeManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The operation to create or update the restore point collection.
+        /// The operation to create or update the restore point collection. Please
+        /// refer to https://aka.ms/RestorePoints for more details.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -314,7 +315,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RestorePointCollection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, RestorePointCollection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RestorePointCollection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -522,9 +523,9 @@ namespace Microsoft.Azure.Management.Compute
         /// The name of the restore point collection.
         /// </param>
         /// <param name='expand'>
-        /// The expand expression to apply on the operation. If true, server would
-        /// return all contained restore points in response. Possible values include:
-        /// 'restorePoints'
+        /// The expand expression to apply on the operation. If expand=restorePoints,
+        /// server will return all contained restore points in the
+        /// restorePointCollection. Possible values include: 'restorePoints'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -547,7 +548,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RestorePointCollection>> GetWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, RestorePointCollectionExpandOptions? expand = default(RestorePointCollectionExpandOptions?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RestorePointCollection>> GetWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -585,7 +586,7 @@ namespace Microsoft.Azure.Management.Compute
             List<string> _queryParameters = new List<string>();
             if (expand != null)
             {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expand, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
             }
             if (apiVersion != null)
             {
@@ -1205,7 +1206,7 @@ namespace Microsoft.Azure.Management.Compute
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

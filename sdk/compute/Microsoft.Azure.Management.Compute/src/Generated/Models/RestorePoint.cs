@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Restore Point details.
     /// </summary>
-    public partial class RestorePoint : ProxyOnlyResource
+    public partial class RestorePoint : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the RestorePoint class.
@@ -34,24 +34,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="optionalProperties">Optional properties to be passed
-        /// for restore point creation (raw JSON)</param>
         /// <param name="sourceMetadata">Gets the details of the VM captured at
-        /// the time of creation of restore point.</param>
+        /// the time of the restore point creation.</param>
         /// <param name="provisioningState">Gets the provisioning state of
         /// restore point, which only appears in the response.</param>
-        /// <param name="consistencyMode">Gets or sets the consistency mode for
-        /// the restore point. Possible values include: 'CrashConsistent',
+        /// <param name="consistencyMode">Gets the consistency mode for the
+        /// restore point. Please refer to https://aka.ms/RestorePoints for
+        /// more details. Possible values include: 'CrashConsistent',
         /// 'FileSystemConsistent', 'ApplicationConsistent'</param>
         /// <param name="provisioningDetails">Gets the provisioning details set
         /// by the server during Create restore point operation.</param>
         /// <param name="excludeDisks">List of disk resource ids that the
         /// customer wishes to exclude from the restore point. If no disks are
         /// specified, all disks will be included.</param>
-        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), object optionalProperties = default(object), RestorePointSourceMetadata sourceMetadata = default(RestorePointSourceMetadata), string provisioningState = default(string), ConsistencyModeTypes? consistencyMode = default(ConsistencyModeTypes?), RestorePointProvisioningDetails provisioningDetails = default(RestorePointProvisioningDetails), IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>))
+        public RestorePoint(string id = default(string), string name = default(string), string type = default(string), RestorePointSourceMetadata sourceMetadata = default(RestorePointSourceMetadata), string provisioningState = default(string), string consistencyMode = default(string), RestorePointProvisioningDetails provisioningDetails = default(RestorePointProvisioningDetails), IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>))
             : base(id, name, type)
         {
-            OptionalProperties = optionalProperties;
             SourceMetadata = sourceMetadata;
             ProvisioningState = provisioningState;
             ConsistencyMode = consistencyMode;
@@ -66,15 +64,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets optional properties to be passed for restore point
-        /// creation (raw JSON)
-        /// </summary>
-        [JsonProperty(PropertyName = "optionalProperties")]
-        public object OptionalProperties { get; set; }
-
-        /// <summary>
-        /// Gets the details of the VM captured at the time of creation of
-        /// restore point.
+        /// Gets the details of the VM captured at the time of the restore
+        /// point creation.
         /// </summary>
         [JsonProperty(PropertyName = "sourceMetadata")]
         public RestorePointSourceMetadata SourceMetadata { get; private set; }
@@ -87,12 +78,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the consistency mode for the restore point. Possible
-        /// values include: 'CrashConsistent', 'FileSystemConsistent',
+        /// Gets the consistency mode for the restore point. Please refer to
+        /// https://aka.ms/RestorePoints for more details. Possible values
+        /// include: 'CrashConsistent', 'FileSystemConsistent',
         /// 'ApplicationConsistent'
         /// </summary>
         [JsonProperty(PropertyName = "consistencyMode")]
-        public ConsistencyModeTypes? ConsistencyMode { get; private set; }
+        public string ConsistencyMode { get; private set; }
 
         /// <summary>
         /// Gets the provisioning details set by the server during Create

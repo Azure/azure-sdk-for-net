@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ConsistencyModeTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ConsistencyModeTypes
+    public static class ConsistencyModeTypes
     {
-        [EnumMember(Value = "CrashConsistent")]
-        CrashConsistent,
-        [EnumMember(Value = "FileSystemConsistent")]
-        FileSystemConsistent,
-        [EnumMember(Value = "ApplicationConsistent")]
-        ApplicationConsistent
-    }
-    internal static class ConsistencyModeTypesEnumExtension
-    {
-        internal static string ToSerializedValue(this ConsistencyModeTypes? value)
-        {
-            return value == null ? null : ((ConsistencyModeTypes)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ConsistencyModeTypes value)
-        {
-            switch( value )
-            {
-                case ConsistencyModeTypes.CrashConsistent:
-                    return "CrashConsistent";
-                case ConsistencyModeTypes.FileSystemConsistent:
-                    return "FileSystemConsistent";
-                case ConsistencyModeTypes.ApplicationConsistent:
-                    return "ApplicationConsistent";
-            }
-            return null;
-        }
-
-        internal static ConsistencyModeTypes? ParseConsistencyModeTypes(this string value)
-        {
-            switch( value )
-            {
-                case "CrashConsistent":
-                    return ConsistencyModeTypes.CrashConsistent;
-                case "FileSystemConsistent":
-                    return ConsistencyModeTypes.FileSystemConsistent;
-                case "ApplicationConsistent":
-                    return ConsistencyModeTypes.ApplicationConsistent;
-            }
-            return null;
-        }
+        public const string CrashConsistent = "CrashConsistent";
+        public const string FileSystemConsistent = "FileSystemConsistent";
+        public const string ApplicationConsistent = "ApplicationConsistent";
     }
 }

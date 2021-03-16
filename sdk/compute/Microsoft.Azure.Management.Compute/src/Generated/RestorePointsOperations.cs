@@ -63,8 +63,9 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='restorePointName'>
         /// The name of the restore point.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create restore point operation.
+        /// <param name='excludeDisks'>
+        /// List of disk resource ids that the customer wishes to exclude from the
+        /// restore point. If no disks are specified, all disks will be included.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -72,10 +73,10 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<RestorePoint>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RestorePoint>> CreateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<RestorePoint> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, restorePointName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<RestorePoint> _response = await BeginCreateWithHttpMessagesAsync(resourceGroupName, restorePointCollectionName, restorePointName, excludeDisks, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -320,8 +321,9 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='restorePointName'>
         /// The name of the restore point.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Create restore point operation.
+        /// <param name='excludeDisks'>
+        /// List of disk resource ids that the customer wishes to exclude from the
+        /// restore point. If no disks are specified, all disks will be included.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -344,7 +346,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RestorePoint>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, RestorePoint parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RestorePoint>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string restorePointCollectionName, string restorePointName, IList<ApiEntityReference> excludeDisks = default(IList<ApiEntityReference>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -362,15 +364,12 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "restorePointName");
             }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
-            if (parameters != null)
-            {
-                parameters.Validate();
-            }
             string apiVersion = "2020-12-01";
+            RestorePointCreate parameters = new RestorePointCreate();
+            if (excludeDisks != null)
+            {
+                parameters.ExcludeDisks = excludeDisks;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -381,10 +380,10 @@ namespace Microsoft.Azure.Management.Compute
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("restorePointCollectionName", restorePointCollectionName);
                 tracingParameters.Add("restorePointName", restorePointName);
-                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -462,7 +461,7 @@ namespace Microsoft.Azure.Management.Compute
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            if ((int)_statusCode != 201)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -503,24 +502,6 @@ namespace Microsoft.Azure.Management.Compute
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RestorePoint>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
             }
             // Deserialize Response
             if ((int)_statusCode == 201)
@@ -680,7 +661,7 @@ namespace Microsoft.Azure.Management.Compute
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

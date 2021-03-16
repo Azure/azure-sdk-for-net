@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// RestorePointSourceVMStorageProfile class.
         /// </summary>
         /// <param name="osDisk">Gets the OS disk of the VM captured at the
-        /// time of creation of restore point.</param>
+        /// time of the restore point creation.</param>
         /// <param name="dataDisks">Gets the data disks of the VM captured at
-        /// the time of creation of restore point.</param>
+        /// the time of the restore point creation.</param>
         public RestorePointSourceVMStorageProfile(RestorePointSourceVMOSDisk osDisk = default(RestorePointSourceVMOSDisk), IList<RestorePointSourceVMDataDisk> dataDisks = default(IList<RestorePointSourceVMDataDisk>))
         {
             OsDisk = osDisk;
@@ -50,15 +50,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the OS disk of the VM captured at the time of creation of
-        /// restore point.
+        /// Gets the OS disk of the VM captured at the time of the restore
+        /// point creation.
         /// </summary>
         [JsonProperty(PropertyName = "osDisk")]
         public RestorePointSourceVMOSDisk OsDisk { get; set; }
 
         /// <summary>
-        /// Gets the data disks of the VM captured at the time of creation of
-        /// restore point.
+        /// Gets the data disks of the VM captured at the time of the restore
+        /// point creation.
         /// </summary>
         [JsonProperty(PropertyName = "dataDisks")]
         public IList<RestorePointSourceVMDataDisk> DataDisks { get; set; }

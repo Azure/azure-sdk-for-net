@@ -29,16 +29,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the RestorePointSourceVMOSDisk class.
         /// </summary>
-        /// <param name="osType">Gets or sets the Operating System type.
-        /// Possible values include: 'Windows', 'Linux'</param>
-        /// <param name="encryptionSettings">Gets or sets the disk encryption
+        /// <param name="osType">Gets the Operating System type. Possible
+        /// values include: 'Windows', 'Linux'</param>
+        /// <param name="encryptionSettings">Gets the disk encryption
         /// settings.</param>
-        /// <param name="name">Gets or sets the disk name.</param>
-        /// <param name="caching">Gets or sets the caching type. Possible
-        /// values include: 'None', 'ReadOnly', 'ReadWrite'</param>
+        /// <param name="name">Gets the disk name.</param>
+        /// <param name="caching">Gets the caching type. Possible values
+        /// include: 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <param name="diskSizeGB">Gets the disk size in GB.</param>
         /// <param name="managedDisk">Gets the managed disk details</param>
-        /// <param name="diskRestorePoint">Gets or sets the disk restore point
+        /// <param name="diskRestorePoint">Gets the disk restore point
         /// Id.</param>
         public RestorePointSourceVMOSDisk(OperatingSystemTypes? osType = default(OperatingSystemTypes?), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), CachingTypes? caching = default(CachingTypes?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), ApiEntityReference diskRestorePoint = default(ApiEntityReference))
         {
@@ -58,27 +58,27 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Operating System type. Possible values include:
-        /// 'Windows', 'Linux'
+        /// Gets the Operating System type. Possible values include: 'Windows',
+        /// 'Linux'
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
         public OperatingSystemTypes? OsType { get; set; }
 
         /// <summary>
-        /// Gets or sets the disk encryption settings.
+        /// Gets the disk encryption settings.
         /// </summary>
         [JsonProperty(PropertyName = "encryptionSettings")]
         public DiskEncryptionSettings EncryptionSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the disk name.
+        /// Gets the disk name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the caching type. Possible values include: 'None',
-        /// 'ReadOnly', 'ReadWrite'
+        /// Gets the caching type. Possible values include: 'None', 'ReadOnly',
+        /// 'ReadWrite'
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         public ManagedDiskParameters ManagedDisk { get; set; }
 
         /// <summary>
-        /// Gets or sets the disk restore point Id.
+        /// Gets the disk restore point Id.
         /// </summary>
         [JsonProperty(PropertyName = "diskRestorePoint")]
         public ApiEntityReference DiskRestorePoint { get; set; }

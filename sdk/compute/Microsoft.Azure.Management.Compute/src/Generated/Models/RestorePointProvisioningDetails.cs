@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Restore Point Provisioning details.
+    /// </summary>
     public partial class RestorePointProvisioningDetails
     {
         /// <summary>

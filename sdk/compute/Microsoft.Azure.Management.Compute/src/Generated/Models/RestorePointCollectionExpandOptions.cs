@@ -10,45 +10,12 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for RestorePointCollectionExpandOptions.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum RestorePointCollectionExpandOptions
+    public static class RestorePointCollectionExpandOptions
     {
-        [EnumMember(Value = "restorePoints")]
-        RestorePoints
-    }
-    internal static class RestorePointCollectionExpandOptionsEnumExtension
-    {
-        internal static string ToSerializedValue(this RestorePointCollectionExpandOptions? value)
-        {
-            return value == null ? null : ((RestorePointCollectionExpandOptions)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this RestorePointCollectionExpandOptions value)
-        {
-            switch( value )
-            {
-                case RestorePointCollectionExpandOptions.RestorePoints:
-                    return "restorePoints";
-            }
-            return null;
-        }
-
-        internal static RestorePointCollectionExpandOptions? ParseRestorePointCollectionExpandOptions(this string value)
-        {
-            switch( value )
-            {
-                case "restorePoints":
-                    return RestorePointCollectionExpandOptions.RestorePoints;
-            }
-            return null;
-        }
+        public const string RestorePoints = "restorePoints";
     }
 }

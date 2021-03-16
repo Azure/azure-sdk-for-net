@@ -147,6 +147,16 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IImagesOperations Images { get; private set; }
 
         /// <summary>
+        /// Gets the IRestorePointCollectionsOperations.
+        /// </summary>
+        public virtual IRestorePointCollectionsOperations RestorePointCollections { get; private set; }
+
+        /// <summary>
+        /// Gets the IRestorePointsOperations.
+        /// </summary>
+        public virtual IRestorePointsOperations RestorePoints { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetExtensionsOperations.
         /// </summary>
         public virtual IVirtualMachineScaleSetExtensionsOperations VirtualMachineScaleSetExtensions { get; private set; }
@@ -165,16 +175,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IVirtualMachineScaleSetVMsOperations.
         /// </summary>
         public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
-
-        /// <summary>
-        /// Gets the IRestorePointCollectionsOperations.
-        /// </summary>
-        public virtual IRestorePointCollectionsOperations RestorePointCollections { get; private set; }
-
-        /// <summary>
-        /// Gets the IRestorePointsOperations.
-        /// </summary>
-        public virtual IRestorePointsOperations RestorePoints { get; private set; }
 
         /// <summary>
         /// Gets the ILogAnalyticsOperations.
@@ -502,12 +502,12 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
             VirtualMachineSizes = new VirtualMachineSizesOperations(this);
             Images = new ImagesOperations(this);
+            RestorePointCollections = new RestorePointCollectionsOperations(this);
+            RestorePoints = new RestorePointsOperations(this);
             VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
             VirtualMachineScaleSetVMExtensions = new VirtualMachineScaleSetVMExtensionsOperations(this);
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
-            RestorePointCollections = new RestorePointCollectionsOperations(this);
-            RestorePoints = new RestorePointsOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
             VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
             VirtualMachineScaleSetVMRunCommands = new VirtualMachineScaleSetVMRunCommandsOperations(this);
