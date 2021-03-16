@@ -1,19 +1,13 @@
 {
   "matrix": {
-    "IMPORT": "/eng/pipelines/templates/stages/platform-matrix.json"
-  },
-  "include": [
-    {
-      "Agent": {
-          "macOS-10.15": { "OSVmImage": "macOS-10.15", "Pool": "Azure Pipelines" }
-      },
-      "TestTargetFramework": "netcoreapp3.1"
-    },
-    {
-      "Agent": {
+      "Groups": {
+          "ubuntu-18.04_HSM": {
+              "OSVmImage": "MMSUbuntu18.04", "Pool": "azsdk-pool-mms-ubuntu-1804-general",
+              "ArmTemplateParameters": "@{ enableHsm = $true }"
+          },
+          "macOS-10.15": { "OSVmImage": "macOS-10.15", "Pool": "Azure Pipelines" },
           "windows-2019": { "OSVmImage": "MMS2019", "Pool": "azsdk-pool-mms-win-2019-general" }
       },
-      "TestTargetFramework": "net47"
-    }
-  ]
+      "TestTargetFramework": [ "netcoreapp2.1", "netcoreapp3.1", "net47" ]
+  }
 }
