@@ -17,6 +17,11 @@ namespace Azure.Core.Serialization
     /// </summary>
     public class JsonObjectSerializer : ObjectSerializer, IMemberNameConverter
     {
+        private const int JsonIgnoreConditionAlways = 1;
+
+        private static PropertyInfo? s_jsonIgnoreAttributeCondition;
+        private static bool s_jsonIgnoreAttributeConditionInitialized;
+
         private readonly ConcurrentDictionary<MemberInfo, string?> _cache;
         private readonly JsonSerializerOptions _options;
 
@@ -104,7 +109,8 @@ namespace Azure.Core.Serialization
                     if (propertyInfo.GetMethod?.IsPublic == true ||
                         propertyInfo.SetMethod?.IsPublic == true)
                     {
-                        if (propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>() != null)
+                        JsonIgnoreAttribute? attr = propertyInfo.GetCustomAttribute<JsonIgnoreAttribute>();
+                        if (attr != null && GetCondition(attr) == JsonIgnoreConditionAlways)
                         {
                             return null;
                         }
@@ -124,6 +130,23 @@ namespace Azure.Core.Serialization
                 // The member is unsupported or ignored.
                 return null;
             });
+        }
+
+        private static int GetCondition(JsonIgnoreAttribute attribute)
+        {
+            if (!s_jsonIgnoreAttributeConditionInitialized)
+            {
+                s_jsonIgnoreAttributeCondition = typeof(JsonIgnoreAttribute).GetProperty("Condition", BindingFlags.Public | BindingFlags.Instance);
+                s_jsonIgnoreAttributeConditionInitialized = true;
+            }
+
+            if (s_jsonIgnoreAttributeCondition != null)
+            {
+                return (int)s_jsonIgnoreAttributeCondition.GetValue(attribute)!;
+            }
+
+            // Return the default value in net5.0.
+            return JsonIgnoreConditionAlways;
         }
 
         private string GetPropertyName(MemberInfo memberInfo)
