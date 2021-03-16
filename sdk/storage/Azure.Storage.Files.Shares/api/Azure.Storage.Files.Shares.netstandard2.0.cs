@@ -99,13 +99,13 @@ namespace Azure.Storage.Files.Shares
         public Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
-            V2020_08_04 = -1,
             V2019_02_02 = 1,
             V2019_07_07 = 2,
             V2019_12_12 = 3,
             V2020_02_10 = 4,
             V2020_04_08 = 5,
             V2020_06_12 = 6,
+            V2020_08_04 = 7,
         }
     }
     public partial class ShareDirectoryClient

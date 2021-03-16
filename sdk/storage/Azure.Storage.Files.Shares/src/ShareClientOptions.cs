@@ -62,7 +62,7 @@ namespace Azure.Storage.Files.Shares
             /// <summary>
             /// The 2020-08-14 service version.
             /// </summary>
-            V2020_08_04 = -1
+            V2020_08_04 = 7
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -82,7 +82,9 @@ namespace Azure.Storage.Files.Shares
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
+#pragma warning disable AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         public ShareClientOptions(ServiceVersion version = LatestVersion)
+#pragma warning restore AZC0010 // ClientOptions constructors should default ServiceVersion to latest supported service version
         {
             if (ServiceVersion.V2019_02_02 <= version
                 && version <= LatestVersion)
