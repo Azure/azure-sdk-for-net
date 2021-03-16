@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -23,6 +24,15 @@ namespace Azure.AI.DocumentTranslation.Tests
             var client = GetClient(credential: new AzureKeyCredential("fakeKey"));
 
             Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetDocumentFormatsAsync());
+        }
+
+        [RecordedTest]
+        public async System.Threading.Tasks.Task GetDocumentFormatsTestAsync()
+        {
+            var client = GetClient();
+
+            var pepe = await client.GetDocumentFormatsAsync();
+            Assert.GreaterOrEqual(pepe.Value.Count, 0);
         }
     }
 }
