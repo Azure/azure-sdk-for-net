@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithTokenCredential(TokenCredential token, bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    new Uri(ConnectionString.Parse(TestEnvironment.LiveTestConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
+                    TestEnvironment.LiveTestEndpoint,
                     token,
                     InstrumentClientOptions(new PhoneNumbersClientOptions()));
 
