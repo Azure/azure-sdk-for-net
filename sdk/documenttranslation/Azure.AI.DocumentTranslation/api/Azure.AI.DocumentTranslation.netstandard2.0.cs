@@ -38,10 +38,8 @@ namespace Azure.AI.DocumentTranslation
         public virtual Azure.AsyncPageable<Azure.AI.DocumentTranslation.TranslationStatusDetail> GetTranslationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.DocumentTranslation.DocumentTranslationOperation StartTranslation(Azure.AI.DocumentTranslation.TranslationConfiguration configuration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.DocumentTranslation.DocumentTranslationOperation StartTranslation(System.Collections.Generic.IEnumerable<Azure.AI.DocumentTranslation.TranslationConfiguration> configurations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AI.DocumentTranslation.DocumentTranslationOperation StartTranslation(System.Uri sourceBlobContainerSas, System.Uri targetBlobContainerSas, string targetLanguageCode, Azure.AI.DocumentTranslation.TranslationGlossary glossary = null, Azure.AI.DocumentTranslation.TranslationOperationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.DocumentTranslation.DocumentTranslationOperation> StartTranslationAsync(Azure.AI.DocumentTranslation.TranslationConfiguration configuration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.DocumentTranslation.DocumentTranslationOperation> StartTranslationAsync(System.Collections.Generic.IEnumerable<Azure.AI.DocumentTranslation.TranslationConfiguration> configurations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.DocumentTranslation.DocumentTranslationOperation> StartTranslationAsync(System.Uri sourceBlobContainerSas, System.Uri targetBlobContainerSas, string targetLanguageCode, Azure.AI.DocumentTranslation.TranslationGlossary glossary = null, Azure.AI.DocumentTranslation.TranslationOperationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
@@ -172,14 +170,6 @@ namespace Azure.AI.DocumentTranslation
         public string FormatVersion { get { throw null; } set { } }
         public System.Uri GlossaryUri { get { throw null; } }
         public string Version { get { throw null; } set { } }
-    }
-    public partial class TranslationOperationOptions
-    {
-        public TranslationOperationOptions() { }
-        public string Category { get { throw null; } set { } }
-        public Azure.AI.DocumentTranslation.DocumentFilter Filter { get { throw null; } set { } }
-        public string SourceLanguage { get { throw null; } set { } }
-        public Azure.AI.DocumentTranslation.StorageType? StorageType { get { throw null; } set { } }
     }
     public partial class TranslationSource
     {
