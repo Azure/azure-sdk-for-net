@@ -13,11 +13,11 @@ namespace Azure.AI.DocumentTranslation
         /// <summary>
         /// Initializes a new instance of TranslationConfiguration.
         /// </summary>
-        /// <param name="sourceUri">The SAS URL for the source container containing documents to be translated.</param>
-        /// <param name="targetUri">The SAS URL for the source container containing documents to be translated.</param>
+        /// <param name="sourceUri">The SAS URI for the source container containing documents to be translated.</param>
+        /// <param name="targetUri">The SAS URI for the target container to which the translated documents will be written.</param>
         /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
-        /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
+        /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types see
         /// <see cref="DocumentTranslationClient.GetGlossaryFormatsAsync(System.Threading.CancellationToken)"/>.</param>
         public TranslationConfiguration(Uri sourceUri, Uri targetUri, string targetLanguageCode, TranslationGlossary glossary = default)
         {
@@ -30,25 +30,13 @@ namespace Azure.AI.DocumentTranslation
             Targets.Add(target);
         }
 
-        /// <summary> Initializes a new instance of TranslationConfiguration. </summary>
-        /// <param name="source"> Source of the input documents. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        public TranslationConfiguration(TranslationSource source)
-        {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            Source = source;
-        }
-
         /// <summary>
         /// Add Translation Target to the configuration.
         /// </summary>
-        /// <param name="targetUri">The SAS URL for the source container containing documents to be translated.</param>
+        /// <param name="targetUri">The SAS URI for the target container to which the translated documents will be written.</param>
         /// <param name="languageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
-        /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
+        /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types see
         /// <see cref="DocumentTranslationClient.GetGlossaryFormatsAsync(System.Threading.CancellationToken)"/>.</param>
         public void AddTarget(Uri targetUri, string languageCode, TranslationGlossary glossary = default)
         {

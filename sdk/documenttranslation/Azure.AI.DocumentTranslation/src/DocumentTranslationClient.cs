@@ -106,7 +106,7 @@ namespace Azure.AI.DocumentTranslation
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
         /// <param name="configurations">Sets the configurations for the translation operation
-        /// including source and target storage for documents to be translated. </param>
+        /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
         public virtual DocumentTranslationOperation StartTranslation(IEnumerable<TranslationConfiguration> configurations, CancellationToken cancellationToken = default)
@@ -133,7 +133,7 @@ namespace Azure.AI.DocumentTranslation
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
         /// <param name="configurations">Sets the configurations for the translation operation
-        /// including source and target storage for documents to be translated. </param>
+        /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
         public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(IEnumerable<TranslationConfiguration> configurations, CancellationToken cancellationToken = default)
@@ -160,7 +160,7 @@ namespace Azure.AI.DocumentTranslation
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
         /// <param name="configuration">Sets the configurations for the translation operation
-        /// including source and target storage for documents to be translated. </param>
+        /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
         public virtual DocumentTranslationOperation StartTranslation(TranslationConfiguration configuration, CancellationToken cancellationToken = default)
@@ -188,7 +188,7 @@ namespace Azure.AI.DocumentTranslation
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
         /// <param name="configuration">Sets the configurations for the translation operation
-        /// including source and target storage for documents to be translated. </param>
+        /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
         public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(TranslationConfiguration configuration, CancellationToken cancellationToken = default)

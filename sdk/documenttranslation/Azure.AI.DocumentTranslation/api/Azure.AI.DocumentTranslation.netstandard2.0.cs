@@ -156,7 +156,6 @@ namespace Azure.AI.DocumentTranslation
     }
     public partial class TranslationConfiguration
     {
-        public TranslationConfiguration(Azure.AI.DocumentTranslation.TranslationSource source) { }
         public TranslationConfiguration(Azure.AI.DocumentTranslation.TranslationSource source, System.Collections.Generic.IEnumerable<Azure.AI.DocumentTranslation.TranslationTarget> targets) { }
         public TranslationConfiguration(System.Uri sourceUri, System.Uri targetUri, string targetLanguageCode, Azure.AI.DocumentTranslation.TranslationGlossary glossary = null) { }
         public Azure.AI.DocumentTranslation.TranslationSource Source { get { throw null; } }
