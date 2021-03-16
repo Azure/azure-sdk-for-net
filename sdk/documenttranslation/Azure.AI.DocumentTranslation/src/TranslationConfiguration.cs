@@ -17,14 +17,10 @@ namespace Azure.AI.DocumentTranslation
         /// <param name="targetUri"></param>
         /// <param name="targetLanguageCode"></param>
         /// <param name="glossary"></param>
-        /// <param name="categoryId"></param>
-        public TranslationConfiguration(Uri sourceUri, Uri targetUri, string targetLanguageCode, TranslationGlossary glossary = default, string categoryId = default)
+        public TranslationConfiguration(Uri sourceUri, Uri targetUri, string targetLanguageCode, TranslationGlossary glossary = default)
         {
             Source = new TranslationSource(sourceUri);
-            var target = new TranslationTarget(targetUri, targetLanguageCode)
-            {
-                CategoryId = categoryId
-            };
+            var target = new TranslationTarget(targetUri, targetLanguageCode);
             if (glossary != null)
             {
                 target.Glossaries.Add(glossary);
@@ -47,30 +43,12 @@ namespace Azure.AI.DocumentTranslation
         /// <summary>
         /// Add Translation Target to the configuration.
         /// </summary>
-        /// <param name="target"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="target"/> is null. </exception>
-        public void AddTarget(TranslationTarget target)
-        {
-            if (target == null)
-            {
-                throw new ArgumentNullException(nameof(target));
-            }
-            Targets.Add(target);
-        }
-
-        /// <summary>
-        /// Add Translation Target to the configuration.
-        /// </summary>
         /// <param name="targetUri"></param>
         /// <param name="languageCode"></param>
         /// <param name="glossary"></param>
-        /// <param name="categoryId"></param>
-        public void AddTarget(Uri targetUri, string languageCode, TranslationGlossary glossary = default, string categoryId = default)
+        public void AddTarget(Uri targetUri, string languageCode, TranslationGlossary glossary = default)
         {
-            var target = new TranslationTarget(targetUri, languageCode)
-            {
-                CategoryId = categoryId
-            };
+            var target = new TranslationTarget(targetUri, languageCode);
             if (glossary != null)
             {
                 target.Glossaries.Add(glossary);

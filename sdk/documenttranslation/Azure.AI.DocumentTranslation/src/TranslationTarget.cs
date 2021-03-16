@@ -23,32 +23,5 @@ namespace Azure.AI.DocumentTranslation
         /// <summary> Category / custom system for translation request. </summary>
         [CodeGenMember("Category")]
         public string CategoryId { get; set; }
-
-        /// <summary>
-        /// Add a translation glossary to the target.
-        /// </summary>
-        /// <param name="glossary"></param>
-        public void AddGlossary(TranslationGlossary glossary)
-        {
-            if (glossary == null)
-            {
-                throw new ArgumentNullException(nameof(glossary));
-            }
-            Glossaries.Add(glossary);
-        }
-
-        /// <summary>
-        /// Add a translation glossary to the target.
-        /// </summary>
-        /// <param name="glossaryUri"></param>
-        /// <param name="formatVersion"></param>
-        public void AddGlossary(Uri glossaryUri, string formatVersion = default)
-        {
-            if (glossaryUri == null)
-            {
-                throw new ArgumentNullException(nameof(glossaryUri));
-            }
-            Glossaries.Add(new TranslationGlossary(glossaryUri) { FormatVersion = formatVersion });
-        }
     }
 }
