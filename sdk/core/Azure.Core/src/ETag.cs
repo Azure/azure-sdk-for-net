@@ -102,7 +102,7 @@ namespace Azure
         {
             if (_value == null)
             {
-                return "<null>";
+                return string.Empty;
             }
 
             var _needsQuoateWrap = !IsValidQuotedFormat(_value);

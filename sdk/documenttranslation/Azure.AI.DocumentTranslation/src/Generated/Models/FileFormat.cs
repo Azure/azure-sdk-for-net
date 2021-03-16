@@ -8,10 +8,10 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     /// <summary> The FileFormat. </summary>
-    internal partial class FileFormat
+    public partial class FileFormat
     {
         /// <summary> Initializes a new instance of FileFormat. </summary>
         internal FileFormat()

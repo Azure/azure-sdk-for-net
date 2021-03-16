@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     public partial class TranslationConfiguration : IUtf8JsonSerializable
     {

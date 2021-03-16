@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     public partial class TranslationTarget : IUtf8JsonSerializable
     {
@@ -16,14 +16,14 @@ namespace Azure.AI.DocumentTranslation.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetUrl");
-            writer.WriteStringValue(TargetUrl.AbsoluteUri);
+            writer.WriteStringValue(TargetUri.AbsoluteUri);
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category");
                 writer.WriteStringValue(Category);
             }
             writer.WritePropertyName("language");
-            writer.WriteStringValue(Language);
+            writer.WriteStringValue(LanguageCode);
             if (Optional.IsCollectionDefined(Glossaries))
             {
                 writer.WritePropertyName("glossaries");
