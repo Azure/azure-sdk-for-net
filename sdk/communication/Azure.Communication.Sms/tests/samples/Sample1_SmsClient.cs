@@ -33,12 +33,12 @@ namespace Azure.Communication.Sms.Tests.samples
 
         public SmsClient CreateSmsClientWithToken()
         {
-            string endpoint = ConnectionString.Parse(TestEnvironment.LiveTestConnectionString, allowEmptyValues: true).GetRequired("endpoint");
+            Uri endpoint = TestEnvironment.LiveTestEndpoint;
 
             #region Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
             //@@string endpoint = "<endpoint_url>";
             TokenCredential tokenCredential = new DefaultAzureCredential();
-            /*@@*/SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential, InstrumentClientOptions(new SmsClientOptions()));
+            /*@@*/SmsClient client = new SmsClient(endpoint, tokenCredential, InstrumentClientOptions(new SmsClientOptions()));
             //@@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
             #endregion Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
             return InstrumentClient(client);
