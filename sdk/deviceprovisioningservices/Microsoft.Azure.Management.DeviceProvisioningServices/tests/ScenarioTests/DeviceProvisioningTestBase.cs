@@ -1,60 +1,59 @@
-using System.Net;
+using DeviceProvisioningServices.Tests.Helpers;
 using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Azure.Management.DeviceProvisioningServices.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using DeviceProvisioningServices.Tests.Helpers;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace DeviceProvisioningServices.Tests.ScenarioTests
 {
     public class DeviceProvisioningTestBase : TestBase
     {
-        protected IotDpsClient provisioningClient;
-        protected ResourceManagementClient resourcesClient;
-        protected TestEnvironment testEnv;
+        protected IotDpsClient _provisioningClient;
+        protected ResourceManagementClient _resourcesClient;
+        protected TestEnvironment _testEnv;
 
-        protected bool initialized = false;
-        protected object locker = new object();
-
-
+        protected bool _isInitialized = false;
+        protected object _initLock = new object();
 
         protected void Initialize(MockContext context)
         {
-            if (!initialized)
+            if (!_isInitialized)
             {
-                lock (locker)
+                lock (_initLock)
                 {
-                    if (!initialized)
+                    if (!_isInitialized)
                     {
-                        testEnv = TestEnvironmentFactory.GetTestEnvironment();
-                        resourcesClient = GetClient<ResourceManagementClient>(context);
-                        provisioningClient = GetClient<IotDpsClient>(context);
+                        _testEnv = TestEnvironmentFactory.GetTestEnvironment();
+                        _resourcesClient = GetClient<ResourceManagementClient>(context);
+                        _provisioningClient = GetClient<IotDpsClient>(context);
                     }
-                    initialized = true;
+                    _isInitialized = true;
                 }
             }
         }
 
-        protected ProvisioningServiceDescription GetService(string serviceName, string resourceGroupName)
+        protected Task<ProvisioningServiceDescription> GetServiceAsync(string serviceName, string resourceGroupName)
         {
-            var availabilityInfo =
-                this.provisioningClient.IotDpsResource.CheckProvisioningServiceNameAvailability(new OperationInputs(serviceName));
-            if (!availabilityInfo.NameAvailable ?? true)
+            var availabilityInfo = _provisioningClient.IotDpsResource.CheckProvisioningServiceNameAvailability(new OperationInputs(serviceName));
+            if (availabilityInfo.NameAvailable.HasValue && !availabilityInfo.NameAvailable.Value)
             {
-                this.provisioningClient.IotDpsResource.Get(serviceName,
-                    resourceGroupName);
+                _provisioningClient.IotDpsResource.Get(serviceName, resourceGroupName);
             }
-            var createServiceDescription = new ProvisioningServiceDescription(Constants.DefaultLocation,
+
+            var createServiceDescription = new ProvisioningServiceDescription(
+                Constants.DefaultLocation,
                 new IotDpsPropertiesDescription(),
                 new IotDpsSkuInfo(Constants.DefaultSku.Name,
                 Constants.DefaultSku.Tier,
-                Constants.DefaultSku.Capacity
-            ));
+                Constants.DefaultSku.Capacity));
 
-            return this.provisioningClient.IotDpsResource.CreateOrUpdate(
+            return _provisioningClient.IotDpsResource.CreateOrUpdateAsync(
                 resourceGroupName,
-                serviceName, createServiceDescription);
+                serviceName,
+                createServiceDescription);
         }
 
         protected T GetClient<T>(MockContext context, RecordedDelegatingHandler handler = null) where T : class
@@ -67,19 +66,18 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                     IsPassThrough = true
                 };
             }
-            var client = context.GetServiceClient<T>(handlers: handler);
-            return client;
+            return context.GetServiceClient<T>(handlers: handler);
         }
 
-        protected ResourceGroup GetResourceGroup(string resourceGroupName, string resourceGroupLocation = null)
+        protected Task<ResourceGroup> GetResourceGroupAsync(string resourceGroupName, string resourceGroupLocation = null)
         {
-
             if (string.IsNullOrEmpty(resourceGroupLocation))
             {
                 resourceGroupLocation = Constants.DefaultLocation;
             }
 
-            return this.resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+            return _resourcesClient.ResourceGroups.CreateOrUpdateAsync(
+                resourceGroupName,
                 new ResourceGroup { Location = resourceGroupLocation });
         }
     }

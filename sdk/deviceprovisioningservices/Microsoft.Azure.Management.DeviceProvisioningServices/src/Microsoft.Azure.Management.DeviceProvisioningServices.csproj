@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  	<!-- Please do not move/edit code below this line -->
-	<Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
-	<!-- Please do not move/edit code above this line -->
-	
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$(RepoEngPath)/mgmt/AzSdk.reference.props" />
+  <!-- Please do not move/edit code above this line -->
+
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.DeviceProvisioningServices</PackageId>
     <Description>Provides management capabilities for Microsoft Azure IoT Device Provisioning Service.</Description>
@@ -13,10 +13,10 @@
     <PackageReleaseNotes>This is a general availability release of the Azure Iot Device Provisioning Service SDK.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
-	<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
   </PropertyGroup>
-  
+
   <!-- Please do not move/edit code below this line -->
-	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
-	<!-- Please do not move/edit code above this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
 </Project>
