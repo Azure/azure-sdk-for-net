@@ -23,7 +23,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
 
 
             var availabilityInfo = await _provisioningClient.IotDpsResource
-                .CheckProvisioningServiceNameAvailabilityAsync(new OperationInputs(testName))
+                .CheckProvisioningServiceNameAvailabilityAsync(testName)
                 .ConfigureAwait(false);
 
             if (availabilityInfo.NameAvailable.HasValue && !availabilityInfo.NameAvailable.Value)
@@ -35,7 +35,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
 
                 // check the name is now available
                 availabilityInfo = await _provisioningClient.IotDpsResource
-                    .CheckProvisioningServiceNameAvailabilityAsync(new OperationInputs(testName))
+                    .CheckProvisioningServiceNameAvailabilityAsync(testName)
                     .ConfigureAwait(false);
                 availabilityInfo.NameAvailable.Should().BeTrue();
             }
@@ -95,7 +95,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                 .ConfigureAwait(false);
 
             // As long as it is gone or deleting, we're good
-            existingServices.Should().NotContain(, x => x.Name == testName && x.Properties.State != "Deleting");
+            existingServices.Should().NotContain(x => x.Name == testName && x.Properties.State != "Deleting");
         }
 
         [Fact]

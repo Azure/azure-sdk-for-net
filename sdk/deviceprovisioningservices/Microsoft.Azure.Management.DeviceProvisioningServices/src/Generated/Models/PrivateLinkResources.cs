@@ -11,28 +11,31 @@
 namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Available SKUs of tier and units.
+    /// The available private link resources for a provisioning service
     /// </summary>
-    public partial class IotDpsSkuDefinition
+    public partial class PrivateLinkResources
     {
         /// <summary>
-        /// Initializes a new instance of the IotDpsSkuDefinition class.
+        /// Initializes a new instance of the PrivateLinkResources class.
         /// </summary>
-        public IotDpsSkuDefinition()
+        public PrivateLinkResources()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IotDpsSkuDefinition class.
+        /// Initializes a new instance of the PrivateLinkResources class.
         /// </summary>
-        /// <param name="name">Sku name. Possible values include: 'S1'</param>
-        public IotDpsSkuDefinition(string name = default(string))
+        /// <param name="value">The list of available private link resources
+        /// for a provisioning service</param>
+        public PrivateLinkResources(IList<GroupIdInformation> value = default(IList<GroupIdInformation>))
         {
-            Name = name;
+            Value = value;
             CustomInit();
         }
 
@@ -42,10 +45,11 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets sku name. Possible values include: 'S1'
+        /// Gets or sets the list of available private link resources for a
+        /// provisioning service
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<GroupIdInformation> Value { get; set; }
 
     }
 }

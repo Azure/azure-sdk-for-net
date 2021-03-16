@@ -4,7 +4,9 @@
 
 try
 {
-	Start-AutoRestCodeGeneration -ResourceProvider "deviceprovisioningservices/resource-manager" -AutoRestVersion "v2" -SpecsRepoFork "drwill-ms" -SpecsRepoBranch "drwill/dps"
+	# To test from a fork, use these parameters:
+	# -SpecsRepoFork "fork-name" -SpecsRepoBranch "branch-name"
+	Start-AutoRestCodeGeneration -ResourceProvider "deviceprovisioningservices/resource-manager" -AutoRestVersion "v2"
 }
 catch
 {

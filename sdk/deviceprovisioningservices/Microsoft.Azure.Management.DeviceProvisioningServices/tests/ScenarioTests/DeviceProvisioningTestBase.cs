@@ -35,9 +35,11 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             }
         }
 
-        protected Task<ProvisioningServiceDescription> GetServiceAsync(string serviceName, string resourceGroupName)
+        protected async Task<ProvisioningServiceDescription> GetServiceAsync(string serviceName, string resourceGroupName)
         {
-            var availabilityInfo = _provisioningClient.IotDpsResource.CheckProvisioningServiceNameAvailability(new OperationInputs(serviceName));
+            NameAvailabilityInfo availabilityInfo = await _provisioningClient.IotDpsResource
+                .CheckProvisioningServiceNameAvailabilityAsync(serviceName)
+                .ConfigureAwait(false);
             if (availabilityInfo.NameAvailable.HasValue && !availabilityInfo.NameAvailable.Value)
             {
                 _provisioningClient.IotDpsResource.Get(serviceName, resourceGroupName);
@@ -46,14 +48,17 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             var createServiceDescription = new ProvisioningServiceDescription(
                 Constants.DefaultLocation,
                 new IotDpsPropertiesDescription(),
-                new IotDpsSkuInfo(Constants.DefaultSku.Name,
-                Constants.DefaultSku.Tier,
-                Constants.DefaultSku.Capacity));
+                new IotDpsSkuInfo(
+                    Constants.DefaultSku.Name,
+                    Constants.DefaultSku.Tier,
+                    Constants.DefaultSku.Capacity));
 
-            return _provisioningClient.IotDpsResource.CreateOrUpdateAsync(
-                resourceGroupName,
-                serviceName,
-                createServiceDescription);
+            return await _provisioningClient.IotDpsResource
+                .CreateOrUpdateAsync(
+                    resourceGroupName,
+                    serviceName,
+                    createServiceDescription)
+                .ConfigureAwait(false);
         }
 
         protected T GetClient<T>(MockContext context, RecordedDelegatingHandler handler = null) where T : class

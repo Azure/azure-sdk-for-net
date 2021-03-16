@@ -14,25 +14,25 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Available SKUs of tier and units.
+    /// The private endpoint property of a private endpoint connection
     /// </summary>
-    public partial class IotDpsSkuDefinition
+    public partial class PrivateEndpoint
     {
         /// <summary>
-        /// Initializes a new instance of the IotDpsSkuDefinition class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        public IotDpsSkuDefinition()
+        public PrivateEndpoint()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IotDpsSkuDefinition class.
+        /// Initializes a new instance of the PrivateEndpoint class.
         /// </summary>
-        /// <param name="name">Sku name. Possible values include: 'S1'</param>
-        public IotDpsSkuDefinition(string name = default(string))
+        /// <param name="id">The resource identifier.</param>
+        public PrivateEndpoint(string id = default(string))
         {
-            Name = name;
+            Id = id;
             CustomInit();
         }
 
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets sku name. Possible values include: 'S1'
+        /// Gets the resource identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
     }
 }

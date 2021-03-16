@@ -27,10 +27,11 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                     testName,
                     testName,
                     Constants.Certificate.Name,
-                    new CertificateBodyDescription(Constants.Certificate.Content))
+                    null,
+                    Constants.Certificate.Content)
                 .ConfigureAwait(false);
 
-            CertificateListDescription certificateList = await _provisioningClient.DpsCertificates
+            CertificateListDescription certificateList = await _provisioningClient.DpsCertificate
                 .ListAsync(
                     testName,
                     testName)
@@ -64,7 +65,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                     Constants.Certificate.Name)
                 .ConfigureAwait(false);
 
-            certificateList = await _provisioningClient.DpsCertificates
+            certificateList = await _provisioningClient.DpsCertificate
                 .ListAsync(testName, testName)
                 .ConfigureAwait(false);
             certificateList.Value.Should().NotContain(Constants.Certificate.Name);
