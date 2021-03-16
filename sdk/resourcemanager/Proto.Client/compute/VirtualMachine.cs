@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
 
 namespace Proto.Compute
@@ -31,7 +32,7 @@ namespace Proto.Compute
         }
 
         /// <inheritdoc />
-        protected override Task<VirtualMachine> GetResourceAsync()
+        protected override Task<VirtualMachine> GetResourceAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(this);
         }

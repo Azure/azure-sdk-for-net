@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class ResourceNameFilterTests
     {
         [TestCase("filter")]

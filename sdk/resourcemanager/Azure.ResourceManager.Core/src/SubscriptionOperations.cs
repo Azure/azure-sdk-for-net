@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -19,6 +18,13 @@ namespace Azure.ResourceManager.Core
         /// The resource type for subscription
         /// </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class for mocking.
+        /// </summary>
+        protected SubscriptionOperations()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.
@@ -60,7 +66,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> The resource group operations. </returns>
         /// <exception cref="ArgumentOutOfRangeException"> resourceGroupName must be at least one character long and cannot be longer than 90 characters. </exception>
         /// <exception cref="ArgumentException"> The name of the resource group can include alphanumeric, underscore, parentheses, hyphen, period (except at end), and Unicode characters that match the allowed characters. </exception>
-        public ResourceGroupOperations GetResourceGroupOperations(string resourceGroupName)
+        public virtual ResourceGroupOperations GetResourceGroupOperations(string resourceGroupName)
         {
             return new ResourceGroupOperations(this, resourceGroupName);
         }
@@ -69,7 +75,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the resource group container under this subscription
         /// </summary>
         /// <returns> The resource group container. </returns>
-        public ResourceGroupContainer GetResourceGroupContainer()
+        public virtual ResourceGroupContainer GetResourceGroupContainer()
         {
             return new ResourceGroupContainer(this);
         }
@@ -78,28 +84,28 @@ namespace Azure.ResourceManager.Core
         /// Gets the location group container under this subscription
         /// </summary>
         /// <returns> The resource group container. </returns>
-        public LocationContainer GetLocationContainer()
+        public virtual LocationContainer GetLocationContainer()
         {
             return new LocationContainer(this);
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<Subscription> Get()
+        public override ArmResponse<Subscription> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subscription, Azure.ResourceManager.Resources.Models.Subscription>(
-                SubscriptionsClient.Get(Id.Name),
+            return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
+                SubscriptionsClient.Get(Id.Name, cancellationToken),
                 Converter());
         }
 
         /// <inheritdoc/>
         public override async Task<ArmResponse<Subscription>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subscription, Azure.ResourceManager.Resources.Models.Subscription>(
+            return new PhArmResponse<Subscription, ResourceManager.Resources.Models.Subscription>(
                 await SubscriptionsClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
                 Converter());
         }
 
-        private Func<Azure.ResourceManager.Resources.Models.Subscription, Subscription> Converter()
+        private Func<ResourceManager.Resources.Models.Subscription, Subscription> Converter()
         {
             return s => new Subscription(this, new SubscriptionData(s));
         }

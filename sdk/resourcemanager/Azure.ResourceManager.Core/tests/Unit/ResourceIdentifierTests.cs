@@ -3,6 +3,7 @@ using System;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class ResourceIdentifierTests
     {
         const string TrackedResourceId =

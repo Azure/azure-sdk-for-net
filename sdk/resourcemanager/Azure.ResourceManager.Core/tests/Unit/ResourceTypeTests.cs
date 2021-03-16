@@ -6,6 +6,7 @@ using System;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class ResourceTypeTests
     {
         [TestCase(0, "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1",

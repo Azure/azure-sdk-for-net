@@ -3,11 +3,15 @@
 
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class ResourceManagerTestBase : ManagementRecordedTestBase<ResourceManagerTestEnvironment>
     {
+        protected AzureResourceManagerClient Client { get; private set; }
+
         protected ResourceManagerTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -16,6 +20,12 @@ namespace Azure.ResourceManager.Core.Tests
         protected ResourceManagerTestBase(bool isAsync)
             : base(isAsync)
         {
+        }
+
+        [SetUp]
+        public void CreateCommonClient()
+        {
+            Client = GetArmClient();
         }
     }
 }

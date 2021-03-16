@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class ResourceListOperationsTest
     {
         [TestCase]

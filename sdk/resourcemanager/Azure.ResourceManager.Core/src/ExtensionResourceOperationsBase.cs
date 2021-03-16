@@ -61,8 +61,9 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Get details and operations for this extension resource.  This call will block the thread until details are returned from the service.
         /// </summary>
+        /// <param name="cancellationToken"> A token allowing cancellation of the Http call in the task. </param>
         /// <returns> An Http Response containing details and operations for the extension resource. </returns>
-        public abstract ArmResponse<TOperations> Get();
+        public abstract ArmResponse<TOperations> Get(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get details and operations for this extension resource.  This call returns a Task that completes when the details are returned from the service.
@@ -84,10 +85,11 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Get details for this resource from the service or can be overriden to provide a cached instance.
         /// </summary>
+        /// <param name="cancellationToken"> A token allowing cancellation of the Http call in the task. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
-        protected virtual async Task<TOperations> GetResourceAsync()
+        protected virtual async Task<TOperations> GetResourceAsync(CancellationToken cancellationToken = default)
         {
-            return (await GetAsync().ConfigureAwait(false)).Value;
+            return (await GetAsync(cancellationToken).ConfigureAwait(false)).Value;
         }
     }
 }

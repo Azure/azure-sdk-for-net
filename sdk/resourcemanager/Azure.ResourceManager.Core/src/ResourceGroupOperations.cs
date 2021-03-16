@@ -24,6 +24,13 @@ namespace Azure.ResourceManager.Core
         public static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceGroupOperations"/> class for mocking.
+        /// </summary>
+        protected ResourceGroupOperations()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupOperations"/> class.
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
@@ -62,10 +69,22 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
         /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public ArmResponse<Response> Delete()
+        public virtual ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDelete(Id.Name).WaitForCompletionAsync().EnsureCompleted());
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Delete");
+            scope.Start();
+
+            try
+            {
+                return new ArmResponse(Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletion(cancellationToken));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -73,9 +92,20 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(await Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Delete");
+            scope.Start();
+
+            try
+            {
+                return new ArmResponse(await Operations.StartDelete(Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -86,9 +116,20 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public virtual ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartDelete(Id.Name, cancellationToken));
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
+            scope.Start();
+
+            try
+            {
+                return new ArmVoidOperation(Operations.StartDelete(Id.Name, cancellationToken));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -99,132 +140,173 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
+            scope.Start();
+
+            try
+            {
+                return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<ResourceGroup> Get()
+        public override ArmResponse<ResourceGroup> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(Id.Name), g =>
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Get");
+            scope.Start();
+
+            try
             {
-                return new ResourceGroup(this, new ResourceGroupData(g));
-            });
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(Id.Name, cancellationToken), g =>
+                {
+                    return new ResourceGroup(this, new ResourceGroupData(g));
+                });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
         public override async Task<ArmResponse<ResourceGroup>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.Get");
+            scope.Start();
+
+            try
+            {
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 await Operations.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false),
                 g =>
                 {
                     return new ResourceGroup(this, new ResourceGroupData(g));
                 });
-        }
-
-        /// <summary>
-        /// Add a tag to a ResourceGroup.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <returns> A response with the <see cref="ArmOperation{ResourceGroup}"/> operation for this resource. </returns>
-        /// <exception cref="ArgumentException"> Key cannot be null or a whitespace. </exception>
-        public ArmResponse<ResourceGroup> AddTag(string key, string value)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(resource.Data.Tags);
-            patch.Tags[key] = value;
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch), g =>
+            }
+            catch (Exception e)
             {
-                return new ResourceGroup(this, new ResourceGroupData(g));
-            });
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// Add a tag to a ResourceGroup.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmOperation{ResourceGroup}"/> operation for this resource. </returns>
-        /// <exception cref="ArgumentException"> Key cannot be null or a whitespace. </exception>
-        public async Task<ArmResponse<ResourceGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        /// <inheritdoc/>
+        public virtual ArmResponse<ResourceGroup> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
 
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(resource.Data.Tags);
-            patch.Tags[key] = value;
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false), g =>
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.AddTag");
+            scope.Start();
+
+            try
             {
-                return new ResourceGroup(this, new ResourceGroupData(g));
-            });
-        }
-
-        /// <summary>
-        /// Add a tag to a ResourceGroup.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <returns> A response with the <see cref="ArmOperation{ResourceGroup}"/> operation for this resource. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        /// <exception cref="ArgumentException"> Key cannot be null or a whitespace. </exception>
-        public ArmOperation<ResourceGroup> StartAddTag(string key, string value)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(resource.Data.Tags);
-            patch.Tags[key] = value;
-            return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch), g =>
-            {
-                return new ResourceGroup(this, new ResourceGroupData(g));
-            });
-        }
-
-        /// <summary>
-        /// Add a tag to a ResourceGroup.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmOperation{ResourceGroup}"/> operation for this resource. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
-        /// </remarks>
-        /// <exception cref="ArgumentException"> Key cannot be null or a whitespace. </exception>
-        public async Task<ArmOperation<ResourceGroup>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(resource.Data.Tags);
-            patch.Tags[key] = value;
-            return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                g =>
+                var resource = GetResource();
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(resource.Data.Tags);
+                patch.Tags[key] = value;
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
                 {
                     return new ResourceGroup(this, new ResourceGroupData(g));
                 });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual async Task<ArmResponse<ResourceGroup>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.AddTag");
+            scope.Start();
+
+            try
+            {
+                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(resource.Data.Tags);
+                patch.Tags[key] = value;
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false), g =>
+                {
+                    return new ResourceGroup(this, new ResourceGroupData(g));
+                });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual ArmOperation<ResourceGroup> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartAddTag");
+            scope.Start();
+
+            try
+            {
+                var resource = GetResource();
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(resource.Data.Tags);
+                patch.Tags[key] = value;
+                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
+                {
+                    return new ResourceGroup(this, new ResourceGroupData(g));
+                });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual async Task<ArmOperation<ResourceGroup>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartAddTag");
+            scope.Start();
+
+            try
+            {
+                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(resource.Data.Tags);
+                patch.Tags[key] = value;
+                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
+                    g =>
+                    {
+                        return new ResourceGroup(this, new ResourceGroupData(g));
+                    });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -238,7 +320,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Returns a response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> Model cannot be null. </exception>
-        public ArmResponse<TOperations> CreateResource<TContainer, TOperations, TResource>(string name, TResource model)
+        public virtual ArmResponse<TOperations> CreateResource<TContainer, TOperations, TResource>(string name, TResource model)
             where TResource : TrackedResource
             where TOperations : ResourceOperationsBase<TOperations>
             where TContainer : ResourceContainerBase<TOperations, TResource>
@@ -266,7 +348,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> Model cannot be null. </exception>
-        public Task<ArmResponse<TOperations>> CreateResourceAsync<TContainer, TOperations, TResource>(string name, TResource model, CancellationToken cancellationToken = default)
+        public virtual Task<ArmResponse<TOperations>> CreateResourceAsync<TContainer, TOperations, TResource>(string name, TResource model, CancellationToken cancellationToken = default)
             where TResource : TrackedResource
             where TOperations : ResourceOperationsBase<TOperations>
             where TContainer : ResourceContainerBase<TOperations, TResource>
@@ -284,144 +366,244 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public ArmResponse<ResourceGroup> SetTags(IDictionary<string, string> tags)
+        public virtual ArmResponse<ResourceGroup> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
 
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(tags);
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch), g =>
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.SetTags");
+            scope.Start();
+
+            try
             {
-                return new ResourceGroup(this, new ResourceGroupData(g));
-            });
+                var resource = GetResource();
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(tags);
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
+                {
+                    return new ResourceGroup(this, new ResourceGroupData(g));
+                });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
-        public async Task<ArmResponse<ResourceGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmResponse<ResourceGroup>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
 
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(tags);
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.SetTags");
+            scope.Start();
+
+            try
+            {
+                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(tags);
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
+                    g =>
+                    {
+                        return new ResourceGroup(this, new ResourceGroupData(g));
+                    });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
-        public ArmOperation<ResourceGroup> StartSetTags(IDictionary<string, string> tags)
+        public virtual ArmOperation<ResourceGroup> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
 
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(tags);
-            return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch), g =>
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartSetTags");
+            scope.Start();
+
+            try
             {
-                return new ResourceGroup(this, new ResourceGroupData(g));
-            });
+                var resource = GetResource();
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(tags);
+                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
+                {
+                    return new ResourceGroup(this, new ResourceGroupData(g));
+                });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<ResourceGroup>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceGroup>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             if (tags == null)
                 throw new ArgumentNullException(nameof(tags));
 
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(tags);
-            return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
-        }
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartSetTags");
+            scope.Start();
 
-        /// <inheritdoc/>
-        public ArmResponse<ResourceGroup> RemoveTag(string key)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(resource.Data.Tags);
-            patch.Tags.Remove(key);
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch), g =>
+            try
             {
-                return new ResourceGroup(this, new ResourceGroupData(g));
-            });
-        }
-
-        /// <inheritdoc/>
-        public async Task<ArmResponse<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(resource.Data.Tags);
-            patch.Tags.Remove(key);
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                g =>
-                {
-                    return new ResourceGroup(this, new ResourceGroupData(g));
-                });
-        }
-
-        /// <inheritdoc/>
-        public ArmOperation<ResourceGroup> StartRemoveTag(string key)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
-
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(resource.Data.Tags);
-            patch.Tags.Remove(key);
-            return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch), g =>
+                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(tags);
+                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
+                    g =>
+                    {
+                        return new ResourceGroup(this, new ResourceGroupData(g));
+                    });
+            }
+            catch (Exception e)
             {
-                return new ResourceGroup(this, new ResourceGroupData(g));
-            });
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
-        public async Task<ArmOperation<ResourceGroup>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual ArmResponse<ResourceGroup> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
 
-            var resource = GetResource();
-            var patch = new ResourceGroupPatchable();
-            patch.Tags.ReplaceWith(resource.Data.Tags);
-            patch.Tags.Remove(key);
-            return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
-                g =>
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.RemoveTag");
+            scope.Start();
+
+            try
+            {
+                var resource = GetResource();
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(resource.Data.Tags);
+                patch.Tags.Remove(key);
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
                 {
                     return new ResourceGroup(this, new ResourceGroupData(g));
                 });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual async Task<ArmResponse<ResourceGroup>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.RemoveTag");
+            scope.Start();
+
+            try
+            {
+                ResourceGroup resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(resource.Data.Tags);
+                patch.Tags.Remove(key);
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
+                    g =>
+                    {
+                        return new ResourceGroup(this, new ResourceGroupData(g));
+                    });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual ArmOperation<ResourceGroup> StartRemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartRemoveTag");
+            scope.Start();
+
+            try
+            {
+                var resource = GetResource();
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(resource.Data.Tags);
+                patch.Tags.Remove(key);
+                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Update(Id.Name, patch, cancellationToken), g =>
+                {
+                    return new ResourceGroup(this, new ResourceGroupData(g));
+                });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual async Task<ArmOperation<ResourceGroup>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                throw new ArgumentException($"{nameof(key)} provided cannot be null or a whitespace.", nameof(key));
+
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartRemoveTag");
+            scope.Start();
+
+            try
+            {
+                var resource = GetResource();
+                var patch = new ResourceGroupPatchable();
+                patch.Tags.ReplaceWith(resource.Data.Tags);
+                patch.Tags.Remove(key);
+                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                    await Operations.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false),
+                    g =>
+                    {
+                        return new ResourceGroup(this, new ResourceGroupData(g));
+                    });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<LocationData> ListAvailableLocations()
+        public virtual IEnumerable<LocationData> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType);
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.ListAvailableLocations");
+            scope.Start();
+
+            try
+            {
+                return ListAvailableLocations(ResourceType, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -430,9 +612,20 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of location that may take multiple service requests to iterate over. </returns>
         /// <exception cref="InvalidOperationException"> The default subscription id is null. </exception>
-        public async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<IEnumerable<LocationData>> ListAvailableLocationsAsync(CancellationToken cancellationToken = default)
         {
-            return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            using var scope = Diagnostics.CreateScope("ResourceGroupOperations.ListAvailableLocations");
+            scope.Start();
+
+            try
+            {
+                return await ListAvailableLocationsAsync(ResourceType, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

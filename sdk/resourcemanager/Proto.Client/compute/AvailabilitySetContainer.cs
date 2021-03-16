@@ -25,7 +25,7 @@ namespace Proto.Compute
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
         /// <inheritdoc/>
-        public override ArmResponse<AvailabilitySet> CreateOrUpdate(string name, AvailabilitySetData resourceDetails)
+        public override ArmResponse<AvailabilitySet> CreateOrUpdate(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
         {
             var response = Operations.CreateOrUpdate(Id.ResourceGroup, name, resourceDetails.Model);
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
@@ -141,7 +141,7 @@ namespace Proto.Compute
 
 
         /// <inheritdoc />
-        public override ArmResponse<AvailabilitySet> Get(string availabilitySetName)
+        public override ArmResponse<AvailabilitySet> Get(string availabilitySetName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(Operations.Get(Id.ResourceGroup, availabilitySetName),
                 g => new AvailabilitySet(Parent, new AvailabilitySetData(g)));
