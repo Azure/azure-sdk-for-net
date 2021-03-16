@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -119,7 +119,7 @@
     }
   ],
   "Variables": {
-    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "136581784"
   }
 }
