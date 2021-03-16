@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Core.Tests
             var options = new AzureResourceManagerClientOptions();
             Assert.Throws<ArgumentNullException>(() => { options.AddPolicy(null, HttpPipelinePosition.PerCall); });
         }
-        
+
         [TestCase]
         public void VersionLoadedChanges()
         {
@@ -42,10 +42,6 @@ namespace Azure.ResourceManager.Core.Tests
             options.FakeRestApiVersions().FakeResourceVersion = FakeResourceApiVersions.V2019_12_01;
             var result = options.ApiVersions.GetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
             Assert.True(result.Equals(FakeResourceApiVersions.V2019_12_01));
-
-            options.FakeRestApiVersions().FakeResourceVersion = FakeResourceApiVersions.Default;
-            result = options.ApiVersions.GetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
-            Assert.True(result.Equals(FakeResourceApiVersions.Default));
 
             options.FakeRestApiVersions().FakeResourceVersion = FakeResourceApiVersions.Default;
             result = options.ApiVersions.GetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
