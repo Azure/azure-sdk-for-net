@@ -12,14 +12,12 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for DiskSecurityTypes.
+    /// Defines values for CloudServiceUpgradeMode.
     /// </summary>
-    public static class DiskSecurityTypes
+    public static class CloudServiceUpgradeMode
     {
-        /// <summary>
-        /// Trusted Launch provides security features such as secure boot and
-        /// virtual Trusted Platform Module (vTPM)
-        /// </summary>
-        public const string TrustedLaunch = "TrustedLaunch";
+        public const string Auto = "Auto";
+        public const string Manual = "Manual";
+        public const string Simultaneous = "Simultaneous";
     }
 }

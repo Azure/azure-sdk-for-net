@@ -13,27 +13,25 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Properties of the disk for which update is pending.
-    /// </summary>
-    public partial class PropertyUpdatesInProgress
+    public partial class CloudServiceVaultAndSecretReference
     {
         /// <summary>
-        /// Initializes a new instance of the PropertyUpdatesInProgress class.
+        /// Initializes a new instance of the
+        /// CloudServiceVaultAndSecretReference class.
         /// </summary>
-        public PropertyUpdatesInProgress()
+        public CloudServiceVaultAndSecretReference()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PropertyUpdatesInProgress class.
+        /// Initializes a new instance of the
+        /// CloudServiceVaultAndSecretReference class.
         /// </summary>
-        /// <param name="targetTier">The target performance tier of the disk if
-        /// a tier change operation is in progress.</param>
-        public PropertyUpdatesInProgress(string targetTier = default(string))
+        public CloudServiceVaultAndSecretReference(SubResource sourceVault = default(SubResource), string secretUrl = default(string))
         {
-            TargetTier = targetTier;
+            SourceVault = sourceVault;
+            SecretUrl = secretUrl;
             CustomInit();
         }
 
@@ -43,11 +41,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the target performance tier of the disk if a tier
-        /// change operation is in progress.
         /// </summary>
-        [JsonProperty(PropertyName = "targetTier")]
-        public string TargetTier { get; set; }
+        [JsonProperty(PropertyName = "sourceVault")]
+        public SubResource SourceVault { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "secretUrl")]
+        public string SecretUrl { get; set; }
 
     }
 }

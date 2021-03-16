@@ -61,10 +61,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the resource of private end point.
+        /// Gets or sets the resource of private end point.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpoint")]
-        public PrivateEndpoint PrivateEndpoint { get; private set; }
+        public PrivateEndpoint PrivateEndpoint { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of information about the state of the

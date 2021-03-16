@@ -11,29 +11,31 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Contains the security related information for the resource.
+    /// Describes the OS profile for the cloud service.
     /// </summary>
-    public partial class DiskSecurityProfile
+    public partial class CloudServiceOsProfile
     {
         /// <summary>
-        /// Initializes a new instance of the DiskSecurityProfile class.
+        /// Initializes a new instance of the CloudServiceOsProfile class.
         /// </summary>
-        public DiskSecurityProfile()
+        public CloudServiceOsProfile()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DiskSecurityProfile class.
+        /// Initializes a new instance of the CloudServiceOsProfile class.
         /// </summary>
-        /// <param name="securityType">Possible values include:
-        /// 'TrustedLaunch'</param>
-        public DiskSecurityProfile(string securityType = default(string))
+        /// <param name="secrets">Specifies set of certificates that should be
+        /// installed onto the role instances.</param>
+        public CloudServiceOsProfile(IList<CloudServiceVaultSecretGroup> secrets = default(IList<CloudServiceVaultSecretGroup>))
         {
-            SecurityType = securityType;
+            Secrets = secrets;
             CustomInit();
         }
 
@@ -43,10 +45,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'TrustedLaunch'
+        /// Gets or sets specifies set of certificates that should be installed
+        /// onto the role instances.
         /// </summary>
-        [JsonProperty(PropertyName = "securityType")]
-        public string SecurityType { get; set; }
+        [JsonProperty(PropertyName = "secrets")]
+        public IList<CloudServiceVaultSecretGroup> Secrets { get; set; }
 
     }
 }
