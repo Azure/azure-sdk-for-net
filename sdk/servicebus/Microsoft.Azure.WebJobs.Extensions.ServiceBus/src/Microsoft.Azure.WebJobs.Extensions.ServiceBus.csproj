@@ -7,6 +7,7 @@
     <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;CA1507</NoWarn>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+    <InheritDocTrimLevel>internal</InheritDocTrimLevel>
   </PropertyGroup>
 
   <ItemGroup>
