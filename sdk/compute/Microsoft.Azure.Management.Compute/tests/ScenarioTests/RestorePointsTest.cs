@@ -15,6 +15,18 @@ using Xunit;
 
 namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 {
+    /// <summary>
+    /// Covers following Operations:
+    /// Create source VM
+    /// Create two Restore Point Collections for the source VM
+    /// Update rpc via PATCH
+    /// Create restore point and exclude one data disk using ExcludeDisks property
+    /// List all restore points in rpc (using $expand=restorePoints)
+    /// List all rpcs in resource group
+    /// List all rpcs in subscription
+    /// Delete restore point
+    /// Delete restore point collection
+    /// </summary>
     public class RestorePointsTest: VMTestBase
     {
         RecordedDelegatingHandler handler;
@@ -80,7 +92,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                     VerifyRpc(rpc2, rpcName2, location, vmId);
 
                     // GET list of all rpc in subscription.
-                    rpcs = ListRpcInSubscription(rgName);
+                    rpcs = ListRpcInSubscription();
                     // verify two rpcs exist in the sub as well
                     rpc1 = rpcs.First();
                     VerifyRpc(rpc1, rpcName, location, vmId);
@@ -88,24 +100,24 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                     VerifyRpc(rpc2, rpcName2, location, vmId);
 
                     // create RP in the RPC
-                    RestorePoint createdRP = CreateRestorePoint(rgName, rpcName, rpName, osDisk, vmSize, diskToExclude: dataDiskId);
+                    RestorePoint createdRP = CreateRestorePoint(rgName, rpcName, rpName, osDisk, diskToExclude: dataDiskId);
                     VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
                     RestorePoint getRP = GetRP(rgName, rpcName, rpName);
                     VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
 
-                    // get RPC without dollar expand
+                    // get RPC without $expand=restorePoints
                     RestorePointCollection returnedRpc = GetRpc(rgName, rpcName);
                     VerifyRpc(returnedRpc, rpcName, location, vmId);
 
-                    // get RPC with dollar expand
+                    // get RPC with $expand=restorePoints
                     returnedRpc = GetRpc(rgName, rpcName,  
                         RestorePointCollectionExpandOptions.RestorePoints);
                     VerifyRpc(returnedRpc, rpcName, location, vmId,
                         shouldRpcContainRestorePoints: true);
 
-                    // verify the restore point returned from GET RPC with $expand
+                    // verify the restore point returned from GET RPC with $expand=restorePoints
                     RestorePoint rpInRpc = returnedRpc.RestorePoints[0];
                     VerifyRestorePointDetails(rpInRpc, rpName, osDisk, 1,
                         excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
@@ -162,12 +174,12 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             return m_CrpClient.RestorePointCollections.List(rgName);
         }
 
-        private IEnumerable<RestorePointCollection> ListRpcInSubscription(string rgName)
+        private IEnumerable<RestorePointCollection> ListRpcInSubscription()
         {
             return m_CrpClient.RestorePointCollections.ListAll();
         }
 
-        // for update of RPC, only update of tags are permitted
+        // for update of RPC, only update of tags is permitted
         private void UpdateRpc(string rgName, string rpcName, RestorePointCollection rpc,
             Dictionary<string,string> tags)
         {
@@ -195,7 +207,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             Assert.NotNull(rpc.Id);
             IDictionary<string, string> tagsOnRestorePoint = rpc.Tags;
 
-            // RPC contains restore points only if request contains $expand
+            // RPC contains restore points only if request contains $expand=restorePoints
             if (shouldRpcContainRestorePoints)
             {
                 Assert.NotNull(rpc.RestorePoints);
@@ -216,11 +228,9 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                 expandOptions);
         }
 
-        // Create restore point and exercise 'ExcludeDisk' functionality.
-        // Verify returned restore point contains the id of the excluded disk and did not create diskRestorePoint
-        // of the excluded data disk.
+        // Create restore point and exercise 'ExcludeDisk' functionality by excluding dataDisk.
         private RestorePoint CreateRestorePoint(string rgName, string rpcName, 
-            string rpName, OSDisk osDisk, string vmSize, string diskToExclude = null)
+            string rpName, OSDisk osDisk, string diskToExclude)
         {
             string osDiskId = osDisk.ManagedDisk.Id;
             string osDiskName = osDisk.Name;
@@ -229,14 +239,15 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             return m_CrpClient.RestorePoints.Create(rgName, rpcName, rpName, disksToExclude);
         }
 
-        // Verify the created restore point contains properties such as:
-        // 1. source metadata
-        // 2. storage profile
-        // 3. provisioning state
-        // 4. id(s) of the excluded disk(s)
+        // Verify restore point properties.
+        // Verify disk exclusion by verifying the the returned restore point contains the id of the 
+        // excluded disk in 'ExcludeDisks' propertyand did not create diskRestorePoint
+        // of the excluded data disk.
         void VerifyRestorePointDetails(RestorePoint rp, string rpName, OSDisk osDisk,
             int excludeDisksCount, string excludeDiskId, string vmId, string vmSize)
         {
+            Assert.Equal(rpName, rp.Name);
+            //Assert.Equal(vmId, rp.SourceMetadata.VmId, ignoreCase: true);
             Assert.NotNull(rp.Id);
             Assert.NotNull(rp.ProvisioningDetails.CreationTime);
             Assert.NotNull(rp.ProvisioningDetails.StatusCode);
@@ -247,7 +258,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             RestorePointSourceVMStorageProfile storageProfile = rp.SourceMetadata.StorageProfile;
             Assert.Equal(osDisk.Name, storageProfile.OsDisk.Name, ignoreCase: true);
             Assert.Equal(osDisk.ManagedDisk.Id, storageProfile.OsDisk.ManagedDisk.Id, ignoreCase: true);
-            Assert.Equal(1, rp.ExcludeDisks.Count);
+            Assert.Equal(excludeDisksCount, rp.ExcludeDisks.Count);
             Assert.Equal(excludeDiskId, rp.ExcludeDisks[0].Id, ignoreCase: true);
             Assert.NotNull(rp.SourceMetadata.VmId);
             Assert.Equal(vmSize, rp.SourceMetadata.HardwareProfile.VmSize);
@@ -258,20 +269,10 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         {
             Models.SubResource sourceVM = new Models.SubResource(id: sourceVMId);
             var inputRpc = new RestorePointCollection(location, source: sourceVM, name: rpcName, tags: tags);
-
-            try
-            {
-                RestorePointCollection restorePointCollection =
-                    m_CrpClient.RestorePointCollections.CreateOrUpdate(rgName, rpcName,
-                    inputRpc);
-
-                return restorePointCollection;
-            }
-            catch(CloudException ex)
-            {
-                Console.WriteLine("here");
-                return null;
-            }
+            RestorePointCollection restorePointCollection =
+                m_CrpClient.RestorePointCollections.CreateOrUpdate(rgName, rpcName,
+                inputRpc);
+            return restorePointCollection;
         }
     }
 }
