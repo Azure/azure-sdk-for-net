@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class CommunicationErrorResponse
+    internal partial class ChatErrorResponse
     {
-        internal static CommunicationErrorResponse DeserializeCommunicationErrorResponse(JsonElement element)
+        internal static ChatErrorResponse DeserializeChatErrorResponse(JsonElement element)
         {
-            CommunicationError error = default;
+            ChatError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"))
                 {
-                    error = CommunicationError.DeserializeCommunicationError(property.Value);
+                    error = ChatError.DeserializeChatError(property.Value);
                     continue;
                 }
             }
-            return new CommunicationErrorResponse(error);
+            return new ChatErrorResponse(error);
         }
     }
 }

@@ -16,13 +16,13 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>
         internal CreateChatThreadResultInternal()
         {
-            InvalidParticipants = new ChangeTrackingList<CommunicationError>();
+            InvalidParticipants = new ChangeTrackingList<ChatError>();
         }
 
         /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>
         /// <param name="chatThread"> Chat thread. </param>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
-        internal CreateChatThreadResultInternal(ChatThreadPropertiesInternal chatThread, IReadOnlyList<CommunicationError> invalidParticipants)
+        internal CreateChatThreadResultInternal(ChatThreadPropertiesInternal chatThread, IReadOnlyList<ChatError> invalidParticipants)
         {
             ChatThread = chatThread;
             InvalidParticipants = invalidParticipants;
@@ -31,6 +31,6 @@ namespace Azure.Communication.Chat
         /// <summary> Chat thread. </summary>
         public ChatThreadPropertiesInternal ChatThread { get; }
         /// <summary> The participants that failed to be added to the chat thread. </summary>
-        public IReadOnlyList<CommunicationError> InvalidParticipants { get; }
+        public IReadOnlyList<ChatError> InvalidParticipants { get; }
     }
 }

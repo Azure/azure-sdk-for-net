@@ -16,17 +16,17 @@ namespace Azure.Communication.Chat
         /// <summary> Initializes a new instance of AddChatParticipantsResult. </summary>
         internal AddChatParticipantsResult()
         {
-            InvalidParticipants = new ChangeTrackingList<CommunicationError>();
+            InvalidParticipants = new ChangeTrackingList<ChatError>();
         }
 
         /// <summary> Initializes a new instance of AddChatParticipantsResult. </summary>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
-        internal AddChatParticipantsResult(IReadOnlyList<CommunicationError> invalidParticipants)
+        internal AddChatParticipantsResult(IReadOnlyList<ChatError> invalidParticipants)
         {
             InvalidParticipants = invalidParticipants;
         }
 
         /// <summary> The participants that failed to be added to the chat thread. </summary>
-        public IReadOnlyList<CommunicationError> InvalidParticipants { get; }
+        public IReadOnlyList<ChatError> InvalidParticipants { get; }
     }
 }

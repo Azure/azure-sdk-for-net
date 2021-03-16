@@ -56,7 +56,7 @@ namespace Azure.Communication.Chat
         /// <param name="idempotencyToken"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-ID and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-ID is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<CreateChatThreadResult>> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipant> participants, string idempotencyToken = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateChatThreadResult>> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipant> participants = null, string idempotencyToken = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(CreateChatThread)}");
             scope.Start();
@@ -113,55 +113,15 @@ namespace Azure.Communication.Chat
             }
         }
 
-        /// <summary> Gets a chat thread asynchronously. </summary>
-        /// <param name="threadId"> Thread id of the chat thread. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<ChatThreadProperties>> GetChatThreadPropertiesAsync(string threadId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreadProperties)}");
-            scope.Start();
-            try
-            {
-                Response<ChatThreadPropertiesInternal> chatThreadPropertiesInternal = await _chatRestClient.GetChatThreadPropertiesAsync(threadId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ChatThreadProperties(chatThreadPropertiesInternal.Value), chatThreadPropertiesInternal.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary> Gets a chat thread. </summary>
-        /// <param name="threadId"> Thread id of the chat thread. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<ChatThreadProperties> GetChatThreadProperties(string threadId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreadProperties)}");
-            scope.Start();
-            try
-            {
-                Response<ChatThreadPropertiesInternal> chatThreadPropertiesInternal = _chatRestClient.GetChatThreadProperties(threadId, cancellationToken);
-                return Response.FromValue(new ChatThreadProperties(chatThreadPropertiesInternal.Value), chatThreadPropertiesInternal.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
         /// <summary> Gets the list of chat threads of a user<see cref="ChatThreadItem"/> asynchronously.</summary>
         /// <param name="startTime"> The earliest point in time to get chat threads up to. The timestamp should be in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual AsyncPageable<ChatThreadItem> GetChatThreadsItemAsync(DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ChatThreadItem> GetChatThreadsAsync(DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<ChatThreadItem>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreadsItem)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreads)}");
                 scope.Start();
 
                 try
@@ -178,7 +138,7 @@ namespace Azure.Communication.Chat
 
             async Task<Page<ChatThreadItem>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreadsItem)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreads)}");
                 scope.Start();
 
                 try
@@ -200,11 +160,11 @@ namespace Azure.Communication.Chat
         /// <param name="startTime"> The earliest point in time to get chat threads up to. The timestamp should be in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Pageable<ChatThreadItem> GetChatThreadsItem(DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ChatThreadItem> GetChatThreads(DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
         {
             Page<ChatThreadItem> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreadsItem)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreads)}");
                 scope.Start();
 
                 try
@@ -221,7 +181,7 @@ namespace Azure.Communication.Chat
 
             Page<ChatThreadItem> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreadsItem)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatClient)}.{nameof(GetChatThreads)}");
                 scope.Start();
 
                 try

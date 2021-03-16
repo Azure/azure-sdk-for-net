@@ -10,12 +10,12 @@ using System;
 namespace Azure.Communication.Chat
 {
     /// <summary> The Communication Services error. </summary>
-    internal partial class CommunicationErrorResponse
+    internal partial class ChatErrorResponse
     {
-        /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
+        /// <summary> Initializes a new instance of ChatErrorResponse. </summary>
         /// <param name="error"> The Communication Services error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal CommunicationErrorResponse(CommunicationError error)
+        internal ChatErrorResponse(ChatError error)
         {
             if (error == null)
             {
@@ -26,6 +26,6 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> The Communication Services error. </summary>
-        public CommunicationError Error { get; }
+        public ChatError Error { get; }
     }
 }

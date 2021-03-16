@@ -12,13 +12,13 @@ using Azure.Core;
 namespace Azure.Communication.Chat
 {
     /// <summary> The Communication Services error. </summary>
-    public partial class CommunicationError
+    public partial class ChatError
     {
-        /// <summary> Initializes a new instance of CommunicationError. </summary>
+        /// <summary> Initializes a new instance of ChatError. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        internal CommunicationError(string code, string message)
+        internal ChatError(string code, string message)
         {
             if (code == null)
             {
@@ -31,16 +31,16 @@ namespace Azure.Communication.Chat
 
             Code = code;
             Message = message;
-            Details = new ChangeTrackingList<CommunicationError>();
+            Details = new ChangeTrackingList<ChatError>();
         }
 
-        /// <summary> Initializes a new instance of CommunicationError. </summary>
+        /// <summary> Initializes a new instance of ChatError. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>
         /// <param name="details"> Further details about specific errors that led to this error. </param>
         /// <param name="innerError"> The inner error if any. </param>
-        internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innerError)
+        internal ChatError(string code, string message, string target, IReadOnlyList<ChatError> details, ChatError innerError)
         {
             Code = code;
             Message = message;
@@ -56,8 +56,8 @@ namespace Azure.Communication.Chat
         /// <summary> The error target. </summary>
         public string Target { get; }
         /// <summary> Further details about specific errors that led to this error. </summary>
-        public IReadOnlyList<CommunicationError> Details { get; }
+        public IReadOnlyList<ChatError> Details { get; }
         /// <summary> The inner error if any. </summary>
-        public CommunicationError InnerError { get; }
+        public ChatError InnerError { get; }
     }
 }
