@@ -155,7 +155,7 @@ function Get-PkgPropsForEntireService ($serviceDirectoryPath)
         }
     }
 
-    $ciYmlFiles = Get-ChildItem $serviceDirectoryPath -filter "ci.*yml"
+    $ciYmlFiles = Get-ChildItem $serviceDirectoryPath -filter "ci.yml"
     foreach($ciYmlFile in $ciYmlFiles)
     {
         $activeArtifactList = Get-ArtifactListFromYml -ciYmlPath $ciYmlFile.FullName
