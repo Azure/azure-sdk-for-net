@@ -455,10 +455,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatThreadClient chatThreadClient = CreateMockChatThreadClient(201, AddParticipantApiResponsePayload);
 
             //act
-            AddChatParticipantsResult AddParticipantResponse = await chatThreadClient.AddParticipantAsync(chatParticipant);
+            Response AddParticipantResponse = await chatThreadClient.AddParticipantAsync(chatParticipant);
 
             //assert
-            Assert.AreEqual(0, AddParticipantResponse.InvalidParticipants.Count);
+            Assert.AreEqual(201, AddParticipantResponse.Status);
         }
 
         [Test]

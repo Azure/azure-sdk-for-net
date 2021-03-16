@@ -383,7 +383,7 @@ namespace Azure.Communication.Chat
         /// <param name="participant"> Participant to add to a chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<AddChatParticipantsResult>> AddParticipantAsync(ChatParticipant participant, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AddParticipantAsync(ChatParticipant participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(AddParticipant)}");
             scope.Start();
@@ -394,7 +394,7 @@ namespace Azure.Communication.Chat
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(addChatParticipantsResult.GetRawResponse());
                 }
-                return addChatParticipantsResult;
+                return addChatParticipantsResult.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -407,7 +407,7 @@ namespace Azure.Communication.Chat
         /// <param name="participant"> Participants to add to a chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<AddChatParticipantsResult> AddParticipant(ChatParticipant participant, CancellationToken cancellationToken = default)
+        public virtual Response AddParticipant(ChatParticipant participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(AddParticipant)}");
             scope.Start();
@@ -418,7 +418,7 @@ namespace Azure.Communication.Chat
                 {
                     throw _clientDiagnostics.CreateRequestFailedException(addChatParticipantsResult.GetRawResponse());
                 }
-                return addChatParticipantsResult;
+                return addChatParticipantsResult.GetRawResponse();
             }
             catch (Exception ex)
             {

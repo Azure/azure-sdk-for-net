@@ -124,7 +124,7 @@ namespace Azure.Communication.Chat.Tests
             var newParticipant = new ChatParticipant(user4) { DisplayName = "user4" };
             var newParticipant2 = new ChatParticipant(user5) { DisplayName = "user5" };
             chatThreadClient.AddParticipants(participants: new[] { newParticipant });
-            AddChatParticipantsResult addChatParticipantsResult = chatThreadClient.AddParticipant(newParticipant2);
+            Response addChatParticipantsResult = chatThreadClient.AddParticipant(newParticipant2);
 
             Pageable<ChatParticipant> chatParticipantsAfterTwoAdded = chatThreadClient.GetParticipants();
             PageableTester<ChatParticipant>.AssertPagination(enumerableResource: chatParticipantsAfterTwoAdded, expectedPageSize: 2, expectedTotalResources: 5);
@@ -179,7 +179,7 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(3, chatParticipantsCount);
             Assert.AreEqual(5, chatParticipantsAfterTwoAddedCount);
             Assert.AreEqual(4, chatParticipantAfterOneDeletedCount);
-            Assert.AreEqual(0, addChatParticipantsResult.InvalidParticipants.Count);
+            Assert.AreEqual((int)HttpStatusCode.Created, addChatParticipantsResult.Status);
             Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
         }
 
@@ -333,7 +333,7 @@ namespace Azure.Communication.Chat.Tests
             var newParticipant = new ChatParticipant(user4) { DisplayName = "user4" };
             var newParticipant2 = new ChatParticipant(user5) { DisplayName = "user5" };
             AddChatParticipantsResult addChatParticipantsResult = await chatThreadClient.AddParticipantsAsync(participants: new[] { newParticipant });
-            AddChatParticipantsResult addChatParticipantsResult2 = await chatThreadClient.AddParticipantAsync(newParticipant2);
+            Response addChatParticipantResult = await chatThreadClient.AddParticipantAsync(newParticipant2);
 
             AsyncPageable<ChatParticipant> chatParticipantsAfterTwoOneAdded = chatThreadClient.GetParticipantsAsync();
             await PageableTester<ChatParticipant>.AssertPaginationAsync(enumerableResource: chatParticipantsAfterTwoOneAdded, expectedPageSize: 2, expectedTotalResources: 5);
@@ -391,7 +391,7 @@ namespace Azure.Communication.Chat.Tests
             Assert.AreEqual(5, chatParticipantsAfterTwoOneAddedCount);
             Assert.AreEqual(4, chatParticipantAfterOneDeletedCount);
             Assert.AreEqual(0, addChatParticipantsResult.InvalidParticipants.Count);
-            Assert.AreEqual(0, addChatParticipantsResult2.InvalidParticipants.Count);
+            Assert.AreEqual((int)HttpStatusCode.Created, addChatParticipantResult.Status);
             Assert.AreEqual((int)HttpStatusCode.OK, typingNotificationResponse.Status);
         }
 
