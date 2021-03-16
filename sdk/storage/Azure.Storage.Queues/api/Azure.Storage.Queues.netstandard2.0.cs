@@ -70,20 +70,20 @@ namespace Azure.Storage.Queues
     }
     public partial class QueueClientOptions : Azure.Core.ClientOptions
     {
-        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2020_08_04) { }
+        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2020_06_12) { }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueMessageEncoding MessageEncoding { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueClientOptions.ServiceVersion Version { get { throw null; } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.Queues.QueueMessageDecodingFailedEventArgs> MessageDecodingFailed { add { } remove { } }
         public enum ServiceVersion
         {
+            V2020_08_04 = -1,
             V2019_02_02 = 1,
             V2019_07_07 = 2,
             V2019_12_12 = 3,
             V2020_02_10 = 4,
             V2020_04_08 = 5,
             V2020_06_12 = 6,
-            V2020_08_04 = 7,
         }
     }
     public partial class QueueMessageDecodingFailedEventArgs : Azure.SyncAsyncEventArgs
@@ -375,7 +375,7 @@ namespace Azure.Storage.Queues.Specialized
     }
     public partial class SpecializedQueueClientOptions : Azure.Storage.Queues.QueueClientOptions
     {
-        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2020_08_04) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
+        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2020_06_12) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedQueueExtensions
