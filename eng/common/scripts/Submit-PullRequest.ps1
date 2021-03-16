@@ -115,7 +115,7 @@ else {
 
     # ensure that the user that was used to create the PR is not attempted to add as a reviewer
     $cleanedUsers = (SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser }
-    $cleanedTeamReviewers = (SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser }
+    $cleanedTeamReviewers = (SplitParameterArray -members $TeamReviewers) | ? { $_ -ne $prOwnerUser }
 
     if ($cleanedUsers -or $cleanedTeamReviewers) {
       Add-GitHubPullRequestReviewers -RepoOwner $RepoOwner -RepoName $RepoName -PrNumber $resp.number `
