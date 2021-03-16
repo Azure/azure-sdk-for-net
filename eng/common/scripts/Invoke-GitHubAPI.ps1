@@ -24,7 +24,7 @@ function SplitParameterArray($members) {
 
 function Set-GitHubAPIParameters ($members,  $parameterName, $parameters, $allowEmptyMembers=$false) {
   if ($null -ne $members) {
-    $memberAdditions = SplitParameterArray -members $members
+    [array]$memberAdditions = SplitParameterArray -members $members
 
     if (($memberAdditions.Count -gt 0) -or $allowEmptyMembers) {
       $parameters[$parameterName] = $memberAdditions
