@@ -36,12 +36,6 @@ namespace Azure.Core.TestFramework
         [DebuggerStepThrough]
         public void Intercept(IInvocation invocation)
         {
-            if (invocation.Method.Name.Contains("WaitForCompletionAsync"))
-            {
-                invocation.Proceed();
-                return;
-            }
-
             Type[] parameterTypes = invocation.Method.GetParameters().Select(p => p.ParameterType).ToArray();
 
             var methodName = invocation.Method.Name;
@@ -253,9 +247,13 @@ namespace Azure.Core.TestFramework
 
         private static bool IsInternal(MethodBase method) => method.IsAssembly || method.IsFamilyAndAssembly && !method.IsFamilyOrAssembly;
 
-        private class SyncPageableWrapper<T> : AsyncPageable<T>
+        public class SyncPageableWrapper<T> : AsyncPageable<T>
         {
             private readonly Pageable<T> _enumerable;
+
+            protected SyncPageableWrapper()
+            {
+            }
 
             public SyncPageableWrapper(Pageable<T> enumerable)
             {

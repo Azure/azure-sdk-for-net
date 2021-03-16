@@ -5,6 +5,10 @@ namespace Azure.Core.Tests
 {
     public class ArmOperationTest<T>
     {
+        protected ArmOperationTest()
+        {
+        }
+
         public ArmOperationTest(T value)
         {
             Value = value;

@@ -5,6 +5,10 @@ namespace Azure.Core.Tests
 {
     public class ArmResponseTest<T>
     {
+        protected ArmResponseTest()
+        {
+        }
+
         public ArmResponseTest(T value)
         {
             Value = value;
