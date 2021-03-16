@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Test;
-using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
@@ -21,7 +19,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Read() with various sized Reads().
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task ReadAsync()
         {
             // Arrange
@@ -58,7 +56,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests LazyBlobStream parameter validation.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task ReadAsync_InvalidParameterTests()
         {
             // Arrange
@@ -84,7 +82,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             await TestHelper.AssertExpectedExceptionAsync<ArgumentOutOfRangeException>(
                 lazyStream.ReadAsync(buffer: new byte[10], offset: 5, count: 15),
-                new ArgumentOutOfRangeException("count", "offset + count cannot exceed buffer length."));
+                new ArgumentOutOfRangeException("offset and count", "offset + count cannot exceed buffer length."));
         }
     }
 }

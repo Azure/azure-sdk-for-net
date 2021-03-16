@@ -188,7 +188,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
 
             if (offset + count > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
+                throw new ArgumentOutOfRangeException($"{nameof(offset)} and {nameof(count)}", $"{nameof(offset)} + {nameof(count)} cannot exceed {nameof(buffer)} length.");
             }
         }
 
@@ -211,7 +211,8 @@ namespace Azure.Storage.Blobs.ChangeFeed
         public override long Length => throw new NotSupportedException();
 
         /// <inheritdoc/>
-        public override long Position {
+        public override long Position
+        {
             get => _stream.Position;
             set => throw new NotSupportedException();
         }
