@@ -14,7 +14,7 @@ namespace KubernetesConfiguration.Tests.ScenarioTests
     public class ExtensionInstanceTest
     {
         [Fact]
-        public void CanCreateUpdateDeleteExtensionInstance()
+        public void CanCreateUpdateDeleteExtensionInstanceWithoutIdentity()
         {
             ClusterInfo cluster = new ClusterInfo(
                 name: "nanthicluster0923",
@@ -30,15 +30,18 @@ namespace KubernetesConfiguration.Tests.ScenarioTests
                 autoUpgradeMinorVersion: false,
                 releaseTrain: "staging",
                 version: "0.1.0",
-                scope: new ScopeCluster(
-                    ReleaseNamespace: "arc-osm-system"
+                scope: new Scope(
+                    cluster: new ScopeCluster(
+                        releaseNamespace: "arc-osm-system"
+                    )
                 )
             );
 
             using (var context = MockContext.Start(this.GetType()))
             {
-                using (var testFixture = new Extension(context))
+                using (var testFixture = new ExtensionTestBase(context))
                 {
+                     
                     testFixture.Cluster = cluster;
                     testFixture.ExtensionInstance = extensionInstance;
 
@@ -52,8 +55,70 @@ namespace KubernetesConfiguration.Tests.ScenarioTests
 
                     // Get the configuration and verify
                     var ext = testFixture.GetExtensionInstance();
-                    Assert.Equal(extension.Name, ext.Name);
-                    Assert.True((ext.ComplianceStatus.ComplianceState.ToString() == "Pending") || (ext.ComplianceStatus.ComplianceState.ToString() == "Installed"));
+                    Assert.Equal(extensionInstance.Name, ext.Name);
+                    Assert.True((ext.InstallState.ToString() == "Pending") || (ext.InstallState.ToString() == "Installed"));
+
+                    // List configurations and get count to confirm it is up by one
+                    extensions = testFixture.ListExtensionInstances();
+                    Assert.True(extensions.Count() == extensionCount + 1);
+
+                    // Delete the configuration created
+                    testFixture.DeleteExtensionInstance();
+
+                    // List configurations and get count to confirm it is what we started with
+                    extensions = testFixture.ListExtensionInstances();
+                    Assert.True(extensions.Count() == extensionCount);
+                }
+            }
+        }
+
+        [Fact]
+        public void CanCreateUpdateDeleteExtensionInstanceWithIdentity()
+        {
+            ClusterInfo cluster = new ClusterInfo(
+                name: "nanthicluster0923",
+                type: ClusterInfo.ClusterType.connectedClusters,
+                location: "eastus2euap",
+                resourceGroup: "nanthirg0923"
+            );
+
+            ExtensionInstance extensionInstance = new ExtensionInstance(
+                name: "microsoft.azuredefender.kubernetes",
+                type: ExtensionTestBase.ConfigurationType,
+                extensionType: "microsoft.azuredefender.kubernetes",
+                autoUpgradeMinorVersion: false,
+                releaseTrain: "Stable",
+                version: "0.4.61",
+                scope: new Scope(
+                    cluster: new ScopeCluster(
+                        releaseNamespace: "azuredefender"
+                    )
+                ),
+                identity: new ConfigurationIdentity(
+                    type: ResourceIdentityType.SystemAssigned
+                )
+            );
+
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                using (var testFixture = new ExtensionTestBase(context))
+                {
+                     
+                    testFixture.Cluster = cluster;
+                    testFixture.ExtensionInstance = extensionInstance;
+
+                    // List configurations and get count
+                    var extensions = testFixture.ListExtensionInstances();
+                    int extensionCount = extensions.Count();
+
+                    // Create a configuration
+                    var newExtension = testFixture.CreateExtensionInstance();
+                    Assert.NotNull(newExtension);
+
+                    // Get the configuration and verify
+                    var ext = testFixture.GetExtensionInstance();
+                    Assert.Equal(extensionInstance.Name, ext.Name);
+                    Assert.True((ext.InstallState.ToString() == "Pending") || (ext.InstallState.ToString() == "Installed"));
 
                     // List configurations and get count to confirm it is up by one
                     extensions = testFixture.ListExtensionInstances();
