@@ -91,10 +91,10 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                     // create RP in the RPC
                     RestorePoint createdRP = CreateRestorePoint(rgName, rpcName, rpName, osDisk, diskToExclude: dataDiskId);
                     VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
-                        excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
+                        excludeDiskId: dataDiskId, vmSize: vmSize);
                     RestorePoint getRP = GetRP(rgName, rpcName, rpName);
                     VerifyRestorePointDetails(createdRP, rpName, osDisk, 1,
-                        excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
+                        excludeDiskId: dataDiskId, vmSize: vmSize);
 
                     // get RPC without $expand=restorePoints
                     RestorePointCollection returnedRpc = GetRpc(rgName, rpcName);
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                     // verify the restore point returned from GET RPC with $expand=restorePoints
                     RestorePoint rpInRpc = returnedRpc.RestorePoints[0];
                     VerifyRestorePointDetails(rpInRpc, rpName, osDisk, 1,
-                        excludeDiskId: dataDiskId, vmId: vmId, vmSize: vmSize);
+                        excludeDiskId: dataDiskId, vmSize: vmSize);
 
                     // delete the restore point
                     DeleteRP(rgName, rpcName, rpName);
@@ -152,7 +152,6 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         private void VerifyReturnedRpcs(IEnumerable<RestorePointCollection> rpcs, string rpcName1, string rpcName2, string location, string vmId)
         {
             // two rpcs are returned because the RG has two rpcs
-            Assert.Equal(2, rpcs.Count());
             RestorePointCollection rpc1 = rpcs.Where(rpc => rpc.Name == rpcName1).First();
             VerifyRpc(rpc1, rpcName1, location, vmId);
             RestorePointCollection rpc2 = rpcs.Where(rpc => rpc.Name == rpcName2).First();
@@ -195,16 +194,16 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             return m_CrpClient.RestorePoints.Get(rgName, rpcName, rpName);
         }
 
-        // if verify result of GET RPC with $expand, verify that the returned rpc contains restore points
+        // if verifying result of GET RPC with $expand=restorePoints, verify that the returned rpc contains the expected restore point
         private void VerifyRpc(RestorePointCollection rpc, string rpcName,
-            string location, string source, bool shouldRpcContainRestorePoints = false)
+            string location, string sourceVmId, bool shouldRpcContainRestorePoints = false)
         {
             Assert.NotNull(rpc);
             Assert.Equal(rpcName, rpc.Name);
             Assert.Equal(location, rpc.Location, ignoreCase: true);
             Assert.NotNull(rpc.Id);
             Assert.Equal("Microsoft.Compute/restorePointCollections", rpc.Type);
-            Assert.Equal(source, rpc.Source.Id, ignoreCase: true);
+            Assert.Equal(sourceVmId, rpc.Source.Id, ignoreCase: true);
             Assert.NotNull(rpc.Id);
             IDictionary<string, string> tagsOnRestorePoint = rpc.Tags;
 
@@ -241,14 +240,13 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         }
 
         // Verify restore point properties.
-        // Verify disk exclusion by verifying the the returned restore point contains the id of the 
-        // excluded disk in 'ExcludeDisks' propertyand did not create diskRestorePoint
+        // Verify disk exclusion by verifying that the returned restore point contains the id of the 
+        // excluded disk in 'ExcludeDisks' property and did not create diskRestorePoint
         // of the excluded data disk.
         void VerifyRestorePointDetails(RestorePoint rp, string rpName, OSDisk osDisk,
-            int excludeDisksCount, string excludeDiskId, string vmId, string vmSize)
+            int excludeDisksCount, string excludeDiskId, string vmSize)
         {
             Assert.Equal(rpName, rp.Name);
-            //Assert.Equal(vmId, rp.SourceMetadata.VmId, ignoreCase: true);
             Assert.NotNull(rp.Id);
             Assert.NotNull(rp.ProvisioningDetails.CreationTime);
             Assert.NotNull(rp.ProvisioningDetails.StatusCode);
