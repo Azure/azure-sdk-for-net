@@ -44,9 +44,9 @@ namespace Compute.Tests
                     // Define Configurations
                     List<string> supportedRoleInstanceSizes = GetSupportedRoleInstanceSizes();
                     Dictionary<string, RoleConfiguration> roleNameToPropertiesMapping = new Dictionary<string, RoleConfiguration>
-            {
-                { "HelloWorldTest1", new RoleConfiguration { InstanceCount = 2, RoleInstanceSize = supportedRoleInstanceSizes[0] } }
-            };
+                    {
+                        { "HelloWorldTest1", new RoleConfiguration { InstanceCount = 2, RoleInstanceSize = supportedRoleInstanceSizes[0] } }
+                    };
 
                     CloudService cloudService = GenerateCloudServiceWithNetworkProfile(
                         resourceGroupName: rgName,
