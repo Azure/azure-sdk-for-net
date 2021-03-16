@@ -62,8 +62,13 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var apiVersions = "2019-10-01";
             AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
-            options.ApiVersions.SetApiVersion("Microsoft.Logic/LogicApps", "2019-10-01");
+            options.ApiVersions.SetApiVersion("Microsoft.Logic/LogicApps", apiVersions);
             var result = options.ApiVersions.GetApiVersion("Microsoft.Logic/LogicApps");
+            Assert.True(result.Equals(apiVersions));
+
+            apiVersions = "2021-02-01";
+            options.ApiVersions.SetApiVersion("Microsoft.Logic/LogicApps", apiVersions);
+            result = options.ApiVersions.GetApiVersion("Microsoft.Logic/LogicApps");
             Assert.True(result.Equals(apiVersions));
         }
 
