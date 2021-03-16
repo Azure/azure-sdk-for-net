@@ -2,9 +2,7 @@
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
@@ -15,21 +13,20 @@ using Xunit;
 
 namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 {
-    /// <summary>
-    /// Covers following Operations:
-    /// Create source VM
-    /// Create two Restore Point Collections for the source VM
-    /// Update rpc via PATCH
-    /// Create restore point and exclude one data disk using ExcludeDisks property
-    /// List all restore points in rpc (using $expand=restorePoints)
-    /// List all rpcs in resource group
-    /// List all rpcs in subscription
-    /// Delete restore point
-    /// Delete restore point collection
-    /// </summary>
     public class RestorePointsTest: VMTestBase
     {
-        RecordedDelegatingHandler handler;
+        /// <summary>
+        /// Covers following Operations:
+        /// Create source VM
+        /// Create two Restore Point Collections for the source VM
+        /// Update rpc via PATCH
+        /// Create restore point and exclude one data disk using ExcludeDisks property
+        /// List all restore points in rpc (using $expand=restorePoints)
+        /// List all rpcs in resource group
+        /// List all rpcs in subscription
+        /// Delete restore point
+        /// Delete restore point collection
+        /// </summary>
         [Fact]
         public void CreateRpcAndRestorePoints()
         {
@@ -85,19 +82,11 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 
                     // GET list of all rpc in the resource group.
                     IEnumerable<RestorePointCollection> rpcs = ListRpcInResourceGroup(rgName);
-                    // two rpcs are returned because the RG has two rpcs
-                    RestorePointCollection rpc1 = rpcs.First();
-                    VerifyRpc(rpc1, rpcName, location, vmId);
-                    RestorePointCollection rpc2 = rpcs.ElementAt(1);
-                    VerifyRpc(rpc2, rpcName2, location, vmId);
+                    VerifyReturnedRpcs(rpcs, rpcName, rpcName2, location, vmId);
 
                     // GET list of all rpc in subscription.
                     rpcs = ListRpcInSubscription();
-                    // verify two rpcs exist in the sub as well
-                    rpc1 = rpcs.First();
-                    VerifyRpc(rpc1, rpcName, location, vmId);
-                    rpc2 = rpcs.ElementAt(1);
-                    VerifyRpc(rpc2, rpcName2, location, vmId);
+                    VerifyReturnedRpcs(rpcs, rpcName, rpcName2, location, vmId);
 
                     // create RP in the RPC
                     RestorePoint createdRP = CreateRestorePoint(rgName, rpcName, rpName, osDisk, diskToExclude: dataDiskId);
@@ -159,6 +148,17 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             }
         }
 
+        // Verify that the two rpcs created by this test are in the GET restorePointCollections response.
+        private void VerifyReturnedRpcs(IEnumerable<RestorePointCollection> rpcs, string rpcName1, string rpcName2, string location, string vmId)
+        {
+            // two rpcs are returned because the RG has two rpcs
+            Assert.Equal(2, rpcs.Count());
+            RestorePointCollection rpc1 = rpcs.Where(rpc => rpc.Name == rpcName1).First();
+            VerifyRpc(rpc1, rpcName1, location, vmId);
+            RestorePointCollection rpc2 = rpcs.Where(rpc => rpc.Name == rpcName2).First();
+            VerifyRpc(rpc2, rpcName2, location, vmId);
+        }
+
         private void DeleteRP(string rgName, string rpcName, string rpName)
         {
             m_CrpClient.RestorePoints.Delete(rgName, rpcName, rpName);
@@ -199,6 +199,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         private void VerifyRpc(RestorePointCollection rpc, string rpcName,
             string location, string source, bool shouldRpcContainRestorePoints = false)
         {
+            Assert.NotNull(rpc);
             Assert.Equal(rpcName, rpc.Name);
             Assert.Equal(location, rpc.Location, ignoreCase: true);
             Assert.NotNull(rpc.Id);
