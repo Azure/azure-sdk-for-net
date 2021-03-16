@@ -13,6 +13,7 @@ namespace Azure.AI.DocumentTranslation
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string DocumentId { get { throw null; } }
         public Azure.AI.DocumentTranslation.DocumentTranslationError Error { get { throw null; } }
+        public bool HasCompleted { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public System.Uri LocationUri { get { throw null; } }
         public Azure.AI.DocumentTranslation.TranslationStatus Status { get { throw null; } }
@@ -211,6 +212,7 @@ namespace Azure.AI.DocumentTranslation
         public int DocumentsSucceeded { get { throw null; } }
         public int DocumentsTotal { get { throw null; } }
         public Azure.AI.DocumentTranslation.DocumentTranslationError Error { get { throw null; } }
+        public bool HasCompleted { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public Azure.AI.DocumentTranslation.TranslationStatus Status { get { throw null; } }
         public long TotalCharacterCharged { get { throw null; } }
