@@ -237,12 +237,12 @@ namespace Azure.Core.Pipeline
 
                         return info.HeaderValue;
                     }
-                    catch (TaskCanceledException)
+                    catch (TaskCanceledException) when (!message.CancellationToken.IsCancellationRequested)
                     {
                         maxCancellationRetries--;
 
-                        // If the current request has been cancelled or the message has no CancellationToken and we have tried this 3 times, throw.
-                        if (message.CancellationToken.IsCancellationRequested || (message.CancellationToken == default && maxCancellationRetries <= 0))
+                        // If the current message has no CancellationToken and we have tried this 3 times, throw.
+                        if (!message.CancellationToken.CanBeCanceled && maxCancellationRetries <= 0)
                         {
                             throw;
                         }
