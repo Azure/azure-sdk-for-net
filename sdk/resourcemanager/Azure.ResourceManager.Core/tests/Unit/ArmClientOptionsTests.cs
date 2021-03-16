@@ -57,7 +57,6 @@ namespace Azure.ResourceManager.Core.Tests
             
         }
 
-        #pragma warning disable CS0012
         [TestCase]
         public void VersionNonLoadedChanges()
         {
