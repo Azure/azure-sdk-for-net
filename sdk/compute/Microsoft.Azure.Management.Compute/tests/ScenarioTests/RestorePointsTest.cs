@@ -53,17 +53,21 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 
                     string rpName = ComputeManagementTestUtilities.GenerateName("rpClientTest");
                     string rpcName = ComputeManagementTestUtilities.GenerateName("rpcClientTest");
+                    string rpcName2 = ComputeManagementTestUtilities.GenerateName("rpcClientTest");
                     string vmId = createdVM.Id;
                     string vmSize = createdVM.HardwareProfile.VmSize;
 
-                    // create RPC
+                    // create two RPCs
                     Dictionary<string, string> tags = new Dictionary<string, string>()
                     {
                         {"RG", "rg"},
                         {"testTag", "1"},
                     };
                     RestorePointCollection createdRpc = CreateRpc(createdVM.Id, rpcName, rgName, location, tags);
-                    VerifyRpc(createdRpc, rgName, rpcName, location, vmId, rpName, false);
+                    VerifyRpc(createdRpc, rpcName, location, vmId, false);
+
+                    RestorePointCollection createdRpc2 = CreateRpc(createdVM.Id, rpcName2, rgName, location, tags);
+                    VerifyRpc(createdRpc2, rpcName2, location, vmId, false);
 
                     // patch RPC. Only tags are allowed to be updated
                     Dictionary<string, string> newTags = new Dictionary<string, string>()
@@ -75,10 +79,18 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 
                     // GET list of all rpc in resource group.
                     IEnumerable<RestorePointCollection> rpcs = ListRpcInResourceGroup(rgName);
-                    // only one rpc is returned because the RG has only one rpc
-                    Assert.Single(rpcs);
-                    RestorePointCollection rpc = rpcs.First();
-                    VerifyRpc(rpc, rgName, rpcName, location, vmId, rpName);
+                    // two rpcs are returned because the RG has two rpcs
+                    RestorePointCollection rpc1 = rpcs.First();
+                    VerifyRpc(rpc1, rpcName, location, vmId);
+                    RestorePointCollection rpc2 = rpcs.ElementAt(1);
+                    VerifyRpc(rpc2, rpcName, location, vmId);
+
+                    // GET list of all rpc in subscription.
+                    rpcs = ListRpcInSubscription(rgName);
+                    rpc1 = rpcs.First();
+                    VerifyRpc(rpc1, rpcName, location, vmId);
+                    rpc2 = rpcs.ElementAt(1);
+                    VerifyRpc(rpc2, rpcName, location, vmId);
 
                     // create RP in the RPC
                     RestorePoint createdRP = CreateRestorePoint(rgName, rpcName, rpName, osDisk, vmSize, diskToExclude: dataDiskId);
@@ -90,12 +102,12 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 
                     // get RPC without dollar expand
                     RestorePointCollection returnedRpc = GetRpc(rgName, rpcName);
-                    VerifyRpc(returnedRpc, rgName, rpcName, location, vmId, rpName);
+                    VerifyRpc(returnedRpc, rpcName, location, vmId);
 
                     // get RPC with dollar expand
                     returnedRpc = GetRpc(rgName, rpcName,  
                         RestorePointCollectionExpandOptions.RestorePoints);
-                    VerifyRpc(returnedRpc, rgName, rpcName, location, vmId, rpName,
+                    VerifyRpc(returnedRpc, rpcName, location, vmId,
                         verifyRpcContainsRestorePoints: true);
 
                     // verify the restore point returned from GET RPC with $expand
@@ -155,6 +167,11 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
             return m_CrpClient.RestorePointCollections.List(rgName);
         }
 
+        private IEnumerable<RestorePointCollection> ListRpcInSubscription(string rgName)
+        {
+            return m_CrpClient.RestorePointCollections.ListAll();
+        }
+
         // for update of RPC, only update of tags are permitted
         private void UpdateRpc(string rgName, string rpcName, RestorePointCollection rpc,
             Dictionary<string,string> tags)
@@ -172,8 +189,8 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         }
 
         // if verify result of GET RPC with $expand, verify that the returned rpc contains restore points
-        private void VerifyRpc(RestorePointCollection rpc, string rgName, string rpcName,
-            string location, string source, string rpName, bool verifyRpcContainsRestorePoints = false)
+        private void VerifyRpc(RestorePointCollection rpc, string rpcName,
+            string location, string source, bool verifyRpcContainsRestorePoints = false)
         {
             Assert.Equal(rpcName, rpc.Name);
             Assert.Equal(location, rpc.Location, ignoreCase: true);
@@ -196,7 +213,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         }
 
         private RestorePointCollection GetRpc(string rgName, string rpcName,
-            RestorePointCollectionExpandOptions? expandOptions = null)
+            string expandOptions = null)
         {
             return m_CrpClient.RestorePointCollections.Get(
                 rgName,
@@ -221,7 +238,7 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
         // 1. source metadata
         // 2. storage profile
         // 3. provisioning state
-        // 4. id(s) of the exclude disk(s)
+        // 4. id(s) of the excluded disk(s)
         void VerifyRestorePointDetails(RestorePoint rp, string rpName, OSDisk osDisk,
             int excludeDisksCount, string excludeDiskId, string vmId, string vmSize)
         {
