@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Core
@@ -14,6 +15,13 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public class ResourceGroupContainer : ResourceContainerBase<ResourceGroup, ResourceGroupData>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceGroupContainer"/> class for mocking.
+        /// </summary>
+        protected ResourceGroupContainer()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupContainer"/> class.
         /// </summary>
@@ -53,17 +61,28 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<ResourceGroup> CreateOrUpdate(string name, ResourceGroupData resourceDetails)
+        public override ArmResponse<ResourceGroup> CreateOrUpdate(string name, ResourceGroupData resourceDetails, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name cannot be null or a whitespace.", nameof(name));
             if (resourceDetails is null)
                 throw new ArgumentNullException(nameof(resourceDetails));
 
-            var response = Operations.CreateOrUpdate(name, resourceDetails);
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                response,
-                g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CreateOrUpdate");
+            scope.Start();
+
+            try
+            {
+                var response = Operations.CreateOrUpdate(name, resourceDetails, cancellationToken);
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                    response,
+                    g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
@@ -74,10 +93,21 @@ namespace Azure.ResourceManager.Core
             if (resourceDetails is null)
                 throw new ArgumentNullException(nameof(resourceDetails));
 
-            var response = await Operations.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                response,
-                g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.CreateOrUpdate");
+            scope.Start();
+
+            try
+            {
+                var response = await Operations.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false);
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+                    response,
+                    g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
@@ -88,9 +118,20 @@ namespace Azure.ResourceManager.Core
             if (resourceDetails is null)
                 throw new ArgumentNullException(nameof(resourceDetails));
 
-            return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.StartCreateOrUpdate");
+            scope.Start();
+
+            try
+            {
+                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 Operations.CreateOrUpdate(name, resourceDetails, cancellationToken),
                 g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
@@ -101,9 +142,20 @@ namespace Azure.ResourceManager.Core
             if (resourceDetails is null)
                 throw new ArgumentNullException(nameof(resourceDetails));
 
-            return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.StartCreateOrUpdate");
+            scope.Start();
+
+            try
+            {
+                return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 await Operations.CreateOrUpdateAsync(name, resourceDetails, cancellationToken).ConfigureAwait(false),
                 g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -111,11 +163,24 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public Pageable<ResourceGroup> List(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual Pageable<ResourceGroup> List(CancellationToken cancellationToken = default)
         {
-            return new PhWrappingPageable<ResourceManager.Resources.Models.ResourceGroup, ResourceGroup>(
-                Operations.List(null, null, cancellationToken),
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+            scope.Start();
+
+            try
+            {
+                var results = Operations.List(null, null, cancellationToken);
+                return new PhWrappingPageable<ResourceManager.Resources.Models.ResourceGroup, ResourceGroup>(
+                results,
                 s => new ResourceGroup(Parent, new ResourceGroupData(s)));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -123,23 +188,46 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<ResourceGroup> ListAsync(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<ResourceGroup> ListAsync(CancellationToken cancellationToken = default)
         {
-            return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.ResourceGroup, ResourceGroup>(
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.List");
+            scope.Start();
+
+            try
+            {
+                return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.ResourceGroup, ResourceGroup>(
                 Operations.ListAsync(null, null, cancellationToken),
                 s => new ResourceGroup(Parent, new ResourceGroupData(s)));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc />
-        public override ArmResponse<ResourceGroup> Get(string resourceGroupName)
+        public override ArmResponse<ResourceGroup> Get(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(resourceGroupName))
                 throw new ArgumentException("resourceGroupName cannot be null or a whitespace.", nameof(resourceGroupName));
 
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(resourceGroupName), g =>
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.Get");
+            scope.Start();
+
+            try
             {
-                return new ResourceGroup(Parent, new ResourceGroupData(g));
-            });
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(Operations.Get(resourceGroupName, cancellationToken), g =>
+                {
+                    return new ResourceGroup(Parent, new ResourceGroupData(g));
+                });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <inheritdoc/>
@@ -148,12 +236,23 @@ namespace Azure.ResourceManager.Core
             if (string.IsNullOrWhiteSpace(resourceGroupName))
                 throw new ArgumentException("resourceGroupName cannot be null or a whitespace.", nameof(resourceGroupName));
 
-            return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
+            using var scope = Diagnostics.CreateScope("ResourceGroupContainer.Get");
+            scope.Start();
+
+            try
+            {
+                return new PhArmResponse<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
                 await Operations.GetAsync(resourceGroupName, cancellationToken).ConfigureAwait(false),
                 g =>
                 {
                     return new ResourceGroup(Parent, new ResourceGroupData(g));
                 });
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

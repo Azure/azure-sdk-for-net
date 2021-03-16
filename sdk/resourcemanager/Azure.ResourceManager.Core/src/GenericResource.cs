@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the data representing this generic azure resource.
         /// </summary>
-        public GenericResourceData Data { get; }
+        public virtual GenericResourceData Data { get; }
 
         /// <inheritdoc/>
         protected override GenericResource GetResource()
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <inheritdoc />
-        protected override Task<GenericResource> GetResourceAsync()
+        protected override Task<GenericResource> GetResourceAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(this);
         }

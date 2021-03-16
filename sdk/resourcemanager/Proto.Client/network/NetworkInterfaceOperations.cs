@@ -48,62 +48,37 @@ namespace Proto.Network
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkInterfaces;
 
-        /// <summary>
-        /// Deletes a <see cref="NetworkInterface"/>.
-        /// </summary>
-        /// <returns> An <see cref="ArmResponse"/> representing the service response to deletion. </returns>
-        public ArmResponse<Response> Delete()
+        /// <inheritdoc/>
+        public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDelete(Id.ResourceGroup, Id.Name).WaitForCompletionAsync().ConfigureAwait(false).GetAwaiter().GetResult());
+            return new ArmResponse(Operations.StartDelete(Id.ResourceGroup, Id.Name, cancellationToken)
+                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
-        /// <summary>
-        /// Deletes a <see cref="NetworkInterface"/>.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
-        /// The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that returns an <see cref="ArmResponse"/> when completed. </returns>
+        /// <inheritdoc/>
         public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken)).WaitForCompletionAsync().ConfigureAwait(false).GetAwaiter().GetResult());
+            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken))
+                .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
-        /// <summary>
-        /// Deletes a <see cref="NetworkInterface"/>.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
-        /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
-        /// <returns> An <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
-        /// </remarks>
+        /// <inheritdoc/>
         public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
         {
             return new ArmVoidOperation(Operations.StartDelete(Id.ResourceGroup, Id.Name, cancellationToken));
         }
 
-        /// <summary>
-        /// Deletes a <see cref="NetworkInterface"/>.
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
-        /// The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
-        /// </remarks>
+        /// <inheritdoc/>
         public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken));
         }
 
-        /// <summary>
-        /// Gets details of the <see cref="NetworkInterface"/> from the service.
-        /// </summary>
-        /// <returns> An <see cref="ArmResponse{NetworkInterface}"/>. </returns>
-        public override ArmResponse<NetworkInterface> Get()
+        /// <inheritdoc/>
+        public override ArmResponse<NetworkInterface> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                Operations.Get(Id.ResourceGroup, Id.Name),
+                Operations.Get(Id.ResourceGroup, Id.Name, cancellationToken: cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
 
@@ -115,33 +90,22 @@ namespace Proto.Network
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
 
-        /// <summary>
-        /// Add the given tag key and tag value to the <see cref="NetworkInterface"/> resource.
-        /// </summary>
-        /// <param name="key" > The tag key. </param>
-        /// <param name="value"> The Tag Value. </param>
-        /// <returns> An <see cref="ArmResponse{NetworkInterface}"/> that allows polling for completion of the operation. </returns>
-        public ArmResponse<NetworkInterface> AddTag(string key, string value)
+        /// <inheritdoc/>
+        public ArmResponse<NetworkInterface> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
 
-        /// <summary>
-        /// Add the given tag key and tag value to the <see cref="NetworkInterface"/> resource.
-        /// </summary>
-        /// <param name="key" > The tag key. </param>
-        /// <param name="value"> The Tag Value. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
-        /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a <see cref="ArmOperation{NetworkInterface}"/> that allows polling for completion of the operation. </returns>
+        /// <inheritdoc/>
         public async Task<ArmResponse<NetworkInterface>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
+            var resource = await GetResourceAsync(cancellationToken);
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
@@ -150,39 +114,22 @@ namespace Proto.Network
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
 
-        /// <summary>
-        /// Add the given tag key and tag value to the <see cref="NetworkInterface"/> resource.
-        /// </summary>
-        /// <param name="key" > The tag key. </param>
-        /// <param name="value"> The Tag Value. </param>
-        /// <returns> An <see cref="ArmOperation{NetworkInterface}"/> that allows polling for completion of the operation. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
-        /// </remarks>
-        public ArmOperation<NetworkInterface> StartAddTag(string key, string value)
+        /// <inheritdoc/>
+        public ArmOperation<NetworkInterface> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
 
-        /// <summary>
-        /// Add the given tag key and tag value to the <see cref="NetworkInterface"/> resource.
-        /// </summary>
-        /// <param name="key" > The tag key. </param>
-        /// <param name="value"> The Tag Value. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. 
-        /// The default value is <see cref="System.Threading.CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a <see cref="ArmOperation{NetworkInterface}"/> that allows polling for completion of the operation. </returns>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
-        /// </remarks>
+        /// <inheritdoc/>
         public async Task<ArmOperation<NetworkInterface>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
+            var resource = await GetResourceAsync(cancellationToken);
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
@@ -192,11 +139,12 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmResponse<NetworkInterface> SetTags(IDictionary<string, string> tags)
+        public ArmResponse<NetworkInterface> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
 
@@ -211,11 +159,12 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmOperation<NetworkInterface> StartSetTags(IDictionary<string, string> tags)
+        public ArmOperation<NetworkInterface> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
 
@@ -230,20 +179,21 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmResponse<NetworkInterface> RemoveTag(string key)
+        public ArmResponse<NetworkInterface> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
 
         /// <inheritdoc/>
         public async Task<ArmResponse<NetworkInterface>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
+            var resource = await GetResourceAsync(cancellationToken);
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
@@ -253,20 +203,21 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public ArmOperation<NetworkInterface> StartRemoveTag(string key)
+        public ArmOperation<NetworkInterface> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable),
+            return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 n => new NetworkInterface(this, new NetworkInterfaceData(n)));
         }
 
         /// <inheritdoc/>
         public async Task<ArmOperation<NetworkInterface>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
+            var resource = await GetResourceAsync(cancellationToken);
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
@@ -279,9 +230,9 @@ namespace Proto.Network
         /// Lists all available geo-locations.
         /// </summary>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<LocationData> ListAvailableLocations()
+        public IEnumerable<LocationData> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType);
+            return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary>

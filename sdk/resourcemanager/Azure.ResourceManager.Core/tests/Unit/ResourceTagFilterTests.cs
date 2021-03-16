@@ -7,6 +7,7 @@ using System;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class ResourceTagFilterTests
     {
         [TestCase]

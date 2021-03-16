@@ -14,8 +14,9 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Delete the resource.
         /// </summary>
+        /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> The status of the delete operation. </returns>
-        ArmResponse<Response> Delete();
+        ArmResponse<Response> Delete(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete the resource.

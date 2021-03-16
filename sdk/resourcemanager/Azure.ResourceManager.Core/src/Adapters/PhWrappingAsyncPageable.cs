@@ -22,6 +22,13 @@ namespace Azure.ResourceManager.Core
         private readonly IEnumerable<AsyncPageable<TModel>> _wrapped;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PhWrappingAsyncPageable{TModel, TOperations}"/> class for mocking.
+        /// </summary>
+        protected PhWrappingAsyncPageable()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PhWrappingAsyncPageable{TModel, TOperations}"/> class.
         /// </summary>
         /// <param name="wrapped"> The results to wrap. </param>

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
 
 namespace Proto.Network
@@ -31,7 +32,7 @@ namespace Proto.Network
         }
 
         /// <inheritdoc />
-        protected override Task<VirtualNetwork> GetResourceAsync()
+        protected override Task<VirtualNetwork> GetResourceAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult(this);
         }

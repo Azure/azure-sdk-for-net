@@ -33,11 +33,11 @@ namespace Proto.Network
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
         /// <inheritdoc/>
-        public override ArmResponse<NetworkInterface> CreateOrUpdate(string name, NetworkInterfaceData resourceDetails)
+        public override ArmResponse<NetworkInterface> CreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails);
+            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails, cancellationToken);
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                operation.WaitForCompletionAsync().ConfigureAwait(false).GetAwaiter().GetResult(),
+                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
         }
 
@@ -188,16 +188,18 @@ namespace Proto.Network
         }
 
         /// <inheritdoc />
-        public override ArmResponse<NetworkInterface> Get(string networkInterfaceName)
+        public override ArmResponse<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(Operations.Get(Id.ResourceGroup, networkInterfaceName),
+            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+                Operations.Get(Id.ResourceGroup, networkInterfaceName, cancellationToken: cancellationToken),
                 g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
         }
 
         /// <inheritdoc/>
         public override async Task<ArmResponse<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(await Operations.GetAsync(Id.ResourceGroup, networkInterfaceName, null, cancellationToken),
+            return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
+                await Operations.GetAsync(Id.ResourceGroup, networkInterfaceName, null, cancellationToken),
                     g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
         }
     }

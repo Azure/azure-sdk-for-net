@@ -27,7 +27,9 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Get the tenant operations <see cref="TenantOperations"/> class.
         /// </summary>
-        public TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, _credentials, _baseUri);
+        public TenantOperations Tenant => _tenant ??= new TenantOperations(_clientOptions, _credentials, _baseUri);
+
+        private readonly AzureResourceManagerClientOptions _clientOptions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class for mocking.
@@ -95,7 +97,7 @@ namespace Azure.ResourceManager.Core
 
             _credentials = credential;
             _baseUri = baseUri;
-            ClientOptions = options ?? new AzureResourceManagerClientOptions();
+            _clientOptions = options ?? new AzureResourceManagerClientOptions();
 
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
@@ -108,17 +110,12 @@ namespace Azure.ResourceManager.Core
         public virtual Subscription DefaultSubscription { get; private set; }
 
         /// <summary>
-        /// Gets the Azure resource manager client options.
-        /// </summary>
-        internal virtual AzureResourceManagerClientOptions ClientOptions { get; }
-
-        /// <summary>
         /// Gets the Azure subscription operations.
         /// </summary>
         /// <param name="subscriptionGuid"> The guid of the subscription. </param>
         /// <returns> Subscription operations. </returns>
-        public SubscriptionOperations GetSubscriptionOperations(string subscriptionGuid) => new SubscriptionOperations(
-            ClientOptions,
+        public virtual SubscriptionOperations GetSubscriptionOperations(string subscriptionGuid) => new SubscriptionOperations(
+            _clientOptions,
             subscriptionGuid,
             _credentials,
             _baseUri);
@@ -127,9 +124,9 @@ namespace Azure.ResourceManager.Core
         /// Gets the Azure subscriptions.
         /// </summary>
         /// <returns> Subscription container. </returns>
-        public SubscriptionContainer GetSubscriptionContainer()
+        public virtual SubscriptionContainer GetSubscriptionContainer()
         {
-            return new SubscriptionContainer(ClientOptions, _credentials, _baseUri);
+            return new SubscriptionContainer(_clientOptions, _credentials, _baseUri);
         }
 
         /// <summary>
@@ -138,7 +135,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="subscriptionGuid"> The id of the Azure subscription. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <returns> Resource group operations. </returns>
-        public ResourceGroupOperations GetResourceGroupOperations(string subscriptionGuid, string resourceGroupName)
+        public virtual ResourceGroupOperations GetResourceGroupOperations(string subscriptionGuid, string resourceGroupName)
         {
             return GetSubscriptionOperations(subscriptionGuid).GetResourceGroupOperations(resourceGroupName);
         }
@@ -148,7 +145,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="resourceGroupId"> The resource identifier of the resource group. </param>
         /// <returns> Resource group operations. </returns>
-        public ResourceGroupOperations GetResourceGroupOperations(ResourceIdentifier resourceGroupId)
+        public virtual ResourceGroupOperations GetResourceGroupOperations(ResourceIdentifier resourceGroupId)
         {
             return GetSubscriptionOperations(resourceGroupId.Subscription).GetResourceGroupOperations(resourceGroupId.ResourceGroup);
         }
@@ -161,7 +158,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceGroup"> The resource group name. </param>
         /// <param name="name"> The resource type name. </param>
         /// <returns> Resource operations of the resource. </returns>
-        public T GetResourceOperations<T>(string subscription, string resourceGroup, string name)
+        public virtual T GetResourceOperations<T>(string subscription, string resourceGroup, string name)
             where T : OperationsBase
         {
             var rgOp = GetSubscriptionOperations(subscription).GetResourceGroupOperations(resourceGroup);
