@@ -771,7 +771,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [LiveOnly]
-        [RecordedTest]
+        [Test]
         public async Task UploadPagesAsync_ProgressReporting()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2073,7 +2073,7 @@ namespace Azure.Storage.Blobs.Test
                 });
         }
 
-        [RecordedTest]
+        [Test]
         [Ignore("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
         public async Task StartCopyIncrementalAsync()
         {
@@ -2141,7 +2141,7 @@ namespace Azure.Storage.Blobs.Test
                 });
         }
 
-        [RecordedTest]
+        [Test]
         [Ignore("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
         public async Task StartCopyIncrementalAsync_AccessConditions()
         {
@@ -2259,7 +2259,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [RecordedTest]
+        [Test]
         [PlaybackOnly("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task StartCopyIncrementalAsync_IfTags()
@@ -2320,7 +2320,7 @@ namespace Azure.Storage.Blobs.Test
                     conditions: conditions);
         }
 
-        [RecordedTest]
+        [Test]
         [PlaybackOnly("#10715 - Disabled failing StartCopyIncrementalAsync live tests")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task StartCopyIncrementalAsync_IfTags_Failed()

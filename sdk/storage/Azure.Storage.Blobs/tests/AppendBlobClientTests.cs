@@ -861,7 +861,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [LiveOnly]
-        [RecordedTest]
+        [Test]
         public async Task AppendBlockAsync_ProgressReporting()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

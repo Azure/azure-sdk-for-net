@@ -438,7 +438,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [LiveOnly]
-        [RecordedTest]
+        [Test]
         public async Task StageBlockAsync_ProgressReporting()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1765,7 +1765,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [LiveOnly]
-        [RecordedTest]
+        [Test]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9487")]
         public async Task UploadAsync_LargeFile()
         {
@@ -2106,7 +2106,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [LiveOnly]
-        [RecordedTest]
+        [Test]
         public async Task UploadAsync_ProgressReporting()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2133,7 +2133,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [LiveOnly]
-        [RecordedTest]
+        [Test]
         public async Task UploadAsync_SingleUpload_DefaultThreshold()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2159,7 +2159,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [LiveOnly]
-        [RecordedTest]
+        [Test]
         public async Task UploadAsync_MultipleUpload_DefaultThreshold()
         {
             await using DisposingContainer test = await GetTestContainerAsync();

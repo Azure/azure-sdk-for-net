@@ -206,7 +206,7 @@ namespace Azure.Storage.Blobs.Test
             return result;
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         public void CanSwapKey()
         {
@@ -413,7 +413,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly] // cannot seed content encryption key
         public async Task Track2DownloadTrack1Blob()
         {
@@ -461,7 +461,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly] // cannot seed content encryption key
         public async Task Track1DownloadTrack2Blob()
         {
@@ -510,7 +510,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly] // need access to keyvault service && cannot seed content encryption key
         public async Task RoundtripWithKeyvaultProvider()
         {
@@ -624,7 +624,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly] // cannot seed content encryption key
         [Ignore("stress test")]
         public async Task StressAsync()
@@ -671,7 +671,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         public async Task EncryptedReuploadSuccess()
         {

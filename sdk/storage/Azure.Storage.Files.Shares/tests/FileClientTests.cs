@@ -2649,7 +2649,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreNotEqual(0, timesFaulted);
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9085")]
         // TODO: #7645
@@ -2702,7 +2702,7 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertSequenceEqual(sourceStream.ToArray(), destStream.ToArray());
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         // TODO: #7645
@@ -2751,7 +2751,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 conditions: conditions);
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_07_07)]
         // TODO: #7645
@@ -2801,7 +2801,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("LeaseNotPresentWithFileOperation", e.ErrorCode));
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/9085")]
         // TODO: #7645

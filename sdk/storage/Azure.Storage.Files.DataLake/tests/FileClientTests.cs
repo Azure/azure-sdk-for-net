@@ -2785,7 +2785,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [RecordedTest]
+        [Test]
         [Ignore("Live tests will run out of memory")]
         public async Task UploadAsync_StreamLarge()
         {
@@ -3042,7 +3042,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
-        [RecordedTest]
+        [Test]
         [Ignore("Live tests will run out of memory")]
         public async Task UploadAsync_FileLarge()
         {

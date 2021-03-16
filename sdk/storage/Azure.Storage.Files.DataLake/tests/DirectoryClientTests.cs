@@ -1193,7 +1193,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_InBatches_StopAndResume()
@@ -1477,7 +1477,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
@@ -1892,7 +1892,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_InBatches_StopAndResume()
@@ -2185,7 +2185,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UpdateAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
@@ -2601,7 +2601,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_InBatches_StopAndResume()
@@ -2889,7 +2889,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RemoveAccessControlRecursiveAsync_ContinueOnFailure_Batches_StopAndResume()
@@ -4091,7 +4091,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [RecordedTest]
+        [Test]
         [Ignore("Nightly live test is failing")]
         public async Task DeleteSubDirectoryAsync()
         {

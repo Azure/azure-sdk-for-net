@@ -323,7 +323,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(new Uri("https://account.blob.core.windows.net/filesystem/"), uri);
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly] // Test recording paths are too long.
         [TestCase("2020-10-27", "2020-10-28")]
         [TestCase("2020-10-27T12:10Z", "2020-10-28T13:20Z")]

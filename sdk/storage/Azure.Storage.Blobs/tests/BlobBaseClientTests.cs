@@ -664,7 +664,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.Details.EncryptionScope);
         }
 
-        [RecordedTest]
+        [Test]
         [TestCase(10 * Constants.KB, 1 * Constants.KB)]
         [TestCase(256 * Constants.KB, 255 * Constants.KB)]
         [TestCase(257 * Constants.KB, 256 * Constants.KB)]
@@ -707,7 +707,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreNotEqual(0, timesFaulted);
         }
 
-        [RecordedTest]
+        [Test]
         [TestCase(10 * Constants.KB, 1 * Constants.KB)]
         [TestCase(256 * Constants.KB, 255 * Constants.KB)]
         [TestCase(257 * Constants.KB, 256 * Constants.KB)]
@@ -750,7 +750,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreNotEqual(0, timesFaulted);
         }
 
-        [RecordedTest]
+        [Test]
         [TestCase(10 * Constants.KB, 1 * Constants.KB)]
         [TestCase(256 * Constants.KB, 255 * Constants.KB)]
         [TestCase(257 * Constants.KB, 256 * Constants.KB)]
@@ -1382,7 +1382,7 @@ namespace Azure.Storage.Blobs.Test
              await ParallelDownloadFileAndVerify(size, Constants.KB, new StorageTransferOptions { MaximumTransferLength = Constants.KB });
 
         [Ignore("These tests currently take 40 mins for little additional coverage")]
-        [RecordedTest]
+        [Test]
         [Category("Live")]
         [TestCase(33 * Constants.MB, 1)]
         [TestCase(33 * Constants.MB, 4)]

@@ -213,7 +213,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(403, ex.Status);
         }
 
-        [RecordedTest]
+        [Test]
         [LiveOnly]
         public async Task Batch_AzureSasCredential()
         {
@@ -581,7 +581,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, blobs);
         }
 
-        [RecordedTest]
+        [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/18058
         public async Task SetBlobAccessTier_Basic_AccountSas()
