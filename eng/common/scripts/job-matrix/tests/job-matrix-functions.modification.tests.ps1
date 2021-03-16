@@ -262,11 +262,11 @@ Describe "Platform Matrix Import" -Tag "import" {
 
 Describe "Platform Matrix Replace" -Tag "replace" {
     It "Should parse replacement syntax" -TestCases @(
-         @{ query = 'foo=bar/baz'; key = 'foo'; value = 'bar'; replace = 'baz' },
-         @{ query = 'foo=\/p:bar/\/p:baz'; key = 'foo'; value = '\/p:bar'; replace = '/p:baz' },
-         @{ query = 'f\=o\/o=\/p:b\=ar/\/p:b\=az'; key = 'f\=o\/o'; value = '\/p:b\=ar'; replace = '/p:b=az' },
-         @{ query = 'foo=bar/'; key = 'foo'; value = 'bar'; replace = '' },
-         @{ query = 'foo=/baz'; key = 'foo'; value = ''; replace = 'baz' }
+         @{ query = 'foo=bar/baz'; key = '^foo$'; value = '^bar$'; replace = 'baz' },
+         @{ query = 'foo=\/p:bar/\/p:baz'; key = '^foo$'; value = '^\/p:bar$'; replace = '/p:baz' },
+         @{ query = 'f\=o\/o=\/p:b\=ar/\/p:b\=az'; key = '^f\=o\/o$'; value = '^\/p:b\=ar$'; replace = '/p:b=az' },
+         @{ query = 'foo=bar/'; key = '^foo$'; value = '^bar$'; replace = '' },
+         @{ query = 'foo=/baz'; key = '^foo$'; value = '^$'; replace = 'baz' }
     ) {
         $parsed = ParseReplacement $query
         $parsed.key | Should -Be $key
@@ -319,7 +319,7 @@ Describe "Platform Matrix Replace" -Tag "replace" {
         $replace = @(
             "Foo=foo1/foo1Replaced",
             "Foo=foo.*/fooDefaultReplaced",
-            ".*=B.z/bazReplaced"
+            ".*=B.z\d/bazReplaced"
         )
 
         $importConfig = GetMatrixConfigFromJson $matrixJson
@@ -375,5 +375,33 @@ Describe "Platform Matrix Replace" -Tag "replace" {
         $matrix[0].parameters.JavaTestVersion | Should -Be "2.0"
         $matrix[0].parameters.Pool | Should -Be "custom-ubuntu-pool"
         $matrix[0].parameters.OSVmImage | Should -Be "MMSUbuntu18.04"
+
+        # Make sure non-literal keys still replace under the hood
+        $matrix = GenerateMatrix $importConfig "all" -replace ".*=.*ubuntu.*/custom-ubuntu-pool"
+
+        $matrix.Length | Should -Be 2
+        $matrix[0].name | Should -Be "ubuntu1804_18"
+        $matrix[0].parameters.Pool | Should -Be "custom-ubuntu-pool"
+    }
+
+    It "Should replace values and apply regex capture groups" {
+        $matrixJson = @'
+{
+  "matrix": {
+    "Foo": [ "foo1", "foo2" ],
+    "Bar": [ "bar1", "bar2" ]
+  }
+}
+'@
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $replace = 'Foo=(foo)1/$1ReplacedFoo1', 'B.*=(.*)2/$1ReplacedBar2'
+        $matrix = GenerateMatrix $importConfig "sparse" -replace $replace
+
+        $matrix.Length | Should -Be 2
+        $matrix[0].name | Should -Be "fooReplacedFoo1_bar1"
+        $matrix[0].parameters.Foo | Should -Be "fooReplacedFoo1"
+
+        $matrix[1].name | Should -Be "foo2_barReplacedBar2"
+        $matrix[1].parameters.Bar | Should -Be "barReplacedBar2"
     }
 }

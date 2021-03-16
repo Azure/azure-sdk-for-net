@@ -18,19 +18,19 @@ class MatrixParameter {
     [System.Object]$Value
     [System.Object]$Name
 
-    Set($value, [String]$key = '')
+    Set($value, [String]$keyRegex = '')
     {
         if ($this.Value -is [PSCustomObject]) {
             $set = $false
             foreach ($prop in $this.Value.PSObject.Properties) {
-                if ($prop.Name -eq $key) {
+                if ($prop.Name -match $keyRegex) {
                     $prop.Value = $value
                     $set = $true
                     break
                 }
             }
             if (!$set) {
-                throw "Property `"$key`" does not exist for MatrixParameter."
+                throw "Property `"$keyRegex`" does not exist for MatrixParameter."
             }
         } else {
             $this.Value = $value
@@ -283,13 +283,12 @@ function ParseReplacement([String]$replacement) {
         throw $err
     }
 
-    $replace = $parsed[2]
-    $replace = $replace -replace '\\=', '='
-    $replace = $replace -replace '\\/', '/'
+    $replace = $parsed[2] -replace "\\([$($operators -join '')])", '$1'
 
     return @{
-        "key" = $parsed[0]
-        "value" = $parsed[1]
+        "key" = '^' + $parsed[0] + '$'
+        # Force full matches only.
+        "value" = '^' + $parsed[1] + '$'
         "replace" = $replace
     }
 }
@@ -319,7 +318,11 @@ function ProcessReplace
                 foreach ($query in $replacements) {
                     $parsed = ParseReplacement $query
                     if ($flattened.Name -match $parsed.key -and $flattened.Value -match $parsed.value) {
-                        $perm.Set($parsed.replace, $parsed.key)
+                        # In most cases, this will just swap one value for another, however -replace
+                        # is used here in order to support replace values which may use regex capture groups
+                        # e.g. 'foo-1' -replace '(foo)-1', '$1-replaced'
+                        $replaceValue = $flattened.Value -replace $parsed.value, $parsed.replace
+                        $perm.Set($replaceValue, $parsed.key)
                         break
                     }
                 }

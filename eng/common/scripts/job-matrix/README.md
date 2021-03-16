@@ -400,11 +400,12 @@ named "ExcludedKey", a framework variable containing either "461" or "5.0", and 
 #### Replace values
 
 Replacements for values can be passed to the matrix as an array of strings, each matching the format of `<keyRegex>=<valueRegex>/<replacementValue>`.
-The replace argument will find any permutations where the key matches the key regex and the value matches the value regex, and replace the value with
+The replace argument will find any permutations where the key fully matches the key regex and the value fully matches the value regex, and replace the value with
 the replacement specified.
 
 NOTE:
-- For each value, the first replacement provided that matches will be the only one applied.
+- The replacement value supports regex capture groups, enabling substring transformations, e.g. `Foo=(.*)-replaceMe/$1-replaced`. See the below examples for usage.
+- For each key/value, the first replacement provided that matches will be the only one applied.
 - If `=` or `/` characters need to be part of the regex or replacement, escape them with `\`.
 
 For example, given a matrix config like below:
@@ -442,17 +443,20 @@ $ ./Create-JobMatrix.ps1 -ConfigPath <test> -Selection all
 Passing in multiple replacements, the output will look like below. Note that replacing key/values that appear nested within a grouping
 will not affect that segment of the job name, since the job takes the grouping name (in this case "ubuntu1804").
 
+The below example includes samples of regex grouping references, and wildcard key/value regexes:
+
 ```
-$ ./Create-JobMatrix.ps1 -ConfigPath <test> -Selection all -Replace @("Java.*Version=1.11/2.0", "Pool=.*ubuntu.*/custom-ubuntu-pool")
+$ $replacements = @('.*Version=1.11/2.0', 'Pool=(.*ubuntu.*)-general/$1-custom')
+$ ../Create-JobMatrix.ps1 -ConfigPath ./test.Json -Selection all -Replace $replacements
 {
   "ubuntu1804_18": {
     "OSVmImage": "MMSUbuntu18.04",
-    "Pool": "custom-ubuntu-pool",
+    "Pool": "azsdk-pool-mms-ubuntu-1804-custom",
     "JavaTestVersion": "1.8"
   },
   "ubuntu1804_20": {
     "OSVmImage": "MMSUbuntu18.04",
-    "Pool": "custom-ubuntu-pool",
+    "Pool": "azsdk-pool-mms-ubuntu-1804-custom",
     "JavaTestVersion": "2.0"
   }
 }
