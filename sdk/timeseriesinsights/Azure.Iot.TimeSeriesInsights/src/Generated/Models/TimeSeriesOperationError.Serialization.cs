@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Iot.TimeSeriesInsights
 {
-    public partial class InstancesOperationError
+    public partial class TimeSeriesOperationError
     {
-        internal static InstancesOperationError DeserializeInstancesOperationError(JsonElement element)
+        internal static TimeSeriesOperationError DeserializeTimeSeriesOperationError(JsonElement element)
         {
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<InstancesOperationError> innerError = default;
-            Optional<IReadOnlyList<InstancesOperationErrorDetails>> details = default;
+            Optional<TimeSeriesOperationError> innerError = default;
+            Optional<IReadOnlyList<TimeSeriesOperationErrorDetails>> details = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -46,7 +46,7 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    innerError = DeserializeInstancesOperationError(property.Value);
+                    innerError = DeserializeTimeSeriesOperationError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("details"))
@@ -56,10 +56,10 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<InstancesOperationErrorDetails> array = new List<InstancesOperationErrorDetails>();
+                    List<TimeSeriesOperationErrorDetails> array = new List<TimeSeriesOperationErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancesOperationErrorDetails.DeserializeInstancesOperationErrorDetails(item));
+                        array.Add(TimeSeriesOperationErrorDetails.DeserializeTimeSeriesOperationErrorDetails(item));
                     }
                     details = array;
                     continue;
@@ -67,7 +67,7 @@ namespace Azure.Iot.TimeSeriesInsights
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new InstancesOperationError(code.Value, message.Value, target.Value, innerError.Value, Optional.ToList(details), additionalProperties);
+            return new TimeSeriesOperationError(code.Value, message.Value, target.Value, innerError.Value, Optional.ToList(details), additionalProperties);
         }
     }
 }
