@@ -106,7 +106,7 @@ namespace Azure.AI.DocumentTranslation
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
         /// <param name="configurations">Sets the configurations for the translation operation
-        /// including source and target storage for documents to be translated. </param>
+        /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
         public virtual DocumentTranslationOperation StartTranslation(IEnumerable<TranslationConfiguration> configurations, CancellationToken cancellationToken = default)
@@ -133,7 +133,7 @@ namespace Azure.AI.DocumentTranslation
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
         /// <param name="configurations">Sets the configurations for the translation operation
-        /// including source and target storage for documents to be translated. </param>
+        /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
         public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(IEnumerable<TranslationConfiguration> configurations, CancellationToken cancellationToken = default)
@@ -155,49 +155,18 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Starts a translation operation for documents in an Azure Blob Container.
+        /// Starts a translation operation.
         /// For document length limits, maximum batch size, and supported document formats, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
-        /// <param name="sourceBlobContainerSas">The SAS URL for the source container containing documents to be translated. </param>
-        /// <param name="targetBlobContainerSas">The SAS URL for the target container to which the translated documents will be written. </param>
-        /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
-        /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
-        /// <see cref="GetGlossaryFormatsAsync(CancellationToken)"/>.</param>
-        /// <param name="options">Set translation options including source language and custom translation category.</param>
+        /// <param name="configuration">Sets the configurations for the translation operation
+        /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual DocumentTranslationOperation StartTranslation(Uri sourceBlobContainerSas, Uri targetBlobContainerSas, string targetLanguageCode, TranslationGlossary glossary = default, TranslationOperationOptions options = default, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
+        public virtual DocumentTranslationOperation StartTranslation(TranslationConfiguration configuration, CancellationToken cancellationToken = default)
         {
-            var source = new TranslationSource(sourceBlobContainerSas)
-            {
-                LanguageCode = options?.SourceLanguage,
-                Filter = options?.Filter
-            };
-
-            var target = new TranslationTarget(targetBlobContainerSas, targetLanguageCode)
-            {
-                CategoryId = options?.Category
-            };
-
-            if (glossary != null)
-            {
-                target.Glossaries.Add(glossary);
-            }
-
-            var targets = new List<TranslationTarget>
-            {
-               target
-            };
-
-            var request = new BatchSubmissionRequest(new List<TranslationConfiguration>
-                {
-                    new TranslationConfiguration(source, targets)
-                    {
-                        StorageType = options?.StorageType
-                    }
-                }
-            );
+            Argument.AssertNotNull(configuration, nameof(configuration));
+            var request = new BatchSubmissionRequest(new List<TranslationConfiguration> { configuration });
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
@@ -214,50 +183,18 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Starts a translation operation for documents in an Azure Blob Container.
+        /// Starts a translation operation
         /// For document length limits, maximum batch size, and supported document formats, see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
         /// </summary>
-        /// <param name="sourceBlobContainerSas">The SAS URL for the source container containing documents to be translated. </param>
-        /// <param name="targetBlobContainerSas">The SAS URL for the target container to which the translated documents will be written. </param>
-        /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
-        /// <param name="glossary">Custom translation glossary to be used in the translation operation. For supported file types see
-        /// <see cref="GetGlossaryFormatsAsync(CancellationToken)"/>.</param>
-        /// <param name="options">Set translation options including source language and custom translation category.</param>
+        /// <param name="configuration">Sets the configurations for the translation operation
+        /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(Uri sourceBlobContainerSas, Uri targetBlobContainerSas, string targetLanguageCode, TranslationGlossary glossary = default, TranslationOperationOptions options = default, CancellationToken cancellationToken = default)
+        /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
+        public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(TranslationConfiguration configuration, CancellationToken cancellationToken = default)
         {
-            var source = new TranslationSource(sourceBlobContainerSas)
-            {
-                LanguageCode = options?.SourceLanguage,
-                Filter = options?.Filter
-            };
-
-            var target = new TranslationTarget(targetBlobContainerSas, targetLanguageCode)
-            {
-                CategoryId = options?.Category
-            };
-
-            if (glossary != null)
-            {
-                target.Glossaries.Add(glossary);
-            }
-
-            var targets = new List<TranslationTarget>
-            {
-               target
-            };
-
-            var request = new BatchSubmissionRequest(new List<TranslationConfiguration>
-                {
-                    new TranslationConfiguration(source, targets)
-                    {
-                        StorageType = options?.StorageType
-                    }
-                }
-            );
-
+            Argument.AssertNotNull(configuration, nameof(configuration));
+            var request = new BatchSubmissionRequest(new List<TranslationConfiguration> { configuration });
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslationAsync)}");
             scope.Start();
 
