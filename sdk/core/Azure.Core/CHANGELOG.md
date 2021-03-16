@@ -2,6 +2,9 @@
 
 ## 1.11.0-beta.1 (Unreleased)
 
+### Key Bug Fixes
+
+- Check the `JsonIgnoreAttribute.Condition` property added in .NET 5 when discovering members with `JsonObjectSerializer`.
 
 ## 1.10.0 (2021-03-09)
 
