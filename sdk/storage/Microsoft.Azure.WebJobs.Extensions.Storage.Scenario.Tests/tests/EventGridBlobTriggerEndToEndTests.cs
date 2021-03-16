@@ -108,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 });
         }
 
-       [RecordedTest]
+        [Test]
         public async Task EventGridRequest_Subscription_Succeeded()
         {
             var prog = new EventGrid_Program();
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             }
         }
 
-       [RecordedTest]
+        [Test]
         public async Task EventGridRequest_Notification_Succeeded()
         {
             var blob = _testContainer.GetBlockBlobClient(TestBlobName);
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             }
         }
 
-       [RecordedTest]
+        [Test]
         public async Task PageBlob_NotSupported()
         {
             var prog = new EventGrid_PageBlob();

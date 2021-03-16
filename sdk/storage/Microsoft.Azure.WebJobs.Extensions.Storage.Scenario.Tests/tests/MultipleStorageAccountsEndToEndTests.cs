@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             await _fixture.DisposeAsync();
         }
 
-       [RecordedTest]
+        [Test]
         public async Task BlobToBlob_DifferentAccounts_PrimaryToSecondary_Succeeds()
         {
             BlockBlobClient resultBlob = null;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.AreEqual(TestData, data);
         }
 
-       [RecordedTest]
+        [Test]
         public async Task BlobToBlob_DifferentAccounts_SecondaryToPrimary_Succeeds()
         {
             BlockBlobClient resultBlob = null;
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.AreEqual(TestData, data);
         }
 
-       [RecordedTest]
+        [Test]
         public async Task QueueToQueue_DifferentAccounts_PrimaryToSecondary_Succeeds()
         {
             QueueMessage resultMessage = null;
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.AreEqual(TestData, data);
         }
 
-       [RecordedTest]
+        [Test]
         public async Task QueueToQueue_DifferentAccounts_SecondaryToPrimary_Succeeds()
         {
             QueueMessage resultMessage = null;

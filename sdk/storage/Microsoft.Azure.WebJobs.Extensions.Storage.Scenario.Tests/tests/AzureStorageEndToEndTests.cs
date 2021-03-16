@@ -154,7 +154,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             await EndToEndTest(uploadBlobBeforeHostStart: false);
         }
 
-       [RecordedTest]
+       [Test]
         public async Task AzureStorageEndToEndFast()
         {
             await EndToEndTest(uploadBlobBeforeHostStart: true);
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.True(signaled, $"[{DateTime.UtcNow.ToString("HH:mm:ss.fff")}] Function chain did not complete in {waitTime}. Logs:{Environment.NewLine}{host.GetTestLoggerProvider().GetLogString()}");
         }
 
-       [RecordedTest]
+       [Test]
         public async Task BadQueueMessageE2ETests()
         {
             // This test ensures that the host does not crash on a bad message (it previously did)

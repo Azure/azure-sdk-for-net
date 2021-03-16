@@ -21,7 +21,7 @@ namespace Azure.Storage.Queues.Test
         {
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void QueueSasBuilder_ToSasQueryParameters_VersionTest()
         {
             // Arrange
@@ -47,7 +47,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void QueueSasBuilder_ToSasQueryParameters_NoVersionTest()
         {
             // Arrange
@@ -73,7 +73,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void QueueSasBuilder_NullSharedKeyCredentialTest()
         {
             // Arrange
@@ -85,7 +85,7 @@ namespace Azure.Storage.Queues.Test
             Assert.Throws<ArgumentNullException>(() => queueSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void ToSasQueryParameters_IdentifierTest()
         {
             // Arrange
@@ -109,7 +109,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2019_12_12)]
         [TestCase("FTPUCALXDWR")]
         [TestCase("rwdxlacuptf")]
@@ -138,7 +138,7 @@ namespace Azure.Storage.Queues.Test
             await queueClient.GetPropertiesAsync();
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task AccountPermissionsRawPermissions_InvalidPermission()
         {
             // Arrange
@@ -157,7 +157,7 @@ namespace Azure.Storage.Queues.Test
                 new ArgumentException("e is not a valid SAS permission"));
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [TestCase("PUAR")]
         [TestCase("raup")]
         public async Task QueuePermissionsRawPermissions(string permissionsString)
@@ -189,7 +189,7 @@ namespace Azure.Storage.Queues.Test
             await sasQueueClient.PeekMessagesAsync();
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task QueuePermissionsRawPermissions_Invalid()
         {
             // Arrange
@@ -210,7 +210,7 @@ namespace Azure.Storage.Queues.Test
                 new ArgumentException("s is not a valid SAS permission"));
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void QueueUriBuilder_LocalDockerUrl_PortTest()
         {
             // Arrange
@@ -234,7 +234,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void QueueUriBuilder_CustomUri_AccountShareFileTest()
         {
             // Arrange

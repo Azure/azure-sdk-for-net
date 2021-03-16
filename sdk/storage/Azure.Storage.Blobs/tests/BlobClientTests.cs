@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Test
         {
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -58,7 +58,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("accountName", builder2.AccountName);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void Ctor_Uri()
         {
             var accountName = "accountName";
@@ -73,7 +73,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(accountName, builder2.AccountName);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void Ctor_UriNonIpStyle()
         {
             // Arrange
@@ -94,7 +94,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(accountName, builder.AccountName);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
@@ -106,7 +106,7 @@ namespace Azure.Storage.Blobs.Test
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void Ctor_CPK_Http()
         {
             // Arrange
@@ -123,7 +123,7 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("Cannot use client-provided key without HTTPS."));
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [Ignore("#10044: Re-enable failing Storage tests")]
         public void Ctor_CPK_EncryptionScope()
         {
@@ -141,7 +141,7 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
             // Arrange
@@ -159,7 +159,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(blobProperties);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
         {
             // Arrange
@@ -176,7 +176,7 @@ namespace Azure.Storage.Blobs.Test
 
         #region Upload
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_Stream()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -219,7 +219,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, download.Value.Content.ToArray());
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UploadAsync_Stream_Tags()
         {
@@ -270,7 +270,7 @@ namespace Azure.Storage.Blobs.Test
             AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_Stream_UploadsBlock()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -287,7 +287,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [TestCase(1)]
         [TestCase(4)]
         [TestCase(8)]
@@ -324,7 +324,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_Stream_Overloads()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -373,7 +373,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_Stream_NullStreamFail()
         {
             // Arrange
@@ -393,7 +393,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_File()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -435,7 +435,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UploadAsync_File_Tags()
         {
@@ -480,7 +480,7 @@ namespace Azure.Storage.Blobs.Test
             AssertDictionaryEquality(tags, response.Value.Tags);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_File_UploadsBlock()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -511,7 +511,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_Stream_InvalidStreamPosition()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -532,7 +532,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_NonZeroStreamPosition()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -559,7 +559,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(expectedData, actual.ToArray());
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_NonZeroStreamPositionMultipleBlocks()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -598,7 +598,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(expectedData, actual.ToArray());
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [TestCase(1)]
         [TestCase(4)]
         [TestCase(8)]
@@ -649,7 +649,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(BlobType.Block, properties.Value.BlobType);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [TestCase(1)]
         public async Task UploadAsync_File_AccessTier(int? maximumThreadCount)
         {
@@ -683,7 +683,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(AccessTier.Cool.ToString(), properties.Value.AccessTier);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [TestCase(1)]
         public async Task UploadAsync_File_AccessTierFail(int? maximumThreadCount)
         {
@@ -720,7 +720,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_File_Overloads()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -855,7 +855,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [TestCase(512)]
         [TestCase(1 * Constants.KB)]
         [TestCase(2 * Constants.KB)]
@@ -866,16 +866,16 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(50 * Constants.KB)]
         // [TestCase(501 * Constants.KB)] // TODO: #6781 We don't want to add 500K of random data in the recordings
         public async Task UploadStreamAsync_SmallBlobs(long size) =>
-            // Use a 1KB threshold so we get a lot of individual blocks
-            await UploadStreamAndVerify(
-                size,
-                new StorageTransferOptions
-                {
-                    MaximumTransferLength = Constants.KB,
-                    InitialTransferLength = Constants.KB
-                });
+             // Use a 1KB threshold so we get a lot of individual blocks
+             await UploadStreamAndVerify(
+                 size,
+                 new StorageTransferOptions
+                 {
+                     MaximumTransferLength = Constants.KB,
+                     InitialTransferLength = Constants.KB
+                 });
 
-       [RecordedTest]
+        [RecordedTest]
         [TestCase(512)]
         [TestCase(1 * Constants.KB)]
         [TestCase(2 * Constants.KB)]
@@ -886,16 +886,16 @@ namespace Azure.Storage.Blobs.Test
         [TestCase(50 * Constants.KB)]
         // [TestCase(501 * Constants.KB)] // TODO: #6781 We don't want to add 500K of random data in the recordings
         public async Task UploadFileAsync_SmallBlobs(long size) =>
-            // Use a 1KB threshold so we get a lot of individual blocks
-            await UploadFileAndVerify(
-                size,
-                new StorageTransferOptions
-                {
-                    MaximumTransferLength = Constants.KB,
-                    InitialTransferLength = Constants.KB
-                });
+             // Use a 1KB threshold so we get a lot of individual blocks
+             await UploadFileAndVerify(
+                 size,
+                 new StorageTransferOptions
+                 {
+                     MaximumTransferLength = Constants.KB,
+                     InitialTransferLength = Constants.KB
+                 });
 
-       [RecordedTest]
+        [Test]
         [LiveOnly]
         [Explicit("These tests are timing out occasionally due to issue described in https://github.com/Azure/azure-sdk-for-net/issues/9340")]
         [TestCase(33 * Constants.MB, 1)]
@@ -926,7 +926,7 @@ namespace Azure.Storage.Blobs.Test
                 });
         }
 
-       [RecordedTest]
+        [Test]
         [LiveOnly]
         [Explicit("These tests are timing out occasionally due to issue described in https://github.com/Azure/azure-sdk-for-net/issues/9340")]
         [TestCase(33 * Constants.MB, 1)]
@@ -949,14 +949,15 @@ namespace Azure.Storage.Blobs.Test
             // TODO: #6781 We don't want to add 1GB of random data in the recordings
             await UploadFileAndVerify(
                 size,
-                new StorageTransferOptions {
+                new StorageTransferOptions
+                {
                     MaximumConcurrency = maximumThreadCount,
                     MaximumTransferLength = 16 * Constants.MB,
                     InitialTransferLength = 16 * Constants.MB
                 });
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_DoesNotOverwriteDefault_Stream()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -988,7 +989,7 @@ namespace Azure.Storage.Blobs.Test
                 async () => await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(Constants.KB))));
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_DoesNotOverwrite_Stream()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1020,7 +1021,7 @@ namespace Azure.Storage.Blobs.Test
                 async () => await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(Constants.KB)), overwrite: false));
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_OverwritesDeliberately_Stream()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1050,7 +1051,7 @@ namespace Azure.Storage.Blobs.Test
             await blob.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(Constants.KB)), overwrite: true);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_DoesNotOverwriteDefault_Path()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1076,7 +1077,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_DoesNotOverwrite_Path()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1102,7 +1103,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task UploadAsync_OverwritesDeliberately_Path()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1128,7 +1129,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [LiveOnly]
-       [RecordedTest]
+        [Test]
         [Explicit("#10716 - Disabled failing UploadAsync_ProgressReporting live test")]
         public async Task UploadAsync_ProgressReporting()
         {
@@ -1154,7 +1155,7 @@ namespace Azure.Storage.Blobs.Test
         }
         #endregion Upload
 
-       [RecordedTest]
+        [Test]
         [Explicit]
         [Ignore("The latest test runner isn't handling the [Explicit] attribute properly")]
         public async Task Perf_SmallBlobs()
@@ -1186,7 +1187,7 @@ namespace Azure.Storage.Blobs.Test
             }
         } // Add breakpoint here to stop collecting traces
 
-       [RecordedTest]
+        [Test]
         [Explicit] // This runs for a full minute and uploads a ton of data.  Don't want this on every run.
         [Ignore("The latest test runner isn't handling the [Explicit] attribute properly")]
         public async Task Upload_Stress()
@@ -1216,7 +1217,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [Test]
         [LiveOnly] // Don't want a 100MB recording
         [Explicit("#10717 - Disabled failing ChecksForCancelation live test")]
         public async Task ChecksForCancelation()
@@ -1259,7 +1260,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void WithSnapshot()
         {
             // Arrange
@@ -1288,7 +1289,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(snapshotUri, blobUriBuilder.ToUri());
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void WithVersion()
         {
             // Arrange
@@ -1317,7 +1318,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.

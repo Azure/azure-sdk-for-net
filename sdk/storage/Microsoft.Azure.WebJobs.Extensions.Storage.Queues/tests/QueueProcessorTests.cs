@@ -54,7 +54,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             _processor = new QueueProcessor(context);
         }
 
-       [RecordedTest]
+       [Test]
         public void Constructor_DefaultsValues()
         {
             var options = new QueuesOptions
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual(options.MaxPollingInterval, localProcessor.QueuesOptions.MaxPollingInterval);
         }
 
-       [RecordedTest]
+       [Test]
         public async Task CompleteProcessingMessageAsync_Success_DeletesMessage()
         {
             await _queue.SendMessageAsync("Test Message");
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.Null(message);
         }
 
-       [RecordedTest]
+       [Test]
         public async Task CompleteProcessingMessageAsync_FailureWithoutPoisonQueue_DoesNotDeleteMessage()
         {
             await _queue.SendMessageAsync("Test Message");
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual(id, message.MessageId);
         }
 
-       [RecordedTest]
+       [Test]
         public async Task CompleteProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
             QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, _queuesOptions, _poisonQueue);
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.True(poisonMessageHandlerCalled);
         }
 
-       [RecordedTest]
+       [Test]
         public async Task CompleteProcessingMessageAsync_Failure_AppliesVisibilityTimeout()
         {
             var queuesOptions = new QueuesOptions
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual(queuesOptions.VisibilityTimeout, updatedVisibilityTimeout);
         }
 
-       [RecordedTest]
+       [Test]
         public async Task BeginProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
             QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, _queuesOptions, _poisonQueue);

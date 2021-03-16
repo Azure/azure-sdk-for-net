@@ -173,7 +173,7 @@ namespace Azure.Storage.Blobs.Test
             keyMock.SetupGet(k => k.DefaultKeyWrapAlgorithm).Returns(s_algorithmName);
             // track one had async-only key wrapping
             keyMock.Setup(k => k.WrapKeyAsync(IsNotNull<byte[]>(), IsAny<string>(), IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
-                // track 1 doesn't pass in the algorithm name, it lets the implementation return the default algorithm it chose
+                                                                                                                     // track 1 doesn't pass in the algorithm name, it lets the implementation return the default algorithm it chose
                 .Returns<byte[], string, CancellationToken>((key, algorithm, cancellationToken) => Task.FromResult(Tuple.Create(Xor(userKeyBytes, key), s_algorithmName)));
             keyMock.Setup(k => k.UnwrapKeyAsync(IsNotNull<byte[]>(), s_algorithmName, IsNotNull<CancellationToken>())) // track 1 doesn't pass in the same cancellation token?
                 .Returns<byte[], string, CancellationToken>((wrappedKey, algorithm, cancellationToken) => Task.FromResult(Xor(userKeyBytes, wrappedKey)));
@@ -206,7 +206,7 @@ namespace Azure.Storage.Blobs.Test
             return result;
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [LiveOnly]
         public void CanSwapKey()
         {
@@ -324,7 +324,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest] // multiple unalligned blocks
+        [RecordedTest] // multiple unalligned blocks
         [LiveOnly] // cannot seed content encryption key
         public async Task KeyResolverKicksIn()
         {
@@ -413,7 +413,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [LiveOnly] // cannot seed content encryption key
         public async Task Track2DownloadTrack1Blob()
         {
@@ -461,7 +461,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [LiveOnly] // cannot seed content encryption key
         public async Task Track1DownloadTrack2Blob()
         {
@@ -510,7 +510,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [LiveOnly] // need access to keyvault service && cannot seed content encryption key
         public async Task RoundtripWithKeyvaultProvider()
         {
@@ -624,7 +624,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [LiveOnly] // cannot seed content encryption key
         [Ignore("stress test")]
         public async Task StressAsync()
@@ -671,7 +671,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [LiveOnly]
         public async Task EncryptedReuploadSuccess()
         {
@@ -723,7 +723,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void CanGenerateSas_WithClientSideEncryptionOptions_True()
         {
             // Arrange
@@ -754,7 +754,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(blobEncrypted.CanGenerateSasUri);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void CanGenerateSas_WithClientSideEncryptionOptions_False()
         {
             // Arrange

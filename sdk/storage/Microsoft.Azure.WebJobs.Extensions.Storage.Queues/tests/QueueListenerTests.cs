@@ -77,13 +77,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
         public TestFixture Fixture { get; set; }
 
-       [RecordedTest]
+        [Test]
         public void ScaleMonitor_Id_ReturnsExpectedValue()
         {
             Assert.AreEqual("testfunction-queuetrigger-testqueue", _listener.Descriptor.Id);
         }
 
-       [RecordedTest]
+        [Test]
         public async Task GetMetrics_ReturnsExpectedResult()
         {
             var queuesOptions = new QueuesOptions();
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual(5, metrics.QueueLength);
         }
 
-       [RecordedTest]
+        [Test]
         public async Task GetMetrics_HandlesStorageExceptions()
         {
             var exception = new RequestFailedException(
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual("Error querying for queue scale status: Things are very wrong.", warning.FormattedMessage);
         }
 
-       [RecordedTest]
+        [Test]
         public void GetScaleStatus_NoMetrics_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual(ScaleVote.None, status.Vote);
         }
 
-       [RecordedTest]
+        [Test]
         public void GetScaleStatus_MessagesPerWorkerThresholdExceeded_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual(ScaleVote.ScaleOut, status.Vote);
         }
 
-       [RecordedTest]
+        [Test]
         public void GetScaleStatus_QueueLengthIncreasing_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual("Queue length is increasing for 'testqueue'", log.FormattedMessage);
         }
 
-       [RecordedTest]
+        [Test]
         public void GetScaleStatus_QueueTimeIncreasing_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual("Queue time is increasing for 'testqueue'", log.FormattedMessage);
         }
 
-       [RecordedTest]
+        [Test]
         public void GetScaleStatus_QueueLengthDecreasing_ReturnsVote_ScaleIn()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual("Queue length is decreasing for 'testqueue'", log.FormattedMessage);
         }
 
-       [RecordedTest]
+        [Test]
         public void GetScaleStatus_QueueTimeDecreasing_ReturnsVote_ScaleIn()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual("Queue time is decreasing for 'testqueue'", log.FormattedMessage);
         }
 
-       [RecordedTest]
+        [Test]
         public void GetScaleStatus_QueueSteady_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -336,7 +336,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual("Queue 'testqueue' is steady", log.FormattedMessage);
         }
 
-       [RecordedTest]
+        [Test]
         public void GetScaleStatus_QueueIdle_ReturnsVote_ScaleOut()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -364,7 +364,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual("Queue 'testqueue' is idle", log.FormattedMessage);
         }
 
-       [RecordedTest]
+        [Test]
         public void GetScaleStatus_UnderSampleCountThreshold_ReturnsVote_None()
         {
             var context = new ScaleStatusContext<QueueTriggerMetrics>
@@ -382,7 +382,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.AreEqual(ScaleVote.None, status.Vote);
         }
 
-       [RecordedTest]
+        [Test]
         public async Task UpdatedQueueMessage_RetainsOriginalProperties()
         {
             QueueClient queue = Fixture.CreateNewQueue();
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             mockTriggerExecutor.Verify(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), CancellationToken.None), Times.Exactly(2));
         }
 
-       [RecordedTest]
+        [Test]
         public async Task RenewedQueueMessage_DeletesCorrectly()
         {
             QueueClient queue = Fixture.CreateNewQueue();
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.IsNull(messageFromCloud);
         }
 
-       [RecordedTest]
+        [Test]
         public void CreateQueueProcessor_CreatesProcessorCorrectly()
         {
             QueueClient poisonQueue = Mock.Of<QueueClient>();
@@ -523,7 +523,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.False(poisonMessageHandlerInvoked);
         }
 
-       [RecordedTest]
+        [Test]
         public async Task ProcessMessageAsync_Success()
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -535,7 +535,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
         }
 
-       [RecordedTest]
+        [Test]
         public async Task GetMessages_QueueCheckThrowsTransientError_ReturnsBackoffResult()
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -553,7 +553,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             await result.Wait;
         }
 
-       [RecordedTest]
+        [Test]
         public async Task GetMessages_ChecksQueueExistence_UntilQueueExists()
         {
             var cancellationToken = new CancellationToken();
@@ -582,7 +582,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(numIterations - numFailedExistenceChecks));
         }
 
-       [RecordedTest]
+        [Test]
         public async Task GetMessages_ResetsQueueExistenceCheck_OnException()
         {
             var cancellationToken = new CancellationToken();
@@ -604,7 +604,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(5));
         }
 
-       [RecordedTest]
+        [Test]
         public async Task ProcessMessageAsync_QueueBeginProcessingMessageReturnsFalse_MessageNotProcessed()
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -613,7 +613,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
         }
 
-       [RecordedTest]
+        [Test]
         public async Task ProcessMessageAsync_FunctionInvocationFails()
         {
             CancellationToken cancellationToken = new CancellationToken();

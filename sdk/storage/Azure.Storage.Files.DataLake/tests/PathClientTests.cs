@@ -20,7 +20,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task Ctor_Uri()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -42,7 +42,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(uri, pathClient.Uri);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task Ctor_SharedKey()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -66,7 +66,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(uri, pathClient.Uri);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task Ctor_TokenCredential()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -88,7 +88,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(uri, pathClient.Uri);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task Ctor_ConnectionString_RoundTrip()
         {
             // Arrange
@@ -107,7 +107,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await connStringDirectory.GetAccessControlAsync();
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task Ctor_ConnectionString_GenerateSas()
         {
             // Arrange
@@ -128,7 +128,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await sasPathClient.GetAccessControlAsync();
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
@@ -145,7 +145,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public async Task Ctor_FileSystemAndPath()
         {
             // Arrange
@@ -161,7 +161,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         #region GenerateSasTests
-       [RecordedTest]
+        [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
@@ -193,7 +193,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(blob5.CanGenerateSasUri);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void CanGenerateSas_Mockable()
         {
             // Act
@@ -210,7 +210,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsTrue(pathClient.Object.CanGenerateSasUri);
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
@@ -241,7 +241,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void GenerateSas_Builder()
         {
             var constants = new TestConstants(this);
@@ -278,7 +278,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void GenerateSas_BuilderWrongFileSystemName()
         {
             // Arrange
@@ -313,7 +313,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void GenerateSas_BuilderWrongPath()
         {
             // Arrange
@@ -348,7 +348,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         public void GenerateSas_BuilderIsDirectoryError()
         {
             var constants = new TestConstants(this);
@@ -385,7 +385,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
         #endregion
 
-       [RecordedTest]
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.

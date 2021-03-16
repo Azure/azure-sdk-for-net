@@ -169,13 +169,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             }
         }
 
-       [RecordedTest]
+        [Test]
         public async Task PoisonMessage_CreatedInPrimaryStorageAccount()
         {
             await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.PrimaryStorageAccountConnectionString, true);
         }
 
-       [RecordedTest]
+        [Test]
         public async Task PoisonMessage_CreatedInSecondaryStorageAccount()
         {
             await PoisonMessage_CreatedInCorrectStorageAccount(TestEnvironment.SecondaryStorageAccountConnectionString, false);
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             }
         }
 
-       [RecordedTest]
+        [Test]
         public async Task BlobGetsProcessedOnlyOnce_SingleHost()
         {
             var blob = _testContainer.GetBlockBlobClient(TestBlobName);
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             Assert.AreEqual(1, prog._timesProcessed);
         } // host
 
-       [RecordedTest]
+        [Test]
         public async Task BlobChainTest()
         {
             // write the initial trigger blob to start the chain
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             }
         }
 
-       [RecordedTest]
+        [Test]
         public async Task GarbageMessageDoesNotCrashHost()
         {
             // write the initial trigger blob to start the chain
@@ -316,7 +316,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             }
         }
 
-       [RecordedTest]
+        [Test]
         public async Task BlobGetsProcessedOnlyOnce_MultipleHosts()
         {
             await _testContainer
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             var prog = new BlobGetsProcessedOnlyOnce_SingleHost_Program();
 
             string hostId = Guid.NewGuid().ToString("N");
-            var host1 = NewBuilder(prog, builder=>builder.UseHostId(hostId))
+            var host1 = NewBuilder(prog, builder => builder.UseHostId(hostId))
                 .Build();
             var host2 = NewBuilder(prog, builder => builder.UseHostId(hostId))
                 .Build();

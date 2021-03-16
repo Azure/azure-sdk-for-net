@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Tests
             blobServiceClient = new BlobServiceClient(connectionString, new BlobClientOptions() { Transport = transport });
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [LiveOnly]
         public async Task GetBlockListAsync_LongBlock()
         {
@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs.Tests
             Assert.Throws<OverflowException>(() => _ = response.Value.CommittedBlocks.First().Size); // if no overflow then we didn't actually test handling of long lengths
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [LiveOnly]
         public async Task CanHandleLongBlockBufferedUpload()
         {
@@ -90,7 +90,7 @@ namespace Azure.Storage.Blobs.Tests
             }
         }
 
-       [RecordedTest]
+        [RecordedTest]
         [LiveOnly]
         public async Task CanHandleLongBlockBufferedUploadInParallel()
         {
