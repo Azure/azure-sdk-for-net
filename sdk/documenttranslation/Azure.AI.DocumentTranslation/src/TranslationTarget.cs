@@ -19,5 +19,9 @@ namespace Azure.AI.DocumentTranslation
         /// <summary> Target Language. </summary>
         [CodeGenMember("Language")]
         public string LanguageCode { get; }
+
+        /// <summary> Category / custom system for translation request. </summary>
+        [CodeGenMember("Category")]
+        public string CategoryId { get; set; }
     }
 }

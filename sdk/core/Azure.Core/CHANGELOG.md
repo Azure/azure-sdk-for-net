@@ -5,6 +5,7 @@
 ### Key Bug Fixes
 
 - Check the `JsonIgnoreAttribute.Condition` property added in .NET 5 when discovering members with `JsonObjectSerializer`.
+- `ETag` now returns `string.Empty` if it is constructed with a null value.
 
 ## 1.10.0 (2021-03-09)
 

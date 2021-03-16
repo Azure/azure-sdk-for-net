@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_Uri()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -53,7 +53,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(uri, directoryClient.Uri);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_SharedKey()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -82,7 +82,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(uri, directoryClient.Uri);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_TokenCredential()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -109,7 +109,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(uri, directoryClient.Uri);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_ConnectionString_RoundTrip()
         {
             // Arrange
@@ -128,7 +128,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await connStringDirectory.GetAccessControlAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_ConnectionString_GenerateSas()
         {
             // Arrange
@@ -149,7 +149,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await sasDirectoryClient.GetAccessControlAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
@@ -166,7 +166,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
             // Arrange
@@ -184,7 +184,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(properties);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
         {
             // Arrange
@@ -199,7 +199,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -220,7 +220,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertCacheableProperty(name, () => directory.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_Error()
         {
             // Arrange
@@ -234,7 +234,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_HttpHeaders()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -262,7 +262,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(CacheControl, response.Value.CacheControl);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_Metadata()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -279,7 +279,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata, isDirectory: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_PermissionAndUmask()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -299,7 +299,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -327,7 +327,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -350,7 +350,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_NotExists()
         {
             // Arrange
@@ -364,7 +364,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.Value.ETag);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_Exists()
         {
             // Arrange
@@ -379,7 +379,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(response);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_Error()
         {
             // Arrange
@@ -393,7 +393,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExistsAsync_Exists()
         {
             // Arrange
@@ -408,7 +408,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsTrue(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExistsAsync_NotExists()
         {
             // Arrange
@@ -422,7 +422,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExistsAsync_FileSystemNotExists()
         {
             // Arrange
@@ -437,7 +437,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExistsAsync_Error()
         {
             // Arrange
@@ -451,7 +451,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfExists_Exists()
         {
             // Arrange
@@ -469,7 +469,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             response = await directory.DeleteIfExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfExists_NotExists()
         {
             // Arrange
@@ -483,7 +483,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfExistsAsync_FileSystemNotExists()
         {
             // Arrange
@@ -498,7 +498,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfNotExistsAsync_Error()
         {
             // Arrange
@@ -512,7 +512,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -526,7 +526,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response response = await directory.DeleteAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -548,7 +548,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -571,7 +571,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenameAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -587,7 +587,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenameAsync_FileSystemSAS()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -632,7 +632,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(destSasQueryParameters.ToString(), uriBuilder.Sas.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenameAsync_FileSystem()
         {
             await using DisposingFileSystem sourceTest = await GetNewFileSystem();
@@ -651,7 +651,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Response<PathProperties> response = await destDirectory.GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenameAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -667,7 +667,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("SourcePathNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenameAsync_DestinationConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -696,7 +696,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenameAsync_DestinationConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -722,7 +722,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenameAsync_SourceConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -751,7 +751,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenameAsync_SourceConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -777,7 +777,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase(" my cool directory ")]
@@ -800,7 +800,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(expectedDestDirectoryUri, destDirectory.Uri);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase(" my cool directory ")]
@@ -824,7 +824,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(expectedDestDirectoryUri, destDirectory.Uri);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccessControlAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -840,7 +840,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(accessControl.AccessControlList);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccessControlAsync_RootDirectory()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -856,7 +856,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(accessControl.AccessControlList);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccessControlAsync_Oauth()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -881,7 +881,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(accessControl.AccessControlList);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccessControlAsync_FileSystemSAS()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -908,7 +908,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(accessControl.AccessControlList);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccessControlAsync_FileSystemIdentitySAS()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -941,7 +941,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(accessControl.AccessControlList);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccessControlAsync_PathSAS()
         {
             var fileSystemName = GetNewFileSystemName();
@@ -969,7 +969,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(accessControl.AccessControlList);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccessControlAsync_PathIdentitySAS()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -1003,7 +1003,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(accessControl.AccessControlList);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccessControlAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1017,7 +1017,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("PathNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccessControlAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -1040,7 +1040,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Ignore("service bug")]
-        [Test]
+        [RecordedTest]
         public async Task GetAccessControlAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -1061,7 +1061,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetAccessControlAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1074,7 +1074,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertValidStoragePathInfo(response);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetAccessControlAsync_RootDirectory()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -1088,7 +1088,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertValidStoragePathInfo(response);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetAccessControlAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -1115,7 +1115,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetAccessControlAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -1138,7 +1138,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync()
         {
@@ -1162,7 +1162,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_InBatches()
         {
@@ -1253,7 +1253,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
         {
@@ -1297,7 +1297,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(7, progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_InBatches_WithExplicitIteration()
         {
@@ -1343,7 +1343,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
         {
@@ -1407,7 +1407,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.That(failure.ErrorMessage, Is.Not.Null.Or.Empty);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetAccessControlRecursiveAsync_ContinueOnFailure()
         {
@@ -1594,7 +1594,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetAccessControlRecursiveAsync_BatchFailures_BatchSize()
         {
@@ -1685,7 +1685,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task SetAccessControlRecursiveAsync_ContinueOnFailure_RetrieveBatchFailures()
         {
@@ -1755,7 +1755,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_NetworkError()
         {
@@ -1766,7 +1766,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem(fileSystemName: fileSystemName);
             DataLakeDirectoryClient rootDirectory = test.FileSystem.GetRootDirectoryClient();
-                await rootDirectory.SetAccessControlListAsync(ExecuteOnlyAccessControlList);
+            await rootDirectory.SetAccessControlListAsync(ExecuteOnlyAccessControlList);
 
             TokenCredential tokenCredential = GetOAuthCredential(TestConfigHierarchicalNamespace);
             Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{topDirectoryName}").ToHttps();
@@ -1784,7 +1784,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_TaskCanceledError()
         {
@@ -1815,7 +1815,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetAccessControlRecursiveAsync_Error()
         {
@@ -1837,7 +1837,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => { });
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync()
         {
@@ -1861,7 +1861,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_InBatches()
         {
@@ -1952,7 +1952,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
         {
@@ -1996,7 +1996,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(7, progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_InBatches_WithExplicitIteration()
         {
@@ -2043,7 +2043,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UpdateAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
         {
@@ -2115,7 +2115,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.That(failure.ErrorMessage, Is.Not.Null.Or.Empty);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UpdateAccessControlRecursiveAsync_ContinueOnFailure()
         {
@@ -2302,7 +2302,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UpdateAccessControlRecursiveAsync_BatchFailures_BatchSize()
         {
@@ -2393,7 +2393,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UpdateAccessControlRecursiveAsync_ContinueOnFailure_RetrieveBatchFailures()
         {
@@ -2463,7 +2463,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_NetworkError()
         {
@@ -2492,7 +2492,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_TaskCanceledError()
         {
@@ -2523,7 +2523,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task UpdateAccessControlRecursiveAsync_Error()
         {
@@ -2546,7 +2546,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => { });
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync()
         {
@@ -2570,7 +2570,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_InBatches()
         {
@@ -2662,7 +2662,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_InBatches_WithProgressMonitoring()
         {
@@ -2706,7 +2706,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(7, progress.CummulativeCounters[3].ChangedDirectoriesCount + progress.CummulativeCounters[3].ChangedFilesCount);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_InBatches_WithExplicitIteration()
         {
@@ -2753,7 +2753,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RemoveAccessControlRecursiveAsync_WithProgressMonitoring_WithFailure()
         {
@@ -2819,7 +2819,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.That(failure.ErrorMessage, Is.Not.Null.Or.Empty);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RemoveAccessControlRecursiveAsync_ContinueOnFailure()
         {
@@ -3005,7 +3005,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RemoveAccessControlRecursiveAsync_BatchFailures_BatchSize()
         {
@@ -3096,7 +3096,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task RemoveAccessControlRecursiveAsync_ContinueOnFailure_RetrieveBatchFailures()
         {
@@ -3166,7 +3166,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNull(result.ContinuationToken);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_NetworkError()
         {
@@ -3195,7 +3195,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_TaskCanceledError()
         {
@@ -3226,7 +3226,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => Assert.AreEqual(e.ContinuationToken, sampleToken));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2019_12_12)]
         public async Task RemoveAccessControlRecursiveAsync_Error()
         {
@@ -3249,7 +3249,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     e => { });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPermissionsAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3262,7 +3262,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertValidStoragePathInfo(response);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPermissionsAsync_JustOwner_JustGroup()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3286,7 +3286,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertValidStoragePathInfo(response);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPermissionsAsync_RootDirectory()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3300,7 +3300,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertValidStoragePathInfo(response);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPermissionsAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -3327,7 +3327,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPermissionsAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -3350,7 +3350,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3364,7 +3364,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsTrue(response.Value.IsDirectory);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_Oauth()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -3386,7 +3386,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_FileSystemSAS()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -3414,7 +3414,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertCacheableProperty(directoryName, () => directory.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_FileSystemIdentitySAS()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -3444,7 +3444,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_PathSAS()
         {
             var fileSystemName = GetNewFileSystemName();
@@ -3469,7 +3469,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_PathSasWithIdentifiers()
         {
             string fileSystemName = GetNewFileSystemName();
@@ -3516,7 +3516,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_PathIdentitySAS()
         {
             DataLakeServiceClient oauthService = GetServiceClient_OAuth();
@@ -3547,7 +3547,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -3571,7 +3571,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -3594,7 +3594,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3608,7 +3608,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetHttpHeadersAsync()
         {
             var constants = new TestConstants(this);
@@ -3635,9 +3635,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
             Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
             Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
-    }
+        }
 
-        [Test]
+        [RecordedTest]
         public async Task SetHttpHeadersAsync_Error()
         {
             var constants = new TestConstants(this);
@@ -3661,7 +3661,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetHttpHeadersAsync_Conditions()
         {
             var constants = new TestConstants(this);
@@ -3697,7 +3697,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetHttpHeadersAsync_ConditionsFail()
         {
             var constants = new TestConstants(this);
@@ -3729,7 +3729,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetMetadataAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3746,7 +3746,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertMetadataEquality(metadata, response.Value.Metadata, isDirectory: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetMetadataAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3761,7 +3761,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetMetadataAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -3789,7 +3789,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetMetadataAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -3813,7 +3813,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateFileAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3829,7 +3829,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(fileName, response.Value.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateFileAsync_HttpHeaders()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3857,7 +3857,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(CacheControl, response.Value.CacheControl);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateFileAsync_Metadata()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3874,7 +3874,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata, isDirectory: false);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateFileAsync_PermissionAndUmask()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3895,7 +3895,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateFileAsync_Error()
         {
             // Arrange
@@ -3909,7 +3909,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteFileAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3924,7 +3924,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directory.DeleteFileAsync(fileName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteFileAsync_Error()
         {
             // Arrange
@@ -3938,7 +3938,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateSubDirectoryAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3954,7 +3954,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(directoryName, response.Value.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateSubDirectoryAsync_Error()
         {
             // Arrange
@@ -3968,7 +3968,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("FilesystemNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateSubDirectoryAsync_HttpHeaders()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -3998,7 +3998,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(CacheControl, response.Value.CacheControl);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateSubDirectoryAsync_Metadata()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4017,7 +4017,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertMetadataEquality(metadata, getPropertiesResponse.Value.Metadata, isDirectory: true);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateSubDirectoryAsync_PermissionAndUmask()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4038,7 +4038,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertPathPermissionsEquality(PathPermissions.ParseSymbolicPermissions("rwx-w----"), response.Value.Permissions);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateSubDirectoryAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -4067,7 +4067,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateSubDirectoryAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -4107,7 +4107,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directory.DeleteFileAsync(directoryName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteSubDirectoryAsync_Conditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -4130,7 +4130,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteSubDirectoryAsync_ConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -4154,7 +4154,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AcquireLeaseAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4172,7 +4172,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AcquireLeaseAsync_ExtendedExceptionMessage()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4194,7 +4194,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AcquireLeaseAsync_Conditions()
         {
             foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
@@ -4221,7 +4221,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AcquireLeaseAsync_ConditionsFail()
         {
             foreach (AccessConditionParameters parameters in NoLease_ConditionsFail_Data)
@@ -4246,7 +4246,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AcquireLeaseAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4262,7 +4262,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenewLeaseAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4283,7 +4283,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenewLeaseAsync_Conditions()
         {
             foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
@@ -4311,7 +4311,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenewLeaseAsync_ConditionsFail()
         {
             foreach (AccessConditionParameters parameters in NoLease_ConditionsFail_Data)
@@ -4337,7 +4337,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenewLeaseAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4352,7 +4352,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ReleaseLeaseAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4373,7 +4373,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ReleaseLeaseAsync_Conditions()
         {
             foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
@@ -4401,7 +4401,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ReleaseLeaseAsync_ConditionsFail()
         {
             foreach (AccessConditionParameters parameters in NoLease_ConditionsFail_Data)
@@ -4427,7 +4427,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ReleaseLeaseAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4442,7 +4442,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ChangeLeaseAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4464,7 +4464,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ChangeLeaseAsync_Conditions()
         {
             foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
@@ -4495,7 +4495,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ChangeLeaseAsync_ConditionsFail()
         {
             foreach (AccessConditionParameters parameters in NoLease_ConditionsFail_Data)
@@ -4524,7 +4524,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ChangeLeaseAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4540,7 +4540,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task BreakLeaseAsync()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4561,7 +4561,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task BreakLeaseAsync_Conditions()
         {
             foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
@@ -4589,7 +4589,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task BreakLeaseAsync_ConditionsFail()
         {
             foreach (AccessConditionParameters parameters in NoLease_ConditionsFail_Data)
@@ -4615,7 +4615,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task BreakLeaseAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4629,7 +4629,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetDirectoryClientAsync_AsciiName()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4649,7 +4649,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.Contains(directoryName, names);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetDirectoryClientAsync_NonAsciiName()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4669,7 +4669,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.Contains(directoryName, names);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetSubDirectoryClientAsync_AsciiName()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4693,7 +4693,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.Contains(fullPathName, names);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetSubDirectoryClientAsync_NonAsciiName()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -4717,7 +4717,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.Contains(fullPathName, names);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("directory", "!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("!'();[]", "!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("%21%27%28%29", "!'();[]@&%=+$,#äÄöÖüÜß;")]
@@ -4764,7 +4764,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("directory", "!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("!'();[]", "!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("%21%27%28%29", "!'();[]@&%=+$,#äÄöÖüÜß;")]
@@ -4810,7 +4810,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateSubDirectoryAndFileAsync()
         {
             // Arrange
@@ -4830,7 +4830,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual($"{subdirectory.Path}/{fileName}", file.Path);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateSubDirectoryAndSubDirectoryAsync()
         {
             // Arrange
@@ -4850,7 +4850,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual($"{subdirectory.Path}/{lowerSubDirectoryName}", lowerSubDirectory.Path);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPathsAsync()
         {
             // Arrange
@@ -4870,7 +4870,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPathsAsync_UriCtor()
         {
             // Arrange
@@ -4895,7 +4895,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPathsAsync_Recursive()
         {
             // Arrange
@@ -4922,7 +4922,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual($"{directoryName}/foo/foo", paths[8].Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPathsAsync_Upn()
         {
             // Arrange
@@ -4946,7 +4946,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual($"{directoryName}/foo", paths[2].Name);
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task GetPathsAsync_MaxResults()
         {
@@ -4965,7 +4965,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual($"{directoryName}/baz", page.Values[1].Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPathsAsync_Error()
         {
             // Arrange
@@ -4994,7 +4994,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         #region GenerateSasTests
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
@@ -5023,7 +5023,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(directory3.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_GetFileClient()
         {
             // Arrange
@@ -5055,7 +5055,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(file3.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_GetSubDirectoryClient()
         {
             // Arrange
@@ -5087,7 +5087,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(subdirectory3.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_Mockable()
         {
             // Act
@@ -5104,7 +5104,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsTrue(directory.Object.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
@@ -5134,7 +5134,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_Builder()
         {
             var constants = new TestConstants(this);
@@ -5173,7 +5173,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_BuilderWrongFileSystemName()
         {
             // Arrange
@@ -5209,7 +5209,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_BuilderWrongDirectoryName()
         {
             // Arrange
@@ -5246,7 +5246,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_BuilderIsDirectoryError()
         {
             var constants = new TestConstants(this);
@@ -5284,7 +5284,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
         #endregion
 
-        [Test]
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.

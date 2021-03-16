@@ -177,7 +177,7 @@ namespace Azure.AI.DocumentTranslation
 
             var target = new TranslationTarget(targetBlobContainerSas, targetLanguageCode)
             {
-                Category = options?.Category
+                CategoryId = options?.Category
             };
 
             if (glossary != null)
@@ -236,7 +236,7 @@ namespace Azure.AI.DocumentTranslation
 
             var target = new TranslationTarget(targetBlobContainerSas, targetLanguageCode)
             {
-                Category = options?.Category
+                CategoryId = options?.Category
             };
 
             if (glossary != null)
