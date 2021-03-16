@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Translator is a cloud-based machine translation service and is part of the Azure Cognitive Services family of cognitive APIs used to build intelligent apps. Translator is easy to integrate in your applications, websites, tools, and solutions. It allows you to add multi-language user experiences in 90 languages and dialects. And it can be used on any hardware platform with any operating system for text translation.</Description>
     <AssemblyTitle>Microsoft Azure.AI.DocumentTranslation client library</AssemblyTitle>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0-beta.1</Version>
     <PackageTags>Microsoft Azure Document Translation</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -26,6 +26,7 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

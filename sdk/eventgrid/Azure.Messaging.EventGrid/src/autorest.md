@@ -38,6 +38,17 @@ directive:
     $.ResourceWriteSuccessData["x-ms-client-name"] = "ResourceWriteSuccessEventData";
 ```
 
+### Fix casing
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    $.RedisExportRDBCompletedEventData["x-ms-client-name"] = "RedisExportRdbCompletedEventData";
+    $.RedisImportRDBCompletedEventData["x-ms-client-name"] = "RedisImportRdbCompletedEventData";
+```
+
 ### Apply converters and update namespace for system event data models
 ``` yaml
 directive:

@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The AccessToken. </summary>
-    public partial class AccessToken
+    internal partial class AccessToken
     {
         /// <summary> Initializes a new instance of AccessToken. </summary>
         internal AccessToken()

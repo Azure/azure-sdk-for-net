@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class DeletedRepository
+    internal partial class DeletedRepository
     {
         internal static DeletedRepository DeserializeDeletedRepository(JsonElement element)
         {

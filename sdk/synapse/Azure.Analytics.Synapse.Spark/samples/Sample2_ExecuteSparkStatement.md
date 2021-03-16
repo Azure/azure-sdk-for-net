@@ -12,7 +12,7 @@ string sparkPoolName = "<my-spark-pool-name>";
 
 string endpoint = "<my-endpoint-url>";
 
-SparkSessionClient client = new SparkSessionClient(endpoint, sparkPoolName, new DefaultAzureCredential());
+SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
 ```
 
 ## Create Spark session

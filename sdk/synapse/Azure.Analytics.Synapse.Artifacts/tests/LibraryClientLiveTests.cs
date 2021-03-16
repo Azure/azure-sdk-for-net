@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         private LibraryClient CreateClient()
         {
             return InstrumentClient(new LibraryClient(
-                TestEnvironment.EndpointUrl,
+                new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ArtifactsClientOptions())
             ));
