@@ -10,7 +10,7 @@ trigger:
   paths:
     include:
     - sdk/containerregistry/ci.yml
-    - sdk/containerregistry/Azure.Containers.ContainerRegistry
+    - sdk/containerregistry/Microsoft.Azure.ContainerRegistry
 
 pr:
   branches:
@@ -26,14 +26,14 @@ pr:
     - common/PerfStressShared/
     - common/Stress/
     - sdk/containerregistry/ci.yml
-    - sdk/containerregistry/Azure.Containers.ContainerRegistry
+    - sdk/containerregistry/Microsoft.Azure.ContainerRegistry
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: client
+    SDKType: data
     ServiceDirectory: containerregistry
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Containers.ContainerRegistry
-      safeName: AzureContainersContainerRegistry
+    - name: Microsoft.Azure.ContainerRegistry
+      safeName: MicrosoftAzureContainerRegistry
