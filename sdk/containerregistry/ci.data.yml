@@ -9,7 +9,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/containerregistry/ci.yml
+    - sdk/containerregistry/ci.data.yml
     - sdk/containerregistry/Microsoft.Azure.ContainerRegistry
 
 pr:
@@ -25,7 +25,7 @@ pr:
     - common/Perf/
     - common/PerfStressShared/
     - common/Stress/
-    - sdk/containerregistry/ci.yml
+    - sdk/containerregistry/ci.data.yml
     - sdk/containerregistry/Microsoft.Azure.ContainerRegistry
 
 extends:
