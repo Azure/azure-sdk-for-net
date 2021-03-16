@@ -13,7 +13,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -36,7 +36,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             RepositoryProperties properties = await client.GetPropertiesAsync();
 
             Assert.AreEqual(_repositoryName, properties.Name);
-            Assert.AreEqual(TestEnvironment.Endpoint, properties.Registry);
+            Assert.AreEqual(new Uri(TestEnvironment.Endpoint).Host, properties.Registry);
         }
     }
 }
