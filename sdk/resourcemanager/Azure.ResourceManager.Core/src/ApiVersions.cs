@@ -53,8 +53,9 @@ namespace Azure.ResourceManager.Core
         {
             var results =
                         from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                        where assembly.GetName().ToString().StartsWith("Azure.") || assembly.GetName().ToString().StartsWith("Proto.")
                         from type in assembly.GetTypes()
-                        where type.IsSealed && !type.IsGenericType && !type.IsNested
+                        where type.IsSealed && !type.IsGenericType && !type.IsNested && type.Name.Equals("AzureResourceManagerClientOptionsExtensions")
                         from method in type.GetMethods(BindingFlags.Static | BindingFlags.Public)
                         where method.IsDefined(typeof(ExtensionAttribute), false)
                         where method.GetParameters()[0].ParameterType == typeof(AzureResourceManagerClientOptions)
