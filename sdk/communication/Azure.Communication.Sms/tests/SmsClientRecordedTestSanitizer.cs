@@ -19,7 +19,6 @@ namespace Azure.Communication.Sms.Tests
             => variableName switch
             {
                 SmsClientTestEnvironment.FromPhoneNumberEnvironmentVariableName => "+14255550123",
-                SmsClientTestEnvironment.LiveTestConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
     }

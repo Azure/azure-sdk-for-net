@@ -46,5 +46,11 @@ namespace Azure.AI.DocumentTranslation
 
         /// <summary> Total characters charged by the API. </summary>
         public long TotalCharacterCharged => Summary.TotalCharacterCharged;
+
+        /// <summary> Returns true if the translation operation is completed. </summary>
+        public bool HasCompleted => Status == TranslationStatus.Succeeded
+                                    || Status == TranslationStatus.Failed
+                                    || Status == TranslationStatus.Cancelled
+                                    || Status == TranslationStatus.ValidationFailed;
     }
 }

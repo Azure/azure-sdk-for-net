@@ -307,15 +307,12 @@ Describe "Platform Matrix Generation" -Tag "generate" {
     }
 
     It "Should get matrix dimensions from Nd parameters" {
-        GetMatrixDimensions $generateConfig.orderedMatrix | Should -Be 3, 2, 2
-
-        $generateConfig.orderedMatrix.Add("testStringParameter", "test")
-        GetMatrixDimensions $generateConfig.orderedMatrix | Should -Be 3, 2, 2, 1
+        GetMatrixDimensions $generateConfig.matrixParameters | Should -Be 3, 2, 2
     }
 
     It "Should use name overrides from displayNames" {
-        $dimensions = GetMatrixDimensions $generateConfig.orderedMatrix
-        $matrix = GenerateFullMatrix $generateConfig.orderedMatrix $generateconfig.displayNamesLookup
+        $dimensions = GetMatrixDimensions $generateConfig.matrixParameters
+        $matrix = GenerateFullMatrix $generateConfig.matrixParameters $generateconfig.displayNamesLookup
 
         $element = GetNdMatrixElement @(0, 0, 0) $matrix $dimensions
         $element.name | Should -Be "windows2019_net461"
@@ -330,8 +327,8 @@ Describe "Platform Matrix Generation" -Tag "generate" {
     It "Should enforce valid display name format" {
         $generateconfig.displayNamesLookup["net461"] = '123.Some.456.Invalid_format-name$(foo)'
         $generateconfig.displayNamesLookup["netcoreapp2.1"] = (New-Object string[] 150) -join "a"
-        $dimensions = GetMatrixDimensions $generateConfig.orderedMatrix
-        $matrix = GenerateFullMatrix $generateconfig.orderedMatrix $generateconfig.displayNamesLookup
+        $dimensions = GetMatrixDimensions $generateConfig.matrixParameters
+        $matrix = GenerateFullMatrix $generateconfig.matrixParameters $generateconfig.displayNamesLookup
 
         $element = GetNdMatrixElement @(0, 0, 0) $matrix $dimensions
         $element.name | Should -Be "windows2019_123some456invalid_formatnamefoo"
@@ -344,8 +341,8 @@ Describe "Platform Matrix Generation" -Tag "generate" {
 
 
     It "Should initialize an N-dimensional matrix from all parameter permutations" {
-        $dimensions = GetMatrixDimensions $generateConfig.orderedMatrix
-        $matrix = GenerateFullMatrix $generateConfig.orderedMatrix $generateConfig.displayNamesLookup
+        $dimensions = GetMatrixDimensions $generateConfig.matrixParameters
+        $matrix = GenerateFullMatrix $generateConfig.matrixParameters $generateConfig.displayNamesLookup
         $matrix.Count | Should -Be 12
 
         $element = $matrix[0].parameters
@@ -369,8 +366,8 @@ Describe "Platform Matrix Generation" -Tag "generate" {
         @{ i = 1; name = "ubuntu1804_netcoreapp21_withfoo"; operatingSystem = "ubuntu-18.04"; framework = "netcoreapp2.1"; additionalArguments = "--enableFoo"; }
         @{ i = 2; name = "macOS1015_net461"; operatingSystem = "macOS-10.15"; framework = "net461"; additionalArguments = ""; }
     ) {
-        $sparseMatrix = GenerateSparseMatrix $generateConfig.orderedMatrix $generateConfig.displayNamesLookup
-        $dimensions = GetMatrixDimensions $generateConfig.orderedMatrix
+        $sparseMatrix = GenerateSparseMatrix $generateConfig.matrixParameters $generateConfig.displayNamesLookup
+        $dimensions = GetMatrixDimensions $generateConfig.matrixParameters
         $size = ($dimensions | Measure-Object -Maximum).Maximum
         $sparseMatrix.Count | Should -Be $size
 
@@ -398,18 +395,14 @@ Describe "Config File Object Conversion" -Tag "convert" {
     }
 
     It "Should convert a matrix config" {
-        $config.orderedMatrix | Should -BeOfType [System.Collections.Specialized.OrderedDictionary]
-        $config.orderedMatrix.operatingSystem[0] | Should -Be "windows-2019"
+        $config.matrixParameters[0].Name | Should -Be "operatingSystem"
+        $config.matrixParameters[0].Flatten()[0].Value | Should -Be "windows-2019"
 
         $config.displayNamesLookup | Should -BeOfType [Hashtable]
         $config.displayNamesLookup["--enableFoo"] | Should -Be "withFoo"
 
-        $config.include | ForEach-Object {
-            $_ | Should -BeOfType [System.Collections.Specialized.OrderedDictionary]
-        }
-        $config.exclude | ForEach-Object {
-            $_ | Should -BeOfType [System.Collections.Specialized.OrderedDictionary]
-        }
+        $config.include.Length | Should -Be 1
+        $config.exclude.Length | Should -Be 3
     }
 }
 
@@ -429,17 +422,17 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
     }
 
     It "Should remove matrix elements based on exclude filters" {
-        $matrix = GenerateFullMatrix $config.orderedMatrix $config.displayNamesLookup
+        $matrix = GenerateFullMatrix $config.matrixParameters $config.displayNamesLookup
         $withExclusion = ProcessExcludes $matrix $config.exclude
         $withExclusion.Length | Should -Be 5
 
-        $matrix = GenerateSparseMatrix $config.orderedMatrix $config.displayNamesLookup
+        $matrix = GenerateSparseMatrix $config.matrixParameters $config.displayNamesLookup
         [array]$withExclusion = ProcessExcludes $matrix $config.exclude
         $withExclusion.Length | Should -Be 1
     }
 
     It "Should add matrix elements based on include elements" {
-        $matrix = GenerateFullMatrix $config.orderedMatrix $config.displayNamesLookup
+        $matrix = GenerateFullMatrix $config.matrixParameters $config.displayNamesLookup
         $withInclusion = ProcessIncludes $config $matrix "all"
         $withInclusion.Length | Should -Be 15
     }
@@ -503,7 +496,7 @@ Describe "Platform Matrix Generation With Object Fields" -Tag "objectfields" {
     }
 
     It "Should parse dimensions properly" {
-        [Array]$dimensions = GetMatrixDimensions $objectFieldConfig.orderedMatrix
+        [Array]$dimensions = GetMatrixDimensions $objectFieldConfig.matrixParameters
         $dimensions.Length | Should -Be 3
         $dimensions[0] | Should -Be 2
         $dimensions[1] | Should -Be 1

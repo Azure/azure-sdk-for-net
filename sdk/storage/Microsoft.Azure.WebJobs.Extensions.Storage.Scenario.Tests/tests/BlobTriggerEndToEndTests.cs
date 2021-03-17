@@ -326,7 +326,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             var prog = new BlobGetsProcessedOnlyOnce_SingleHost_Program();
 
             string hostId = Guid.NewGuid().ToString("N");
-            var host1 = NewBuilder(prog, builder=>builder.UseHostId(hostId))
+            var host1 = NewBuilder(prog, builder => builder.UseHostId(hostId))
                 .Build();
             var host2 = NewBuilder(prog, builder => builder.UseHostId(hostId))
                 .Build();
