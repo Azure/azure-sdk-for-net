@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The ChangeableAttributes. </summary>
-    public partial class ChangeableAttributes
+    internal partial class ChangeableAttributes
     {
         /// <summary> Initializes a new instance of ChangeableAttributes. </summary>
         public ChangeableAttributes()

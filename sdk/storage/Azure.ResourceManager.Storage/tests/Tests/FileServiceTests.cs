@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         // create share
         // delete share
-        [Test]
+        [RecordedTest]
         public async Task FileSharesCreateDeleteListTest()
         {
             // Create resource group
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         // update share
         // get share properties
-        [Test]
+        [RecordedTest]
         public async Task FileSharesUpdateGetTest()
         {
             // Create resource group
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // Get/Set File Service Properties
-        [Test]
+        [RecordedTest]
         public async Task FileServiceCorsTest()
         {
             // Create resource group
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
             properties1.Value.Cors = new CorsRules
             {
-               CorsRulesValue =                    {
+                CorsRulesValue =                    {
                         new CorsRule(allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
                         allowedMethods: new CorsRuleAllowedMethodsItem[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
                         maxAgeInSeconds: 100,

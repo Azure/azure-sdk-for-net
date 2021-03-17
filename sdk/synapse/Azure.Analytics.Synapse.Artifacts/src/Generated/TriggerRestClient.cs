@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts
 {
     internal partial class TriggerRestClient
     {
-        private string endpoint;
+        private Uri endpoint;
         private string apiVersion;
         private ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public TriggerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
+        public TriggerRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
         {
             if (endpoint == null)
             {
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/triggers", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
@@ -106,7 +106,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -187,7 +187,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -266,7 +266,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendQuery("api-version", apiVersion, true);
@@ -329,7 +329,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendPath("/subscribeToEvents", false);
@@ -391,7 +391,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendPath("/getEventSubscriptionStatus", false);
@@ -461,7 +461,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendPath("/unsubscribeFromEvents", false);
@@ -523,7 +523,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendPath("/start", false);
@@ -583,7 +583,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendPath("/triggers/", false);
             uri.AppendPath(triggerName, true);
             uri.AppendPath("/stop", false);
@@ -643,7 +643,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(endpoint, false);
+            uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

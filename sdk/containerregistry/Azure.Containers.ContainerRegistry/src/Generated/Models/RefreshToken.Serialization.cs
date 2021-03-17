@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class RefreshToken
+    internal partial class RefreshToken
     {
         internal static RefreshToken DeserializeRefreshToken(JsonElement element)
         {

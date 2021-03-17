@@ -15,9 +15,9 @@ namespace Azure.Iot.TimeSeriesInsights
     {
         internal static TypesBatchResponse DeserializeTypesBatchResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<TimeSeriesTypeOrError>> @get = default;
-            Optional<IReadOnlyList<TimeSeriesTypeOrError>> put = default;
-            Optional<IReadOnlyList<TsiErrorBody>> delete = default;
+            Optional<IReadOnlyList<TimeSeriesTypeOperationResult>> @get = default;
+            Optional<IReadOnlyList<TimeSeriesTypeOperationResult>> put = default;
+            Optional<IReadOnlyList<TimeSeriesOperationError>> delete = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("get"))
@@ -27,10 +27,10 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TimeSeriesTypeOrError> array = new List<TimeSeriesTypeOrError>();
+                    List<TimeSeriesTypeOperationResult> array = new List<TimeSeriesTypeOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesTypeOrError.DeserializeTimeSeriesTypeOrError(item));
+                        array.Add(TimeSeriesTypeOperationResult.DeserializeTimeSeriesTypeOperationResult(item));
                     }
                     @get = array;
                     continue;
@@ -42,10 +42,10 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TimeSeriesTypeOrError> array = new List<TimeSeriesTypeOrError>();
+                    List<TimeSeriesTypeOperationResult> array = new List<TimeSeriesTypeOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesTypeOrError.DeserializeTimeSeriesTypeOrError(item));
+                        array.Add(TimeSeriesTypeOperationResult.DeserializeTimeSeriesTypeOperationResult(item));
                     }
                     put = array;
                     continue;
@@ -57,10 +57,10 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TsiErrorBody> array = new List<TsiErrorBody>();
+                    List<TimeSeriesOperationError> array = new List<TimeSeriesOperationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TsiErrorBody.DeserializeTsiErrorBody(item));
+                        array.Add(TimeSeriesOperationError.DeserializeTimeSeriesOperationError(item));
                     }
                     delete = array;
                     continue;

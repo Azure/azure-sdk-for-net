@@ -27,7 +27,7 @@ namespace Azure.Storage.Blobs.Test
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("accountName", builder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_Uri()
         {
             // Arrange
@@ -72,7 +72,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(accountName, builder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
@@ -84,7 +84,7 @@ namespace Azure.Storage.Blobs.Test
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_CPK_Http()
         {
             // Arrange
@@ -101,7 +101,7 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("Cannot use client-provided key without HTTPS."));
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("#10044: Re-enable failing Storage tests")]
         public void Ctor_CPK_EncryptionScope()
         {
@@ -119,7 +119,7 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
             // Arrange
@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(blobProperties);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
         {
             // Arrange
@@ -152,7 +152,7 @@ namespace Azure.Storage.Blobs.Test
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
-        [Test]
+        [RecordedTest]
         public void WithSnapshot()
         {
             // Arrange
@@ -181,7 +181,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(snapshotUri, blobUriBuilder.ToUri());
         }
 
-        [Test]
+        [RecordedTest]
         public void WithVersion()
         {
             // Arrange
@@ -210,7 +210,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(versionUri, blobUriBuilder.ToUri());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -229,7 +229,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobName, blobs.First().Name);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task CreateAsync_Tags()
         {
@@ -250,7 +250,7 @@ namespace Azure.Storage.Blobs.Test
             AssertDictionaryEquality(options.Tags, response.Value.Tags);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task CreateAsync_TagsWithSpecialCharacters()
         {
@@ -275,7 +275,7 @@ namespace Azure.Storage.Blobs.Test
             AssertDictionaryEquality(options.Tags, response.Value.Tags);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_Metadata()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -292,7 +292,7 @@ namespace Azure.Storage.Blobs.Test
             AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -310,7 +310,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task CreateAsync_EncryptionScope()
         {
@@ -329,14 +329,14 @@ namespace Azure.Storage.Blobs.Test
 
         //TODO
         [Ignore("Not yet implemented")]
-        [Test]
+        [RecordedTest]
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task CreateAsync_Headers()
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_Error()
         {
             // Arrange
@@ -351,7 +351,7 @@ namespace Azure.Storage.Blobs.Test
                 );
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task CreateAsync_VersionId()
         {
@@ -367,7 +367,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.VersionId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -402,7 +402,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_AccessConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -434,7 +434,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task CreateAsync_IfTags()
         {
@@ -459,7 +459,7 @@ namespace Azure.Storage.Blobs.Test
             await blob.CreateAsync(conditions: conditions);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task CreateAsync_IfTagsFailed()
         {
@@ -481,7 +481,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -501,7 +501,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobName, blobs.First().Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_Exists()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -522,7 +522,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobName, blobs.First().Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_Error()
         {
             // Arrange
@@ -537,7 +537,7 @@ namespace Azure.Storage.Blobs.Test
                 );
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -563,7 +563,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -585,7 +585,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, response.Value.EncryptionKeySha256);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task AppendBlockAsync_EncryptionScope()
         {
@@ -607,7 +607,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(TestConfigDefault.EncryptionScope, response.Value.EncryptionScope);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -629,7 +629,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockAsync_MD5Fail()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -650,7 +650,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockAsync_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -668,7 +668,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -711,7 +711,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockAsync_AccessConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -752,7 +752,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task AppendBlockAsync_IfTags()
         {
@@ -781,7 +781,7 @@ namespace Azure.Storage.Blobs.Test
                 conditions: conditions);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task AppendBlockAsync_IfTags_Failed()
         {
@@ -807,7 +807,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
@@ -886,7 +886,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobSize, progress.List[progress.List.Count - 1]);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockAsync_InvalidStreamPosition()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -907,7 +907,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("content.Position must be less than content.Length. Please set content.Position to the start of the data to upload.", e.Message));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockAsync_NonZeroStreamPosition()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -937,7 +937,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockFromUriAsync_Min()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -961,7 +961,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockFromUriAsync_CPK()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -991,7 +991,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task AppendBlockFromUriAsync_EncryptionScope()
         {
@@ -1021,7 +1021,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockFromUriAsync_Range()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1052,7 +1052,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockFromUriAsync_MD5()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1078,7 +1078,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockFromUriAsync_MD5_Fail()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1107,7 +1107,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockFromUriAsync_AccessConditions()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -1163,7 +1163,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockFromUriAsync_AccessConditionsFail()
         {
             var garbageLeaseId = GetGarbageLeaseId();
@@ -1220,7 +1220,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task AppendBlockFromUriAsync_IfTags()
         {
@@ -1258,7 +1258,7 @@ namespace Azure.Storage.Blobs.Test
                 conditions: conditions);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task AppendBlockFromUriAsync_IfTagsFailed()
         {
@@ -1292,7 +1292,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockFromUriAsync_NonAsciiSourceUri()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1316,7 +1316,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AppendBlockAsync_NullStream_Error()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1334,7 +1334,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SealAsync()
         {
@@ -1355,7 +1355,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(blobs.First().Properties.IsSealed);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SealAsync_Error()
         {
@@ -1369,7 +1369,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SealAsync_AccessConditions()
         {
@@ -1407,7 +1407,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SealAsync_AccessConditionsFailed()
         {
@@ -1465,7 +1465,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.Contains(blobName, names);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAppendBlobClient_NonAsciiName()
         {
             //Arrange
@@ -1487,7 +1487,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.Contains(blobName, names);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task OpenWriteAsync_NewBlob()
         {
             // Arrange
@@ -1526,7 +1526,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task OpenWriteAsync_NewBlob_WithUsing()
         {
             // Arrange
@@ -1565,7 +1565,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(data, dataResult.ToArray());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task OpenWriteAsync_AppendExistingBlob()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -1597,7 +1597,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task OpenWriteAsync_AlternatingWriteAndFlush()
         {
             // Arrange
@@ -1630,7 +1630,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task OpenWriteAsync_Error()
         {
             // Arrange
@@ -1644,7 +1644,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task OpenWriteAsync_ModifiedDuringWrite()
         {
             // Arrange
@@ -1676,7 +1676,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task OpenWriteAsync_ProgressReporting()
         {
             // Arrange
@@ -1706,7 +1706,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(Constants.KB, progress.List[progress.List.Count - 1]);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
         public async Task OpenWriteAsync_OverwiteNewBlob(bool blobExists)
@@ -1735,7 +1735,7 @@ namespace Azure.Storage.Blobs.Test
             TestHelper.AssertSequenceEqual(expectedData, dataResult.ToArray());
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
         public async Task OpenWriteAsync_AccessConditions(bool overwrite)
@@ -1790,7 +1790,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(false)]
         [TestCase(true)]
         public async Task OpenWriteAsync_AccessConditionsFail(bool overwite)
@@ -1836,7 +1836,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.

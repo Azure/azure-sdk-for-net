@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #endregion
 
             #region Snippet:CreateDataFlowClient
-            DataFlowClient client = new DataFlowClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+            DataFlowClient client = new DataFlowClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreateDataFlow

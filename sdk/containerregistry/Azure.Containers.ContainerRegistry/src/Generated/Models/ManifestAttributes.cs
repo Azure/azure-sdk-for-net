@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes details. </summary>
-    public partial class ManifestAttributes
+    internal partial class ManifestAttributes
     {
         /// <summary> Initializes a new instance of ManifestAttributes. </summary>
         internal ManifestAttributes()

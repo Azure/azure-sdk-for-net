@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AppEventTypeDetailConverter))]
     public partial class AppEventTypeDetail
     {
         internal static AppEventTypeDetail DeserializeAppEventTypeDetail(JsonElement element)
@@ -32,19 +29,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AppEventTypeDetail(Optional.ToNullable(action));
-        }
-
-        internal partial class AppEventTypeDetailConverter : JsonConverter<AppEventTypeDetail>
-        {
-            public override void Write(Utf8JsonWriter writer, AppEventTypeDetail model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override AppEventTypeDetail Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAppEventTypeDetail(document.RootElement);
-            }
         }
     }
 }

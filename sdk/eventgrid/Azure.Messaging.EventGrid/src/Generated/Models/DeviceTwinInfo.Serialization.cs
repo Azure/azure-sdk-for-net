@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(DeviceTwinInfoConverter))]
     public partial class DeviceTwinInfo
     {
         internal static DeviceTwinInfo DeserializeDeviceTwinInfo(JsonElement element)
@@ -107,19 +104,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new DeviceTwinInfo(authenticationType.Value, Optional.ToNullable(cloudToDeviceMessageCount), connectionState.Value, deviceId.Value, etag.Value, lastActivityTime.Value, properties.Value, status.Value, statusUpdateTime.Value, Optional.ToNullable(version), x509Thumbprint.Value);
-        }
-
-        internal partial class DeviceTwinInfoConverter : JsonConverter<DeviceTwinInfo>
-        {
-            public override void Write(Utf8JsonWriter writer, DeviceTwinInfo model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override DeviceTwinInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDeviceTwinInfo(document.RootElement);
-            }
         }
     }
 }
