@@ -18,25 +18,6 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
         /// </summary>
-        /// <param name="operations"> The operations representing the resource. </param>
-        protected ResourceOperationsBase(ResourceOperationsBase operations)
-            : base(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri), operations.Id)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
-        /// </summary>
-        /// <param name="options"> The operations to copy options from. </param>
-        /// <param name="resourceId">The resource that is the target of operations.</param>
-        protected ResourceOperationsBase(ResourceOperationsBase options, ResourceIdentifier resourceId)
-            : base(new ClientContext(options.ClientOptions, options.Credential, options.BaseUri), resourceId)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
-        /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"></param>
         internal ResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
@@ -56,19 +37,10 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class.
         /// </summary>
-        /// <param name="genericOperations"> Generic ARMResourceOperations for this resource type. </param>
-        protected ResourceOperationsBase(GenericResourceOperations genericOperations)
-            : base(genericOperations)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class.
-        /// </summary>
         /// <param name="parentOperations"> The resource representing the parent resource. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         protected ResourceOperationsBase(ResourceOperationsBase parentOperations, ResourceIdentifier id)
-            : base(parentOperations, id)
+            : base(new ClientContext(parentOperations.ClientOptions, parentOperations.Credential, parentOperations.BaseUri), id)
         {
         }
 
