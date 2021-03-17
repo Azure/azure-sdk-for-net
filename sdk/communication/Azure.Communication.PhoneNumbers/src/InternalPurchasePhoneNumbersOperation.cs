@@ -4,7 +4,7 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     [CodeGenModel("InternalPhoneNumbersPurchasePhoneNumbersOperation")]
     internal partial class InternalPurchasePhoneNumbersOperation
