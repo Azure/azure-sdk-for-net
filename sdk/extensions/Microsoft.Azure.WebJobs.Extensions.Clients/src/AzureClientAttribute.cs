@@ -15,9 +15,9 @@ namespace Microsoft.Azure.WebJobs
     public class AzureClientAttribute: Attribute, IConnectionProvider
     {
         /// <summary>
-        ///
+        /// Initialize a new instance of the <see cref="AzureClientAttribute"/>.
         /// </summary>
-        /// <param name="connection"></param>
+        /// <param name="connection">The app setting name that contains the connection string.</param>
         public AzureClientAttribute(string connection)
         {
             Connection = connection;
