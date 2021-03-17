@@ -15,11 +15,6 @@ namespace Azure.Storage.Test
     /// Base class for Common tests
     /// </summary>
     [ClientTestFixture(
-    BlobClientOptions.ServiceVersion.V2019_02_02,
-    BlobClientOptions.ServiceVersion.V2019_07_07,
-    BlobClientOptions.ServiceVersion.V2019_12_12,
-    BlobClientOptions.ServiceVersion.V2020_02_10,
-    BlobClientOptions.ServiceVersion.V2020_04_08,
     BlobClientOptions.ServiceVersion.V2020_06_12,
     BlobClientOptions.ServiceVersion.V2020_08_04,
     RecordingServiceVersion = BlobClientOptions.ServiceVersion.V2020_08_04,

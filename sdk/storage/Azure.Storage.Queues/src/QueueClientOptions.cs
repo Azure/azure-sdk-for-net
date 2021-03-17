@@ -94,9 +94,7 @@ namespace Azure.Storage.Queues
 #pragma warning restore AZC0010
         {
             if (ServiceVersion.V2019_02_02 <= version
-                // TODO https://github.com/Azure/azure-sdk-for-net/issues/19575 - prepare for STG 77 beta release.
-                // Change back to LatestVersion
-                && version <= ServiceVersion.V2020_08_04)
+                && version <= StorageVersionExtensions.MaxVersion)
             {
                 Version = version;
             }

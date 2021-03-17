@@ -41,6 +41,17 @@ namespace Azure.Storage
 #endif
 
         /// <summary>
+        /// Gets the latest version of the service supported by this SDK.
+        /// </summary>
+        internal const ServiceVersion MaxVersion =
+#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK
+            // TODO https://github.com/Azure/azure-sdk-for-net/issues/19575 - prepare for STG 77 beta release.
+            ServiceVersion.V2020_08_04;
+#else
+            ERROR_STORAGE_SERVICE_NOT_DEFINED;
+#endif
+
+        /// <summary>
         /// Convert a Storage ServiceVersion enum to an x-ms-version string.
         /// </summary>
         /// <param name="version">The service version enum value.</param>
