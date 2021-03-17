@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly RepositoryRestClient _restClient;
 
-        private string _repository;
+        private readonly string _repository;
 
         /// <summary>
         /// </summary>
@@ -42,9 +42,9 @@ namespace Azure.Containers.ContainerRegistry
         public ContainerRepositoryClient(Uri endpoint, string repository, string username, string password, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(endpoint, nameof(repository));
-            Argument.AssertNotNull(endpoint, nameof(username));
-            Argument.AssertNotNull(endpoint, nameof(password));
+            Argument.AssertNotNull(repository, nameof(repository));
+            Argument.AssertNotNull(username, nameof(username));
+            Argument.AssertNotNull(password, nameof(password));
             Argument.AssertNotNull(options, nameof(options));
 
             _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy(username, password));
@@ -114,8 +114,8 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Update the attribute identified by `name` where `reference` is the name of the repository. </summary>
-        /// <param name="value"> Repository attribute value. </param>
+        /// <summary>Update the repository properties.</summary>
+        /// <param name="value"> Repository properties to set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response SetProperties(ContentProperties value, CancellationToken cancellationToken = default)
         {

@@ -11,14 +11,16 @@ namespace Azure.Containers.ContainerRegistry.Tests
     public class ContainerRepositoryClientLiveTests : RecordedTestBase<ContainerRegistryTestEnvironment>
     {
         private readonly string _repositoryName = "library/hello-world";
+        private ContainerRepositoryClient _client;
 
         public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
-        private ContainerRepositoryClient CreateClient()
+        [SetUp]
+        protected void CreateClient()
         {
-            return InstrumentClient(new ContainerRepositoryClient(
+            _client = InstrumentClient(new ContainerRepositoryClient(
                 new Uri(TestEnvironment.Endpoint),
                 _repositoryName,
                 TestEnvironment.UserName,
@@ -30,36 +32,41 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [RecordedTest]
         public async Task CanGetRepositoryProperties()
         {
-            var client = CreateClient();
-
-            RepositoryProperties properties = await client.GetPropertiesAsync();
+            RepositoryProperties properties = await _client.GetPropertiesAsync();
 
             Assert.AreEqual(_repositoryName, properties.Name);
             Assert.AreEqual(new Uri(TestEnvironment.Endpoint).Host, properties.Registry);
         }
 
         [RecordedTest]
-        public async Task CanSetRepositoryProperties()
+        public async Task CanSetRepositoryProperties([Values(true, false)] bool canList,
+                                                     [Values(true, false)] bool canRead,
+                                                     [Values(true, false)] bool canWrite,
+                                                     [Values(true, false)] bool canDelete)
         {
-            var client = CreateClient();
-
-            await client.SetPropertiesAsync(
+            await _client.SetPropertiesAsync(
                 new ContentProperties()
                 {
-                    CanWrite = false,
-                    CanDelete = false
+                    CanList = canList,
+                    CanRead = canRead,
+                    CanWrite = canWrite,
+                    CanDelete = canDelete
                 });
 
-            RepositoryProperties properties = await client.GetPropertiesAsync();
+            RepositoryProperties properties = await _client.GetPropertiesAsync();
 
-            Assert.IsTrue(properties.ModifiableProperties.CanList);
-            Assert.IsTrue(properties.ModifiableProperties.CanRead);
-            Assert.IsFalse(properties.ModifiableProperties.CanWrite);
-            Assert.IsFalse(properties.ModifiableProperties.CanDelete);
+            Assert.AreEqual(canList, properties.ModifiableProperties.CanList);
+            Assert.AreEqual(canRead, properties.ModifiableProperties.CanRead);
+            Assert.AreEqual(canWrite, properties.ModifiableProperties.CanWrite);
+            Assert.AreEqual(canDelete, properties.ModifiableProperties.CanDelete);
+        }
 
-            await client.SetPropertiesAsync(new ContentProperties());
+        [TearDown]
+        public async Task ResetRepositoryProperties()
+        {
+            await _client.SetPropertiesAsync(new ContentProperties());
 
-            properties = await client.GetPropertiesAsync();
+            RepositoryProperties properties = await _client.GetPropertiesAsync();
 
             Assert.IsTrue(properties.ModifiableProperties.CanList);
             Assert.IsTrue(properties.ModifiableProperties.CanRead);
