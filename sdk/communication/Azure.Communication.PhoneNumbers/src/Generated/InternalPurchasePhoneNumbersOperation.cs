@@ -12,10 +12,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.PhoneNumbers
+namespace Azure.Communication.PhoneNumbers.Models
 {
-    /// <summary> Releases a purchased phone number. </summary>
-    public partial class ReleasePhoneNumberOperation : Operation<Response>, IOperationSource<Response>
+    /// <summary> Purchases phone numbers. </summary>
+    internal partial class InternalPurchasePhoneNumbersOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
 
