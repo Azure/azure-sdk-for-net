@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"location\": \"WestUS2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fcdf5064-6903-45b0-bf41-5980333a9a4d"
+          "24967401-cded-4999-beb4-21885d723fec"
         ],
         "Accept-Language": [
           "en-US"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "eadc2554-b2a9-43fb-849f-2b12a895ca2a"
+          "b3a5860f-0256-47c4-850b-9a7dc1ea7ccc"
         ],
         "x-ms-correlation-request-id": [
-          "eadc2554-b2a9-43fb-849f-2b12a895ca2a"
+          "b3a5860f-0256-47c4-850b-9a7dc1ea7ccc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T224729Z:eadc2554-b2a9-43fb-849f-2b12a895ca2a"
+          "WESTUS2:20210317T223114Z:b3a5860f-0256-47c4-850b-9a7dc1ea7ccc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 22:47:28 GMT"
+          "Wed, 17 Mar 2021 22:31:13 GMT"
         ],
         "Content-Length": [
           "228"
@@ -67,13 +67,13 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/unitTestingDPSCreateUpdateInvalidName/providers/Microsoft.Devices/provisioningServices/1%C3%B11unitTestingDPSCreateUpdateInvalidName%21%21%21?api-version=2020-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTQ3JlYXRlVXBkYXRlSW52YWxpZE5hbWUvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL3Byb3Zpc2lvbmluZ1NlcnZpY2VzLzElQzMlQjExdW5pdFRlc3RpbmdEUFNDcmVhdGVVcGRhdGVJbnZhbGlkTmFtZSUyMSUyMSUyMT9hcGktdmVyc2lvbj0yMDIwLTAzLTAx",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/unitTestingDPSCreateUpdateInvalidName/providers/Microsoft.Devices/provisioningServices/Invalid%20unitTestingDPSCreateUpdateInvalidName?api-version=2020-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nRFBTQ3JlYXRlVXBkYXRlSW52YWxpZE5hbWUvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXZpY2VzL3Byb3Zpc2lvbmluZ1NlcnZpY2VzL0ludmFsaWQlMjB1bml0VGVzdGluZ0RQU0NyZWF0ZVVwZGF0ZUludmFsaWROYW1lP2FwaS12ZXJzaW9uPTIwMjAtMDMtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"WestUS2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "369595e9-df74-4438-95a4-b1cbd327b97b"
+          "0b7ece36-f377-4650-8fef-51fe254c22be"
         ],
         "Accept-Language": [
           "en-US"
@@ -82,7 +82,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/1.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/2.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -105,13 +105,13 @@
           "4999"
         ],
         "x-ms-request-id": [
-          "30161669-6496-4a5f-94a8-5ab8780e8e82"
+          "c75b299a-d621-484a-8123-c5821f27e2f4"
         ],
         "x-ms-correlation-request-id": [
-          "30161669-6496-4a5f-94a8-5ab8780e8e82"
+          "c75b299a-d621-484a-8123-c5821f27e2f4"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T224730Z:30161669-6496-4a5f-94a8-5ab8780e8e82"
+          "WESTUS2:20210317T223115Z:c75b299a-d621-484a-8123-c5821f27e2f4"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -120,7 +120,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 22:47:29 GMT"
+          "Wed, 17 Mar 2021 22:31:15 GMT"
         ],
         "Content-Length": [
           "395"
@@ -132,7 +132,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"code\": 400305,\r\n  \"httpStatusCode\": \"BadRequest\",\r\n  \"message\": \"Provisioning Service name can contain only alphanumeric and hyphen and must start/end with alphanumeric. Should be 3 to 50 chars long. Name 'global' not allowed. If you contact a support representative please include this correlation identifier: 466ccc4a-6a4d-4340-99e9-f2d2c32a7e38, timestamp: 2021-03-16 22:47:30Z, errorcode: IH400305.\"\r\n}",
+      "ResponseBody": "{\r\n  \"code\": 400305,\r\n  \"httpStatusCode\": \"BadRequest\",\r\n  \"message\": \"Provisioning Service name can contain only alphanumeric and hyphen and must start/end with alphanumeric. Should be 3 to 50 chars long. Name 'global' not allowed. If you contact a support representative please include this correlation identifier: 35683d2c-0a50-473b-aa4e-8c451f9047da, timestamp: 2021-03-17 22:31:15Z, errorcode: IH400305.\"\r\n}",
       "StatusCode": 400
     }
   ],

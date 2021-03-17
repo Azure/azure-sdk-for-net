@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"location\": \"WestUS2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e6d05c50-1554-4622-bbcd-6a3739d717c5"
+          "108835cc-f48a-4056-b73f-2247662a88db"
         ],
         "Accept-Language": [
           "en-US"
@@ -36,13 +36,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "3f132a5b-92d8-4c32-a23d-1bd90ad69e01"
+          "0b2d3011-ab59-4e01-ac45-a5cb43196bee"
         ],
         "x-ms-correlation-request-id": [
-          "3f132a5b-92d8-4c32-a23d-1bd90ad69e01"
+          "0b2d3011-ab59-4e01-ac45-a5cb43196bee"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T224853Z:3f132a5b-92d8-4c32-a23d-1bd90ad69e01"
+          "WESTUS2:20210317T200923Z:0b2d3011-ab59-4e01-ac45-a5cb43196bee"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 22:48:52 GMT"
+          "Wed, 17 Mar 2021 20:09:23 GMT"
         ],
         "Content-Length": [
           "226"
@@ -73,7 +73,7 @@
       "RequestBody": "{\r\n  \"name\": \"unitTestingUpdateAllocationPolicyGet\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "15b47c09-8bcd-42e6-8929-9d0fa77a5b55"
+          "69d02eec-0910-4aff-847e-2a9fa50f3192"
         ],
         "Accept-Language": [
           "en-US"
@@ -82,7 +82,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/1.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/2.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -105,13 +105,13 @@
           "1199"
         ],
         "x-ms-request-id": [
-          "de718aad-af5a-448b-82ad-f8b7af06cd47"
+          "b85a2303-dd62-4d1d-8620-3350608c44f9"
         ],
         "x-ms-correlation-request-id": [
-          "de718aad-af5a-448b-82ad-f8b7af06cd47"
+          "b85a2303-dd62-4d1d-8620-3350608c44f9"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T224853Z:de718aad-af5a-448b-82ad-f8b7af06cd47"
+          "WESTUS2:20210317T200924Z:b85a2303-dd62-4d1d-8620-3350608c44f9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -120,7 +120,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 22:48:53 GMT"
+          "Wed, 17 Mar 2021 20:09:23 GMT"
         ],
         "Content-Length": [
           "56"
@@ -142,7 +142,7 @@
       "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"WestUS2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "de34b8d9-8e6e-4cd2-942e-cf3b41f797f0"
+          "320e2ccd-d5fb-437e-988c-067d171ae4f6"
         ],
         "Accept-Language": [
           "en-US"
@@ -151,7 +151,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/1.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/2.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -168,7 +168,7 @@
           "no-cache"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/unitTestingUpdateAllocationPolicyGet/providers/Microsoft.Devices/provisioningServices/unitTestingUpdateAllocationPolicyGet/operationResults/b3NfaWRfNmNlYWVmMWQtOTlmNS00ZjlmLWFhNjMtYjllZTFjMTRhN2Qx?api-version=2020-03-01&asyncinfo"
+          "https://management.azure.com/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/unitTestingUpdateAllocationPolicyGet/providers/Microsoft.Devices/provisioningServices/unitTestingUpdateAllocationPolicyGet/operationResults/b3NfaWRfNWNiNGFmNjUtZTZiMS00OTRhLTk0ZDYtN2MwMDQ3NTg3ZmQ2?api-version=2020-03-01&asyncinfo"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -177,13 +177,13 @@
           "4999"
         ],
         "x-ms-request-id": [
-          "0b31d63b-57ed-43d2-810d-a0cb3e700f63"
+          "209185a9-4a7a-4fa9-a59f-58eee0a5f3dc"
         ],
         "x-ms-correlation-request-id": [
-          "0b31d63b-57ed-43d2-810d-a0cb3e700f63"
+          "209185a9-4a7a-4fa9-a59f-58eee0a5f3dc"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T224855Z:0b31d63b-57ed-43d2-810d-a0cb3e700f63"
+          "WESTUS2:20210317T200925Z:209185a9-4a7a-4fa9-a59f-58eee0a5f3dc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -192,7 +192,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 22:48:55 GMT"
+          "Wed, 17 Mar 2021 20:09:24 GMT"
         ],
         "Content-Length": [
           "595"
@@ -208,8 +208,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/unitTestingUpdateAllocationPolicyGet/providers/Microsoft.Devices/provisioningServices/unitTestingUpdateAllocationPolicyGet/operationResults/b3NfaWRfNmNlYWVmMWQtOTlmNS00ZjlmLWFhNjMtYjllZTFjMTRhN2Qx?api-version=2020-03-01&asyncinfo",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nVXBkYXRlQWxsb2NhdGlvblBvbGljeUdldC9wcm92aWRlcnMvTWljcm9zb2Z0LkRldmljZXMvcHJvdmlzaW9uaW5nU2VydmljZXMvdW5pdFRlc3RpbmdVcGRhdGVBbGxvY2F0aW9uUG9saWN5R2V0L29wZXJhdGlvblJlc3VsdHMvYjNOZmFXUmZObU5sWVdWbU1XUXRPVGxtTlMwMFpqbG1MV0ZoTmpNdFlqbGxaVEZqTVRSaE4yUXg/YXBpLXZlcnNpb249MjAyMC0wMy0wMSZhc3luY2luZm8=",
+      "RequestUri": "/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/unitTestingUpdateAllocationPolicyGet/providers/Microsoft.Devices/provisioningServices/unitTestingUpdateAllocationPolicyGet/operationResults/b3NfaWRfNWNiNGFmNjUtZTZiMS00OTRhLTk0ZDYtN2MwMDQ3NTg3ZmQ2?api-version=2020-03-01&asyncinfo",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOWRiYjAyZmEtYzlkMi00NTkzLTk2N2UtZmZjOTljNTY2YzVjL3Jlc291cmNlR3JvdXBzL3VuaXRUZXN0aW5nVXBkYXRlQWxsb2NhdGlvblBvbGljeUdldC9wcm92aWRlcnMvTWljcm9zb2Z0LkRldmljZXMvcHJvdmlzaW9uaW5nU2VydmljZXMvdW5pdFRlc3RpbmdVcGRhdGVBbGxvY2F0aW9uUG9saWN5R2V0L29wZXJhdGlvblJlc3VsdHMvYjNOZmFXUmZOV05pTkdGbU5qVXRaVFppTVMwME9UUmhMVGswWkRZdE4yTXdNRFEzTlRnM1ptUTI/YXBpLXZlcnNpb249MjAyMC0wMy0wMSZhc3luY2luZm8=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -217,7 +217,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/1.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -234,13 +234,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "523be97a-c9f6-44d9-a8de-a52f1af88f99"
+          "48a2d451-66f4-45b8-b2a9-20e118be4866"
         ],
         "x-ms-correlation-request-id": [
-          "523be97a-c9f6-44d9-a8de-a52f1af88f99"
+          "48a2d451-66f4-45b8-b2a9-20e118be4866"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T224925Z:523be97a-c9f6-44d9-a8de-a52f1af88f99"
+          "WESTUS2:20210317T200955Z:48a2d451-66f4-45b8-b2a9-20e118be4866"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -249,7 +249,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 22:49:24 GMT"
+          "Wed, 17 Mar 2021 20:09:55 GMT"
         ],
         "Content-Length": [
           "22"
@@ -274,7 +274,7 @@
           "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/1.0.0.0"
+          "Microsoft.Azure.Management.DeviceProvisioningServices.IotDpsClient/2.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -291,13 +291,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "a64e6d6c-3b7e-46e9-b4d1-883e78449494"
+          "01d61f6c-d233-4bac-9a5f-c003ec2ed213"
         ],
         "x-ms-correlation-request-id": [
-          "a64e6d6c-3b7e-46e9-b4d1-883e78449494"
+          "01d61f6c-d233-4bac-9a5f-c003ec2ed213"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T224925Z:a64e6d6c-3b7e-46e9-b4d1-883e78449494"
+          "WESTUS2:20210317T200955Z:01d61f6c-d233-4bac-9a5f-c003ec2ed213"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -306,7 +306,7 @@
           "nosniff"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 22:49:24 GMT"
+          "Wed, 17 Mar 2021 20:09:55 GMT"
         ],
         "Content-Length": [
           "803"
@@ -318,7 +318,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"etag\": \"AAAAAAeCzi4=\",\r\n  \"name\": \"unitTestingUpdateAllocationPolicyGet\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"serviceOperationsHostName\": \"unitTestingUpdateAllocationPolicyGet.azure-devices-provisioning.net\",\r\n    \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n    \"idScope\": \"0ne00257710\"\r\n  },\r\n  \"resourcegroup\": \"unitTestingUpdateAllocationPolicyGet\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/unitTestingUpdateAllocationPolicyGet/providers/Microsoft.Devices/provisioningServices/unitTestingUpdateAllocationPolicyGet\",\r\n  \"subscriptionid\": \"9dbb02fa-c9d2-4593-967e-ffc99c566c5c\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"etag\": \"AAAAAAeHedA=\",\r\n  \"name\": \"unitTestingUpdateAllocationPolicyGet\",\r\n  \"location\": \"WestUS2\",\r\n  \"properties\": {\r\n    \"state\": \"Active\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"iotHubs\": [],\r\n    \"allocationPolicy\": \"Hashed\",\r\n    \"serviceOperationsHostName\": \"unitTestingUpdateAllocationPolicyGet.azure-devices-provisioning.net\",\r\n    \"deviceProvisioningHostName\": \"global.azure-devices-provisioning.net\",\r\n    \"idScope\": \"0ne00258DA4\"\r\n  },\r\n  \"resourcegroup\": \"unitTestingUpdateAllocationPolicyGet\",\r\n  \"type\": \"Microsoft.Devices/provisioningServices\",\r\n  \"id\": \"/subscriptions/9dbb02fa-c9d2-4593-967e-ffc99c566c5c/resourceGroups/unitTestingUpdateAllocationPolicyGet/providers/Microsoft.Devices/provisioningServices/unitTestingUpdateAllocationPolicyGet\",\r\n  \"subscriptionid\": \"9dbb02fa-c9d2-4593-967e-ffc99c566c5c\",\r\n  \"tags\": {},\r\n  \"sku\": {\r\n    \"name\": \"S1\",\r\n    \"tier\": \"Standard\",\r\n    \"capacity\": 1\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

@@ -154,8 +154,8 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                     // force a failure by passing bad input
                     _provisioningClient.IotDpsResource.CreateOrUpdateAsync(
                     rg.Name,
-                    // We dont't allow most punctuation, leading numbers, etc
-                    $"1ñ1{testName}!!!",
+                    // Must be between 3 and 64 characters, must not be a number, must be alphanumeric/dash characters, and must be unique
+                    $"Invalid {testName}",
                     createServiceDescription));
 
             await badCall.Should().ThrowAsync<ErrorDetailsException>();
