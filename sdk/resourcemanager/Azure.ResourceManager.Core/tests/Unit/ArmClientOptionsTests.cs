@@ -47,7 +47,11 @@ namespace Azure.ResourceManager.Core.Tests
             options.FakeRestApiVersions().FakeResourceVersion = FakeResourceApiVersions.Default;
             result = options.ApiVersions.TryGetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
             Assert.True(result.Equals(FakeResourceApiVersions.Default));
+        }
 
+        [TestCase]
+        public void VersionsLoadedChangeSet()
+        {
             options.ApiVersions.SetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString(), "2021-01-01-beta");
             result = options.ApiVersions.TryGetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
             Assert.True(result.Equals("2021-01-01-beta"));
@@ -55,8 +59,8 @@ namespace Azure.ResourceManager.Core.Tests
             options.FakeRestApiVersions().FakeResourceVersion = FakeResourceApiVersions.V2019_12_01;
             result = options.ApiVersions.TryGetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString());
             Assert.True(result.Equals(FakeResourceApiVersions.V2019_12_01));
-            
         }
+
 
         [TestCase]
         public void VersionNonLoadedChanges()
