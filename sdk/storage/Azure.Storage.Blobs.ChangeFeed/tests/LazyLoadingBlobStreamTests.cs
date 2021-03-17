@@ -13,8 +13,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class LazyLoadingBlobStreamTests : ChangeFeedTestBase
     {
-        public LazyLoadingBlobStreamTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public LazyLoadingBlobStreamTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

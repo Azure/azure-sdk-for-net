@@ -16,8 +16,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class ChunkTests : ChangeFeedTestBase
     {
-        public ChunkTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ChunkTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
