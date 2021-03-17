@@ -26,7 +26,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             if (!IncludePhoneNumberLiveTests)
                 Assert.Ignore("Include phone number live tests flag is off.");
 
-            var client = CreateClient(false);
+            var client = CreateClient(AuthMethod.ConnectionString, false);
 
             const string countryCode = "US";
 
@@ -115,7 +115,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             //@@client = new PhoneNumbersClient(endpoint, tokenCredential);
             #endregion Snippet:CreatePhoneNumbersClientWithTokenCredential
 
-            client = CreateClient(false);
+            client = CreateClient(AuthMethod.ConnectionString, false);
 
             const string countryCode = "US";
 

@@ -21,5 +21,7 @@ namespace Azure.Communication.Tests
         public string LiveTestConnectionString => GetRecordedVariable(LiveTestConnectionStringEnvironmentVariableName);
 
         public Uri LiveTestEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestConnectionString).GetRequired("endpoint"));
+
+        public string CommunicationTestPhoneNumber => GetOptionalVariable("COMMUNICATION_PHONE_NUMBER") ?? "+11234567891";
     }
 }
