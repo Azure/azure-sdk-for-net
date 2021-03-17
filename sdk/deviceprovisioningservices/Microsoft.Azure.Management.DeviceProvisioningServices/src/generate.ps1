@@ -2,6 +2,8 @@
 # Configuration for the code generation including target swagger file and code generation settings can be found here:
 # https://github.com/Azure/azure-rest-api-specs/tree/master/specification/digitaltwins/resource-manager
 
+# If running this script fails, try running it in an admin console.
+
 try
 {
 	# To test from a fork, use these parameters:
