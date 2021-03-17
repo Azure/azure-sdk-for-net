@@ -1,8 +1,8 @@
 # Azure Communication Chat client library for .NET
 
-> Server - Chat Api Version:  2021-01-27-preview4
+> Server - Chat Api Version:  2021-03-01-preview5
 
-> Client - Chat SDK Version:  1.0.0-beta.5
+> Client - Chat SDK Version:  1.0.0-beta.6 (Unreleased)
 
 This package contains a C# SDK for Azure Communication Services for chat.
 
