@@ -35,7 +35,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             }
         }
 
-        protected async Task<ProvisioningServiceDescription> GetServiceAsync(string serviceName, string resourceGroupName)
+        protected async Task<ProvisioningServiceDescription> GetServiceAsync(string resourceGroupName, string serviceName)
         {
             NameAvailabilityInfo availabilityInfo = await _provisioningClient.IotDpsResource
                 .CheckProvisioningServiceNameAvailabilityAsync(serviceName)

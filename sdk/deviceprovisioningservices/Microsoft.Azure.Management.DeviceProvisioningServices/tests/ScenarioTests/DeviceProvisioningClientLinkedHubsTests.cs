@@ -23,7 +23,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             Initialize(context);
             var iotHubClient = GetClient<IotHubClient>(context);
             ResourceGroup resourceGroup = await GetResourceGroupAsync(testName).ConfigureAwait(false);
-            ProvisioningServiceDescription testedService = await GetServiceAsync(testName, resourceGroup.Name).ConfigureAwait(false);
+            ProvisioningServiceDescription testedService = await GetServiceAsync(resourceGroup.Name, testName).ConfigureAwait(false);
 
             IotHubDescription iotHub = await GetIotHubAsync(iotHubClient, resourceGroup, testName).ConfigureAwait(false);
             IPage<SharedAccessSignatureAuthorizationRule> keys = await iotHubClient.IotHubResource

@@ -19,7 +19,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             var testName = "unitTestingUpdateAllocationPolicyGet";
             Initialize(context);
             ResourceGroup resourceGroup = await GetResourceGroupAsync(testName).ConfigureAwait(false);
-            ProvisioningServiceDescription testedService = await GetServiceAsync(testName, resourceGroup.Name).ConfigureAwait(false);
+            ProvisioningServiceDescription testedService = await GetServiceAsync(resourceGroup.Name, testName).ConfigureAwait(false);
 
             Constants.AllocationPolicies.Should().Contain(testedService.Properties.AllocationPolicy);
         }

@@ -22,7 +22,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             ResourceGroup resourceGroup = await GetResourceGroupAsync(testName).ConfigureAwait(false);
             ProvisioningServiceDescription testedService = await GetServiceAsync(testName, testName).ConfigureAwait(false);
 
-            //verify owner has been created
+            // verify owner has been created
             var ownerKey = await _provisioningClient.IotDpsResource
                 .ListKeysForKeyNameAsync(
                     testedService.Name,
@@ -48,14 +48,14 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                     });
 
             var attempts = Constants.ArmAttemptLimit;
-            var hasSucceeded = false;
-            while (attempts > 0 && !hasSucceeded)
+            while (attempts > 0)
             {
                 try
                 {
-                    _provisioningClient.IotDpsResource.CreateOrUpdate(testName, testedService.Name,
-                        testedService);
-                    hasSucceeded = true;
+                    await _provisioningClient.IotDpsResource
+                        .CreateOrUpdateAsync(testName, testedService.Name, testedService)
+                        .ConfigureAwait(false);
+                    break;
                 }
                 catch
                 {
@@ -77,15 +77,14 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                         ownerKey,
                     });
             attempts = Constants.ArmAttemptLimit;
-            hasSucceeded = false;
-            while (attempts > 0 && !hasSucceeded)
+            while (attempts > 0)
             {
                 try
                 {
                     await _provisioningClient.IotDpsResource
                         .CreateOrUpdateAsync(testName, testedService.Name, testedService)
                         .ConfigureAwait(false);
-                    hasSucceeded = true;
+                    break;
                 }
                 catch
                 {

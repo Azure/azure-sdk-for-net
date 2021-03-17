@@ -2,6 +2,7 @@ using DeviceProvisioningServices.Tests.Helpers;
 using FluentAssertions;
 using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Azure.Management.DeviceProvisioningServices.Models;
+using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
@@ -18,9 +19,8 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             using var context = MockContext.Start(GetType());
 
             Initialize(context);
-            var testName = "unitTestingDPSCreateUpdate";
-            await GetResourceGroupAsync(testName);
-
+            const string testName = "unitTestingDPSCreateUpdate";
+            ResourceGroup rg = await GetResourceGroupAsync(testName);
 
             var availabilityInfo = await _provisioningClient.IotDpsResource
                 .CheckProvisioningServiceNameAvailabilityAsync(testName)
@@ -28,9 +28,9 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
 
             if (availabilityInfo.NameAvailable.HasValue && !availabilityInfo.NameAvailable.Value)
             {
-                //it exists, so test the delete
+                // it exists, so test the delete
                 await _provisioningClient.IotDpsResource
-                    .DeleteAsync(testName, testName)
+                    .DeleteAsync(testName, rg.Name)
                     .ConfigureAwait(false);
 
                 // check the name is now available
@@ -51,7 +51,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
 
             var dpsInstance = await _provisioningClient.IotDpsResource
                 .CreateOrUpdateAsync(
-                    testName,
+                    rg.Name,
                     testName,
                     createServiceDescription)
                 .ConfigureAwait(false);
@@ -62,7 +62,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
 
             // verify item exists in list by resource group
             IPage<ProvisioningServiceDescription> existingServices = await _provisioningClient.IotDpsResource
-                .ListByResourceGroupAsync(testName)
+                .ListByResourceGroupAsync(rg.Name)
                 .ConfigureAwait(false);
             existingServices.Should().Contain(x => x.Name == testName);
 
@@ -74,15 +74,14 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             foundInstance.Name.Should().Be(testName);
 
             var attempts = Constants.ArmAttemptLimit;
-            var hasSucceeded = false;
-            while (attempts > 0 && !hasSucceeded)
+            while (attempts > 0)
             {
                 try
                 {
                     await _provisioningClient.IotDpsResource
-                        .DeleteAsync(testName, testName)
+                        .DeleteAsync(testName, rg.Name)
                         .ConfigureAwait(false);
-                    hasSucceeded = true;
+                    break;
                 }
                 catch
                 {
@@ -103,27 +102,26 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
         {
             using var context = MockContext.Start(GetType());
             Initialize(context);
-            string testName = "unitTestingDPSUpdateSku";
-            Microsoft.Azure.Management.Resources.Models.ResourceGroup resourceGroup = await GetResourceGroupAsync(testName).ConfigureAwait(false);
+            const string testName = "unitTestingDPSUpdateSku";
+            ResourceGroup rg = await GetResourceGroupAsync(testName).ConfigureAwait(false);
             ProvisioningServiceDescription service = await GetServiceAsync(testName, testName).ConfigureAwait(false);
-            
-            //update capacity
+
+            // update capacity
             service.Sku.Capacity += 1;
 
             var attempts = Constants.ArmAttemptLimit;
-            var success = false;
-            while (attempts > 0 && !success)
+            while (attempts > 0)
             {
                 try
                 {
-                    var updatedInstance = await _provisioningClient
+                    ProvisioningServiceDescription updatedInstance = await _provisioningClient
                         .IotDpsResource.CreateOrUpdateAsync(
-                            resourceGroup.Name,
+                            rg.Name,
                             service.Name,
                             service)
                         .ConfigureAwait(false);
-                    Assert.Equal(service.Sku.Capacity, updatedInstance.Sku.Capacity);
-                    success = true;
+                    updatedInstance.Sku.Capacity.Should().Be(service.Sku.Capacity);
+                    break;
                 }
                 catch
                 {
@@ -140,8 +138,8 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             using var context = MockContext.Start(GetType());
 
             Initialize(context);
-            var testName = "unitTestingDPSCreateUpdateInvalidName";
-            await GetResourceGroupAsync(testName).ConfigureAwait(false);
+            const string testName = "unitTestingDPSCreateUpdateInvalidName";
+            ResourceGroup rg = await GetResourceGroupAsync(testName).ConfigureAwait(false);
 
             // try to create a DPS service
             var createServiceDescription = new ProvisioningServiceDescription(
@@ -155,7 +153,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                 () =>
                     // force a failure by passing bad input
                     _provisioningClient.IotDpsResource.CreateOrUpdateAsync(
-                    testName,
+                    rg.Name,
                     // We dont't allow most punctuation, leading numbers, etc
                     $"1ñ1{testName}!!!",
                     createServiceDescription));

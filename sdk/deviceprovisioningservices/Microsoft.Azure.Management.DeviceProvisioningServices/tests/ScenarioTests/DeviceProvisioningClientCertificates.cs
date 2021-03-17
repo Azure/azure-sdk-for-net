@@ -19,7 +19,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             Initialize(context);
             var testName = "unitTestingDPSCertificatesCreateAndDelete";
             ResourceGroup rg = await GetResourceGroupAsync(testName).ConfigureAwait(false);
-            ProvisioningServiceDescription service = await GetServiceAsync(rg.Name, testName).ConfigureAwait(false);
+            ProvisioningServiceDescription service = await GetServiceAsync(testName, rg.Name).ConfigureAwait(false);
 
             //add a cert
             await _provisioningClient.DpsCertificate
