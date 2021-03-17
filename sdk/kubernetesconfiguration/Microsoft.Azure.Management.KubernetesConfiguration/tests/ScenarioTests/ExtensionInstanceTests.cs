@@ -85,6 +85,7 @@ namespace KubernetesConfiguration.Tests.ScenarioTests
             ExtensionInstance extensionInstance = new ExtensionInstance(
                 name: "microsoft.azuredefender.kubernetes",
                 type: ExtensionTestBase.ConfigurationType,
+                location: "eastus2euap",
                 extensionType: "microsoft.azuredefender.kubernetes",
                 autoUpgradeMinorVersion: false,
                 releaseTrain: "Stable",

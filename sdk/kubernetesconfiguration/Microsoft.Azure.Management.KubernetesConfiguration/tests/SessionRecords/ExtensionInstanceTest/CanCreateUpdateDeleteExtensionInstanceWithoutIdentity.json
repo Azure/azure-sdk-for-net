@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e2836659-67b4-43bc-a616-b6a01c997746"
+          "9c5a8e84-8733-4640-9cea-cca8b1066419"
         ],
         "Accept-Language": [
           "en-US"
@@ -30,7 +30,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "8be08334-a63a-42b6-8c74-b9085f1f8b48"
+          "a5216f03-9080-4f74-8b41-1126cea791cd"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
@@ -48,13 +48,13 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-correlation-request-id": [
-          "8be08334-a63a-42b6-8c74-b9085f1f8b48"
+          "a5216f03-9080-4f74-8b41-1126cea791cd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201524Z:8be08334-a63a-42b6-8c74-b9085f1f8b48"
+          "WESTUS2:20210317T205836Z:a5216f03-9080-4f74-8b41-1126cea791cd"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:24 GMT"
+          "Wed, 17 Mar 2021 20:58:36 GMT"
         ],
         "Content-Length": [
           "673"
@@ -76,7 +76,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4c059284-5e97-47ae-8415-0555aea82648"
+          "b7a44401-8aa9-47ce-926d-da600881e476"
         ],
         "Accept-Language": [
           "en-US"
@@ -99,7 +99,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "a3556aff-e72d-4b13-9908-7371ee669881"
+          "b61b511d-7de3-4b80-925f-740d5fd7d93d"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11997"
@@ -117,13 +117,13 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-correlation-request-id": [
-          "a3556aff-e72d-4b13-9908-7371ee669881"
+          "b61b511d-7de3-4b80-925f-740d5fd7d93d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201528Z:a3556aff-e72d-4b13-9908-7371ee669881"
+          "WESTUS2:20210317T205839Z:b61b511d-7de3-4b80-925f-740d5fd7d93d"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:27 GMT"
+          "Wed, 17 Mar 2021 20:58:39 GMT"
         ],
         "Content-Length": [
           "1339"
@@ -135,7 +135,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n      \"name\": \"openservicemesh\",\r\n      \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n      \"properties\": {\r\n        \"extensionType\": \"microsoft.openservicemesh\",\r\n        \"autoUpgradeMinorVersion\": false,\r\n        \"releaseTrain\": \"staging\",\r\n        \"version\": \"0.1.0\",\r\n        \"scope\": {\r\n          \"cluster\": {\r\n            \"releaseNamespace\": \"arc-osm-system\"\r\n          }\r\n        },\r\n        \"installState\": \"Pending\",\r\n        \"lastStatusTime\": null,\r\n        \"errorInfo\": {},\r\n        \"creationTime\": \"2021-03-16T13:15:26.4307604-07:00\",\r\n        \"lastModifiedTime\": \"2021-03-16T13:15:26.4307605-07:00\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/hci22jan21\",\r\n      \"name\": \"hci22jan21\",\r\n      \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n      \"properties\": {\r\n        \"extensionType\": \"microsoft.azstackhci.operator\",\r\n        \"autoUpgradeMinorVersion\": true,\r\n        \"releaseTrain\": \"stable\",\r\n        \"version\": \"1.0.0\",\r\n        \"scope\": {\r\n          \"cluster\": {\r\n            \"releaseNamespace\": null\r\n          }\r\n        },\r\n        \"installState\": \"Pending\",\r\n        \"lastStatusTime\": null,\r\n        \"errorInfo\": {},\r\n        \"creationTime\": \"2021-01-22T12:49:34.3336157-08:00\",\r\n        \"lastModifiedTime\": \"2021-01-22T12:49:34.3336249-08:00\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n      \"name\": \"openservicemesh\",\r\n      \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n      \"properties\": {\r\n        \"extensionType\": \"microsoft.openservicemesh\",\r\n        \"autoUpgradeMinorVersion\": false,\r\n        \"releaseTrain\": \"staging\",\r\n        \"version\": \"0.1.0\",\r\n        \"scope\": {\r\n          \"cluster\": {\r\n            \"releaseNamespace\": \"arc-osm-system\"\r\n          }\r\n        },\r\n        \"installState\": \"Pending\",\r\n        \"lastStatusTime\": null,\r\n        \"errorInfo\": {},\r\n        \"creationTime\": \"2021-03-17T13:58:38.0014681-07:00\",\r\n        \"lastModifiedTime\": \"2021-03-17T13:58:38.0014682-07:00\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/hci22jan21\",\r\n      \"name\": \"hci22jan21\",\r\n      \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n      \"properties\": {\r\n        \"extensionType\": \"microsoft.azstackhci.operator\",\r\n        \"autoUpgradeMinorVersion\": true,\r\n        \"releaseTrain\": \"stable\",\r\n        \"version\": \"1.0.0\",\r\n        \"scope\": {\r\n          \"cluster\": {\r\n            \"releaseNamespace\": null\r\n          }\r\n        },\r\n        \"installState\": \"Pending\",\r\n        \"lastStatusTime\": null,\r\n        \"errorInfo\": {},\r\n        \"creationTime\": \"2021-01-22T12:49:34.3336157-08:00\",\r\n        \"lastModifiedTime\": \"2021-01-22T12:49:34.3336249-08:00\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "StatusCode": 200
     },
     {
@@ -145,7 +145,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "ce66c025-041f-45c5-8714-f1c40f501957"
+          "5dafbb3b-1a19-4fa0-853c-3f0e550c89e5"
         ],
         "Accept-Language": [
           "en-US"
@@ -168,7 +168,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "34cdc0fb-1e71-47c7-9308-dd3fe9fe0e53"
+          "e00af0fe-b3c5-4faa-b370-0d0aec1ce817"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11996"
@@ -186,13 +186,13 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-correlation-request-id": [
-          "34cdc0fb-1e71-47c7-9308-dd3fe9fe0e53"
+          "e00af0fe-b3c5-4faa-b370-0d0aec1ce817"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201529Z:34cdc0fb-1e71-47c7-9308-dd3fe9fe0e53"
+          "WESTUS2:20210317T205841Z:e00af0fe-b3c5-4faa-b370-0d0aec1ce817"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:29 GMT"
+          "Wed, 17 Mar 2021 20:58:41 GMT"
         ],
         "Content-Length": [
           "673"
@@ -214,7 +214,7 @@
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"extensionType\": \"microsoft.openservicemesh\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"staging\",\r\n    \"version\": \"0.1.0\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"arc-osm-system\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "706b9420-ae88-4203-b37f-e6874ae426ee"
+          "a22886cb-3906-4256-b8c9-94fa97e55ee9"
         ],
         "Accept-Language": [
           "en-US"
@@ -243,7 +243,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "1254d480-42bb-4ced-889e-107506ef1b80"
+          "b65a9d0d-cb39-495b-9a72-dd434ac98a4f"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
@@ -261,13 +261,13 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-correlation-request-id": [
-          "1254d480-42bb-4ced-889e-107506ef1b80"
+          "b65a9d0d-cb39-495b-9a72-dd434ac98a4f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201526Z:1254d480-42bb-4ced-889e-107506ef1b80"
+          "WESTUS2:20210317T205838Z:b65a9d0d-cb39-495b-9a72-dd434ac98a4f"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:26 GMT"
+          "Wed, 17 Mar 2021 20:58:38 GMT"
         ],
         "Content-Length": [
           "706"
@@ -279,7 +279,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n  \"name\": \"openservicemesh\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"configurationSettings\": {},\r\n    \"statuses\": [],\r\n    \"extensionType\": \"microsoft.openservicemesh\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"staging\",\r\n    \"version\": \"0.1.0\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"arc-osm-system\"\r\n      }\r\n    },\r\n    \"installState\": \"Pending\",\r\n    \"lastStatusTime\": null,\r\n    \"errorInfo\": {},\r\n    \"creationTime\": \"2021-03-16T13:15:26.4307604-07:00\",\r\n    \"lastModifiedTime\": \"2021-03-16T13:15:26.4307605-07:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n  \"name\": \"openservicemesh\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"configurationSettings\": {},\r\n    \"statuses\": [],\r\n    \"extensionType\": \"microsoft.openservicemesh\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"staging\",\r\n    \"version\": \"0.1.0\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"arc-osm-system\"\r\n      }\r\n    },\r\n    \"installState\": \"Pending\",\r\n    \"lastStatusTime\": null,\r\n    \"errorInfo\": {},\r\n    \"creationTime\": \"2021-03-17T13:58:38.0014681-07:00\",\r\n    \"lastModifiedTime\": \"2021-03-17T13:58:38.0014682-07:00\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -289,7 +289,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e5149bac-af58-413c-96c8-4e72543da3d0"
+          "e50b50bb-a738-4022-b689-1e4acdb8078f"
         ],
         "Accept-Language": [
           "en-US"
@@ -312,7 +312,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "03f9dfe3-76f9-4407-8212-1372e666e714"
+          "82d4b03e-d6eb-4ebf-a847-449341aed4f3"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11998"
@@ -330,13 +330,13 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-correlation-request-id": [
-          "03f9dfe3-76f9-4407-8212-1372e666e714"
+          "82d4b03e-d6eb-4ebf-a847-449341aed4f3"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201527Z:03f9dfe3-76f9-4407-8212-1372e666e714"
+          "WESTUS2:20210317T205839Z:82d4b03e-d6eb-4ebf-a847-449341aed4f3"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:26 GMT"
+          "Wed, 17 Mar 2021 20:58:38 GMT"
         ],
         "Content-Length": [
           "706"
@@ -348,7 +348,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n  \"name\": \"openservicemesh\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"configurationSettings\": {},\r\n    \"statuses\": [],\r\n    \"extensionType\": \"microsoft.openservicemesh\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"staging\",\r\n    \"version\": \"0.1.0\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"arc-osm-system\"\r\n      }\r\n    },\r\n    \"installState\": \"Pending\",\r\n    \"lastStatusTime\": null,\r\n    \"errorInfo\": {},\r\n    \"creationTime\": \"2021-03-16T13:15:26.4307604-07:00\",\r\n    \"lastModifiedTime\": \"2021-03-16T13:15:26.4307605-07:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/openservicemesh\",\r\n  \"name\": \"openservicemesh\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"configurationSettings\": {},\r\n    \"statuses\": [],\r\n    \"extensionType\": \"microsoft.openservicemesh\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"staging\",\r\n    \"version\": \"0.1.0\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"arc-osm-system\"\r\n      }\r\n    },\r\n    \"installState\": \"Pending\",\r\n    \"lastStatusTime\": null,\r\n    \"errorInfo\": {},\r\n    \"creationTime\": \"2021-03-17T13:58:38.0014681-07:00\",\r\n    \"lastModifiedTime\": \"2021-03-17T13:58:38.0014682-07:00\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -358,7 +358,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b05ca9ed-f6ab-412a-a9c7-d71dc0c1aec0"
+          "8b135d26-87ba-4b5c-b335-ebb322fe365c"
         ],
         "Accept-Language": [
           "en-US"
@@ -393,16 +393,16 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-request-id": [
-          "9da17ad1-59ef-4d25-8ef9-17a166011129"
+          "b092ed8b-35f5-440a-a8b0-3f2a1f19eb64"
         ],
         "x-ms-correlation-request-id": [
-          "9da17ad1-59ef-4d25-8ef9-17a166011129"
+          "b092ed8b-35f5-440a-a8b0-3f2a1f19eb64"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201528Z:9da17ad1-59ef-4d25-8ef9-17a166011129"
+          "WESTUS2:20210317T205840Z:b092ed8b-35f5-440a-a8b0-3f2a1f19eb64"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:28 GMT"
+          "Wed, 17 Mar 2021 20:58:40 GMT"
         ],
         "Content-Length": [
           "152"

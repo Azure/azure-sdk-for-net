@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f56bcca5-d169-4caa-aa3f-d9d07d5e98e5"
+          "85fda3bc-a546-425d-9b54-6699c3c5f89b"
         ],
         "Accept-Language": [
           "en-US"
@@ -30,7 +30,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "c572ddb5-7746-42f1-aa74-3c3d0342c0e3"
+          "6ed0e71c-86cb-4d0b-b48e-692272fdb88a"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
@@ -48,13 +48,13 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-correlation-request-id": [
-          "c572ddb5-7746-42f1-aa74-3c3d0342c0e3"
+          "6ed0e71c-86cb-4d0b-b48e-692272fdb88a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201530Z:c572ddb5-7746-42f1-aa74-3c3d0342c0e3"
+          "WESTUS2:20210317T205842Z:6ed0e71c-86cb-4d0b-b48e-692272fdb88a"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:30 GMT"
+          "Wed, 17 Mar 2021 20:58:42 GMT"
         ],
         "Content-Length": [
           "673"
@@ -76,7 +76,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d7a615a1-6fbd-44f5-b3c7-90d17014e78e"
+          "5fd8060e-c7b2-4686-a6b2-3b2d56b8c413"
         ],
         "Accept-Language": [
           "en-US"
@@ -99,7 +99,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "60f79c9b-e057-4002-86d5-725c1905c002"
+          "a6a9766f-1786-45d5-b1fd-adb4706fb42c"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11997"
@@ -117,13 +117,13 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-correlation-request-id": [
-          "60f79c9b-e057-4002-86d5-725c1905c002"
+          "a6a9766f-1786-45d5-b1fd-adb4706fb42c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201538Z:60f79c9b-e057-4002-86d5-725c1905c002"
+          "WESTUS2:20210317T205847Z:a6a9766f-1786-45d5-b1fd-adb4706fb42c"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:38 GMT"
+          "Wed, 17 Mar 2021 20:58:47 GMT"
         ],
         "Content-Length": [
           "1475"
@@ -135,7 +135,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/microsoft.azuredefender.kubernetes\",\r\n      \"name\": \"microsoft.azuredefender.kubernetes\",\r\n      \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n      \"properties\": {\r\n        \"extensionType\": \"microsoft.azuredefender.kubernetes\",\r\n        \"autoUpgradeMinorVersion\": false,\r\n        \"releaseTrain\": \"Stable\",\r\n        \"version\": \"0.4.61\",\r\n        \"scope\": {\r\n          \"cluster\": {\r\n            \"releaseNamespace\": \"azuredefender\"\r\n          }\r\n        },\r\n        \"installState\": \"Pending\",\r\n        \"lastStatusTime\": null,\r\n        \"errorInfo\": {},\r\n        \"creationTime\": \"2021-03-16T13:15:36.5499484-07:00\",\r\n        \"lastModifiedTime\": \"2021-03-16T13:15:36.5499622-07:00\"\r\n      },\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"295a4bcf-8182-4cbb-9c6d-f4a6165e4de1\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/hci22jan21\",\r\n      \"name\": \"hci22jan21\",\r\n      \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n      \"properties\": {\r\n        \"extensionType\": \"microsoft.azstackhci.operator\",\r\n        \"autoUpgradeMinorVersion\": true,\r\n        \"releaseTrain\": \"stable\",\r\n        \"version\": \"1.0.0\",\r\n        \"scope\": {\r\n          \"cluster\": {\r\n            \"releaseNamespace\": null\r\n          }\r\n        },\r\n        \"installState\": \"Pending\",\r\n        \"lastStatusTime\": null,\r\n        \"errorInfo\": {},\r\n        \"creationTime\": \"2021-01-22T12:49:34.3336157-08:00\",\r\n        \"lastModifiedTime\": \"2021-01-22T12:49:34.3336249-08:00\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/microsoft.azuredefender.kubernetes\",\r\n      \"name\": \"microsoft.azuredefender.kubernetes\",\r\n      \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n      \"properties\": {\r\n        \"extensionType\": \"microsoft.azuredefender.kubernetes\",\r\n        \"autoUpgradeMinorVersion\": false,\r\n        \"releaseTrain\": \"Stable\",\r\n        \"version\": \"0.4.61\",\r\n        \"scope\": {\r\n          \"cluster\": {\r\n            \"releaseNamespace\": \"azuredefender\"\r\n          }\r\n        },\r\n        \"installState\": \"Pending\",\r\n        \"lastStatusTime\": null,\r\n        \"errorInfo\": {},\r\n        \"creationTime\": \"2021-03-17T13:58:46.0169252-07:00\",\r\n        \"lastModifiedTime\": \"2021-03-17T13:58:46.0169253-07:00\"\r\n      },\r\n      \"identity\": {\r\n        \"type\": \"SystemAssigned\",\r\n        \"principalId\": \"7c33135c-5426-41f7-b209-0bdb6d8d560d\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/hci22jan21\",\r\n      \"name\": \"hci22jan21\",\r\n      \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n      \"properties\": {\r\n        \"extensionType\": \"microsoft.azstackhci.operator\",\r\n        \"autoUpgradeMinorVersion\": true,\r\n        \"releaseTrain\": \"stable\",\r\n        \"version\": \"1.0.0\",\r\n        \"scope\": {\r\n          \"cluster\": {\r\n            \"releaseNamespace\": null\r\n          }\r\n        },\r\n        \"installState\": \"Pending\",\r\n        \"lastStatusTime\": null,\r\n        \"errorInfo\": {},\r\n        \"creationTime\": \"2021-01-22T12:49:34.3336157-08:00\",\r\n        \"lastModifiedTime\": \"2021-01-22T12:49:34.3336249-08:00\"\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "StatusCode": 200
     },
     {
@@ -145,7 +145,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e557fc5c-836c-44b7-9b02-1a03cce72482"
+          "baa48e06-bc8f-48ce-a00c-14e6e258cb5e"
         ],
         "Accept-Language": [
           "en-US"
@@ -168,7 +168,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "1e2b8a21-7d73-4ee9-bb44-56b39cb54aab"
+          "8dbd4524-8dc1-4e6d-bd94-55cc13cc6ae1"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11996"
@@ -186,13 +186,13 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-correlation-request-id": [
-          "1e2b8a21-7d73-4ee9-bb44-56b39cb54aab"
+          "8dbd4524-8dc1-4e6d-bd94-55cc13cc6ae1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201540Z:1e2b8a21-7d73-4ee9-bb44-56b39cb54aab"
+          "WESTUS2:20210317T205849Z:8dbd4524-8dc1-4e6d-bd94-55cc13cc6ae1"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:39 GMT"
+          "Wed, 17 Mar 2021 20:58:49 GMT"
         ],
         "Content-Length": [
           "673"
@@ -211,10 +211,10 @@
       "RequestUri": "/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/microsoft.azuredefender.kubernetes?api-version=2020-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGU3NTA0NTctNTI1Mi00OTNlLTk1YTMtZTQwZTZhNDYwYmYwL3Jlc291cmNlR3JvdXBzL25hbnRoaXJnMDkyMy9wcm92aWRlcnMvTWljcm9zb2Z0Lkt1YmVybmV0ZXMvY29ubmVjdGVkQ2x1c3RlcnMvbmFudGhpY2x1c3RlcjA5MjMvcHJvdmlkZXJzL01pY3Jvc29mdC5LdWJlcm5ldGVzQ29uZmlndXJhdGlvbi9leHRlbnNpb25zL21pY3Jvc29mdC5henVyZWRlZmVuZGVyLmt1YmVybmV0ZXM/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"extensionType\": \"microsoft.azuredefender.kubernetes\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"Stable\",\r\n    \"version\": \"0.4.61\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"azuredefender\"\r\n      }\r\n    }\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"eastus2euap\",\r\n  \"properties\": {\r\n    \"extensionType\": \"microsoft.azuredefender.kubernetes\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"Stable\",\r\n    \"version\": \"0.4.61\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"azuredefender\"\r\n      }\r\n    }\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7e26ebf1-51e1-49f2-be1a-fe352e476568"
+          "edba157b-5e34-445a-802f-49163c55764e"
         ],
         "Accept-Language": [
           "en-US"
@@ -229,7 +229,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "334"
+          "364"
         ]
       },
       "ResponseHeaders": {
@@ -243,7 +243,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "e5e032cf-5790-4e9c-8b5c-fc578a570366"
+          "2a2f73e3-9efe-4a17-b1ee-3fa354a75682"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
@@ -261,13 +261,13 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-correlation-request-id": [
-          "e5e032cf-5790-4e9c-8b5c-fc578a570366"
+          "2a2f73e3-9efe-4a17-b1ee-3fa354a75682"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201536Z:e5e032cf-5790-4e9c-8b5c-fc578a570366"
+          "WESTUS2:20210317T205846Z:2a2f73e3-9efe-4a17-b1ee-3fa354a75682"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:36 GMT"
+          "Wed, 17 Mar 2021 20:58:45 GMT"
         ],
         "Content-Length": [
           "842"
@@ -279,7 +279,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/microsoft.azuredefender.kubernetes\",\r\n  \"name\": \"microsoft.azuredefender.kubernetes\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"configurationSettings\": {},\r\n    \"statuses\": [],\r\n    \"extensionType\": \"microsoft.azuredefender.kubernetes\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"Stable\",\r\n    \"version\": \"0.4.61\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"azuredefender\"\r\n      }\r\n    },\r\n    \"installState\": \"Pending\",\r\n    \"lastStatusTime\": null,\r\n    \"errorInfo\": {},\r\n    \"creationTime\": \"2021-03-16T13:15:36.5499484-07:00\",\r\n    \"lastModifiedTime\": \"2021-03-16T13:15:36.5499622-07:00\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"295a4bcf-8182-4cbb-9c6d-f4a6165e4de1\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/microsoft.azuredefender.kubernetes\",\r\n  \"name\": \"microsoft.azuredefender.kubernetes\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"configurationSettings\": {},\r\n    \"statuses\": [],\r\n    \"extensionType\": \"microsoft.azuredefender.kubernetes\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"Stable\",\r\n    \"version\": \"0.4.61\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"azuredefender\"\r\n      }\r\n    },\r\n    \"installState\": \"Pending\",\r\n    \"lastStatusTime\": null,\r\n    \"errorInfo\": {},\r\n    \"creationTime\": \"2021-03-17T13:58:46.0169252-07:00\",\r\n    \"lastModifiedTime\": \"2021-03-17T13:58:46.0169253-07:00\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"7c33135c-5426-41f7-b209-0bdb6d8d560d\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -289,7 +289,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9243cfbc-d80f-422b-b814-54df0ad3f696"
+          "40504dd7-48e0-401a-9441-67a4af9083ec"
         ],
         "Accept-Language": [
           "en-US"
@@ -312,7 +312,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "75ae962b-8489-4a46-a28f-ad0b898ab093"
+          "ad8a585d-b90b-4022-a25e-24fc27b03266"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11998"
@@ -330,13 +330,13 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-correlation-request-id": [
-          "75ae962b-8489-4a46-a28f-ad0b898ab093"
+          "ad8a585d-b90b-4022-a25e-24fc27b03266"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201537Z:75ae962b-8489-4a46-a28f-ad0b898ab093"
+          "WESTUS2:20210317T205846Z:ad8a585d-b90b-4022-a25e-24fc27b03266"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:37 GMT"
+          "Wed, 17 Mar 2021 20:58:46 GMT"
         ],
         "Content-Length": [
           "842"
@@ -348,7 +348,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/microsoft.azuredefender.kubernetes\",\r\n  \"name\": \"microsoft.azuredefender.kubernetes\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"configurationSettings\": {},\r\n    \"statuses\": [],\r\n    \"extensionType\": \"microsoft.azuredefender.kubernetes\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"Stable\",\r\n    \"version\": \"0.4.61\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"azuredefender\"\r\n      }\r\n    },\r\n    \"installState\": \"Pending\",\r\n    \"lastStatusTime\": null,\r\n    \"errorInfo\": {},\r\n    \"creationTime\": \"2021-03-16T13:15:36.5499484-07:00\",\r\n    \"lastModifiedTime\": \"2021-03-16T13:15:36.5499622-07:00\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"295a4bcf-8182-4cbb-9c6d-f4a6165e4de1\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0e750457-5252-493e-95a3-e40e6a460bf0/resourceGroups/nanthirg0923/providers/Microsoft.Kubernetes/connectedClusters/nanthicluster0923/providers/Microsoft.KubernetesConfiguration/extensions/microsoft.azuredefender.kubernetes\",\r\n  \"name\": \"microsoft.azuredefender.kubernetes\",\r\n  \"type\": \"Microsoft.KubernetesConfiguration/extensions\",\r\n  \"properties\": {\r\n    \"configurationSettings\": {},\r\n    \"statuses\": [],\r\n    \"extensionType\": \"microsoft.azuredefender.kubernetes\",\r\n    \"autoUpgradeMinorVersion\": false,\r\n    \"releaseTrain\": \"Stable\",\r\n    \"version\": \"0.4.61\",\r\n    \"scope\": {\r\n      \"cluster\": {\r\n        \"releaseNamespace\": \"azuredefender\"\r\n      }\r\n    },\r\n    \"installState\": \"Pending\",\r\n    \"lastStatusTime\": null,\r\n    \"errorInfo\": {},\r\n    \"creationTime\": \"2021-03-17T13:58:46.0169252-07:00\",\r\n    \"lastModifiedTime\": \"2021-03-17T13:58:46.0169253-07:00\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"principalId\": \"7c33135c-5426-41f7-b209-0bdb6d8d560d\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -358,7 +358,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e6545df2-3ac4-41d5-8eca-515e338fa0cb"
+          "70517227-1a57-4fbd-b61b-d59a60b168fb"
         ],
         "Accept-Language": [
           "en-US"
@@ -393,16 +393,16 @@
           "openresty/1.15.8.2"
         ],
         "x-ms-request-id": [
-          "a679c76d-9bcd-454f-bd42-c2f02e16114b"
+          "87fbe3e7-0e33-4b0f-9ff5-5d31ae7c0e54"
         ],
         "x-ms-correlation-request-id": [
-          "a679c76d-9bcd-454f-bd42-c2f02e16114b"
+          "87fbe3e7-0e33-4b0f-9ff5-5d31ae7c0e54"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20210316T201539Z:a679c76d-9bcd-454f-bd42-c2f02e16114b"
+          "WESTUS2:20210317T205848Z:87fbe3e7-0e33-4b0f-9ff5-5d31ae7c0e54"
         ],
         "Date": [
-          "Tue, 16 Mar 2021 20:15:38 GMT"
+          "Wed, 17 Mar 2021 20:58:48 GMT"
         ],
         "Content-Length": [
           "152"

@@ -73,9 +73,10 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// <param name="errorInfo">Error information from the Agent - e.g.
         /// errors during installation.</param>
         /// <param name="identity">The identity of the configuration.</param>
-        public ExtensionInstance(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string extensionType = default(string), bool? autoUpgradeMinorVersion = default(bool?), string releaseTrain = default(string), string version = default(string), Scope scope = default(Scope), IDictionary<string, string> configurationSettings = default(IDictionary<string, string>), IDictionary<string, string> configurationProtectedSettings = default(IDictionary<string, string>), string installState = default(string), IList<ExtensionStatus> statuses = default(IList<ExtensionStatus>), string creationTime = default(string), string lastModifiedTime = default(string), string lastStatusTime = default(string), ErrorDefinition errorInfo = default(ErrorDefinition), ConfigurationIdentity identity = default(ConfigurationIdentity))
+        public ExtensionInstance(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string location = default(string), string extensionType = default(string), bool? autoUpgradeMinorVersion = default(bool?), string releaseTrain = default(string), string version = default(string), Scope scope = default(Scope), IDictionary<string, string> configurationSettings = default(IDictionary<string, string>), IDictionary<string, string> configurationProtectedSettings = default(IDictionary<string, string>), string installState = default(string), IList<ExtensionStatus> statuses = default(IList<ExtensionStatus>), string creationTime = default(string), string lastModifiedTime = default(string), string lastStatusTime = default(string), ErrorDefinition errorInfo = default(ErrorDefinition), ConfigurationIdentity identity = default(ConfigurationIdentity))
             : base(id, name, type, systemData)
         {
+            Location = location;
             ExtensionType = extensionType;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
             ReleaseTrain = releaseTrain;
@@ -97,6 +98,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the location of the configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets type of the Extension, of which this resource is an
