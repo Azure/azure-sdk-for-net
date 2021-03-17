@@ -88,9 +88,9 @@ try
         to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
         message: "Weekly Promotion!",
         options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
-    {
-        Tag = "marketing", // custom tags
-    });
+        {
+            Tag = "marketing", // custom tags
+        });
     IEnumerable<SmsSendResult> results = response.Value;
     foreach (SmsSendResult result in results)
     {
