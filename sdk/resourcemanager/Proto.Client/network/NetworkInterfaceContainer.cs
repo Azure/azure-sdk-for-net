@@ -25,9 +25,9 @@ namespace Proto.Network
 
         internal NetworkInterfacesOperations Operations => new NetworkManagementClient(
             Id.Subscription,
-            ((IClientContext)this).BaseUri,
-            ((IClientContext)this).Credential,
-            ((IClientContext)this).ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkInterfaces;
+            BaseUri,
+            Credential,
+            ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkInterfaces;
 
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;

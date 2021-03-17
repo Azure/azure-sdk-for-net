@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// The entry point for all ARM clients.
     /// </summary>
-    public class AzureResourceManagerClient : IClientContext
+    public class AzureResourceManagerClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="options"> The client parameters to use in these operations. </param>
         private AzureResourceManagerClient(string defaultSubscriptionId, Uri baseUri, TokenCredential credential, AzureResourceManagerClientOptions options = default)
         {
-            ((IClientContext)this).Credential = credential;
-            ((IClientContext)this).BaseUri = baseUri;
-            ((IClientContext)this).ClientOptions = options ?? new AzureResourceManagerClientOptions();
+            Credential = credential;
+            BaseUri = baseUri;
+            ClientOptions = options ?? new AzureResourceManagerClientOptions();
 
             if (string.IsNullOrWhiteSpace(defaultSubscriptionId))
             {
@@ -107,24 +107,24 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Azure Resource Manager client options.
         /// </summary>
-        AzureResourceManagerClientOptions IClientContext.ClientOptions { get; set; }
+        private AzureResourceManagerClientOptions ClientOptions { get; set; }
 
         /// <summary>
         /// Gets the Azure credential.
         /// </summary>
-        TokenCredential IClientContext.Credential { get; set; }
+        private TokenCredential Credential { get; set; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        Uri IClientContext.BaseUri { get; set; }
+        private Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets the Azure subscription operations.
         /// </summary>
         /// <param name="subscriptionGuid"> The guid of the subscription. </param>
         /// <returns> Subscription operations. </returns>
-        public SubscriptionOperations GetSubscriptionOperations(string subscriptionGuid) => new SubscriptionOperations(this, subscriptionGuid);
+        public SubscriptionOperations GetSubscriptionOperations(string subscriptionGuid) => new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), subscriptionGuid);
 
         /// <summary>
         /// Gets the Azure subscriptions.
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Subscription container. </returns>
         public SubscriptionContainer GetSubscriptionContainer()
         {
-            return new SubscriptionContainer(this);
+            return new SubscriptionContainer(new ClientContext(ClientOptions, Credential, BaseUri));
         }
 
         /// <summary>

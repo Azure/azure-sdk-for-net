@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="subscriptionGuid"> The Guid of the subscription. </param>
-        internal SubscriptionOperations(IClientContext clientContext, string subscriptionGuid)
+        internal SubscriptionOperations(ClientContext clientContext, string subscriptionGuid)
             : base(clientContext, $"/subscriptions/{subscriptionGuid}")
         {
         }
@@ -41,15 +41,37 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// ListResources of type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public T ListResources<T>(Func<Uri, TokenCredential, AzureResourceManagerClientOptions, T> func)
+        {
+            return func(BaseUri, Credential, ClientOptions);
+        }
+
+        /// <summary>
+        /// ListResourcesAsync of type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public T ListResourcesAsync<T>(Func<Uri, TokenCredential, AzureResourceManagerClientOptions, T> func)
+        {
+            return func(BaseUri, Credential, ClientOptions);
+        }
+
+        /// <summary>
         /// Gets the valid resource type for this operation class
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
 
         private SubscriptionsOperations SubscriptionsClient => new ResourcesManagementClient(
-            ((IClientContext)this).BaseUri,
+            BaseUri,
             Guid.NewGuid().ToString(),
-            ((IClientContext)this).Credential,
-            ((IClientContext)this).ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
+            Credential,
+            ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
 
         /// <summary>
         /// Gets the resource group operations for a given resource group.

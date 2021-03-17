@@ -33,9 +33,9 @@ namespace Proto.Network
 
         private PublicIPAddressesOperations Operations => new NetworkManagementClient(
             Id.Subscription,
-            ((IClientContext)this).BaseUri,
-            ((IClientContext)this).Credential,
-            ((IClientContext)this).ClientOptions.Convert<NetworkManagementClientOptions>()).PublicIPAddresses;
+            BaseUri,
+            Credential,
+            ClientOptions.Convert<NetworkManagementClientOptions>()).PublicIPAddresses;
 
         /// <inheritdoc />
         public override ArmResponse<PublicIpAddress> CreateOrUpdate(string name, PublicIPAddressData resourceDetails)

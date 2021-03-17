@@ -35,7 +35,7 @@ namespace Proto.Authorization
         /// <summary>
         /// Gets the resource type of the resource being created.
         /// </summary>
-        private RoleAssignmentsOperations Operations => new AuthorizationManagementClient(Id.Subscription, ((IClientContext)this).BaseUri, ((IClientContext)this).Credential).RoleAssignments;
+        private RoleAssignmentsOperations Operations => new AuthorizationManagementClient(Id.Subscription, BaseUri, Credential).RoleAssignments;
 
         /// <summary>
         /// Create a role assignment. This method blocks until the RoleAssignment is created on the service.

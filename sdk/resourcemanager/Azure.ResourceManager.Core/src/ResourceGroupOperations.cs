@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.Core
         protected override ResourceType ValidResourceType => ResourceType;
 
         private ResourceGroupsOperations Operations => new ResourcesManagementClient(
-            ((IClientContext)this).BaseUri,
+            BaseUri,
             Id.Subscription,
-            ((IClientContext)this).Credential,
-            ((IClientContext)this).ClientOptions.Convert<ResourcesManagementClientOptions>()).ResourceGroups;
+            Credential,
+            ClientOptions.Convert<ResourcesManagementClientOptions>()).ResourceGroups;
 
         /// <summary>
         /// When you delete a resource group, all of its resources are also deleted. Deleting a resource group deletes all of its template deployments and currently stored operations.
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentNullException(nameof(model));
 
             var myResource = model as TrackedResource;
-            TContainer container = Activator.CreateInstance(typeof(TContainer), ((IClientContext)this).ClientOptions, myResource) as TContainer;
+            TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
 
             return container.CreateOrUpdate(name, model);
         }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Core
 
             var myResource = model as TrackedResource;
 
-            TContainer container = Activator.CreateInstance(typeof(TContainer), ((IClientContext)this).ClientOptions, myResource) as TContainer;
+            TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
 
             return container.CreateOrUpdateAsync(name, model, cancellationToken);
         }

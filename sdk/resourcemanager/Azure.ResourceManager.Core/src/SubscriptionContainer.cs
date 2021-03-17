@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
-        internal SubscriptionContainer(IClientContext clientContext)
+        internal SubscriptionContainer(ClientContext clientContext)
             : base(clientContext, null)
         {
         }
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.Core
         /// Gets the operations that can be performed on the container.
         /// </summary>
         private SubscriptionsOperations Operations => new ResourcesManagementClient(
-            ((IClientContext)this).BaseUri,
+            BaseUri,
             Guid.NewGuid().ToString(),
-            ((IClientContext)this).Credential,
-            ((IClientContext)this).ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
+            Credential,
+            ClientOptions.Convert<ResourcesManagementClientOptions>()).Subscriptions;
 
         /// <summary>
         /// Lists all subscriptions in the current container.
@@ -80,12 +80,13 @@ namespace Azure.ResourceManager.Core
         /// <returns> An instance of <see cref="ResourceOperationsBase{Subscription}"/>. </returns>
         protected override ResourceOperationsBase<Subscription> GetOperation(string subscriptionGuid)
         {
-            return new SubscriptionOperations((IClientContext)this, subscriptionGuid);
+            return new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), subscriptionGuid);
         }
 
+        //TODO: can make static?
         private Func<ResourceManager.Resources.Models.Subscription, Subscription> Converter()
         {
-            return s => new Subscription(new SubscriptionOperations(((IClientContext)this), s.SubscriptionId), new SubscriptionData(s));
+            return s => new Subscription(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), s.SubscriptionId), new SubscriptionData(s));
         }
     }
 }

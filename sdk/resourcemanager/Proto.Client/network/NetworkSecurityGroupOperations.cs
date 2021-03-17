@@ -57,9 +57,9 @@ namespace Proto.Network
 
         private NetworkSecurityGroupsOperations Operations => new NetworkManagementClient(
             Id.Subscription,
-            ((IClientContext)this).BaseUri,
-            ((IClientContext)this).Credential,
-            ((IClientContext)this).ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkSecurityGroups;
+            BaseUri,
+            Credential,
+            ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkSecurityGroups;
 
         /// <summary>
         /// Updates the network security group rules.

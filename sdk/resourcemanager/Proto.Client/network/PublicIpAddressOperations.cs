@@ -56,9 +56,9 @@ namespace Proto.Network
 
         private PublicIPAddressesOperations Operations => new NetworkManagementClient(
             Id.Subscription,
-            ((IClientContext)this).BaseUri,
-            ((IClientContext)this).Credential,
-            ((IClientContext)this).ClientOptions.Convert<NetworkManagementClientOptions>()).PublicIPAddresses;
+            BaseUri,
+            Credential,
+            ClientOptions.Convert<NetworkManagementClientOptions>()).PublicIPAddresses;
 
         /// <summary>
         /// The operation to delete a public IP address.

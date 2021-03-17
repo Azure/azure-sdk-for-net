@@ -10,19 +10,19 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the operations that can be performed over a specific resource.
     /// </summary>
-    public abstract class OperationsBase : IClientContext
+    public abstract class OperationsBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationsBase"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal OperationsBase(IClientContext clientContext, ResourceIdentifier id)
+        internal OperationsBase(ClientContext clientContext, ResourceIdentifier id)
         {
-            ((IClientContext)this).ClientOptions = clientContext.ClientOptions;
+            ClientOptions = clientContext.ClientOptions;
             Id = id;
-            ((IClientContext)this).Credential = clientContext.Credential;
-            ((IClientContext)this).BaseUri = clientContext.BaseUri;
+            Credential = clientContext.Credential;
+            BaseUri = clientContext.BaseUri;
 
             Validate(id);
         }
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Azure Resource Manager client options.
         /// </summary>
-        AzureResourceManagerClientOptions IClientContext.ClientOptions { get; set; }
+        protected internal AzureResourceManagerClientOptions ClientOptions { get; set; }
 
         /// <summary>
         /// Gets the Azure credential.
         /// </summary>
-        TokenCredential IClientContext.Credential { get; set; }
+        protected internal TokenCredential Credential { get; set; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        Uri IClientContext.BaseUri { get; set; }
+        protected internal Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets the valid Azure resource type for the current operations.
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the resource client.
         /// </summary>
-        protected ResourcesManagementClient ResourcesClient => new ResourcesManagementClient(((IClientContext)this).BaseUri, Id.Subscription, ((IClientContext)this).Credential);
+        protected ResourcesManagementClient ResourcesClient => new ResourcesManagementClient(BaseUri, Id.Subscription, Credential);
 
         /// <summary>
         /// Validate the resource identifier against current operations.

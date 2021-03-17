@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Core
 
         private static ResourcesManagementClient GetResourcesClient(ResourceOperationsBase resourceOperations)
         {
-            return new ResourcesManagementClient(((IClientContext)resourceOperations).BaseUri, resourceOperations.Id.Subscription, ((IClientContext)resourceOperations).Credential);
+            return new ResourcesManagementClient(resourceOperations.BaseUri, resourceOperations.Id.Subscription, resourceOperations.Credential);
         }
 
         private static AsyncPageable<GenericResource> ListAtContextInternalAsync(

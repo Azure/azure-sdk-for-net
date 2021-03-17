@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="operations"> The operations representing the resource. </param>
         protected ResourceOperationsBase(ResourceOperationsBase operations)
-            : base(operations, operations.Id)
+            : base(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri), operations.Id)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="options"> The operations to copy options from. </param>
         /// <param name="resourceId">The resource that is the target of operations.</param>
         protected ResourceOperationsBase(ResourceOperationsBase options, ResourceIdentifier resourceId)
-            : base(options, resourceId)
+            : base(new ClientContext(options.ClientOptions, options.Credential, options.BaseUri), resourceId)
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"></param>
-        internal ResourceOperationsBase(IClientContext clientContext, ResourceIdentifier id)
+        internal ResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
         }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"></param>
-        internal ResourceOperationsBase(IClientContext clientContext, ResourceIdentifier id)
+        internal ResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
         }

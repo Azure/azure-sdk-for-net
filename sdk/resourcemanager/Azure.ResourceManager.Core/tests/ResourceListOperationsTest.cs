@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Core.Tests
 
         private static ResourceGroupOperations GetResourceGroupOperations()
         {
-            var clientContext = new ClientContextImplementation();
+            var clientContext = new ClientContext(new AzureResourceManagerClientOptions(), new DefaultAzureCredential(), new Uri("http://foo.com"));
             var rgOp = new ResourceGroupOperations(
                             new SubscriptionOperations(
                                 clientContext,

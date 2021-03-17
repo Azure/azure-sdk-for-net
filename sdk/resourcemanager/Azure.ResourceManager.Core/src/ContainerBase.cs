@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ContainerBase(IClientContext clientContext, ResourceIdentifier id)
+        internal ContainerBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         protected ContainerBase(ResourceOperationsBase parent)
-            : this(parent, parent.Id)
+            : this(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri), parent.Id)
         {
             Parent = parent;
         }

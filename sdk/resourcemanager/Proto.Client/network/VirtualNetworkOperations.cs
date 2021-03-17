@@ -55,9 +55,9 @@ namespace Proto.Network
 
         private VirtualNetworksOperations Operations => new NetworkManagementClient(
             Id.Subscription,
-            ((IClientContext)this).BaseUri,
-            ((IClientContext)this).Credential,
-            ((IClientContext)this).ClientOptions.Convert<NetworkManagementClientOptions>()).VirtualNetworks;
+            BaseUri,
+            Credential,
+            ClientOptions.Convert<NetworkManagementClientOptions>()).VirtualNetworks;
 
         /// <summary>
         /// The operation to delete a virtual nerwork. 

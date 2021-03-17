@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="operations"> The operations to copy the client options from. </param>
         /// <param name="parentId"> The resource Id of the parent resource. </param>
         protected ExtensionResourceContainer(OperationsBase operations, ResourceIdentifier parentId)
-            : base(operations, parentId)
+            : base(new ClientContext(operations.ClientOptions, operations.Credential, operations.BaseUri), parentId)
         {
         }
 

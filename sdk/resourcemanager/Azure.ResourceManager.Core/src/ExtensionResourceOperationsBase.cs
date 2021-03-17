@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="genericOperations"> The operations to copy the client options from. </param>
         internal ExtensionResourceOperationsBase(OperationsBase genericOperations)
-            : this(genericOperations, genericOperations.Id)
+            : this(new ClientContext(genericOperations.ClientOptions, genericOperations.Credential, genericOperations.BaseUri), genericOperations.Id)
         {
         }
 
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the extension resource. </param>
-        internal ExtensionResourceOperationsBase(IClientContext clientContext, ResourceIdentifier id)
+        internal ExtensionResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
         {
         }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="genericOperations"> The operations to copy the client options from. </param>
         /// <param name="id"> The identifier of the extension resource. </param>
         protected ExtensionResourceOperationsBase(OperationsBase genericOperations, ResourceIdentifier id)
-            : base(genericOperations, id)
+            : base(new ClientContext(genericOperations.ClientOptions, genericOperations.Credential, genericOperations.BaseUri), id)
         {
         }
 
