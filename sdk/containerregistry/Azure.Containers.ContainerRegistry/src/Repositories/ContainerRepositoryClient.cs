@@ -95,5 +95,41 @@ namespace Azure.Containers.ContainerRegistry
                 throw;
             }
         }
+
+        /// <summary> Update the attribute identified by `name` where `reference` is the name of the repository. </summary>
+        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> SetPropertiesAsync(ContentProperties value, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetProperties)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.UpdateAttributesAsync(_repository, value, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update the attribute identified by `name` where `reference` is the name of the repository. </summary>
+        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response SetProperties(ContentProperties value, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetProperties)}");
+            scope.Start();
+            try
+            {
+                return _restClient.UpdateAttributes(_repository, value, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

@@ -38,5 +38,34 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual(_repositoryName, properties.Name);
             Assert.AreEqual(new Uri(TestEnvironment.Endpoint).Host, properties.Registry);
         }
+
+        [RecordedTest]
+        public async Task CanSetRepositoryProperties()
+        {
+            var client = CreateClient();
+
+            await client.SetPropertiesAsync(
+                new ContentProperties()
+                {
+                    CanWrite = false,
+                    CanDelete = false
+                });
+
+            RepositoryProperties properties = await client.GetPropertiesAsync();
+
+            Assert.IsTrue(properties.ModifiableProperties.CanList);
+            Assert.IsTrue(properties.ModifiableProperties.CanRead);
+            Assert.IsFalse(properties.ModifiableProperties.CanWrite);
+            Assert.IsFalse(properties.ModifiableProperties.CanDelete);
+
+            await client.SetPropertiesAsync(new ContentProperties());
+
+            properties = await client.GetPropertiesAsync();
+
+            Assert.IsTrue(properties.ModifiableProperties.CanList);
+            Assert.IsTrue(properties.ModifiableProperties.CanRead);
+            Assert.IsTrue(properties.ModifiableProperties.CanWrite);
+            Assert.IsTrue(properties.ModifiableProperties.CanDelete);
+        }
     }
 }

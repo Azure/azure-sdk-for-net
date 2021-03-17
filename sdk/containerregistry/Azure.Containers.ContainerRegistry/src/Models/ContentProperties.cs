@@ -16,21 +16,21 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// </summary>
         [CodeGenMember("DeleteEnabled")]
-        public bool CanDelete { get; set; }
+        public bool CanDelete { get; set; } = true;
 
         /// <summary>
         /// </summary>
         [CodeGenMember("WriteEnabled")]
-        public bool CanWrite { get; set; }
+        public bool CanWrite { get; set; } = true;
 
         /// <summary>
         /// </summary>
         [CodeGenMember("ListEnabled")]
-        public bool CanList { get; set; }
+        public bool CanList { get; set; } = true;
 
         /// <summary>
         /// </summary>
         [CodeGenMember("ReadEnabled")]
-        public bool CanRead { get; set; }
+        public bool CanRead { get; set; } = true;
     }
 }
