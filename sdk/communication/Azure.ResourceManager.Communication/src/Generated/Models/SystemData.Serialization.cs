@@ -5,69 +5,76 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class Operation
+    public partial class SystemData
     {
-        internal static Operation DeserializeOperation(JsonElement element)
+        internal static SystemData DeserializeSystemData(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<bool> isDataAction = default;
-            Optional<OperationDisplay> display = default;
-            Optional<Origin> origin = default;
-            Optional<ActionType> actionType = default;
+            Optional<string> createdBy = default;
+            Optional<CreatedByType> createdByType = default;
+            Optional<DateTimeOffset> createdAt = default;
+            Optional<string> lastModifiedBy = default;
+            Optional<CreatedByType> lastModifiedByType = default;
+            Optional<DateTimeOffset> lastModifiedAt = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("createdBy"))
                 {
-                    name = property.Value.GetString();
+                    createdBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isDataAction"))
+                if (property.NameEquals("createdByType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    isDataAction = property.Value.GetBoolean();
+                    createdByType = new CreatedByType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("display"))
+                if (property.NameEquals("createdAt"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    display = OperationDisplay.DeserializeOperationDisplay(property.Value);
+                    createdAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("origin"))
+                if (property.NameEquals("lastModifiedBy"))
+                {
+                    lastModifiedBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastModifiedByType"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    origin = new Origin(property.Value.GetString());
+                    lastModifiedByType = new CreatedByType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("actionType"))
+                if (property.NameEquals("lastModifiedAt"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    actionType = new ActionType(property.Value.GetString());
+                    lastModifiedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new Operation(name.Value, Optional.ToNullable(isDataAction), display.Value, Optional.ToNullable(origin), Optional.ToNullable(actionType));
+            return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
         }
     }
 }

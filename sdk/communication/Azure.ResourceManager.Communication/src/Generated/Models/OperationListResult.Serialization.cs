@@ -11,30 +11,36 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class ServiceSpecification
+    internal partial class OperationListResult
     {
-        internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element)
+        internal static OperationListResult DeserializeOperationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MetricSpecification>> metricSpecifications = default;
+            Optional<IReadOnlyList<Operation>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metricSpecifications"))
+                if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MetricSpecification> array = new List<MetricSpecification>();
+                    List<Operation> array = new List<Operation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricSpecification.DeserializeMetricSpecification(item));
+                        array.Add(Operation.DeserializeOperation(item));
                     }
-                    metricSpecifications = array;
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("nextLink"))
+                {
+                    nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ServiceSpecification(Optional.ToList(metricSpecifications));
+            return new OperationListResult(Optional.ToList(value), nextLink.Value);
         }
     }
 }
