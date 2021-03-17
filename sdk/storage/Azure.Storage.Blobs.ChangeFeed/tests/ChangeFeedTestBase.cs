@@ -15,8 +15,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
     [ClientTestFixture(
     BlobClientOptions.ServiceVersion.V2020_06_12,
     BlobClientOptions.ServiceVersion.V2020_08_04,
-    RecordingServiceVersion = BlobClientOptions.ServiceVersion.V2020_08_04,
-    LiveServiceVersions = new object[] { BlobClientOptions.ServiceVersion.V2020_06_12 })]
+    RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
+    LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public class ChangeFeedTestBase : StorageTestBase
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;

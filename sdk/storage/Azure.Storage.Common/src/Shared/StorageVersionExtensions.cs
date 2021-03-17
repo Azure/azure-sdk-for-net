@@ -14,6 +14,8 @@ using ServiceVersion =
     Azure.Storage.Files.Shares.ShareClientOptions.ServiceVersion;
 #elif DataLakeSDK
     Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion;
+#elif ChangeFeedSDK
+    Azure.Storage.Blobs.BlobClientOptions.ServiceVersion;
 #else
     // If you see this error, you've included this shared source file from a
     // client library that it doesn't know how to help you with.  Either add
@@ -33,7 +35,7 @@ namespace Azure.Storage
         /// Gets the latest version of the service supported by this SDK.
         /// </summary>
         public const ServiceVersion LatestVersion =
-#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK
+#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK
             // TODO https://github.com/Azure/azure-sdk-for-net/issues/19575 - prepare for STG 77 beta release.
             ServiceVersion.V2020_06_12;
 #else
@@ -44,7 +46,7 @@ namespace Azure.Storage
         /// Gets the latest version of the service supported by this SDK.
         /// </summary>
         internal const ServiceVersion MaxVersion =
-#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK
+#if BlobSDK || QueueSDK || FileSDK || DataLakeSDK || ChangeFeedSDK
             // TODO https://github.com/Azure/azure-sdk-for-net/issues/19575 - prepare for STG 77 beta release.
             ServiceVersion.V2020_08_04;
 #else
