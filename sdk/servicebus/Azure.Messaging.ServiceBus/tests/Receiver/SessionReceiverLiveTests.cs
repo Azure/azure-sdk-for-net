@@ -607,7 +607,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await receiver.RenewSessionLockAsync();
 
-                Assert.True(receiver.SessionLockedUntil >= firstLockedUntilUtcTime);
+                Assert.Greater(receiver.SessionLockedUntil, firstLockedUntilUtcTime);
 
                 // Complete Messages
                 await receiver.CompleteMessageAsync(receivedMessage.LockToken);
