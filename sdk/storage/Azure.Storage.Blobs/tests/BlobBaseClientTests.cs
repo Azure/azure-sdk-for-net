@@ -7123,10 +7123,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync()
         {
             // Arrange
-            BlobServiceClient blobServiceClient = GetServiceClient_OauthAccount();
-            await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
-            await EnableVersionLevelWorm(test.Container);
-            BlobBaseClient blob = await GetNewBlobClient(test.Container);
+            BlobContainerClient blobContainer = await CreateVersionLevelWormContainer();
+            BlobBaseClient blob = await GetNewBlobClient(blobContainer);
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
@@ -7143,26 +7141,37 @@ namespace Azure.Storage.Blobs.Test
         }
 
         // TODO how do we record this??
-        public async Task EnableVersionLevelWorm(BlobContainerClient containerClient)
+        public async Task<BlobContainerClient> CreateVersionLevelWormContainer()
         {
             // TODO move this to TestConfiguration.xml
             string subscriptionId = "ba45b233-e2ef-4169-8808-49eb0d8eba0d";
             string token = await GetAuthToken();
             TokenCredentials tokenCredentials = new TokenCredentials(token);
             StorageManagementClient storageManagementClient = new StorageManagementClient(tokenCredentials) { SubscriptionId = subscriptionId };
+            string containerName = GetNewContainerName();
 
-            await storageManagementClient.BlobContainers.CreateOrUpdateImmutabilityPolicyAsync(
+            await storageManagementClient.BlobContainers.CreateAsync(
                 resourceGroupName: "XClient",
                 accountName: TestConfigOAuth.AccountName,
-                containerName: containerClient.Name,
-                immutabilityPeriodSinceCreationInDays: 1,
-                allowProtectedAppendWrites: true);
+                containerName: containerName,
+                new Microsoft.Azure.Management.Storage.Models.BlobContainer(
+                    enabled: true));
 
-            await storageManagementClient.BlobContainers.VersionLevelWormMethodAsync(
-                // TODO
-                resourceGroupName: "XClient",
-                accountName: TestConfigOAuth.AccountName,
-                containerName: containerClient.Name);
+            BlobServiceClient blobServiceClient = GetServiceClient_OauthAccount();
+            return InstrumentClient(blobServiceClient.GetBlobContainerClient(containerName));
+
+            //await storageManagementClient.BlobContainers.CreateOrUpdateImmutabilityPolicyAsync(
+            //    resourceGroupName: "XClient",
+            //    accountName: TestConfigOAuth.AccountName,
+            //    containerName: containerClient.Name,
+            //    immutabilityPeriodSinceCreationInDays: 1,
+            //    allowProtectedAppendWrites: true);
+
+            //await storageManagementClient.BlobContainers.VersionLevelWormMethodAsync(
+            //    // TODO
+            //    resourceGroupName: "XClient",
+            //    accountName: TestConfigOAuth.AccountName,
+            //    containerName: containerClient.Name);
         }
 
         private async Task<string> GetAuthToken()
