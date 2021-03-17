@@ -2,18 +2,22 @@
 
 ## 1.0.0-beta.6 (Unreleased)
 
-### Added
-- Updated client constructors URL variable to `endpoint`.
+### Breaking Changes
+
+- Renamed client constructors URL variable to `endpoint`.
 - Renamed `ChatThread` model to `ChatThreadProperties`.
 - Renamed `GetChatThread` operation to `GetPropertie`s and moved it to `ChatThreadClient`.
-- Made list of participants optional for `CreateChatThread`.
 - Renamed `ChatThreadInfo` model to `ChatThreadItem`.
 - Renamed `GetChatThreadsInfo` operation to `GetChatThreads`.
-- Made `ChatThreadClient` constructor public.
 - Made `AddParticipant` throw exception when request fails.
 - Renamed parameter `repeatabilityRequestId` to `idempotencyToken`.
 - Updated `SendMessage` to use `SendChatMessageResult` instead of `string` for the request result.
 - Exposed the list of `invalidparticipants` directly and removed `AddChatParticipantsErrors` and `CreateChatThreadErrors` models for `AddChatParticipantsResult` and `CreateChatThreadResult`.
+
+### Added
+
+- Made list of participants optional for `CreateChatThread`.
+- Made `ChatThreadClient` constructor public.
 
 ## 1.0.0-beta.5 (2021-03-09)
 
