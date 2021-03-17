@@ -13,38 +13,35 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The common properties of an Azure resource.
+    /// The private endpoint connection of a provisioning service
     /// </summary>
-    public partial class Resource : IResource
+    public partial class PrivateEndpointConnection : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the PrivateEndpointConnection class.
         /// </summary>
-        public Resource()
+        public PrivateEndpointConnection()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the PrivateEndpointConnection class.
         /// </summary>
-        /// <param name="location">The resource location.</param>
+        /// <param name="properties">The properties of a private endpoint
+        /// connection</param>
         /// <param name="id">The resource identifier.</param>
         /// <param name="name">The resource name.</param>
         /// <param name="type">The resource type.</param>
-        /// <param name="tags">The resource tags.</param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public PrivateEndpointConnection(PrivateEndpointConnectionProperties properties, string id = default(string), string name = default(string), string type = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
-            Location = location;
-            Tags = tags;
+            Properties = properties;
             CustomInit();
         }
 
@@ -72,16 +69,10 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource location.
+        /// Gets or sets the properties of a private endpoint connection
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the resource tags.
-        /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public PrivateEndpointConnectionProperties Properties { get; set; }
 
     }
 }
