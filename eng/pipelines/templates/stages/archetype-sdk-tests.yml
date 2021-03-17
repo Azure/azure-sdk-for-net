@@ -107,7 +107,7 @@ stages:
         jobs:
         - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
           parameters:
-            JobTemplatePath: /eng/pipelines/templates/jobs/archetype-sdk-tests-jobs.yml
+            JobTemplatePath: /eng/pipelines/templates/jobs/live-tests.yml
             AdditionalParameters:
               PreSteps:
                 - ${{ parameters.PlatformPreSteps }}

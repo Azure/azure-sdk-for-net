@@ -57,7 +57,7 @@ variables:
 stages:
   - stage: Build
     jobs:
-    - template: ../jobs/archetype-sdk-client.yml
+    - template: /eng/pipelines/templates/jobs/ci.yml
       parameters:
         SDKType: ${{ parameters.SDKType }}
         ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}

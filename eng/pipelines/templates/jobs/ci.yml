@@ -147,7 +147,7 @@ jobs:
 
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:
-      JobTemplatePath: /eng/pipelines/templates/jobs/archetype-sdk-client-test.yml
+      JobTemplatePath: /eng/pipelines/templates/jobs/tests.yml
       MatrixConfigs: ${{ parameters.MatrixConfigs }}
       MatrixFilters: ${{ parameters.MatrixFilters }}
       CloudConfig:
