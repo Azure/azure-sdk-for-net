@@ -37,7 +37,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                     testName)
                 .ConfigureAwait(false);
 
-            certificateList.Value.Should().Contain(Constants.Certificate.Name);
+            certificateList.Value.Should().Contain(x => x.Name == Constants.Certificate.Name);
 
             // verify certificate details
             var certificateDetails = certificateList.Value.FirstOrDefault(x => x.Name == Constants.Certificate.Name);

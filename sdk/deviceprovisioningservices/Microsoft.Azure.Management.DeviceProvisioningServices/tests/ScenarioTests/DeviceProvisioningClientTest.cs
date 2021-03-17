@@ -64,7 +64,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             IPage<ProvisioningServiceDescription> existingServices = await _provisioningClient.IotDpsResource
                 .ListByResourceGroupAsync(testName)
                 .ConfigureAwait(false);
-            existingServices.Should().Contain(testName);
+            existingServices.Should().Contain(x => x.Name == testName);
 
             // verify can find
             ProvisioningServiceDescription foundInstance = await _provisioningClient.IotDpsResource
@@ -87,7 +87,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                 catch
                 {
                     attempts--;
-                    await Task.Delay(Constants.ArmAttemptWaitMS).ConfigureAwait(false);
+                    await Task.Delay(Constants.ArmAttemptWaitMs).ConfigureAwait(false);
                 }
             }
             existingServices = await _provisioningClient.IotDpsResource
@@ -128,14 +128,13 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                 catch
                 {
                     // Let ARM finish
-                    await Task.Delay(Constants.ArmAttemptWaitMS).ConfigureAwait(false);
+                    await Task.Delay(Constants.ArmAttemptWaitMs).ConfigureAwait(false);
                     attempts--;
                 }
             }
         }
 
-        [Fact(Skip = "Needs re-recording")]
-        //[Fact]
+        [Fact]
         public async Task CreateFailure()
         {
             using var context = MockContext.Start(GetType());
@@ -143,7 +142,6 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             Initialize(context);
             var testName = "unitTestingDPSCreateUpdateInvalidName";
             await GetResourceGroupAsync(testName).ConfigureAwait(false);
-
 
             // try to create a DPS service
             var createServiceDescription = new ProvisioningServiceDescription(
@@ -155,9 +153,11 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
 
             var badCall = new Func<Task<ProvisioningServiceDescription>>(
                 () =>
+                    // force a failure by passing bad input
                     _provisioningClient.IotDpsResource.CreateOrUpdateAsync(
                     testName,
-                    $"1ñ1{testName}!!!", // We dont't allow most punctuation, leading numbers, etc
+                    // We dont't allow most punctuation, leading numbers, etc
+                    $"1ñ1{testName}!!!",
                     createServiceDescription));
 
             await badCall.Should().ThrowAsync<ErrorDetailsException>();

@@ -33,7 +33,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
 
             // this access policy should not exist
             var keyInfo = await TryGetKeyByNameAsync(testName).ConfigureAwait(false);
-            keyInfo.hasKey.Should().BeTrue();
+            keyInfo.hasKey.Should().BeFalse();
             keyInfo.accessPolicy.Should().BeNull();
 
             // new key
@@ -60,7 +60,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                 catch
                 {
                     // Let ARM finish
-                    await Task.Delay(Constants.ArmAttemptWaitMS).ConfigureAwait(false);
+                    await Task.Delay(Constants.ArmAttemptWaitMs).ConfigureAwait(false);
                     attempts--;
                 }
             }
@@ -90,7 +90,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                 catch
                 {
                     // Let ARM finish
-                    await Task.Delay(Constants.ArmAttemptWaitMS).ConfigureAwait(false);
+                    await Task.Delay(Constants.ArmAttemptWaitMs).ConfigureAwait(false);
 
                     attempts--;
                 }

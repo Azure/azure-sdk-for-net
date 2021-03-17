@@ -58,7 +58,7 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
                 catch
                 {
                     // Let ARM finish
-                    await Task.Delay(Constants.ArmAttemptWaitMS).ConfigureAwait(false);
+                    await Task.Delay(Constants.ArmAttemptWaitMs).ConfigureAwait(false);
 
                     attempts--;
                 }
