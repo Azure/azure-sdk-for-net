@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Core
             BuildApiTable(clientOptions);
         }
 
-        private Dictionary<string, (PropertyInfo, object)> _loadedResourceToApiVersions = new Dictionary<string, (PropertyInfo, object)>();
+        private Dictionary<string, PropertyWrapper> _loadedResourceToApiVersions = new Dictionary<string, PropertyWrapper>();
         private Dictionary<string, string> _nonLoadedResourceToApiVersion = new Dictionary<string, string>();
 
         private void BuildApiTable(AzureResourceManagerClientOptions clientOptions)
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Core
                         {
                             var propVal = (ApiVersionsBase)prop.GetValue(apiObject);
                             var key = propVal.ResourceType;
-                            _loadedResourceToApiVersions.Add(key.ToString(), (prop, apiObject));
+                            _loadedResourceToApiVersions.Add(key.ToString(), new PropertyWrapper(prop, apiObject));
                         }
                     }
                 }
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.Core
         /// <returns> API version string. </returns>
         public string TryGetApiVersion(string resourceId)
         {
-            (PropertyInfo, object) tuple;
-            if (_loadedResourceToApiVersions.TryGetValue(resourceId, out tuple))
+            PropertyWrapper propertyWrapper;
+            if (_loadedResourceToApiVersions.TryGetValue(resourceId, out propertyWrapper))
             {
-                return tuple.Item1.GetValue(tuple.Item2).ToString();
+                return propertyWrapper.Info.GetValue(propertyWrapper.PropertyObject).ToString();
             }
 
             string val;
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         public void SetApiVersion(string resourceId, string apiVersion)
         {
-            (PropertyInfo, object) tuple;
-            if (_loadedResourceToApiVersions.TryGetValue(resourceId, out tuple))
+            PropertyWrapper propertyWrapper;
+            if (_loadedResourceToApiVersions.TryGetValue(resourceId, out propertyWrapper))
             {
-                Type type = tuple.Item1.PropertyType;
+                Type type = propertyWrapper.Info.PropertyType;
                 ConstructorInfo ctor = type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(string) }, null);
-                tuple.Item1.SetValue(tuple.Item2, ctor.Invoke(new object[] { apiVersion }));
+                propertyWrapper.Info.SetValue(propertyWrapper.PropertyObject, ctor.Invoke(new object[] { apiVersion }));
             }
             else
             {
