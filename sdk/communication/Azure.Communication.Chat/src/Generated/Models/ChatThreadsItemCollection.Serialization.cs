@@ -11,20 +11,20 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    internal partial class ChatThreadsInfoCollection
+    internal partial class ChatThreadsItemCollection
     {
-        internal static ChatThreadsInfoCollection DeserializeChatThreadsInfoCollection(JsonElement element)
+        internal static ChatThreadsItemCollection DeserializeChatThreadsItemCollection(JsonElement element)
         {
-            IReadOnlyList<ChatThreadInfo> value = default;
+            IReadOnlyList<ChatThreadItem> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<ChatThreadInfo> array = new List<ChatThreadInfo>();
+                    List<ChatThreadItem> array = new List<ChatThreadItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatThreadInfo.DeserializeChatThreadInfo(item));
+                        array.Add(ChatThreadItem.DeserializeChatThreadItem(item));
                     }
                     value = array;
                     continue;
@@ -35,7 +35,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatThreadsInfoCollection(value, nextLink.Value);
+            return new ChatThreadsItemCollection(value, nextLink.Value);
         }
     }
 }

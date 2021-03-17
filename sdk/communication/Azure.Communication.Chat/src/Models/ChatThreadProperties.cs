@@ -5,16 +5,16 @@ using System;
 
 namespace Azure.Communication.Chat
 {
-    /// <summary>The ChatThread.</summary>
-    public class ChatThread
+    /// <summary>The Chat Thread Properties.</summary>
+    public class ChatThreadProperties
     {
-        internal ChatThread(ChatThreadInternal chatThreadInternal)
+        internal ChatThreadProperties(ChatThreadPropertiesInternal chatThreadPropertiesInternal)
         {
-            Id = chatThreadInternal.Id;
-            Topic = chatThreadInternal.Topic;
-            CreatedOn = chatThreadInternal.CreatedOn;
-            CreatedBy = CommunicationIdentifierSerializer.Deserialize(chatThreadInternal.CreatedByCommunicationIdentifier);
-            DeletedOn = chatThreadInternal.DeletedOn;
+            Id = chatThreadPropertiesInternal.Id;
+            Topic = chatThreadPropertiesInternal.Topic;
+            CreatedOn = chatThreadPropertiesInternal.CreatedOn;
+            CreatedBy = CommunicationIdentifierSerializer.Deserialize(chatThreadPropertiesInternal.CreatedByCommunicationIdentifier);
+            DeletedOn = chatThreadPropertiesInternal.DeletedOn;
         }
 
         /// <summary> Chat thread id. </summary>

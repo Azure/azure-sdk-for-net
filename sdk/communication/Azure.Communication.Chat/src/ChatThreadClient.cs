@@ -27,20 +27,21 @@ namespace Azure.Communication.Chat
 
         /// <summary> Initializes a new instance of <see cref="ChatThreadClient"/>.</summary>
         /// <param name="threadId"></param>
-        /// <param name="endpointUrl">The uri for the Azure Communication Services Chat.</param>
+        /// <param name="endpoint">The uri for the Azure Communication Services Chat.</param>
         /// <param name="communicationTokenCredential">Instance of <see cref="CommunicationTokenCredential"/>.</param>
         /// <param name="options">Chat client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
         /// <exception cref="ArgumentNullException"> This occurs when one of the required arguments is null. </exception>
-        internal ChatThreadClient(string threadId, Uri endpointUrl, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions options = default)
+
+        public ChatThreadClient(string threadId, Uri endpoint, CommunicationTokenCredential communicationTokenCredential, ChatClientOptions options = default)
         {
             Argument.AssertNotNull(threadId, nameof(threadId));
             Argument.AssertNotNull(communicationTokenCredential, nameof(communicationTokenCredential));
-            Argument.AssertNotNull(endpointUrl, nameof(endpointUrl));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new ChatClientOptions();
             Id = threadId;
             _clientDiagnostics = new ClientDiagnostics(options);
             HttpPipeline pipeline = CreatePipelineFromOptions(options, communicationTokenCredential);
-            _chatThreadRestClient = new ChatThreadRestClient(_clientDiagnostics, pipeline, endpointUrl.AbsoluteUri, options.ApiVersion);
+            _chatThreadRestClient = new ChatThreadRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri, options.ApiVersion);
         }
 
         /// <summary>Initializes a new instance of <see cref="ChatThreadClient"/> for mocking.</summary>
@@ -62,7 +63,7 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.UpdateChatThreadAsync(Id, topic, cancellationToken).ConfigureAwait(false);
+                return await _chatThreadRestClient.UpdateChatThreadPropertiesAsync(Id, topic, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -81,7 +82,45 @@ namespace Azure.Communication.Chat
             scope.Start();
             try
             {
-                return _chatThreadRestClient.UpdateChatThread(Id, topic, cancellationToken);
+                return _chatThreadRestClient.UpdateChatThreadProperties(Id, topic, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a chat thread asynchronously. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<ChatThreadProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetProperties)}");
+            scope.Start();
+            try
+            {
+                Response<ChatThreadPropertiesInternal> chatThreadPropertiesInternal = await _chatThreadRestClient.GetChatThreadPropertiesAsync(Id, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ChatThreadProperties(chatThreadPropertiesInternal.Value), chatThreadPropertiesInternal.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a chat thread. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<ChatThreadProperties> GetProperties(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(GetProperties)}");
+            scope.Start();
+            try
+            {
+                Response<ChatThreadPropertiesInternal> chatThreadPropertiesInternal = _chatThreadRestClient.GetChatThreadProperties(Id, cancellationToken);
+                return Response.FromValue(new ChatThreadProperties(chatThreadPropertiesInternal.Value), chatThreadPropertiesInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -98,14 +137,14 @@ namespace Azure.Communication.Chat
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<string>> SendMessageAsync(string content, ChatMessageType type = default, string senderDisplayName = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SendChatMessageResult>> SendMessageAsync(string content, ChatMessageType type = default, string senderDisplayName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendMessage)}");
             scope.Start();
             try
             {
-                Response<SendChatMessageResult> sendChatMessageResult = await _chatThreadRestClient.SendChatMessageAsync(Id, content, senderDisplayName, type: null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(sendChatMessageResult.Value.Id, sendChatMessageResult.GetRawResponse());
+                Response<SendChatMessageResultInternal> sendChatMessageResultInternal = await _chatThreadRestClient.SendChatMessageAsync(Id, content, senderDisplayName, type: null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SendChatMessageResult(sendChatMessageResultInternal.Value), sendChatMessageResultInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -120,14 +159,14 @@ namespace Azure.Communication.Chat
         /// <param name="senderDisplayName"> The display name of the message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<string> SendMessage(string content, ChatMessageType type = default, string senderDisplayName = null, CancellationToken cancellationToken = default)
+        public virtual Response<SendChatMessageResult> SendMessage(string content, ChatMessageType type = default, string senderDisplayName = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(SendMessage)}");
             scope.Start();
             try
             {
-                Response<SendChatMessageResult> sendChatMessageResult = _chatThreadRestClient.SendChatMessage(Id, content, senderDisplayName, type, cancellationToken);
-                return Response.FromValue(sendChatMessageResult.Value.Id, sendChatMessageResult.GetRawResponse());
+                Response<SendChatMessageResultInternal> sendChatMessageResultInternal = _chatThreadRestClient.SendChatMessage(Id, content, senderDisplayName, type, cancellationToken);
+                return Response.FromValue(new SendChatMessageResult(sendChatMessageResultInternal.Value), sendChatMessageResultInternal.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -344,13 +383,18 @@ namespace Azure.Communication.Chat
         /// <param name="participant"> Participant to add to a chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<AddChatParticipantsResult>> AddParticipantAsync(ChatParticipant participant, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AddParticipantAsync(ChatParticipant participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(AddParticipant)}");
             scope.Start();
             try
             {
-                return await _chatThreadRestClient.AddChatParticipantsAsync(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken).ConfigureAwait(false);
+                Response<AddChatParticipantsResult> addChatParticipantsResult = await _chatThreadRestClient.AddChatParticipantsAsync(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken).ConfigureAwait(false);
+                if (addChatParticipantsResult.Value.InvalidParticipants.Count > 0)
+                {
+                    throw _clientDiagnostics.CreateRequestFailedException(addChatParticipantsResult.GetRawResponse());
+                }
+                return addChatParticipantsResult.GetRawResponse();
             }
             catch (Exception ex)
             {
@@ -363,13 +407,18 @@ namespace Azure.Communication.Chat
         /// <param name="participant"> Participants to add to a chat thread. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<AddChatParticipantsResult> AddParticipant(ChatParticipant participant, CancellationToken cancellationToken = default)
+        public virtual Response AddParticipant(ChatParticipant participant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ChatThreadClient)}.{nameof(AddParticipant)}");
             scope.Start();
             try
             {
-                return _chatThreadRestClient.AddChatParticipants(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken);
+                Response<AddChatParticipantsResult> addChatParticipantsResult = _chatThreadRestClient.AddChatParticipants(Id, new[] { participant.ToChatParticipantInternal() }, cancellationToken);
+                if (addChatParticipantsResult.Value.InvalidParticipants.Count > 0)
+                {
+                    throw _clientDiagnostics.CreateRequestFailedException(addChatParticipantsResult.GetRawResponse());
+                }
+                return addChatParticipantsResult.GetRawResponse();
             }
             catch (Exception ex)
             {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,8 +15,8 @@ namespace Azure.Communication.Chat
     {
         internal static CreateChatThreadResultInternal DeserializeCreateChatThreadResultInternal(JsonElement element)
         {
-            Optional<ChatThreadInternal> chatThread = default;
-            Optional<CreateChatThreadErrors> errors = default;
+            Optional<ChatThreadPropertiesInternal> chatThread = default;
+            Optional<IReadOnlyList<ChatError>> invalidParticipants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("chatThread"))
@@ -25,21 +26,26 @@ namespace Azure.Communication.Chat
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    chatThread = ChatThreadInternal.DeserializeChatThreadInternal(property.Value);
+                    chatThread = ChatThreadPropertiesInternal.DeserializeChatThreadPropertiesInternal(property.Value);
                     continue;
                 }
-                if (property.NameEquals("errors"))
+                if (property.NameEquals("invalidParticipants"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    errors = CreateChatThreadErrors.DeserializeCreateChatThreadErrors(property.Value);
+                    List<ChatError> array = new List<ChatError>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ChatError.DeserializeChatError(item));
+                    }
+                    invalidParticipants = array;
                     continue;
                 }
             }
-            return new CreateChatThreadResultInternal(chatThread.Value, errors.Value);
+            return new CreateChatThreadResultInternal(chatThread.Value, Optional.ToList(invalidParticipants));
         }
     }
 }
