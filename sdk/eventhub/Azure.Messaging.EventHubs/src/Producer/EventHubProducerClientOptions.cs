@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <value><c>true</c> if the producer should enable idempotent partition publishing; otherwise, <c>false</c>.</value>
         ///
-        internal bool EnableIdempotentPartitions { get; set; }
+        public bool EnableIdempotentPartitions { get; set; }
 
         /// <summary>
         ///   The set of options that can be specified to influence publishing behavior specific to the configured Event Hub partition.  These
@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   These options are ignored when publishing to the Event Hubs gateway for automatic routing or when using a partition key.
         /// </remarks>
         ///
-        internal Dictionary<string, PartitionPublishingOptions> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptions>();
+        public Dictionary<string, PartitionPublishingOptions> PartitionOptions { get; } = new Dictionary<string, PartitionPublishingOptions>();
 
         /// <summary>
         ///   The options used for configuring the connection to the Event Hubs service.
