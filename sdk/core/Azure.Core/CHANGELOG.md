@@ -2,6 +2,10 @@
 
 ## 1.11.0-beta.1 (Unreleased)
 
+### Added
+
+- `Operation` base class for operation that do not return a value.
+
 ### Key Bug Fixes
 
 - Check the `JsonIgnoreAttribute.Condition` property added in .NET 5 when discovering members with `JsonObjectSerializer`.
