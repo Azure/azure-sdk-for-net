@@ -218,6 +218,7 @@
     <PackageReference Update="WindowsAzure.ServiceBus" Version="5.1.0" />
     <PackageReference Update="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Update="xunit" Version="2.4.1" />
+    <PackageReference Update="Microsoft.Azure.Management.Storage.XScenario" Version="19.0.1-private-xscenario" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">

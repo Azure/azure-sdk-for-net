@@ -7123,7 +7123,8 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            BlobServiceClient blobServiceClient = GetServiceClient_OauthAccount();
+            await using DisposingContainer test = await GetTestContainerAsync(blobServiceClient);
             await EnableVersionLevelWorm(test.Container);
             BlobBaseClient blob = await GetNewBlobClient(test.Container);
 
@@ -7149,9 +7150,17 @@ namespace Azure.Storage.Blobs.Test
             string token = await GetAuthToken();
             TokenCredentials tokenCredentials = new TokenCredentials(token);
             StorageManagementClient storageManagementClient = new StorageManagementClient(tokenCredentials) { SubscriptionId = subscriptionId };
+
+            await storageManagementClient.BlobContainers.CreateOrUpdateImmutabilityPolicyAsync(
+                resourceGroupName: "XClient",
+                accountName: TestConfigOAuth.AccountName,
+                containerName: containerClient.Name,
+                immutabilityPeriodSinceCreationInDays: 1,
+                allowProtectedAppendWrites: true);
+
             await storageManagementClient.BlobContainers.VersionLevelWormMethodAsync(
                 // TODO
-                resourceGroupName: "XStore",
+                resourceGroupName: "XClient",
                 accountName: TestConfigOAuth.AccountName,
                 containerName: containerClient.Name);
         }
@@ -7163,7 +7172,7 @@ namespace Azure.Storage.Blobs.Test
                 .WithClientSecret(TestConfigOAuth.ActiveDirectoryApplicationSecret)
                 .Build();
 
-            string[] scopes = new string[] { $"{TestConfigOAuth.BlobServiceEndpoint}/.default" };
+            string[] scopes = new string[] { "https://management.azure.com/.default" };
 
             AcquireTokenForClientParameterBuilder result = application.AcquireTokenForClient(scopes);
             AuthenticationResult authenticationResult = await result.ExecuteAsync();
