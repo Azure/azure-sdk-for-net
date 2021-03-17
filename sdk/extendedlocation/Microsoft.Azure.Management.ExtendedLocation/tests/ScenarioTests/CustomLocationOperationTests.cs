@@ -13,26 +13,6 @@ namespace ExtendedLocation.Tests.ScenarioTests
     
     public class CustomLocationOperationTests
     {
-        public bool PageListResult(Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation> start, Func<string, IPage<CustomLocation>> getNext)
-        {
-            var page = start;
-            bool foundCL = false;
-            for (;;)
-            {
-                foreach (var currCL in page)
-                {
-                    // check for created CL in List  
-                    if (currCL.Name == CustomLocationTestData.ResourceName) {Console.WriteLine("CL: "+currCL.Name);foundCL = true; break;}
-                }   
-                if (string.IsNullOrEmpty(page.NextPageLink))
-                {
-                    break;
-                }
-                page = (Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation>)getNext(page.NextPageLink);
-            }
-            return foundCL;   
-        }
-
         [Fact]
         public void TestOperationsCustomLocation()
         {
@@ -73,13 +53,13 @@ namespace ExtendedLocation.Tests.ScenarioTests
                     Console.WriteLine("\n");
                     Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation> page = (Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation>)customLocationTestBase.ListCustomLocationsBySubscription();
                     bool foundCL;
-                    foundCL = PageListResult(page, customLocationTestBase.ListCustomLocationsBySubscriptionNext);
+                    foundCL = Paging.PageListResult(page, customLocationTestBase.ListCustomLocationsBySubscriptionNext);
                     Assert.True(foundCL);
 
                     // LIST BY RESOURCE GROUP
                     Console.WriteLine("\n");
                     page = (Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation>)customLocationTestBase.ListCustomLocationsByResourceGroup();
-                    foundCL = PageListResult(page, customLocationTestBase.ListCustomLocationsByResourceGroupNext);
+                    foundCL = Paging.PageListResult(page, customLocationTestBase.ListCustomLocationsByResourceGroupNext);
                     Assert.True(foundCL);
 
                     // DELETE CREATED CL
@@ -89,7 +69,7 @@ namespace ExtendedLocation.Tests.ScenarioTests
 
                     // LIST OPERATION SHOULD NOT FIND CL
                     page = (Microsoft.Azure.Management.ExtendedLocation.Models.Page<CustomLocation>)customLocationTestBase.ListCustomLocationsByResourceGroup();
-                    foundCL = PageListResult(page, customLocationTestBase.ListCustomLocationsByResourceGroupNext);
+                    foundCL = Paging.PageListResult(page, customLocationTestBase.ListCustomLocationsByResourceGroupNext);
                     Assert.False(foundCL);
                 }
             }
