@@ -8,7 +8,7 @@ using Microsoft.Azure.WebJobs.Description;
 namespace Microsoft.Azure.WebJobs
 {
     /// <summary>
-    ///
+    /// Allows binding to an Azure SDK client using connection settings defined in the <see cref="Connection"/> configuration section.
     /// </summary>
     [AttributeUsage(AttributeTargets.Parameter)]
     [Binding]
@@ -23,7 +23,9 @@ namespace Microsoft.Azure.WebJobs
             Connection = connection;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Gets or sets the app setting name that contains the connection string.
+        /// </summary>
         public string Connection { get; set; }
     }
 }
