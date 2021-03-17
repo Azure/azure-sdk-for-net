@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     [CodeGenModel("PhoneNumbersClient")]
     internal partial class InternalPhoneNumbersClient
