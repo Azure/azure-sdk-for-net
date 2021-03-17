@@ -9,7 +9,7 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   A set of information for an Event Hub.
     /// </summary>
     ///
-    internal class PartitionPublishingProperties
+    public class PartitionPublishingProperties
     {
         /// <summary>An empty set of properties.</summary>
         private static PartitionPublishingProperties s_emptyInstance;

@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   of the producer are enabled.  For example, it is used by idempotent publishing.
         /// </remarks>
         ///
-        internal int? StartingPublishedSequenceNumber { get; set; } // Setter should be internal when member is made public
+        public int? StartingPublishedSequenceNumber { get; set; } // Setter should be internal when member is made public
 
         /// <summary>
         ///   The count of events contained in the batch.
