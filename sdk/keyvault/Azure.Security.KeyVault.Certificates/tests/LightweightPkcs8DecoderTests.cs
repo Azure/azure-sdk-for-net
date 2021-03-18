@@ -94,7 +94,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             catch (Exception ex) when (
                 (ex is CryptographicException || (ex is TargetInvocationException && ex.InnerException is CryptographicException)) &&
                 RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
-                keyCurveName == CertificateKeyCurveName.P256)
+                keyCurveName == CertificateKeyCurveName.P256 || keyCurveName == CertificateKeyCurveName.P256K)
             {
                 Assert.Ignore("The curve is not supported by the current platform");
             }
