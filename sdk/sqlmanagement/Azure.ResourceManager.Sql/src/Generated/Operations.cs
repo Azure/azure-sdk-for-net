@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             async Task<Page<Operation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Models.Operation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("Operations.List");
                 scope.Start();
