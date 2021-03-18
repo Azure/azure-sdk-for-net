@@ -9,8 +9,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <!-- These supressions should be removed in a production library -->
     <NoWarn>$(NoWarn);CS1591;AZC0001;AZC0012</NoWarn>
-    <AssemblyName>Azure.IoT.DeviceUpdate</AssemblyName>
-    <RootNamespace>Azure.IoT.DeviceUpdate</RootNamespace>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->
