@@ -474,7 +474,7 @@ function GenerateFullMatrix(
     [Hashtable]$displayNamesLookup = @{}
 ) {
     # Handle when the config does not have a matrix specified (e.g. only the include field is specified)
-    if ($parameters.Count -eq 0) {
+    if (!$parameters) {
         return @()
     }
 

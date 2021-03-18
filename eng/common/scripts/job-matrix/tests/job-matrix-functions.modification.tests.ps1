@@ -404,4 +404,26 @@ Describe "Platform Matrix Replace" -Tag "replace" {
         $matrix[1].name | Should -Be "foo2_barReplacedBar2"
         $matrix[1].parameters.Bar | Should -Be "barReplacedBar2"
     }
+
+    It "Should only fully match a string for replace" {
+        $matrixJson = @'
+{
+    "matrix": {
+        "Foo": [ "foo1", "foo2" ],
+        "Bar": "bar1"
+    }
+}
+'@
+
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+
+        $replace = @("Foo=foo/shouldNotReplaceFoo", "B=bar1/shouldNotReplaceBar")
+        $matrix = GenerateMatrix -config $importConfig -selectFromMatrixType "sparse" -replace $replace
+
+        $matrix.Length | Should -Be 2
+        $matrix[0].parameters.Foo | Should -Be "foo1"
+        $matrix[0].parameters.Bar | Should -Be "bar1"
+        $matrix[1].parameters.Foo | Should -Be "foo2"
+        $matrix[1].parameters.Bar | Should -Be "bar1"
+    }
 }
