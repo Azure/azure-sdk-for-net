@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Iot.DeviceUpdate", "src\Azure.Iot.DeviceUpdate.csproj", "{F1AB3BFB-DBBF-4002-A93F-DFB02545C666}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.IoT.DeviceUpdate", "src\Azure.IoT.DeviceUpdate.csproj", "{F1AB3BFB-DBBF-4002-A93F-DFB02545C666}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Iot.DeviceUpdate.Tests", "tests\Azure.Iot.DeviceUpdate.Tests.csproj", "{C039F382-F091-433C-9DAA-CC2FF7CF4644}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.IoT.DeviceUpdate.Tests", "tests\Azure.IoT.DeviceUpdate.Tests.csproj", "{C039F382-F091-433C-9DAA-CC2FF7CF4644}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{24219D07-7E76-4631-9D89-49DCB79F7A84}"
 EndProject
