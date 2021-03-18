@@ -11,11 +11,9 @@ namespace Azure
     /// <summary>
     /// Represents a long-running operation.
     /// </summary>
-#pragma warning disable SA1649 // File name should match first type name
 #pragma warning disable AZC0012 // Avoid single word type names
     public abstract class Operation
 #pragma warning restore AZC0012 // Avoid single word type names
-#pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
