@@ -4790,7 +4790,8 @@ namespace Azure.Storage.Blobs.Specialized
         #region SetImmutabilityPolicy
         /// <summary>
         /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
-        /// Note that Blob Versioning and Version Level Worm must be enable for to call
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with Version Level Worm enabled to call
         /// this API.
         /// </summary>
         /// <param name="immutabilityPolicy">
@@ -4824,7 +4825,8 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
-        /// Note that Blob Versioning and Version Level Worm must be enable for to call
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with Version Level Worm enabled to call
         /// this API.
         /// </summary>
         /// <param name="immutabilityPolicy">
@@ -4858,7 +4860,8 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// Sets the Immutability Policy on a Blob, Blob Snapshot, or Blob Version.
-        /// Note that Blob Versioning and Version Level Worm must be enable for to call
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with Version Level Worm enabled to call
         /// this API.
         /// </summary>
         /// <param name="immutabilityPolicy">
@@ -4924,6 +4927,146 @@ namespace Azure.Storage.Blobs.Specialized
 
                     return Response.FromValue(
                         response.ToBlobImmutabilityPolicy(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobBaseClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region SetLegalHold
+        /// <summary>
+        /// Sets a legal hold on the blob.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with Version Level Worm enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="legalHoldEnabled">
+        /// Set to true to set a legal hold on the blob.
+        /// Set to false to remove an existing legal hold.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobLegalHoldInfo}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobLegalHoldInfo> SetLegalHold(
+            bool legalHoldEnabled,
+            CancellationToken cancellationToken = default)
+            => SetLegalHoldInternal(
+                legalHoldEnabled: legalHoldEnabled,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Sets a legal hold on the blob.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with Version Level Worm enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="legalHoldEnabled">
+        /// Set to true to set a legal hold on the blob.
+        /// Set to false to remove an existing legal hold.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobLegalHoldInfo}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobLegalHoldInfo>> SetLegalHoldAsync(
+            bool legalHoldEnabled,
+            CancellationToken cancellationToken = default)
+            => await SetLegalHoldInternal(
+                legalHoldEnabled: legalHoldEnabled,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Sets a legal hold on the blob.
+        /// Note that Blob Versioning must be enabled on your storage account, and the blob
+        /// must be in a Container with Version Level Worm enabled to call
+        /// this API.
+        /// </summary>
+        /// <param name="legalHoldEnabled">
+        /// Set to true to set a legal hold on the blob.
+        /// Set to false to remove an existing legal hold.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobLegalHoldInfo}"/>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<BlobLegalHoldInfo>> SetLegalHoldInternal(
+            bool legalHoldEnabled,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobBaseClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(legalHoldEnabled)}: {legalHoldEnabled}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetLegalHold)}");
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<BlobSetLegalHoldHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.SetLegalHoldAsync(
+                            legalHold: legalHoldEnabled,
+                            timeout: null,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.SetLegalHold(
+                            legalHold: legalHoldEnabled,
+                            timeout: null,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobLegalHoldInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)

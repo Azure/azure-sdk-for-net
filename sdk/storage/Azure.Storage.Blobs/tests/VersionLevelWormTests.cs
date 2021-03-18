@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Identity.Client;
@@ -26,89 +29,338 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetImmutibilityPolicyAsync()
         {
             // Arrange
-            BlobContainerClient blobContainer = await CreateVersionLevelWormContainer();
-            BlobBaseClient blob = await GetNewBlobClient(blobContainer);
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container);
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = BuildExpiryDateTimeOffset(),
+                ExpiriesOn = Recording.UtcNow.AddSeconds(5),
                 PolicyMode = BlobImmutabilityPolicyMode.Locked
             };
 
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
+                year: immutabilityPolicy.ExpiriesOn.Value.Year,
+                month: immutabilityPolicy.ExpiriesOn.Value.Month,
+                day: immutabilityPolicy.ExpiriesOn.Value.Day,
+                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
+                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
+                second: immutabilityPolicy.ExpiriesOn.Value.Second,
+                offset: TimeSpan.Zero);
+
+            // Test SetImmutabilityPolicyAsync API and validate response.
             // Act
             Response<BlobImmutabilityPolicy> response = await blob.SetImmutabilityPolicyAsync(immutabilityPolicy);
 
             // Assert
-            Assert.AreEqual(immutabilityPolicy.ExpiriesOn, response.Value.ExpiriesOn);
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, response.Value.ExpiriesOn);
             Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
 
-            //await blobContainer.DeleteIfExistsAsync();
+            // Validate that we are correctly deserializing Get Properties response.
+            // Act
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+
+            // Validate we are correctly deserializing Blob Items.
+            // Act
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in vlwContainer.Container.GetBlobsAsync(traits: BlobTraits.ImmutabilityPolicy))
+            {
+                blobItems.Add(blobItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobItems.Count);
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, blobItems[0].Properties.ImmutabilityPolicyExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, blobItems[0].Properties.ImmutabilityPolicyMode);
+
+            // Validate we are correctly deserialzing Get Blob response.
+            // Act
+            Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
+
+            // Assert
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, downloadResponse.Value.Details.ImmutabilityPolicyExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, downloadResponse.Value.Details.ImmutabilityPolicyMode);
+
+            // Wait for immutability policy to expire.
+            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
+            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
+            {
+                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
+            }
         }
 
-        // TODO how do we record this??
-        public async Task<BlobContainerClient> CreateVersionLevelWormContainer()
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetImmutibilityPolicyAsync_IfModifiedSince()
         {
-            // TODO move this to TestConfiguration.xml
-            string subscriptionId = "ba45b233-e2ef-4169-8808-49eb0d8eba0d";
-            string token = await GetAuthToken();
-            TokenCredentials tokenCredentials = new TokenCredentials(token);
-            StorageManagementClient storageManagementClient = new StorageManagementClient(tokenCredentials) { SubscriptionId = subscriptionId };
-            string containerName = GetNewContainerName();
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container);
 
-            await storageManagementClient.BlobContainers.CreateAsync(
-                resourceGroupName: "XClient",
-                accountName: TestConfigOAuth.AccountName,
-                containerName: containerName,
-                new Microsoft.Azure.Management.Storage.Models.BlobContainer(
-                    enabled: true));
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
 
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
+                year: immutabilityPolicy.ExpiriesOn.Value.Year,
+                month: immutabilityPolicy.ExpiriesOn.Value.Month,
+                day: immutabilityPolicy.ExpiriesOn.Value.Day,
+                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
+                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
+                second: immutabilityPolicy.ExpiriesOn.Value.Second,
+                offset: TimeSpan.Zero);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                IfUnmodifiedSince = Recording.UtcNow.AddDays(1)
+            };
+
+            // Act
+            Response<BlobImmutabilityPolicy> response = await blob.SetImmutabilityPolicyAsync(
+                immutabilityPolicy: immutabilityPolicy,
+                conditions: conditions);
+
+            // Assert
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, response.Value.ExpiriesOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
+
+            // Wait for immutability policy to expire.
+            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
+            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
+            {
+                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetImmutibilityPolicyAsync_IfModifiedSince_Failed()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container);
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                IfUnmodifiedSince = Recording.UtcNow.AddDays(-1)
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetImmutabilityPolicyAsync(
+                    immutabilityPolicy: immutabilityPolicy,
+                    conditions: conditions),
+                e => Assert.AreEqual(BlobErrorCode.ConditionNotMet.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetImmutibilityPolicyAsync_Error()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = InstrumentClient(vlwContainer.Container.GetBlobClient(GetNewBlobName()));
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetImmutabilityPolicyAsync(immutabilityPolicy),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetLegalHoldAsync()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container);
+
+            // Act
+            Response<BlobLegalHoldInfo> response = await blob.SetLegalHoldAsync(true);
+
+            // Assert
+            Assert.IsTrue(response.Value.LegalHoldEnabled);
+
+            // Validate that we are correctly deserializing Get Properties response.
+            // Act
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
+
+            // Validate we are correctly deserializing Blob Items.
+            // Act
+            List<BlobItem> blobItems = new List<BlobItem>();
+            await foreach (BlobItem blobItem in vlwContainer.Container.GetBlobsAsync(traits: BlobTraits.LegalHold))
+            {
+                blobItems.Add(blobItem);
+            }
+
+            // Assert
+            Assert.AreEqual(1, blobItems.Count);
+            Assert.IsTrue(blobItems[0].Properties.HasLegalHold);
+
+            // Validate we are correctly deserialzing Get Blob response.
+            // Act
+            Response<BlobDownloadInfo> downloadResponse = await blob.DownloadAsync();
+
+            // Assert
+            Assert.IsTrue(downloadResponse.Value.Details.HasLegalHold);
+
+            // Act
+            response = await blob.SetLegalHoldAsync(false);
+
+            // Assert
+            Assert.IsFalse(response.Value.LegalHoldEnabled);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SetLegalHoldAsync_Error()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = InstrumentClient(vlwContainer.Container.GetBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.SetLegalHoldAsync(true),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        public async Task ContainerVersionLevelWorm()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+
+            // Validate we are deserializing Get Container Properties responses correctly.
+            // Act
+            Response<BlobContainerProperties> propertiesResponse = await vlwContainer.Container.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsTrue(propertiesResponse.Value.IsVersionLevelWormEnabled);
+
+            // Validate we are deserializing BlobContainerItems correctly.
+            // Act
+            BlobServiceClient blobServiceClient = vlwContainer.Container.GetParentBlobServiceClient();
+            IList<BlobContainerItem> containers = await blobServiceClient.GetBlobContainersAsync().ToListAsync();
+            BlobContainerItem containerItem = containers.Where(c => c.Name == vlwContainer.Container.Name).FirstOrDefault();
+
+            // Assert
+            Assert.IsTrue(containerItem.Properties.IsVersionLevelWormEnabled);
+        }
+
+        private async Task <DisposingVersionLevelWormContainer> GetTestVersionLevelWormContainer(TenantConfiguration tenantConfiguration)
+        {
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigOAuth.AccountName, TestConfigOAuth.AccountKey);
             Uri serviceUri = new Uri(TestConfigOAuth.BlobServiceEndpoint);
             BlobServiceClient blobServiceClient = InstrumentClient(new BlobServiceClient(serviceUri, sharedKeyCredential, GetOptions()));
-            return InstrumentClient(blobServiceClient.GetBlobContainerClient(containerName));
+            BlobContainerClient containerClient = InstrumentClient(blobServiceClient.GetBlobContainerClient(GetNewContainerName()));
 
-            //await storageManagementClient.BlobContainers.CreateOrUpdateImmutabilityPolicyAsync(
-            //    resourceGroupName: "XClient",
-            //    accountName: TestConfigOAuth.AccountName,
-            //    containerName: containerClient.Name,
-            //    immutabilityPeriodSinceCreationInDays: 1,
-            //    allowProtectedAppendWrites: true);
+            DisposingVersionLevelWormContainer disposingVersionLevelWormContainer = new DisposingVersionLevelWormContainer(
+                tenantConfiguration,
+                containerClient);
+            await disposingVersionLevelWormContainer.CreateAsync();
+            return disposingVersionLevelWormContainer;
+        }
+    }
 
-            //await storageManagementClient.BlobContainers.VersionLevelWormMethodAsync(
-            //    // TODO
-            //    resourceGroupName: "XClient",
-            //    accountName: TestConfigOAuth.AccountName,
-            //    containerName: containerClient.Name);
+#pragma warning disable SA1402 // File may only contain a single type
+    public class DisposingVersionLevelWormContainer : IAsyncDisposable
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        public BlobContainerClient Container;
+
+        private TenantConfiguration _tenantConfiguration;
+        private StorageManagementClient _storageManagementClient;
+
+        public DisposingVersionLevelWormContainer(
+            TenantConfiguration tenantConfiguration,
+            BlobContainerClient containerClient)
+        {
+            _tenantConfiguration = tenantConfiguration;
+            Container = containerClient;
         }
 
-        //public async Task DeleteVersionLevelWormContainer(BlobContainerClient containerClient)
-        //{
-        //    string subscriptionId = "ba45b233-e2ef-4169-8808-49eb0d8eba0d";
-        //    string token = await GetAuthToken();
-        //    TokenCredentials tokenCredentials = new TokenCredentials(token);
-        //    StorageManagementClient storageManagementClient = new StorageManagementClient(tokenCredentials) { SubscriptionId = subscriptionId };
-        //    storageManagementClient.BlobContainers.
-        //}
+        public async Task CreateAsync()
+        {
+            string subscriptionId = "ba45b233-e2ef-4169-8808-49eb0d8eba0d";
+            string token = await GetAuthToken();
+            TokenCredentials tokenCredentials = new TokenCredentials(token);
+            _storageManagementClient = new StorageManagementClient(tokenCredentials) { SubscriptionId = subscriptionId };
 
-        /// <summary>
-        /// The service rounds expiry times for Version Level Worm to the nearest second.
-        /// We're sending a DateTimeOffset without milliseconds so our equality check will pass in the unit tests.
-        /// </summary>
-        private DateTimeOffset BuildExpiryDateTimeOffset()
-            => new DateTimeOffset(
-                    Recording.UtcNow.Year,
-                    Recording.UtcNow.Month,
-                    Recording.UtcNow.Day,
-                    Recording.UtcNow.Hour + 1,
-                    Recording.UtcNow.Minute,
-                    Recording.UtcNow.Second,
-                    TimeSpan.Zero);
+            await _storageManagementClient.BlobContainers.CreateAsync(
+                resourceGroupName: "XClient",
+                accountName: _tenantConfiguration.AccountName,
+                containerName: Container.Name,
+                new Microsoft.Azure.Management.Storage.Models.BlobContainer(
+                    enabled: true));
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            if (Container != null)
+            {
+                await foreach (BlobItem blobItem in Container.GetBlobsAsync())
+                {
+                    BlobClient blobClient = Container.GetBlobClient(blobItem.Name);
+                    if (blobItem.Properties.HasLegalHold)
+                    {
+                        await blobClient.SetLegalHoldAsync(false);
+                    }
+
+                    if (blobItem.Properties.ImmutabilityPolicyMode == BlobImmutabilityPolicyMode.Locked)
+                    {
+                        BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+                        {
+                            PolicyMode = BlobImmutabilityPolicyMode.Unlocked
+                        };
+                        await blobClient.SetImmutabilityPolicyAsync(immutabilityPolicy);
+                    }
+
+                    await blobClient.DeleteIfExistsAsync();
+                }
+
+                try
+                {
+                    await _storageManagementClient.BlobContainers.DeleteAsync(
+                        resourceGroupName: "XClient",
+                        accountName: _tenantConfiguration.AccountName,
+                        containerName: Container.Name);
+                    Container = null;
+                }
+                catch
+                {
+                    // swallow the exception to avoid hiding another test failure
+                }
+            }
+        }
 
         private async Task<string> GetAuthToken()
         {
-            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(TestConfigOAuth.ActiveDirectoryApplicationId)
-                .WithAuthority(AzureCloudInstance.AzurePublic, TestConfigOAuth.ActiveDirectoryTenantId)
-                .WithClientSecret(TestConfigOAuth.ActiveDirectoryApplicationSecret)
+            IConfidentialClientApplication application = ConfidentialClientApplicationBuilder.Create(_tenantConfiguration.ActiveDirectoryApplicationId)
+                .WithAuthority(AzureCloudInstance.AzurePublic, _tenantConfiguration.ActiveDirectoryTenantId)
+                .WithClientSecret(_tenantConfiguration.ActiveDirectoryApplicationSecret)
                 .Build();
 
             string[] scopes = new string[] { "https://management.azure.com/.default" };

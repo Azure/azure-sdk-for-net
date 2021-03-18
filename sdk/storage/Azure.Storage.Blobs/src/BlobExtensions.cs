@@ -768,7 +768,10 @@ namespace Azure.Storage.Blobs
                 ExpiresOn = response.Headers.ExpiresOn.GetValueOrDefault(),
                 IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
                 RehydratePriority = response.Headers.RehydratePriority,
-                LastAccessed = response.Headers.LastAccessed.GetValueOrDefault()
+                LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
+                ImmutabilityPolicyExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn,
+                ImmutabilityPolicyMode = response.Headers.ImmutabilityPolicyMode,
+                HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
             };
         }
         #endregion
@@ -875,7 +878,10 @@ namespace Azure.Storage.Blobs
                         ? ParseObjectReplicationIds(objectReplicationRules)
                         : null,
                     ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
-                    LastAccessed = response.Headers.LastAccessed.GetValueOrDefault()
+                    LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
+                    ImmutabilityPolicyExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn,
+                    ImmutabilityPolicyMode = response.Headers.ImmutabilityPolicyMode,
+                    HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
                 }
             };
         }
@@ -1200,7 +1206,10 @@ namespace Azure.Storage.Blobs
                 CreatedOn = blobPropertiesInternal.CreationTime,
                 CopyCompletedOn = blobPropertiesInternal.CopyCompletionTime,
                 DeletedOn = blobPropertiesInternal.DeletedTime,
-                AccessTierChangedOn = blobPropertiesInternal.AccessTierChangeTime
+                AccessTierChangedOn = blobPropertiesInternal.AccessTierChangeTime,
+                ImmutabilityPolicyExpiresOn = blobPropertiesInternal.ImmutabilityPolicyExpiresOn,
+                ImmutabilityPolicyMode = blobPropertiesInternal.ImmutabilityPolicyMode,
+                HasLegalHold = blobPropertiesInternal.LegalHold.GetValueOrDefault()
             };
         }
 
@@ -1259,6 +1268,7 @@ namespace Azure.Storage.Blobs
                 RemainingRetentionDays = containerPropertiesInternal.RemainingRetentionDays,
                 ETag = new ETag(containerPropertiesInternal.Etag),
                 Metadata = metadata.ToMetadata(),
+                IsVersionLevelWormEnabled = containerPropertiesInternal.IsVersionLevelWormEnabled.GetValueOrDefault(),
             };
         }
 
@@ -1283,7 +1293,8 @@ namespace Azure.Storage.Blobs
                 // Container Get Properties does not return DeletedOn.
                 // Container Get Properties does not return RemainingRetentionDays.
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
-                Metadata = response.Headers.Metadata.ToMetadata()
+                Metadata = response.Headers.Metadata.ToMetadata(),
+                IsVersionLevelWormEnabled = response.Headers.IsVersionLevelWormEnabled.GetValueOrDefault()
             };
         }
 
@@ -1334,6 +1345,21 @@ namespace Azure.Storage.Blobs
             {
                 ExpiriesOn = response.Headers.ImmutabilityPolicyExpiry,
                 PolicyMode = response.Headers.ImmutabilityPolicyMode
+            };
+        }
+        #endregion
+
+        #region ToBlobLegalHoldInfo
+        internal static BlobLegalHoldInfo ToBlobLegalHoldInfo(this ResponseWithHeaders<BlobSetLegalHoldHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new BlobLegalHoldInfo
+            {
+                LegalHoldEnabled = response.Headers.LegalHold.GetValueOrDefault()
             };
         }
         #endregion

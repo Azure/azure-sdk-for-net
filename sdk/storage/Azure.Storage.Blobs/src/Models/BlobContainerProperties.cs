@@ -77,6 +77,11 @@ namespace Azure.Storage.Blobs.Models
         public IDictionary<string, string> Metadata { get; internal set; }
 
         /// <summary>
+        /// If version level worm is enabled on this container.
+        /// </summary>
+        public bool IsVersionLevelWormEnabled { get; internal set; }
+
+        /// <summary>
         /// Creates a new BlobContainerProperties instance.
         /// </summary>
         internal BlobContainerProperties()

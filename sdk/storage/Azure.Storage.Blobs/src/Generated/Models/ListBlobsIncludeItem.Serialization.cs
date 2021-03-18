@@ -20,6 +20,8 @@ namespace Azure.Storage.Blobs.Models
             ListBlobsIncludeItem.Uncommittedblobs => "uncommittedblobs",
             ListBlobsIncludeItem.Versions => "versions",
             ListBlobsIncludeItem.Tags => "tags",
+            ListBlobsIncludeItem.Immutabilitypolicy => "immutabilitypolicy",
+            ListBlobsIncludeItem.Legalhold => "legalhold",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListBlobsIncludeItem value.")
         };
 
@@ -32,6 +34,8 @@ namespace Azure.Storage.Blobs.Models
             if (string.Equals(value, "uncommittedblobs", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Uncommittedblobs;
             if (string.Equals(value, "versions", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Versions;
             if (string.Equals(value, "tags", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Tags;
+            if (string.Equals(value, "immutabilitypolicy", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Immutabilitypolicy;
+            if (string.Equals(value, "legalhold", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Legalhold;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListBlobsIncludeItem value.");
         }
     }

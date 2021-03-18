@@ -185,5 +185,22 @@ namespace Azure.Storage.Blobs.Models
         /// Returns the date and time the blob was read or written to.
         /// </summary>
         public DateTimeOffset LastAccessed { get; internal set; }
+
+        /// <summary>
+        /// Indicates when the blob's immutability policy will expire.
+        /// Null if the blob doesn't have an immutability policy.
+        /// </summary>
+        public DateTimeOffset? ImmutabilityPolicyExpiresOn { get; internal set; }
+
+        /// <summary>
+        /// Indicates the immutability policy mode of the blob.
+        /// Null if the blob doesn't have an immutability policy.
+        /// </summary>
+        public BlobImmutabilityPolicyMode? ImmutabilityPolicyMode { get; internal set; }
+
+        /// <summary>
+        /// Indicates if the blob has a legal hold.
+        /// </summary>
+        public bool HasLegalHold { get; internal set; }
     }
 }
