@@ -118,9 +118,12 @@ else {
     [array]$cleanedUsers = @(SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser }
     [array]$cleanedTeamReviewers = @(SplitParameterArray -members $TeamReviewers) | ? { $_ -ne $prOwnerUser }
 
+    if ($null -eq $cleanedUsers){ $cleanedUsers = "" }
+    if ($null -eq $cleanedTeamReviewers){ $cleanedUsers = "" }
+
     if ($cleanedUsers -or $cleanedTeamReviewers) {
       Add-GitHubPullRequestReviewers -RepoOwner $RepoOwner -RepoName $RepoName -PrNumber $resp.number `
-      -Users $cleanedUsers ?? "" -Teams $cleanedTeamReviewers ?? "" -AuthToken $AuthToken
+      -Users $cleanedUsers -Teams $cleanedTeamReviewers -AuthToken $AuthToken
     }
 
     if ($CloseAfterOpenForTesting) {
