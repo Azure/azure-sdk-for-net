@@ -30,6 +30,9 @@ parameters:
 - name: MatrixFilters
   type: object
   default: []
+- name: MatrixReplace
+  type: object
+  default: []
 
 jobs:
   - job: Build
@@ -150,6 +153,7 @@ jobs:
       JobTemplatePath: /eng/pipelines/templates/jobs/tests.yml
       MatrixConfigs: ${{ parameters.MatrixConfigs }}
       MatrixFilters: ${{ parameters.MatrixFilters }}
+      MatrixReplace: ${{ parameters.MatrixReplace }}
       CloudConfig:
         Cloud: Public
       AdditionalParameters:
