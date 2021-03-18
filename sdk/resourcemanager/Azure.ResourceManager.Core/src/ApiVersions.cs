@@ -33,15 +33,14 @@ namespace Azure.ResourceManager.Core
             var methods = GetExtensionMethods();
             foreach (var method in methods)
             {
-                if (method.Name.EndsWith("RestApiVersions"))
+                if (method.Name.EndsWith("RestApiVersions", StringComparison.Ordinal))
                 {
                     var apiObject = method.Invoke(null, new object[] { clientOptions });
                     var properties = apiObject.GetType().GetProperties();
                     foreach (var prop in properties)
                     {
-                        if (typeof(ApiVersionsBase).IsAssignableFrom(prop.PropertyType))
+                        if (prop.GetValue(apiObject) is ApiVersionsBase propVal)
                         {
-                            var propVal = (ApiVersionsBase)prop.GetValue(apiObject);
                             var key = propVal.ResourceType;
                             _loadedResourceToApiVersions.Add(key.ToString(), new PropertyWrapper(prop, apiObject));
                         }
@@ -52,11 +51,12 @@ namespace Azure.ResourceManager.Core
 
         private static IEnumerable<MethodInfo> GetExtensionMethods()
         {
+            // See TODO ADO #5692
             var results =
                         from assembly in AppDomain.CurrentDomain.GetAssemblies()
-                        where assembly.GetName().ToString().StartsWith("Azure.") || assembly.GetName().ToString().StartsWith("Proto.")
+                        where assembly.GetName().ToString().StartsWith("Azure.", StringComparison.Ordinal ) || assembly.GetName().ToString().StartsWith("Proto.", StringComparison.Ordinal)
                         from type in assembly.GetTypes()
-                        where type.IsSealed && !type.IsGenericType && !type.IsNested && type.Name.Equals("AzureResourceManagerClientOptionsExtensions")
+                        where type.IsSealed && !type.IsGenericType && !type.IsNested && type.Name.Equals("AzureResourceManagerClientOptionsExtensions", StringComparison.Ordinal)
                         from method in type.GetMethods(BindingFlags.Static | BindingFlags.Public)
                         where method.IsDefined(typeof(ExtensionAttribute), false)
                         where method.GetParameters()[0].ParameterType == typeof(AzureResourceManagerClientOptions)
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.Core
             return results;
         }
 
-        internal string LoadApiVersion(ProvidersOperations providers, ResourceIdentifier id)
+        internal string LoadApiVersion(ProvidersOperations providers, ResourceIdentifier id, CancellationToken cancellationToken)
         {
-            var results = providers.Get(id.Type.Namespace);
+            var results = providers.Get(id.Type.Namespace, null, cancellationToken);
             foreach (var type in results.Value.ResourceTypes)
             {
                 if (type.ResourceType.Equals(id.Type.Type))

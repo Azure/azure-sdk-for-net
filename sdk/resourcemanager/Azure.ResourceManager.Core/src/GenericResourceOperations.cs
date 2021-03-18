@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
         {
-            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id);
+            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id, cancellationToken);
             return new ArmVoidOperation(Operations.StartDeleteById(Id, _apiVersion, cancellationToken));
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Core
         public ArmResponse<GenericResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             GenericResource resource = GetResource();
-            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id);
+            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id, cancellationToken);
             // Potential optimization on tags set, remove NOOP to bypass the call.
             resource.Data.Tags[key] = value;
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Core
         {
             GenericResource resource = GetResource();
             resource.Data.Tags[key] = value;
-            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id);
+            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id, cancellationToken);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 Operations.StartUpdateById(Id, _apiVersion, resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
                 v => new GenericResource(this, new GenericResourceData(v)));
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override ArmResponse<GenericResource> Get(CancellationToken cancellationToken = default)
         {
-            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id);
+            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id, cancellationToken);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 Operations.GetById(Id, _apiVersion, cancellationToken),
                 v => new GenericResource(this, new GenericResourceData(v)));
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Core
         public ArmResponse<GenericResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             GenericResource resource = GetResource();
-            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id);
+            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id, cancellationToken);
             resource.Data.Tags.ReplaceWith(tags);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 Operations.StartUpdateById(Id, _apiVersion, resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Core
         public ArmOperation<GenericResource> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             GenericResource resource = GetResource();
-             _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id);
+             _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id, cancellationToken);
             resource.Data.Tags.ReplaceWith(tags);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 Operations.StartUpdateById(Id, _apiVersion, resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Core
         public ArmResponse<GenericResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             GenericResource resource = GetResource();
-            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id);
+            _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id, cancellationToken);
             resource.Data.Tags.Remove(key);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 Operations.StartUpdateById(Id, _apiVersion, resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Core
         public ArmOperation<GenericResource> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             GenericResource resource = GetResource();
-             _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id);
+             _apiVersion ??= ClientOptions.ApiVersions.LoadApiVersion(ProviderOperations, Id, cancellationToken);
             resource.Data.Tags.Remove(key);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 Operations.StartUpdateById(Id, _apiVersion, resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
