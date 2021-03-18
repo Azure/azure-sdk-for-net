@@ -27,7 +27,7 @@ param(
     [Parameter(Mandatory = $false)]
     [string] $PushArgs = "",
 
-    [string] $RemoteName = "azure-sdk-fork",
+    [string] $RemoteName = "",
 
     [Parameter(Mandatory = $false)]
     [boolean] $SkipCommit = $false,
