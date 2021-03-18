@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="baseUri"> The base URI of the service. </param>
         internal TenantOperations(AzureResourceManagerClientOptions options, TokenCredential credential, Uri baseUri)
-            : base(options, "/tenants", credential, baseUri)
+            : base(new ClientContext(options, credential, baseUri), "/tenants")
         {
         }
 
@@ -35,5 +35,16 @@ namespace Azure.ResourceManager.Core
         /// Gets the valid resource type for this operation class
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
+
+        /// <summary>
+        /// ListResources of type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public virtual T ListResources<T>(Func<Uri, TokenCredential, AzureResourceManagerClientOptions, T> func)
+        {
+            return func(BaseUri, Credential, ClientOptions);
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Core
         where TOperations : ResourceOperationsBase<TOperations>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class for /mocking.
         /// </summary>
         protected ResourceOperationsBase()
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="parentOperations"> The resource representing the parent resource. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected ResourceOperationsBase(ResourceOperationsBase parentOperations, ResourceIdentifier id)
+        protected ResourceOperationsBase(OperationsBase parentOperations, ResourceIdentifier id)
             : base(new ClientContext(parentOperations.ClientOptions, parentOperations.Credential, parentOperations.BaseUri), id)
         {
         }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"></param>
-        internal ResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
+        protected ResourceOperationsBase(ClientContext clientContext, string id)
             : base(clientContext, id)
         {
         }

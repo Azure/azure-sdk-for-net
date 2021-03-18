@@ -6,6 +6,7 @@ using Azure.ResourceManager.Core.Adapters;
 using Azure.ResourceManager.Core.Resources;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Proto.Compute
 {
@@ -49,9 +50,9 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<VirtualMachine> ListVirtualMachinesAsync(this SubscriptionOperations subscription)
+        public static async Task<AsyncPageable<VirtualMachine>> ListVirtualMachinesAsync(this SubscriptionOperations subscription)
         {
-            return subscription.ListResourcesAsync(
+            return await subscription.ListResourcesAsync(async
                 (baseUri, credential, options) =>
                 {
                     ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.Subscription, credential, options);

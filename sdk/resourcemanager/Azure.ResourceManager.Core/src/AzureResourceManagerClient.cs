@@ -23,9 +23,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Get the tenant operations <see cref="TenantOperations"/> class.
         /// </summary>
-        public TenantOperations Tenant => _tenant ??= new TenantOperations(_clientOptions, _credentials, _baseUri);
-
-        private readonly AzureResourceManagerClientOptions _clientOptions;
+        public TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, Credential, BaseUri);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class for mocking.
@@ -93,7 +91,7 @@ namespace Azure.ResourceManager.Core
             if (credential is null)
                 throw new ArgumentNullException(nameof(credential));
 
-            _clientOptions = options ?? new AzureResourceManagerClientOptions();
+            ClientOptions = options ?? new AzureResourceManagerClientOptions();
 
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
@@ -107,6 +105,7 @@ namespace Azure.ResourceManager.Core
 
         /// <summary>
         /// Gets the Azure Resource Manager client options.
+        /// </summary>
         private AzureResourceManagerClientOptions ClientOptions { get; set; }
 
         /// <summary>
@@ -118,6 +117,8 @@ namespace Azure.ResourceManager.Core
         /// Gets the base URI of the service.
         /// </summary>
         private Uri BaseUri { get; set; }
+
+        /// <summary>
         /// Gets the Azure subscription operations.
         /// </summary>
         /// <param name="subscriptionGuid"> The guid of the subscription. </param>

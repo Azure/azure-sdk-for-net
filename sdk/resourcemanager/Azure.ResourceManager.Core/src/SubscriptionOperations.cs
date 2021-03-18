@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public T ListResources<T>(Func<Uri, TokenCredential, AzureResourceManagerClientOptions, T> func)
+        public virtual T ListResources<T>(Func<Uri, TokenCredential, AzureResourceManagerClientOptions, T> func)
         {
             return func(BaseUri, Credential, ClientOptions);
         }
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public T ListResourcesAsync<T>(Func<Uri, TokenCredential, AzureResourceManagerClientOptions, T> func)
+        public virtual async Task<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, AzureResourceManagerClientOptions, Task<T>> func)
         {
-            return func(BaseUri, Credential, ClientOptions);
+            return await func(BaseUri, Credential, ClientOptions).ConfigureAwait(false);
         }
 
         /// <summary>

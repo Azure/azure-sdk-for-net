@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Core
             Id = id;
             Credential = clientContext.Credential;
             BaseUri = clientContext.BaseUri;
-            Diagnostics = new ClientDiagnostics(options);
+            Diagnostics = new ClientDiagnostics(ClientOptions);
             Validate(id);
         }
 
