@@ -5,6 +5,7 @@
 ### Added
 
 - `Operation` base class for operations that do not return a value.
+- `AzureNamedKeyCredential` has been implemented to cover scenarios where services require that a shared key name and the key value be used as a component of the algorithm to form the authorization token.
 
 ### Key Bug Fixes
 
