@@ -102,18 +102,27 @@ namespace Azure.Identity
         }
 
         [NonEvent]
-        public void ImdsEndpointUnavailable(Uri uri)
+        public void ImdsEndpointUnavailable(Uri uri, string error)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                ImdsEndpointUnavailable(uri.ToString());
+                ImdsEndpointUnavailable(uri.ToString(), error);
             }
         }
 
-        [Event(ImdsEndpointUnavailableEvent, Level = EventLevel.Informational, Message = "IMDS endpoint is did not respond. Endpoint: {0}")]
-        public void ImdsEndpointUnavailable(string uri)
+        [NonEvent]
+        public void ImdsEndpointUnavailable(Uri uri, Exception e)
         {
-            WriteEvent(ImdsEndpointUnavailableEvent, uri);
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                ImdsEndpointUnavailable(uri.ToString(), FormatException(e));
+            }
+        }
+
+        [Event(ImdsEndpointUnavailableEvent, Level = EventLevel.Informational, Message = "IMDS endpoint is not available. Endpoint: {0}. Error: {1}")]
+        public void ImdsEndpointUnavailable(string uri, string error)
+        {
+            WriteEvent(ImdsEndpointUnavailableEvent, uri, error);
         }
 
         [NonEvent]
