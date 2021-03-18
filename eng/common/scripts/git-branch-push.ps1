@@ -177,5 +177,9 @@ do
 if ($LASTEXITCODE -ne 0 -or $tryNumber -ge $numberOfRetries)
 {
     Write-Error "Unable to push commit after $($tryNumber) retries LASTEXITCODE=$($LASTEXITCODE), see command output above."
+    if (0 -eq $LASTEXITCODE) 
+    {
+        exit 1
+    }
     exit $LASTEXITCODE
 }

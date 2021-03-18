@@ -33,11 +33,14 @@ steps:
   displayName: Enable Long Paths if Necessary
   
 - pwsh: |
-    git clone https://$(azuresdk-github-pat)@github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
-
+    git clone https://github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
+ 
     try {
       Push-Location ${{ parameters.WorkingDirectory }}/repo
-
+      $setDefaultBranch = (git remote show origin | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
+      Write-Host "Setting DefaultBranch=$setDefaultBranch"
+      echo "##vso[task.setvariable variable=DefaultBranch]$setDefaultBranch"
+      
       Write-Host "git checkout ${{ parameters.SourceBranchName }}"
       git checkout ${{ parameters.SourceBranchName }}
     } finally {
@@ -45,10 +48,6 @@ steps:
     }
   displayName: Clone Documentation Repository
   ignoreLASTEXITCODE: false
-
-- template: /eng/common/pipelines/templates/steps/set-default-branch.yml
-  parameters:
-    WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
 
 - task: PowerShell@2
   displayName: 'Apply Documentation Updates From Artifact'
