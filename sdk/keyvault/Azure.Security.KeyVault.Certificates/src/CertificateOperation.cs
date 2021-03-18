@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,6 +14,9 @@ namespace Azure.Security.KeyVault.Certificates
     /// </summary>
     public class CertificateOperation : Operation<KeyVaultCertificateWithPolicy>
     {
+        private const string CancelledStatus = "cancelled";
+        private const string CompletedStatus = "completed";
+
         private readonly CertificateClient _client;
 
         private bool _completed;
@@ -73,7 +77,7 @@ namespace Azure.Security.KeyVault.Certificates
                     throw new InvalidOperationException("The operation was deleted so no value is available.");
                 }
 
-                if (Properties.Status == "cancelled")
+                if (Properties.Status == CancelledStatus)
                 {
                     throw new OperationCanceledException("The operation was canceled so no value is available.");
                 }
@@ -110,6 +114,8 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The raw response of the poll operation.</returns>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
+            using var _ = new UpdateStatusActivity(this);
+
             if (!_completed)
             {
                 Response<CertificateOperationProperties> pollResponse = _client.GetPendingCertificate(Properties.Name, cancellationToken);
@@ -126,7 +132,7 @@ namespace Azure.Security.KeyVault.Certificates
                 }
             }
 
-            if (Properties.Status == "completed")
+            if (Properties.Status == CompletedStatus)
             {
                 Response<KeyVaultCertificateWithPolicy> getResponse = _client.GetCertificate(Properties.Name, cancellationToken);
 
@@ -136,7 +142,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 _completed = true;
             }
-            else if (Properties.Status == "cancelled")
+            else if (Properties.Status == CancelledStatus)
             {
                 _completed = true;
             }
@@ -158,6 +164,8 @@ namespace Azure.Security.KeyVault.Certificates
         /// <returns>The raw response of the poll operation.</returns>
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
+            using var _ = new UpdateStatusActivity(this);
+
             if (!_completed)
             {
                 Response<CertificateOperationProperties> pollResponse = await _client.GetPendingCertificateAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
@@ -174,7 +182,7 @@ namespace Azure.Security.KeyVault.Certificates
                 }
             }
 
-            if (Properties.Status == "completed")
+            if (Properties.Status == CompletedStatus)
             {
                 Response<KeyVaultCertificateWithPolicy> getResponse = await _client.GetCertificateAsync(Properties.Name, cancellationToken).ConfigureAwait(false);
 
@@ -184,7 +192,7 @@ namespace Azure.Security.KeyVault.Certificates
 
                 _completed = true;
             }
-            else if (Properties.Status == "cancelled")
+            else if (Properties.Status == CancelledStatus)
             {
                 _completed = true;
             }
@@ -260,6 +268,37 @@ namespace Azure.Security.KeyVault.Certificates
             _response = response.GetRawResponse();
 
             Properties = response;
+        }
+
+        private class UpdateStatusActivity : IDisposable
+        {
+            private readonly CertificateOperation _operation;
+            private readonly long _start;
+
+            public UpdateStatusActivity(CertificateOperation operation)
+            {
+                _operation = operation;
+
+                if (EventSource.IsEnabled())
+                {
+                    EventSource.BeginUpdateStatus(_operation.Properties);
+
+                    _start = Stopwatch.GetTimestamp();
+                }
+            }
+
+            public void Dispose()
+            {
+                if (EventSource.IsEnabled())
+                {
+                    long end = Stopwatch.GetTimestamp();
+                    double elapsed = (end - _start) / Stopwatch.Frequency;
+
+                    EventSource.EndUpdateStatus(_operation.Properties, elapsed);
+                }
+            }
+
+            private static CertificatesEventSource EventSource => CertificatesEventSource.Singleton;
         }
     }
 }
