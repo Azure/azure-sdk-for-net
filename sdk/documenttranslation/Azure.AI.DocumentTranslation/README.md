@@ -46,7 +46,7 @@ az cognitiveservices account create \
 For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
 
 ### Authenticate the client
-In order to interact with the Document Translation service, you'll need to create an instance of the [DocumentTranslationClient][documenttranslation_client_class] class. You will need an **endpoint**, and either an **API key** or ``TokenCredential`` to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Document Translation service, you'll need to create an instance of the [DocumentTranslationClient][documenttranslation_client_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get API Key
 You can get the `endpoint` and `API key` from the Cognitive Services resource or Translator resource information in the [Azure Portal][azure_portal].
@@ -67,26 +67,6 @@ With the value of the endpoint and an `AzureKeyCredential`, you can create the [
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
 var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-```
-
-#### Create DocumentTranslationClient with Azure Active Directory Credential
-
-Client API key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity].  Note that regional endpoints do not support AAD authentication. Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  
-
-To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
-or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
-
-```PowerShell
-Install-Package Azure.Identity
-```
-
-You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to Translator by assigning the `"Cognitive Services User"` role to your service principal.
-
-Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
-
-```C# Snippet:CreateDocumentTranslationClientTokenCredential
-string endpoint = "<endpoint>";
-var client = new DocumentTranslationClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -114,7 +94,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 
 ## Examples
-The following section provides several code snippets using the `client` [created above](#create-documenttranslationclient-with-azure-active-directory-credential), and covers the main functions of Document Translation.
+The following section provides several code snippets using the `client` [created above](#create-documenttranslationclient-with-api-key-credential), and covers the main functions of Document Translation.
 
 ### Sync Examples
 * [Start Translation](#start-translation)
@@ -432,12 +412,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
 [documenttranslation_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/src/DocumentTranslationClient.cs
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
-[register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
-[aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
-[custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
 <!-- TODO: Add correct link -->
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/document-translation/overview
