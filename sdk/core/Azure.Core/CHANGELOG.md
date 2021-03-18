@@ -2,6 +2,10 @@
 
 ## 1.11.0-beta.1 (Unreleased)
 
+## Added
+
+- `AzureNamedKeyCredential` has been implemented to cover scenarios where services require that a shared key name and the key value be used as a component of the algorithm to form the authorization token.
+
 ### Key Bug Fixes
 
 - Check the `JsonIgnoreAttribute.Condition` property added in .NET 5 when discovering members with `JsonObjectSerializer`.
