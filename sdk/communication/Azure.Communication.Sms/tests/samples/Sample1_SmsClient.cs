@@ -98,9 +98,9 @@ namespace Azure.Communication.Sms.Tests.samples
                     /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
                     message: "Weekly Promotion!",
                     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
-                {
-                    Tag = "marketing", // custom tags
-                });
+                    {
+                        Tag = "marketing", // custom tags
+                    });
                 IEnumerable<SmsSendResult> results = response.Value;
                 foreach (SmsSendResult result in results)
                 {

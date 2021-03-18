@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> The Repository service client. </summary>
+    /// <summary> The registry service client. </summary>
     public partial class ContainerRegistryClient
     {
         private readonly Uri _endpoint;
@@ -36,7 +36,6 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(options, nameof(options));
 
-            // The HttpPipelineBuilder.Build method, builds up a pipeline with client options, and any number of additional policies.
             _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy(username, password));
 
             _clientDiagnostics = new ClientDiagnostics(options);

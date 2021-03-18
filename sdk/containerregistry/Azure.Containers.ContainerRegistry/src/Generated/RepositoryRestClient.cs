@@ -123,7 +123,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async Task<Response<RepositoryAttributes>> GetAttributesAsync(string name, CancellationToken cancellationToken = default)
+        public async Task<Response<RepositoryProperties>> GetAttributesAsync(string name, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -136,9 +136,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 case 200:
                     {
-                        RepositoryAttributes value = default;
+                        RepositoryProperties value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RepositoryAttributes.DeserializeRepositoryAttributes(document.RootElement);
+                        value = RepositoryProperties.DeserializeRepositoryProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -150,7 +150,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Response<RepositoryAttributes> GetAttributes(string name, CancellationToken cancellationToken = default)
+        public Response<RepositoryProperties> GetAttributes(string name, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -163,9 +163,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 case 200:
                     {
-                        RepositoryAttributes value = default;
+                        RepositoryProperties value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RepositoryAttributes.DeserializeRepositoryAttributes(document.RootElement);
+                        value = RepositoryProperties.DeserializeRepositoryProperties(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -241,7 +241,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        internal HttpMessage CreateUpdateAttributesRequest(string name, ChangeableAttributes value)
+        internal HttpMessage CreateUpdateAttributesRequest(string name, ContentProperties value)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -267,7 +267,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public async Task<Response> UpdateAttributesAsync(string name, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAttributesAsync(string name, ContentProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {
@@ -290,7 +290,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public Response UpdateAttributes(string name, ChangeableAttributes value = null, CancellationToken cancellationToken = default)
+        public Response UpdateAttributes(string name, ContentProperties value = null, CancellationToken cancellationToken = default)
         {
             if (name == null)
             {

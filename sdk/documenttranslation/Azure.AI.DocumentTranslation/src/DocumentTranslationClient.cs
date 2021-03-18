@@ -21,9 +21,6 @@ namespace Azure.AI.DocumentTranslation
         internal readonly ClientDiagnostics _clientDiagnostics;
         internal readonly DocumentTranslationClientOptions _options;
 
-        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private readonly string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
-
         /// <summary>
         /// Protected constructor to allow mocking.
         /// </summary>
@@ -48,7 +45,7 @@ namespace Azure.AI.DocumentTranslation
             _options = options;
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, DefaultCognitiveScope));
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
             _serviceRestClient = new DocumentTranslationRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
@@ -83,7 +80,7 @@ namespace Azure.AI.DocumentTranslation
             _options = options;
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
             _serviceRestClient = new DocumentTranslationRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 
@@ -367,7 +364,7 @@ namespace Azure.AI.DocumentTranslation
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetDocumentFormatsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetDocumentFormatsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetDocumentFormats)}");
             scope.Start();
 
             try
