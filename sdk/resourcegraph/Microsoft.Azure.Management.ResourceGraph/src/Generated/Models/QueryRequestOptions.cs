@@ -41,12 +41,17 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// property is present.</param>
         /// <param name="resultFormat">Defines in which format query result
         /// returned. Possible values include: 'table', 'objectArray'</param>
-        public QueryRequestOptions(string skipToken = default(string), int? top = default(int?), int? skip = default(int?), ResultFormat? resultFormat = default(ResultFormat?))
+        /// <param name="allowPartialScopes">Only applicable for tenant and
+        /// management group level queries to decide whether to allow partial
+        /// scopes for result in case the number of subscriptions exceed
+        /// allowed limits.</param>
+        public QueryRequestOptions(string skipToken = default(string), int? top = default(int?), int? skip = default(int?), ResultFormat? resultFormat = default(ResultFormat?), bool? allowPartialScopes = default(bool?))
         {
             SkipToken = skipToken;
             Top = top;
             Skip = skip;
             ResultFormat = resultFormat;
+            AllowPartialScopes = allowPartialScopes;
             CustomInit();
         }
 
@@ -86,6 +91,14 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         public ResultFormat? ResultFormat { get; set; }
 
         /// <summary>
+        /// Gets or sets only applicable for tenant and management group level
+        /// queries to decide whether to allow partial scopes for result in
+        /// case the number of subscriptions exceed allowed limits.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowPartialScopes")]
+        public bool? AllowPartialScopes { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -93,17 +106,23 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Top > 1000)
+            if (Top != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "Top", 1000);
+                if (Top > 1000)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Top", 1000);
+                }
+                if (Top < 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Top", 1);
+                }
             }
-            if (Top < 1)
+            if (Skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Top", 1);
-            }
-            if (Skip < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "Skip", 0);
+                if (Skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Skip", 0);
+                }
             }
         }
     }

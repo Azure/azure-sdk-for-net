@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
     /// Successfully executed facet containing additional statistics on the
     /// response of a query.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("FacetResult")]
     public partial class FacetResult : Facet
     {
         /// <summary>
@@ -37,8 +38,8 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// results.</param>
         /// <param name="count">Number of records returned in the facet
         /// response.</param>
-        /// <param name="data">A table containing the desired facets. Only
-        /// present if the facet is valid.</param>
+        /// <param name="data">A JObject array or Table containing the desired
+        /// facets. Only present if the facet is valid.</param>
         public FacetResult(string expression, long totalRecords, int count, object data)
             : base(expression)
         {
@@ -66,8 +67,8 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         public int Count { get; set; }
 
         /// <summary>
-        /// Gets or sets a table containing the desired facets. Only present if
-        /// the facet is valid.
+        /// Gets or sets a JObject array or Table containing the desired
+        /// facets. Only present if the facet is valid.
         /// </summary>
         [JsonProperty(PropertyName = "data")]
         public object Data { get; set; }
