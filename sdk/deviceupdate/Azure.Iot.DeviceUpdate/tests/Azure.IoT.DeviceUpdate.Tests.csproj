@@ -12,6 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Azure.Iot.DeviceUpdate.csproj" />
+    <ProjectReference Include="..\src\Azure.IoT.DeviceUpdate.csproj" />
   </ItemGroup>
 </Project>
