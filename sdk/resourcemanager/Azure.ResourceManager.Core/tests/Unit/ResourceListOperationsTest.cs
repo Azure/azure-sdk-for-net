@@ -90,7 +90,6 @@ namespace Azure.ResourceManager.Core.Tests
             var createResourceConverterMethod = typeof(ResourceListOperations).GetMethod("CreateResourceConverter", BindingFlags.Static | BindingFlags.NonPublic);
             ResourceGroupOperations rgOp = GetResourceGroupOperations();
             var activatorFunction = (Func<GenericResourceExpanded, GenericResource>)createResourceConverterMethod.Invoke(null, new object[] { rgOp });
-            TestContext.Progress.WriteLine("activate is " + activatorFunction.ToString());
             return activatorFunction.DynamicInvoke(new object[] { genericResource });
         }
 
