@@ -17,6 +17,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         private readonly Uri _invalidServiceUri = new Uri("https://account.file.core.windows.net");
         private readonly Uri _blobUri = new Uri("https://account.blob.core.windows.net");
         private readonly Uri _dfsUri = new Uri("https://account.dfs.core.windows.net");
+        private readonly Uri _blobPeriodUri = new Uri("https://account.z.blob.core.windows.net");
+        private readonly Uri _dfsPeriodUri = new Uri("https://account.z.dfs.core.windows.net");
         private readonly Uri _rootDirectoryUri = new Uri("https://account.dfs.core.windows.net/filesystem/");
 
         public DataLakeUriBuilderTests(bool async, DataLakeClientOptions.ServiceVersion serviceVersion)
@@ -206,7 +208,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_blobUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToDfsUri_CustomUri()
         {
             // Arrange
@@ -284,7 +286,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_dfsUri, result);
         }
 
-        [Test]
+        [RecordedTest]
         public void DataLakeUriBuilder_ToUri_RootDirectory()
         {
             // Arrange
