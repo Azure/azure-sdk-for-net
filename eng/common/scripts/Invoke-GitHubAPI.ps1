@@ -19,7 +19,6 @@ function SplitParameterArray($members) {
         return (@($members.Split(",") | % { $_.Trim() } | ? { return $_ }))
       }
     }
-    return $members
 }
 
 function Set-GitHubAPIParameters ($members,  $parameterName, $parameters, $allowEmptyMembers=$false) {
