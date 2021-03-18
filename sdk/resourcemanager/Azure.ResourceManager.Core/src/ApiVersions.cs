@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Azure.ResourceManager.Core
 {
@@ -77,9 +78,9 @@ namespace Azure.ResourceManager.Core
             return string.Empty;
         }
 
-        internal async Task<string> LoadApiVersionAsync(ProvidersOperations providers, ResourceIdentifier id)
+        internal async Task<string> LoadApiVersionAsync(ProvidersOperations providers, ResourceIdentifier id, CancellationToken cancellationToken)
         {
-            var results = await providers.GetAsync(id.Type.Namespace).ConfigureAwait(false);
+            var results = await providers.GetAsync(id.Type.Namespace, null, cancellationToken).ConfigureAwait(false);
             foreach (var type in results.Value.ResourceTypes)
             {
                 if (type.ResourceType.Equals(id.Type.Type))

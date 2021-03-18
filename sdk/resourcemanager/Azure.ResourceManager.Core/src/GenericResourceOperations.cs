@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A <see cref="Task"/> that on completion returns the status of the delete operation. </returns>
         public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id).ConfigureAwait(false);
+            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id, cancellationToken).ConfigureAwait(false);
             var operation = await Operations.StartDeleteByIdAsync(Id, _apiVersion, cancellationToken).ConfigureAwait(false);
             var result = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             return new ArmResponse(result);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id).ConfigureAwait(false);
+            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id, cancellationToken).ConfigureAwait(false);
             var operation = await Operations.StartDeleteByIdAsync(Id, _apiVersion, cancellationToken).ConfigureAwait(false);
             return new ArmVoidOperation(operation);
         }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public async Task<ArmResponse<GenericResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id).ConfigureAwait(false);
+            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id, cancellationToken).ConfigureAwait(false);
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags[key] = value;
             var op = await Operations.StartUpdateByIdAsync(Id, _apiVersion, resource.Data, cancellationToken).ConfigureAwait(false);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public async Task<ArmOperation<GenericResource>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id).ConfigureAwait(false);
+            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id, cancellationToken).ConfigureAwait(false);
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags[key] = value;
             var op = await Operations.StartUpdateByIdAsync(Id, _apiVersion, resource.Data, cancellationToken).ConfigureAwait(false);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public override async Task<ArmResponse<GenericResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id).ConfigureAwait(false);
+            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 await Operations.GetByIdAsync(Id, _apiVersion, cancellationToken).ConfigureAwait(false),
                 v => new GenericResource(this, new GenericResourceData(v)));
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public async Task<ArmResponse<GenericResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id).ConfigureAwait(false);
+            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id, cancellationToken).ConfigureAwait(false);
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags.ReplaceWith(tags);
             var op = await Operations.StartUpdateByIdAsync(Id, _apiVersion, resource.Data, cancellationToken).ConfigureAwait(false);
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public async Task<ArmOperation<GenericResource>> StartSetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id).ConfigureAwait(false);
+            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id, cancellationToken).ConfigureAwait(false);
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags.ReplaceWith(tags);
             var op = await Operations.StartUpdateByIdAsync(Id, _apiVersion, resource.Data, cancellationToken).ConfigureAwait(false);
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public async Task<ArmResponse<GenericResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id).ConfigureAwait(false);
+            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id, cancellationToken).ConfigureAwait(false);
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags.Remove(key);
             var op = await Operations.StartUpdateByIdAsync(Id, _apiVersion, resource.Data, cancellationToken).ConfigureAwait(false);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public async Task<ArmOperation<GenericResource>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id).ConfigureAwait(false);
+            _apiVersion ??= await ClientOptions.ApiVersions.LoadApiVersionAsync(ProviderOperations, Id, cancellationToken).ConfigureAwait(false);
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags.Remove(key);
             var op = await Operations.StartUpdateByIdAsync(Id, _apiVersion, resource.Data, cancellationToken).ConfigureAwait(false);

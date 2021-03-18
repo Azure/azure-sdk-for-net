@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Core.Tests
             resource.Kind = kind;
             resource.ManagedBy = managedBy;
             var field = typeof(GenericResourceExpanded).BaseType.BaseType.GetField("<Id>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic);
-            field.SetValue(resource, "/subscriptions/{subscription-id}/resourceGroups/myResourceGrou");
+            field.SetValue(resource, "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup");
             return resource;
         }
     }
