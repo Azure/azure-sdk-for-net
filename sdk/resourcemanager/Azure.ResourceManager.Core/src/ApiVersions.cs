@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Set the API version give a resource ID
+        /// Set the API version given a resource ID
         /// </summary>
         public void SetApiVersion(string resourceId, string apiVersion)
         {
