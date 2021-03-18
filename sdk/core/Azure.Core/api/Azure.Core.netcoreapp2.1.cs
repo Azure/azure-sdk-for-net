@@ -27,6 +27,14 @@ namespace Azure
         public string Key { get { throw null; } }
         public void Update(string key) { }
     }
+    public partial class AzureNamedKeyCredential
+    {
+        public AzureNamedKeyCredential(string name, string key) { }
+        public string Name { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void Deconstruct(out string name, out string key) { throw null; }
+        public void Update(string name, string key) { }
+    }
     public partial class AzureSasCredential
     {
         public AzureSasCredential(string signature) { }
