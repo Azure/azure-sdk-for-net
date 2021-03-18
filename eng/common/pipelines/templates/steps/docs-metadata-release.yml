@@ -92,7 +92,7 @@ steps:
     RepoOwner: ${{ parameters.TargetDocRepoOwner }}
     WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-    #RemoteName: ${{ parameters.RemoteName }}
+    RemoteName: ${{ parameters.RemoteName }}
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
