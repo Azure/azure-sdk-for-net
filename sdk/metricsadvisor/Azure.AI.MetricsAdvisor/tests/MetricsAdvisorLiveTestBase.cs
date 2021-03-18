@@ -41,8 +41,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var instrumentedOptions = InstrumentClientOptions(new MetricsAdvisorClientsOptions());
 
             MetricsAdvisorAdministrationClient client = useTokenCredential
-                ? new (endpoint, TestEnvironment.Credential, instrumentedOptions)
-                : new (endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+                ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
 
             return InstrumentClient(client);
         }
@@ -53,8 +53,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var instrumentedOptions = InstrumentClientOptions(new MetricsAdvisorClientsOptions());
 
             MetricsAdvisorClient client = useTokenCredential
-                ? new (endpoint, TestEnvironment.Credential, instrumentedOptions)
-                : new (endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
+                ? new(endpoint, TestEnvironment.Credential, instrumentedOptions)
+                : new(endpoint, new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey), instrumentedOptions);
 
             return InstrumentClient(client);
         }

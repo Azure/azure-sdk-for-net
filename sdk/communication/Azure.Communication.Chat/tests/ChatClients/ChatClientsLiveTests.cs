@@ -444,7 +444,7 @@ namespace Azure.Communication.Chat.Tests
         }
 
         #region Support functions
-        private (CommunicationUserIdentifier user, string token) CreateUserAndToken(CommunicationIdentityClient communicationIdentityClient)
+        private (CommunicationUserIdentifier User, string Token) CreateUserAndToken(CommunicationIdentityClient communicationIdentityClient)
         {
             Response<CommunicationUserIdentifier> user = communicationIdentityClient.CreateUser();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };
@@ -453,7 +453,7 @@ namespace Azure.Communication.Chat.Tests
             return (user, tokenResponseUser.Value.Token);
         }
 
-        private async Task<(CommunicationUserIdentifier user, string token)> CreateUserAndTokenAsync(CommunicationIdentityClient communicationIdentityClient)
+        private async Task<(CommunicationUserIdentifier User, string Token)> CreateUserAndTokenAsync(CommunicationIdentityClient communicationIdentityClient)
         {
             Response<CommunicationUserIdentifier> user = await communicationIdentityClient.CreateUserAsync();
             IEnumerable<CommunicationTokenScope> scopes = new[] { CommunicationTokenScope.Chat };

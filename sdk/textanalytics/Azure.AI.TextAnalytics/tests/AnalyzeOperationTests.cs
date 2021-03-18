@@ -292,7 +292,7 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
 
-            List<string> documents = new ();
+            List<string> documents = new();
 
             for (int i = 0; i < 23; i++)
             {

@@ -415,7 +415,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             return InstrumentClient(client);
         }
 
-        private (CryptographyClient, ICryptographyProvider) GetCryptoClient(KeyVaultKey key)
+        private (CryptographyClient ClientProxy, ICryptographyProvider RemoteClientProxy) GetCryptoClient(KeyVaultKey key)
         {
             CryptographyClientOptions options = InstrumentClientOptions(new CryptographyClientOptions((CryptographyClientOptions.ServiceVersion)_serviceVersion));
             CryptographyClient client = new CryptographyClient(key, TestEnvironment.Credential, options);

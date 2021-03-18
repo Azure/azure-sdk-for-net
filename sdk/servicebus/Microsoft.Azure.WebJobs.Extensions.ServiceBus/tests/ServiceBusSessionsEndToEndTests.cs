@@ -348,7 +348,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
          * Helper functions
          */
 
-        private (JobHost, IHost) BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true)
+        private (JobHost JobHost, IHost Host) BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true)
         {
             return BuildHost<T>(builder =>
                 builder.ConfigureWebJobs(b =>

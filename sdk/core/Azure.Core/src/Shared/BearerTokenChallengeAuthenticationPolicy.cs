@@ -254,7 +254,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            private (TaskCompletionSource<HeaderValueInfo>, TaskCompletionSource<HeaderValueInfo>?, bool) GetTaskCompletionSources(TokenRequestContext context)
+            private (TaskCompletionSource<HeaderValueInfo> InfoTcs, TaskCompletionSource<HeaderValueInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential) GetTaskCompletionSources(TokenRequestContext context)
             {
                 lock (_syncObj)
                 {

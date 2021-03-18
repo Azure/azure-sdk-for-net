@@ -59,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 });
         }
 
-        protected (JobHost, IHost) BuildHost<T>(Action<IHostBuilder> configurationDelegate = null, Action<IHost> preStartCallback = null)
+        protected (JobHost JobHost, IHost Host) BuildHost<T>(Action<IHostBuilder> configurationDelegate = null, Action<IHost> preStartCallback = null)
         {
             configurationDelegate ??= ConfigureTestEventHub;
 

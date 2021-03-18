@@ -132,7 +132,7 @@
     <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
-    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
+    <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
   </ItemGroup>
 
   <!--

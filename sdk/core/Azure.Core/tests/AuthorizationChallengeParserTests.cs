@@ -100,7 +100,7 @@ namespace Azure.Core.Tests
         {
             public string Scheme { get; set; }
 
-            public List<(string, string)> Parameters { get; } = new List<(string, string)>();
+            public List<(string Name, string Value)> Parameters { get; } = new();
         }
 
         [Test]
