@@ -4,6 +4,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: keyvault
+    MaxParallel: 5
     TimeoutInMinutes: 180
     AdditionalMatrixConfigs:
       - Name: keyvault_test_matrix_addons
