@@ -4,7 +4,7 @@
 
 ### Added
 
-- `Operation` base class for operation that do not return a value.
+- `Operation` base class for operations that do not return a value.
 
 ### Key Bug Fixes
 
