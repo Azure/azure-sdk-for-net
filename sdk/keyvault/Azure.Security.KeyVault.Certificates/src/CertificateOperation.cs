@@ -279,16 +279,13 @@ namespace Azure.Security.KeyVault.Certificates
             {
                 _operation = operation;
 
-                if (EventSource.IsEnabled())
-                {
-                    EventSource.BeginUpdateStatus(_operation.Properties);
-
-                    _start = Stopwatch.GetTimestamp();
-                }
+                EventSource.BeginUpdateStatus(_operation.Properties);
+                _start = Stopwatch.GetTimestamp();
             }
 
             public void Dispose()
             {
+                // Skip calculation if event source is not currently enabled.
                 if (EventSource.IsEnabled())
                 {
                     long end = Stopwatch.GetTimestamp();
