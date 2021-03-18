@@ -208,7 +208,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_blobUri, result);
         }
 
-        [RecordedTest]
+        [Test]
         public void DataLakeUriBuilder_ToDfsUri_CustomUri()
         {
             // Arrange
@@ -286,7 +286,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(_dfsUri, result);
         }
 
-        [RecordedTest]
+        [Test]
         public void DataLakeUriBuilder_ToUri_RootDirectory()
         {
             // Arrange
