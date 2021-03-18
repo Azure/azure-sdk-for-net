@@ -11,16 +11,18 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Manifest details. </summary>
-    internal partial class ManifestAttributesBase
+    /// <summary> Manifest attributes details. </summary>
+    public partial class RegistryArtifactProperties
     {
-        /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
-        internal ManifestAttributesBase()
+        /// <summary> Initializes a new instance of RegistryArtifactProperties. </summary>
+        internal RegistryArtifactProperties()
         {
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
+        /// <summary> Initializes a new instance of RegistryArtifactProperties. </summary>
+        /// <param name="registry"> Registry name. </param>
+        /// <param name="repository"> Image name. </param>
         /// <param name="digest"> Manifest. </param>
         /// <param name="size"> Image size. </param>
         /// <param name="createdOn"> Created time. </param>
@@ -31,8 +33,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="configMediaType"> Config blob media type. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="manifestProperties"> Changeable attributes. </param>
-        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, string manifestMediaType, string configMediaType, IReadOnlyList<string> tags, ContentProperties manifestProperties)
+        internal RegistryArtifactProperties(string registry, string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, string manifestMediaType, string configMediaType, IReadOnlyList<string> tags, ContentProperties manifestProperties)
         {
+            Registry = registry;
+            Repository = repository;
             Digest = digest;
             Size = size;
             CreatedOn = createdOn;
@@ -45,6 +49,10 @@ namespace Azure.Containers.ContainerRegistry
             ManifestProperties = manifestProperties;
         }
 
+        /// <summary> Registry name. </summary>
+        public string Registry { get; }
+        /// <summary> Image name. </summary>
+        public string Repository { get; }
         /// <summary> Manifest. </summary>
         public string Digest { get; }
         /// <summary> Image size. </summary>

@@ -7,7 +7,7 @@
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> The ChangeableAttributes. </summary>
+    /// <summary> The ContentProperties. </summary>
     public partial class ContentProperties
     {
         /// <summary> Initializes a new instance of ContentProperties. </summary>

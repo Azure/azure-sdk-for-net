@@ -14,7 +14,8 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RepositoryRestClient _restClient;
+        private readonly ContainerRegistryRestClient _registryRestClient;
+        private readonly ContainerRegistryRepositoryRestClient _repositoryRestClient;
 
         private readonly string _repository;
 
@@ -54,7 +55,8 @@ namespace Azure.Containers.ContainerRegistry
             Endpoint = endpoint;
             _repository = repository;
 
-            _restClient = new RepositoryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
+            _registryRestClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
+            _repositoryRestClient = new ContainerRegistryRepositoryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
@@ -70,7 +72,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.GetAttributesAsync(_repository, cancellationToken).ConfigureAwait(false);
+                return await _registryRestClient.GetRepositoryAttributesAsync(_repository, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -87,7 +89,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.GetAttributes(_repository, cancellationToken);
+                return _registryRestClient.GetRepositoryAttributes(_repository, cancellationToken);
             }
             catch (Exception e)
             {
@@ -105,7 +107,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.UpdateAttributesAsync(_repository, value, cancellationToken).ConfigureAwait(false);
+                return await _registryRestClient.UpdateRepositoryAttributesAsync(_repository, value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -123,7 +125,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.UpdateAttributes(_repository, value, cancellationToken);
+                return _registryRestClient.UpdateRepositoryAttributes(_repository, value, cancellationToken);
             }
             catch (Exception e)
             {

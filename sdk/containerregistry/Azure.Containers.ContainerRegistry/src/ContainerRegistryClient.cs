@@ -14,9 +14,9 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ContainerRegistryClient
     {
         private readonly Uri _endpoint;
-        private readonly HttpPipeline _pipeline;
-        private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RepositoryRestClient _restClient;
+        //private readonly HttpPipeline _pipeline;
+        //private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly ContainerRegistryRestClient _restClient;
 
         /// <summary>
         /// <paramref name="endpoint"/>
@@ -42,7 +42,7 @@ namespace Azure.Containers.ContainerRegistry
 
             _endpoint = endpoint;
 
-            _restClient = new RepositoryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
@@ -50,73 +50,73 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
-        /// <summary> List repositories. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<string> GetRepositoriesAsync(CancellationToken cancellationToken = default)
-        {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken, pageSizeHint) =>
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
-                scope.Start();
-                try
-                {
-                    ResponseWithHeaders<Repositories, RepositoryGetListHeaders> response =
-                        await _restClient.GetListAsync(
-                            continuationToken,
-                            pageSizeHint,
-                            cancellationToken)
-                       .ConfigureAwait(false);
+        ///// <summary> List repositories. </summary>
+        ///// <param name="cancellationToken"> The cancellation token to use. </param>
+        //public virtual AsyncPageable<string> GetRepositoriesAsync(CancellationToken cancellationToken = default)
+        //{
+        //    return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken, pageSizeHint) =>
+        //    {
+        //        using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+        //        scope.Start();
+        //        try
+        //        {
+        //            ResponseWithHeaders<Repositories, RepositoryGetListHeaders> response =
+        //                await _restClient.GetListAsync(
+        //                    continuationToken,
+        //                    pageSizeHint,
+        //                    cancellationToken)
+        //               .ConfigureAwait(false);
 
-                    string lastRepository = null;
-                    if (!string.IsNullOrEmpty(response.Headers.Link))
-                    {
-                        Uri nextLink = new Uri(response.Headers.Link);
-                        NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
-                        lastRepository = queryParams["last"];
-                    }
+        //            string lastRepository = null;
+        //            if (!string.IsNullOrEmpty(response.Headers.Link))
+        //            {
+        //                Uri nextLink = new Uri(response.Headers.Link);
+        //                NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
+        //                lastRepository = queryParams["last"];
+        //            }
 
-                    return Page<string>.FromValues(response.Value.Names, lastRepository, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
-        }
+        //            return Page<string>.FromValues(response.Value.Names, lastRepository, response.GetRawResponse());
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            scope.Failed(ex);
+        //            throw;
+        //        }
+        //    });
+        //}
 
-        /// <summary> List repositories. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<string> GetRepositories(CancellationToken cancellationToken = default)
-        {
-            return PageResponseEnumerator.CreateEnumerable((continuationToken, pageSizeHint) =>
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
-                scope.Start();
-                try
-                {
-                    ResponseWithHeaders<Repositories, RepositoryGetListHeaders> response =
-                        _restClient.GetList(
-                            continuationToken,
-                            pageSizeHint,
-                            cancellationToken);
+        ///// <summary> List repositories. </summary>
+        ///// <param name="cancellationToken"> The cancellation token to use. </param>
+        //public virtual Pageable<string> GetRepositories(CancellationToken cancellationToken = default)
+        //{
+        //    return PageResponseEnumerator.CreateEnumerable((continuationToken, pageSizeHint) =>
+        //    {
+        //        using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+        //        scope.Start();
+        //        try
+        //        {
+        //            ResponseWithHeaders<Repositories, RepositoryGetListHeaders> response =
+        //                _restClient.GetList(
+        //                    continuationToken,
+        //                    pageSizeHint,
+        //                    cancellationToken);
 
-                    string lastRepository = null;
-                    if (!string.IsNullOrEmpty(response.Headers.Link))
-                    {
-                        Uri nextLink = new Uri(response.Headers.Link);
-                        NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
-                        lastRepository = queryParams["last"];
-                    }
+        //            string lastRepository = null;
+        //            if (!string.IsNullOrEmpty(response.Headers.Link))
+        //            {
+        //                Uri nextLink = new Uri(response.Headers.Link);
+        //                NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
+        //                lastRepository = queryParams["last"];
+        //            }
 
-                    return Page<string>.FromValues(response.Value.Names, lastRepository, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
-        }
+        //            return Page<string>.FromValues(response.Value.Names, lastRepository, response.GetRawResponse());
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            scope.Failed(ex);
+        //            throw;
+        //        }
+        //    });
+        //}
     }
 }
