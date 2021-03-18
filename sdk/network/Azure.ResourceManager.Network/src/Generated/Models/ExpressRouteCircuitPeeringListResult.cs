@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListPeering API service call retrieves all peerings that belong to an ExpressRouteCircuit. </summary>
-    public partial class ExpressRouteCircuitPeeringListResult
+    internal partial class ExpressRouteCircuitPeeringListResult
     {
         /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringListResult. </summary>
         internal ExpressRouteCircuitPeeringListResult()

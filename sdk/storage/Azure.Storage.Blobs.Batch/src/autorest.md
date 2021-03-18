@@ -206,3 +206,12 @@ directive:
     $.Blob["x-ms-skip-url-encoding"] = true;
     $.ContainerName["x-ms-skip-url-encoding"] = true;
 ```
+
+### Buffer batch responses
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='Service_SubmitBatch' || @.operationId=='Container_SubmitBatch')]
+  transform: $["x-csharp-buffer-response"] = true;
+```

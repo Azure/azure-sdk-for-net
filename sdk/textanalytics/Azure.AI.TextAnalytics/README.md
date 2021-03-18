@@ -7,7 +7,7 @@ Azure Cognitive Services Text Analytics is a cloud service that provides advance
 * Personally Identifiable Information (PII) Recognition
 * Linked Entity Recognition
 * Healthcare Recognition <sup>beta</sup>
-* Analyze Operation <sup>beta</sup>
+* Running multiple actions in one or more documents <sup>beta</sup>
 
 [Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][textanalytics_docs] | [Samples][textanalytics_samples]
 
@@ -151,7 +151,7 @@ The following section provides several code snippets using the `client` [created
 * [Detect Language Asynchronously](#detect-language-asynchronously)
 * [Recognize Entities Asyncronously](#recognize-entities-asynchronously)
 * [Recognize Healthcare Entities Asyncronously](#recognize-healthcare-entities-asynchronously)
-* [Run Analyze Operation Asyncronously](#run-analyze-operation-asynchronously)
+* [Run multiple actions Asyncronously](#run-multiple-actions-asynchronously)
 
 ### Detect Language
 Run a Text Analytics predictive model to determine the language that the passed-in document or batch of documents are written in.
@@ -426,10 +426,10 @@ catch (RequestFailedException exception)
 ### Recognize Healthcare Entities Asynchronously
 Text Analytics for health is a containerized service that extracts and labels relevant medical information from unstructured texts such as doctor's notes, discharge summaries, clinical documents, and electronic health records. For more information see [How to: Use Text Analytics for health][healthcare].
 
-```C# Snippet:TextAnalyticsSampleHealthcareBatchAsync
-    string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |
-                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE.
-                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months.
+```C# Snippet:Sample7_AnalyzeHealthcareEntitiesBatchConvenience
+    string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
+                        Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
+                        HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
                         The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
                         with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
                         another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
@@ -443,58 +443,102 @@ Text Analytics for health is a containerized service that extracts and labels re
     {
         document1,
         document2,
+        string.Empty
     };
+    var options = new AnalyzeHealthcareEntitiesOptions { };
 
-    AnalyzeHealthcareEntitiesOptions options = new AnalyzeHealthcareEntitiesOptions()
-    {
-        IncludeStatistics = true
-    };
-
-    AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput, "en", options);
+    AnalyzeHealthcareEntitiesOperation healthOperation = client.StartAnalyzeHealthcareEntities(batchInput, "en", options);
 
     await healthOperation.WaitForCompletionAsync();
 
-    await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
+    Console.WriteLine($"AnalyzeHealthcareEntities operation was completed");
+
+    Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
+    Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
+    Console.WriteLine($"Status       : {healthOperation.Status}");
+    Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
+
+    foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.GetValues())
     {
-        Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
+        Console.WriteLine($"Results of Azure Text Analytics \"Healthcare\" Model, version: \"{documentsInPage.ModelVersion}\"");
         Console.WriteLine("");
 
         foreach (AnalyzeHealthcareEntitiesResult result in documentsInPage)
         {
-            Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
-
-            foreach (HealthcareEntity entity in result.Entities)
+            if (result.HasError)
             {
-                Console.WriteLine($"    Entity: {entity.Text}");
-                Console.WriteLine($"    Category: {entity.Category}");
-                Console.WriteLine($"    Offset: {entity.Offset}");
-                Console.WriteLine($"    Length: {entity.Length}");
-                Console.WriteLine($"    Links:");
-
-                foreach (EntityDataSource entityDataSource in entity.DataSources)
-                {
-                    Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
-                    Console.WriteLine($"        DataSource: {entityDataSource.Name}");
-                }
+                Console.WriteLine("  Error!");
+                Console.WriteLine($"  Document error code: {result.Error.ErrorCode}.");
+                Console.WriteLine($"  Message: {result.Error.Message}");
             }
+            else
+            {
+                Console.WriteLine($"    Recognized the following {result.Entities.Count} healthcare entities:");
 
-            Console.WriteLine($"    Document statistics:");
-            Console.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
-            Console.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-            Console.WriteLine("");
+                foreach (HealthcareEntity entity in result.Entities)
+                {
+                    Console.WriteLine($"    Entity: {entity.Text}");
+                    Console.WriteLine($"    Category: {entity.Category}");
+                    Console.WriteLine($"    Offset: {entity.Offset}");
+                    Console.WriteLine($"    Length: {entity.Length}");
+                    Console.WriteLine($"    NormalizedText: {entity.NormalizedText}");
+                    Console.WriteLine($"    Links:");
+
+                    foreach (EntityDataSource entityDataSource in entity.DataSources)
+                    {
+                        Console.WriteLine($"        Entity ID in Data Source: {entityDataSource.EntityId}");
+                        Console.WriteLine($"        DataSource: {entityDataSource.Name}");
+                    }
+
+                    if (entity.Assertion != null)
+                    {
+                        Console.WriteLine($"    Assertions:");
+
+                        if (entity.Assertion?.Association != null)
+                        {
+                            Console.WriteLine($"        Association: {entity.Assertion?.Association}");
+                        }
+
+                        if (entity.Assertion?.Certainty != null)
+                        {
+                            Console.WriteLine($"        Certainty: {entity.Assertion?.Certainty}");
+                        }
+                        if (entity.Assertion?.Conditionality != null)
+                        {
+                            Console.WriteLine($"        Conditionality: {entity.Assertion?.Conditionality}");
+                        }
+                    }
+
+                    Console.WriteLine($"    We found {result.EntityRelations.Count} relations in the current document:");
+                    Console.WriteLine("");
+
+                    foreach (HealthcareEntityRelation relations in result.EntityRelations)
+                    {
+                        Console.WriteLine($"        Relation: {relations.RelationType}");
+                        Console.WriteLine($"        For this relation there are {relations.Roles.Count} roles");
+
+                        foreach (HealthcareEntityRelationRole role in relations.Roles)
+                        {
+                            Console.WriteLine($"            Role Name: {role.Name}");
+
+                            Console.WriteLine($"            Associated Entity Text: {role.Entity.Text}");
+                            Console.WriteLine($"            Associated Entity Category: {role.Entity.Category}");
+
+                            Console.WriteLine("");
+                        }
+
+                        Console.WriteLine("");
+                    }
+                }
+                Console.WriteLine("");
+            }
         }
-        Console.WriteLine($"Request statistics:");
-        Console.WriteLine($"    Document Count: {documentsInPage.Statistics.DocumentCount}");
-        Console.WriteLine($"    Valid Document Count: {documentsInPage.Statistics.ValidDocumentCount}");
-        Console.WriteLine($"    Transaction Count: {documentsInPage.Statistics.TransactionCount}");
-        Console.WriteLine($"    Invalid Document Count: {documentsInPage.Statistics.InvalidDocumentCount}");
-        Console.WriteLine("");
     }
 }
 ```
 
-### Run Analyze Operation Asynchronously
-The Analyze functionality allows to choose which of the supported Text Analytics features to execute in the same set of documents. Currently the supported features are: entity recognition, key phrase extraction, and Personally Identifiable Information (PII) Recognition. For more information see [How to: Use Text Analytics for analyze operation][analyze_operation_howto].
+### Run multiple actions Asynchronously
+This functionality allows running multiple actions in one or more documents. Actions include entity recognition, linked entity recognition, key phrase extraction, and Personally Identifiable Information (PII) Recognition. For more information see [Using analyze][analyze_operation_howto].
 
 ```C# Snippet:AnalyzeOperationBatchConvenienceAsync
     string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
@@ -521,17 +565,29 @@ The Analyze functionality allows to choose which of the supported Text Analytics
         documentC
     };
 
-    TextAnalyticsActions batchActions = new TextAnalyticsActions()
+    TextAnalyticsActions actions = new TextAnalyticsActions()
     {
         ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
         RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
         RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
+        RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>() { new RecognizeLinkedEntitiesOptions() },
         DisplayName = "AnalyzeOperationSample"
     };
 
-    AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, batchActions);
+    AnalyzeBatchActionsOperation operation = await client.StartAnalyzeBatchActionsAsync(batchDocuments, actions);
 
     await operation.WaitForCompletionAsync();
+
+    Console.WriteLine($"Status: {operation.Status}");
+    Console.WriteLine($"Created On: {operation.CreatedOn}");
+    Console.WriteLine($"Expires On: {operation.ExpiresOn}");
+    Console.WriteLine($"Last modified: {operation.LastModified}");
+    if (!string.IsNullOrEmpty(operation.DisplayName))
+        Console.WriteLine($"Display name: {operation.DisplayName}");
+    Console.WriteLine($"Total actions: {operation.TotalActions}");
+    Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
+    Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
+    Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
 
     await foreach (AnalyzeBatchActionsResult documentsInPage in operation.Value)
     {
@@ -541,19 +597,22 @@ The Analyze functionality allows to choose which of the supported Text Analytics
 
         RecognizePiiEntitiesResultCollection piiResult = documentsInPage.RecognizePiiEntitiesActionsResults.FirstOrDefault().Result;
 
+        RecognizeLinkedEntitiesResultCollection linkedEntitiesResult = documentsInPage.RecognizeLinkedEntitiesActionsResults.FirstOrDefault().Result;
+
         Console.WriteLine("Recognized Entities");
 
         foreach (RecognizeEntitiesResult result in entitiesResult)
         {
-            Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+            Console.WriteLine($"  Recognized the following {result.Entities.Count} entities:");
 
             foreach (CategorizedEntity entity in result.Entities)
             {
-                Console.WriteLine($"    Entity: {entity.Text}");
-                Console.WriteLine($"    Category: {entity.Category}");
-                Console.WriteLine($"    Offset: {entity.Offset}");
-                Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-                Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                Console.WriteLine($"  Entity: {entity.Text}");
+                Console.WriteLine($"  Category: {entity.Category}");
+                Console.WriteLine($"  Offset: {entity.Offset}");
+                Console.WriteLine($"  Length: {entity.Length}");
+                Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
+                Console.WriteLine($"  SubCategory: {entity.SubCategory}");
             }
             Console.WriteLine("");
         }
@@ -562,15 +621,16 @@ The Analyze functionality allows to choose which of the supported Text Analytics
 
         foreach (RecognizePiiEntitiesResult result in piiResult)
         {
-            Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
+            Console.WriteLine($"  Recognized the following {result.Entities.Count} PII entities:");
 
             foreach (PiiEntity entity in result.Entities)
             {
-                Console.WriteLine($"    Entity: {entity.Text}");
-                Console.WriteLine($"    Category: {entity.Category}");
-                Console.WriteLine($"    Offset: {entity.Offset}");
-                Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-                Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                Console.WriteLine($"  Entity: {entity.Text}");
+                Console.WriteLine($"  Category: {entity.Category}");
+                Console.WriteLine($"  Offset: {entity.Offset}");
+                Console.WriteLine($"  Length: {entity.Length}");
+                Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
+                Console.WriteLine($"  SubCategory: {entity.SubCategory}");
             }
             Console.WriteLine("");
         }
@@ -579,17 +639,50 @@ The Analyze functionality allows to choose which of the supported Text Analytics
 
         foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
         {
-            Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+            Console.WriteLine($"  Recognized the following {result.KeyPhrases.Count} Keyphrases:");
 
             foreach (string keyphrase in result.KeyPhrases)
             {
-                Console.WriteLine($"    {keyphrase}");
+                Console.WriteLine($"  {keyphrase}");
+            }
+            Console.WriteLine("");
+        }
+
+        Console.WriteLine("Recognized Linked Entities");
+
+        foreach (RecognizeLinkedEntitiesResult result in linkedEntitiesResult)
+        {
+            Console.WriteLine($"  Recognized the following {result.Entities.Count} linked entities:");
+
+            foreach (LinkedEntity entity in result.Entities)
+            {
+                Console.WriteLine($"  Entity: {entity.Name}");
+                Console.WriteLine($"  DataSource: {entity.DataSource}");
+                Console.WriteLine($"  DataSource EntityId: {entity.DataSourceEntityId}");
+                Console.WriteLine($"  Language: {entity.Language}");
+                Console.WriteLine($"  DataSource Url: {entity.Url}");
+
+                Console.WriteLine($"  Total Matches: {entity.Matches.Count()}");
+                foreach (LinkedEntityMatch match in entity.Matches)
+                {
+                    Console.WriteLine($"    Match Text: {match.Text}");
+                    Console.WriteLine($"    ConfidenceScore: {match.ConfidenceScore}");
+                    Console.WriteLine($"    Offset: {match.Offset}");
+                    Console.WriteLine($"    Length: {match.Length}");
+                }
+                Console.WriteLine("");
             }
             Console.WriteLine("");
         }
     }
 }
 ```
+
+### Known Issues
+- `StartAnalyzeHealthcareEntities` is in gated preview and can not be used with AAD credentials. For more information, see [the Text Analytics for Health documentation](https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview).
+- The parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions` is currently not working when used in `StartAnalyzeBatchActions`. [19237](https://github.com/Azure/azure-sdk-for-net/issues/19237).
+- `Statistics` for `AnalyzeBatchActionsResult` are not currently returned even if the user passes `IncludeStatistics  = true`. [19268](https://github.com/Azure/azure-sdk-for-net/issues/19268).
+- At time of this SDK release, the `ModelVersion` option to `StartAnalyzeHealthcareEntities` is ignored by the service. The service always processes the operation using the `latest` model.
 
 ## Troubleshooting
 
@@ -684,7 +777,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [recognize_healthcare_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md
 [analyze_operation_sample]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeBatchActions.md
-[analyze_operation_howto]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-call-api?tabs=analyze
+[analyze_operation_howto]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-call-api?tabs=synchronous#using-the-api-asynchronously
 [healthcare]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner
 [language_detection]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-language-detection
 [sentiment_analysis]: https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/how-tos/text-analytics-how-to-sentiment-analysis

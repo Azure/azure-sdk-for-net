@@ -32,7 +32,7 @@ function GenerateMatrix(
     [Array]$filters = @(),
     [Array]$nonSparseParameters = @()
 ) {
-    $orderedMatrix, $importedMatrix = ProcessImport $config.orderedMatrix $selectFromMatrixType
+    $orderedMatrix, $importedMatrix, $importedDisplayNamesLookup = ProcessImport $config.orderedMatrix $selectFromMatrixType
     if ($selectFromMatrixType -eq "sparse") {
         [Array]$matrix = GenerateSparseMatrix $orderedMatrix $config.displayNamesLookup $nonSparseParameters
     } elseif ($selectFromMatrixType -eq "all") {
@@ -44,7 +44,7 @@ function GenerateMatrix(
     # Combine with imported after matrix generation, since a sparse selection should result in a full combination of the
     # top level and imported sparse matrices (as opposed to a sparse selection of both matrices).
     if ($importedMatrix) {
-        [Array]$matrix = CombineMatrices $matrix $importedMatrix
+        [Array]$matrix = CombineMatrices $matrix $importedMatrix $importedDisplayNamesLookup
     }
 
     if ($config.exclude) {
@@ -199,19 +199,19 @@ function ProcessIncludes([MatrixConfig]$config, [Array]$matrix)
 function ProcessImport([System.Collections.Specialized.OrderedDictionary]$matrix, [String]$selection)
 {
     if (!$matrix -or !$matrix.Contains($IMPORT_KEYWORD)) {
-        return $matrix
+        return $matrix, @(), @{}
     }
 
     $importPath = $matrix[$IMPORT_KEYWORD]
     $matrix.Remove($IMPORT_KEYWORD)
 
-    $matrixConfig = GetMatrixConfigFromJson (Get-Content $importPath)
-    $importedMatrix = GenerateMatrix $matrixConfig $selection
+    $importedMatrixConfig = GetMatrixConfigFromJson (Get-Content $importPath)
+    $importedMatrix = GenerateMatrix $importedMatrixConfig $selection
 
-    return $matrix, $importedMatrix
+    return $matrix, $importedMatrix, $importedMatrixConfig.displayNamesLookup
 }
 
-function CombineMatrices([Array]$matrix1, [Array]$matrix2)
+function CombineMatrices([Array]$matrix1, [Array]$matrix2, [Hashtable]$displayNamesLookup = @{})
 {
     $combined = @()
     if (!$matrix1) {
@@ -223,21 +223,22 @@ function CombineMatrices([Array]$matrix1, [Array]$matrix2)
 
     foreach ($entry1 in $matrix1) {
         foreach ($entry2 in $matrix2) {
+            $entry2name = @()
             $newEntry = @{
                 name = $entry1.name
                 parameters = CloneOrderedDictionary $entry1.parameters
             }
             foreach($param in $entry2.parameters.GetEnumerator()) {
-                if (!$newEntry.Contains($param.Name)) {
+                if (!$newEntry.parameters.Contains($param.Name)) {
                     $newEntry.parameters[$param.Name] = $param.Value
+                    $entry2name += CreateDisplayName $param.Value $displayNamesLookup
                 } else {
                     Write-Warning "Skipping duplicate parameter `"$($param.Name)`" when combining matrix."
                 }
             }
 
             # The maximum allowed matrix name length is 100 characters
-            $entry2.name = $entry2.name.TrimStart("job_")
-            $newEntry.name = $newEntry.name, $entry2.name -join "_"
+            $newEntry.name = @($newEntry.name, ($entry2name -join "_")) -join "_"
             if ($newEntry.name.Length -gt 100) {
                 $newEntry.name = $newEntry.name[0..99] -join ""
             }
@@ -305,7 +306,7 @@ function GenerateSparseMatrix(
 
     if ($nonSparse) {
         [Array]$allOfMatrix = GenerateFullMatrix $nonSparse $displayNamesLookup
-        return CombineMatrices $allOfMatrix $sparseMatrix
+        return CombineMatrices $allOfMatrix $sparseMatrix $displayNamesLookup
     }
 
     return $sparseMatrix

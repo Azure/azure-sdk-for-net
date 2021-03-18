@@ -1,4 +1,4 @@
-# Azure.Communication.Administration
+# Azure.Communication.PhoneNumbers
 
 Run `dotnet msbuild /t:GenerateCode` to generate code.
 
@@ -6,8 +6,9 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
+public-clients: true
 input-file:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/257f060be8b60d8468584682aa2d71b1faa5f82c/specification/communication/data-plane/Microsoft.CommunicationServicesAdministration/preview/2020-07-20-preview1/communicationservicesadministration.json
-title: Phone number administration
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1ef769ae890b5f5a952f9ba6e46e0ef6d38241da/specification/communication/data-plane/Microsoft.CommunicationServicesPhoneNumbers/stable/2021-03-07/phonenumbers.json
+title: Phone numbers
 payload-flattening-threshold: 3
 ```

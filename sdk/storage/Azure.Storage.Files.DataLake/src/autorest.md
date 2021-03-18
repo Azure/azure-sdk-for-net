@@ -91,3 +91,12 @@ directive:
       "application/octet-stream"
     ]
 ```
+
+### Don't buffer downloads
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='Path_Read')]
+  transform: $["x-csharp-buffer-response"] = false;
+```

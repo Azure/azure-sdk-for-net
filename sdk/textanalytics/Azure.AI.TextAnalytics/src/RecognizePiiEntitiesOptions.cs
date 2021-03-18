@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -24,6 +26,11 @@ namespace Azure.AI.TextAnalytics
         /// Filters the response entities to ones only included in the specified domain.
         /// For more information see <a href="https://aka.ms/tanerpii"/>.
         /// </summary>
-        public PiiEntityDomainType DomainFilter { get; set; }
+        public PiiEntityDomainType? DomainFilter { get; set; }
+
+        /// <summary>
+        /// Filters the response entities to entities that match the <see cref="PiiEntityCategory"/> specified.
+        /// </summary>
+        public IList<PiiEntityCategory> CategoriesFilter { get; internal set; } = new List<PiiEntityCategory>();
     }
 }

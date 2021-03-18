@@ -3,7 +3,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
     public partial class ManagedPrivateEndpointsClient
     {
         protected ManagedPrivateEndpointsClient() { }
-        public ManagedPrivateEndpointsClient(string endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions options = null) { }
+        public ManagedPrivateEndpointsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Analytics.Synapse.ManagedPrivateEndpoints.ManagedPrivateEndpointsClientOptions options = null) { }
         public virtual Azure.Response<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> Create(string managedPrivateEndpointName, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName = "default", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint>> CreateAsync(string managedPrivateEndpointName, Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName = "default", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(string managedPrivateEndpointName, string managedVirtualNetworkName = "default", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -38,12 +38,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } }
-    }
-    public partial class ManagedPrivateEndpointListResponse
-    {
-        internal ManagedPrivateEndpointListResponse() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models.ManagedPrivateEndpoint> Value { get { throw null; } }
     }
     public partial class ManagedPrivateEndpointProperties
     {

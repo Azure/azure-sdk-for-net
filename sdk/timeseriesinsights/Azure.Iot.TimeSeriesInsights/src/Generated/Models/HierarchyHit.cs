@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> The hierarchy node which contains the instances matching the query based on the input. May be empty or null. </summary>
     public partial class HierarchyHit

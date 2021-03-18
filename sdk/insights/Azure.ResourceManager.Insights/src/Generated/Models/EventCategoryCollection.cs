@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Insights.Models
 {
     /// <summary> A collection of event categories. Currently possible values are: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy. </summary>
-    public partial class EventCategoryCollection
+    internal partial class EventCategoryCollection
     {
         /// <summary> Initializes a new instance of EventCategoryCollection. </summary>
         /// <param name="value"> the list that includes the Azure event categories. </param>

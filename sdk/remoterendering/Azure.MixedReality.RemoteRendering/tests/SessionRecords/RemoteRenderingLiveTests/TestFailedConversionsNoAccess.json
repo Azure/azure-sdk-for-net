@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/conversions/6a27bf37-5009-7103-745a-5ed572f66c08?api-version=2021-01-01-preview",
+      "RequestUri": "https://remoterendering.westeurope.mixedreality.azure.com/accounts/1b405859-8af9-47e6-941d-9205163c0f63/conversions/6a27bf37-5009-7103-745a-5ed572f66c08?api-version=2021-01-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -30,7 +30,7 @@
       },
       "StatusCode": 403,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-01-01-preview",
+        "api-supported-versions": "2021-01-01-preview, 2021-01-01",
         "Content-Length": "206",
         "Content-Type": "application/json; charset=utf-8",
         "Date": "Fri, 29 Jan 2021 15:49:14 GMT",

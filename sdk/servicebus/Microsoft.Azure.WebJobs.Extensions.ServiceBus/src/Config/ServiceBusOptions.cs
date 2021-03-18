@@ -132,17 +132,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public Func<ProcessErrorEventArgs, Task> ExceptionHandler { get; set; }
 
         /// <summary>
-        /// Gets or sets an optional <see cref="TimeSpan"/> specifying the maximum time to wait when attempting to receive messages.
-        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used. This only applies for functions that receive
-        /// a batch of messages.
-        /// </summary>
-        public TimeSpan? MaxWaitTime { get; set; }  // TODO this should probably be exposed in the Processor as well and would then also apply for functions that receive a single message.
-
-        /// <summary>
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
         /// a batch of messages. The default value is 1000.
         /// </summary>
         public int MaxMessages { get; set; } = 1000;
+
+        /// <summary>
+        /// Gets or sets the maximum amount of time to wait for a message to be received for the
+        /// currently active session. After this time has elapsed, the processor will close the session
+        /// and attempt to process another session.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        public TimeSpan? SessionIdleTimeout { get; set; }
 
         /// <summary>
         /// Formats the options as JSON objects for display.
@@ -171,7 +172,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
                 { nameof(MaxMessages), MaxMessages },
-                { nameof(MaxWaitTime), MaxWaitTime.ToString() ?? string.Empty }
+                { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty }
             };
 
             return options.ToString(Formatting.Indented);
@@ -199,7 +200,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 AutoCompleteMessages = AutoCompleteMessages,
                 PrefetchCount = PrefetchCount,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
-                MaxConcurrentSessions = MaxConcurrentSessions
+                MaxConcurrentSessions = MaxConcurrentSessions,
+                SessionIdleTimeout = SessionIdleTimeout
             };
 
         internal ServiceBusClientOptions ToClientOptions() =>

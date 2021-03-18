@@ -7,7 +7,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// Representaion of ARM SKU
+    /// A class representing SKU for resource
     /// </summary>
     public sealed class Sku : IEquatable<Sku>, IComparable<Sku>
     {

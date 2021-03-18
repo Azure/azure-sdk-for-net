@@ -57,53 +57,32 @@ namespace Proto.Compute
             Credential,
             ClientOptions.Convert<ComputeManagementClientOptions>()).AvailabilitySets;
 
-        /// <summary>
-        /// The operation to delete an availability set. 
-        /// </summary>
-        /// <returns> A response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
-        public ArmResponse<Response> Delete()
+        /// <inheritdoc/>
+        public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.Delete(Id.ResourceGroup, Id.Name));
+            return new ArmResponse(Operations.Delete(Id.ResourceGroup, Id.Name, cancellationToken));
         }
 
-        /// <summary>
-        /// The operation to delete an availability set. 
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
+        /// <inheritdoc/>
         public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
             return new ArmResponse(await Operations.DeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken));
         }
 
-        /// <summary>
-        /// The operation to delete an availability set. 
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
-        /// </remarks>
-        /// <returns> An <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
+        /// <inheritdoc/>
         public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
         {
             return new ArmVoidOperation(Operations.Delete(Id.ResourceGroup, Id.Name, cancellationToken));
         }
 
-        /// <summary>
-        /// The operation to delete an availability set. 
-        /// </summary>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
-        /// </remarks>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
+        /// <inheritdoc/>
         public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             return new ArmVoidOperation(await Operations.DeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<AvailabilitySet> Get()
+        public override ArmResponse<AvailabilitySet> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 Operations.Get(Id.ResourceGroup, Id.Name),
@@ -123,10 +102,10 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="patchable"> The parameters to update. </param>
         /// <returns> The operation of the updated resource. </returns>
-        public ArmResponse<AvailabilitySet> Update(AvailabilitySetUpdate patchable)
+        public ArmResponse<AvailabilitySet> Update(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                Operations.Update(Id.ResourceGroup, Id.Name, patchable),
+                Operations.Update(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 a => new AvailabilitySet(this, new AvailabilitySetData(a)));
         }
 
@@ -148,10 +127,10 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="patchable"> The parameters to update. </param>
         /// <returns> The operation of the updated resource. </returns>
-        public ArmOperation<AvailabilitySet> StartUpdate(AvailabilitySetUpdate patchable)
+        public ArmOperation<AvailabilitySet> StartUpdate(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                Operations.Update(Id.ResourceGroup, Id.Name, patchable),
+                Operations.Update(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
                 a => new AvailabilitySet(this, new AvailabilitySetData(a)));
         }
 
@@ -168,84 +147,52 @@ namespace Proto.Compute
                 a => new AvailabilitySet(this, new AvailabilitySetData(a)));
         }
 
-        /// <summary>
-        /// Adds a tag to an availability set.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <returns> An <see cref="ArmResponse{AvailabilitySet}"/> that allows polling for completion of the operation. </returns>
-        public ArmResponse<AvailabilitySet> AddTag(string key, string value)
+        /// <inheritdoc/>
+        public ArmResponse<AvailabilitySet> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return Update(patchable);
-        }
-
-        /// <summary>
-        /// Adds a tag to an availability set.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmResponse{AvailabilitySet}"/> that allows polling for completion of the operation. </returns>
-        public async Task<ArmResponse<AvailabilitySet>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate();
-            patchable.Tags.ReplaceWith(resource.Data.Tags);
-            patchable.Tags[key] = value;
-            return await UpdateAsync(patchable);
-        }
-
-        /// <summary>
-        /// Adds a tag to an availability set.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
-        /// </remarks>
-        /// <returns> An <see cref="ArmOperation{AvailabilitySet}"/> that allows polling for completion of the operation. </returns>
-        public ArmOperation<AvailabilitySet> StartAddTag(string key, string value)
-        {
-            var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate();
-            patchable.Tags.ReplaceWith(resource.Data.Tags);
-            patchable.Tags[key] = value;
-            return StartUpdate(patchable);
-        }
-
-        /// <summary>
-        /// Adds a tag to an availability set.
-        /// If the tag already exists it will be modified.
-        /// </summary>
-        /// <param name="key"> The key for the tag. </param>
-        /// <param name="value"> The value for the tag. </param>
-        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
-        /// <remarks>
-        /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning"> Details on long running operation object. </see>
-        /// </remarks>
-        /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{AvailabilitySet}"/> that allows polling for completion of the operation. </returns>
-        public async Task<ArmOperation<AvailabilitySet>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
-        {
-            var resource = GetResource();
-            var patchable = new AvailabilitySetUpdate();
-            patchable.Tags.ReplaceWith(resource.Data.Tags);
-            patchable.Tags[key] = value;
-            return await StartUpdateAsync(patchable);
+            return Update(patchable, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public ArmResponse<AvailabilitySet> SetTags(IDictionary<string, string> tags)
+        public async Task<ArmResponse<AvailabilitySet>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            var resource = await GetResourceAsync(cancellationToken);
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags[key] = value;
+            return await UpdateAsync(patchable, cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public ArmOperation<AvailabilitySet> StartAddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            var resource = GetResource();
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags[key] = value;
+            return StartUpdate(patchable, cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public async Task<ArmOperation<AvailabilitySet>> StartAddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        {
+            var resource = await GetResourceAsync(cancellationToken);
+            var patchable = new AvailabilitySetUpdate();
+            patchable.Tags.ReplaceWith(resource.Data.Tags);
+            patchable.Tags[key] = value;
+            return await StartUpdateAsync(patchable, cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public ArmResponse<AvailabilitySet> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(tags);
-            return Update(patchable);
+            return Update(patchable, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -253,15 +200,15 @@ namespace Proto.Compute
         {
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(tags);
-            return await UpdateAsync(patchable);
+            return await UpdateAsync(patchable, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public ArmOperation<AvailabilitySet> StartSetTags(IDictionary<string, string> tags)
+        public ArmOperation<AvailabilitySet> StartSetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(tags);
-            return StartUpdate(patchable);
+            return StartUpdate(patchable, cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -269,56 +216,56 @@ namespace Proto.Compute
         {
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(tags);
-            return await StartUpdateAsync(patchable);
+            return await StartUpdateAsync(patchable, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public ArmResponse<AvailabilitySet> RemoveTag(string key)
+        public ArmResponse<AvailabilitySet> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return Update(patchable);
+            return Update(patchable, cancellationToken);
         }
 
         /// <inheritdoc/>
         public async Task<ArmResponse<AvailabilitySet>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
+            var resource = await GetResourceAsync(cancellationToken);
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return await UpdateAsync(patchable);
+            return await UpdateAsync(patchable, cancellationToken);
         }
 
         /// <inheritdoc/>
-        public ArmOperation<AvailabilitySet> StartRemoveTag(string key)
+        public ArmOperation<AvailabilitySet> StartRemoveTag(string key, CancellationToken cancellationToken = default)
         {
             var resource = GetResource();
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return StartUpdate(patchable);
+            return StartUpdate(patchable, cancellationToken);
         }
 
         /// <inheritdoc/>
         public async Task<ArmOperation<AvailabilitySet>> StartRemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var resource = GetResource();
+            var resource = await GetResourceAsync(cancellationToken);
             var patchable = new AvailabilitySetUpdate();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return await StartUpdateAsync(patchable);
+            return await StartUpdateAsync(patchable, cancellationToken);
         }
 
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        public IEnumerable<LocationData> ListAvailableLocations()
+        public IEnumerable<LocationData> ListAvailableLocations(CancellationToken cancellationToken = default)
         {
-            return ListAvailableLocations(ResourceType);
+            return ListAvailableLocations(ResourceType, cancellationToken);
         }
 
         /// <summary>

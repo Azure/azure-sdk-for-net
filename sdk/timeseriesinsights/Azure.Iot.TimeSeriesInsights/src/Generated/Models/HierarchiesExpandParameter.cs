@@ -5,7 +5,9 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+using Azure.Iot.TimeSeriesInsights.Models;
+
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Definition of whether to expand hierarchy nodes in the same search instances call. </summary>
     public partial class HierarchiesExpandParameter

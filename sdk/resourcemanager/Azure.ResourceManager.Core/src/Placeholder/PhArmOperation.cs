@@ -21,6 +21,13 @@ namespace Azure.ResourceManager.Core
         private readonly Operation<TModel> _wrapped;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PhArmOperation{TOperations, TModel}"/> class for mocking.
+        /// </summary>
+        protected PhArmOperation()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PhArmOperation{TOperations, TModel}"/> class.
         /// </summary>
         /// <param name="wrapped"> The results to wrap. </param>

@@ -3,6 +3,7 @@ using Proto.Compute;
 using Proto.Network;
 using System;
 using System.Diagnostics;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -13,7 +14,7 @@ namespace Proto.Client
             var createMultipleVms = new CreateMultipleVms(Context);
             createMultipleVms.Execute();
 
-            var sub = new AzureResourceManagerClient().GetSubscriptionOperations(Context.SubscriptionId);
+            var sub = new AzureResourceManagerClient(new DefaultAzureCredential()).GetSubscriptionOperations(Context.SubscriptionId);
             var rg = sub.GetResourceGroupOperations(Context.RgName);
             var virtualMachineContainer = rg.GetVirtualMachineContainer();
             foreach (var response in virtualMachineContainer.List())
@@ -28,9 +29,8 @@ namespace Proto.Client
                 Debug.Assert(virtualNetwork.Value.Data.Name.Equals(response.Data.Id.Name));
                 foreach (var subnetResponse in response.GetSubnetContainer().List())
                 {
-                    var actualSubnet = subnetResponse.Get();
-                    var subnets = response.GetSubnetContainer().Get(actualSubnet.Value.Data.Name);
-                    Debug.Assert(subnets.Value.Data.Name.Equals(actualSubnet.Value.Data.Name));
+                    var subnets = response.GetSubnetContainer().Get(subnetResponse.Data.Name);
+                    Debug.Assert(subnets.Value.Data.Name.Equals(subnetResponse.Data.Name));
                 }
             }
             Console.WriteLine("\nDone all asserts passed ...");

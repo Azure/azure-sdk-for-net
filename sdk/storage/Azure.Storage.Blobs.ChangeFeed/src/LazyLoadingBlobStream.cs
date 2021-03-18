@@ -101,15 +101,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         private async Task DownloadBlock(bool async, CancellationToken cancellationToken)
         {
-            Response<BlobDownloadInfo> response;
+            Response<BlobDownloadStreamingResult> response;
             HttpRange range = new HttpRange(_offset, _blockSize);
 
             response = async
-                ? await _blobClient.DownloadAsync(range, cancellationToken: cancellationToken).ConfigureAwait(false)
-                : _blobClient.Download(range, cancellationToken: cancellationToken);
+                ? await _blobClient.DownloadStreamingAsync(range, cancellationToken: cancellationToken).ConfigureAwait(false)
+                : _blobClient.DownloadStreaming(range, cancellationToken: cancellationToken);
             _stream = response.Value.Content;
-            _offset += response.Value.ContentLength;
-            _lastDownloadBytes = response.Value.ContentLength;
+            _offset += response.Value.Details.ContentLength;
+            _lastDownloadBytes = response.Value.Details.ContentLength;
             _blobLength = GetBlobLength(response);
         }
 
@@ -192,7 +192,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             }
         }
 
-        private static long GetBlobLength(Response<BlobDownloadInfo> response)
+        private static long GetBlobLength(Response<BlobDownloadStreamingResult> response)
         {
             string lengthString = response.Value.Details.ContentRange;
             string[] split = lengthString.Split('/');

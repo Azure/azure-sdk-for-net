@@ -22,6 +22,5 @@ namespace Azure.AI.TextAnalytics
             KeyPhraseExtractionTasks = new ChangeTrackingList<KeyPhrasesTask>();
             EntityLinkingTasks = new ChangeTrackingList<EntityLinkingTask>();
         }
-        public IList<EntityLinkingTask> EntityLinkingTasks { get; }
     }
 }

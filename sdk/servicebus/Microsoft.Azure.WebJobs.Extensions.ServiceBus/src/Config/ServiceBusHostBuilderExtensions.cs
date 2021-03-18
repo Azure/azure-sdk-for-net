@@ -75,6 +75,8 @@ namespace Microsoft.Extensions.Hosting
                         "SessionHandlerOptions:MaxConcurrentSessions",
                         options.MaxConcurrentSessions);
 
+                    options.SessionIdleTimeout = section.GetValue("SessionHandlerOptions:MessageWaitTime", options.SessionIdleTimeout);
+
                     section.Bind(options);
 
                     configure(options);

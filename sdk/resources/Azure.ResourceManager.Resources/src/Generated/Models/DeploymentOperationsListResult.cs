@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of deployment operations. </summary>
-    public partial class DeploymentOperationsListResult
+    internal partial class DeploymentOperationsListResult
     {
         /// <summary> Initializes a new instance of DeploymentOperationsListResult. </summary>
         internal DeploymentOperationsListResult()

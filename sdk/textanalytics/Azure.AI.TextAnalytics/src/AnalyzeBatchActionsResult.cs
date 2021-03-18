@@ -11,11 +11,17 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class AnalyzeBatchActionsResult
     {
-        internal AnalyzeBatchActionsResult(IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult, IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults, IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults, TextDocumentBatchStatistics statistics)
+        internal AnalyzeBatchActionsResult(
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResult,
+            IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionsResults,
+            TextDocumentBatchStatistics statistics)
         {
             ExtractKeyPhrasesActionsResults = extractKeyPhrasesActionResult;
             RecognizeEntitiesActionsResults = recognizeEntitiesActionResults;
             RecognizePiiEntitiesActionsResults = recognizePiiEntitiesActionResults;
+            RecognizeLinkedEntitiesActionsResults = recognizeLinkedEntitiesActionsResults;
             Statistics = statistics;
         }
 
@@ -25,6 +31,7 @@ namespace Azure.AI.TextAnalytics
             ExtractKeyPhrasesActionsResults = actionResults.ExtractKeyPhrasesActionsResults;
             RecognizeEntitiesActionsResults = actionResults.RecognizeEntitiesActionsResults;
             RecognizePiiEntitiesActionsResults = actionResults.RecognizePiiEntitiesActionsResults;
+            RecognizeLinkedEntitiesActionsResults = actionResults.RecognizeLinkedEntitiesActionsResults;
             Statistics = actionResults.Statistics;
         }
 
@@ -44,7 +51,13 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<RecognizePiiEntitiesActionResult> RecognizePiiEntitiesActionsResults { get; }
 
         /// <summary>
-        /// <summary> if showStats=true was specified in the request this field will contain information about the document payload. </summary>
+        /// Determines the collection of RecognizeLinkedEntitiesActionsResult.
+        /// </summary>
+        public IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> RecognizeLinkedEntitiesActionsResults { get; }
+
+        /// <summary>
+        /// Gets statistics about the operation executed and how it was processed
+        /// by the service.
         /// </summary>
         public TextDocumentBatchStatistics Statistics { get; }
     }

@@ -212,7 +212,6 @@ namespace Azure.Messaging.ServiceBus
             MaxConcurrentSessions = maxConcurrentSessions;
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
-            TransactionGroup = _options.TransactionGroup;
 
             int maxCalls = isSessionEntity ?
                 (_sessionIds.Length > 0 ?
@@ -447,6 +446,11 @@ namespace Azure.Messaging.ServiceBus
         /// signal the request to cancel the start operation.  This won't affect the
         /// processor once it starts running.
         /// </param>
+        /// <exception cref="InvalidOperationException">
+        ///   This can occur if the processor is already running. This can be checked via the <see cref="IsProcessing"/> property.
+        ///   This can also occur if event handlers have not been specified for the <see cref="ProcessMessageAsync"/> or
+        ///   the <see cref="ProcessErrorAsync"/> events.
+        /// </exception>
         public virtual async Task StartProcessingAsync(
             CancellationToken cancellationToken = default)
         {
@@ -693,7 +697,7 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="action">The action to invoke.</param>
         ///
-        /// <exception cref="InvalidOperationException">Occurs when this method is invoked while the event processor is running.</exception>
+        /// <exception cref="InvalidOperationException">Method is invoked while the event processor is running.</exception>
         internal void EnsureNotRunningAndInvoke(Action action)
         {
             if (ActiveReceiveTask == null)

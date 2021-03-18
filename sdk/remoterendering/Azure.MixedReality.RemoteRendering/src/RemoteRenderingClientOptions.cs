@@ -24,11 +24,11 @@ namespace Azure.MixedReality.RemoteRendering
         /// Initializes a new instance of the <see cref="RemoteRenderingClientOptions"/> class.
         /// </summary>
         /// <param name="version">The version.</param>
-        public RemoteRenderingClientOptions(ServiceVersion version = ServiceVersion.V2021_01_01_Preview)
+        public RemoteRenderingClientOptions(ServiceVersion version = ServiceVersion.V2021_01_01)
         {
             Version = version switch
             {
-                ServiceVersion.V2021_01_01_Preview => "2021-01-01-preview",
+                ServiceVersion.V2021_01_01 => "2021-01-01",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
 
@@ -44,7 +44,7 @@ namespace Azure.MixedReality.RemoteRendering
             /// Version V2021_01_01_preview of the Azure Remote Rendering service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-            V2021_01_01_Preview = 1,
+            V2021_01_01 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

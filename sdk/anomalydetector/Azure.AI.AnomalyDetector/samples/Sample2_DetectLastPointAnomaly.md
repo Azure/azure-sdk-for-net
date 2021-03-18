@@ -18,7 +18,7 @@ var endpointUri = new Uri(endpoint);
 var credential = new AzureKeyCredential(apiKey);
 
 //create client
-AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri.AbsoluteUri, credential);
+AnomalyDetectorClient client = new AnomalyDetectorClient(endpointUri, credential);
 ```
 
 ## Load time series and create DetectRequest

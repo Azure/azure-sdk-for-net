@@ -3,6 +3,7 @@ using Azure.ResourceManager.Core;
 using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.Identity;
 
 namespace Proto.Client
 {
@@ -19,7 +20,7 @@ namespace Proto.Client
                 context = new ScenarioContext();
             }
 
-            var subscription = new AzureResourceManagerClient().GetSubscriptionOperations(Context.SubscriptionId);
+            var subscription = new AzureResourceManagerClient(new DefaultAzureCredential()).GetSubscriptionOperations(Context.SubscriptionId);
 
             Regex reg = new Regex($"{Context.VmName}.*-e");
             Parallel.ForEach(subscription.ListVirtualMachines(), vm =>

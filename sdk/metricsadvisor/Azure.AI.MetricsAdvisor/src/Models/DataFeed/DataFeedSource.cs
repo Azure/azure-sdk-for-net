@@ -48,19 +48,19 @@ namespace Azure.AI.MetricsAdvisor.Models
 
             return Parameter switch
             {
-                AzureApplicationInsightsParameter p => new AzureApplicationInsightsDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                AzureBlobParameter p => new AzureBlobDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                AzureCosmosDBParameter p => new AzureCosmosDBDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                AzureDataLakeStorageGen2Parameter p => new AzureDataLakeStorageGen2DataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                AzureTableParameter p => new AzureTableDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                ElasticsearchParameter p => new ElasticsearchDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                HttpRequestParameter p => new HttpRequestDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                InfluxDBParameter p => new InfluxDBDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                SqlSourceParameter p when Type == DataFeedSourceType.AzureDataExplorer => new AzureDataExplorerDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                SqlSourceParameter p when Type == DataFeedSourceType.MySql => new MySqlDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                SqlSourceParameter p when Type == DataFeedSourceType.PostgreSql => new PostgreSqlDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                SqlSourceParameter p when Type == DataFeedSourceType.SqlServer => new SQLServerDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
-                MongoDBParameter p => new MongoDBDataFeed(name, granularityType, metricColumns, ingestionStartTime, p),
+                AzureApplicationInsightsParameter p => new AzureApplicationInsightsDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                AzureBlobParameter p => new AzureBlobDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                AzureCosmosDBParameter p => new AzureCosmosDBDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                AzureDataLakeStorageGen2Parameter p => new AzureDataLakeStorageGen2DataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                AzureTableParameter p => new AzureTableDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                ElasticsearchParameter p => new ElasticsearchDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                HttpRequestParameter p => new HttpRequestDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                InfluxDBParameter p => new InfluxDBDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                SqlSourceParameter p when Type == DataFeedSourceType.AzureDataExplorer => new AzureDataExplorerDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                SqlSourceParameter p when Type == DataFeedSourceType.MySql => new MySqlDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                SqlSourceParameter p when Type == DataFeedSourceType.PostgreSql => new PostgreSqlDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                SqlSourceParameter p when Type == DataFeedSourceType.SqlServer => new SQLServerDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
+                MongoDBParameter p => new MongoDBDataFeed(name, granularityType, metricColumns, ingestionStartTime) { DataSourceParameter = p },
                 _ => throw new InvalidOperationException("Invalid DataFeedDetail type")
             };
         }

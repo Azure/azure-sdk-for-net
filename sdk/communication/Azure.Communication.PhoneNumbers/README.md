@@ -1,10 +1,10 @@
-# Azure Communication PhoneNumbers client library for .NET
+# Azure Communication Phone Numbers client library for .NET
 
 > Server Version:
 
 > Phone number client: 2020-07-20-preview1
 
-Azure Communication PhoneNumbers is managing phone numbers for Azure Communication Services.
+Azure Communication Phone Numbers is managing phone numbers for Azure Communication Services.
 
 [Source code][source] <!--| [Package (NuGet)][package]--> | [Product documentation][product_docs] | [Samples][source_samples]
 
@@ -12,10 +12,10 @@ Azure Communication PhoneNumbers is managing phone numbers for Azure Communicati
 
 ### Install the package
 
-Install the Azure Communication PhoneNumbers client library for .NET with [NuGet][nuget]:
+Install the Azure Communication Phone Numbers client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Communication.PhoneNumbers --version 1.0.0-beta.3
+dotnet add package Azure.Communication.PhoneNumbers --version 1.0.0-beta.5
 ```
 
 ### Prerequisites
@@ -42,28 +42,30 @@ All geographic phone plans within the same country are grouped into a phone plan
 
 Phone Number clients can be authenticated using connection string acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
 
-```C# Snippet:CreatePhoneNumberAdministrationClient
+```C# Snippet:CreatePhoneNumbersClient
 // Get a connection string to our Azure Communication resource.
 var connectionString = "<connection_string>";
-var client = new PhoneNumberAdministrationClient(connectionString);
+var client = new PhoneNumbersClient(connectionString);
 ```
 
 Phone Number clients also have the option to authenticate with Azure Active Directory Authentication. With this option,
 `AZURE_CLIENT_SECRET`, `AZURE_CLIENT_ID` and `AZURE_TENANT_ID` environment variables need to be set up for authentication.
 
-```C# Snippet:CreatePhoneNumberWithTokenCredential
-var endpoint = "<endpoint_url>";
+```C# Snippet:CreatePhoneNumbersClientWithTokenCredential
+// Get an endpoint to our Azure Communication resource.
+var endpoint = new Uri("<endpoint_url>");
 TokenCredential tokenCredential = new DefaultAzureCredential();
-var client = new PhoneNumberAdministrationClient(new Uri(endpoint), tokenCredential);
+client = new PhoneNumbersClient(endpoint, tokenCredential);
 ```
 
-### Reserving and acquiring numbers
+### Phone number types overview
+Phone numbers come in two types: Geographic and Toll-Free. Geographic phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
 
-Phone numbers reservation can be performed through the reservation creation API by providing a phone plan id, an area code and quantity of phone numbers. The provided quantity of phone numbers will be reserved for ten minutes. This reservation of phone numbers can either be cancelled or purchased. If the reservation is cancelled, then the phone numbers will become available to others. If the reservation is purchased, then the phone numbers are acquired for the Azure resources.
+### Searching, purchasing and releasing phone numbers
 
-### Configuring / Assigning numbers
+Phone numbers can be searched through the search creation API by providing an area code, quantity of phone numbers, application type, phone number type and capabilities. The provided quantity of phone numbers will be reserved for ten minutes and can be purchased within this time. If the search is not purchased, the phone numbers will become available to others after ten minutes. If the search is purchased, then the phone numbers are acquired for the Azure resources.
 
-Phone numbers can be assigned to a callback URL via the configure number API. As part of the configuration, you will need an acquired phone number, callback URL and application id.
+Phone numbers can also be released using the release API.
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -81,117 +83,62 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-### Get list of the countries that are supported by the service
 
-```C#
-string connectionString = "<connection_string>";
-PhoneNumberAdministrationClient client = new PhoneNumberAdministrationClient(connectionString);
-Pageable<PhoneNumberCountry> countries = client.GetAllSupportedCountries();
+## Creating a PhoneNumbersClient
 
-foreach (var country in countries)
+To create a new `PhoneNumbersClient` you need a connection string to the Azure Communication Services resource that you can get from the Azure Portal once you have created the resource.
+
+You can set `connectionString` based on an environment variable, a configuration setting, or any way that works for your application.
+
+```C# Snippet:CreatePhoneNumbersClient
+// Get a connection string to our Azure Communication resource.
+var connectionString = "<connection_string>";
+var client = new PhoneNumbersClient(connectionString);
+```
+
+## Search phone numbers
+
+Phone numbers need to be searched before they can be purchased. Search is a long running operation that can be started by `StartSearchAvailablePhoneNumbers` function that returns an `SearchAvailablePhoneNumbersOperation` object. `SearchAvailablePhoneNumbersOperation` can be used to update status of the operation and to check for completeness.
+
+```C# Snippet:SearchPhoneNumbersAsync
+var capabilities = new PhoneNumberCapabilities(calling:PhoneNumberCapabilityType.None, sms:PhoneNumberCapabilityType.Outbound);
+
+var searchOperation = await client.StartSearchAvailablePhoneNumbersAsync(countryCode, PhoneNumberType.TollFree, PhoneNumberAssignmentType.Application, capabilities);
+await searchOperation.WaitForCompletionAsync();
+```
+
+## Purchase phone numbers
+
+Phone numbers can be acquired through purchasing a search.
+
+```C# Snippet:StartPurchaseSearchAsync
+var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Value.SearchId);
+await purchaseOperation.WaitForCompletionAsync();
+```
+
+## Listing purchased phone numbers
+
+You can list all phone numbers that have been purchased for your resource.
+
+```C# Snippet:GetPurchasedPhoneNumbersAsync
+var purchasedPhoneNumbers = client.GetPurchasedPhoneNumbersAsync();
+
+await foreach (var phoneNumber in purchasedPhoneNumbers)
 {
-    Console.WriteLine($"Country code {country.CountryCode}, Country name: {country.LocalizedName}");
+    Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, monthly cost: {phoneNumber.Cost}");
 }
 ```
 
-### Get phone plan groups
+## Release phone numbers
 
-Phone plan groups come in two types, Geographic and Toll-Free.
+If you no longer need a phone number you can release it.
 
-```C#
-var phonePlanGroups = client.GetPhonePlanGroups(countryCode);
-
-foreach (var group in phonePlanGroups)
-{
-    Console.WriteLine($"PhonePlanGroupId {group.PhonePlanGroupId}, Name: {group.LocalizedName}, PhoneNumberType: {group.PhoneNumberType}");
-}
+```C# Snippet:ReleasePhoneNumbersAsync
+var purchasedPhoneNumber = "<purchased_phone_number>";
+var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber);
+await releaseOperation.WaitForCompletionAsync();
 ```
 
-### Get phone plans
-
-Unlike Toll-Free phone plans, area codes for Geographic Phone Plans are empty. Area codes are found in the Area Codes API.
-
-```C#
-var phonePlans = client.GetPhonePlans(countryCode, planGroupId);
-
-foreach (var plan in phonePlans)
-{
-    Console.WriteLine($"PhonePlanId {plan.PhonePlanId}, Name: {plan.LocalizedName}");
-    Console.WriteLine("Top 10 area codes");
-    foreach (var areaCode in plan.AreaCodes.Take(10).ToList())
-    {
-        Console.WriteLine($"Area code: {areaCode}");
-    }
-}
-```
-
-### Get location options
-
-For Geographic phone plans, you can query the available geographic locations. The locations options are structured like the geographic hierarchy of a country. For example, the US has states and within each state are cities.
-
-```C#
-var locationOptionsResponse = client.GetPhonePlanLocationOptions(countryCode, phonePlanGroupId, phonePlanId);
-var locationOprions = locationOptionsResponse.Value.LocationOptions;
-
-Console.WriteLine($"LabelId: {locationOprions.LabelId}, LabelName: {locationOprions.LabelName}");
-foreach(var locationOption in locationOprions.Options)
-{
-    Console.WriteLine($"Name: {locationOption.Name}, Value: {locationOption.Value}");
-}
-```
-
-### Get area codes
-
-Fetching area codes for geographic phone plans will require that the location options queries be set. You must include the chain of geographic locations which traverse down the location options returned by the `GetLocationOptions` API.
-
-```C#
-var areaCodesResponse = client.GetAllAreaCodes(locationType, countryCode, planId, locationOptionsQueries);
-var areaCodes = areaCodesResponse.Value;
-
-foreach(var primaryAreaCode in areaCodes.PrimaryAreaCodes)
-{
-    Console.WriteLine("Primary area code" + primaryAreaCode);
-}
-
-foreach (var secondaryAreaCode in areaCodes.SecondaryAreaCodes)
-{
-    Console.WriteLine("Secondary area code" + secondaryAreaCode);
-}
-```
-
-### Create reservation
-
-```C#
-var reservationOptions = new CreateReservationOptions(displayName, description, plans, areaCode) { Quantity = 1 };
-var reservationOperation = await client.StartReservationAsync(reservationOptions).ConfigureAwait(false);
-var reservationResponse = await reservationOperation.WaitForCompletionAsync().ConfigureAwait(false);
-
-Console.WriteLine($"ReservationId: {reservationResponse.Value.ReservationId}, Status {reservationResponse.Value.Status}");
-```
-
-### Purchase reservation
-
-```C#
-var reservationPurchaseOperation = await client.StartPurchaseReservationAsync(reservationId).ConfigureAwait(false);
-await reservationPurchaseOperation.WaitForCompletionAsync().ConfigureAwait(false);
-```
-
-### Configure phone number
-
-```C#
-var pstnConfiguration = new PstnConfiguration("<url>");
-var phoneNumber = new PhoneNumber("<phone_number>");
-client.ConfigureNumber(pstnConfiguration, phoneNumber);
-```
-
-### Release phone numbers
-
-```C#
-var releasePhoneNumberOperation = await client.StartReleasePhoneNumbersAsync(numbers).ConfigureAwait(false);
-await releasePhoneNumberOperation.WaitForCompletionAsync().ConfigureAwait(false);
-
-Console.WriteLine($"ReleaseId: {releasePhoneNumberOperation.Value.ReleaseId}, Status: {releasePhoneNumberOperation.Value.Status}");
-```
 ## Troubleshooting
 
 ## Next steps

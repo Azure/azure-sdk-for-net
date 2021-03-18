@@ -91,6 +91,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="apiProperties">API specific properties.</param>
         /// <param name="enableAnalyticalStorage">Flag to indicate whether to
         /// enable storage analytics.</param>
+        /// <param name="instanceId">A unique identifier assigned to the
+        /// database account</param>
+        /// <param name="createMode">Enum to indicate the mode of account
+        /// creation. Possible values include: 'Default', 'Restore'</param>
+        /// <param name="restoreParameters">Parameters to indicate the
+        /// information about the restore.</param>
         /// <param name="backupPolicy">The object representing the policy for
         /// taking backups on an account.</param>
         /// <param name="cors">The CORS policy for the Cosmos DB database
@@ -101,11 +107,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="networkAclBypassResourceIds">An array that contains
         /// the Resource Ids for Network Acl Bypass for the Cosmos DB
         /// account.</param>
-        public DatabaseAccountGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string provisioningState = default(string), string documentEndpoint = default(string), DatabaseAccountOfferType? databaseAccountOfferType = default(DatabaseAccountOfferType?), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Capability> capabilities = default(IList<Capability>), IList<Location> writeLocations = default(IList<Location>), IList<Location> readLocations = default(IList<Location>), IList<Location> locations = default(IList<Location>), IList<FailoverPolicy> failoverPolicies = default(IList<FailoverPolicy>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>))
-            : base(id, name, type, location, tags)
+        /// <param name="systemData">The system meta data relating to this
+        /// resource.</param>
+        public DatabaseAccountGetResults(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedServiceIdentity identity = default(ManagedServiceIdentity), string kind = default(string), string provisioningState = default(string), string documentEndpoint = default(string), DatabaseAccountOfferType? databaseAccountOfferType = default(DatabaseAccountOfferType?), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<Capability> capabilities = default(IList<Capability>), IList<Location> writeLocations = default(IList<Location>), IList<Location> readLocations = default(IList<Location>), IList<Location> locations = default(IList<Location>), IList<FailoverPolicy> failoverPolicies = default(IList<FailoverPolicy>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), string instanceId = default(string), string createMode = default(string), RestoreParameters restoreParameters = default(RestoreParameters), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>), SystemData systemData = default(SystemData))
+            : base(id, name, type, location, tags, identity)
         {
             Kind = kind;
-            Identity = identity;
             ProvisioningState = provisioningState;
             DocumentEndpoint = documentEndpoint;
             DatabaseAccountOfferType = databaseAccountOfferType;
@@ -129,10 +136,14 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             EnableFreeTier = enableFreeTier;
             ApiProperties = apiProperties;
             EnableAnalyticalStorage = enableAnalyticalStorage;
+            InstanceId = instanceId;
+            CreateMode = createMode;
+            RestoreParameters = restoreParameters;
             BackupPolicy = backupPolicy;
             Cors = cors;
             NetworkAclBypass = networkAclBypass;
             NetworkAclBypassResourceIds = networkAclBypassResourceIds;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -148,11 +159,6 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary>
         /// </summary>
@@ -309,6 +315,26 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public bool? EnableAnalyticalStorage { get; set; }
 
         /// <summary>
+        /// Gets a unique identifier assigned to the database account
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.instanceId")]
+        public string InstanceId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets enum to indicate the mode of account creation.
+        /// Possible values include: 'Default', 'Restore'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.createMode")]
+        public string CreateMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets parameters to indicate the information about the
+        /// restore.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.restoreParameters")]
+        public RestoreParameters RestoreParameters { get; set; }
+
+        /// <summary>
         /// Gets or sets the object representing the policy for taking backups
         /// on an account.
         /// </summary>
@@ -334,6 +360,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkAclBypassResourceIds")]
         public IList<string> NetworkAclBypassResourceIds { get; set; }
+
+        /// <summary>
+        /// Gets the system meta data relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -761,11 +761,11 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Gets all role assignments for the subscription. </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="nameFilter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<RoleAssignmentListResult>> ListAsync(string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleAssignmentListResult>> ListAsync(string nameFilter = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter);
+            using var message = CreateListRequest(nameFilter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -782,11 +782,11 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Gets all role assignments for the subscription. </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="nameFilter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<RoleAssignmentListResult> List(string filter = null, CancellationToken cancellationToken = default)
+        public Response<RoleAssignmentListResult> List(string nameFilter = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(filter);
+            using var message = CreateListRequest(nameFilter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

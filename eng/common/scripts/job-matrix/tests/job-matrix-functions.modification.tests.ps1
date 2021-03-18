@@ -216,4 +216,25 @@ Describe "Platform Matrix Import" -Tag "import" {
         $matrix.Length | Should -Be 7
         CompareMatrices $matrix $expected
     }
+
+    It "Should generate a sparse matrix with an imported a sparse matrix" {
+        $matrixJson = @'
+{
+    "matrix": {
+        "$IMPORT": "./test-import-matrix.json",
+        "Foo": [ "fooOverride1", "fooOverride2" ],
+    }
+}
+'@
+
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $matrix = GenerateMatrix $importConfig "sparse"
+
+        $matrix[0].parameters["Foo"] | Should -Be "fooOverride1"
+        $matrix[0].name | Should -Be "fooOverride1_bar1"
+        $matrix[3].parameters["Foo"] | Should -Be "fooOverride2"
+        $matrix[3].name | Should -Be "fooOverride2_bar1"
+        $matrix[5].parameters["Foo"] | Should -Be "fooOverride2"
+        $matrix[5].name | Should -Be "fooOverride2_importedBaz"
+    }
 }

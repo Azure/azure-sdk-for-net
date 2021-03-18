@@ -11,6 +11,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
     internal class EventProcessorHostPartition : EventProcessorPartition
     {
+        private PartitionContext _partitionContext;
+
         public EventProcessorHostPartition()
         {
         }
@@ -20,17 +22,21 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             PartitionId = partitionId;
         }
 
+        public PartitionContext PartitionContext => _partitionContext ??= new EventProcessorHostPartitionContext(this);
+
         public string Owner => ProcessorHost.Identifier;
         public string EventHubPath => ProcessorHost.EventHubName;
         public CheckpointInfo? Checkpoint { get; set; }
 
-        public LastEnqueuedEventProperties? LastEnqueuedEventProperties
+        public LastEnqueuedEventProperties LastEnqueuedEventProperties
         {
             get
             {
+                if (ReadLastEnqueuedEventPropertiesFunc == null) return default;
+
                 try
                 {
-                    return ReadLastEnqueuedEventPropertiesFunc?.Invoke(PartitionId);
+                    return ReadLastEnqueuedEventPropertiesFunc.Invoke(PartitionId);
                 }
                 catch (EventHubsException e) when (e.Reason == EventHubsException.FailureReason.ClientClosed)
                 {
@@ -48,6 +54,18 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         {
             await ProcessorHost.CheckpointAsync(PartitionId, checkpointEvent).ConfigureAwait(false);
             Checkpoint = new CheckpointInfo(checkpointEvent.Offset, checkpointEvent.SequenceNumber);
+        }
+
+        private class EventProcessorHostPartitionContext : PartitionContext
+        {
+            private readonly EventProcessorHostPartition _hostPartition;
+
+            public EventProcessorHostPartitionContext(EventProcessorHostPartition hostPartition) : base(hostPartition.PartitionId)
+            {
+                _hostPartition = hostPartition;
+            }
+
+            public override LastEnqueuedEventProperties ReadLastEnqueuedEventProperties() => _hostPartition.LastEnqueuedEventProperties;
         }
     }
 }

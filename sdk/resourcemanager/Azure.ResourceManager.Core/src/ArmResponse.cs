@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
@@ -14,8 +16,12 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ArmResponse"/> class.
         /// </summary>
         /// <param name="response"> The azure response object to wrap. </param>
+        /// <exception cref="ArgumentNullException"> If <see cref="Response"/> is null. </exception>
         public ArmResponse(Response response)
         {
+            if (response is null)
+                throw new ArgumentNullException(nameof(response));
+
             _response = response;
         }
 

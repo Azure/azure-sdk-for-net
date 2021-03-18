@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Proto.Network
 {
     /// <summary>
-    /// A class representing collection of virtual nerwork and their operations over a resource group.
+    /// A class representing collection of virtual network and their operations over a resource group.
     /// </summary>
     public class VirtualNetworkContainer : ResourceContainerBase<VirtualNetwork, VirtualNetworkData>
     {
@@ -37,11 +37,11 @@ namespace Proto.Network
             ClientOptions.Convert<NetworkManagementClientOptions>()).VirtualNetworks;
 
         /// <inheritdoc/>
-        public override ArmResponse<VirtualNetwork> CreateOrUpdate(string name, VirtualNetworkData resourceDetails)
+        public override ArmResponse<VirtualNetwork> CreateOrUpdate(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails);
+            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails, cancellationToken);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                operation.WaitForCompletionAsync().ConfigureAwait(false).GetAwaiter().GetResult(),
+                operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 n => new VirtualNetwork(Parent, new VirtualNetworkData(n)));
         }
 
@@ -71,7 +71,7 @@ namespace Proto.Network
         }
 
         /// <summary>
-        /// Constructs an object used to create a virtual nerwork.
+        /// Constructs an object used to create a virtual network.
         /// </summary>
         /// <param name="vnetCidr"> The CIDR of the resource. </param>
         /// <param name="location"> The location of the resource. </param>
@@ -114,58 +114,58 @@ namespace Proto.Network
         }
 
         /// <summary>
-        /// Filters the list of virtual nerwork for this resource group represented as generic resources.
+        /// Filters the list of virtual network for this resource group represented as generic resources.
         /// </summary>
-        /// <param name="filter"> The filter used in this operation. </param>
+        /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<GenericResource> ListByName(string filter, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<GenericResource> ListAsGenericResource(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new ResourceFilterCollection(VirtualNetworkData.ResourceType);
-            filters.SubstringFilter = filter;
+            filters.SubstringFilter = nameFilter;
             return ResourceListOperations.ListAtContext(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         }
 
         /// <summary>
-        /// Filters the list of virtual nerwork for this resource group represented as generic resources.
+        /// Filters the list of virtual network for this resource group represented as generic resources.
         /// </summary>
-        /// <param name="filter"> The filter used in this operation. </param>
+        /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> An async collection of resource that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<GenericResource> ListByNameAsync(string filter, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<GenericResource> ListAsGenericResourceAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
             ResourceFilterCollection filters = new ResourceFilterCollection(VirtualNetworkData.ResourceType);
-            filters.SubstringFilter = filter;
+            filters.SubstringFilter = nameFilter;
             return ResourceListOperations.ListAtContextAsync(Parent as ResourceGroupOperations, filters, top, cancellationToken);
         }
 
         /// <summary>
-        /// Filters the list of virtual nerwork for this resource group.
-        /// Makes an additional network call to retrieve the full data model for each virtual nerwork.
+        /// Filters the list of virtual network for this resource group.
+        /// Makes an additional network call to retrieve the full data model for each virtual network.
         /// </summary>
-        /// <param name="filter"> The filter used in this operation. </param>
+        /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> A collection of resource that may take multiple service requests to iterate over. </returns>
-        public Pageable<VirtualNetwork> ListByNameExpanded(string filter, int? top = null, CancellationToken cancellationToken = default)
+        public Pageable<VirtualNetwork> List(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
-            var results = ListByName(filter, top, cancellationToken);
+            var results = ListAsGenericResource(nameFilter, top, cancellationToken);
             return new PhWrappingPageable<GenericResource, VirtualNetwork>(results, s => new VirtualNetworkOperations(s).Get().Value);
         }
 
         /// <summary>
-        /// Filters the list of virtual nerwork for this resource group.
-        /// Makes an additional network call to retrieve the full data model for each virtual nerwork.
+        /// Filters the list of virtual network for this resource group.
+        /// Makes an additional network call to retrieve the full data model for each virtual network.
         /// </summary>
-        /// <param name="filter"> The filter used in this operation. </param>
+        /// <param name="nameFilter"> The filter used in this operation. </param>
         /// <param name="top"> The number of results to return. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="P:System.Threading.CancellationToken.None" />. </param>
         /// <returns> An asyc collection of availability set that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<VirtualNetwork> ListByNameExpandedAsync(string filter, int? top = null, CancellationToken cancellationToken = default)
+        public AsyncPageable<VirtualNetwork> ListAsync(string nameFilter, int? top = null, CancellationToken cancellationToken = default)
         {
-            var results = ListByNameAsync(filter, top, cancellationToken);
+            var results = ListAsGenericResourceAsync(nameFilter, top, cancellationToken);
             return new PhWrappingAsyncPageable<GenericResource, VirtualNetwork>(results, s => new VirtualNetworkOperations(s).Get().Value);
         }
 
@@ -175,16 +175,18 @@ namespace Proto.Network
         }
 
         /// <inheritdoc/>
-        public override ArmResponse<VirtualNetwork> Get(string virtualNetworkName)
+        public override ArmResponse<VirtualNetwork> Get(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(Operations.Get(Id.ResourceGroup, virtualNetworkName),
+            return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
+                Operations.Get(Id.ResourceGroup, virtualNetworkName, cancellationToken: cancellationToken),
                Convertor());
         }
 
         /// <inheritdoc/>
         public override async Task<ArmResponse<VirtualNetwork>> GetAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(await Operations.GetAsync(Id.ResourceGroup, virtualNetworkName, null, cancellationToken),
+            return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
+                await Operations.GetAsync(Id.ResourceGroup, virtualNetworkName, null, cancellationToken),
                 Convertor());
         }
 

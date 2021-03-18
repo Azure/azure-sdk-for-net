@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PeerExpressRouteCircuitConnectionListResult
+    internal partial class PeerExpressRouteCircuitConnectionListResult
     {
         internal static PeerExpressRouteCircuitConnectionListResult DeserializePeerExpressRouteCircuitConnectionListResult(JsonElement element)
         {

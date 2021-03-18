@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace Azure.Core
 {
@@ -20,7 +21,7 @@ namespace Azure.Core
     ///
     /// This code is able to decode RSA keys (without any attributes) from well formed PKCS#8 blobs.
     /// </summary>
-    internal class LightweightPkcs8Decoder
+    internal static partial class LightweightPkcs8Decoder
     {
         private static readonly byte[] s_derIntegerZero = { 0x02, 0x01, 0x00 };
 
@@ -30,6 +31,159 @@ namespace Azure.Core
             0x06, 0x09, 0x2A, 0x86, 0x48, 0x86, 0xF7, 0x0D, 0x01, 0x01, 0x01,
             0x05, 0x00,
         };
+
+        internal static byte[] ReadBitString(byte[] data, ref int offset)
+        {
+            // Adapted from https://github.com/dotnet/runtime/blob/be74b4bd/src/libraries/System.Formats.Asn1/src/System/Formats/Asn1/AsnDecoder.BitString.cs#L156
+
+            if (data[offset++] != 0x03)
+            {
+                throw new InvalidDataException("Invalid PKCS#8 Data");
+            }
+
+            int length = ReadLength(data, ref offset);
+            if (length == 0)
+            {
+                throw new InvalidDataException("Invalid PKCS#8 Data");
+            }
+
+            int unusedBitCount = data[offset++];
+            if (unusedBitCount > 7)
+            {
+                throw new InvalidDataException("Invalid PKCS#8 Data");
+            }
+
+            Span<byte> span = data.AsSpan(offset, length - 1);
+
+            // Build a mask for the bits that are used so the normalized value can be computed
+            //
+            // If 3 bits are "unused" then build a mask for them to check for 0.
+            // -1 << 3 => 0b1111_1111 << 3 => 0b1111_1000
+            int mask = -1 << unusedBitCount;
+            byte lastByte = span[span.Length - 1];
+            byte maskedByte = (byte)(lastByte & mask);
+
+            byte[] ret = new byte[span.Length];
+
+            Buffer.BlockCopy(data, offset, ret, 0, span.Length);
+            ret[span.Length - 1] = maskedByte;
+
+            offset += span.Length;
+
+            return ret;
+        }
+
+        internal static string ReadObjectIdentifier(byte[] data, ref int offset)
+        {
+            // Adapted from https://github.com/dotnet/runtime/blob/be74b4bd/src/libraries/System.Formats.Asn1/src/System/Formats/Asn1/AsnDecoder.Oid.cs#L175
+
+            if (data[offset++] != 0x06)
+            {
+                throw new InvalidDataException("Invalid PKCS#8 Data");
+            }
+
+            int length = ReadLength(data, ref offset);
+
+            StringBuilder ret = new StringBuilder();
+            for (int i = offset; i < offset + length; i++)
+            {
+                byte val = data[i];
+
+                if (i == offset)
+                {
+                    byte first;
+                    if (val < 40)
+                    {
+                        first = 0;
+                    }
+                    else if (val < 80)
+                    {
+                        first = 1;
+                        val -= 40;
+                    }
+                    else
+                    {
+                        throw new InvalidDataException("Unsupported PKCS#8 Data");
+                    }
+
+                    ret.Append(first).Append('.').Append(val);
+                }
+                else
+                {
+                    if (val < 128)
+                    {
+                        ret.Append('.').Append(val);
+                    }
+                    else
+                    {
+                        ret.Append('.');
+
+                        if (val == 0x80)
+                        {
+                            throw new InvalidDataException("Invalid PKCS#8 Data");
+                        }
+
+                        // See how long the segment is.
+                        int end = -1;
+                        int idx;
+
+                        for (idx = i; idx < offset + length; idx++)
+                        {
+                            if ((data[idx] & 0x80) == 0)
+                            {
+                                end = idx;
+                                break;
+                            }
+                        }
+
+                        if (end < 0)
+                        {
+                            throw new InvalidDataException("Invalid PKCS#8 Data");
+                        }
+
+                        // 4 or fewer bytes fits into a signed integer.
+                        int max = end + 1;
+                        if (max <= i + 4)
+                        {
+                            int accum = 0;
+                            for (idx = i; idx < max; idx++)
+                            {
+                                val = data[idx];
+                                accum <<= 7;
+                                accum |= (byte)(val & 0x7f);
+                            }
+
+                            ret.Append(accum);
+                            i = end;
+                        }
+                        else
+                        {
+                            throw new InvalidDataException("Unsupported PKCS#8 Data");
+                        }
+                    }
+                }
+            }
+
+            offset += length;
+            return ret.ToString();
+        }
+
+        internal static byte[] ReadOctetString(byte[] data, ref int offset)
+        {
+            if (data[offset++] != 0x04)
+            {
+                throw new InvalidDataException("Invalid PKCS#8 Data");
+            }
+
+            int length = ReadLength(data, ref offset);
+
+            byte[] ret = new byte[length];
+
+            Buffer.BlockCopy(data, offset, ret, 0, length);
+            offset += length;
+
+            return ret;
+        }
 
         private static int ReadLength(byte[] data, ref int offset)
         {
@@ -45,13 +199,13 @@ namespace Azure.Core
 
             for (int i = 0; i < lengthLength; i++)
             {
+                length <<= 8;
+                length |= data[offset++];
+
                 if (length > ushort.MaxValue)
                 {
                     throw new InvalidDataException("Invalid PKCS#8 Data");
                 }
-
-                length <<= 8;
-                length |= data[offset++];
             }
 
             return length;
@@ -105,6 +259,16 @@ namespace Azure.Core
             Buffer.BlockCopy(data, offset, ret, ret.Length - length, length);
             offset += length;
             return ret;
+        }
+
+        private static int ReadPayloadTagLength(byte[] data, ref int offset, byte tagValue)
+        {
+            if (data[offset++] != tagValue)
+            {
+                throw new InvalidDataException("Invalid PKCS#8 Data");
+            }
+
+            return ReadLength(data, ref offset);
         }
 
         private static void ConsumeFullPayloadTag(byte[] data, ref int offset, byte tagValue)
@@ -172,6 +336,23 @@ namespace Azure.Core
             RSA rsa = RSA.Create();
             rsa.ImportParameters(rsaParameters);
             return rsa;
+        }
+
+        public static string DecodePrivateKeyOid(byte[] pkcs8Bytes)
+        {
+            int offset = 0;
+
+            // PrivateKeyInfo SEQUENCE
+            ConsumeFullPayloadTag(pkcs8Bytes, ref offset, 0x30);
+
+            // PKCS#8 PrivateKeyInfo.version == 0
+            ConsumeMatch(pkcs8Bytes, ref offset, s_derIntegerZero);
+
+            // PKCS#8 PrivateKeyInfo.sequence
+            ReadPayloadTagLength(pkcs8Bytes, ref offset, 0x30);
+
+            // Return the AlgorithmIdentifier value
+            return ReadObjectIdentifier(pkcs8Bytes, ref offset);
         }
     }
 }

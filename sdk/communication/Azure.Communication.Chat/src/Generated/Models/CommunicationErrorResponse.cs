@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.Chat
 {
     /// <summary> The Communication Services error. </summary>
@@ -12,8 +14,14 @@ namespace Azure.Communication.Chat
     {
         /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
         /// <param name="error"> The Communication Services error. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal CommunicationErrorResponse(CommunicationError error)
         {
+            if (error == null)
+            {
+                throw new ArgumentNullException(nameof(error));
+            }
+
             Error = error;
         }
 

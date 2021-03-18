@@ -42,7 +42,8 @@ namespace Azure.AI.TextAnalytics
         public string ModelVersion { get; set; }
 
         /// <summary>
-        /// StringIndexType
+        /// Specifies the method used to interpret string offsets. Defaults to
+        /// <see cref="StringIndexType.Utf16CodeUnit"/>.
         /// </summary>
         public StringIndexType StringIndexType { get; set; } = StringIndexType.Utf16CodeUnit;
     }

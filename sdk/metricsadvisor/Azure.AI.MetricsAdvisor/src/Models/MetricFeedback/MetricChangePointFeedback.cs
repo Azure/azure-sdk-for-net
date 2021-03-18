@@ -10,6 +10,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Feedback indicating that this is the start of a trend change.
     /// </summary>
     [CodeGenModel("ChangePointFeedback")]
+    [CodeGenSuppress(nameof(MetricChangePointFeedback), typeof(string), typeof(FeedbackDimensionFilter))]
     public partial class MetricChangePointFeedback : MetricFeedback
     {
         /// <summary> Initializes a new <see cref="MetricChangePointFeedback"/> instance. </summary>

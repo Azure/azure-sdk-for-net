@@ -224,7 +224,7 @@ namespace Azure.Iot.ModelsRepository.Tests
         {
             const string dtmi = "dtmi:com:example:Thermostat;1";
 
-            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled);
+            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled);
             ModelsRepositoryClient client = GetClient(clientType, options);
 
             IDictionary<string, string> result = await client.GetModelsAsync(dtmi);
@@ -243,7 +243,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             ModelsRepositoryClient client = GetClient(clientType);
 
             // We would expect 3 models without the resolution option override.
-            IDictionary<string, string> result = await client.GetModelsAsync(dtmi, resolutionOption: DependencyResolutionOption.Disabled);
+            IDictionary<string, string> result = await client.GetModelsAsync(dtmi, dependencyResolution: ModelDependencyResolution.Disabled);
             var expectedDtmis = $"{dtmi}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
             result.Keys.Count.Should().Be(expectedDtmis.Length);
@@ -263,10 +263,10 @@ namespace Azure.Iot.ModelsRepository.Tests
             const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
 
             ModelsRepositoryClient client = GetClient(
-                clientType, new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
+                clientType, new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled));
 
             // We would expect 1 model without the resolution option override.
-            IDictionary<string, string> result = await client.GetModelsAsync(dtmi, resolutionOption: DependencyResolutionOption.Enabled);
+            IDictionary<string, string> result = await client.GetModelsAsync(dtmi, dependencyResolution: ModelDependencyResolution.Enabled);
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
             result.Keys.Count.Should().Be(expectedDtmis.Length);
@@ -285,10 +285,10 @@ namespace Azure.Iot.ModelsRepository.Tests
             const string expectedDeps = "dtmi:com:example:Thermostat;1,dtmi:azure:DeviceManagement:DeviceInformation;1";
 
             ModelsRepositoryClient client = GetClient(
-                clientType, new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.Disabled));
+                clientType, new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.Disabled));
 
             // We would expect 1 model without the resolution option override.
-            IDictionary<string, string> result = await client.GetModelsAsync(dtmi, resolutionOption: DependencyResolutionOption.TryFromExpanded);
+            IDictionary<string, string> result = await client.GetModelsAsync(dtmi, dependencyResolution: ModelDependencyResolution.TryFromExpanded);
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
             result.Keys.Count.Should().Be(expectedDtmis.Length);
@@ -309,7 +309,7 @@ namespace Azure.Iot.ModelsRepository.Tests
 
             var expectedDtmis = $"{dtmi},{expectedDeps}".Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
-            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.TryFromExpanded);
+            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.TryFromExpanded);
             ModelsRepositoryClient client = GetClient(clientType, options);
 
             IDictionary<string, string> result = await client.GetModelsAsync(dtmi);
@@ -337,7 +337,7 @@ namespace Azure.Iot.ModelsRepository.Tests
             string[] nonExpandedDtmis = dtmisNonExpanded.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
             string[] totalDtmis = expandedDtmis.Concat(nonExpandedDtmis).ToArray();
 
-            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(resolutionOption: DependencyResolutionOption.TryFromExpanded);
+            ModelsRepositoryClientOptions options = new ModelsRepositoryClientOptions(dependencyResolution: ModelDependencyResolution.TryFromExpanded);
             ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local, options);
 
             // Multi-resolve dtmi:com:example:TemperatureController;1 + dtmi:com:example:ColdStorage;1

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> Result of the request to list REST API operations. It contains a list of operations. </summary>
-    public partial class OperationList
+    internal partial class OperationList
     {
         /// <summary> Initializes a new instance of OperationList. </summary>
         internal OperationList()

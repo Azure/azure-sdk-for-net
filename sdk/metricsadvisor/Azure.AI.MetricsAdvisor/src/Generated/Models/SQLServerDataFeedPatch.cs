@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of SQLServerDataFeedPatch. </summary>
         public SQLServerDataFeedPatch()
         {
-            DataSourceType = DataFeedDetailPatchDataSourceType.SqlServer;
+            DataSourceType = DataFeedSourceType.SqlServer;
         }
 
         public SqlSourceParameter DataSourceParameter { get; set; }

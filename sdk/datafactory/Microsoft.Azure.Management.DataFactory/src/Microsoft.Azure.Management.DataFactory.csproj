@@ -5,18 +5,15 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.DataFactory</PackageId>
     <Description>Azure Data Factory V2 is the data integration platform that goes beyond Azure Data Factory V1's orchestration and batch-processing of time-series data, with a general purpose app model supporting modern data warehousing patterns and scenarios, lift-and-shift SSIS, and data-driven SaaS applications. Compose and manage reliable and secure data integration workflows at scale. Use native ADF data connectors and Integration Runtimes to move and transform cloud and on-premises data that can be unstructured, semi-structured, and structured with Hadoop, Azure Data Lake, Spark, SQL Server, Cosmos DB and many other data platforms.</Description>
-    <Version>4.14.0</Version>
+    <Version>4.15.0</Version>
     <AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
     <PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
     <PackageReleaseNotes>
   <![CDATA[
-- Added encryption property for Customer Managed Key
-- Added custom events trigger definition
-- Added Policy property into Databricks linkedService
-- Added managed identity support for authentication in Databricks linkedService
-- Added admin property in Custom Activity typeProperties
-- Added dualStandbyPairName property in IntegrationRuntimeSsisCatalogInfo to support SSISDB failover
-- Added managedVirtualNetwork reference to IR
+- Added WebActivity support for Service Principal
+- Added PipelineEndpoint with version and DataPathAssignments fields in AzureMLExecutePipeline
+- Added pipeline policy and Elapsed Time Metric
+- Fixed WebActivity dynamic authentication
   ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

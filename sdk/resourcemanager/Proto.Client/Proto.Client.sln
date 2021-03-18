@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proto.Authorization", "auth
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Authorization", "authorization\Azure.ResourceManager.Authorization\Azure.ResourceManager.Authorization.csproj", "{ADB32B3D-D6DE-49A3-80E1-59ADAA21F78F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proto.Billing", "billing\Proto.Billing.csproj", "{05033168-19BE-4D6B-AD24-135CB028A1EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Billing", "billing\Azure.ResourceManager.Billing\Azure.ResourceManager.Billing.csproj", "{340B4A62-1817-4C28-A7BE-0648E0BCA933}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{ADB32B3D-D6DE-49A3-80E1-59ADAA21F78F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADB32B3D-D6DE-49A3-80E1-59ADAA21F78F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADB32B3D-D6DE-49A3-80E1-59ADAA21F78F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05033168-19BE-4D6B-AD24-135CB028A1EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05033168-19BE-4D6B-AD24-135CB028A1EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05033168-19BE-4D6B-AD24-135CB028A1EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05033168-19BE-4D6B-AD24-135CB028A1EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{340B4A62-1817-4C28-A7BE-0648E0BCA933}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{340B4A62-1817-4C28-A7BE-0648E0BCA933}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{340B4A62-1817-4C28-A7BE-0648E0BCA933}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{340B4A62-1817-4C28-A7BE-0648E0BCA933}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

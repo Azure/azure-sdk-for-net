@@ -6,9 +6,8 @@
 #nullable disable
 
 using System;
-using Azure.Iot.TimeSeriesInsights;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary> Aggregate variable represents any aggregation calculation. Aggregate Variables does not support interpolation. </summary>
     public partial class AggregateVariable : TimeSeriesVariable

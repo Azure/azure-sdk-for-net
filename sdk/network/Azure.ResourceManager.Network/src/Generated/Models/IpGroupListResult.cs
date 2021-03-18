@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for the ListIpGroups API service call. </summary>
-    public partial class IpGroupListResult
+    internal partial class IpGroupListResult
     {
         /// <summary> Initializes a new instance of IpGroupListResult. </summary>
         internal IpGroupListResult()

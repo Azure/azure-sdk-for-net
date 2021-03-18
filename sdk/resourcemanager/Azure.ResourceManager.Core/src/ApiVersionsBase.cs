@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Core
         /// <returns></returns>
         public static bool operator <(ApiVersionsBase left, ApiVersionsBase right)
         {
-            if (left is null)
-                return true;
+            if (ReferenceEquals(null, left))
+                return !ReferenceEquals(null, right);
 
             return left.CompareTo(right) == -1;
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Core
         /// <returns></returns>
         public static bool operator >(ApiVersionsBase left, ApiVersionsBase right)
         {
-            if (left is null)
+            if (ReferenceEquals(null, left))
                 return false;
 
             return left.CompareTo(right) == 1;
@@ -57,6 +57,10 @@ namespace Azure.ResourceManager.Core
         /// <returns> API version value. </returns>
         public static implicit operator string(ApiVersionsBase version)
         {
+            if (ReferenceEquals(null, version))
+            {
+                return null;
+            }
             return version._value;
         }
 
@@ -109,7 +113,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Comparison result in integer. 1 for greater than, 0 for equals to, and -1 for less than. </returns>
         public int CompareTo(string other)
         {
-            if (other == null)
+            if (other is null)
             {
                 return 1;
             }
@@ -180,14 +184,9 @@ namespace Azure.ResourceManager.Core
         public override bool Equals(object obj)
         {
             if (obj is ApiVersionsBase)
-            {
                 return Equals(obj as ApiVersionsBase);
-            }
-
             if (obj is string)
-            {
                 return Equals(obj as string);
-            }
 
             return false;
         }

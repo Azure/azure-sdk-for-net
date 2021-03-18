@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of managed applications. </summary>
-    public partial class ApplicationListResult
+    internal partial class ApplicationListResult
     {
         /// <summary> Initializes a new instance of ApplicationListResult. </summary>
         internal ApplicationListResult()

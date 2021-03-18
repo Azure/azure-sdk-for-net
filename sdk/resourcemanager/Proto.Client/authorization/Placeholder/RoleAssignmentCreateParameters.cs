@@ -1,4 +1,7 @@
-﻿using Azure.ResourceManager.Authorization.Models;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License
+
+using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Core;
 
 namespace Proto.Authorization

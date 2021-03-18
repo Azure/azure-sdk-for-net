@@ -98,7 +98,6 @@ public static string Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer)
 
 To send multiple events from a single Azure Function invocation you can apply the `EventHubAttribute` to the `IAsyncCollector<string>` or `IAsyncCollector<EventData>` parameter.
 
-
 ```C# Snippet:BindingToCollector
 [FunctionName("BindingToCollector")]
 public static async Task Run(
@@ -108,6 +107,39 @@ public static async Task Run(
     // IAsyncCollector allows sending multiple events in a single function invocation
     await collector.AddAsync(new EventData(new BinaryData($"Event 1 added at: {DateTime.Now}")));
     await collector.AddAsync(new EventData(new BinaryData($"Event 2 added at: {DateTime.Now}")));
+}
+```
+
+### Using binding to strongly-typed models
+
+To use strongly-typed model classes with the EventHub binding apply the `EventHubAttribute` to the model parameter.
+
+```C# Snippet:TriggerSingleModel
+[FunctionName("TriggerSingleModel")]
+public static void Run(
+    [EventHubTrigger("<event_hub_name>", Connection = "<connection_name>")] Dog dog,
+    ILogger logger)
+{
+    logger.LogInformation($"Who's a good dog? {dog.Name} is!");
+}
+```
+
+### Sending multiple events using EventHubProducerClient
+
+You can also bind to the `EventHubProducerClient` directly to have the most control over the event sending.
+
+```C# Snippet:BindingToProducerClient
+[FunctionName("BindingToProducerClient")]
+public static async Task Run(
+    [TimerTrigger("0 */5 * * * *")] TimerInfo myTimer,
+    [EventHub("<event_hub_name>", Connection = "<connection_name>")] EventHubProducerClient eventHubProducerClient)
+{
+    // IAsyncCollector allows sending multiple events in a single function invocation
+    await eventHubProducerClient.SendAsync(new[]
+    {
+        new EventData(new BinaryData($"Event 1 added at: {DateTime.Now}")),
+        new EventData(new BinaryData($"Event 2 added at: {DateTime.Now}"))
+    });
 }
 ```
 

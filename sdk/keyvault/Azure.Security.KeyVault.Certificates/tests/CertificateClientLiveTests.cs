@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
+using Azure.Security.KeyVault.Keys.Cryptography;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -14,8 +15,10 @@ using Org.BouncyCastle.X509;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -848,6 +851,137 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name);
             Assert.IsFalse(x509certificate.HasPrivateKey);
         }
+
+        [Test]
+        public async Task DownloadECDsaCertificateSignRemoteVerifyLocal([EnumValues] CertificateContentType contentType, [EnumValues] CertificateKeyCurveName keyCurveName)
+        {
+#if NET461
+            Assert.Ignore("ECC is not supported before .NET Framework 4.7");
+#endif
+            string name = Recording.GenerateId();
+
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerName = WellKnownIssuerNames.Self,
+                Subject = "CN=default",
+                KeyType = CertificateKeyType.Ec,
+                KeyCurveName = keyCurveName,
+                Exportable = true,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.DigitalSignature,
+                },
+                ContentType = contentType,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
+            RegisterForCleanup(name);
+
+            await WaitForCompletion(operation, TimeSpan.FromSeconds(5));
+
+            // Sign data remotely.
+            byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));
+
+            CryptographyClient cryptoClient = GetCryptographyClient(operation.Value.KeyId);
+            SignResult result = await cryptoClient.SignDataAsync(keyCurveName.GetSignatureAlgorithm(), plaintext);
+
+            // Download the certificate and verify data locally.
+            X509Certificate2 certificate = null;
+            try
+            {
+                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
+                using ECDsa publicKey = certificate.GetECDsaPublicKey();
+
+                Assert.IsTrue(publicKey.VerifyData(plaintext, result.Signature, keyCurveName.GetHashAlgorithmName()));
+            }
+            catch (CryptographicException) when (IsExpectedP256KException(certificate, keyCurveName))
+            {
+                Assert.Ignore("The curve is not supported by the current platform");
+            }
+            finally
+            {
+                certificate?.Dispose();
+            }
+        }
+
+        [Test]
+        public async Task DownloadECDsaCertificateSignLocalVerifyRemote([EnumValues] CertificateContentType contentType, [EnumValues] CertificateKeyCurveName keyCurveName)
+        {
+#if NET461
+            Assert.Ignore("ECC is not supported before .NET Framework 4.7");
+#endif
+            string name = Recording.GenerateId();
+
+            CertificatePolicy policy = new CertificatePolicy
+            {
+                IssuerName = WellKnownIssuerNames.Self,
+                Subject = "CN=default",
+                KeyType = CertificateKeyType.Ec,
+                KeyCurveName = keyCurveName,
+                Exportable = true,
+                KeyUsage =
+                {
+                    CertificateKeyUsage.DigitalSignature,
+                },
+                ContentType = contentType,
+            };
+
+            CertificateOperation operation = await Client.StartCreateCertificateAsync(name, policy);
+            RegisterForCleanup(name);
+
+            await WaitForCompletion(operation, TimeSpan.FromSeconds(5));
+
+            // Download the certificate and sign data locally.
+            byte[] plaintext = Encoding.UTF8.GetBytes(nameof(DownloadECDsaCertificateSignRemoteVerifyLocal));
+
+            X509Certificate2 certificate = null;
+            try
+            {
+                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
+                using ECDsa privateKey = certificate.GetECDsaPrivateKey();
+
+                byte[] signature = privateKey.SignData(plaintext, keyCurveName.GetHashAlgorithmName());
+
+                // Verify data remotely.
+                CryptographyClient cryptoClient = GetCryptographyClient(operation.Value.KeyId);
+                VerifyResult result = await cryptoClient.VerifyDataAsync(keyCurveName.GetSignatureAlgorithm(), plaintext, signature);
+
+                Assert.IsTrue(result.IsValid);
+            }
+            catch (CryptographicException) when (IsExpectedP256KException(certificate, keyCurveName))
+            {
+                Assert.Ignore("The curve is not supported by the current platform");
+            }
+            finally
+            {
+                certificate?.Dispose();
+            }
+        }
+
+        public CryptographyClient GetCryptographyClient(Uri keyId) => InstrumentClient(
+                new CryptographyClient(
+                    keyId,
+                    TestEnvironment.Credential,
+                    InstrumentClientOptions(
+                        new CryptographyClientOptions
+                        {
+                            Diagnostics =
+                            {
+                                IsLoggingContentEnabled = Debugger.IsAttached || Mode == RecordedTestMode.Live,
+                                LoggedHeaderNames =
+                                {
+                                    "x-ms-request-id",
+                                },
+                            },
+                        }
+                    )
+                )
+            );
+
+        private static bool IsExpectedP256KException(X509Certificate2 certificate, CertificateKeyCurveName keyCurveName) =>
+            certificate is null &&
+            RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
+            keyCurveName == CertificateKeyCurveName.P256K;
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy
         {

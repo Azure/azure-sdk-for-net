@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventGrid
     {
         public static object AsSystemEventData(string eventType, JsonElement data)
         {
-            if (SystemEventDeserializers.TryGetValue(eventType, out Func<JsonElement, object> systemDeserializationFunction))
+            if (s_systemEventDeserializers.TryGetValue(eventType, out Func<JsonElement, object> systemDeserializationFunction))
             {
                 return systemDeserializationFunction(data);
             }
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid
             }
         }
 
-        public static readonly IReadOnlyDictionary<string, Func<JsonElement, object>> SystemEventDeserializers = new Dictionary<string, Func<JsonElement, object>>(StringComparer.OrdinalIgnoreCase)
+        internal static readonly IReadOnlyDictionary<string, Func<JsonElement, object>> s_systemEventDeserializers = new Dictionary<string, Func<JsonElement, object>>(StringComparer.OrdinalIgnoreCase)
         {
             // KEEP THIS SORTED BY THE NAME OF THE PUBLISHING SERVICE
             // Add handling for additional event types here.
@@ -32,16 +32,24 @@ namespace Azure.Messaging.EventGrid
             { SystemEventNames.AppConfigurationKeyValueModified, AppConfigurationKeyValueModifiedEventData.DeserializeAppConfigurationKeyValueModifiedEventData },
 
             // Communication events
-            { SystemEventNames.ACSChatMemberAddedToThreadWithUser, ACSChatMemberAddedToThreadWithUserEventData.DeserializeACSChatMemberAddedToThreadWithUserEventData },
-            { SystemEventNames.ACSChatMemberRemovedFromThreadWithUser, ACSChatMemberRemovedFromThreadWithUserEventData.DeserializeACSChatMemberRemovedFromThreadWithUserEventData },
-            { SystemEventNames.ACSChatMessageDeleted, ACSChatMessageDeletedEventData.DeserializeACSChatMessageDeletedEventData },
-            { SystemEventNames.ACSChatMessageEdited, ACSChatMessageEditedEventData.DeserializeACSChatMessageEditedEventData },
-            { SystemEventNames.ACSChatMessageReceived, ACSChatMessageReceivedEventData.DeserializeACSChatMessageReceivedEventData },
-            { SystemEventNames.ACSChatThreadCreatedWithUser,  ACSChatThreadCreatedWithUserEventData.DeserializeACSChatThreadCreatedWithUserEventData },
-            { SystemEventNames.ACSChatThreadPropertiesUpdatedPerUser, ACSChatThreadPropertiesUpdatedPerUserEventData.DeserializeACSChatThreadPropertiesUpdatedPerUserEventData },
-            { SystemEventNames.ACSChatThreadWithUserDeleted, ACSChatThreadWithUserDeletedEventData.DeserializeACSChatThreadWithUserDeletedEventData },
-            { SystemEventNames.ACSSMSDeliveryReportReceived, AcsSmsDeliveryReportReceivedEventData.DeserializeAcsSmsDeliveryReportReceivedEventData },
-            { SystemEventNames.ACSSMSReceived, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
+            { SystemEventNames.AcsChatParticipantAddedToThread, AcsChatParticipantAddedToThreadEventData.DeserializeAcsChatParticipantAddedToThreadEventData },
+            { SystemEventNames.AcsChatParticipantAddedToThreadWithUser, AcsChatParticipantAddedToThreadWithUserEventData.DeserializeAcsChatParticipantAddedToThreadWithUserEventData },
+            { SystemEventNames.AcsChatParticipantRemovedFromThread, AcsChatParticipantRemovedFromThreadEventData.DeserializeAcsChatParticipantRemovedFromThreadEventData },
+            { SystemEventNames.AcsChatParticipantRemovedFromThreadWithUser, AcsChatParticipantRemovedFromThreadWithUserEventData.DeserializeAcsChatParticipantRemovedFromThreadWithUserEventData },
+            { SystemEventNames.AcsChatMessageDeleted, AcsChatMessageDeletedEventData.DeserializeAcsChatMessageDeletedEventData },
+            { SystemEventNames.AcsChatMessageDeletedInThread, AcsChatMessageDeletedInThreadEventData.DeserializeAcsChatMessageDeletedInThreadEventData },
+            { SystemEventNames.AcsChatMessageEdited, AcsChatMessageEditedEventData.DeserializeAcsChatMessageEditedEventData },
+            { SystemEventNames.AcsChatMessageEditedInThread, AcsChatMessageEditedInThreadEventData.DeserializeAcsChatMessageEditedInThreadEventData },
+            { SystemEventNames.AcsChatMessageReceived, AcsChatMessageReceivedEventData.DeserializeAcsChatMessageReceivedEventData },
+            { SystemEventNames.AcsChatMessageReceivedInThread, AcsChatMessageReceivedInThreadEventData.DeserializeAcsChatMessageReceivedInThreadEventData },
+            { SystemEventNames.AcsChatThreadCreated, AcsChatThreadCreatedEventData.DeserializeAcsChatThreadCreatedEventData },
+            { SystemEventNames.AcsChatThreadCreatedWithUser,  AcsChatThreadCreatedWithUserEventData.DeserializeAcsChatThreadCreatedWithUserEventData },
+            { SystemEventNames.AcsChatThreadPropertiesUpdated, AcsChatThreadPropertiesUpdatedEventData.DeserializeAcsChatThreadPropertiesUpdatedEventData },
+            { SystemEventNames.AcsChatThreadPropertiesUpdatedPerUser, AcsChatThreadPropertiesUpdatedPerUserEventData.DeserializeAcsChatThreadPropertiesUpdatedPerUserEventData },
+            { SystemEventNames.AcsChatThreadDeleted, AcsChatThreadDeletedEventData.DeserializeAcsChatThreadDeletedEventData },
+            { SystemEventNames.AcsChatThreadWithUserDeleted, AcsChatThreadWithUserDeletedEventData.DeserializeAcsChatThreadWithUserDeletedEventData },
+            { SystemEventNames.AcsSmsDeliveryReportReceived, AcsSmsDeliveryReportReceivedEventData.DeserializeAcsSmsDeliveryReportReceivedEventData },
+            { SystemEventNames.AcsSmsReceived, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
 
             // ContainerRegistry events
             { SystemEventNames.ContainerRegistryImagePushed, ContainerRegistryImagePushedEventData.DeserializeContainerRegistryImagePushedEventData },
@@ -50,10 +58,10 @@ namespace Azure.Messaging.EventGrid
             { SystemEventNames.ContainerRegistryChartPushed, ContainerRegistryChartPushedEventData.DeserializeContainerRegistryChartPushedEventData },
 
             // IoTHub Device events
-            { SystemEventNames.IoTHubDeviceCreated, IotHubDeviceCreatedEventData.DeserializeIotHubDeviceCreatedEventData },
-            { SystemEventNames.IoTHubDeviceDeleted, IotHubDeviceDeletedEventData.DeserializeIotHubDeviceDeletedEventData },
-            { SystemEventNames.IoTHubDeviceConnected, IotHubDeviceConnectedEventData.DeserializeIotHubDeviceConnectedEventData },
-            { SystemEventNames.IoTHubDeviceDisconnected, IotHubDeviceDisconnectedEventData.DeserializeIotHubDeviceDisconnectedEventData },
+            { SystemEventNames.IotHubDeviceCreated, IotHubDeviceCreatedEventData.DeserializeIotHubDeviceCreatedEventData },
+            { SystemEventNames.IotHubDeviceDeleted, IotHubDeviceDeletedEventData.DeserializeIotHubDeviceDeletedEventData },
+            { SystemEventNames.IotHubDeviceConnected, IotHubDeviceConnectedEventData.DeserializeIotHubDeviceConnectedEventData },
+            { SystemEventNames.IotHubDeviceDisconnected, IotHubDeviceDisconnectedEventData.DeserializeIotHubDeviceDisconnectedEventData },
             { SystemEventNames.IotHubDeviceTelemetry, IotHubDeviceTelemetryEventData.DeserializeIotHubDeviceTelemetryEventData },
 
             // EventGrid events
@@ -114,19 +122,31 @@ namespace Azure.Messaging.EventGrid
             { SystemEventNames.MediaLiveEventTrackDiscontinuityDetected, MediaLiveEventTrackDiscontinuityDetectedEventData.DeserializeMediaLiveEventTrackDiscontinuityDetectedEventData },
 
             // Resource Manager (Azure Subscription/Resource Group) events
-            { SystemEventNames.ResourceWriteSuccess, ResourceWriteSuccessData.DeserializeResourceWriteSuccessData },
-            { SystemEventNames.ResourceWriteFailure, ResourceWriteFailureData.DeserializeResourceWriteFailureData },
-            { SystemEventNames.ResourceWriteCancel, ResourceWriteCancelData.DeserializeResourceWriteCancelData },
-            { SystemEventNames.ResourceDeleteSuccess, ResourceDeleteSuccessData.DeserializeResourceDeleteSuccessData },
-            { SystemEventNames.ResourceDeleteFailure, ResourceDeleteFailureData.DeserializeResourceDeleteFailureData },
-            { SystemEventNames.ResourceDeleteCancel, ResourceDeleteCancelData.DeserializeResourceDeleteCancelData },
-            { SystemEventNames.ResourceActionSuccess, ResourceActionSuccessData.DeserializeResourceActionSuccessData },
-            { SystemEventNames.ResourceActionFailure, ResourceActionFailureData.DeserializeResourceActionFailureData },
-            { SystemEventNames.ResourceActionCancel, ResourceActionCancelData.DeserializeResourceActionCancelData },
+            { SystemEventNames.ResourceWriteSuccess, ResourceWriteSuccessEventData.DeserializeResourceWriteSuccessEventData },
+            { SystemEventNames.ResourceWriteFailure, ResourceWriteFailureEventData.DeserializeResourceWriteFailureEventData },
+            { SystemEventNames.ResourceWriteCancel, ResourceWriteCancelEventData.DeserializeResourceWriteCancelEventData },
+            { SystemEventNames.ResourceDeleteSuccess, ResourceDeleteSuccessEventData.DeserializeResourceDeleteSuccessEventData },
+            { SystemEventNames.ResourceDeleteFailure, ResourceDeleteFailureEventData.DeserializeResourceDeleteFailureEventData },
+            { SystemEventNames.ResourceDeleteCancel, ResourceDeleteCancelEventData.DeserializeResourceDeleteCancelEventData },
+            { SystemEventNames.ResourceActionSuccess, ResourceActionSuccessEventData.DeserializeResourceActionSuccessEventData },
+            { SystemEventNames.ResourceActionFailure, ResourceActionFailureEventData.DeserializeResourceActionFailureEventData },
+            { SystemEventNames.ResourceActionCancel, ResourceActionCancelEventData.DeserializeResourceActionCancelEventData },
+
+            // Redis
+            { SystemEventNames.RedisExportRdbCompleted, RedisExportRdbCompletedEventData.DeserializeRedisExportRdbCompletedEventData },
+            { SystemEventNames.RedisImportRdbCompleted, RedisImportRdbCompletedEventData.DeserializeRedisImportRdbCompletedEventData },
+            { SystemEventNames.RedisPatchingCompleted, RedisPatchingCompletedEventData.DeserializeRedisPatchingCompletedEventData },
+            { SystemEventNames.RedisScalingCompleted, RedisScalingCompletedEventData.DeserializeRedisScalingCompletedEventData },
 
             // ServiceBus events
             { SystemEventNames.ServiceBusActiveMessagesAvailableWithNoListeners, ServiceBusActiveMessagesAvailableWithNoListenersEventData.DeserializeServiceBusActiveMessagesAvailableWithNoListenersEventData },
             { SystemEventNames.ServiceBusDeadletterMessagesAvailableWithNoListener, ServiceBusDeadletterMessagesAvailableWithNoListenersEventData.DeserializeServiceBusDeadletterMessagesAvailableWithNoListenersEventData },
+            { SystemEventNames.ServiceBusActiveMessagesAvailablePeriodicNotifications, ServiceBusActiveMessagesAvailablePeriodicNotificationsEventData.DeserializeServiceBusActiveMessagesAvailablePeriodicNotificationsEventData },
+            { SystemEventNames.ServiceBusDeadletterMessagesAvailablePeriodicNotifications, ServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData.DeserializeServiceBusDeadletterMessagesAvailablePeriodicNotificationsEventData },
+
+            // SignalR
+            { SystemEventNames.SignalRServiceClientConnectionConnected, SignalRServiceClientConnectionConnectedEventData.DeserializeSignalRServiceClientConnectionConnectedEventData },
+            { SystemEventNames.SignalRServiceClientConnectionDisconnected, SignalRServiceClientConnectionDisconnectedEventData.DeserializeSignalRServiceClientConnectionDisconnectedEventData },
 
             // Storage events
             { SystemEventNames.StorageBlobCreated, StorageBlobCreatedEventData.DeserializeStorageBlobCreatedEventData },

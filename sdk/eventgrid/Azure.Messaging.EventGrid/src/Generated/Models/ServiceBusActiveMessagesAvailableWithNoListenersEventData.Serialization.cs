@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ServiceBusActiveMessagesAvailableWithNoListenersEventDataConverter))]
     public partial class ServiceBusActiveMessagesAvailableWithNoListenersEventData
     {
         internal static ServiceBusActiveMessagesAvailableWithNoListenersEventData DeserializeServiceBusActiveMessagesAvailableWithNoListenersEventData(JsonElement element)
@@ -54,6 +57,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new ServiceBusActiveMessagesAvailableWithNoListenersEventData(namespaceName.Value, requestUri.Value, entityType.Value, queueName.Value, topicName.Value, subscriptionName.Value);
+        }
+
+        internal partial class ServiceBusActiveMessagesAvailableWithNoListenersEventDataConverter : JsonConverter<ServiceBusActiveMessagesAvailableWithNoListenersEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ServiceBusActiveMessagesAvailableWithNoListenersEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override ServiceBusActiveMessagesAvailableWithNoListenersEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeServiceBusActiveMessagesAvailableWithNoListenersEventData(document.RootElement);
+            }
         }
     }
 }

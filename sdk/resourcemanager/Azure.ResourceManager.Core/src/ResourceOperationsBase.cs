@@ -16,6 +16,13 @@ namespace Azure.ResourceManager.Core
     public abstract class ResourceOperationsBase : OperationsBase
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class for mocking.
+        /// </summary>
+        protected ResourceOperationsBase()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
@@ -34,6 +41,13 @@ namespace Azure.ResourceManager.Core
     public abstract class ResourceOperationsBase<TOperations> : ResourceOperationsBase
         where TOperations : ResourceOperationsBase<TOperations>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class for mocking.
+        /// </summary>
+        protected ResourceOperationsBase()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class.
         /// </summary>
@@ -57,8 +71,9 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets details for this resource from the service.
         /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
-        public abstract ArmResponse<TOperations> Get();
+        public abstract ArmResponse<TOperations> Get(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets details for this resource from the service.
@@ -79,20 +94,22 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Get details for this resource from the service or can be overriden to provide a cached instance.
         /// </summary>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A <see cref="Task"/> that on completion returns a <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
-        protected virtual async Task<TOperations> GetResourceAsync()
+        protected virtual async Task<TOperations> GetResourceAsync(CancellationToken cancellationToken = default)
         {
-            return (await GetAsync().ConfigureAwait(false)).Value;
+            return (await GetAsync(cancellationToken).ConfigureAwait(false)).Value;
         }
 
         /// <summary>
         /// Lists all available geo-locations.
         /// </summary>
         /// <param name="resourceType"> The <see cref="ResourceType"/> instance to use for the list. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> A collection of location that may take multiple service requests to iterate over. </returns>
-        protected IEnumerable<LocationData> ListAvailableLocations(ResourceType resourceType)
+        protected IEnumerable<LocationData> ListAvailableLocations(ResourceType resourceType, CancellationToken cancellationToken = default)
         {
-            var pageableProvider = ResourcesClient.Providers.List(expand: "metadata");
+            var pageableProvider = ResourcesClient.Providers.List(expand: "metadata", cancellationToken: cancellationToken);
             var resourcePageableProvider = pageableProvider.FirstOrDefault(p => string.Equals(p.Namespace, resourceType?.Namespace, StringComparison.InvariantCultureIgnoreCase));
             if (resourcePageableProvider is null)
                 throw new InvalidOperationException($"{resourceType.Type} not found for {resourceType.Namespace}");

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class OperationList
+    internal partial class OperationList
     {
         internal static OperationList DeserializeOperationList(JsonElement element)
         {
