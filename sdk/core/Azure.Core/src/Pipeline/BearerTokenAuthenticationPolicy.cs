@@ -146,7 +146,7 @@ namespace Azure.Core.Pipeline
 #pragma warning restore AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
             }
 
-            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs, bool getTokenFromCredential) GetTaskCompletionSources()
+            private (TaskCompletionSource<HeaderValueInfo> Tcs, TaskCompletionSource<HeaderValueInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential) GetTaskCompletionSources()
             {
                 lock (_syncObj)
                 {
