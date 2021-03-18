@@ -728,6 +728,7 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-immutability-policy-mode", immutabilityPolicyMode.Value.ToSerialString());
             }
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -762,6 +763,62 @@ namespace Azure.Storage.Blobs
             using var message = CreateSetImmutabilityPolicyRequest(timeout, ifUnmodifiedSince, immutabilityPolicyExpiry, immutabilityPolicyMode);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetImmutabilityPolicyHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteImmutabilityPolicyRequest(int? timeout)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(containerName, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(blob, false);
+            uri.AppendQuery("comp", "immutabilityPolicies", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> The Delete Immutability Policy operation deletes the immutability policy on the blob. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<BlobDeleteImmutabilityPolicyHeaders>> DeleteImmutabilityPolicyAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteImmutabilityPolicyRequest(timeout);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new BlobDeleteImmutabilityPolicyHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The Delete Immutability Policy operation deletes the immutability policy on the blob. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<BlobDeleteImmutabilityPolicyHeaders> DeleteImmutabilityPolicy(int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDeleteImmutabilityPolicyRequest(timeout);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new BlobDeleteImmutabilityPolicyHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
