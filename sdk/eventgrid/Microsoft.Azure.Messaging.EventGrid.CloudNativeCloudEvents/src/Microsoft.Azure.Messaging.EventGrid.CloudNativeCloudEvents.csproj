@@ -12,10 +12,8 @@
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <PackageReference Include="Azure.Messaging.EventGrid" />
     <PackageReference Include="CloudNative.CloudEvents" />
     <PackageReference Include="System.Text.Json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\eventgrid\Azure.Messaging.EventGrid\src\Azure.Messaging.EventGrid.csproj" />
   </ItemGroup>
 </Project>
