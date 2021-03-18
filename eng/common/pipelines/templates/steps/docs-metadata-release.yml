@@ -20,10 +20,8 @@ parameters:
   OnboardingBranch: ''
   CloseAfterOpenForTesting: false
   SkipPackageJson: false
-  RemoteName: 'origin'
 
 steps:
-- template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 - pwsh: |
     if ($IsWindows) {
       REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem /f /v LongPathsEnabled /t REG_DWORD /d 1
@@ -35,7 +33,7 @@ steps:
   displayName: Enable Long Paths if Necessary
   
 - pwsh: |
-    git clone https://github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
+    git clone https://$(azuresdk-github-pat)@github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
 
     try {
       Push-Location ${{ parameters.WorkingDirectory }}/repo
@@ -47,6 +45,10 @@ steps:
     }
   displayName: Clone Documentation Repository
   ignoreLASTEXITCODE: false
+
+- template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+  parameters:
+    WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
 
 - task: PowerShell@2
   displayName: 'Apply Documentation Updates From Artifact'
@@ -92,7 +94,6 @@ steps:
     RepoOwner: ${{ parameters.TargetDocRepoOwner }}
     WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-    #RemoteName: ${{ parameters.RemoteName }}
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
@@ -127,4 +128,3 @@ steps:
       RepoOwner: ${{ parameters.TargetDocRepoOwner }}
       WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-      RemoteName: ${{ parameters.RemoteName }}

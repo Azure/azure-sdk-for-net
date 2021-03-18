@@ -8,7 +8,7 @@ parameters:
   WorkingDirectory: $(System.DefaultWorkingDirectory)'
   ScriptDirectory: eng/common/scripts
   SkipCheckingForChanges: false
-  RemoteName: 'azure-sdk-fork'
+  RemoteName: ''
 
 steps:
 - pwsh: |
