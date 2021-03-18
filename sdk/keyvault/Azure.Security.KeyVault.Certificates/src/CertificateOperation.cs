@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -273,26 +272,17 @@ namespace Azure.Security.KeyVault.Certificates
         private class UpdateStatusActivity : IDisposable
         {
             private readonly CertificateOperation _operation;
-            private readonly long _start;
 
             public UpdateStatusActivity(CertificateOperation operation)
             {
                 _operation = operation;
 
                 EventSource.BeginUpdateStatus(_operation.Properties);
-                _start = Stopwatch.GetTimestamp();
             }
 
             public void Dispose()
             {
-                // Skip calculation if event source is not currently enabled.
-                if (EventSource.IsEnabled())
-                {
-                    long end = Stopwatch.GetTimestamp();
-                    double elapsed = (end - _start) / Stopwatch.Frequency;
-
-                    EventSource.EndUpdateStatus(_operation.Properties, elapsed);
-                }
+                EventSource.EndUpdateStatus(_operation.Properties);
             }
 
             private static CertificatesEventSource EventSource => CertificatesEventSource.Singleton;

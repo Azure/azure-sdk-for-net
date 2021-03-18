@@ -28,10 +28,10 @@ namespace Azure.Security.KeyVault.Certificates
         public void BeginUpdateStatus(string id, string status, string error) => WriteEvent(BeginUpdateStatusEvent, id ?? Deleted, status, error ?? NoError);
 
         [NonEvent]
-        public void EndUpdateStatus(CertificateOperationProperties properties, double elapsed) =>
-            EndUpdateStatus(properties?.Id.ToString(), properties?.Status, properties?.Error?.Message, elapsed);
+        public void EndUpdateStatus(CertificateOperationProperties properties) =>
+            EndUpdateStatus(properties?.Id.ToString(), properties?.Status, properties?.Error?.Message);
 
-        [Event(EndUpdateStatusEvent, Level = EventLevel.Verbose, Message = "Updated certificate operation status: {0}, ending status: {1}, error: {2}, elapsed: {3:00.0}s")]
-        public void EndUpdateStatus(string id, string status, string error, double elapsed) => WriteEvent(EndUpdateStatusEvent, id ?? Deleted, status, error ?? NoError, elapsed);
+        [Event(EndUpdateStatusEvent, Level = EventLevel.Verbose, Message = "Updated certificate operation status: {0}, ending status: {1}, error: {2}")]
+        public void EndUpdateStatus(string id, string status, string error) => WriteEvent(EndUpdateStatusEvent, id ?? Deleted, status, error ?? NoError);
     }
 }
