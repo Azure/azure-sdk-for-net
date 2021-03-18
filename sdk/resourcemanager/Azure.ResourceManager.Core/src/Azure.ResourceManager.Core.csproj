@@ -22,8 +22,4 @@
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
-  <!--<ItemGroup>
-    <Compile Remove="C:\Github\me\azure-sdk-for-net\eng\..\common\ManagementCoreShared\IClientContext.cs" />
-  </ItemGroup>-->
-
 </Project>
