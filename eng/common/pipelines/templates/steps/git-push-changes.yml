@@ -8,7 +8,7 @@ parameters:
   WorkingDirectory: $(System.DefaultWorkingDirectory)'
   ScriptDirectory: eng/common/scripts
   SkipCheckingForChanges: false
-  RemoteName: not-specified
+  RemoteName: 'azure-sdk-fork'
 
 steps:
 - pwsh: |
@@ -54,4 +54,3 @@ steps:
       -PushArgs "${{ parameters.PushArgs }}"
       -SkipCommit $${{ parameters.SkipCheckingForChanges }}
       -RemoteName ${{ parameters.RemoteName }}
-      
