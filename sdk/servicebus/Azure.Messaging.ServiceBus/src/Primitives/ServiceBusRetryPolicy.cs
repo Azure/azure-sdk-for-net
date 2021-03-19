@@ -102,20 +102,20 @@ namespace Azure.Messaging.ServiceBus
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-        internal Task RunOperation<T1>(
-            Func<T1, TimeSpan, CancellationToken, Task> operation,
+        internal async ValueTask RunOperation<T1>(
+            Func<T1, TimeSpan, CancellationToken, ValueTask> operation,
             T1 t1,
             TransportConnectionScope scope,
             CancellationToken cancellationToken) =>
-            RunOperation(static async (value, timeout, token) =>
+            await RunOperation(static async (value, timeout, token) =>
             {
                 var (t11, op) = value;
                 await op(t11, timeout, token).ConfigureAwait(false);
                 return default(object);
-            }, (t1, operation), scope, cancellationToken);
+            }, (t1, operation), scope, cancellationToken).ConfigureAwait(false);
 
-        internal async Task<TResult> RunOperation<T1, TResult>(
-            Func<T1, TimeSpan, CancellationToken, Task<TResult>> operation,
+        internal async ValueTask<TResult> RunOperation<T1, TResult>(
+            Func<T1, TimeSpan, CancellationToken, ValueTask<TResult>> operation,
             T1 t1,
             TransportConnectionScope scope,
             CancellationToken cancellationToken)

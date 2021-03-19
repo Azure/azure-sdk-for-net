@@ -161,7 +161,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CreateMessageBatchOptions options,
             CancellationToken cancellationToken)
         {
-            Task<TransportMessageBatch> createBatchTask = _retryPolicy.RunOperation(static async (value, timeout, _) =>
+            return await _retryPolicy.RunOperation(static async (value, timeout, _) =>
                 {
                     var (sender, ops) = value;
                     return await sender.CreateMessageBatchInternalAsync(
@@ -170,8 +170,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 },
                 (this, options),
                 _connectionScope,
-                cancellationToken);
-            return await createBatchTask.ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
         }
 
         internal async ValueTask<TransportMessageBatch> CreateMessageBatchInternalAsync(
@@ -498,7 +497,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             long[] sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Task cancelMessageTask = _retryPolicy.RunOperation(static async (value, timeout, token) =>
+            await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
                     var (sender, sqn) = value;
                     await sender.CancelScheduledMessageInternalAsync(
@@ -508,8 +507,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 },
                 (this, sequenceNumbers),
                 _connectionScope,
-                cancellationToken);
-            await cancelMessageTask.ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
