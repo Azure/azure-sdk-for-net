@@ -318,6 +318,53 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task CreatePageBlob_VersionLevelWorm()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            PageBlobClient pageBlob = InstrumentClient(vlwContainer.Container.GetPageBlobClient(GetNewBlobName()));
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
+                year: immutabilityPolicy.ExpiriesOn.Value.Year,
+                month: immutabilityPolicy.ExpiriesOn.Value.Month,
+                day: immutabilityPolicy.ExpiriesOn.Value.Day,
+                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
+                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
+                second: immutabilityPolicy.ExpiriesOn.Value.Second,
+                offset: TimeSpan.Zero);
+
+            PageBlobCreateOptions options = new PageBlobCreateOptions
+            {
+                ImmutabilityPolicy = immutabilityPolicy,
+                LegalHold = true
+            };
+
+            // Act
+            Response<BlobContentInfo> createResponse = await pageBlob.CreateAsync(size: Constants.KB, options);
+
+            // Assert
+            Response<BlobProperties> propertiesResponse = await pageBlob.GetPropertiesAsync();
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
+
+            // Wait for immutability policy to expire.
+            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
+            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
+            {
+                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
+            }
+        }
+
         private async Task <DisposingVersionLevelWormContainer> GetTestVersionLevelWormContainer(TenantConfiguration tenantConfiguration)
         {
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigOAuth.AccountName, TestConfigOAuth.AccountKey);
