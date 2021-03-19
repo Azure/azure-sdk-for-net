@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -353,6 +354,125 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Response<BlobProperties> propertiesResponse = await pageBlob.GetPropertiesAsync();
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
+
+            // Wait for immutability policy to expire.
+            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
+            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
+            {
+                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task CommitBlockList_VersionLevelWorm()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlockBlobClient blockBlob = InstrumentClient(vlwContainer.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            string blockName = GetNewBlockName();
+            using Stream stream = new MemoryStream(data);
+            await blockBlob.StageBlockAsync(ToBase64(blockName), stream);
+
+            string[] blockList = new string[]
+            {
+                ToBase64(blockName)
+            };
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
+                year: immutabilityPolicy.ExpiriesOn.Value.Year,
+                month: immutabilityPolicy.ExpiriesOn.Value.Month,
+                day: immutabilityPolicy.ExpiriesOn.Value.Day,
+                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
+                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
+                second: immutabilityPolicy.ExpiriesOn.Value.Second,
+                offset: TimeSpan.Zero);
+
+            CommitBlockListOptions options = new CommitBlockListOptions
+            {
+                ImmutabilityPolicy = immutabilityPolicy,
+                LegalHold = true
+            };
+
+            // Act
+            await blockBlob.CommitBlockListAsync(blockList, options);
+
+            // Assert
+            Response<BlobProperties> propertiesResponse = await blockBlob.GetPropertiesAsync();
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
+
+            // Wait for immutability policy to expire.
+            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
+            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
+            {
+                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
+            }
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task Upload_VersionLevelWorm(bool multipart)
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlockBlobClient blockBlob = InstrumentClient(vlwContainer.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
+                year: immutabilityPolicy.ExpiriesOn.Value.Year,
+                month: immutabilityPolicy.ExpiriesOn.Value.Month,
+                day: immutabilityPolicy.ExpiriesOn.Value.Day,
+                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
+                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
+                second: immutabilityPolicy.ExpiriesOn.Value.Second,
+                offset: TimeSpan.Zero);
+
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                ImmutabilityPolicy = immutabilityPolicy,
+                LegalHold = true
+            };
+
+            if (multipart)
+            {
+                StorageTransferOptions transferOptions = new StorageTransferOptions
+                {
+                    InitialTransferSize = Constants.KB / 2,
+                    MaximumTransferSize = Constants.KB / 2
+                };
+                options.TransferOptions = transferOptions;
+            }
+
+            // Act
+            await blockBlob.UploadAsync(stream, options);
+
+            // Assert
+            Response<BlobProperties> propertiesResponse = await blockBlob.GetPropertiesAsync();
             Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
             Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);

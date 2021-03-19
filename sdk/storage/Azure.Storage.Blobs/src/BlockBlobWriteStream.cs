@@ -77,6 +77,8 @@ namespace Azure.Storage.Blobs
                 tags: _tags,
                 conditions: _conditions,
                 accessTier: default,
+                immutabilityPolicy: default,
+                legalHold: default,
                 async: async,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
