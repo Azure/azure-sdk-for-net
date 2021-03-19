@@ -26,7 +26,8 @@ param(
 
     [Parameter(Mandatory = $false)]
     [string] $PushArgs = "",
-
+    
+    [Parameter(Mandatory = $false)]
     [string] $RemoteName = "",
 
     [Parameter(Mandatory = $false)]
