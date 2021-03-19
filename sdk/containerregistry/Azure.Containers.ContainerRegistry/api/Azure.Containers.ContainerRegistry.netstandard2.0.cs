@@ -24,8 +24,12 @@ namespace Azure.Containers.ContainerRegistry
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Response<Azure.Containers.ContainerRegistry.RepositoryProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.RepositoryProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.TagProperties> GetTagProperties(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.TagProperties>> GetTagPropertiesAsync(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetProperties(Azure.Containers.ContainerRegistry.ContentProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(Azure.Containers.ContainerRegistry.ContentProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetTagProperties(string tag, Azure.Containers.ContainerRegistry.ContentProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetTagPropertiesAsync(string tag, Azure.Containers.ContainerRegistry.ContentProperties value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ContentProperties
     {
@@ -35,9 +39,9 @@ namespace Azure.Containers.ContainerRegistry
         public bool? CanRead { get { throw null; } set { } }
         public bool? CanWrite { get { throw null; } set { } }
     }
-    public partial class DeletedRepositoryResult
+    public partial class DeleteRepositoryResult
     {
-        internal DeletedRepositoryResult() { }
+        internal DeleteRepositoryResult() { }
         public System.Collections.Generic.IReadOnlyList<string> DeletedRegistryArtifactDigests { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DeletedTags { get { throw null; } }
     }
