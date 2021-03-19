@@ -42,24 +42,24 @@ Operations on the Text Analytics client consume and produce JSON data. Instead o
 When using the `<Operation>Request` method, the body of the `DynamicRequest` is initialized to a `JsonData` representing the empty object. You can either modify the body directly or set your own version. For example, let's call the `GetSentiment` API which determines if text is positive or negative.
 
 ```C# Snippet:DynamicRequestAndResponse
-DynamicRequest req = client.GetSentimentRequest();
+JsonData body = new JsonData();
+JsonData documents = body.SetEmptyArray("documents");
+JsonData document = documents.AddEmptyObject();
+document["language"] = "en";
+document["id"] = "1";
+document["text"] = "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.";
 
-req.DynamicBody.documents = new JsonData[1];
-req.DynamicBody.documents[0] = new JsonData();
-req.DynamicBody.documents[0].language = "en";
-req.DynamicBody.documents[0].id = "1";
-req.DynamicBody.documents[0].text = "Great atmosphere. Close to plenty of restaurants, hotels, and transit! Staff are friendly and helpful.";
-
-DynamicResponse res = req.Send();
+Response res = client.GetSentiment(RequestContent.Create(body));
 
 if (res.Status != 200 /*OK*/)
 {
     // The call failed for some reason, log a message
-    Console.Error.WriteLine($"Requested Failed with status {res.Status}: ${res.Body.ToJsonString()}");
+    Console.Error.WriteLine($"Requested Failed with status {res.Status}: ${res.Content}");
 }
 else
 {
-    Console.WriteLine($"Sentiment of document is {(string)res.DynamicBody.documents[0].sentiment}");
+    JsonData responseBody = JsonData.FromBytes(res.Content.ToMemory());
+    Console.WriteLine($"Sentiment of document is {(string)responseBody["documents"][0]["sentiment"]}");
 }
 ```
 
@@ -337,24 +337,25 @@ Console.WriteLine(new JsonData("Hello, JsonData").ToJsonString()); // prints "He
 
 ```C# Snippet:DetectLanguagesSample
 TextAnalyticsClient client = new TextAnalyticsClient(new Uri("<endpoint-from-portal>"), new AzureKeyCredential("<api-key-from-portal>"));
-DynamicRequest req = client.GetLanguagesRequest();
-req.DynamicBody.documents = new JsonData[3];
-req.DynamicBody.documents[0] = new JsonData();
-req.DynamicBody.documents[0].countryHint = "US";
-req.DynamicBody.documents[0].id = "1";
-req.DynamicBody.documents[0].text = "Hello world";
+dynamic body = new JsonData();
 
-req.DynamicBody.documents[1] = new JsonData();
-req.DynamicBody.documents[1].id = "2";
-req.DynamicBody.documents[1].text = "Bonjour tout le monde";
+body.documents = new JsonData[3];
+body.documents[0] = new JsonData();
+body.documents[0].countryHint = "US";
+body.documents[0].id = "1";
+body.documents[0].text = "Hello world";
 
-req.DynamicBody.documents[2] = new JsonData();
-req.DynamicBody.documents[2].id = "3";
-req.DynamicBody.documents[2].text = "La carretera estaba atascada. Había mucho tráfico el día de ayer.";
+body.documents[1] = new JsonData();
+body.documents[1].id = "2";
+body.documents[1].text = "Bonjour tout le monde";
 
-DynamicResponse res = req.Send();
+body.documents[2] = new JsonData();
+body.documents[2].id = "3";
+body.documents[2].text = "La carretera estaba atascada. Había mucho tráfico el día de ayer.";
 
-Console.WriteLine($"Status is {res.Status} and the body of the response is: {res.DynamicBody.ToJsonString()})");
+Response res = client.GetLanguages(RequestContent.Create(body));
+
+Console.WriteLine($"Status is {res.Status} and the body of the response is: {res.Content})");
 ```
 
 ## Troubleshooting
