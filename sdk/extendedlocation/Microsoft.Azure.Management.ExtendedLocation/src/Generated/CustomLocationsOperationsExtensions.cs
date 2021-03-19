@@ -429,58 +429,6 @@ namespace Microsoft.Azure.Management.ExtendedLocation
             }
 
             /// <summary>
-            /// Gets details of a Enabled Resource Type.
-            /// </summary>
-            /// <remarks>
-            /// Gets the details of the Enabled Resource Type.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='resourceName'>
-            /// Custom Locations name.
-            /// </param>
-            /// <param name='enabledResourceTypeName'>
-            /// Custom Locations Enabled Resource Type name.
-            /// </param>
-            public static EnabledResourceType GetEnabledResourceType(this ICustomLocationsOperations operations, string resourceGroupName, string resourceName, string enabledResourceTypeName)
-            {
-                return operations.GetEnabledResourceTypeAsync(resourceGroupName, resourceName, enabledResourceTypeName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets details of a Enabled Resource Type.
-            /// </summary>
-            /// <remarks>
-            /// Gets the details of the Enabled Resource Type.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group. The name is case insensitive.
-            /// </param>
-            /// <param name='resourceName'>
-            /// Custom Locations name.
-            /// </param>
-            /// <param name='enabledResourceTypeName'>
-            /// Custom Locations Enabled Resource Type name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<EnabledResourceType> GetEnabledResourceTypeAsync(this ICustomLocationsOperations operations, string resourceGroupName, string resourceName, string enabledResourceTypeName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetEnabledResourceTypeWithHttpMessagesAsync(resourceGroupName, resourceName, enabledResourceTypeName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Creates or updates a Custom Location.
             /// </summary>
             /// <remarks>
