@@ -205,41 +205,5 @@ namespace Azure.Containers.ContainerRegistry
                 throw;
             }
         }
-
-        /// <summary> Delete tag. </summary>
-        /// <param name="tag"> Tag name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteTagAsync(string tag, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteTag)}");
-            scope.Start();
-            try
-            {
-                return await _restClient.DeleteTagAsync(_repository, tag, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Delete tag. </summary>
-        /// <param name="tag"> Tag name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteTag(string tag, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteTag)}");
-            scope.Start();
-            try
-            {
-                return _restClient.DeleteTag(_repository, tag, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
     }
 }

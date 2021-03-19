@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         private readonly string _tagName = "latest";
         private ContainerRepositoryClient _client;
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -135,16 +135,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsTrue(properties.WriteableProperties.CanRead);
             Assert.IsTrue(properties.WriteableProperties.CanWrite);
             Assert.IsTrue(properties.WriteableProperties.CanDelete);
-        }
-
-        [RecordedTest]
-        public async Task CanDeleteTag()
-        {
-            await _client.DeleteTagAsync(_tagName);
-
-            Assert.Throws<RequestFailedException>(async () => { await _client.GetTagPropertiesAsync(_tagName); });
-
-            // TODO: restore tag for later tests.
         }
     }
 }
