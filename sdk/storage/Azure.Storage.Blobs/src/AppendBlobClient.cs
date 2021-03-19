@@ -909,6 +909,9 @@ namespace Azure.Storage.Blobs.Specialized
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
                             cancellationToken: cancellationToken);
                     }
 

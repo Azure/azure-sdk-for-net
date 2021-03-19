@@ -1014,6 +1014,9 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: conditions?.TagConditions,
                             blobSequenceNumber: sequenceNumber,
                             blobTagsString: tags?.ToTagsString(),
+                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            legalHold: legalHold,
                             cancellationToken: cancellationToken);
                     }
 

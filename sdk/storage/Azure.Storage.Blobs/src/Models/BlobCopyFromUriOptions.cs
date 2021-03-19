@@ -58,5 +58,19 @@ namespace Azure.Storage.Blobs.Models
         /// This parameter is not valid for synchronous copies.
         /// </summary>
         public bool? ShouldSealDestination { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has version level worm enabled.
+        /// </summary>
+        public BlobImmutabilityPolicy ImmutabilityPolicy { get; set; }
+
+        /// <summary>
+        /// Optional.  Indicates if a legal hold should be placed on the blob.
+        /// Note that is parameter is only applicable to a blob within a container that
+        /// has version level worm enabled.
+        /// </summary>
+        public bool LegalHold { get; set; }
     }
 }

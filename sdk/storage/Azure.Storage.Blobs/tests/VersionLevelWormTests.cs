@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
@@ -40,14 +41,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
-            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
-                year: immutabilityPolicy.ExpiriesOn.Value.Year,
-                month: immutabilityPolicy.ExpiriesOn.Value.Month,
-                day: immutabilityPolicy.ExpiriesOn.Value.Day,
-                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
-                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
-                second: immutabilityPolicy.ExpiriesOn.Value.Second,
-                offset: TimeSpan.Zero);
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
 
             // Test SetImmutabilityPolicyAsync API and validate response.
             // Act
@@ -87,11 +81,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(immutabilityPolicy.PolicyMode, downloadResponse.Value.Details.ImmutabilityPolicyMode);
 
             // Wait for immutability policy to expire.
-            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
-            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
-            {
-                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
-            }
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -109,14 +99,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
-            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
-                year: immutabilityPolicy.ExpiriesOn.Value.Year,
-                month: immutabilityPolicy.ExpiriesOn.Value.Month,
-                day: immutabilityPolicy.ExpiriesOn.Value.Day,
-                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
-                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
-                second: immutabilityPolicy.ExpiriesOn.Value.Second,
-                offset: TimeSpan.Zero);
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
 
             BlobRequestConditions conditions = new BlobRequestConditions
             {
@@ -133,11 +116,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
 
             // Wait for immutability policy to expire.
-            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
-            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
-            {
-                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
-            }
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -287,14 +266,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
-            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
-                year: immutabilityPolicy.ExpiriesOn.Value.Year,
-                month: immutabilityPolicy.ExpiriesOn.Value.Month,
-                day: immutabilityPolicy.ExpiriesOn.Value.Day,
-                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
-                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
-                second: immutabilityPolicy.ExpiriesOn.Value.Second,
-                offset: TimeSpan.Zero);
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
 
             AppendBlobCreateOptions options = new AppendBlobCreateOptions
             {
@@ -312,11 +284,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
 
             // Wait for immutability policy to expire.
-            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
-            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
-            {
-                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
-            }
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -334,14 +302,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
-            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
-                year: immutabilityPolicy.ExpiriesOn.Value.Year,
-                month: immutabilityPolicy.ExpiriesOn.Value.Month,
-                day: immutabilityPolicy.ExpiriesOn.Value.Day,
-                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
-                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
-                second: immutabilityPolicy.ExpiriesOn.Value.Second,
-                offset: TimeSpan.Zero);
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
 
             PageBlobCreateOptions options = new PageBlobCreateOptions
             {
@@ -359,11 +320,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
 
             // Wait for immutability policy to expire.
-            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
-            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
-            {
-                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
-            }
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -391,14 +348,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
-            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
-                year: immutabilityPolicy.ExpiriesOn.Value.Year,
-                month: immutabilityPolicy.ExpiriesOn.Value.Month,
-                day: immutabilityPolicy.ExpiriesOn.Value.Day,
-                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
-                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
-                second: immutabilityPolicy.ExpiriesOn.Value.Second,
-                offset: TimeSpan.Zero);
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
 
             CommitBlockListOptions options = new CommitBlockListOptions
             {
@@ -416,11 +366,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
 
             // Wait for immutability policy to expire.
-            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
-            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
-            {
-                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
-            }
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -443,14 +389,7 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
-            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
-                year: immutabilityPolicy.ExpiriesOn.Value.Year,
-                month: immutabilityPolicy.ExpiriesOn.Value.Month,
-                day: immutabilityPolicy.ExpiriesOn.Value.Day,
-                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
-                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
-                second: immutabilityPolicy.ExpiriesOn.Value.Second,
-                offset: TimeSpan.Zero);
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
 
             BlobUploadOptions options = new BlobUploadOptions
             {
@@ -478,11 +417,90 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
 
             // Wait for immutability policy to expire.
-            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
-            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task SyncCopyFromUri_VersionLevelWorm()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient srcBlob = await GetNewBlobClient(vlwContainer.Container);
+            BlockBlobClient destBlob = InstrumentClient(vlwContainer.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
+                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                ImmutabilityPolicy = immutabilityPolicy,
+                LegalHold = true
+            };
+
+            // Act
+            await destBlob.SyncCopyFromUriAsync(srcBlob.Uri, options);
+
+            // Assert
+            Response<BlobProperties> propertiesResponse = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
+
+            // Wait for immutability policy to expire.
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task StartCopyFromUri_VersionLevelWorm()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient srcBlob = await GetNewBlobClient(vlwContainer.Container);
+            BlockBlobClient destBlob = InstrumentClient(vlwContainer.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
+
+            BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
+            {
+                ImmutabilityPolicy = immutabilityPolicy,
+                LegalHold = true
+            };
+
+            // Act
+            Operation<long> operation = await destBlob.StartCopyFromUriAsync(srcBlob.Uri, options);
+
+            if (Mode == RecordedTestMode.Playback)
+            {
+                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
             }
+            else
+            {
+                await operation.WaitForCompletionAsync();
+            }
+
+            // Assert
+            Response<BlobProperties> propertiesResponse = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
+
+            // Wait for immutability policy to expire.
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         private async Task <DisposingVersionLevelWormContainer> GetTestVersionLevelWormContainer(TenantConfiguration tenantConfiguration)
@@ -497,6 +515,25 @@ namespace Azure.Storage.Blobs.Test
                 containerClient);
             await disposingVersionLevelWormContainer.CreateAsync();
             return disposingVersionLevelWormContainer;
+        }
+
+        private DateTimeOffset RoundToNearestSecond(DateTimeOffset initalDateTimeOffset)
+            => new DateTimeOffset(
+                year: initalDateTimeOffset.Year,
+                month: initalDateTimeOffset.Month,
+                day: initalDateTimeOffset.Day,
+                hour: initalDateTimeOffset.Hour,
+                minute: initalDateTimeOffset.Minute,
+                second: initalDateTimeOffset.Second,
+                offset: TimeSpan.Zero);
+
+        private async Task WaitForImmutabilityPolicyToExpire(DateTimeOffset expiryTime)
+        {
+            TimeSpan remainingImmutibilityPolicyTime = expiryTime - Recording.UtcNow;
+            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
+            {
+                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
+            }
         }
     }
 
@@ -529,6 +566,7 @@ namespace Azure.Storage.Blobs.Test
                 accountName: _tenantConfiguration.AccountName,
                 containerName: Container.Name,
                 new Microsoft.Azure.Management.Storage.Models.BlobContainer(
+                    publicAccess: Microsoft.Azure.Management.Storage.Models.PublicAccess.Container,
                     enabled: true));
         }
 
@@ -536,23 +574,10 @@ namespace Azure.Storage.Blobs.Test
         {
             if (Container != null)
             {
-                await foreach (BlobItem blobItem in Container.GetBlobsAsync(traits: BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold))
+                await foreach (BlobItem blobItem in Container.GetBlobsAsync())
                 {
                     BlobClient blobClient = Container.GetBlobClient(blobItem.Name);
-                    if (blobItem.Properties.HasLegalHold)
-                    {
-                        await blobClient.SetLegalHoldAsync(false);
-                    }
-
-                    //if (blobItem.Properties.ImmutabilityPolicyMode == BlobImmutabilityPolicyMode.Locked)
-                    //{
-                    //    BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
-                    //    {
-                    //        PolicyMode = BlobImmutabilityPolicyMode.Unlocked
-                    //    };
-                    //    await blobClient.SetImmutabilityPolicyAsync(immutabilityPolicy);
-                    //}
-
+                    await blobClient.SetLegalHoldAsync(false);
                     await blobClient.DeleteIfExistsAsync();
                 }
 
