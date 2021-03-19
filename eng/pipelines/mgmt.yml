@@ -165,6 +165,6 @@ variables:
 - name: timeoutInMinutes
   value: 120
 jobs:
-- template: templates/jobs/archetype-sdk-mgmt.yml
+- template: /eng/pipelines/templates/jobs/ci.mgmt.yml
   parameters:
     Scope: $(Scope)
