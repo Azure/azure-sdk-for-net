@@ -17,12 +17,12 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
     /// </summary>
     public class BlobChangeFeedAsyncPagableTests : ChangeFeedTestBase
     {
-        public BlobChangeFeedAsyncPagableTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobChangeFeedAsyncPagableTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task Test()
         {
@@ -37,7 +37,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task TestHistorical()
         {
@@ -52,7 +52,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task TestLastHour()
         {
@@ -144,7 +144,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             CollectionAssert.IsEmpty(EventIdsPart2.Intersect(EventIdsPart3));
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task PageSizeTest()
         {
@@ -166,7 +166,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("For debugging larger Change Feeds locally")]
         public async Task CursorTest()
         {
@@ -664,7 +664,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.IsNotNull(eventList.Find(e => e.EventTime > roundedEndTime.AddMinutes(-15)), "There is some event 15 minutes before end");
         }
 
-        [Test]
+        [RecordedTest]
         [PlaybackOnly("Changefeed E2E tests require previously generated events")]
         public async Task CursorFormatTest()
         {

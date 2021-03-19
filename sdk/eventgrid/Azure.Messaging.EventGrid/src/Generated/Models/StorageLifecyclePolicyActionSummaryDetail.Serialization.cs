@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(StorageLifecyclePolicyActionSummaryDetailConverter))]
     public partial class StorageLifecyclePolicyActionSummaryDetail
     {
         internal static StorageLifecyclePolicyActionSummaryDetail DeserializeStorageLifecyclePolicyActionSummaryDetail(JsonElement element)
@@ -49,19 +46,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new StorageLifecyclePolicyActionSummaryDetail(Optional.ToNullable(totalObjectsCount), Optional.ToNullable(successCount), errorList.Value);
-        }
-
-        internal partial class StorageLifecyclePolicyActionSummaryDetailConverter : JsonConverter<StorageLifecyclePolicyActionSummaryDetail>
-        {
-            public override void Write(Utf8JsonWriter writer, StorageLifecyclePolicyActionSummaryDetail model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override StorageLifecyclePolicyActionSummaryDetail Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeStorageLifecyclePolicyActionSummaryDetail(document.RootElement);
-            }
         }
     }
 }

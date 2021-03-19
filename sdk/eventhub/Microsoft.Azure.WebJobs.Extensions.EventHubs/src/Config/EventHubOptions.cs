@@ -5,6 +5,7 @@ using System;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Hosting;
 using Newtonsoft.Json;
@@ -21,6 +22,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             {
                 TrackLastEnqueuedEventProperties = false,
                 MaximumWaitTime = TimeSpan.FromMinutes(1),
+                LoadBalancingStrategy = LoadBalancingStrategy.Greedy,
                 PrefetchCount = 300,
                 DefaultStartingPosition = EventPosition.Earliest,
             };
@@ -137,6 +139,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal Action<ExceptionReceivedEventArgs> ExceptionHandler { get; set; }
 
+        /// <summary>
+        /// Returns a string representation of this <see cref="EventHubOptions"/> instance.
+        /// </summary>
+        /// <returns>A string representation of this <see cref="EventHubOptions"/> instance.</returns>
         string IOptionsFormatter.Format()
         {
             JObject options = new JObject

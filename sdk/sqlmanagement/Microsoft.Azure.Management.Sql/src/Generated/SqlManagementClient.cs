@@ -298,16 +298,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IJobVersionsOperations JobVersions { get; private set; }
 
         /// <summary>
-        /// Gets the ILongTermRetentionBackupsOperations.
-        /// </summary>
-        public virtual ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; private set; }
-
-        /// <summary>
-        /// Gets the IBackupLongTermRetentionPoliciesOperations.
-        /// </summary>
-        public virtual IBackupLongTermRetentionPoliciesOperations BackupLongTermRetentionPolicies { get; private set; }
-
-        /// <summary>
         /// Gets the IManagedBackupShortTermRetentionPoliciesOperations.
         /// </summary>
         public virtual IManagedBackupShortTermRetentionPoliciesOperations ManagedBackupShortTermRetentionPolicies { get; private set; }
@@ -453,11 +443,6 @@ namespace Microsoft.Azure.Management.Sql
         public virtual IUsagesOperations Usages { get; private set; }
 
         /// <summary>
-        /// Gets the IPrivateEndpointConnectionsOperations.
-        /// </summary>
-        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
-
-        /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
@@ -551,6 +536,21 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerDevOpsAuditSettingsOperations.
         /// </summary>
         public virtual IServerDevOpsAuditSettingsOperations ServerDevOpsAuditSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionBackupsOperations.
+        /// </summary>
+        public virtual ILongTermRetentionBackupsOperations LongTermRetentionBackups { get; private set; }
+
+        /// <summary>
+        /// Gets the ILongTermRetentionPoliciesOperations.
+        /// </summary>
+        public virtual ILongTermRetentionPoliciesOperations LongTermRetentionPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SqlManagementClient class.
@@ -838,8 +838,6 @@ namespace Microsoft.Azure.Management.Sql
             JobTargetExecutions = new JobTargetExecutionsOperations(this);
             JobTargetGroups = new JobTargetGroupsOperations(this);
             JobVersions = new JobVersionsOperations(this);
-            LongTermRetentionBackups = new LongTermRetentionBackupsOperations(this);
-            BackupLongTermRetentionPolicies = new BackupLongTermRetentionPoliciesOperations(this);
             ManagedBackupShortTermRetentionPolicies = new ManagedBackupShortTermRetentionPoliciesOperations(this);
             ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies = new ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations(this);
             ServerAutomaticTuning = new ServerAutomaticTuningOperations(this);
@@ -869,7 +867,6 @@ namespace Microsoft.Azure.Management.Sql
             ManagedDatabaseSensitivityLabels = new ManagedDatabaseSensitivityLabelsOperations(this);
             InstancePools = new InstancePoolsOperations(this);
             Usages = new UsagesOperations(this);
-            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             Servers = new ServersOperations(this);
             Capabilities = new CapabilitiesOperations(this);
@@ -889,6 +886,9 @@ namespace Microsoft.Azure.Management.Sql
             ManagedInstanceAzureADOnlyAuthentications = new ManagedInstanceAzureADOnlyAuthenticationsOperations(this);
             ServerTrustGroups = new ServerTrustGroupsOperations(this);
             ServerDevOpsAuditSettings = new ServerDevOpsAuditSettingsOperations(this);
+            LongTermRetentionBackups = new LongTermRetentionBackupsOperations(this);
+            LongTermRetentionPolicies = new LongTermRetentionPoliciesOperations(this);
+            PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

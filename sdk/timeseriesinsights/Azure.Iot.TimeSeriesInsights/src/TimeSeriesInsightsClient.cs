@@ -27,6 +27,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
         private readonly ModelSettingsRestClient _modelSettingsRestClient;
         private readonly TimeSeriesInstancesRestClient _timeSeriesInstancesRestClient;
+        private readonly TimeSeriesTypesRestClient _timeSeriesTypesRestClient;
         private readonly QueryRestClient _queryRestClient;
 
         /// <summary>
@@ -87,6 +88,7 @@ namespace Azure.Iot.TimeSeriesInsights
             string versionString = options.GetVersionString();
             _modelSettingsRestClient = new ModelSettingsRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _timeSeriesInstancesRestClient = new TimeSeriesInstancesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
+            _timeSeriesTypesRestClient = new TimeSeriesTypesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
         }
 
@@ -653,7 +655,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the <paramref name="timeSeriesInstances"/> array in the request.
-        /// A <seealso cref="InstancesOperationError"/> object will be set when operation is unsuccessful.
+        /// A <seealso cref="TimeSeriesOperationError"/> object will be set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
@@ -664,7 +666,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesInstances"/> is empty.
         /// </exception>
-        public virtual async Task<Response<InstancesOperationError[]>> CreateOrReplaceTimeSeriesInstancesAsync(
+        public virtual async Task<Response<TimeSeriesOperationError[]>> CreateOrReplaceTimeSeriesInstancesAsync(
             IEnumerable<TimeSeriesInstance> timeSeriesInstances,
             CancellationToken cancellationToken = default)
         {
@@ -689,7 +691,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
                 // Extract the errors array from the response. If there was an error with creating or replacing one of the instances,
                 // it will be placed at the same index location that corresponds to its place in the input array.
-                IEnumerable<InstancesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
+                IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
 
                 return Response.FromValue(errorResults.ToArray(), executeBatchResponse.GetRawResponse());
             }
@@ -708,7 +710,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the <paramref name="timeSeriesInstances"/> array in the request.
-        /// A <seealso cref="InstancesOperationError"/> object will be set when operation is unsuccessful.
+        /// A <seealso cref="TimeSeriesOperationError"/> object will be set when operation is unsuccessful.
         /// </returns>
         /// <seealso cref="CreateOrReplaceTimeSeriesInstancesAsync(IEnumerable{TimeSeriesInstance}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
@@ -719,7 +721,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesInstances"/> is empty.
         /// </exception>
-        public virtual Response<InstancesOperationError[]> CreateOrReplaceTimeSeriesInstances(
+        public virtual Response<TimeSeriesOperationError[]> CreateOrReplaceTimeSeriesInstances(
             IEnumerable<TimeSeriesInstance> timeSeriesInstances,
             CancellationToken cancellationToken = default)
         {
@@ -742,7 +744,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
                 // Extract the errors array from the response. If there was an error with creating or replacing one of the instances,
                 // it will be placed at the same index location that corresponds to its place in the input array.
-                IEnumerable<InstancesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
+                IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
 
                 return Response.FromValue(errorResults.ToArray(), executeBatchResponse.GetRawResponse());
             }
@@ -869,7 +871,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
         /// </exception>
-        public virtual async Task<Response<InstancesOperationError[]>> DeleteInstancesAsync(
+        public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteInstancesAsync(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
         {
@@ -921,7 +923,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
         /// </exception>
-        public virtual Response<InstancesOperationError[]> DeleteInstances(
+        public virtual Response<TimeSeriesOperationError[]> DeleteInstances(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
         {
@@ -972,7 +974,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
         /// </exception>
-        public virtual async Task<Response<InstancesOperationError[]>> DeleteInstancesAsync(
+        public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteInstancesAsync(
             IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
@@ -1024,7 +1026,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
         /// </exception>
-        public virtual Response<InstancesOperationError[]> DeleteInstances(
+        public virtual Response<TimeSeriesOperationError[]> DeleteInstances(
             IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
@@ -1341,6 +1343,330 @@ namespace Azure.Iot.TimeSeriesInsights
             }
 
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Gets Time Series Insights types in pages asynchronously.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesType}"/> of Time Series types with the http response.</returns>
+        public virtual AsyncPageable<TimeSeriesType> GetTimeSeriesTypesAsync(
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypes)}");
+            scope.Start();
+
+            try
+            {
+                async Task<Page<TimeSeriesType>> FirstPageFunc(int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypes)}");
+                    scope.Start();
+
+                    try
+                    {
+                        Response<GetTypesPage> getTypesResponse = await _timeSeriesTypesRestClient
+                            .ListAsync(null, _clientSessionId, cancellationToken)
+                            .ConfigureAwait(false);
+                        return Page.FromValues(getTypesResponse.Value.Types, getTypesResponse.Value.ContinuationToken, getTypesResponse.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                async Task<Page<TimeSeriesType>> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypes)}");
+                    scope.Start();
+
+                    try
+                    {
+                        Response<GetTypesPage> getTypesResponse = await _timeSeriesTypesRestClient
+                            .ListAsync(nextLink, _clientSessionId, cancellationToken)
+                            .ConfigureAwait(false);
+                        return Page.FromValues(getTypesResponse.Value.Types, getTypesResponse.Value.ContinuationToken, getTypesResponse.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series Insights types in pages synchronously.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="Pageable{TimeSeriesType}"/> of Time Series types with the http response.</returns>
+        /// <seealso cref="GetTimeSeriesTypesAsync(CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        public virtual Pageable<TimeSeriesType> GetTimeSeriesTypes(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypes)}");
+            scope.Start();
+
+            try
+            {
+                Page<TimeSeriesType> FirstPageFunc(int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypes)}");
+                    scope.Start();
+
+                    try
+                    {
+                        Response<GetTypesPage> getTypesResponse = _timeSeriesTypesRestClient.List(null, _clientSessionId, cancellationToken);
+                        return Page.FromValues(getTypesResponse.Value.Types, getTypesResponse.Value.ContinuationToken, getTypesResponse.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                Page<TimeSeriesType> NextPageFunc(string nextLink, int? pageSizeHint)
+                {
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypes)}");
+                    scope.Start();
+
+                    try
+                    {
+                        Response<GetTypesPage> getTypesResponse = _timeSeriesTypesRestClient.List(nextLink, _clientSessionId, cancellationToken);
+                        return Page.FromValues(getTypesResponse.Value.Types, getTypesResponse.Value.ContinuationToken, getTypesResponse.GetRawResponse());
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
+                    }
+                }
+
+                return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series Insights types by type names asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesTypeNames">List of names of the Time Series types to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of type or error objects corresponding by position to the array in the request.
+        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is empty.
+        /// </exception>
+        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesByNamesAsync(
+            IEnumerable<string> timeSeriesTypeNames,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypesByNames)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
+
+                var batchRequest = new TypesBatchRequest()
+                {
+                    Get = new TypesRequestBatchGetOrDelete()
+                };
+
+                foreach (string timeSeriesName in timeSeriesTypeNames)
+                {
+                    batchRequest.Get.Names.Add(timeSeriesName);
+                }
+
+                Response<TypesBatchResponse> executeBatchResponse = await _timeSeriesTypesRestClient
+                    .ExecuteBatchAsync(batchRequest, _clientSessionId, cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series Insights types by type names synchronously.
+        /// </summary>
+        /// <param name="timeSeriesTypeNames">List of names of the Time Series types to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of type or error objects corresponding by position to the array in the request.
+        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <seealso cref="GetTimeSeriesTypesByNamesAsync(IEnumerable{string}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is empty.
+        /// </exception>
+        public virtual Response<TimeSeriesTypeOperationResult[]> GetTimeSeriesTypesByNames(
+            IEnumerable<string> timeSeriesTypeNames,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypesByNames)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
+
+                var batchRequest = new TypesBatchRequest()
+                {
+                    Get = new TypesRequestBatchGetOrDelete()
+                };
+
+                foreach (string timeSeriesName in timeSeriesTypeNames)
+                {
+                    batchRequest.Get.Names.Add(timeSeriesName);
+                }
+
+                Response<TypesBatchResponse> executeBatchResponse = _timeSeriesTypesRestClient
+                    .ExecuteBatch(batchRequest, _clientSessionId, cancellationToken);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series Insights types by type Ids asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesTypeIds">List of Time Series type Ids of the Time Series types to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of type or error objects corresponding by position to the array in the request.
+        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
+        /// </exception>
+        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesByIdAsync(
+            IEnumerable<string> timeSeriesTypeIds,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypesById)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
+
+                var batchRequest = new TypesBatchRequest()
+                {
+                    Get = new TypesRequestBatchGetOrDelete()
+                };
+
+                foreach (string typeId in timeSeriesTypeIds)
+                {
+                    batchRequest.Get.TypeIds.Add(typeId);
+                }
+
+                Response<TypesBatchResponse> executeBatchResponse = await _timeSeriesTypesRestClient
+                    .ExecuteBatchAsync(batchRequest, _clientSessionId, cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series Insights types by type Ids synchronously.
+        /// </summary>
+        /// <param name="timeSeriesTypeIds">List of Time Series type Ids of the Time Series types to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of type or error objects corresponding by position to the array in the request.
+        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <seealso cref="GetTimeSeriesTypesByIdAsync(IEnumerable{string}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
+        /// </exception>
+        public virtual Response<TimeSeriesTypeOperationResult[]> GetTimeSeriesTypesById(
+            IEnumerable<string> timeSeriesTypeIds,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypesById)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
+
+                var batchRequest = new TypesBatchRequest()
+                {
+                    Get = new TypesRequestBatchGetOrDelete()
+                };
+
+                foreach (string typeId in timeSeriesTypeIds)
+                {
+                    batchRequest.Get.TypeIds.Add(typeId);
+                }
+
+                Response<TypesBatchResponse> executeBatchResponse = _timeSeriesTypesRestClient
+                    .ExecuteBatch(batchRequest, _clientSessionId, cancellationToken);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
     }
 }

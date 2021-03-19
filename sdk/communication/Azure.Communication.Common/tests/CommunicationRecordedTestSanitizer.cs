@@ -27,6 +27,7 @@ namespace Azure.Communication.Pipeline
             => variableName switch
             {
                 CommunicationTestEnvironment.ConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
+                CommunicationTestEnvironment.LiveTestConnectionStringEnvironmentVariableName => SanitizeConnectionString(environmentVariableValue),
                 _ => base.SanitizeVariable(variableName, environmentVariableValue)
             };
 

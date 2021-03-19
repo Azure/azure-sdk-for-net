@@ -14,7 +14,7 @@ string pipelineName = "Test-Pipeline";
 ```
 
 ```C# Snippet:CreatePipelineClient
-var client = new PipelineClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+var client = new PipelineClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 ```
 
 ## Create a pipeline

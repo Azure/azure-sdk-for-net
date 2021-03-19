@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.3.0" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.3.1" />
     <PackageReference Include="Microsoft.Azure.Amqp" Version="2.4.11" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.20.1" />
   </ItemGroup>

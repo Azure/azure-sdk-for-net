@@ -383,7 +383,7 @@ namespace Azure.Storage.Queues
             AssertEncodingForEncryption();
         }
 
-        private (QueueRestClient, MessagesRestClient, MessageIdRestClient) BuildRestClients()
+        private (QueueRestClient QueueClient, MessagesRestClient MessagesClient, MessageIdRestClient MessageIdClient) BuildRestClients()
         {
             QueueUriBuilder uriBuilder = new QueueUriBuilder(_uri);
             string queueName = uriBuilder.QueueName;

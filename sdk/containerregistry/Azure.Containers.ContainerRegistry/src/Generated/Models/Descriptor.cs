@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Docker V2 image layer descriptor including config and layers. </summary>
-    public partial class Descriptor
+    internal partial class Descriptor
     {
         /// <summary> Initializes a new instance of Descriptor. </summary>
         public Descriptor()

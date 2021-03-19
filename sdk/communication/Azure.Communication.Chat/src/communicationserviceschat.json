@@ -3,7 +3,7 @@
     "info": {
         "title": "Azure Communication Chat Service",
         "description": "Azure Communication Chat Service",
-        "version": "2021-01-27-preview4"
+        "version": "2021-03-01-preview5"
     },
     "paths": {
         "/chat/threads/{chatThreadId}/readReceipts": {
@@ -52,28 +52,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -128,28 +128,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -205,28 +205,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -282,28 +282,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -358,28 +358,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -437,28 +437,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -504,28 +504,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -566,28 +566,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -645,28 +645,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -724,28 +724,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -801,28 +801,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -850,8 +850,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "name": "repeatability-Request-Id",
-                        "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs.",
+                        "name": "idempotency-token",
+                        "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Idempotency-Token and get back an appropriate response without the server executing the request multiple times. The value of the Idempotency-Token is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs.",
                         "type": "string"
                     },
                     {
@@ -877,28 +877,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -908,7 +908,7 @@
                         "$ref": "./examples/Threads_CreateChatThread.json"
                     },
                     "Create chat thread with repeatability request id header": {
-                        "$ref": "./examples/Threads_CreateChatThreadWithRepeatabilityRequestId.json"
+                        "$ref": "./examples/Threads_CreateChatThreadWithIdempotencyToken.json"
                     }
                 }
             },
@@ -944,34 +944,34 @@
                     "200": {
                         "description": "Request successful. The action returns a `GetThreadsResponse` resource.",
                         "schema": {
-                            "$ref": "#/definitions/ChatThreadsInfoCollection"
+                            "$ref": "#/definitions/ChatThreadsItemCollection"
                         }
                     },
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -993,7 +993,7 @@
                     "Threads"
                 ],
                 "summary": "Updates a thread's properties.",
-                "operationId": "ChatThread_UpdateChatThread",
+                "operationId": "ChatThread_UpdateChatThreadProperties",
                 "consumes": [
                     "application/merge-patch+json"
                 ],
@@ -1028,28 +1028,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -1064,8 +1064,8 @@
                 "tags": [
                     "Threads"
                 ],
-                "summary": "Gets a chat thread.",
-                "operationId": "Chat_GetChatThread",
+                "summary": "Gets a chat thread's properties.",
+                "operationId": "ChatThread_GetChatThreadProperties",
                 "produces": [
                     "application/json"
                 ],
@@ -1085,34 +1085,34 @@
                     "200": {
                         "description": "Request successful. The action returns a chat thread.",
                         "schema": {
-                            "$ref": "#/definitions/ChatThread"
+                            "$ref": "#/definitions/ChatThreadProperties"
                         }
                     },
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -1151,28 +1151,28 @@
                     "401": {
                         "description": "Unauthorized.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "403": {
                         "description": "Forbidden.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "429": {
                         "description": "Too many requests.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     },
                     "503": {
                         "description": "Service unavailable.",
                         "schema": {
-                            "$ref": "#/definitions/ErrorResponse"
+                            "$ref": "#/definitions/CommunicationErrorResponse"
                         },
                         "x-ms-error-response": true
                     }
@@ -1244,10 +1244,10 @@
                 }
             }
         },
-        "Error": {
+        "CommunicationError": {
             "$ref": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationError"
         },
-        "ErrorResponse": {
+        "CommunicationErrorResponse": {
             "$ref": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/communication/data-plane/Microsoft.CommunicationServicesCommon/stable/2021-03-07/common.json#/definitions/CommunicationErrorResponse"
         },
         "SendReadReceiptRequest": {
@@ -1491,35 +1491,23 @@
                 }
             }
         },
-        "AddChatParticipantsErrors": {
-            "description": "Errors encountered during the addition of the chat participant to the chat thread.",
-            "required": [
-                "invalidParticipants"
-            ],
+        "AddChatParticipantsResult": {
+            "description": "Result of the add chat participants operation.",
             "type": "object",
             "properties": {
                 "invalidParticipants": {
                     "description": "The participants that failed to be added to the chat thread.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Error"
-                    }
-                }
-            }
-        },
-        "AddChatParticipantsResult": {
-            "description": "Result of the add chat participants operation.",
-            "type": "object",
-            "properties": {
-                "errors": {
-                    "$ref": "#/definitions/AddChatParticipantsErrors"
+                        "$ref": "#/definitions/CommunicationError"
+                    },
+                    "readOnly": true
                 }
             }
         },
         "CreateChatThreadRequest": {
             "description": "Request payload for creating a chat thread.",
             "required": [
-                "participants",
                 "topic"
             ],
             "type": "object",
@@ -1538,7 +1526,7 @@
                 }
             }
         },
-        "ChatThread": {
+        "ChatThreadProperties": {
             "description": "Chat thread.",
             "required": [
                 "createdByCommunicationIdentifier",
@@ -1575,33 +1563,24 @@
                 }
             }
         },
-        "CreateChatThreadErrors": {
-            "description": "Errors encountered during the creation of the chat thread.",
-            "type": "object",
-            "properties": {
-                "invalidParticipants": {
-                    "description": "The participants that failed to be added to the chat thread.",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Error"
-                    },
-                    "readOnly": true
-                }
-            }
-        },
         "CreateChatThreadResult": {
             "description": "Result of the create chat thread operation.",
             "type": "object",
             "properties": {
                 "chatThread": {
-                    "$ref": "#/definitions/ChatThread"
+                    "$ref": "#/definitions/ChatThreadProperties"
                 },
-                "errors": {
-                    "$ref": "#/definitions/CreateChatThreadErrors"
+                "invalidParticipants": {
+                    "description": "The participants that failed to be added to the chat thread.",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CommunicationError"
+                    },
+                    "readOnly": true
                 }
             }
         },
-        "ChatThreadInfo": {
+        "ChatThreadItem": {
             "description": "Summary information of a chat thread.",
             "required": [
                 "id",
@@ -1634,7 +1613,7 @@
                 }
             }
         },
-        "ChatThreadsInfoCollection": {
+        "ChatThreadsItemCollection": {
             "description": "Collection of chat threads.",
             "required": [
                 "value"
@@ -1645,7 +1624,7 @@
                     "description": "Collection of chat threads.",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/ChatThreadInfo"
+                        "$ref": "#/definitions/ChatThreadItem"
                     }
                 },
                 "nextLink": {

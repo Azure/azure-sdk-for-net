@@ -30,7 +30,7 @@ namespace Azure.Data.Tables
         internal Guid _changesetGuid;
         internal ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)> _requestLookup = new ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)>();
         internal ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)> _requestMessages = new ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)>();
-        private List<(ITableEntity entity, HttpMessage HttpMessage)> _submittedMessageList;
+        private List<(ITableEntity Entity, HttpMessage HttpMessage)> _submittedMessageList;
         private bool _submitted;
         private readonly string _partitionKey;
 
@@ -264,7 +264,7 @@ namespace Azure.Data.Tables
                 {
                     if (exception.Data[TableConstants.ExceptionData.FailedEntityIndex] is int index)
                     {
-                        failedEntity = _submittedMessageList[index].entity;
+                        failedEntity = _submittedMessageList[index].Entity;
                     }
                 }
                 catch
@@ -298,7 +298,7 @@ namespace Azure.Data.Tables
         /// Builds an ordered list of <see cref="HttpMessage"/>s containing the batch sub-requests.
         /// </summary>
         /// <returns></returns>
-        private List<(ITableEntity entity, HttpMessage HttpMessage)> BuildOrderedBatchRequests()
+        private List<(ITableEntity Entity, HttpMessage HttpMessage)> BuildOrderedBatchRequests()
         {
             var orderedList = _requestMessages.ToList();
             foreach (var item in orderedList)

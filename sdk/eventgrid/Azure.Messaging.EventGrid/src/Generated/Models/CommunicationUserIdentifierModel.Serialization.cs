@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(CommunicationUserIdentifierModelConverter))]
     public partial class CommunicationUserIdentifierModel
     {
         internal static CommunicationUserIdentifierModel DeserializeCommunicationUserIdentifierModel(JsonElement element)
@@ -27,19 +24,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new CommunicationUserIdentifierModel(id);
-        }
-
-        internal partial class CommunicationUserIdentifierModelConverter : JsonConverter<CommunicationUserIdentifierModel>
-        {
-            public override void Write(Utf8JsonWriter writer, CommunicationUserIdentifierModel model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override CommunicationUserIdentifierModel Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeCommunicationUserIdentifierModel(document.RootElement);
-            }
         }
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> Deployment filter. </summary>
     internal partial class DeploymentFilter

@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventGrid
         public const string AcsChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
         public const string AcsChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
         public const string AcsSmsDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
-        public const string ACSSMSReceived = "Microsoft.Communication.SMSReceived";
+        public const string AcsSmsReceived = "Microsoft.Communication.SMSReceived";
         public const string AppConfigurationKeyValueDeleted = "Microsoft.AppConfiguration.KeyValueDeleted";
         public const string AppConfigurationKeyValueModified = "Microsoft.AppConfiguration.KeyValueModified";
         public const string ContainerRegistryChartDeleted = "Microsoft.ContainerRegistry.ChartDeleted";
@@ -87,10 +87,10 @@ namespace Azure.Messaging.EventGrid
         public const string EventGridSubscriptionDeleted = "Microsoft.EventGrid.SubscriptionDeletedEvent";
         public const string EventGridSubscriptionValidation = "Microsoft.EventGrid.SubscriptionValidationEvent";
         public const string EventHubCaptureFileCreated = "Microsoft.EventHub.CaptureFileCreated";
-        public const string IoTHubDeviceConnected = "Microsoft.Devices.DeviceConnected";
-        public const string IoTHubDeviceCreated = "Microsoft.Devices.DeviceCreated";
-        public const string IoTHubDeviceDeleted = "Microsoft.Devices.DeviceDeleted";
-        public const string IoTHubDeviceDisconnected = "Microsoft.Devices.DeviceDisconnected";
+        public const string IotHubDeviceConnected = "Microsoft.Devices.DeviceConnected";
+        public const string IotHubDeviceCreated = "Microsoft.Devices.DeviceCreated";
+        public const string IotHubDeviceDeleted = "Microsoft.Devices.DeviceDeleted";
+        public const string IotHubDeviceDisconnected = "Microsoft.Devices.DeviceDisconnected";
         public const string IotHubDeviceTelemetry = "Microsoft.Devices.DeviceTelemetry";
         public const string KeyVaultAccessPolicyChanged = "Microsoft.KeyVault.VaultAccessPolicyChanged";
         public const string KeyVaultCertificateExpired = "Microsoft.KeyVault.CertificateExpired";
@@ -134,8 +134,8 @@ namespace Azure.Messaging.EventGrid
         public const string MediaLiveEventIncomingVideoStreamsOutOfSync = "Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync";
         public const string MediaLiveEventIngestHeartbeat = "Microsoft.Media.LiveEventIngestHeartbeat";
         public const string MediaLiveEventTrackDiscontinuityDetected = "Microsoft.Media.LiveEventTrackDiscontinuityDetected";
-        public const string RedisExportRDBCompleted = "Microsoft.Cache.ExportRDBCompleted";
-        public const string RedisImportRDBCompleted = "Microsoft.Cache.ImportRDBCompleted";
+        public const string RedisExportRdbCompleted = "Microsoft.Cache.ExportRDBCompleted";
+        public const string RedisImportRdbCompleted = "Microsoft.Cache.ImportRDBCompleted";
         public const string RedisPatchingCompleted = "Microsoft.Cache.PatchingCompleted";
         public const string RedisScalingCompleted = "Microsoft.Cache.ScalingCompleted";
         public const string ResourceActionCancel = "Microsoft.Resources.ResourceActionCancel";
@@ -1082,16 +1082,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal PhoneNumberIdentifierModel() { }
         public string Value { get { throw null; } }
     }
-    public partial class RedisExportRDBCompletedEventData
+    public partial class RedisExportRdbCompletedEventData
     {
-        internal RedisExportRDBCompletedEventData() { }
+        internal RedisExportRdbCompletedEventData() { }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
-    public partial class RedisImportRDBCompletedEventData
+    public partial class RedisImportRdbCompletedEventData
     {
-        internal RedisImportRDBCompletedEventData() { }
+        internal RedisImportRdbCompletedEventData() { }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
