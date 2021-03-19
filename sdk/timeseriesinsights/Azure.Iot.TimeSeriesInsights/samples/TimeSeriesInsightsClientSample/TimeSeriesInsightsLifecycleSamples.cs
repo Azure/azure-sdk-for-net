@@ -26,23 +26,27 @@ namespace Azure.Iot.TimeSeriesInsights.Samples
         {
             try
             {
-                var tsiId = new TimeSeriesId("17", "1", "1");
-                var options = new QueryEventsRequestOptions
-                {
-                    MaximumNumberOfEvents = 20000,
-                };
-                AsyncPageable<QueryResultPage> pageable = client.QueryEventsAsync(
-                    tsiId,
-                    new DateTimeOffset(2020, 3, 8, 0, 0, 0, TimeSpan.Zero),
-                    new DateTimeOffset(2022, 3, 10, 0, 0, 0, TimeSpan.Zero),
-                    options);
+                #region Snippet:TimeSeriesInsightsGetModelSettings
 
-                await foreach (var item in pageable)
+                // Get the model settings for the time series insights environment
+                Response<TimeSeriesModelSettings> currentSettings = await client.GetModelSettingsAsync();
+                Console.WriteLine($"Retrieved model with default type id {currentSettings.Value.DefaultTypeId} " +
+                    $"model name {currentSettings.Value.Name}.");
+
+                foreach (TimeSeriesIdProperty tsiId in currentSettings.Value.TimeSeriesIdProperties)
                 {
-                    var ts = item.Timestamps;
-                    var props = item.Properties;
+                    Console.WriteLine($"Time series Id name: '{tsiId.Name}', Type: '{tsiId.Type}'.");
                 }
 
+                #endregion Snippet:TimeSeriesInsightsGetModelSettings
+
+                #region Snippet:TimeSeriesInsightsUpdateModelSettingsModelName
+
+                string name = "sampleModel";
+                Response<TimeSeriesModelSettings> updatedSettings = await client.UpdateModelSettingsNameAsync(name);
+                Console.WriteLine($"Updated model name to {updatedSettings.Value.Name} ");
+
+                #endregion Snippet:TimeSeriesInsightsUpdateModelSettingsModelName
 
             }
             catch (Exception ex)
