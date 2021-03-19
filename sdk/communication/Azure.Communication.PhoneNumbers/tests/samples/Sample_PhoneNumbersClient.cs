@@ -60,7 +60,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             var purchasedPhoneNumber = searchOperation.Value.PhoneNumbers.Single();
 
             #region Snippet:UpdateCapabilitiesNumbersAsync
-            var updateCapabilitiesOperation = client.StartUpdateCapabilities(purchasedPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.InboundOutbound);
+            var updateCapabilitiesOperation = await client.StartUpdateCapabilitiesAsync(purchasedPhoneNumber, calling: PhoneNumberCapabilityType.Outbound, sms: PhoneNumberCapabilityType.InboundOutbound);
 
             //@@ await updateCapabilitiesOperation.WaitForCompletionAsync();
             /*@@*/ await WaitForCompletionAsync(updateCapabilitiesOperation);
@@ -76,7 +76,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #region Snippet:ReleasePhoneNumbersAsync
 
             //@@var purchasedPhoneNumber = "<purchased_phone_number>";
-            var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber);
+            var releaseOperation = await client.StartReleasePhoneNumberAsync(purchasedPhoneNumber);
             //@@ await releaseOperation.WaitForCompletionResponseAsync();
             /*@@*/ await WaitForCompletionResponseAsync(releaseOperation);
 

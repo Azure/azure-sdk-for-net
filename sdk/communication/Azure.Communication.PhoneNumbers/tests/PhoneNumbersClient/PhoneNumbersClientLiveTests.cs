@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -25,7 +26,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPurchasedPhoneNumbersUsingConnectionString")]
-        //[TestCase(AuthMethod.TokenCredential, TestName = "GetPurchasedPhoneNumbersUsingTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GetPurchasedPhoneNumbersUsingTokenCredential")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GetPurchasedPhoneNumbersUsingKeyCredential")]
         public async Task GetPurchasedPhoneNumbers(AuthMethod authMethod)
         {
@@ -38,7 +39,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         }
 
         [TestCase(AuthMethod.ConnectionString, TestName = "GetPhoneNumberUsingConnectionString")]
-        //[TestCase(AuthMethod.TokenCredential, TestName = "GetPhoneNumberUsingTokenCredential")]
+        [TestCase(AuthMethod.TokenCredential, TestName = "GetPhoneNumberUsingTokenCredential")]
         [TestCase(AuthMethod.KeyCredential, TestName = "GetPhoneNumberUsingKeyCredential")]
         public async Task GetPhoneNumber(AuthMethod authMethod)
         {
@@ -119,7 +120,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("threeLetterISOCountryName", ex.ParamName);
+                Assert.AreEqual("twoLetterISOCountryName", ex.ParamName);
                 return;
             }
 
