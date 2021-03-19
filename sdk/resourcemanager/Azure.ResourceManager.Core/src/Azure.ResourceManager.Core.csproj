@@ -13,6 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\..\core\Azure.Core\src\Shared\Argument.cs" Link="Utils\Argument.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Collections.Immutable" />
     <PackageReference Include="Azure.ResourceManager.Resources" />
     <PackageReference Include="System.Linq.Async" />
