@@ -10,25 +10,31 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
 {
-    public partial class OperationProperties
+    public partial class ErrorAdditionalInfo
     {
-        internal static OperationProperties DeserializeOperationProperties(JsonElement element)
+        internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
-            Optional<ServiceSpecification> serviceSpecification = default;
+            Optional<string> type = default;
+            Optional<object> info = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceSpecification"))
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("info"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serviceSpecification = ServiceSpecification.DeserializeServiceSpecification(property.Value);
+                    info = property.Value.GetObject();
                     continue;
                 }
             }
-            return new OperationProperties(serviceSpecification.Value);
+            return new ErrorAdditionalInfo(type.Value, info.Value);
         }
     }
 }
