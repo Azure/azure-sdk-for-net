@@ -26,7 +26,7 @@ param(
 
     [Parameter(Mandatory = $false)]
     [string] $PushArgs = "",
-    
+
     [Parameter(Mandatory = $false)]
     [string] $RemoteName = "",
 
@@ -59,7 +59,7 @@ if ($RemoteName -and !(git remote | ? {$_ -eq $RemoteName}))
         exit $LASTEXITCODE
     }
 }
-else {
+elseif  (!$RemoteName -or !(git remote | ? {$_ -eq $RemoteName})) {
     Write-Host "git clone $GitUrl"
     git clone $GitUrl
     if ($LASTEXITCODE -ne 0)
