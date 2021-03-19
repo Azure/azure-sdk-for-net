@@ -14,6 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Iot.TimeSeriesInsights.Tests
 {
+    [Parallelizable(ParallelScope.None)]
     public class TimeSeriesInsightsQueryTests : E2eTestBase
     {
         private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(10);
