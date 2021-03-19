@@ -162,16 +162,16 @@ namespace Azure.Identity
             {
                 switch (level)
                 {
-                    case Microsoft.Identity.Client.LogLevel.Error:
+                    case Microsoft.Identity.Client.LogLevel.Error when IsEnabled(EventLevel.Error, EventKeywords.All):
                         LogMsalError(message);
                         break;
-                    case Microsoft.Identity.Client.LogLevel.Warning:
+                    case Microsoft.Identity.Client.LogLevel.Warning when IsEnabled(EventLevel.Warning, EventKeywords.All):
                         LogMsalWarning(message);
                         break;
-                    case Microsoft.Identity.Client.LogLevel.Info:
+                    case Microsoft.Identity.Client.LogLevel.Info when IsEnabled(EventLevel.Informational, EventKeywords.All):
                         LogMsalInformational(message);
                         break;
-                    case Microsoft.Identity.Client.LogLevel.Verbose:
+                    case Microsoft.Identity.Client.LogLevel.Verbose when IsEnabled(EventLevel.Verbose, EventKeywords.All):
                         LogMsalVerbose(message);
                         break;
                     default:
