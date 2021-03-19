@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes details. </summary>
-    public partial class RegistryArtifactProperties
+    internal partial class RegistryArtifactProperties
     {
         /// <summary> Initializes a new instance of RegistryArtifactProperties. </summary>
         internal RegistryArtifactProperties()

@@ -39,28 +39,6 @@ namespace Azure.Containers.ContainerRegistry
         public bool? CanRead { get { throw null; } set { } }
         public bool? CanWrite { get { throw null; } set { } }
     }
-    public partial class DeleteRepositoryResult
-    {
-        internal DeleteRepositoryResult() { }
-        public System.Collections.Generic.IReadOnlyList<string> DeletedRegistryArtifactDigests { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> DeletedTags { get { throw null; } }
-    }
-    public partial class RegistryArtifactProperties
-    {
-        internal RegistryArtifactProperties() { }
-        public string ConfigMediaType { get { throw null; } }
-        public string CpuArchitecture { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public string Digest { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
-        public string ManifestMediaType { get { throw null; } }
-        public Azure.Containers.ContainerRegistry.ContentProperties ManifestProperties { get { throw null; } }
-        public string OperatingSystem { get { throw null; } }
-        public string Registry { get { throw null; } }
-        public string Repository { get { throw null; } }
-        public long? Size { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Tags { get { throw null; } }
-    }
     public partial class RepositoryProperties
     {
         internal RepositoryProperties() { }

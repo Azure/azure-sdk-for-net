@@ -8,10 +8,18 @@ input-file:
 model-namespace: false
 ```
 
-#``` yaml
-#directive:
-#  from: swagger-document
-#  where: $.definitions.*
-#  transform: >
-#    $["x-accessibility"] = "internal"
-#```
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.DeletedRepository
+  transform: >
+    $["x-accessibility"] = "internal"
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ManifestAttributes
+  transform: >
+    $["x-accessibility"] = "internal"
+```

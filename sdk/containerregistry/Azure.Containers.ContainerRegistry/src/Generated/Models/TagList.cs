@@ -21,7 +21,7 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Initializes a new instance of TagList. </summary>
         /// <param name="registry"> Registry name. </param>
-        /// <param name="repository"> Repository name. </param>
+        /// <param name="repository"> Image name. </param>
         /// <param name="tags"> List of tag attribute details. </param>
         /// <param name="link"> . </param>
         internal TagList(string registry, string repository, IReadOnlyList<TagAttributesBase> tags, string link)
