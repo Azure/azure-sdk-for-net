@@ -1666,10 +1666,9 @@ namespace Azure.Iot.TimeSeriesInsights
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteInstances)}");
             scope.Start();
-            // 2, 1, 3
             try
             {
-                //Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
+                Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
 
                 TypesBatchRequest batchRequest = new TypesBatchRequest()
                 {
