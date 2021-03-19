@@ -15,24 +15,15 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
     return $null
   }
 
-  if ($pkgName)
+  $projectPaths = (Resolve-Path (Join-Path $projDirPath "*.csproj")).path
+  if ($projectPaths.Count -gt 1)
   {
-    $projectPath = Join-Path $projDirPath "$pkgName.csproj"
+    LogWarning "There is more than on csproj file in the projectpath/src directory. First project picked."
+    $projectPath = $projectPaths[0]
   }
-  else
-  {
-    $projectPaths = (Resolve-Path (Join-Path $projDirPath "*.csproj")).path
-    if ($projectPaths.Count -gt 1)
-    {
-      LogWarning "There is more than on csproj file in the projectpath/src directory. First project picked."
-      $projectPath = $projectPaths[0]
-    }
-    else {
-      $projectPath = $projectPaths
-    }
+  else {
+    $projectPath = $projectPaths
   }
-
-
 
   if ($projectPath -and (Test-Path $projectPath))
   {
@@ -251,7 +242,7 @@ function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName)
   return $packages
 }
 
-function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseDate, $BuildType=$null, $GroupId=$null)
+function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseDate)
 {
   if($null -eq $ReleaseDate)
   {
