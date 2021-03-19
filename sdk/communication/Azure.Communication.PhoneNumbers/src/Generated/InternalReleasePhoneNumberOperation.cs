@@ -19,6 +19,11 @@ namespace Azure.Communication.PhoneNumbers
     {
         private readonly ArmOperationHelpers<Response> _operation;
 
+        /// <summary> Initializes a new instance of InternalReleasePhoneNumberOperation for mocking. </summary>
+        protected InternalReleasePhoneNumberOperation()
+        {
+        }
+
         /// <inheritdoc />
         public override Response Value => _operation.Value;
 

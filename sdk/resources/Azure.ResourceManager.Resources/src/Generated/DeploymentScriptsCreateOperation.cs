@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Resources
     public partial class DeploymentScriptsCreateOperation : Operation<DeploymentScript>, IOperationSource<DeploymentScript>
     {
         private readonly ArmOperationHelpers<DeploymentScript> _operation;
+
+        /// <summary> Initializes a new instance of DeploymentScriptsCreateOperation for mocking. </summary>
+        protected DeploymentScriptsCreateOperation()
+        {
+        }
+
         internal DeploymentScriptsCreateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<DeploymentScript>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentScriptsCreateOperation");
