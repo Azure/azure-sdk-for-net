@@ -34,6 +34,7 @@ steps:
     WorkingDirectory: ${{ parameters.WorkingDirectory }}
     ScriptDirectory: ${{ parameters.ScriptDirectory }}
     SkipCheckingForChanges: ${{ parameters.SkipCheckingForChanges }} 
+    RemoteName: ${{ parameters.RemoteName }}
 
 - task: PowerShell@2
   displayName: Create pull request
