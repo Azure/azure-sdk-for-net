@@ -5,7 +5,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
-  </PropertyGroup>https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/deviceupdate/Microsoft.Azure.Management.DeviceUpdate/src/Microsoft.Azure.Management.DeviceUpdate.csproj
+  </PropertyGroup>
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.DeviceUpdate</PackageId>
