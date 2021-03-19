@@ -54,12 +54,12 @@ namespace Azure.Iot.TimeSeriesInsights
     }
     public partial class GetEvents
     {
-        public GetEvents(System.Collections.Generic.IEnumerable<object> timeSeriesId, Azure.Iot.TimeSeriesInsights.DateTimeRange searchSpan) { }
+        public GetEvents(Azure.Iot.TimeSeriesInsights.TimeSeriesId timeSeriesId, Azure.Iot.TimeSeriesInsights.DateTimeRange searchSpan) { }
         public Azure.Iot.TimeSeriesInsights.TimeSeriesExpression Filter { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Iot.TimeSeriesInsights.EventProperty> ProjectedProperties { get { throw null; } }
         public Azure.Iot.TimeSeriesInsights.DateTimeRange SearchSpan { get { throw null; } }
         public int? Take { get { throw null; } set { } }
-        public System.Collections.Generic.IList<object> TimeSeriesId { get { throw null; } }
+        public Azure.Iot.TimeSeriesInsights.TimeSeriesId TimeSeriesId { get { throw null; } }
     }
     public partial class GetEventSchemaRequest
     {
@@ -262,12 +262,24 @@ namespace Azure.Iot.TimeSeriesInsights
         public PropertyValues() { }
         public System.Collections.Generic.IList<object> Values { get { throw null; } }
     }
+    public partial class QueryEventsRequestOptions : Azure.Iot.TimeSeriesInsights.QueryRequestOptions
+    {
+        public QueryEventsRequestOptions() { }
+        public Azure.Iot.TimeSeriesInsights.EventProperty[] ProjectedProperties { get { throw null; } set { } }
+    }
     public partial class QueryRequest
     {
         public QueryRequest() { }
         public Azure.Iot.TimeSeriesInsights.AggregateSeries AggregateSeries { get { throw null; } set { } }
         public Azure.Iot.TimeSeriesInsights.GetEvents GetEvents { get { throw null; } set { } }
         public Azure.Iot.TimeSeriesInsights.GetSeries GetSeries { get { throw null; } set { } }
+    }
+    public abstract partial class QueryRequestOptions
+    {
+        protected QueryRequestOptions() { }
+        public string Filter { get { throw null; } set { } }
+        public int? MaximumNumberOfEvents { get { throw null; } set { } }
+        public Azure.Iot.TimeSeriesInsights.StoreType StoreType { get { throw null; } set { } }
     }
     public partial class QueryResultPage : Azure.Iot.TimeSeriesInsights.PagedResponse
     {
@@ -324,6 +336,13 @@ namespace Azure.Iot.TimeSeriesInsights
         internal SearchSuggestion() { }
         public string HighlightedSearchString { get { throw null; } }
         public string SearchString { get { throw null; } }
+    }
+    public partial class StoreType
+    {
+        internal StoreType() { }
+        public static Azure.Iot.TimeSeriesInsights.StoreType ColdStore { get { throw null; } }
+        public static Azure.Iot.TimeSeriesInsights.StoreType WarmStore { get { throw null; } }
+        public override string ToString() { throw null; }
     }
     public partial class TimeSeriesAggregateCategory
     {
@@ -389,6 +408,10 @@ namespace Azure.Iot.TimeSeriesInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.TimeSeriesModelSettings>> GetModelSettingsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.SearchSuggestion[]> GetSearchSuggestions(string searchString, int? maxNumberOfSuggestions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.SearchSuggestion[]>> GetSearchSuggestionsAsync(string searchString, int? maxNumberOfSuggestions = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Iot.TimeSeriesInsights.QueryResultPage> QueryEvents(Azure.Iot.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.Iot.TimeSeriesInsights.QueryEventsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Iot.TimeSeriesInsights.QueryResultPage> QueryEvents(Azure.Iot.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.TimeSpan timeSpan, System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.Iot.TimeSeriesInsights.QueryEventsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Iot.TimeSeriesInsights.QueryResultPage> QueryEventsAsync(Azure.Iot.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, Azure.Iot.TimeSeriesInsights.QueryEventsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Iot.TimeSeriesInsights.QueryResultPage> QueryEventsAsync(Azure.Iot.TimeSeriesInsights.TimeSeriesId timeSeriesId, System.TimeSpan timeSpan, System.DateTimeOffset? endTime = default(System.DateTimeOffset?), Azure.Iot.TimeSeriesInsights.QueryEventsRequestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationResult[]> ReplaceTimeSeriesInstances(System.Collections.Generic.IEnumerable<Azure.Iot.TimeSeriesInsights.TimeSeriesInstance> timeSeriesInstances, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Iot.TimeSeriesInsights.InstancesOperationResult[]>> ReplaceTimeSeriesInstancesAsync(System.Collections.Generic.IEnumerable<Azure.Iot.TimeSeriesInsights.TimeSeriesInstance> timeSeriesInstances, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Iot.TimeSeriesInsights.TimeSeriesModelSettings> UpdateModelSettingsDefaultTypeId(string defaultTypeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
