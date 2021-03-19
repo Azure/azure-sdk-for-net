@@ -41,7 +41,7 @@ param(
 # would fail the first time git wrote command output.
 $ErrorActionPreference = "Continue"
 
-if (!(git remote | ? {$_ -eq $RemoteName}))
+if ($RemoteName -and !(git remote | ? {$_ -eq $RemoteName}))
 {
     Write-Host "git remote add $RemoteName $GitUrl"
     git remote add $RemoteName $GitUrl
@@ -50,20 +50,28 @@ if (!(git remote | ? {$_ -eq $RemoteName}))
         Write-Error "Unable to add remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
         exit $LASTEXITCODE
     }
+    Write-Host "git fetch $RemoteName"
+    git fetch $RemoteName
+    if ($LASTEXITCODE -ne 0)
+    {
+        Write-Error "Unable to fetch remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
+        exit $LASTEXITCODE
+    }
+}
+else {
+    Write-Host "git clone $GitUrl"
+    git clone $GitUrl
+    if ($LASTEXITCODE -ne 0)
+    {
+        Write-Error "Unable to add remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
+        exit $LASTEXITCODE
+    }
 }
 
-Write-Host "git fetch $RemoteName"
-git fetch $RemoteName
-if ($LASTEXITCODE -ne 0)
-{
-    Write-Error "Unable to fetch remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
-    exit $LASTEXITCODE
-}
-
-# Check if the branch is default branch in remote.
-$defaultBranch = (git remote show $RemoteName | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
-Write-Host "The default branch is $defaultBranch."
-if ($defaultBranch -ne $PRBranchName) {
+# Check if the PRBranch is current branch.
+$currentBranch = git branch --show-current
+Write-Host "The current branch is $currentBranch."
+if ($currentBranch -ne $PRBranchName) {
     Write-Host "git checkout -b $PRBranchName"
     git checkout -b $PRBranchName
 }
@@ -111,8 +119,11 @@ do
     {
         $needsRetry = $true
         Write-Host "Git push failed with LASTEXITCODE=$($LASTEXITCODE) Need to fetch and rebase: attempt number=$($tryNumber)"
-        Write-Host "git fetch $RemoteName"
-        git fetch $RemoteName
+        if ($RemoteName) 
+        {
+            Write-Host "git fetch $RemoteName"
+            git fetch $RemoteName
+        }
         if ($LASTEXITCODE -ne 0)
         {
             Write-Error "Unable to fetch remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
