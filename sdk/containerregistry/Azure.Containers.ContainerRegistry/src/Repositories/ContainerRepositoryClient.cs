@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RepositoryRestClient _restClient;
+        private readonly ContainerRegistryRepositoryRestClient _restClient;
 
         private readonly string _repository;
 
@@ -54,7 +54,7 @@ namespace Azure.Containers.ContainerRegistry
             Endpoint = endpoint;
             _repository = repository;
 
-            _restClient = new RepositoryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
+            _restClient = new ContainerRegistryRepositoryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
@@ -70,7 +70,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.GetAttributesAsync(_repository, cancellationToken).ConfigureAwait(false);
+                return await _restClient.GetPropertiesAsync(_repository, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -87,7 +87,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.GetAttributes(_repository, cancellationToken);
+                return _restClient.GetProperties(_repository, cancellationToken);
             }
             catch (Exception e)
             {
@@ -105,7 +105,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.UpdateAttributesAsync(_repository, value, cancellationToken).ConfigureAwait(false);
+                return await _restClient.SetPropertiesAsync(_repository, value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -123,7 +123,81 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.UpdateAttributes(_repository, value, cancellationToken);
+                return _restClient.SetProperties(_repository, value, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get tag properties by tag. </summary>
+        /// <param name="tag"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<TagProperties>> GetTagPropertiesAsync(string tag, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTagProperties)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.GetTagPropertiesAsync(_repository, tag, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get tag attributes by tag. </summary>
+        /// <param name="tag"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<TagProperties> GetTagProperties(string tag, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTagProperties)}");
+            scope.Start();
+            try
+            {
+                return _restClient.GetTagProperties(_repository, tag, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update tag attributes. </summary>
+        /// <param name="tag"> Tag name. </param>
+        /// <param name="value"> Tag property value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> SetTagPropertiesAsync(string tag, ContentProperties value, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetTagProperties)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.UpdateTagAttributesAsync(_repository, tag, value, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update tag attributes. </summary>
+        /// <param name="tag"> Tag name. </param>
+        /// <param name="value"> Tag property value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response SetTagProperties(string tag, ContentProperties value, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetTagProperties)}");
+            scope.Start();
+            try
+            {
+                return _restClient.UpdateTagAttributes(_repository, tag, value, cancellationToken);
             }
             catch (Exception e)
             {

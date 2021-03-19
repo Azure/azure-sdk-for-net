@@ -18,22 +18,22 @@ namespace Azure.Containers.ContainerRegistry
             if (Optional.IsDefined(CanDelete))
             {
                 writer.WritePropertyName("deleteEnabled");
-                writer.WriteBooleanValue(CanDelete);
+                writer.WriteBooleanValue(CanDelete.Value);
             }
             if (Optional.IsDefined(CanWrite))
             {
                 writer.WritePropertyName("writeEnabled");
-                writer.WriteBooleanValue(CanWrite);
+                writer.WriteBooleanValue(CanWrite.Value);
             }
             if (Optional.IsDefined(CanList))
             {
                 writer.WritePropertyName("listEnabled");
-                writer.WriteBooleanValue(CanList);
+                writer.WriteBooleanValue(CanList.Value);
             }
             if (Optional.IsDefined(CanRead))
             {
                 writer.WritePropertyName("readEnabled");
-                writer.WriteBooleanValue(CanRead);
+                writer.WriteBooleanValue(CanRead.Value);
             }
             writer.WriteEndObject();
         }
@@ -87,7 +87,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ContentProperties(deleteEnabled, writeEnabled, listEnabled, readEnabled);
+            return new ContentProperties(Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
         }
     }
 }

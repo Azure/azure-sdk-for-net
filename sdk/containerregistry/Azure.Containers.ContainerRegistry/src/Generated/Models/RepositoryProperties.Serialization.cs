@@ -41,7 +41,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createdTime = property.Value.GetDateTimeOffset();
+                    createdTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastUpdateTime"))
@@ -51,7 +51,7 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastUpdateTime = property.Value.GetDateTimeOffset();
+                    lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("manifestCount"))
@@ -85,7 +85,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new RepositoryProperties(registry.Value, imageName.Value, createdTime, lastUpdateTime, manifestCount, tagCount, changeableAttributes.Value);
+            return new RepositoryProperties(registry.Value, imageName.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), Optional.ToNullable(manifestCount), Optional.ToNullable(tagCount), changeableAttributes.Value);
         }
     }
 }
