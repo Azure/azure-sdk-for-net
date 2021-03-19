@@ -209,6 +209,32 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [Test]
+        public void DataLakeUriBuilder_ToBlobPeriodUri_BlobPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_blobPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_blobPeriodUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToBlobPeriodUri_DfsPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToBlobUri();
+
+            // Assert
+            Assert.AreEqual(_blobPeriodUri, result);
+        }
+
+        [Test]
         public void DataLakeUriBuilder_ToDfsUri_CustomUri()
         {
             // Arrange
@@ -284,6 +310,32 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(_dfsUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToDfsPeriodUri_DfsPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_dfsPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_dfsPeriodUri, result);
+        }
+
+        [Test]
+        public void DataLakeUriBuilder_ToDfsPeriodUri_BlobPeriodUri()
+        {
+            // Arrange
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(_blobPeriodUri);
+
+            // Act
+            Uri result = uriBuilder.ToDfsUri();
+
+            // Assert
+            Assert.AreEqual(_dfsPeriodUri, result);
         }
 
         [Test]
