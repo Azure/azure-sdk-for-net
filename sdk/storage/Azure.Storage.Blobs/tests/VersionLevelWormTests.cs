@@ -248,6 +248,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task ContainerVersionLevelWorm()
         {
             // Arrange
@@ -268,6 +269,53 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsTrue(containerItem.Properties.IsVersionLevelWormEnabled);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task CreateAppendBlob_VersionLevelWorm()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            AppendBlobClient appendBlob = InstrumentClient(vlwContainer.Container.GetAppendBlobClient(GetNewBlobName()));
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = new DateTimeOffset(
+                year: immutabilityPolicy.ExpiriesOn.Value.Year,
+                month: immutabilityPolicy.ExpiriesOn.Value.Month,
+                day: immutabilityPolicy.ExpiriesOn.Value.Day,
+                hour: immutabilityPolicy.ExpiriesOn.Value.Hour,
+                minute: immutabilityPolicy.ExpiriesOn.Value.Minute,
+                second: immutabilityPolicy.ExpiriesOn.Value.Second,
+                offset: TimeSpan.Zero);
+
+            AppendBlobCreateOptions options = new AppendBlobCreateOptions
+            {
+                ImmutabilityPolicy = immutabilityPolicy,
+                LegalHold = true
+            };
+
+            // Act
+            Response<BlobContentInfo> createResponse = await appendBlob.CreateAsync(options);
+
+            // Assert
+            Response<BlobProperties> propertiesResponse = await appendBlob.GetPropertiesAsync();
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
+
+            // Wait for immutability policy to expire.
+            TimeSpan remainingImmutibilityPolicyTime = expectedImmutabilityPolicyExpiry - Recording.UtcNow;
+            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
+            {
+                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
+            }
         }
 
         private async Task <DisposingVersionLevelWormContainer> GetTestVersionLevelWormContainer(TenantConfiguration tenantConfiguration)
@@ -321,7 +369,7 @@ namespace Azure.Storage.Blobs.Test
         {
             if (Container != null)
             {
-                await foreach (BlobItem blobItem in Container.GetBlobsAsync())
+                await foreach (BlobItem blobItem in Container.GetBlobsAsync(traits: BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold))
                 {
                     BlobClient blobClient = Container.GetBlobClient(blobItem.Name);
                     if (blobItem.Properties.HasLegalHold)
@@ -329,14 +377,14 @@ namespace Azure.Storage.Blobs.Test
                         await blobClient.SetLegalHoldAsync(false);
                     }
 
-                    if (blobItem.Properties.ImmutabilityPolicyMode == BlobImmutabilityPolicyMode.Locked)
-                    {
-                        BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
-                        {
-                            PolicyMode = BlobImmutabilityPolicyMode.Unlocked
-                        };
-                        await blobClient.SetImmutabilityPolicyAsync(immutabilityPolicy);
-                    }
+                    //if (blobItem.Properties.ImmutabilityPolicyMode == BlobImmutabilityPolicyMode.Locked)
+                    //{
+                    //    BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+                    //    {
+                    //        PolicyMode = BlobImmutabilityPolicyMode.Unlocked
+                    //    };
+                    //    await blobClient.SetImmutabilityPolicyAsync(immutabilityPolicy);
+                    //}
 
                     await blobClient.DeleteIfExistsAsync();
                 }
