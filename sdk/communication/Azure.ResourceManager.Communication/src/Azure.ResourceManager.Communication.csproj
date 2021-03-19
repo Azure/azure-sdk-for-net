@@ -11,5 +11,6 @@
     AZC0001 - Azure.ResourceManager.Communication namespace needs to be registered in the analyzer
     -->
     <NoWarn>$(NoWarn);AZC0001</NoWarn>
+    <IsOldTrack2>true</IsOldTrack2>
   </PropertyGroup>
 </Project>
