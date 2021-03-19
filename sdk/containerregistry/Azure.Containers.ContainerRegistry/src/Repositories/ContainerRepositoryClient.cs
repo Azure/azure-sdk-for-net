@@ -131,5 +131,119 @@ namespace Azure.Containers.ContainerRegistry
                 throw;
             }
         }
+
+        /// <summary> Get tag properties by tag. </summary>
+        /// <param name="tag"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<TagProperties>> GetTagPropertiesAsync(string tag, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetTagAttributes");
+            scope.Start();
+            try
+            {
+                return await _restClient.GetTagPropertiesAsync(_repository, tag, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get tag attributes by tag. </summary>
+        /// <param name="tag"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<TagProperties> GetTagProperties(string tag, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.GetTagAttributes");
+            scope.Start();
+            try
+            {
+                return _restClient.GetTagProperties(_repository, tag, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update tag attributes. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> Tag name. </param>
+        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> UpdateTagAttributesAsync(string name, string reference, ContentProperties value = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.UpdateTagAttributes");
+            scope.Start();
+            try
+            {
+                return await _restClient.UpdateTagAttributesAsync(name, reference, value, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update tag attributes. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> Tag name. </param>
+        /// <param name="value"> Repository attribute value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response UpdateTagAttributes(string name, string reference, ContentProperties value = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.UpdateTagAttributes");
+            scope.Start();
+            try
+            {
+                return _restClient.UpdateTagAttributes(name, reference, value, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete tag. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteTagAsync(string name, string reference, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.DeleteTag");
+            scope.Start();
+            try
+            {
+                return await _restClient.DeleteTagAsync(name, reference, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete tag. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="reference"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteTag(string name, string reference, CancellationToken cancellationToken = default)
+        {
+            using var scope = _clientDiagnostics.CreateScope("ContainerRegistryRepositoryClient.DeleteTag");
+            scope.Start();
+            try
+            {
+                return _restClient.DeleteTag(name, reference, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }
