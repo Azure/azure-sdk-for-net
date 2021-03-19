@@ -6,12 +6,7 @@
     <PackageTags>Azure Container Registry;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Models\**" />
-    <EmbeddedResource Remove="Models\**" />
-    <None Remove="Models\**" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
