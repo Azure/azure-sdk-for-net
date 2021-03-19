@@ -161,7 +161,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             CreateMessageBatchOptions options,
             CancellationToken cancellationToken)
         {
-            return await _retryPolicy.RunOperation(static async (value, timeout, _) =>
+            Task<TransportMessageBatch> createBatchTask = _retryPolicy.RunOperation(static async (value, timeout, _) =>
                 {
                     var (sender, ops) = value;
                     return await sender.CreateMessageBatchInternalAsync(
@@ -170,7 +170,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 },
                 (this, options),
                 _connectionScope,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken);
+            return await createBatchTask.ConfigureAwait(false);
         }
 
         internal async ValueTask<TransportMessageBatch> CreateMessageBatchInternalAsync(
@@ -205,17 +206,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         ///
-        public override Task SendBatchAsync(
+        public override async Task SendBatchAsync(
             ServiceBusMessageBatch messageBatch,
-            CancellationToken cancellationToken) =>
-            _retryPolicy.RunOperation(static (value, timeout, token) =>
+            CancellationToken cancellationToken)
+        {
+            await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
                     var (sender, msgs) = value;
-                    return sender.SendBatchInternalAsync(msgs, timeout, token);
+                    await sender.SendBatchInternalAsync(
+                        msgs,
+                        timeout,
+                        token).ConfigureAwait(false);
                 },
                 (this, messageBatch.AsEnumerable<ServiceBusMessage>()),
-                _connectionScope,
-                cancellationToken);
+            _connectionScope,
+            cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         ///    Sends a set of messages to the associated Queue/Topic using a batched approach.
@@ -298,20 +304,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <param name="messages">The list of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        public override Task SendAsync(
+        public override async Task SendAsync(
             IReadOnlyList<ServiceBusMessage> messages,
-            CancellationToken cancellationToken) =>
-            _retryPolicy.RunOperation(static (value, timeout, token) =>
+            CancellationToken cancellationToken)
+        {
+            await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
                     var (sender, msgs) = value;
-                    return sender.SendBatchInternalAsync(
+                    await sender.SendBatchInternalAsync(
                         msgs,
                         timeout,
-                        token);
+                        token).ConfigureAwait(false);
                 },
                 (this, messages),
-                _connectionScope,
-                cancellationToken);
+            _connectionScope,
+            cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         ///   Closes the connection to the transport sender instance.
@@ -374,17 +382,28 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IReadOnlyList<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
         {
-            return await _retryPolicy.RunOperation(static (value, timeout, token) =>
+            return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
                     var (sender, msgs) = value;
-                    return sender.ScheduleMessageInternalAsync(msgs, timeout, token);
+                    return await sender
+                        .ScheduleMessageInternalAsync(
+                            msgs,
+                            timeout,
+                            token).ConfigureAwait(false);
                 },
                 (this, messages),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false) ?? Array.Empty<long>();
         }
 
-        internal async Task<IReadOnlyList<long>> ScheduleMessageInternalAsync(
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="messages"></param>
+        /// <param name="timeout"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        internal async Task<long[]> ScheduleMessageInternalAsync(
             IReadOnlyList<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
@@ -475,20 +494,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="sequenceNumbers"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public override Task CancelScheduledMessagesAsync(
+        public override async Task CancelScheduledMessagesAsync(
             long[] sequenceNumbers,
-            CancellationToken cancellationToken = default) =>
-            _retryPolicy.RunOperation(static (value, timeout, token) =>
+            CancellationToken cancellationToken = default)
+        {
+            Task cancelMessageTask = _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
                     var (sender, sqn) = value;
-                    return sender.CancelScheduledMessageInternalAsync(
+                    await sender.CancelScheduledMessageInternalAsync(
                         sqn,
                         timeout,
-                        token);
+                        token).ConfigureAwait(false);
                 },
                 (this, sequenceNumbers),
                 _connectionScope,
                 cancellationToken);
+            await cancelMessageTask.ConfigureAwait(false);
+        }
 
         /// <summary>
         ///
