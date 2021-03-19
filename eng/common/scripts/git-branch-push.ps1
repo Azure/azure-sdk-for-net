@@ -112,6 +112,10 @@ $tryNumber = 0
 do
 {
     $needsRetry = $false
+    if (!$RemoteName) 
+    {   
+        $RemoteName = 'origin'
+    }
     Write-Host "git push $RemoteName $PRBranchName $PushArgs"
     git push $RemoteName $PRBranchName $PushArgs
     $tryNumber++
@@ -119,11 +123,9 @@ do
     {
         $needsRetry = $true
         Write-Host "Git push failed with LASTEXITCODE=$($LASTEXITCODE) Need to fetch and rebase: attempt number=$($tryNumber)"
-        if ($RemoteName) 
-        {
-            Write-Host "git fetch $RemoteName"
-            git fetch $RemoteName
-        }
+ 
+        Write-Host "git fetch $RemoteName"
+        git fetch $RemoteName
         if ($LASTEXITCODE -ne 0)
         {
             Write-Error "Unable to fetch remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
@@ -140,7 +142,6 @@ do
                 Write-Error "Unable to create diff file LASTEXITCODE=$($LASTEXITCODE), see command output above."
                 continue
             }
-
             Write-Host "git reset --hard $RemoteName/${PRBranchName}"
             git reset --hard $RemoteName/${PRBranchName}
             if ($LASTEXITCODE -ne 0)
