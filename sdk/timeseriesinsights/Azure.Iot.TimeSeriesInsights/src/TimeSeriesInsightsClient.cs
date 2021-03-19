@@ -27,6 +27,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
         private readonly ModelSettingsRestClient _modelSettingsRestClient;
         private readonly TimeSeriesInstancesRestClient _timeSeriesInstancesRestClient;
+        private readonly QueryRestClient _queryRestClient;
 
         /// <summary>
         /// Creates a new instance of the <see cref="TimeSeriesInsightsClient"/> class.
@@ -86,6 +87,7 @@ namespace Azure.Iot.TimeSeriesInsights
             string versionString = options.GetVersionString();
             _modelSettingsRestClient = new ModelSettingsRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _timeSeriesInstancesRestClient = new TimeSeriesInstancesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
+            _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
         }
 
         /// <summary>
@@ -1053,6 +1055,292 @@ namespace Azure.Iot.TimeSeriesInsights
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Retrieve raw events for a given Time Series Id asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve raw events for.</param>
+        /// <param name="startTime">Start timestamp of the time range. Events that have this timestamp are included.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded.</param>
+        /// <param name="options">Optional parameters to use when querying for events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
+        public virtual AsyncPageable<QueryResultPage> QueryEventsAsync(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QueryEventsRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+            scope.Start();
+
+            try
+            {
+                return QueryEventsInternalAsync(timeSeriesId, startTime, endTime, options, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve raw events for a given Time Series Id synchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve raw events for.</param>
+        /// <param name="startTime">Start timestamp of the time range. Events that have this timestamp are included.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded.</param>
+        /// <param name="options">Optional parameters to use when querying for events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
+        public virtual Pageable<QueryResultPage> QueryEvents(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QueryEventsRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+            scope.Start();
+
+            try
+            {
+                return QueryEventsInternal(timeSeriesId, startTime, endTime, options, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve raw events for a given Time Series Id over a specified timespan asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve raw events for.</param>
+        /// <param name="timeSpan">The timespan over which to query data.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded. If null is provided, DateTimeOffset.UtcNow is used.</param>
+        /// <param name="options">Optional parameters to use when querying for events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
+        public virtual AsyncPageable<QueryResultPage> QueryEventsAsync(
+            TimeSeriesId timeSeriesId,
+            TimeSpan timeSpan,
+            DateTimeOffset? endTime = null,
+            QueryEventsRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+            scope.Start();
+
+            try
+            {
+                DateTimeOffset rangeEndTime = endTime ?? DateTimeOffset.UtcNow;
+                DateTimeOffset rangeStartTime = rangeEndTime - timeSpan;
+                return QueryEventsInternalAsync(timeSeriesId, rangeStartTime, rangeEndTime, options, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve raw events for a given Time Series Id over a certain timeSpan synchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve raw events for.</param>
+        /// <param name="timeSpan">The timespan over which to query data.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded. If null is provided, DateTimeOffset.UtcNow is used.</param>
+        /// <param name="options">Optional parameters to use when querying for events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
+        public virtual Pageable<QueryResultPage> QueryEvents(
+            TimeSeriesId timeSeriesId,
+            TimeSpan timeSpan,
+            DateTimeOffset? endTime = null,
+            QueryEventsRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+            scope.Start();
+
+            try
+            {
+                DateTimeOffset rangeEndTime = endTime ?? DateTimeOffset.UtcNow;
+                DateTimeOffset rangeStartTime = rangeEndTime - timeSpan;
+                return QueryEventsInternal(timeSeriesId, rangeStartTime, rangeEndTime, options, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        private AsyncPageable<QueryResultPage> QueryEventsInternalAsync(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QueryEventsRequestOptions options,
+            CancellationToken cancellationToken)
+        {
+            var searchSpan = new DateTimeRange(startTime, endTime);
+            var queryRequest = new QueryRequest
+            {
+                GetEvents = new GetEvents(timeSeriesId, searchSpan)
+            };
+
+            if (options != null)
+            {
+                if (options.Filter != null)
+                {
+                    queryRequest.GetEvents.Filter = new TimeSeriesExpression(options.Filter);
+                }
+
+                if (options.ProjectedProperties != null)
+                {
+                    foreach (EventProperty projectedProperty in options.ProjectedProperties)
+                    {
+                        queryRequest.GetEvents.ProjectedProperties.Add(projectedProperty);
+                    }
+                }
+
+                queryRequest.GetEvents.Take = options.MaximumNumberOfEvents;
+            }
+
+            async Task<Page<QueryResultPage>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = await _queryRestClient
+                        .ExecuteAsync(queryRequest, options?.StoreType?.ToString(), null, null, cancellationToken)
+                        .ConfigureAwait(false);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            async Task<Page<QueryResultPage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = await _queryRestClient
+                        .ExecuteAsync(queryRequest, options?.StoreType?.ToString(), nextLink, null, cancellationToken)
+                        .ConfigureAwait(false);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        private Pageable<QueryResultPage> QueryEventsInternal(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QueryEventsRequestOptions options,
+            CancellationToken cancellationToken)
+        {
+            var searchSpan = new DateTimeRange(startTime, endTime);
+            var queryRequest = new QueryRequest
+            {
+                GetEvents = new GetEvents(timeSeriesId, searchSpan)
+            };
+
+            if (options != null)
+            {
+                if (options.Filter != null)
+                {
+                    queryRequest.GetEvents.Filter = new TimeSeriesExpression(options.Filter);
+                }
+
+                if (options.ProjectedProperties != null)
+                {
+                    foreach (EventProperty projectedProperty in options.ProjectedProperties)
+                    {
+                        queryRequest.GetEvents.ProjectedProperties.Add(projectedProperty);
+                    }
+                }
+
+                queryRequest.GetEvents.Take = options.MaximumNumberOfEvents;
+            }
+
+            Page<QueryResultPage> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = _queryRestClient
+                        .Execute(queryRequest, options?.StoreType?.ToString(), null, null, cancellationToken);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            Page<QueryResultPage> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = _queryRestClient
+                        .Execute(queryRequest, options?.StoreType?.ToString(), nextLink, null, cancellationToken);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }
