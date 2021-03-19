@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class DeletedRepository
+    public partial class DeletedRepositoryResult
     {
-        internal static DeletedRepository DeserializeDeletedRepository(JsonElement element)
+        internal static DeletedRepositoryResult DeserializeDeletedRepositoryResult(JsonElement element)
         {
             Optional<IReadOnlyList<string>> manifestsDeleted = default;
             Optional<IReadOnlyList<string>> tagsDeleted = default;
@@ -50,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new DeletedRepository(Optional.ToList(manifestsDeleted), Optional.ToList(tagsDeleted));
+            return new DeletedRepositoryResult(Optional.ToList(manifestsDeleted), Optional.ToList(tagsDeleted));
         }
     }
 }

@@ -23,11 +23,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="registry"> Registry name. </param>
         /// <param name="imageName"> Image name. </param>
         /// <param name="tags"> List of tag attribute details. </param>
-        internal TagList(string registry, string imageName, IReadOnlyList<TagAttributesBase> tags)
+        /// <param name="link"> . </param>
+        internal TagList(string registry, string imageName, IReadOnlyList<TagAttributesBase> tags, string link)
         {
             Registry = registry;
             ImageName = imageName;
             Tags = tags;
+            Link = link;
         }
 
         /// <summary> Registry name. </summary>
@@ -36,5 +38,6 @@ namespace Azure.Containers.ContainerRegistry
         public string ImageName { get; }
         /// <summary> List of tag attribute details. </summary>
         public IReadOnlyList<TagAttributesBase> Tags { get; }
+        public string Link { get; }
     }
 }

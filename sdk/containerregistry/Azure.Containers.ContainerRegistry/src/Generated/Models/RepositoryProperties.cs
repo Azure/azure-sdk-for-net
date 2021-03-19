@@ -24,8 +24,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="lastUpdatedOn"> Image last update time. </param>
         /// <param name="registryArtifactCount"> Number of the manifests. </param>
         /// <param name="tagCount"> Number of the tags. </param>
-        /// <param name="modifiableProperties"> Changeable attributes. </param>
-        internal RepositoryProperties(string registry, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int registryArtifactCount, int tagCount, ContentProperties modifiableProperties)
+        /// <param name="writeableProperties"> Changeable attributes. </param>
+        internal RepositoryProperties(string registry, string name, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, int? registryArtifactCount, int? tagCount, ContentProperties writeableProperties)
         {
             Registry = registry;
             Name = name;
@@ -33,10 +33,22 @@ namespace Azure.Containers.ContainerRegistry
             LastUpdatedOn = lastUpdatedOn;
             RegistryArtifactCount = registryArtifactCount;
             TagCount = tagCount;
-            ModifiableProperties = modifiableProperties;
+            WriteableProperties = writeableProperties;
         }
 
         /// <summary> Registry name. </summary>
         public string Registry { get; }
+        /// <summary> Image name. </summary>
+        public string Name { get; }
+        /// <summary> Image created time. </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Image last update time. </summary>
+        public DateTimeOffset? LastUpdatedOn { get; }
+        /// <summary> Number of the manifests. </summary>
+        public int? RegistryArtifactCount { get; }
+        /// <summary> Number of the tags. </summary>
+        public int? TagCount { get; }
+        /// <summary> Changeable attributes. </summary>
+        public ContentProperties WriteableProperties { get; }
     }
 }

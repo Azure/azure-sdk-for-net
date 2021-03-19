@@ -18,6 +18,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> registry = default;
             Optional<string> imageName = default;
             Optional<IReadOnlyList<TagAttributesBase>> tags = default;
+            Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"))
@@ -45,8 +46,13 @@ namespace Azure.Containers.ContainerRegistry
                     tags = array;
                     continue;
                 }
+                if (property.NameEquals("link"))
+                {
+                    link = property.Value.GetString();
+                    continue;
+                }
             }
-            return new TagList(registry.Value, imageName.Value, Optional.ToList(tags));
+            return new TagList(registry.Value, imageName.Value, Optional.ToList(tags), link.Value);
         }
     }
 }

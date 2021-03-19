@@ -9,22 +9,26 @@ using System;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> Tag attribute details. </summary>
-    internal partial class TagAttributesBase
+    /// <summary> Tag attributes. </summary>
+    public partial class TagProperties
     {
-        /// <summary> Initializes a new instance of TagAttributesBase. </summary>
-        internal TagAttributesBase()
+        /// <summary> Initializes a new instance of TagProperties. </summary>
+        internal TagProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TagAttributesBase. </summary>
+        /// <summary> Initializes a new instance of TagProperties. </summary>
+        /// <param name="registry"> Registry name. </param>
+        /// <param name="repository"> Image name. </param>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
         /// <param name="modifiableProperties"> Changeable attributes. </param>
-        internal TagAttributesBase(string name, string digest, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ContentProperties modifiableProperties)
+        internal TagProperties(string registry, string repository, string name, string digest, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ContentProperties modifiableProperties)
         {
+            Registry = registry;
+            Repository = repository;
             Name = name;
             Digest = digest;
             CreatedOn = createdOn;
@@ -32,6 +36,10 @@ namespace Azure.Containers.ContainerRegistry
             ModifiableProperties = modifiableProperties;
         }
 
+        /// <summary> Registry name. </summary>
+        public string Registry { get; }
+        /// <summary> Image name. </summary>
+        public string Repository { get; }
         /// <summary> Tag name. </summary>
         public string Name { get; }
         /// <summary> Tag digest. </summary>

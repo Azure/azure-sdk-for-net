@@ -55,23 +55,30 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             RepositoryProperties properties = await _client.GetPropertiesAsync();
 
-            Assert.AreEqual(canList, properties.ModifiableProperties.CanList);
-            Assert.AreEqual(canRead, properties.ModifiableProperties.CanRead);
-            Assert.AreEqual(canWrite, properties.ModifiableProperties.CanWrite);
-            Assert.AreEqual(canDelete, properties.ModifiableProperties.CanDelete);
+            Assert.AreEqual(canList, properties.WriteableProperties.CanList);
+            Assert.AreEqual(canRead, properties.WriteableProperties.CanRead);
+            Assert.AreEqual(canWrite, properties.WriteableProperties.CanWrite);
+            Assert.AreEqual(canDelete, properties.WriteableProperties.CanDelete);
         }
 
         [TearDown]
         public async Task ResetRepositoryProperties()
         {
-            await _client.SetPropertiesAsync(new ContentProperties());
+            await _client.SetPropertiesAsync(
+                new ContentProperties()
+                {
+                    CanList = true,
+                    CanRead = true,
+                    CanWrite = true,
+                    CanDelete = true
+                });
 
             RepositoryProperties properties = await _client.GetPropertiesAsync();
 
-            Assert.IsTrue(properties.ModifiableProperties.CanList);
-            Assert.IsTrue(properties.ModifiableProperties.CanRead);
-            Assert.IsTrue(properties.ModifiableProperties.CanWrite);
-            Assert.IsTrue(properties.ModifiableProperties.CanDelete);
+            Assert.IsTrue(properties.WriteableProperties.CanList);
+            Assert.IsTrue(properties.WriteableProperties.CanRead);
+            Assert.IsTrue(properties.WriteableProperties.CanWrite);
+            Assert.IsTrue(properties.WriteableProperties.CanDelete);
         }
     }
 }
