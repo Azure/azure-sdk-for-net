@@ -12,7 +12,7 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing the operations that can be performed over a specific availability set.
     /// </summary>
-    public class AvailabilitySetOperations : ResourceOperationsBase<AvailabilitySet>, ITaggableResource<AvailabilitySet>, IDeletableResource
+    public class AvailabilitySetOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, AvailabilitySet>, ITaggableResource<ResourceGroupResourceIdentifier, AvailabilitySet>, IDeletableResource
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class.
@@ -29,7 +29,7 @@ namespace Proto.Compute
         /// <param name="resourceGroup"> The client parameters to use in these operations. </param>
         /// <param name="availabilitySetName"> The name of the availability set to use. </param>
         internal AvailabilitySetOperations(ResourceGroupOperations resourceGroup, string availabilitySetName)
-            : base(resourceGroup, $"{resourceGroup.Id}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}")
+            : base(resourceGroup, resourceGroup.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", availabilitySetName))
         {
         }
 
@@ -38,7 +38,7 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected AvailabilitySetOperations(ResourceOperationsBase options, ResourceIdentifier id)
+        protected AvailabilitySetOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id)
             : base(options, id)
         {
         }
@@ -53,39 +53,39 @@ namespace Proto.Compute
 
         private AvailabilitySetsOperations Operations => new ComputeManagementClient(
             BaseUri,
-            Id.Subscription,
+            Id.SubscriptionId,
             Credential,
             ClientOptions.Convert<ComputeManagementClientOptions>()).AvailabilitySets;
 
         /// <inheritdoc/>
         public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.Delete(Id.ResourceGroup, Id.Name, cancellationToken));
+            return new ArmResponse(Operations.Delete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
         public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(await Operations.DeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken));
+            return new ArmResponse(await Operations.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
         public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.Delete(Id.ResourceGroup, Id.Name, cancellationToken));
+            return new ArmVoidOperation(Operations.Delete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
         public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.DeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken));
+            return new ArmVoidOperation(await Operations.DeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
         public override ArmResponse<AvailabilitySet> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                Operations.Get(Id.ResourceGroup, Id.Name),
+                Operations.Get(Id.ResourceGroupName, Id.Name),
                 a => new AvailabilitySet(this, new AvailabilitySetData(a)));
         }
 
@@ -93,7 +93,7 @@ namespace Proto.Compute
         public async override Task<ArmResponse<AvailabilitySet>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                await Operations.GetAsync(Id.ResourceGroup, Id.Name, cancellationToken),
+                await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken),
                 a => new AvailabilitySet(this, new AvailabilitySetData(a)));
         }
 
@@ -105,7 +105,7 @@ namespace Proto.Compute
         public ArmResponse<AvailabilitySet> Update(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                Operations.Update(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                Operations.Update(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 a => new AvailabilitySet(this, new AvailabilitySetData(a)));
         }
 
@@ -118,7 +118,7 @@ namespace Proto.Compute
         public async Task<ArmResponse<AvailabilitySet>> UpdateAsync(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                await Operations.UpdateAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                await Operations.UpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 a => new AvailabilitySet(this, new AvailabilitySetData(a)));
         }
 
@@ -130,7 +130,7 @@ namespace Proto.Compute
         public ArmOperation<AvailabilitySet> StartUpdate(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                Operations.Update(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                Operations.Update(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 a => new AvailabilitySet(this, new AvailabilitySetData(a)));
         }
 
@@ -143,7 +143,7 @@ namespace Proto.Compute
         public async Task<ArmOperation<AvailabilitySet>> StartUpdateAsync(AvailabilitySetUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
-                await Operations.UpdateAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                await Operations.UpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 a => new AvailabilitySet(this, new AvailabilitySetData(a)));
         }
 

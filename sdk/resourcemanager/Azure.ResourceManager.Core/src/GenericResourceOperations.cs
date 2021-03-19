@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the operations that can be performed over a specific ArmResource.
     /// </summary>
-    public class GenericResourceOperations : ResourceOperationsBase<GenericResource>, ITaggableResource<GenericResource>, IDeletableResource
+    public class GenericResourceOperations : ResourceOperationsBase<TenantResourceIdentifier, GenericResource>, ITaggableResource<TenantResourceIdentifier, GenericResource>, IDeletableResource
     {
         private readonly string _apiVersion;
 
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="operations"> The resource operations to copy the options from. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GenericResourceOperations(ResourceOperationsBase operations, ResourceIdentifier id)
+        internal GenericResourceOperations(ResourceOperationsBase operations, TenantResourceIdentifier id)
             : base(operations, id)
         {
             _apiVersion = "BAD VALUE";
@@ -30,11 +30,19 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
-        private ResourcesOperations Operations => new ResourcesManagementClient(
-            BaseUri,
-            Id.Subscription,
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>()).Resources;
+        private ResourcesOperations Operations
+        {
+            get
+            {
+                string subscription;
+                Id.TryGetSubscriptionId(out subscription);
+                return new ResourcesManagementClient(
+                    BaseUri,
+                    subscription,
+                    Credential,
+                    ClientOptions.Convert<ResourcesManagementClientOptions>()).Resources;
+            }
+        }
 
         /// <summary>
         /// Delete the resource.

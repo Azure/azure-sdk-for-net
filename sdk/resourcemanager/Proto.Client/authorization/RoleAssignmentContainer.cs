@@ -3,6 +3,7 @@
 
 using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Core;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,6 +21,14 @@ namespace Proto.Authorization
         internal RoleAssignmentContainer(OperationsBase operations)
             : base(operations)
         {
+            // TODO: Remove this once we nio longer need to create management clients
+            string subscriptionId;
+            if (!operations.Id.TryGetSubscriptionId(out subscriptionId))
+            {
+                subscriptionId = Guid.Empty.ToString();
+            }
+
+            Operations = new AuthorizationManagementClient(subscriptionId, BaseUri, Credential).RoleAssignments;
         }
 
         /// <summary>
@@ -30,6 +39,14 @@ namespace Proto.Authorization
         internal RoleAssignmentContainer(OperationsBase operations, ResourceIdentifier scope)
             : base(operations, scope)
         {
+            // TODO: Remove this once we nio longer need to create management clients
+            string subscriptionId;
+            if (!operations.Id.TryGetSubscriptionId(out subscriptionId))
+            {
+                subscriptionId = Guid.Empty.ToString();
+            }
+
+            Operations = new AuthorizationManagementClient(subscriptionId, BaseUri, Credential).RoleAssignments;
         }
 
         /// <inheritdoc/>
@@ -38,7 +55,7 @@ namespace Proto.Authorization
         /// <summary>
         /// Gets the resource type of the resource being created.
         /// </summary>
-        private RoleAssignmentsOperations Operations => new AuthorizationManagementClient(Id.Subscription, BaseUri, Credential).RoleAssignments;
+        private RoleAssignmentsOperations Operations { get; } 
 
         /// <summary>
         /// Create a role assignment. This method blocks until the RoleAssignment is created on the service.

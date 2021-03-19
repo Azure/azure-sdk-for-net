@@ -12,7 +12,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing the operations that can be performed over a specific virtual nerwork.
     /// </summary>
-    public class VirtualNetworkOperations : ResourceOperationsBase<VirtualNetwork>, ITaggableResource<VirtualNetwork>, IDeletableResource
+    public class VirtualNetworkOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualNetwork>, ITaggableResource<ResourceGroupResourceIdentifier, VirtualNetwork>, IDeletableResource
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualNetworkOperations"/> class.
@@ -29,7 +29,7 @@ namespace Proto.Network
         /// <param name="resourceGroup"> The client parameters to use in these operations. </param>
         /// <param name="vnetName"> The name of the virtual network to use. </param>
         internal VirtualNetworkOperations(ResourceGroupOperations resourceGroup, string vnetName)
-            : base(resourceGroup, $"{resourceGroup.Id}/providers/Microsoft.Network/virtualNetworks/{vnetName}")
+            : base(resourceGroup, resourceGroup.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnetName))
         {
         }
         
@@ -54,7 +54,7 @@ namespace Proto.Network
         protected override ResourceType ValidResourceType => ResourceType;
 
         private VirtualNetworksOperations Operations => new NetworkManagementClient(
-            Id.Subscription,
+            Id.SubscriptionId,
             BaseUri,
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).VirtualNetworks;
@@ -62,32 +62,32 @@ namespace Proto.Network
         /// <inheritdoc/>
         public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDelete(Id.ResourceGroup, Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return new ArmResponse(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
         /// <inheritdoc/>
         public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
         /// <inheritdoc/>
         public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartDelete(Id.ResourceGroup, Id.Name, cancellationToken));
+            return new ArmVoidOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
         public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken));
+            return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
         public override ArmResponse<VirtualNetwork> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                Operations.Get(Id.ResourceGroup, Id.Name, cancellationToken: cancellationToken),
+                Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -95,7 +95,7 @@ namespace Proto.Network
         public async override Task<ArmResponse<VirtualNetwork>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                await Operations.GetAsync(Id.ResourceGroup, Id.Name, null, cancellationToken),
+                await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -107,7 +107,7 @@ namespace Proto.Network
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -119,7 +119,7 @@ namespace Proto.Network
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -131,7 +131,7 @@ namespace Proto.Network
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -143,7 +143,7 @@ namespace Proto.Network
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -172,7 +172,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -182,7 +182,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -192,7 +192,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -202,7 +202,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -214,7 +214,7 @@ namespace Proto.Network
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -226,7 +226,7 @@ namespace Proto.Network
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -238,7 +238,7 @@ namespace Proto.Network
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 
@@ -250,7 +250,7 @@ namespace Proto.Network
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new VirtualNetwork(this, new VirtualNetworkData(n)));
         }
 

@@ -25,6 +25,15 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
         /// </summary>
+        /// <param name="operations">The generic operations representing the resource</param>
+        protected ResourceOperationsBase(GenericResourceOperations operations)
+            : base(operations.ClientOptions, operations.Id, operations.Credential, operations.BaseUri)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
+        /// </summary>
         /// <param name="operations"> The operations representing the resource. </param>
         protected ResourceOperationsBase(ResourceOperationsBase operations)
             : base(operations.ClientOptions, operations.Id, operations.Credential, operations.BaseUri)
@@ -58,19 +67,20 @@ namespace Azure.ResourceManager.Core
     /// Base class for all operations over a resource
     /// </summary>
     /// <typeparam name="TOperations"> The type implementing operations over the resource. </typeparam>
+    /// <typeparam name="TIdentifier"> The The identifier type for the resource. </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Types differ by type argument only")]
-    public abstract class ResourceOperationsBase<TOperations> : ResourceOperationsBase
-        where TOperations : ResourceOperationsBase<TOperations>
+    public abstract class ResourceOperationsBase<TIdentifier, TOperations> : ResourceOperationsBase
+        where TOperations : ResourceOperationsBase<TIdentifier, TOperations> where TIdentifier : ResourceIdentifier
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TIdentifier, TOperations}"/> class for mocking.
         /// </summary>
         protected ResourceOperationsBase()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class.
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TIdentifier, TOperations}"/> class.
         /// </summary>
         /// <param name="genericOperations"> Generic ARMResourceOperations for this resource type. </param>
         protected ResourceOperationsBase(GenericResourceOperations genericOperations)
@@ -79,7 +89,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class.
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
         /// </summary>
         /// <param name="parentOperations"> The resource representing the parent resource. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
@@ -89,7 +99,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class.
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="resourceId"> The identifier of the resource that is the target of operations. </param>
@@ -98,6 +108,14 @@ namespace Azure.ResourceManager.Core
         protected ResourceOperationsBase(AzureResourceManagerClientOptions options, ResourceIdentifier resourceId, TokenCredential credential, Uri baseUri)
             : base(options, resourceId, credential, baseUri)
         {
+        }
+
+        /// <summary>
+        /// The typed resource identifier for the underlying resource
+        /// </summary>
+        public virtual new TIdentifier Id
+        {
+            get { return base.Id as TIdentifier; }
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing collection of virtual network and their operations over a resource group.
     /// </summary>
-    public class VirtualNetworkContainer : ResourceContainerBase<VirtualNetwork, VirtualNetworkData>
+    public class VirtualNetworkContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, VirtualNetwork, VirtualNetworkData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualNetworkContainer"/> class.
@@ -31,7 +31,7 @@ namespace Proto.Network
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
         private VirtualNetworksOperations Operations => new NetworkManagementClient(
-            Id.Subscription,
+            Id.SubscriptionId,
             BaseUri,
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).VirtualNetworks;
@@ -39,7 +39,7 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override ArmResponse<VirtualNetwork> CreateOrUpdate(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails, cancellationToken);
+            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
                 operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 n => new VirtualNetwork(Parent, new VirtualNetworkData(n)));
@@ -48,7 +48,7 @@ namespace Proto.Network
         /// <inheritdoc/>
         public async override Task<ArmResponse<VirtualNetwork>> CreateOrUpdateAsync(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroup, name, resourceDetails, cancellationToken).ConfigureAwait(false);
+            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
                 await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 n => new VirtualNetwork(Parent, new VirtualNetworkData(n)));
@@ -58,7 +58,7 @@ namespace Proto.Network
         public override ArmOperation<VirtualNetwork> StartCreateOrUpdate(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails, cancellationToken),
+                Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken),
                 n => new VirtualNetwork(Parent, new VirtualNetworkData(n)));
         }
 
@@ -66,7 +66,7 @@ namespace Proto.Network
         public async override Task<ArmOperation<VirtualNetwork>> StartCreateOrUpdateAsync(string name, VirtualNetworkData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                await Operations.StartCreateOrUpdateAsync(Id.ResourceGroup, name, resourceDetails, cancellationToken).ConfigureAwait(false),
+                await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false),
                 n => new VirtualNetwork(Parent, new VirtualNetworkData(n)));
         }
 
@@ -76,9 +76,9 @@ namespace Proto.Network
         /// <param name="vnetCidr"> The CIDR of the resource. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <returns> A builder with <see cref="VirtualNetwork"/> and <see cref="VirtualNetworkData"/>. </returns>
-        public ArmBuilder<VirtualNetwork, VirtualNetworkData> Construct(string vnetCidr, LocationData location = null)
+        public ArmBuilder<ResourceGroupResourceIdentifier, VirtualNetwork, VirtualNetworkData> Construct(string vnetCidr, LocationData location = null)
         {
-            var parent = GetParentResource<ResourceGroup, ResourceGroupOperations>();
+            var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
             var vnet = new Azure.ResourceManager.Network.Models.VirtualNetwork()
             {
                 Location = location ?? parent.Data.Location,
@@ -86,7 +86,7 @@ namespace Proto.Network
             };
             vnet.AddressSpace.AddressPrefixes.Add(vnetCidr);
 
-            return new ArmBuilder<VirtualNetwork, VirtualNetworkData>(this, new VirtualNetworkData(vnet));
+            return new ArmBuilder<ResourceGroupResourceIdentifier, VirtualNetwork, VirtualNetworkData>(this, new VirtualNetworkData(vnet));
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Proto.Network
         public override ArmResponse<VirtualNetwork> Get(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                Operations.Get(Id.ResourceGroup, virtualNetworkName, cancellationToken: cancellationToken),
+                Operations.Get(Id.ResourceGroupName, virtualNetworkName, cancellationToken: cancellationToken),
                Convertor());
         }
 
@@ -186,7 +186,7 @@ namespace Proto.Network
         public override async Task<ArmResponse<VirtualNetwork>> GetAsync(string virtualNetworkName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualNetwork, Azure.ResourceManager.Network.Models.VirtualNetwork>(
-                await Operations.GetAsync(Id.ResourceGroup, virtualNetworkName, null, cancellationToken),
+                await Operations.GetAsync(Id.ResourceGroupName, virtualNetworkName, null, cancellationToken),
                 Convertor());
         }
 

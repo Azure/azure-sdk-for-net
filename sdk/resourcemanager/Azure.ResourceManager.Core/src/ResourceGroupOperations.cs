@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the operations that can be performed over a specific ResourceGroup.
     /// </summary>
-    public class ResourceGroupOperations : ResourceOperationsBase<ResourceGroup>,
-        ITaggableResource<ResourceGroup>, IDeletableResource
+    public class ResourceGroupOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, ResourceGroup>,
+        ITaggableResource<ResourceGroupResourceIdentifier, ResourceGroup>, IDeletableResource
     {
         /// <summary>
         /// Gets the resource type definition for a ResourceType.
         /// </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions/resourceGroups";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupOperations"/> class for mocking.
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="rgName"> The name of the resource group to use. </param>
         internal ResourceGroupOperations(SubscriptionOperations options, string rgName)
-            : base(options, $"{options.Id}/resourceGroups/{rgName}")
+            : base(options, new ResourceGroupResourceIdentifier(options.Id, rgName))
         {
             if (rgName.Length > 90)
                 throw new ArgumentOutOfRangeException(nameof(rgName), "ResourceGroupName cannot be longer than 90 characters.");
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected ResourceGroupOperations(ResourceOperationsBase options, ResourceIdentifier id)
+        protected ResourceGroupOperations(ResourceOperationsBase options, ResourceGroupResourceIdentifier id)
             : base(options, id)
         {
         }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Core
 
         private ResourceGroupsOperations Operations => new ResourcesManagementClient(
             BaseUri,
-            Id.Subscription,
+            Id.SubscriptionId,
             Credential,
             ClientOptions.Convert<ResourcesManagementClientOptions>()).ResourceGroups;
 
@@ -316,21 +316,23 @@ namespace Azure.ResourceManager.Core
         /// <param name="model"> The model representing the object to create. />. </param>
         /// <typeparam name="TContainer"> The type of the class containing the container for the specific resource. </typeparam>
         /// <typeparam name="TOperations"> The type of the operations class for a specific resource. </typeparam>
+        /// <typeparam name="TIdentifier"> The type of the resource identifier. </typeparam>
         /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
         /// <returns> Returns a response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> Model cannot be null. </exception>
-        public virtual ArmResponse<TOperations> CreateResource<TContainer, TOperations, TResource>(string name, TResource model)
-            where TResource : TrackedResource
-            where TOperations : ResourceOperationsBase<TOperations>
-            where TContainer : ResourceContainerBase<TOperations, TResource>
+        public virtual ArmResponse<TOperations> CreateResource<TContainer, TOperations, TIdentifier, TResource>(string name, TResource model)
+            where TResource : TrackedResource<TIdentifier>
+            where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
+            where TContainer : ResourceContainerBase<TIdentifier, TOperations, TResource>
+            where TIdentifier : SubscriptionResourceIdentifier
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException($"{nameof(name)} provided cannot be null or a whitespace.", nameof(name));
             if (model is null)
                 throw new ArgumentNullException(nameof(model));
 
-            var myResource = model as TrackedResource;
+            var myResource = model as TrackedResource<TIdentifier>;
             TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
 
             return container.CreateOrUpdate(name, model);
@@ -343,22 +345,24 @@ namespace Azure.ResourceManager.Core
         /// <param name="model"> The model representing the object to create. />. </param>
         /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service. The default value is <see cref="CancellationToken.None" />. </param>
         /// <typeparam name="TContainer"> The type of the class containing the container for the specific resource. </typeparam>
-        /// <typeparam name="TOperations"> The type of the operations class for a specific resource. </typeparam>
+        /// <typeparam name="TIdentifier"> The type of the operations class for a specific resource. </typeparam>
+        /// <typeparam name="TOperations"> The type of the resource identifier. </typeparam>
         /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{TOperations}"/> operation for this resource. </returns>
         /// <exception cref="ArgumentException"> Name cannot be null or a whitespace. </exception>
         /// <exception cref="ArgumentNullException"> Model cannot be null. </exception>
-        public virtual Task<ArmResponse<TOperations>> CreateResourceAsync<TContainer, TOperations, TResource>(string name, TResource model, CancellationToken cancellationToken = default)
-            where TResource : TrackedResource
-            where TOperations : ResourceOperationsBase<TOperations>
-            where TContainer : ResourceContainerBase<TOperations, TResource>
+        public virtual Task<ArmResponse<TOperations>> CreateResourceAsync<TContainer, TIdentifier, TOperations, TResource>(string name, TResource model, CancellationToken cancellationToken = default)
+            where TResource : TrackedResource<TIdentifier>
+            where TOperations : ResourceOperationsBase<TIdentifier,TOperations>
+            where TContainer : ResourceContainerBase<TIdentifier, TOperations, TResource>
+            where TIdentifier : SubscriptionResourceIdentifier
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException($"{nameof(name)} provided cannot be null or a whitespace.", nameof(name));
             if (model is null)
                 throw new ArgumentNullException(nameof(model));
 
-            var myResource = model as TrackedResource;
+            var myResource = model as TrackedResource<TIdentifier>;
 
             TContainer container = Activator.CreateInstance(typeof(TContainer), ClientOptions, myResource) as TContainer;
 

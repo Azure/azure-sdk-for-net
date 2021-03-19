@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the subscription data model.
     /// </summary>
-    public class SubscriptionData : Resource
+    public class SubscriptionData : Resource<SubscriptionResourceIdentifier>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionData"/> class.
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Core
             State = subscription.State;
             SubscriptionPolicies = subscription.SubscriptionPolicies;
             AuthorizationSource = subscription.AuthorizationSource;
-            Id = subscription.Id;
+            Id = new SubscriptionResourceIdentifier(subscription.Id);
             ManagedByTenants = subscription.ManagedByTenants;
             Tags = subscription.Tags;
         }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Core
         public string AuthorizationSource { get; }
 
         /// <inheritdoc/>
-        public override ResourceIdentifier Id { get; protected set; }
+        public override SubscriptionResourceIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets an array containing the tenants managing the subscription.

@@ -7,22 +7,24 @@ namespace Azure.ResourceManager.Core
     /// A class representing a generic proxy resource in Azure
     /// </summary>
     /// <typeparam name="TModel"> The type of the underlying model this class wraps </typeparam>
-    public abstract class ProxyResource<TModel> : Resource
-        where TModel : class
+    /// <typeparam name="TIdentifier"> The type of the underlying modelresource Id </typeparam>
+    public abstract class ProxyResource<TIdentifier, TModel> : Resource<TIdentifier>
+        where TModel : class 
+        where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProxyResource{TModel}"/> class.
+        /// Initializes a new instance of the <see cref="ProxyResource{TModel, TIdentifier}"/> class.
         /// </summary>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="data"> The model to copy from. </param>
-        protected ProxyResource(ResourceIdentifier id, TModel data)
+        protected ProxyResource(TIdentifier id, TModel data)
         {
             Id = id;
             Model = data;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProxyResource{TModel}"/> class.
+        /// Initializes a new instance of the <see cref="ProxyResource{TModel, TIdentifier}"/> class.
         /// </summary>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="data"> The model to copy from. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.Core
             }
             else
             {
-                Id = id;
+                Id = ResourceIdentifier.Create(id) as TIdentifier;
             }
 
             Model = data;
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets or sets the identifier for the resource.
         /// </summary>
-        public override ResourceIdentifier Id { get; protected set; }
+        public override TIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets or sets the Model this resource is based off.
@@ -51,10 +53,10 @@ namespace Azure.ResourceManager.Core
         public virtual TModel Model { get; set; }
 
         /// <summary>
-        /// Converts from a <see cref="ProxyResource{TModel}"/> into the TModel.
+        /// Converts from a <see cref="ProxyResource{TModel, TIdentifier}"/> into the TModel.
         /// </summary>
         /// <param name="other"> The tracked resource convert from. </param>
-        public static implicit operator TModel(ProxyResource<TModel> other)
+        public static implicit operator TModel(ProxyResource<TIdentifier, TModel> other)
         {
             return other.Model;
         }

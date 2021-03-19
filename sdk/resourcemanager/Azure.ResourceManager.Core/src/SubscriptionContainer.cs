@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing collection of Subscription and their operations
     /// </summary>
-    public class SubscriptionContainer : ContainerBase<Subscription>
+    public class SubscriptionContainer : ContainerBase<SubscriptionResourceIdentifier, Subscription>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class.
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Core
         /// Get an instance of the operations this container holds.
         /// </summary>
         /// <param name="subscriptionGuid"> The guid of the subscription to be found. </param>
-        /// <returns> An instance of <see cref="ResourceOperationsBase{Subscription}"/>. </returns>
-        protected override ResourceOperationsBase<Subscription> GetOperation(string subscriptionGuid)
+        /// <returns> An instance of <see cref="ResourceOperationsBase{TenantResourceIdentifier, Subscription}"/>. </returns>
+        protected override ResourceOperationsBase<SubscriptionResourceIdentifier, Subscription> GetOperation(string subscriptionGuid)
         {
             return new SubscriptionOperations(ClientOptions, subscriptionGuid, Credential, BaseUri);
         }
