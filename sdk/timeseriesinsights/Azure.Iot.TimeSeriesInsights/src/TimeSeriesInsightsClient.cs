@@ -1411,7 +1411,7 @@ namespace Azure.Iot.TimeSeriesInsights
             {
                 Argument.AssertNotNullOrEmpty(timeSeriesTypes, nameof(timeSeriesTypes));
 
-                TypesBatchRequest batchRequest = new TypesBatchRequest();
+                var batchRequest = new TypesBatchRequest();
 
                 foreach (TimeSeriesType type in timeSeriesTypes)
                 {
@@ -1464,7 +1464,7 @@ namespace Azure.Iot.TimeSeriesInsights
             {
                 Argument.AssertNotNullOrEmpty(timeSeriesTypes, nameof(timeSeriesTypes));
 
-                TypesBatchRequest batchRequest = new TypesBatchRequest();
+                var batchRequest = new TypesBatchRequest();
 
                 foreach (TimeSeriesType type in timeSeriesTypes)
                 {
@@ -1516,7 +1516,7 @@ namespace Azure.Iot.TimeSeriesInsights
             {
                 Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
 
-                TypesBatchRequest batchRequest = new TypesBatchRequest()
+                var batchRequest = new TypesBatchRequest
                 {
                     Delete = new TypesRequestBatchGetOrDelete()
                 };
@@ -1568,7 +1568,7 @@ namespace Azure.Iot.TimeSeriesInsights
             {
                 Argument.AssertNotNullOrEmpty(timeSeriesTypeNames, nameof(timeSeriesTypeNames));
 
-                TypesBatchRequest batchRequest = new TypesBatchRequest()
+                var batchRequest = new TypesBatchRequest
                 {
                     Delete = new TypesRequestBatchGetOrDelete()
                 };
@@ -1619,7 +1619,7 @@ namespace Azure.Iot.TimeSeriesInsights
             {
                 Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
 
-                TypesBatchRequest batchRequest = new TypesBatchRequest()
+                var batchRequest = new TypesBatchRequest
                 {
                     Delete = new TypesRequestBatchGetOrDelete()
                 };
@@ -1670,7 +1670,7 @@ namespace Azure.Iot.TimeSeriesInsights
             {
                 Argument.AssertNotNullOrEmpty(timeSeriesTypeIds, nameof(timeSeriesTypeIds));
 
-                TypesBatchRequest batchRequest = new TypesBatchRequest()
+                var batchRequest = new TypesBatchRequest
                 {
                     Delete = new TypesRequestBatchGetOrDelete()
                 };
