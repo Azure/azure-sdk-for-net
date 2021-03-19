@@ -183,22 +183,6 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
             finally
             {
                 deviceClient?.Dispose();
-
-                // clean up
-                try
-                {
-                    Response<InstancesOperationError[]> deleteInstancesResponse = await tsiClient
-                        .DeleteInstancesAsync(new TimeSeriesId[] { tsiId })
-                        .ConfigureAwait(false);
-
-                    // Assert that the response array does not have any error object set
-                    deleteInstancesResponse.Value.Should().OnlyContain((errorResult) => errorResult == null);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Test clean up failed: {ex.Message}");
-                    throw;
-                }
             }
         }
 

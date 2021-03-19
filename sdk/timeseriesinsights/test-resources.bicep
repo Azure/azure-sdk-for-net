@@ -40,7 +40,15 @@ param environmentTimeSeriesIdProperties array {
     maxLength: 3
     default: [
         {
-            'name': 'iothub-connection-device-id'
+            'name': 'building'
+            'type': 'string'
+        }
+        {
+            'name': 'floor'
+            'type': 'string'
+        }
+        {
+            'name': 'room'
             'type': 'string'
         }
     ]

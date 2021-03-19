@@ -45,7 +45,15 @@
       },
       "defaultValue": [
         {
-          "name": "iothub-connection-device-id",
+          "name": "building",
+          "type": "string"
+        },
+        {
+          "name": "floor",
+          "type": "string"
+        },
+        {
+          "name": "room",
           "type": "string"
         }
       ]
@@ -246,7 +254,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.3.1.62928",
-      "templateHash": "16908405705106812179"
+      "templateHash": "2613984384433687728"
     }
   }
 }
