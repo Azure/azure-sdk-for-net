@@ -111,7 +111,7 @@ namespace Azure.Messaging.ServiceBus
             {
                 var (t11, op) = value;
                 await op(t11, timeout, token).ConfigureAwait(false);
-                return default(VoidResult);
+                return default(object);
             }, (t1, operation), scope, cancellationToken);
 
         internal async Task<TResult> RunOperation<T1, TResult>(
