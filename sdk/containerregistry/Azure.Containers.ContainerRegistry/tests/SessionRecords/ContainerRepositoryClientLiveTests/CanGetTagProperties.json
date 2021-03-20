@@ -6,12 +6,12 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a488bd30bcad8543becc057287dad083-dedd82287a4e984e-00",
+        "traceparent": "00-c68f93a30736f74f968e2246aa464b26-0730cf8c48d6fb4f-00",
         "User-Agent": [
           "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210319.1",
           "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
         ],
-        "x-ms-client-request-id": "715a9347aa99314f9b03ea80547a5d52",
+        "x-ms-client-request-id": "856a71d8ace1e11d50a9f2ed02514028",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -26,7 +26,7 @@
         "Connection": "keep-alive",
         "Content-Length": "403",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 20 Mar 2021 04:14:37 GMT",
+        "Date": "Sat, 20 Mar 2021 04:44:42 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -34,7 +34,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "50a06fdf-90a6-4328-8799-cb5f53b490e2"
+        "X-Ms-Correlation-Request-Id": "bce80ae1-1376-44d9-8bff-341177eeea4d"
       },
       "ResponseBody": [
         "{\u0022registry\u0022:\u0022annelocontainerregistry.azurecr.io\u0022,\u0022imageName\u0022:\u0022library/hello-world\u0022,\u0022tag\u0022:{\u0022name\u0022:\u0022latest\u0022,\u0022digest\u0022:\u0022sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24\u0022,\u0022createdTime\u0022:\u00222021-03-20T04:04:46.2118653Z\u0022,\u0022lastUpdateTime\u0022:\u00222021-03-20T04:04:46.2118653Z\u0022,\u0022signed\u0022:false,\u0022changeableAttributes\u0022:{\u0022deleteEnabled\u0022:true,\u0022writeEnabled\u0022:true,\u0022readEnabled\u0022:true,\u0022listEnabled\u0022:true}}}\n"
@@ -45,6 +45,6 @@
     "CONTAINERREGISTRY_ENDPOINT": "https://annelocontainerregistry.azurecr.io",
     "CONTAINERREGISTRY_PASSWORD": "Sanitized",
     "CONTAINERREGISTRY_USERNAME": "Sanitized",
-    "RandomSeed": "243443246"
+    "RandomSeed": "392676521"
   }
 }
