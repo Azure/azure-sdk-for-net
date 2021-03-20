@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -54,7 +54,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             await _registryClient.Registries.ImportImageAsync(
                 resourceGroupName: TestEnvironment.ResourceGroup,
-                registryName: TestEnvironment.UserName,
+                registryName: TestEnvironment.Registry,
                 parameters:
                     new ImportImageParameters
                     {
