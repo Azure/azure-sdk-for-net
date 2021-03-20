@@ -2,147 +2,180 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using Azure.Core.TestFramework;
+using Microsoft.Azure.Management.ContainerRegistry;
+using Microsoft.Azure.Management.ContainerRegistry.Models;
+using Microsoft.Azure.Management.ResourceManager.Fluent;
+using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using NUnit.Framework;
+using Task = System.Threading.Tasks.Task;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRepositoryClientLiveTests : RecordedTestBase<ContainerRegistryTestEnvironment>
     {
         private readonly string _repositoryName = "library/hello-world";
-        private readonly string _tagName = "latest";
-        private ContainerRepositoryClient _client;
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
         }
 
-        [SetUp]
-        protected async Task CreateClient()
+        protected ContainerRepositoryClient CreateClient()
         {
-            _client = InstrumentClient(new ContainerRepositoryClient(
+            return InstrumentClient(new ContainerRepositoryClient(
                 new Uri(TestEnvironment.Endpoint),
                 _repositoryName,
                 TestEnvironment.UserName,
                 TestEnvironment.Password,
                 InstrumentClientOptions(new ContainerRegistryClientOptions())
             ));
-
-            await InitializeRepositoryProperties();
-            await InitializeTagProperties();
         }
 
-        [OneTimeTearDown]
-        public async Task TearDown()
+        public async Task ImportImage(string tag)
         {
-            await InitializeRepositoryProperties();
-            await InitializeTagProperties();
-        }
-
-        public async Task InitializeRepositoryProperties()
-        {
-            await _client.SetPropertiesAsync(
-                new ContentProperties()
+            var credential = new AzureCredentials(
+                new ServicePrincipalLoginInformation
                 {
-                    CanList = true,
-                    CanRead = true,
-                    CanWrite = true,
-                    CanDelete = true
-                });
+                    ClientId = TestEnvironment.ClientId,
+                    ClientSecret = TestEnvironment.ClientSecret,
+                },
+                TestEnvironment.TenantId,
+                AzureEnvironment.AzureGlobalCloud);
 
-            RepositoryProperties properties = await _client.GetPropertiesAsync();
+            var _registryClient = new ContainerRegistryManagementClient(credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
+            _registryClient.SubscriptionId = TestEnvironment.SubscriptionId;
 
-            Assert.IsTrue(properties.WriteableProperties.CanList);
-            Assert.IsTrue(properties.WriteableProperties.CanRead);
-            Assert.IsTrue(properties.WriteableProperties.CanWrite);
-            Assert.IsTrue(properties.WriteableProperties.CanDelete);
-        }
+            var importSource = new ImportSource
+            {
+                SourceImage = "library/hello-world",
+                RegistryUri = "registry.hub.docker.com"
+            };
 
-        public async Task InitializeTagProperties()
-        {
-            await _client.SetTagPropertiesAsync(
-                _tagName,
-                new ContentProperties()
-                {
-                    CanList = true,
-                    CanRead = true,
-                    CanWrite = true,
-                    CanDelete = true
-                });
-
-            RepositoryProperties properties = await _client.GetPropertiesAsync();
-
-            Assert.IsTrue(properties.WriteableProperties.CanList);
-            Assert.IsTrue(properties.WriteableProperties.CanRead);
-            Assert.IsTrue(properties.WriteableProperties.CanWrite);
-            Assert.IsTrue(properties.WriteableProperties.CanDelete);
+            await _registryClient.Registries.ImportImageAsync(
+                resourceGroupName: TestEnvironment.ResourceGroup,
+                registryName: TestEnvironment.UserName,
+                parameters:
+                    new ImportImageParameters
+                    {
+                        Mode = ImportMode.Force,
+                        Source = importSource,
+                        TargetTags = new List<string>()
+                        {
+                            $"library/hello-world:{tag}"
+                        }
+                    });
         }
 
         [RecordedTest]
         public async Task CanGetRepositoryProperties()
         {
-            RepositoryProperties properties = await _client.GetPropertiesAsync();
+            // Arrange
+            ContainerRepositoryClient client = CreateClient();
 
+            // Act
+            RepositoryProperties properties = await client.GetPropertiesAsync();
+
+            // Assert
             Assert.AreEqual(_repositoryName, properties.Name);
             Assert.AreEqual(new Uri(TestEnvironment.Endpoint).Host, properties.Registry);
         }
 
         [RecordedTest, NonParallelizable]
-        public async Task CanSetRepositoryProperties([Values(true, false)] bool canList,
-                                                     [Values(true, false)] bool canRead,
-                                                     [Values(true, false)] bool canWrite,
-                                                     [Values(true, false)] bool canDelete)
+        public async Task CanSetRepositoryProperties()
         {
-            await _client.SetPropertiesAsync(
+            // Arrange
+            ContainerRepositoryClient client = CreateClient();
+            RepositoryProperties repositoryProperties = await client.GetPropertiesAsync();
+            ContentProperties originalContentProperties = repositoryProperties.WriteableProperties;
+
+            // Act
+            await client.SetPropertiesAsync(
                 new ContentProperties()
                 {
-                    CanList = canList,
-                    CanRead = canRead,
-                    CanWrite = canWrite,
-                    CanDelete = canDelete
+                    CanList = true,
+                    CanRead = true,
+                    CanWrite = false,
+                    CanDelete = false,
                 });
 
-            RepositoryProperties properties = await _client.GetPropertiesAsync();
+            // Assert
+            RepositoryProperties properties = await client.GetPropertiesAsync();
 
-            Assert.AreEqual(canList, properties.WriteableProperties.CanList);
-            Assert.AreEqual(canRead, properties.WriteableProperties.CanRead);
-            Assert.AreEqual(canWrite, properties.WriteableProperties.CanWrite);
-            Assert.AreEqual(canDelete, properties.WriteableProperties.CanDelete);
+            Assert.IsTrue(properties.WriteableProperties.CanList);
+            Assert.IsTrue(properties.WriteableProperties.CanRead);
+            Assert.IsFalse(properties.WriteableProperties.CanWrite);
+            Assert.IsFalse(properties.WriteableProperties.CanDelete);
+
+            // Cleanup
+            await client.SetPropertiesAsync(originalContentProperties);
         }
 
         [RecordedTest]
         public async Task CanGetTagProperties()
         {
-            TagProperties properties = await _client.GetTagPropertiesAsync(_tagName);
+            // Arrange
+            ContainerRepositoryClient client = CreateClient();
+            string tag = "latest";
 
-            Assert.AreEqual(_tagName, properties.Name);
+            // Act
+            TagProperties properties = await client.GetTagPropertiesAsync(tag);
+
+            // Assert
+            Assert.AreEqual(tag, properties.Name);
             Assert.AreEqual(_repositoryName, properties.Repository);
             Assert.AreEqual(new Uri(TestEnvironment.Endpoint).Host, properties.Registry);
         }
 
         [RecordedTest, NonParallelizable]
-        public async Task CanSetTagProperties([Values(true, false)] bool canList,
-                                              [Values(true, false)] bool canRead,
-                                              [Values(true, false)] bool canWrite,
-                                              [Values(true, false)] bool canDelete)
+        public async Task CanSetTagProperties()
         {
-            await _client.SetTagPropertiesAsync(
-                _tagName,
+            // Arrange
+            ContainerRepositoryClient client = CreateClient();
+            string tag = "latest";
+            TagProperties tagProperties = await client.GetTagPropertiesAsync(tag);
+            ContentProperties originalContentProperties = tagProperties.ModifiableProperties;
+
+            // Act
+            await client.SetTagPropertiesAsync(
+                tag,
                 new ContentProperties()
                 {
-                    CanList = canList,
-                    CanRead = canRead,
-                    CanWrite = canWrite,
-                    CanDelete = canDelete
+                    CanList = false,
+                    CanRead = false,
+                    CanWrite = true,
+                    CanDelete = true
                 });
 
-            TagProperties properties = await _client.GetTagPropertiesAsync(_tagName);
+            // Assert
+            TagProperties properties = await client.GetTagPropertiesAsync(tag);
 
-            Assert.AreEqual(canList, properties.ModifiableProperties.CanList);
-            Assert.AreEqual(canRead, properties.ModifiableProperties.CanRead);
-            Assert.AreEqual(canWrite, properties.ModifiableProperties.CanWrite);
-            Assert.AreEqual(canDelete, properties.ModifiableProperties.CanDelete);
+            Assert.IsFalse(properties.ModifiableProperties.CanList);
+            Assert.IsFalse(properties.ModifiableProperties.CanRead);
+            Assert.IsTrue(properties.ModifiableProperties.CanWrite);
+            Assert.IsTrue(properties.ModifiableProperties.CanDelete);
+
+            // Cleanup
+            await client.SetTagPropertiesAsync(tag, originalContentProperties);
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanDeleteTag()
+        {
+            // Arrange
+            ContainerRepositoryClient client = CreateClient();
+            string tag = "test-delete";
+            await ImportImage(tag);
+
+            // Act
+            await client.DeleteTagAsync(tag);
+
+            // Assert
+
+            // The delete takes some time, so if we call GetTagProperties() without a delay, we get a 200 response.
+            await Task.Delay(5000);
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetTagPropertiesAsync(tag); });
         }
     }
 }
