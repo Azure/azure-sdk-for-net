@@ -19,25 +19,31 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
 
+        private readonly RefreshTokensRestClient _tokenExchangeClient;
+        private readonly AccessTokensRestClient _acrTokenClient;
+        private readonly string AcrAadScope = "https://management.core.windows.net/.default";
+
         /// <summary>
-        /// <paramref name="endpoint"/>
         /// </summary>
-        public ContainerRegistryClient(Uri endpoint, string username, string password) : this(endpoint, username, password,  new ContainerRegistryClientOptions())
+        public ContainerRegistryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="options"></param>
-        public ContainerRegistryClient(Uri endpoint, string username, string password, ContainerRegistryClientOptions options)
+        public ContainerRegistryClient(Uri endpoint, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(credential, nameof(credential));
 
-            _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy(username, password));
+            // TODO: Solve:
+            // 1. What pipeline to use for RefreshTokensRestClient - how to reason about this from a customer perspective?
+            // 2. Is it ok that we share a ClientDiagnostics type?
+
+            _tokenExchangeClient = new RefreshTokensRestClient(_clientDiagnostics, HttpPipelineBuilder.Build(options), endpoint.AbsoluteUri);
+            _acrTokenClient = new AccessTokensRestClient(_clientDiagnostics, HttpPipelineBuilder.Build(options), endpoint.AbsoluteUri);
+
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryCredentialsPolicy(credential, AcrAadScope, _tokenExchangeClient, _acrTokenClient));
 
             _clientDiagnostics = new ClientDiagnostics(options);
 

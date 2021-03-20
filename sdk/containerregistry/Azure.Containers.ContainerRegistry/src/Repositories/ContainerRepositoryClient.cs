@@ -16,6 +16,10 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRepositoryRestClient _restClient;
 
+        private readonly RefreshTokensRestClient _tokenExchangeClient;
+        private readonly AccessTokensRestClient _acrTokenClient;
+        private readonly string AcrAadScope = "https://management.core.windows.net/.default";
+
         private readonly string _repository;
 
         /// <summary>
@@ -23,31 +27,26 @@ namespace Azure.Containers.ContainerRegistry
         public virtual Uri Endpoint { get; }
 
         /// <summary>
-        /// <param name="endpoint"></param>
-        /// <param name="repository"> Name of the image (including the namespace). </param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
         /// </summary>
-        public ContainerRepositoryClient(Uri endpoint, string repository, string username, string password) : this(endpoint, repository, username, password, new ContainerRegistryClientOptions())
+        public ContainerRepositoryClient(Uri endpoint, string repository, TokenCredential credential) : this(endpoint, repository, credential, new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary>
-        /// <param name="endpoint"></param>
-        /// <param name="repository"> Name of the image (including the namespace). </param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="options"></param>
         /// </summary>
-        public ContainerRepositoryClient(Uri endpoint, string repository, string username, string password, ContainerRegistryClientOptions options)
+        public ContainerRepositoryClient(Uri endpoint, string repository, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(repository, nameof(repository));
-            Argument.AssertNotNull(username, nameof(username));
-            Argument.AssertNotNull(password, nameof(password));
-            Argument.AssertNotNull(options, nameof(options));
+            Argument.AssertNotNull(credential, nameof(credential));
 
-            _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy(username, password));
+            // TODO: Solve:
+            // 1. What pipeline to use for RefreshTokensRestClient - how to reason about this from a customer perspective?
+            // 2. Is it ok that we share a ClientDiagnostics type?
+
+            _tokenExchangeClient = new RefreshTokensRestClient(_clientDiagnostics, HttpPipelineBuilder.Build(options), endpoint.AbsoluteUri);
+            _acrTokenClient = new AccessTokensRestClient(_clientDiagnostics, HttpPipelineBuilder.Build(options), endpoint.AbsoluteUri);
+
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryCredentialsPolicy(credential, AcrAadScope, _tokenExchangeClient, _acrTokenClient));
 
             _clientDiagnostics = new ClientDiagnostics(options);
 

@@ -3,9 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-
 using Azure.Core.TestFramework;
-
 using Microsoft.Azure.Management.ContainerRegistry;
 using Microsoft.Azure.Management.ContainerRegistry.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
@@ -21,6 +19,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
         {
+            Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
 
         protected ContainerRepositoryClient CreateClient()
@@ -28,48 +27,44 @@ namespace Azure.Containers.ContainerRegistry.Tests
             return InstrumentClient(new ContainerRepositoryClient(
                 new Uri(TestEnvironment.Endpoint),
                 _repositoryName,
-                TestEnvironment.UserName,
-                TestEnvironment.Password,
+                TestEnvironment.Credential,
                 InstrumentClientOptions(new ContainerRegistryClientOptions())
             ));
         }
 
         public async Task ImportImage(string tag)
         {
-            if (TestEnvironment.IsTestModeLive)
-            {
-                var credential = new AzureCredentials(
-                    new ServicePrincipalLoginInformation
-                    {
-                        ClientId = TestEnvironment.ClientId,
-                        ClientSecret = TestEnvironment.ClientSecret,
-                    },
-                    TestEnvironment.TenantId,
-                    AzureEnvironment.AzureGlobalCloud);
-
-                var _registryClient = new ContainerRegistryManagementClient(credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
-                _registryClient.SubscriptionId = TestEnvironment.SubscriptionId;
-
-                var importSource = new ImportSource
+            var credential = new AzureCredentials(
+                new ServicePrincipalLoginInformation
                 {
-                    SourceImage = "library/hello-world",
-                    RegistryUri = "registry.hub.docker.com"
-                };
+                    ClientId = TestEnvironment.ClientId,
+                    ClientSecret = TestEnvironment.ClientSecret,
+                },
+                TestEnvironment.TenantId,
+                AzureEnvironment.AzureGlobalCloud);
 
-                await _registryClient.Registries.ImportImageAsync(
-                    resourceGroupName: TestEnvironment.ResourceGroup,
-                    registryName: TestEnvironment.Registry,
-                    parameters:
-                        new ImportImageParameters
+            var _registryClient = new ContainerRegistryManagementClient(credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
+            _registryClient.SubscriptionId = TestEnvironment.SubscriptionId;
+
+            var importSource = new ImportSource
+            {
+                SourceImage = "library/hello-world",
+                RegistryUri = "registry.hub.docker.com"
+            };
+
+            await _registryClient.Registries.ImportImageAsync(
+                resourceGroupName: TestEnvironment.ResourceGroup,
+                registryName: TestEnvironment.Registry,
+                parameters:
+                    new ImportImageParameters
+                    {
+                        Mode = ImportMode.Force,
+                        Source = importSource,
+                        TargetTags = new List<string>()
                         {
-                            Mode = ImportMode.Force,
-                            Source = importSource,
-                            TargetTags = new List<string>()
-                            {
                             $"library/hello-world:{tag}"
-                            }
-                        });
-            }
+                        }
+                    });
         }
 
         [RecordedTest]
@@ -98,8 +93,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.SetPropertiesAsync(
                 new ContentProperties()
                 {
-                    CanList = false,
-                    CanRead = false,
+                    CanList = true,
+                    CanRead = true,
                     CanWrite = false,
                     CanDelete = false,
                 });
@@ -107,8 +102,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             RepositoryProperties properties = await client.GetPropertiesAsync();
 
-            Assert.IsFalse(properties.WriteableProperties.CanList);
-            Assert.IsFalse(properties.WriteableProperties.CanRead);
+            Assert.IsTrue(properties.WriteableProperties.CanList);
+            Assert.IsTrue(properties.WriteableProperties.CanRead);
             Assert.IsFalse(properties.WriteableProperties.CanWrite);
             Assert.IsFalse(properties.WriteableProperties.CanDelete);
 
@@ -148,8 +143,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 {
                     CanList = false,
                     CanRead = false,
-                    CanWrite = false,
-                    CanDelete = false
+                    CanWrite = true,
+                    CanDelete = true
                 });
 
             // Assert
@@ -157,8 +152,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             Assert.IsFalse(properties.ModifiableProperties.CanList);
             Assert.IsFalse(properties.ModifiableProperties.CanRead);
-            Assert.IsFalse(properties.ModifiableProperties.CanWrite);
-            Assert.IsFalse(properties.ModifiableProperties.CanDelete);
+            Assert.IsTrue(properties.ModifiableProperties.CanWrite);
+            Assert.IsTrue(properties.ModifiableProperties.CanDelete);
 
             // Cleanup
             await client.SetTagPropertiesAsync(tag, originalContentProperties);
