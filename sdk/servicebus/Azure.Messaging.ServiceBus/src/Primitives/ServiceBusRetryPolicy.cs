@@ -109,8 +109,8 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken) =>
             await RunOperation(static async (value, timeout, token) =>
             {
-                var (t11, op) = value;
-                await op(t11, timeout, token).ConfigureAwait(false);
+                var (t1, operation) = value;
+                await operation(t1, timeout, token).ConfigureAwait(false);
                 return default(object);
             }, (t1, operation), scope, cancellationToken).ConfigureAwait(false);
 

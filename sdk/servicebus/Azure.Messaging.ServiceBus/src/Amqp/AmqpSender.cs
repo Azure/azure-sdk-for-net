@@ -163,9 +163,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             return await _retryPolicy.RunOperation(static async (value, timeout, _) =>
                 {
-                    var (sender, ops) = value;
+                    var (sender, options) = value;
                     return await sender.CreateMessageBatchInternalAsync(
-                        ops,
+                        options,
                         timeout).ConfigureAwait(false);
                 },
                 (this, options),
@@ -211,9 +211,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
-                    var (sender, msgs) = value;
+                    var (sender, messageBatch) = value;
                     await sender.SendBatchInternalAsync(
-                        msgs,
+                        messageBatch,
                         timeout,
                         token).ConfigureAwait(false);
                 },
@@ -309,9 +309,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
-                    var (sender, msgs) = value;
+                    var (sender, messages) = value;
                     await sender.SendBatchInternalAsync(
-                        msgs,
+                        messages,
                         timeout,
                         token).ConfigureAwait(false);
                 },
@@ -383,10 +383,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             return await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
-                    var (sender, msgs) = value;
+                    var (sender, messages) = value;
                     return await sender
                         .ScheduleMessageInternalAsync(
-                            msgs,
+                            messages,
                             timeout,
                             token).ConfigureAwait(false);
                 },
@@ -499,9 +499,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             await _retryPolicy.RunOperation(static async (value, timeout, token) =>
                 {
-                    var (sender, sqn) = value;
+                    var (sender, sequenceNumbers) = value;
                     await sender.CancelScheduledMessageInternalAsync(
-                        sqn,
+                        sequenceNumbers,
                         timeout,
                         token).ConfigureAwait(false);
                 },
