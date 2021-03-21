@@ -660,7 +660,11 @@ namespace Azure.Messaging.ServiceBus
                 {
                     foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
-                        await _messageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                        // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
+                        if (!_messageHandlerSemaphore.Wait(0))
+                        {
+                            await _messageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                        }
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
                         // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                         // other than TaskCanceledExceptions
