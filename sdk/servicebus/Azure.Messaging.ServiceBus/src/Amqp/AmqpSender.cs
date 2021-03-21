@@ -392,7 +392,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 },
                 (this, messages),
                 _connectionScope,
-                cancellationToken).ConfigureAwait(false) ?? Array.Empty<long>();
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
