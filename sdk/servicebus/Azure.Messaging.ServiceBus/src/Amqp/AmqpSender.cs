@@ -402,7 +402,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="timeout"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        internal async Task<long[]> ScheduleMessageInternalAsync(
+        internal async Task<IReadOnlyList<long>> ScheduleMessageInternalAsync(
             IReadOnlyList<ServiceBusMessage> messages,
             TimeSpan timeout,
             CancellationToken cancellationToken = default)
