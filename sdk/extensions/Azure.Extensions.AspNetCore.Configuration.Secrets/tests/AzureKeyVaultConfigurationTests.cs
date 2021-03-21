@@ -438,6 +438,56 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         }
 
         [Test]
+        public void HandleCollisions()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client,
+                new[]
+                {
+                    CreateSecret("Section--Secret1", "Value1")
+                },
+                new[]
+                {
+                    CreateSecret("Section:Secret1", "Value1")
+                }
+            );
+
+            // Act
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
+            {
+                provider.Load();
+
+                // Assert
+                Assert.AreEqual("Value1", provider.Get("Section:Secret1"));
+            }
+        }
+
+        [Test]
+        public void HandleCollisionsUseLatestValue()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client,
+                new[]
+                {
+                    CreateSecret("Section--Secret1", "Value1", updated: new DateTimeOffset(new DateTime(2038, 1, 19), TimeSpan.Zero))
+                },
+                new[]
+                {
+                    CreateSecret("Section:Secret1", "Value2", updated: new DateTimeOffset(new DateTime(2038, 1, 20), TimeSpan.Zero))
+                }
+            );
+
+            // Act
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
+            {
+                provider.Load();
+
+                // Assert
+                Assert.AreEqual("Value2", provider.Get("Section:Secret1"));
+            }
+        }
+
+        [Test]
         public async Task LoadsSecretsInParallel()
         {
             var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -504,7 +554,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             // Assert
             for (int i = 0; i < expectedCount; i++)
             {
-                Assert.AreEqual(i.ToString(), provider.Get("Secret"+i));
+                Assert.AreEqual(i.ToString(), provider.Get("Secret" + i));
             }
 
             Assert.LessOrEqual(maxParallel, 32);
