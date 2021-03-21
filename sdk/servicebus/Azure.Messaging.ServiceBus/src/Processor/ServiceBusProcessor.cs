@@ -167,7 +167,8 @@ namespace Azure.Messaging.ServiceBus
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
         private readonly IList<ServiceBusPlugin> _plugins;
-        private readonly IList<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
+        // deliberate usage of List instead of IList for faster enumeration and less allocations
+        private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
