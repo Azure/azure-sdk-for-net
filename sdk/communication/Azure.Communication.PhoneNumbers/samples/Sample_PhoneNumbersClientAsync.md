@@ -32,7 +32,7 @@ Phone numbers can be acquired through purchasing a reservation.
 
 ```C# Snippet:StartPurchaseSearchAsync
 var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Value.SearchId);
-await purchaseOperation.WaitForCompletionAsync();
+await purchaseOperation.WaitForCompletionResponseAsync();
 ```
 
 ## Listing purchased phone numbers
@@ -65,5 +65,5 @@ If you no longer need a phone number you can release it.
 ```C# Snippet:ReleasePhoneNumbersAsync
 var purchasedPhoneNumber = "<purchased_phone_number>";
 var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber);
-await releaseOperation.WaitForCompletionAsync();
+await releaseOperation.WaitForCompletionResponseAsync();
 ```

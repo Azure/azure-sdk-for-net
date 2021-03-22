@@ -51,8 +51,8 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             #region Snippet:StartPurchaseSearchAsync
 
             var purchaseOperation = await client.StartPurchasePhoneNumbersAsync(searchOperation.Value.SearchId);
-            //@@ await purchaseOperation.WaitForCompletionAsync();
-            /*@@*/ await WaitForCompletionAsync(purchaseOperation);
+            //@@ await purchaseOperation.WaitForCompletionResponseAsync();
+            /*@@*/ await WaitForCompletionResponseAsync(purchaseOperation!);
 
             #endregion Snippet:StartPurchaseSearchAsync
 
@@ -85,8 +85,8 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
             //@@var purchasedPhoneNumber = "<purchased_phone_number>";
             var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber);
-            //@@ await releaseOperation.WaitForCompletionAsync();
-            /*@@*/ await WaitForCompletionAsync(releaseOperation);
+            //@@ await releaseOperation.WaitForCompletionResponseAsync();
+            /*@@*/ await WaitForCompletionResponseAsync(releaseOperation);
 
             #endregion Snippet:ReleasePhoneNumbersAsync
 
@@ -97,6 +97,9 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
 
         private ValueTask<Response<T>> WaitForCompletionAsync<T>(Operation<T> operation) where T : notnull
             => operation.WaitForCompletionAsync(TestEnvironment.Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromSeconds(2), default);
+
+        private ValueTask<Response> WaitForCompletionResponseAsync(Operation operation)
+            => operation.WaitForCompletionResponseAsync(TestEnvironment.Mode == RecordedTestMode.Playback ? TimeSpan.Zero : TimeSpan.FromSeconds(2), default);
 
         [Test]
         [SyncOnly]
