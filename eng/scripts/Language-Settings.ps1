@@ -6,7 +6,7 @@ $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 
-function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
+function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory)
 {
   $projDirPath = (Join-Path $pkgPath "src")
 
@@ -16,13 +16,13 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
   }
 
   $projectPaths = (Resolve-Path (Join-Path $projDirPath "*.csproj")).path
-  if ($projectPaths.Count -gt 1)
+  if ($projectPaths -is [array] -and $projectPaths.Count -gt 1)
   {
     LogWarning "There is more than on csproj file in the projectpath/src directory. First project picked."
     $projectPath = $projectPaths[0]
   }
   else {
-    $projectPath = $projectPaths
+    $projectPath = $projectPaths -Join ""
   }
 
   if ($projectPath -and (Test-Path $projectPath))
