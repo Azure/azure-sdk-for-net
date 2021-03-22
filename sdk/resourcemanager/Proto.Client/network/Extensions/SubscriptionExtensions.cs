@@ -184,9 +184,9 @@ namespace Proto.Network
         /// </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <returns> An async collection of <see cref="NetworkSecurityGroup" /> resource operations that may take multiple service requests to iterate over. </returns>
-        public static async Task<AsyncPageable<NetworkSecurityGroup>> ListNsgsAsync(this SubscriptionOperations subscription)
+        public static AsyncPageable<NetworkSecurityGroup> ListNsgsAsync(this SubscriptionOperations subscription)
         {
-            return await subscription.ListResourcesAsync(async
+            return subscription.ListResourcesAsync(async
                (baseUri, credential, options) =>
                {
                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.Subscription, credential, options);

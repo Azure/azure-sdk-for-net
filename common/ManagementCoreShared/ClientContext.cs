@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// helper class
     /// </summary>
-    public class ClientContext
+    internal class ClientContext
     {
         /// <summary>
         /// client options
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="clientOptions"></param>
         /// <param name="credential"></param>
         /// <param name="uri"></param>
-        protected internal ClientContext(AzureResourceManagerClientOptions clientOptions, TokenCredential credential, Uri uri)
+        internal ClientContext(AzureResourceManagerClientOptions clientOptions, TokenCredential credential, Uri uri)
         {
             ClientOptions = clientOptions;
             Credential = credential;

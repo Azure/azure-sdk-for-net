@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Proto.Billing</RootNamespace>
     <LangVersion>latest</LangVersion>
+    <IsOldTrack2>false</IsOldTrack2>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Azure.ResourceManager.Billing\**" />
@@ -13,7 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.ResourceManager.Core\src\Azure.ResourceManager.Core.csproj" />
     <ProjectReference Include="Azure.ResourceManager.Billing\Azure.ResourceManager.Billing.csproj" />
-    <Compile Include="../../../../common/ManagementCoreShared/**/*.cs" Link="Shared/Management/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <PropertyGroup>
     <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->

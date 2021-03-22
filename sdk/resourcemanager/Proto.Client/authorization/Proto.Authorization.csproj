@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -23,10 +23,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.ResourceManager.Core\src\Azure.ResourceManager.Core.csproj" />
     <ProjectReference Include="Azure.ResourceManager.Authorization\Azure.ResourceManager.Authorization.csproj" />
-    <Compile Include="../../../../common/ManagementCoreShared/**/*.cs" Link="Shared/Management/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
   <PropertyGroup>
     <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace -->
     <NoWarn>$(NoWarn);AZC0001;CA1303;SA0001;SA1629; SA1101;SA1200;SA1208;SA1309;SA1633;</NoWarn>
+    <IsOldTrack2>false</IsOldTrack2>
   </PropertyGroup>
 </Project>
