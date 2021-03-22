@@ -461,6 +461,7 @@ namespace Azure.Storage
                 public const char FilterByTags = 'f';
                 public const char Move = 'm';
                 public const char Execute = 'e';
+                public const char SetImmutabilityPolicy = 'i';
                 public const char ManageOwnership = 'o';
                 public const char ManageAccessControl = 'p';
             }

@@ -40,7 +40,7 @@ namespace Azure.Storage.Test.Shared
             new Uri(TestConfigSecondary.BlobServiceSecondaryEndpoint).Host;
 
         public BlobTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
-            : base(async, RecordedTestMode.Live)
+            : base(async, mode)
         {
             _serviceVersion = serviceVersion;
         }
@@ -184,6 +184,9 @@ namespace Azure.Storage.Test.Shared
 
         public BlobServiceClient GetServiceClient_OauthAccount() =>
             GetServiceClientFromOauthConfig(TestConfigOAuth);
+
+        public BlobServiceClient GetServiceClient_OAuthAccount_SharedKey() =>
+            GetServiceClientFromSharedKeyConfig(TestConfigOAuth);
 
         public BlobServiceClient GetServiceClient_ManagedDisk() =>
             GetServiceClientFromSharedKeyConfig(TestConfigManagedDisk);
