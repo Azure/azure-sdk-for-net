@@ -6,8 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7be873846df99f468fd32a4201e40cac-4682163157a72143-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210312.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-dff52186b29a6f489218425a5d4fac58-1cb750a942720d4a-00",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210322.1",
+          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "d1c947d404b29065d5ea7fcc142ddb07",
         "x-ms-return-client-request-id": "true"
       },
@@ -23,7 +26,7 @@
         "Connection": "keep-alive",
         "Content-Length": "41",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Mar 2021 17:46:10 GMT",
+        "Date": "Mon, 22 Mar 2021 15:37:10 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -31,7 +34,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "ee15a0ef-96d2-46bc-b838-c96d3480be31"
+        "X-Ms-Correlation-Request-Id": "893b35b0-95f5-402b-a206-71d03d724abe"
       },
       "ResponseBody": [
         "{\u0022repositories\u0022:[\u0022library/hello-world\u0022]}\n"
