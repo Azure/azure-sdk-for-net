@@ -13,15 +13,6 @@ namespace Azure.Iot.TimeSeriesInsights
     /// <summary> Request to get or delete instances by time series IDs or time series names. Exactly one of &quot;timeSeriesIds&quot; or &quot;names&quot; must be set. </summary>
     public partial class InstancesRequestBatchGetOrDelete
     {
-        /// <summary> Initializes a new instance of InstancesRequestBatchGetOrDelete. </summary>
-        public InstancesRequestBatchGetOrDelete()
-        {
-            TimeSeriesIds = new ChangeTrackingList<IList<object>>();
-            Names = new ChangeTrackingList<string>();
-        }
-
-        /// <summary> List of time series IDs of the time series instances to return or delete. </summary>
-        public IList<IList<object>> TimeSeriesIds { get; }
         /// <summary> List of names of the time series instances to return or delete. </summary>
         public IList<string> Names { get; }
     }

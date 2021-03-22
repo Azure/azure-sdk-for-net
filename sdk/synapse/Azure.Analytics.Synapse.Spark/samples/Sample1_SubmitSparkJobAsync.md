@@ -16,7 +16,7 @@ string storageAccount = "<my-storage-account-name>";
 
 string fileSystem = "<my-storage-filesystem-name>";
 
-SparkBatchClient client = new SparkBatchClient(endpoint, sparkPoolName, new DefaultAzureCredential());
+SparkBatchClient client = new SparkBatchClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
 ```
 
 ## Submitting Spark jobs

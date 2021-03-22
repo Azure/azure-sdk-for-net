@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> Operation status. </summary>
     public readonly partial struct OperationStatus : IEquatable<OperationStatus>

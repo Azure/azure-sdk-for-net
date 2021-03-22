@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.Compute.Tests
                 };
 
                 var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imgageRef, addDataDiskToVM);
-                VirtualMachine vm1 = returnTwoVM.Item1;
-                inputVM = returnTwoVM.Item2;
-                string inputVMName = returnTwoVM.Item3;
+                VirtualMachine vm1 = returnTwoVM.Response;
+                inputVM = returnTwoVM.Input;
+                string inputVMName = returnTwoVM.Name;
                 var getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVMName);
                 Assert.True(getVMWithInstanceViewResponse != null, "VM in Get");
                 ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);

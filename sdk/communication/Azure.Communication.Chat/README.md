@@ -1,8 +1,8 @@
 # Azure Communication Chat client library for .NET
 
-> Server - Chat Api Version:  2020-11-01-preview3
+> Server - Chat Api Version:  2021-03-01-preview5
 
-> Client - Chat SDK Version:  1.0.0-beta.4
+> Client - Chat SDK Version:  1.0.0-beta.6 (Unreleased)
 
 This package contains a C# SDK for Azure Communication Services for chat.
 
@@ -15,7 +15,7 @@ This package contains a C# SDK for Azure Communication Services for chat.
 Install the Azure Communication Chat client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Chat --version 1.0.0-beta.4
+dotnet add package Azure.Communication.Chat --version 1.0.0-beta.5
 ``` 
 
 ### Prerequisites
@@ -70,7 +70,7 @@ Once you initialized a `ChatClient` class, you can do the following chat operati
 ### Create a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
 CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
-ChatThread chatThread = createChatThreadResult.ChatThread;
+ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
 ```
 ### Get a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts
@@ -78,7 +78,7 @@ ChatThread chatThread = chatClient.GetChatThread(chatThread.Id);
 ```
 ### Get all threads for the user
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadsInfo_KeyConcepts
-Pageable<ChatThreadInfo> threads = chatClient.GetChatThreadsInfo();
+Pageable<ChatThreadItem> threads = chatClient.GetChatThreads();
 ```
 ### Delete a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread_KeyConcepts
@@ -94,19 +94,19 @@ chatThreadClient.UpdateTopic(topic: "Launch meeting");
 
 ### Send a message
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage_KeyConcepts
-string messageId = chatThreadClient.SendMessage("Let's meet at 11am");
+SendChatMessageResult sendChatMessageResult = chatThreadClient.SendMessage("Let's meet at 11am");
 ```
 ### Update a message
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_UpdateMessage_KeyConcepts
-chatThreadClient.UpdateMessage(messageId, content: "Instead of 11am, let's meet at 2pm");
+chatThreadClient.UpdateMessage(sendChatMessageResult.Id, content: "Instead of 11am, let's meet at 2pm");
 ```
 ### Get a message
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetMessage_KeyConcepts
-ChatMessage message = chatThreadClient.GetMessage(messageId);
+ChatMessage message = chatThreadClient.GetMessage(sendChatMessageResult.Id);
 ```
 ### Delete a message
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_DeleteMessage_KeyConcepts
-chatThreadClient.DeleteMessage(messageId);
+chatThreadClient.DeleteMessage(sendChatMessageResult.Id);
 ```
 ### Get messages
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetMessages_KeyConcepts
@@ -122,7 +122,7 @@ chatThreadClient.AddParticipants(participants: new[] { new ChatParticipant(parti
 ```
 ### Remove a participant
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_RemoveParticipant_KeyConcepts
-chatThreadClient.RemoveParticipant(user: participantIdentifier);
+chatThreadClient.RemoveParticipant(identifier: participantIdentifier);
 ```
 ### Send a typing notification
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendTypingNotification_KeyConcepts
@@ -134,7 +134,7 @@ Pageable<ChatMessageReadReceipt> readReceipts = chatThreadClient.GetReadReceipts
 ```
 ### Send a read receipt
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendReadReceipt_KeyConcepts
-chatThreadClient.SendReadReceipt(messageId);
+chatThreadClient.SendReadReceipt(sendChatMessageResult.Id);
 ```
 
 ### Thread safety
@@ -179,7 +179,7 @@ ChatClient chatClient = new ChatClient(
     new CommunicationTokenCredential(userToken));
 ```
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread
-var chatParticipant = new ChatParticipant(communicationIdentifier: kimberly)
+var chatParticipant = new ChatParticipant(identifier: kimberly)
 {
     DisplayName = "Kim"
 };
@@ -193,18 +193,18 @@ Use `GetChatThread` to retrieve a chat thread from the service.
 `threadId` is the unique id of the thread.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetThread
-ChatThread chatThread = await chatClient.GetChatThreadAsync(threadId);
+ChatThreadProperties chatThread = await chatThreadClient.GetPropertiesAsync();
 ```
 
 ### Get threads (for a participant)
 
-Use `GetChatThreadsInfo` to get the list of chat threads for the participant that instantiated the chatClient.
+Use `GetChatThreads` to get the list of chat threads for the participant that instantiated the chatClient.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
-AsyncPageable<ChatThreadInfo> chatThreadsInfo = chatClient.GetChatThreadsInfoAsync();
-await foreach (ChatThreadInfo chatThreadInfo in chatThreadsInfo)
+AsyncPageable<ChatThreadItem> chatThreadItems = chatClient.GetChatThreadsAsync();
+await foreach (ChatThreadItem chatThreadItem in chatThreadItems)
 {
-    Console.WriteLine($"{ chatThreadInfo.Id}");
+    Console.WriteLine($"{ chatThreadItem.Id}");
 }
 ```
 
@@ -237,7 +237,8 @@ Use `SendMessage` to send a message to a thread.
 - Use `senderDisplayName` to specify the display name of the sender. If not specified, empty string will be set.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
-var messageId = await chatThreadClient.SendMessageAsync(content:"hello world");
+SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync(content:"hello world");
+var messageId = sendChatMessageResult.Id;
 ```
 
 ### Get a message
@@ -258,7 +259,7 @@ Use `GetMessages` to retrieve all messages for the chat thread.
 AsyncPageable<ChatMessage> allMessages = chatThreadClient.GetMessagesAsync();
 await foreach (ChatMessage message in allMessages)
 {
-    Console.WriteLine($"{message.Id}:{message.Content}");
+    Console.WriteLine($"{message.Id}:{message.Content.Message}");
 }
 ```
 ### Update a message

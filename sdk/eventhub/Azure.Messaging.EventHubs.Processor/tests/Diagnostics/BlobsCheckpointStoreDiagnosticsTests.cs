@@ -613,7 +613,7 @@ namespace Azure.Messaging.EventHubs.Processor.Tests
             public override string Name { get; }
             internal IEnumerable<BlobItem> Blobs;
             internal Exception GetBlobsAsyncException;
-            internal Dictionary<string, MockBlobClient> BlobClients = new ();
+            internal Dictionary<string, MockBlobClient> BlobClients = new();
 
             public MockBlobContainerClient(string accountName = "blobAccount",
                                            string containerName = "container",

@@ -4,10 +4,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Iot.DeviceUpdate.Models;
+using Azure.IoT.DeviceUpdate.Models;
 using NUnit.Framework;
 
-namespace Azure.Iot.DeviceUpdate.Tests
+namespace Azure.IoT.DeviceUpdate.Tests
 {
     /// <summary>
     /// Updates management live samples.
@@ -240,7 +240,7 @@ namespace Azure.Iot.DeviceUpdate.Tests
         {
             var client = CreateClient();
             var expected = TestEnvironment;
-            Response<Operation> response = await client.GetOperationAsync(expected.OperationId);
+            Response<Models.Operation> response = await client.GetOperationAsync(expected.OperationId);
 
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.GetRawResponse());
@@ -255,7 +255,7 @@ namespace Azure.Iot.DeviceUpdate.Tests
             var client = CreateClient();
             try
             {
-                Response<Operation> _ = await client.GetOperationAsync("fake");
+                Response<Models.Operation> _ = await client.GetOperationAsync("fake");
             }
             catch (RequestFailedException e)
             {

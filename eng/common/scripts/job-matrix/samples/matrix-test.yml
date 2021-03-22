@@ -7,12 +7,19 @@ jobs:
   - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
     parameters:
       JobTemplatePath: /eng/common/scripts/job-matrix/samples/matrix-job-sample.yml
-      AdditionalParameters: []
+      AdditionalParameters: {}
+      Pool: Azure Pipelines
+      OsVmImage: ubuntu-18.04
       CloudConfig:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         Location: eastus2
         Cloud: Public
-      MatrixFilters: []
+      MatrixFilters:
+        # Exclusion example
+        - OSVmImage=^(?!macOS).*
+      MatrixReplace:
+        - OsVmImage=.*ubuntu.*/ubuntu-20.04
+        - .*Framework.*=net5.0/net5.1
       MatrixConfigs:
         - Name: base_product_matrix
           Path: eng/common/scripts/job-matrix/samples/matrix.json

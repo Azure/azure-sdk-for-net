@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             }
         }
 
-        public static async Task<(BlobBaseClient, BlobProperties)> GetBlobReferenceFromServerAsync(this BlobContainerClient container, string blobName, CancellationToken cancellationToken = default)
+        public static async Task<(BlobBaseClient Client, BlobProperties Properties)> GetBlobReferenceFromServerAsync(this BlobContainerClient container, string blobName, CancellationToken cancellationToken = default)
         {
             BlobProperties blobProperties = await container.GetBlobClient(blobName).GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
             switch (blobProperties.BlobType)
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
         {
             try
             {
-                return (await container.GetBlobReferenceFromServerAsync(blobName, cancellationToken).ConfigureAwait(false)).Item1;
+                return (await container.GetBlobReferenceFromServerAsync(blobName, cancellationToken).ConfigureAwait(false)).Client;
             }
             catch (RequestFailedException exception)
             {

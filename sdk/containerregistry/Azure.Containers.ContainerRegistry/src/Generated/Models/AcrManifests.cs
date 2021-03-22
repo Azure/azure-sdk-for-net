@@ -11,30 +11,33 @@ using Azure.Core;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes. </summary>
-    public partial class AcrManifests
+    internal partial class AcrManifests
     {
         /// <summary> Initializes a new instance of AcrManifests. </summary>
         internal AcrManifests()
         {
-            ManifestsAttributes = new ChangeTrackingList<ManifestAttributesBase>();
+            Manifests = new ChangeTrackingList<ManifestAttributesBase>();
         }
 
         /// <summary> Initializes a new instance of AcrManifests. </summary>
         /// <param name="registry"> Registry name. </param>
-        /// <param name="imageName"> Image name. </param>
-        /// <param name="manifestsAttributes"> List of manifests. </param>
-        internal AcrManifests(string registry, string imageName, IReadOnlyList<ManifestAttributesBase> manifestsAttributes)
+        /// <param name="repository"> Image name. </param>
+        /// <param name="manifests"> List of manifests. </param>
+        /// <param name="link"> . </param>
+        internal AcrManifests(string registry, string repository, IReadOnlyList<ManifestAttributesBase> manifests, string link)
         {
             Registry = registry;
-            ImageName = imageName;
-            ManifestsAttributes = manifestsAttributes;
+            Repository = repository;
+            Manifests = manifests;
+            Link = link;
         }
 
         /// <summary> Registry name. </summary>
         public string Registry { get; }
         /// <summary> Image name. </summary>
-        public string ImageName { get; }
+        public string Repository { get; }
         /// <summary> List of manifests. </summary>
-        public IReadOnlyList<ManifestAttributesBase> ManifestsAttributes { get; }
+        public IReadOnlyList<ManifestAttributesBase> Manifests { get; }
+        public string Link { get; }
     }
 }

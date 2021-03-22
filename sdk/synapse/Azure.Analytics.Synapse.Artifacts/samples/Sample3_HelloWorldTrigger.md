@@ -6,7 +6,7 @@ string triggerName = "Test-Trigger";
 ```
 
 ```C# Snippet:CreateTriggerClient
-TriggerClient client = new TriggerClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+TriggerClient client = new TriggerClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
 ```
 
 ```C# Snippet:CreateTrigger

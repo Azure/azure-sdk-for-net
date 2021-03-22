@@ -1,9 +1,22 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.11.0 (2021-03-22)
 
+### Added
+
+- `Operation` base class for operations that do not return a value.
+- Added `Content` property to `Response` which returns the body of the response as a `BinaryData` if the body is buffered.
+- `AzureNamedKeyCredential` has been implemented to cover scenarios where services require that a shared key name and the key value be used as a component of the algorithm to form the authorization token.
+
+### Key Bug Fixes
+
+- Check the `JsonIgnoreAttribute.Condition` property added in .NET 5 when discovering members with `JsonObjectSerializer`.
+- `ETag` now returns `string.Empty` if it is constructed with a null value.
+- Keep-Alive connections are recycled every 300 seconds to observe DNS changes.
 
 ## 1.10.0 (2021-03-09)
+
+## Added
 
 - Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/blob/master/spec.md).
 

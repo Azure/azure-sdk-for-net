@@ -11,7 +11,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// Two types of alert emails will be sent: Data feed not available alerts, and Incident reports which contain one or multiple anomalies.
     /// </summary>
     [CodeGenModel("EmailHookInfo")]
-    [CodeGenSuppress(nameof(EmailNotificationHook), typeof(string), typeof(EmailHookParameter))]
+    [CodeGenSuppress(nameof(EmailNotificationHook), typeof(string))]
     public partial class EmailNotificationHook : NotificationHook
     {
         /// <summary>

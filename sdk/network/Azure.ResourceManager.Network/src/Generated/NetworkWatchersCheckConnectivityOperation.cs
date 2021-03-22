@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatchersCheckConnectivityOperation : Operation<ConnectivityInformation>, IOperationSource<ConnectivityInformation>
     {
         private readonly ArmOperationHelpers<ConnectivityInformation> _operation;
+
+        /// <summary> Initializes a new instance of NetworkWatchersCheckConnectivityOperation for mocking. </summary>
+        protected NetworkWatchersCheckConnectivityOperation()
+        {
+        }
+
         internal NetworkWatchersCheckConnectivityOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ConnectivityInformation>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersCheckConnectivityOperation");

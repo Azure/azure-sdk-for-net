@@ -77,7 +77,7 @@ namespace Azure.Communication.Sms.Tests
             };
 
             return optionsCombinations
-                .Select(sendOptions => new object?[] { "+18001230000", "+18005670000", "Hello 👋", sendOptions });
+                .Select(sendOptions => new object?[] { "+14255550123", "+14255550234", "Hello 👋", sendOptions });
         }
 
         private static Expression<Func<SmsClient, TResult>> BuildExpression<TResult>(Expression<Func<SmsClient, TResult>> expression)

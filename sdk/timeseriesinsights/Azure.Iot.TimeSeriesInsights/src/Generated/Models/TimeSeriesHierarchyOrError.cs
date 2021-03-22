@@ -18,7 +18,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary> Initializes a new instance of TimeSeriesHierarchyOrError. </summary>
         /// <param name="hierarchy"> Time series hierarchy object - set when the operation is successful. </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
-        internal TimeSeriesHierarchyOrError(TimeSeriesHierarchy hierarchy, TsiErrorBody error)
+        internal TimeSeriesHierarchyOrError(TimeSeriesHierarchy hierarchy, TimeSeriesOperationError error)
         {
             Hierarchy = hierarchy;
             Error = error;
@@ -27,6 +27,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary> Time series hierarchy object - set when the operation is successful. </summary>
         public TimeSeriesHierarchy Hierarchy { get; }
         /// <summary> Error object - set when the operation is unsuccessful. </summary>
-        public TsiErrorBody Error { get; }
+        public TimeSeriesOperationError Error { get; }
     }
 }

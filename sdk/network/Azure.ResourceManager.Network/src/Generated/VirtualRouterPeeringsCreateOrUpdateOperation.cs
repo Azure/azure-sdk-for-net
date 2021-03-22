@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualRouterPeeringsCreateOrUpdateOperation : Operation<VirtualRouterPeering>, IOperationSource<VirtualRouterPeering>
     {
         private readonly ArmOperationHelpers<VirtualRouterPeering> _operation;
+
+        /// <summary> Initializes a new instance of VirtualRouterPeeringsCreateOrUpdateOperation for mocking. </summary>
+        protected VirtualRouterPeeringsCreateOrUpdateOperation()
+        {
+        }
+
         internal VirtualRouterPeeringsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VirtualRouterPeering>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "VirtualRouterPeeringsCreateOrUpdateOperation");

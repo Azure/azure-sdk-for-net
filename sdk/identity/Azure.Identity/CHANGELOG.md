@@ -1,5 +1,17 @@
 # Release History
 
+## 1.4.0-beta.5 (Unreleased)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Identity better with their contributions to this release:
+
+- Marco Mansi _([GitHub](https://github.com/olandese))_
+
+### New Features
+
+- Added `AzurePowerShellCredential` to `DefaultAzureCredential` (A community contribution, courtesy of _[olandese](https://github.com/olandese))_
+
 ## 1.4.0-beta.4 (2021-03-09)
 
 ### Fixes and Improvements

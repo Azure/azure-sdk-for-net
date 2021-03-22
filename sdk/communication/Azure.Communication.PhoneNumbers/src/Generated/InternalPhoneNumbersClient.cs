@@ -9,11 +9,11 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.PhoneNumbers;
+using Azure.Communication.PhoneNumbers.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The InternalPhoneNumbers service client. </summary>
     internal partial class InternalPhoneNumbersClient
@@ -147,10 +147,10 @@ namespace Azure.Communication.PhoneNumbers.Models
             }
         }
 
-        /// <summary> Gets the details of the given acquired phone number. </summary>
-        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
+        /// <summary> Gets the details of the given purchased phone number. </summary>
+        /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AcquiredPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PurchasedPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetByNumber");
             scope.Start();
@@ -165,10 +165,10 @@ namespace Azure.Communication.PhoneNumbers.Models
             }
         }
 
-        /// <summary> Gets the details of the given acquired phone number. </summary>
-        /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
+        /// <summary> Gets the details of the given purchased phone number. </summary>
+        /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AcquiredPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
+        public virtual Response<PurchasedPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetByNumber");
             scope.Start();
@@ -183,13 +183,13 @@ namespace Azure.Communication.PhoneNumbers.Models
             }
         }
 
-        /// <summary> Gets the list of all acquired phone numbers. </summary>
+        /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<AcquiredPhoneNumber> ListPhoneNumbersAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PurchasedPhoneNumber> ListPhoneNumbersAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AcquiredPhoneNumber>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PurchasedPhoneNumber>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListPhoneNumbers");
                 scope.Start();
@@ -204,7 +204,7 @@ namespace Azure.Communication.PhoneNumbers.Models
                     throw;
                 }
             }
-            async Task<Page<AcquiredPhoneNumber>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PurchasedPhoneNumber>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListPhoneNumbers");
                 scope.Start();
@@ -222,13 +222,13 @@ namespace Azure.Communication.PhoneNumbers.Models
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets the list of all acquired phone numbers. </summary>
+        /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
         /// <param name="top"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<AcquiredPhoneNumber> ListPhoneNumbers(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PurchasedPhoneNumber> ListPhoneNumbers(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<AcquiredPhoneNumber> FirstPageFunc(int? pageSizeHint)
+            Page<PurchasedPhoneNumber> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListPhoneNumbers");
                 scope.Start();
@@ -243,7 +243,7 @@ namespace Azure.Communication.PhoneNumbers.Models
                     throw;
                 }
             }
-            Page<AcquiredPhoneNumber> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PurchasedPhoneNumber> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.ListPhoneNumbers");
                 scope.Start();
@@ -324,14 +324,14 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<InternalPurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartPurchasePhoneNumbers");
             scope.Start();
             try
             {
                 var originalResponse = await RestClient.PurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
-                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+                return new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -343,64 +343,14 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
+        public virtual InternalPurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartPurchasePhoneNumbers");
             scope.Start();
             try
             {
                 var originalResponse = RestClient.PurchasePhoneNumbers(searchId, cancellationToken);
-                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Releases an acquired phone number. </summary>
-        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
-        {
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartReleasePhoneNumber");
-            scope.Start();
-            try
-            {
-                var originalResponse = await RestClient.ReleasePhoneNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
-                return new ReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Releases an acquired phone number. </summary>
-        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
-        {
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
-
-            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartReleasePhoneNumber");
-            scope.Start();
-            try
-            {
-                var originalResponse = RestClient.ReleasePhoneNumber(phoneNumber, cancellationToken);
-                return new ReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
+                return new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -455,6 +405,56 @@ namespace Azure.Communication.PhoneNumbers.Models
             {
                 var originalResponse = RestClient.UpdateCapabilities(phoneNumber, calling, sms, cancellationToken);
                 return new UpdatePhoneNumberCapabilitiesOperation(_clientDiagnostics, _pipeline, RestClient.CreateUpdateCapabilitiesRequest(phoneNumber, calling, sms).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Releases a purchased phone number. </summary>
+        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        public virtual async Task<InternalReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        {
+            if (phoneNumber == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumber));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartReleasePhoneNumber");
+            scope.Start();
+            try
+            {
+                var originalResponse = await RestClient.ReleasePhoneNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
+                return new InternalReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Releases a purchased phone number. </summary>
+        /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
+        public virtual InternalReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
+        {
+            if (phoneNumber == null)
+            {
+                throw new ArgumentNullException(nameof(phoneNumber));
+            }
+
+            using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartReleasePhoneNumber");
+            scope.Start();
+            try
+            {
+                var originalResponse = RestClient.ReleasePhoneNumber(phoneNumber, cancellationToken);
+                return new InternalReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
             }
             catch (Exception e)
             {

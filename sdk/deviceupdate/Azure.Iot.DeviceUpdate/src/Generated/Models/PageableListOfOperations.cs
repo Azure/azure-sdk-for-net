@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> The list of operations with server paging support. </summary>
     internal partial class PageableListOfOperations

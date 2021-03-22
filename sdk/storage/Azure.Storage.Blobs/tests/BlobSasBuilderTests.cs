@@ -40,7 +40,7 @@ namespace Azure.Storage.Blobs.Test
                 Value = constants.Sas.KeyValue
             };
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_ContainerTest()
         {
             // Arrange
@@ -68,7 +68,7 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_ContainerIdentityTest()
         {
             // Arrange
@@ -102,7 +102,7 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_BlobTest()
         {
             // Arrange
@@ -130,7 +130,7 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_BlobIdentityTest()
         {
             // Arrange
@@ -164,7 +164,7 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_SnapshotTest()
         {
             // Arrange
@@ -192,7 +192,7 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_SnapshotIdentityTest()
         {
             // Arrange
@@ -226,7 +226,7 @@ namespace Azure.Storage.Blobs.Test
             AssertResponseHeaders(constants, sasQueryParameters);
         }
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_NullSharedKeyCredentialTest()
         {
             // Arrange
@@ -239,7 +239,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.Throws<ArgumentNullException>(() => blobSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_IdentifierTest()
         {
             // Arrange
@@ -264,7 +264,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(resource, sasQueryParameters.Resource);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         [TestCase("FTPUCALXDWR")]
         [TestCase("rwdxlacuptf")]
@@ -293,7 +293,7 @@ namespace Azure.Storage.Blobs.Test
             await sasContainerClient.GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AccountPermissionsRawPermissions_InvalidPermission()
         {
             // Arrange
@@ -313,7 +313,7 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("e is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         [TestCase("TLXDWMECAR")]
         [TestCase("racwdxltme")]
@@ -349,7 +349,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ContainerPermissionsRawPermissions_Invalid()
         {
             // Arrange
@@ -370,7 +370,7 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("s is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         [TestCase(BlobSasPermissions.Read)]
         [TestCase(BlobSasPermissions.Read | BlobSasPermissions.Write | BlobSasPermissions.List)]
@@ -403,7 +403,7 @@ namespace Azure.Storage.Blobs.Test
             await sasBlobClient.ExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         [TestCase(BlobContainerSasPermissions.List)]
         [TestCase(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.List)]
@@ -462,7 +462,7 @@ namespace Azure.Storage.Blobs.Test
             return builder;
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task BlobSasBuilder_PreauthorizedAgentObjectId()
         {
@@ -500,7 +500,7 @@ namespace Azure.Storage.Blobs.Test
             await blobClient.ExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task BlobSasBuilder_CorrelationId()
         {

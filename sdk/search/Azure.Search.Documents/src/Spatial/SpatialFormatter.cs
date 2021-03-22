@@ -133,15 +133,19 @@ namespace Azure.Search.Documents
 
             if (line.Coordinates.Count < 4)
             {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentException(
                     $"A GeographyLineString must have at least four Points to form a searchable polygon.",
-                    $"{nameof(line)}");
+                    $"{nameof(line)}.{nameof(line.Points)}");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
             else if (line.Coordinates[0] != line.Coordinates[line.Coordinates.Count - 1])
             {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentException(
                     $"A GeographyLineString must have matching first and last Points to form a searchable polygon.",
-                    $"{nameof(line)}");
+                    $"{nameof(line)}.{nameof(line.Points)}");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
 
             StringBuilder odata = new StringBuilder("geography'POLYGON((");
@@ -210,9 +214,11 @@ namespace Azure.Search.Documents
 
             if (polygon.Rings.Count != 1)
             {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentException(
                     $"A GeographyPolygon must have exactly one Rings to form a searchable polygon.",
-                    $"{nameof(polygon)}");
+                    $"{nameof(polygon)}.{nameof(polygon.Rings)}");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
 
             return EncodePolygon(polygon.Rings[0]);

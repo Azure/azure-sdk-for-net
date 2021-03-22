@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class NotebookWorkspacesCreateOrUpdateOperation : Operation<NotebookWorkspace>, IOperationSource<NotebookWorkspace>
     {
         private readonly ArmOperationHelpers<NotebookWorkspace> _operation;
+
+        /// <summary> Initializes a new instance of NotebookWorkspacesCreateOrUpdateOperation for mocking. </summary>
+        protected NotebookWorkspacesCreateOrUpdateOperation()
+        {
+        }
+
         internal NotebookWorkspacesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<NotebookWorkspace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebookWorkspacesCreateOrUpdateOperation");

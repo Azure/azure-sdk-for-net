@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> JSON web key parameter. </summary>
-    public partial class JWKHeader
+    internal partial class JWKHeader
     {
         /// <summary> Initializes a new instance of JWKHeader. </summary>
         public JWKHeader()

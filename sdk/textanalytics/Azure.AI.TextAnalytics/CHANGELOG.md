@@ -1,6 +1,9 @@
 # Release History
 
-## 5.1.0-beta.5 (Unreleased)
+## 5.1.0-beta.6 (Unreleased)
+
+
+## 5.1.0-beta.5 (2021-03-09)
 ### New features
 - Added ability to filter the categories returned in a Personally Identifiable Information recognition with the optional parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions`.
 - Added the ability to recognize linked entities under `StartAnalyzeBatchActions`.
@@ -23,11 +26,6 @@
 
 ### Fixes
 - `RecognizePiiEntities` and `TextAnalyticsActions.RecognizePiiEntitiesOptions` were always passing `PiiEntityDomainType.PHI`. Now, it is only passed when requested by the user [19086](https://github.com/Azure/azure-sdk-for-net/issues/19086).
-
-### Known Issues
-- The parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions` is currently not working when used in `StartAnalyzeBatchActions`. [19237](https://github.com/Azure/azure-sdk-for-net/issues/19237).
-- `Statistics` for `AnalyzeBatchActionsResult` are not currently returned even if the user passes `IncludeStatistics  = true`. [19268](https://github.com/Azure/azure-sdk-for-net/issues/19268).
-- `StartAnalyzeHealthcareEntities` is in gated preview and can not be used with AAD credentials. For more information, see [the Text Analytics for Health documentation](https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview).
 
 ## 5.1.0-beta.4 (2021-02-10)
 ### New features

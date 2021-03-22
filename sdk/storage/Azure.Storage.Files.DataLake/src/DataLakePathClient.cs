@@ -609,7 +609,7 @@ namespace Azure.Storage.Files.DataLake
             _blobPathRestClient = blobPathRestClient;
         }
 
-        private (PathRestClient, PathRestClient) BuildPathRestClients(Uri uri)
+        private (PathRestClient DfsPathClient, PathRestClient BlobPathClient) BuildPathRestClients(Uri uri)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(uri);
             string fileSystmeName = uriBuilder.FileSystemName;

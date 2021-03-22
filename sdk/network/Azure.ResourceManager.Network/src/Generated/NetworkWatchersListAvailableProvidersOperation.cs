@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatchersListAvailableProvidersOperation : Operation<AvailableProvidersList>, IOperationSource<AvailableProvidersList>
     {
         private readonly ArmOperationHelpers<AvailableProvidersList> _operation;
+
+        /// <summary> Initializes a new instance of NetworkWatchersListAvailableProvidersOperation for mocking. </summary>
+        protected NetworkWatchersListAvailableProvidersOperation()
+        {
+        }
+
         internal NetworkWatchersListAvailableProvidersOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<AvailableProvidersList>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersListAvailableProvidersOperation");

@@ -1,0 +1,138 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://python-doctranslation.cognitiveservices.azure.com/translator/text/batch/v1.0-preview.1/documents/formats",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-37cf8a045faeb54eadfa71870bbb3c07-ffd6b680ce8fa848-00",
+        "User-Agent": "azsdk-net-AI.DocumentTranslation/1.0.0-alpha.20210316.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "701de2170cc2d39d01e76b6112fe8a7d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6a6f13eb-adb3-442e-aace-276ea17469a8",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Mar 2021 23:44:13 GMT",
+        "ETag": "\u00229286211A60DF4B26245EA35A361E28C65AD4EC6AA36FD35FDD84FC606B95BEB6\u0022",
+        "Set-Cookie": [
+          "ARRAffinity=5dd610bbbfcdcce1e8b7e036dad4b7c92b91df5adc2f4b536e67d2a5eff0940e;Path=/;HttpOnly;Secure;Domain=doctrans.westus.microsofttranslator.com",
+          "ARRAffinitySameSite=5dd610bbbfcdcce1e8b7e036dad4b7c92b91df5adc2f4b536e67d2a5eff0940e;Path=/;HttpOnly;SameSite=None;Secure;Domain=doctrans.westus.microsofttranslator.com"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "X-Powered-By": "ASP.NET",
+        "X-RequestId": "6a6f13eb-adb3-442e-aace-276ea17469a8"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "format": "PlainText",
+            "fileExtensions": [
+              ".txt"
+            ],
+            "contentTypes": [
+              "text/plain"
+            ],
+            "versions": []
+          },
+          {
+            "format": "OpenXmlWord",
+            "fileExtensions": [
+              ".docx"
+            ],
+            "contentTypes": [
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            ],
+            "versions": []
+          },
+          {
+            "format": "OpenXmlPresentation",
+            "fileExtensions": [
+              ".pptx"
+            ],
+            "contentTypes": [
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+            ],
+            "versions": []
+          },
+          {
+            "format": "OpenXmlSpreadsheet",
+            "fileExtensions": [
+              ".xlsx"
+            ],
+            "contentTypes": [
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            ],
+            "versions": []
+          },
+          {
+            "format": "OutlookMailMessage",
+            "fileExtensions": [
+              ".msg"
+            ],
+            "contentTypes": [
+              "application/vnd.ms-outlook"
+            ],
+            "versions": []
+          },
+          {
+            "format": "HtmlFile",
+            "fileExtensions": [
+              ".html",
+              ".htm"
+            ],
+            "contentTypes": [
+              "text/html"
+            ],
+            "versions": []
+          },
+          {
+            "format": "PortableDocumentFormat",
+            "fileExtensions": [
+              ".pdf"
+            ],
+            "contentTypes": [
+              "application/pdf"
+            ],
+            "versions": []
+          },
+          {
+            "format": "XLIFF",
+            "fileExtensions": [
+              ".xlf"
+            ],
+            "contentTypes": [
+              "application/xliff\u002Bxml"
+            ],
+            "versions": [
+              "1.0",
+              "1.1",
+              "1.2"
+            ]
+          },
+          {
+            "format": "TSV",
+            "fileExtensions": [
+              ".tsv",
+              ".tab"
+            ],
+            "contentTypes": [
+              "text/tab-separated-values"
+            ],
+            "versions": []
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "DOCUMENT_TRANSLATION_API_KEY": "Sanitized",
+    "DOCUMENT_TRANSLATION_ENDPOINT": "https://python-doctranslation.cognitiveservices.azure.com",
+    "RandomSeed": "11358514"
+  }
+}
