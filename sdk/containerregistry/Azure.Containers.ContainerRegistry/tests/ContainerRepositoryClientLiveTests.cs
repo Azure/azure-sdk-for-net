@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+
 using Azure.Core.TestFramework;
+
 using Microsoft.Azure.Management.ContainerRegistry;
 using Microsoft.Azure.Management.ContainerRegistry.Models;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
