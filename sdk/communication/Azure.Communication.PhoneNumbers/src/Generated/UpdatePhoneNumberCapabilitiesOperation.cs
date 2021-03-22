@@ -21,6 +21,11 @@ namespace Azure.Communication.PhoneNumbers
     {
         private readonly ArmOperationHelpers<AcquiredPhoneNumber> _operation;
 
+        /// <summary> Initializes a new instance of UpdatePhoneNumberCapabilitiesOperation for mocking. </summary>
+        protected UpdatePhoneNumberCapabilitiesOperation()
+        {
+        }
+
         /// <inheritdoc />
         public override AcquiredPhoneNumber Value => _operation.Value;
 

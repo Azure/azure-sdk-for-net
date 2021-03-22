@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class ContainerServicesCreateOrUpdateOperation : Operation<ContainerService>, IOperationSource<ContainerService>
     {
         private readonly ArmOperationHelpers<ContainerService> _operation;
+
+        /// <summary> Initializes a new instance of ContainerServicesCreateOrUpdateOperation for mocking. </summary>
+        protected ContainerServicesCreateOrUpdateOperation()
+        {
+        }
+
         internal ContainerServicesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ContainerService>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ContainerServicesCreateOrUpdateOperation");
