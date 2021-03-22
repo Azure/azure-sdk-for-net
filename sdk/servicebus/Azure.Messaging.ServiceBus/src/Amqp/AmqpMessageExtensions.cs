@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Microsoft.Azure.Amqp;
@@ -26,9 +27,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             foreach (ReadOnlyMemory<byte> data in binaryData)
             {
+                ArraySegment<byte> segment;
+                if (!data.IsEmpty)
+                {
+                    if (!MemoryMarshal.TryGetArray(data, out segment))
+                    {
+                        segment = new ArraySegment<byte>(data.ToArray());
+                    }
+                }
+                else
+                {
+                    segment = new ArraySegment<byte>(Array.Empty<byte>());
+                }
                 yield return new Data
                 {
-                    Value = new ArraySegment<byte>(data.IsEmpty ? Array.Empty<byte>() : data.ToArray())
+                    Value = segment
                 };
             }
         }
