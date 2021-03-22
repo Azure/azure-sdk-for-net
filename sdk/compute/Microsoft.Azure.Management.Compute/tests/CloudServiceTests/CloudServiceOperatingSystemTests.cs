@@ -11,8 +11,9 @@ namespace Compute.Tests
 {
     public class CloudServiceOperatingSystemTests : CloudServiceTestsBase
     {
-        [Fact]
-        [Trait("Name", "Test_CloudServiceOperatingSystemOperations")]
+        //DIsabling this test till ARM Manifest is not rolled out with new OS API
+        //[Fact]
+        //[Trait("Name", "Test_CloudServiceOperatingSystemOperations")]
         public void Test_CloudServiceOperatingSystemOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType()))

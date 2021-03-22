@@ -90,7 +90,7 @@ namespace Compute.Tests
                     ValidateCloudService(cloudService, getResponse, rgName, csName);
 
                     // Delete the cloud Service
-                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, csName);
+                    m_CrpClient.CloudServices.Delete(rgName, csName);
                 }
                 finally
                 {

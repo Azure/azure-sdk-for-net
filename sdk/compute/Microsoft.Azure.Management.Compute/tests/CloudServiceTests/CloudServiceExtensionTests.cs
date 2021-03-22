@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
@@ -221,6 +222,12 @@ namespace Compute.Tests
 
                     // Send the request
                     ValidateGetAndListResponseForMultiRole(rgName, csName, cloudService, roleNameToPropertiesMapping);
+
+                    // Validate the RDP file response
+                    VerifyRDPResponse("WorkerRole1_IN_0", rgName, csName);
+                    VerifyRDPResponse("WorkerRole2_IN_0", rgName, csName);
+                    VerifyRDPResponse("WebRole1_IN_0", rgName, csName);
+                    VerifyRDPResponse("WebRole1_IN_1", rgName, csName);
                     ///
                     /// Update[1]: and Add Monitor Extension in WorkerRole1.
                     ///
@@ -253,6 +260,7 @@ namespace Compute.Tests
                     ValidateCloudService(cloudService, getResponse, rgName, csName);
                     // Send the request
                     ValidateGetAndListResponseForMultiRole(rgName, csName, cloudService, roleNameToPropertiesMapping);
+                    VerifyRDPResponse("WorkerRole2_IN_0", rgName, csName);
                     ///
                     /// Update[3]: Add MonitorExtension to all roles,
                     /// 
@@ -270,11 +278,10 @@ namespace Compute.Tests
                     ValidateGetAndListResponseForMultiRole(rgName, csName, cloudService, roleNameToPropertiesMapping);
 
                     ///
-                    /// Update[4]: Delete MonitorExtension from all roles, Delete rdpExtensionWebRole
+                    /// Update[4]: Delete MonitorExtension from all roles
                     ///
 
                     cloudService.Properties.ExtensionProfile.Extensions.Remove(monitorExtension);
-                    //cloudService.Properties.ExtensionProfile.Extensions.Remove(rdpExtensionWebRole);
 
 
                     getResponse = CreateCloudService_NoAsyncTracking(
@@ -351,6 +358,13 @@ namespace Compute.Tests
                 Assert.True(expectedRoleInstanceNameMappedWithSkuName[roleInstance.Name] == roleInstance.Sku.Name, "RoleInstance Sku should match expected sku");
                 expectedRoleInstanceNameMappedWithSkuName.Remove(roleInstance.Name);
             }
+        }
+
+        private void VerifyRDPResponse(string roleInstanceName, string rgName, string cloudServiceName)
+        {
+            //Call GetRemoteDesktopFile for RoleInstance: {roleInstanceName} of CloudService: {cloudServiceName}"
+            Stream rdpResponse = m_CrpClient.CloudServiceRoleInstances.GetRemoteDesktopFile(roleInstanceName, rgName, cloudServiceName);
+            Assert.True(rdpResponse.Length > 0, "ContentLength should be > 0.");
         }
     }
 }

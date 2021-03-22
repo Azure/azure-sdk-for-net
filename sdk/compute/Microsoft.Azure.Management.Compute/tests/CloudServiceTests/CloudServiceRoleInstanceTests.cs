@@ -88,15 +88,13 @@ namespace Compute.Tests
                     roleInstance = m_CrpClient.CloudServiceRoleInstances.Get(roleInstanceName, rgName, csName);
                     verifyRoleInstance(roleInstanceName, supportedRoleInstanceSizes[0], roleInstance);
 
-                    /* // Disabling the test since NRP side changes for this are not done/rolled out. 
-                    //Delete the RoleInstance 
+                     //Delete the RoleInstance 
                     m_CrpClient.CloudServiceRoleInstances.Delete(roleInstanceName, rgName, csName);
                     IPage<RoleInstance> roleInstanceList = m_CrpClient.CloudServiceRoleInstances.List(rgName, csName);
                     Assert.True(roleInstanceList.Count() == 1, "Returned CloudService does not have 1 RoleInstance. Postcondition failed.");
-                    */
-
+                    
                     // Delete the cloud Service
-                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, csName);
+                    m_CrpClient.CloudServices.Delete(rgName, csName);
                 }
                 finally
                 {

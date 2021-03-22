@@ -279,7 +279,7 @@ namespace Compute.Tests
                     Assert.True(roleInstanceList.Count() == 1, "Returned CloudService does not have 1 RoleInstance. Postcondition failed.");
                     #endregion
 
-                    m_CrpClient.VirtualMachineScaleSets.Delete(rgName, csName);
+                    m_CrpClient.CloudServices.Delete(rgName, csName);
                 }
                 finally
                 {
