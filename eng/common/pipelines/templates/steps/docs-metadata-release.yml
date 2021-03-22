@@ -9,7 +9,6 @@ parameters:
   TargetDocRepoName: ''
   TargetDocRepoOwner: ''
   PRBranchName: 'master-rdme'
-  SourceBranchName: ''
   PRLabels: 'auto-merge'
   ArtifactName: ''
   Language: ''
@@ -40,11 +39,6 @@ steps:
       $setDefaultBranch = (git remote show origin | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
       Write-Host "Setting DefaultBranch=$setDefaultBranch"
       echo "##vso[task.setvariable variable=DefaultBranch]$setDefaultBranch"
-      if (!${{ parameters.SourceBranchName }}) {
-        ${{ parameters.SourceBranchName }} = $setDefaultBranch
-      }                                                                                         
-      Write-Host "git checkout ${{ parameters.SourceBranchName }}"
-      git checkout ${{ parameters.SourceBranchName }}
     } finally {
       Pop-Location
     }
