@@ -357,6 +357,22 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual("some default value", client.Options.OtherParameter);
         }
 
+        [Test]
+        public void CanRegisterCustomClient()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddAzureClients(builder =>
+                builder.AddClient<TestClient, TestClientOptions>(options => new TestClient("conn str", options))
+                    .ConfigureOptions(options => options.IntProperty = 1)
+            );
+            ServiceProvider provider = serviceCollection.BuildServiceProvider();
+            TestClient client = provider.GetService<TestClient>();
+
+            Assert.AreEqual("conn str", client.ConnectionString);
+            Assert.NotNull(client.Options);
+            Assert.AreEqual(1, client.Options.IntProperty);
+        }
+
         private IConfiguration GetConfiguration(params KeyValuePair<string, string>[] items)
         {
             return new ConfigurationBuilder().AddInMemoryCollection(items).Build();
