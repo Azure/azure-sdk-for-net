@@ -22,7 +22,7 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory)
     $projectPath = $projectPaths[0]
   }
   else {
-    $projectPath = $projectPaths -Join ""
+    $projectPath = $projectPaths
   }
 
   if ($projectPath -and (Test-Path $projectPath))
