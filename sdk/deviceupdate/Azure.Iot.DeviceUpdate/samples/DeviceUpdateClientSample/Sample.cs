@@ -9,6 +9,7 @@ using Azure.Identity;
 using Azure.IoT.DeviceUpdate;
 using Azure.IoT.DeviceUpdate.Models;
 using Newtonsoft.Json;
+using Operation = Azure.IoT.DeviceUpdate.Models.Operation;
 
 namespace ConsoleTest
 {
@@ -38,8 +39,8 @@ namespace ConsoleTest
         private readonly string _deviceTag;
         private readonly bool _delete;
 
-        private readonly UpdatesClient _updatesClient; 
-        private readonly DevicesClient _devicesClient; 
+        private readonly UpdatesClient _updatesClient;
+        private readonly DevicesClient _devicesClient;
         private readonly DeploymentsClient _deploymentsClient;
 
         /// <summary>
@@ -265,8 +266,8 @@ namespace ConsoleTest
                 await foreach (UpdatableDevices updatableDevices in groupResponse)
                 {
                     var update = updatableDevices.UpdateId;
-                    if (update.Provider == provider && 
-                        update.Name == name && 
+                    if (update.Provider == provider &&
+                        update.Name == name &&
                         update.Version == version)
                     {
                         updateFound = true;
@@ -318,7 +319,7 @@ namespace ConsoleTest
                                                       new UpdateId(provider, name, version)));
             Console.WriteLine($"Deployment '{deployment.Value.DeploymentId}' is created.");
             await Task.Delay(DefaultRetryAfterValue);
-            
+
             Console.WriteLine("Checking the deployment status...");
             Response<DeploymentStatus> deploymentStatus = await _deploymentsClient.GetDeploymentStatusAsync(deploymentId);
             Console.WriteLine($"  {deploymentStatus.Value.DeploymentState}");
@@ -336,9 +337,9 @@ namespace ConsoleTest
             {
                 Response<Device> deviceResponse = await _devicesClient.GetDeviceAsync(_deviceId);
                 var installedUpdateId = deviceResponse.Value.InstalledUpdateId;
-                if (installedUpdateId != null && 
+                if (installedUpdateId != null &&
                     installedUpdateId.Provider == provider &&
-                    installedUpdateId.Name == name && 
+                    installedUpdateId.Name == name &&
                     installedUpdateId.Version == version)
                 {
                     repeat = false;
@@ -363,7 +364,7 @@ namespace ConsoleTest
             var repeat = true;
             while (repeat)
             {
-                Response<Operation> operationResponse = await _updatesClient.GetOperationAsync(operationIdResponse.Value);
+                Response<Models.Operation> operationResponse = await _updatesClient.GetOperationAsync(operationIdResponse.Value);
                 if (operationResponse.Value.Status == OperationStatus.Succeeded)
                 {
                     Console.WriteLine();
