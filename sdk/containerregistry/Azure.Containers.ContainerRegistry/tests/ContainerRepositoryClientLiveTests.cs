@@ -93,8 +93,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.SetPropertiesAsync(
                 new ContentProperties()
                 {
-                    CanList = true,
-                    CanRead = true,
+                    CanList = false,
+                    CanRead = false,
                     CanWrite = false,
                     CanDelete = false,
                 });
@@ -102,8 +102,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             RepositoryProperties properties = await client.GetPropertiesAsync();
 
-            Assert.IsTrue(properties.WriteableProperties.CanList);
-            Assert.IsTrue(properties.WriteableProperties.CanRead);
+            Assert.IsFalse(properties.WriteableProperties.CanList);
+            Assert.IsFalse(properties.WriteableProperties.CanRead);
             Assert.IsFalse(properties.WriteableProperties.CanWrite);
             Assert.IsFalse(properties.WriteableProperties.CanDelete);
 
@@ -143,8 +143,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 {
                     CanList = false,
                     CanRead = false,
-                    CanWrite = true,
-                    CanDelete = true
+                    CanWrite = false,
+                    CanDelete = false
                 });
 
             // Assert
@@ -152,8 +152,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             Assert.IsFalse(properties.ModifiableProperties.CanList);
             Assert.IsFalse(properties.ModifiableProperties.CanRead);
-            Assert.IsTrue(properties.ModifiableProperties.CanWrite);
-            Assert.IsTrue(properties.ModifiableProperties.CanDelete);
+            Assert.IsFalse(properties.ModifiableProperties.CanWrite);
+            Assert.IsFalse(properties.ModifiableProperties.CanDelete);
 
             // Cleanup
             await client.SetTagPropertiesAsync(tag, originalContentProperties);
