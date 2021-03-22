@@ -99,7 +99,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [Test]
-        [Ignore("Temporarily disable until https://github.com/Azure/azure-sdk-for-net/pull/19612")]
         public void LoadECDsaPrime256v1Certificate()
         {
 #if NET461
