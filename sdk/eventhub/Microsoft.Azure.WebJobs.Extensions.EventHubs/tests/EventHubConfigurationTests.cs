@@ -145,7 +145,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                     { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUtc", enqueuedTime },
                 });
             Assert.AreEqual(OffsetType.FromEnqueuedTime, options.InitialOffsetOptions.Type);
-            Assert.AreEqual(enqueuedTime, options.InitialOffsetOptions.EnqueuedTimeUtc.Value.ToString("u"));
+            Assert.AreEqual(DateTimeOffset.Parse(enqueuedTime), options.InitialOffsetOptions.EnqueuedTimeUtc);
         }
 
         private EventHubOptions CreateOptionsFromConfig()

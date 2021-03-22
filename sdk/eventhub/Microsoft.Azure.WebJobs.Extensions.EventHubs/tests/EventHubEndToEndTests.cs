@@ -353,7 +353,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 // send one at a time so they will have slightly different enqueued times
                 await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
-                // There seems to be a resolution of 1 second when using FromEnqueuedTime, so delay 2s between 
+                // There seems to be a resolution of 1 second when using FromEnqueuedTime, so delay 2s between
                 // each event.
                 await Task.Delay(2000);
             }
