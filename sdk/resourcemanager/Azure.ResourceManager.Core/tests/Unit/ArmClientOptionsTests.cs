@@ -36,6 +36,17 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [TestCase]
+        public void VersionExist()
+        {
+            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            options.FakeRestApiVersions().FakeResourceVersion = FakeResourceApiVersions.V2019_12_01;
+            string result;
+            bool val = options.ApiVersions.TryGetApiVersion(options.FakeRestApiVersions().FakeResourceVersion.ResourceType.ToString(), out result);
+            Assert.True(val);
+            Assert.NotNull(result);
+        }
+
+        [TestCase]
         public void VersionLoadedChanges()
         {
             AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
