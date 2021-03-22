@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.AI.DocumentTranslation.Tests;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -28,13 +29,25 @@ namespace Azure.AI.DocumentTranslation.Samples
         }
 
         [Test]
-        public void CreateDocumentTranslationClientTokenCredential()
+        public void BadRequestSnippet()
         {
             string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
-            #region Snippet:CreateDocumentTranslationClientTokenCredential
-            //@@ string endpoint = "<endpoint>";
-            var client = new DocumentTranslationClient(new Uri(endpoint), new DefaultAzureCredential());
+            var credentials = new AzureKeyCredential(apiKey);
+            var client = new DocumentTranslationClient(new Uri(endpoint), credentials);
+
+            var invalidConfiguration = new TranslationConfiguration(new TranslationSource(new Uri(endpoint)), new List<TranslationTarget>());
+
+            #region Snippet:BadRequest
+            try
+            {
+                DocumentTranslationOperation operation = client.StartTranslation(invalidConfiguration);
+            }
+            catch (RequestFailedException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
             #endregion
         }
     }

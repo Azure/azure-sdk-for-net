@@ -78,7 +78,7 @@ A `DocumentTranslationClient` is the primary interface for developers using the 
 
 Document Translation is implemented as a [**long-running operation**][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed successfully or failed.
 
-For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#recognize-healthcare-entities-asynchronously).
+For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#start-translation-asynchronously).
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -92,6 +92,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
 [Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 The following section provides several code snippets using the `client` [created above](#create-documenttranslationclient-with-api-key-credential), and covers the main functions of Document Translation.
@@ -376,7 +377,65 @@ await foreach (DocumentStatusDetail document in operation.GetValuesAsync())
 
 ## Troubleshooting
 
+### General
+When you interact with the Cognitive Services Document Translation client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][textanalytics_rest_api] requests.
+
+For example, if you submit a request with an empty targets list, a `400` error is returned, indicating "Bad Request".
+
+```C# Snippet:BadRequest
+try
+{
+    DocumentTranslationOperation operation = client.StartTranslation(invalidConfiguration);
+}
+catch (RequestFailedException e)
+{
+    Console.WriteLine(e.ToString());
+}
+```
+
+You will notice that additional information is logged, like the client request ID of the operation.
+
+```
+Message:
+    Azure.RequestFailedException: Service request failed.
+    Status: 400 (Bad Request)
+
+Content:
+    {"error":{"code":"InvalidRequest","message":"No translation target found.","target":"TargetInput","innerError":{"code":"NoTranslationTargetFound","message":"No translation target found."}}}
+
+Headers:
+    Transfer-Encoding: chunked
+    X-RequestId: REDACTED
+    Content-Type: application/json; charset=utf-8
+    Set-Cookie: REDACTED
+    X-Powered-By: REDACTED
+    apim-request-id: REDACTED
+    Strict-Transport-Security: REDACTED
+    x-content-type-options: REDACTED
+    Date: Mon, 22 Mar 2021 11:54:58 GMT
+```
+
+### Setting up console logging
+The simplest way to see the logs is to enable the console logging.
+To create an Azure SDK log listener that outputs messages to console use AzureEventSourceListener.CreateConsoleLogger method.
+
+```
+// Setup a listener to monitor logged events.
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+To learn more about other logging mechanisms see [here][logging].
+
 ## Next steps
+
+Samples showing how to use the Cognitive Services Document Translation library are available in this GitHub repository.
+
+- [Start Translation][start_translation_sample]
+- [Poll Documents Status][documents_status_sample]
+- [Operations History][operations_history_sample]
+
+### Advanced samples
+- [Multiple Configurations][multiple_configurations_sample]
 
 ## Contributing
 See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to this library.
@@ -411,6 +470,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- TODO: Add correct link -->
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/document-translation/overview
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md
+
+[start_translation_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample1_StartTranslation.md
+[documents_status_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample2_PollIndividualDocuments.md
+[operations_history_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample3_OperationsHistory.md
+[multiple_configurations_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample4_MultipleConfigurations.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/

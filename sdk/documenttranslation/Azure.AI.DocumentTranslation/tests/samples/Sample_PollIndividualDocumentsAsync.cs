@@ -12,7 +12,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
-        public async Task StartTranslationAsync()
+        public async Task PollIndividualDocumentsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -21,28 +21,25 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            #region Snippet:StartTranslationAsync
-
             var input = new TranslationConfiguration(sourceUrl, targetUrl, "es");
-
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            Response<AsyncPageable<DocumentStatusDetail>> operationResult = await operation.WaitForCompletionAsync();
+            TimeSpan pollingInterval = new TimeSpan(1000);
 
-            Console.WriteLine($"  Status: {operation.Status}");
-            Console.WriteLine($"  Created on: {operation.CreatedOn}");
-            Console.WriteLine($"  Last modified: {operation.LastModified}");
-            Console.WriteLine($"  Total documents: {operation.DocumentsTotal}");
-            Console.WriteLine($"    Succeeded: {operation.DocumentsSucceeded}");
-            Console.WriteLine($"    Failed: {operation.DocumentsFailed}");
-            Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
-            Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
-
-            await foreach (DocumentStatusDetail document in operationResult.Value)
+            AsyncPageable<DocumentStatusDetail> documents = operation.GetAllDocumentsStatusAsync();
+            await foreach (DocumentStatusDetail document in documents)
             {
-                Console.WriteLine($"Document with Id: {document.DocumentId}");
-                Console.WriteLine($"  Status:{document.Status}");
-                if (document.Status == TranslationStatus.Succeeded)
+                Console.WriteLine($"Polling Status for document{document.LocationUri}");
+
+                Response<DocumentStatusDetail> status = await operation.GetDocumentStatusAsync(document.DocumentId);
+
+                while (!status.Value.HasCompleted)
+                {
+                    await Task.Delay(pollingInterval);
+                    status = await operation.GetDocumentStatusAsync(document.DocumentId);
+                }
+
+                if (status.Value.Status == TranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Location: {document.LocationUri}");
                     Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
@@ -53,8 +50,6 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
                     Console.WriteLine($"  Message: {document.Error.Message}");
                 }
             }
-
-            #endregion
         }
     }
 }
