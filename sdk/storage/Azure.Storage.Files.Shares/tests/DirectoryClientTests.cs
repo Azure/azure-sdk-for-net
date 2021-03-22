@@ -23,7 +23,7 @@ namespace Azure.Storage.Files.Shares.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -47,7 +47,7 @@ namespace Azure.Storage.Files.Shares.Tests
             //Assert.AreEqual("accountName", builder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         //Test framework doesn't allow recorded tests with connection string because the word 'Sanitized' is not base-64 encoded,
         // so we can't pass connection string validation"
         [LiveOnly]
@@ -71,7 +71,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
             // Arrange
@@ -89,7 +89,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(properties);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
         {
             // Arrange
@@ -104,7 +104,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
-        [Test]
+        [RecordedTest]
         public void DirectoryPathsParsing()
         {
             // nested directories
@@ -140,7 +140,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(string.Empty, builder4.LastDirectoryOrFileName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -162,7 +162,7 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertCacheableProperty(name, () => directory.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_FilePermission()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -179,7 +179,7 @@ namespace Azure.Storage.Files.Shares.Tests
             AssertValidStorageDirectoryInfo(response);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_FilePermissionAndFilePermissionKeySet()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -201,7 +201,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_FilePermissionTooLarge()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -221,7 +221,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_SmbProperties()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -250,7 +250,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(smbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -267,7 +267,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("ResourceAlreadyExists", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_Metadata()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -285,13 +285,13 @@ namespace Azure.Storage.Files.Shares.Tests
             AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExists_NotExists()
         {
             // Arrange
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
-            string  name = GetNewDirectoryName();
+            string name = GetNewDirectoryName();
             ShareDirectoryClient directory = InstrumentClient(share.GetDirectoryClient(name));
 
             // Act
@@ -301,7 +301,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(response);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExists_Exists()
         {
             // Arrange
@@ -318,7 +318,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNull(response);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExists_Error()
         {
             // Arrange
@@ -334,7 +334,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Exists_NotExists()
         {
             // Arrange
@@ -350,7 +350,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExistsAsync_ShareNotExists()
         {
             // Arrange
@@ -365,7 +365,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExistsAsync_ParentDirectoryNotExists()
         {
             // Arrange
@@ -380,7 +380,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Exists_Exists()
         {
             // Arrange
@@ -397,7 +397,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Exists_Error()
         {
             // Arrange
@@ -425,7 +425,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => { });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfExists_Exists()
         {
             // Arrange
@@ -442,7 +442,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfExists_NotExists()
         {
             // Arrange
@@ -458,7 +458,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfExists_ShareNotExists()
         {
             // Arrange
@@ -473,7 +473,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfExists_ParentDirectoryNotExists()
         {
             // Arrange
@@ -488,7 +488,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfExists_Error()
         {
             // Arrange
@@ -505,7 +505,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("DirectoryNotEmpty", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteAsync()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -518,7 +518,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(response.Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -533,7 +533,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -552,7 +552,7 @@ namespace Azure.Storage.Files.Shares.Tests
             AssertPropertiesEqual(createResponse.Value.SmbProperties, getPropertiesResponse.Value.SmbProperties);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -567,7 +567,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_Snapshot()
         {
             // Arrange
@@ -586,7 +586,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(getPropertiesResponse.Value.ETag);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_SnapshotFailed()
         {
             // Arrange
@@ -603,7 +603,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPropertiesAsync_FilePermission()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -621,7 +621,7 @@ namespace Azure.Storage.Files.Shares.Tests
             AssertValidStorageDirectoryInfo(response);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPropertiesAsync_SmbProperties()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -652,7 +652,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(smbProperties.FileLastWrittenOn, response.Value.SmbProperties.FileLastWrittenOn);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPropertiesAsync_FilePermissionTooLong()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -670,7 +670,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 new ArgumentOutOfRangeException("filePermission", "Value must be less than or equal to 8192"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPropertiesAsync_FilePermissionAndFilePermissionKeySet()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -693,7 +693,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("filePermission and filePermissionKey cannot both be set", e.Message));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetMetadataAsync()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -710,7 +710,7 @@ namespace Azure.Storage.Files.Shares.Tests
             AssertDictionaryEquality(metadata, response.Value.Metadata);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetMetadataAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -726,7 +726,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListFilesAndDirectoriesSegmentAsync()
         {
             // Arrange
@@ -777,7 +777,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(fileNames.All(fileName => foundFileNames.Contains(fileName)));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListFilesAndDirectoriesSegmentAsync_Error()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -792,7 +792,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task ListHandles()
         {
@@ -811,7 +811,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(0, handles.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListHandles_Min()
         {
             // Arrange
@@ -825,7 +825,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(0, handles.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListHandles_Error()
         {
             // Arrange
@@ -840,7 +840,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ForceCloseHandles_Min()
         {
             // Arrange
@@ -855,7 +855,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(0, response.FailedHandlesCount);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ForceCloseHandles_Recursive()
         {
             // Arrange
@@ -870,7 +870,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(0, response.FailedHandlesCount);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ForceCloseHandles_Error()
         {
             // Arrange
@@ -885,7 +885,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 actualException => Assert.AreEqual("ResourceNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ForceCloseHandle_Error()
         {
             // Arrange
@@ -900,7 +900,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 actualException => Assert.AreEqual("InvalidHeaderValue", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateSubdirectoryAsync()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -912,7 +912,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(properties.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteSubdirectoryAsync()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -926,7 +926,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 async () => await subdir.GetPropertiesAsync());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateFileAsync()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -938,7 +938,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(properties.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteFileAsync()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -952,7 +952,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 async () => await file.GetPropertiesAsync());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetDirectoryAsync_AsciiName()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -972,7 +972,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.Contains(name, names);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetDirectoryAsync_NonAsciiName()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -992,7 +992,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.Contains(name, names);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetSubdirectoryAsync_AsciiName()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -1012,7 +1012,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.Contains(name, names);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetSubdirectoryAsync_NonAsciiName()
         {
             await using DisposingDirectory test = await GetTestDirectoryAsync();
@@ -1032,7 +1032,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.Contains(name, names);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("directory", "!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("!'();[]", "!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("%21%27%28%29", "!'();[]@&%=+$,#äÄöÖüÜß;")]
@@ -1095,7 +1095,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(expectedUri, shareUriBuilder.ToUri());
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("directory", "!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("!'();[]@&%=+$", "!'();[]@&%=+$,#äÄöÖüÜß;")]
         [TestCase("%21%27%28%29%3B%5B%5D", "!'();[]@&%=+$,#äÄöÖüÜß;")]
@@ -1151,7 +1151,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         #region GenerateSasTests
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
@@ -1190,7 +1190,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(directory4.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_GetFileClient()
         {
             // Arrange
@@ -1233,7 +1233,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(file4.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_GetSubdirectoryClient()
         {
             // Arrange
@@ -1276,7 +1276,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(subdirectory4.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_Mockable()
         {
             // Act
@@ -1293,12 +1293,12 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(directory.Object.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
             var constants = new TestConstants(this);
-            ShareFileSasPermissions permissions =ShareFileSasPermissions.Read;
+            ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
             var blobEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account);
             var blobSecondaryEndpoint = new Uri("http://127.0.0.1/" + constants.Sas.Account + "-secondary");
@@ -1330,7 +1330,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_Builder()
         {
             var constants = new TestConstants(this);
@@ -1376,7 +1376,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_BuilderWrongShareName()
         {
             // Arrange
@@ -1409,7 +1409,7 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_BuilderWrongDirectoryName()
         {
             // Arrange
@@ -1443,7 +1443,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
         #endregion
 
-        [Test]
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class HubRouteTablesCreateOrUpdateOperation : Operation<HubRouteTable>, IOperationSource<HubRouteTable>
     {
         private readonly ArmOperationHelpers<HubRouteTable> _operation;
+
+        /// <summary> Initializes a new instance of HubRouteTablesCreateOrUpdateOperation for mocking. </summary>
+        protected HubRouteTablesCreateOrUpdateOperation()
+        {
+        }
+
         internal HubRouteTablesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<HubRouteTable>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "HubRouteTablesCreateOrUpdateOperation");

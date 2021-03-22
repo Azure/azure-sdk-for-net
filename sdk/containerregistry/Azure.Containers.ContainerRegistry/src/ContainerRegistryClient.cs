@@ -10,13 +10,13 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> The Repository service client. </summary>
+    /// <summary> The registry service client. </summary>
     public partial class ContainerRegistryClient
     {
         private readonly Uri _endpoint;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RepositoryRestClient _restClient;
+        private readonly ContainerRegistryRestClient _restClient;
 
         /// <summary>
         /// <paramref name="endpoint"/>
@@ -36,14 +36,13 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(options, nameof(options));
 
-            // The HttpPipelineBuilder.Build method, builds up a pipeline with client options, and any number of additional policies.
             _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy(username, password));
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _endpoint = endpoint;
 
-            _restClient = new RepositoryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
@@ -61,22 +60,22 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<Repositories, RepositoryGetListHeaders> response =
-                        await _restClient.GetListAsync(
+                    Response<Repositories> response =
+                        await _restClient.GetRepositoriesAsync(
                             continuationToken,
                             pageSizeHint,
                             cancellationToken)
                        .ConfigureAwait(false);
 
                     string lastRepository = null;
-                    if (!string.IsNullOrEmpty(response.Headers.Link))
+                    if (!string.IsNullOrEmpty(response.Value.Link))
                     {
-                        Uri nextLink = new Uri(response.Headers.Link);
+                        Uri nextLink = new Uri(response.Value.Link);
                         NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
                         lastRepository = queryParams["last"];
                     }
 
-                    return Page<string>.FromValues(response.Value.Names, lastRepository, response.GetRawResponse());
+                    return Page<string>.FromValues(response.Value.RepositoriesValue, lastRepository, response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
@@ -96,21 +95,21 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<Repositories, RepositoryGetListHeaders> response =
-                        _restClient.GetList(
+                    Response<Repositories> response =
+                        _restClient.GetRepositories(
                             continuationToken,
                             pageSizeHint,
                             cancellationToken);
 
                     string lastRepository = null;
-                    if (!string.IsNullOrEmpty(response.Headers.Link))
+                    if (!string.IsNullOrEmpty(response.Value.Link))
                     {
-                        Uri nextLink = new Uri(response.Headers.Link);
+                        Uri nextLink = new Uri(response.Value.Link);
                         NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
                         lastRepository = queryParams["last"];
                     }
 
-                    return Page<string>.FromValues(response.Value.Names, lastRepository, response.GetRawResponse());
+                    return Page<string>.FromValues(response.Value.RepositoriesValue, lastRepository, response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

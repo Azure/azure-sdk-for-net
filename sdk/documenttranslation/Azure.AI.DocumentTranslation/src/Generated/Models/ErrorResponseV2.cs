@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.AI.DocumentTranslation;
+
 namespace Azure.AI.DocumentTranslation.Models
 {
     /// <summary>

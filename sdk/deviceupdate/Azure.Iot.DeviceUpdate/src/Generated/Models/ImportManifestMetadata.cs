@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> Metadata describing the import manifest, a document which describes the files and other metadata about an update version. </summary>
     public partial class ImportManifestMetadata

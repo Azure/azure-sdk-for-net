@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "3b2348ce-f254-65ef-6df5-3fbe429ef623",
         "x-ms-date": "Thu, 21 Jan 2021 20:43:35 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -31,7 +31,7 @@
         "x-ms-client-request-id": "3b2348ce-f254-65ef-6df5-3fbe429ef623",
 <<<<<<< HEAD
         "x-ms-request-id": "1ae956a0-001a-0055-0ff3-6926c7000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
 =======
         "x-ms-request-id": "f7abbd71-c01a-0017-5636-f09f47000000",
         "x-ms-version": "2020-04-08"
@@ -55,7 +55,7 @@
         "x-ms-client-request-id": "857b8fdd-4c6d-329d-8ec5-9ff3ff294a84",
         "x-ms-date": "Thu, 21 Jan 2021 20:43:35 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": "\uFEFF\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Etrue\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedMethods\u003EDELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH\u003C/AllowedMethods\u003E\u003CAllowedHeaders\u003E*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003E*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E86400\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003C/StorageServiceProperties\u003E",
       "StatusCode": 202,
@@ -69,7 +69,7 @@
         "x-ms-client-request-id": "857b8fdd-4c6d-329d-8ec5-9ff3ff294a84",
 <<<<<<< HEAD
         "x-ms-request-id": "1ae956a2-001a-0055-10f3-6926c7000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
 =======
         "x-ms-request-id": "f7abbd73-c01a-0017-5736-f09f47000000",
         "x-ms-version": "2020-04-08"
@@ -91,7 +91,7 @@
         "x-ms-client-request-id": "b2e0192e-7122-73b6-fbe3-da606294f9be",
         "x-ms-date": "Thu, 21 Jan 2021 20:43:38 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -108,7 +108,7 @@
         "x-ms-client-request-id": "b2e0192e-7122-73b6-fbe3-da606294f9be",
 <<<<<<< HEAD
         "x-ms-request-id": "1ae956a8-001a-0055-11f3-6926c7000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
 =======
         "x-ms-request-id": "f7abbd83-c01a-0017-5836-f09f47000000",
         "x-ms-version": "2020-04-08"
@@ -132,7 +132,7 @@
         "x-ms-client-request-id": "e5c44def-9848-dc61-4668-c62b4168692b",
         "x-ms-date": "Thu, 21 Jan 2021 20:43:38 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": "\uFEFF\u003CStorageServiceProperties\u003E\u003CHourMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/HourMetrics\u003E\u003CMinuteMetrics\u003E\u003CVersion\u003E1.0\u003C/Version\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003CRetentionPolicy\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/RetentionPolicy\u003E\u003C/MinuteMetrics\u003E\u003CProtocolSettings\u003E\u003CSMB\u003E\u003CMultichannel\u003E\u003CEnabled\u003Efalse\u003C/Enabled\u003E\u003C/Multichannel\u003E\u003C/SMB\u003E\u003C/ProtocolSettings\u003E\u003CCors\u003E\u003CCorsRule\u003E\u003CAllowedOrigins\u003E*\u003C/AllowedOrigins\u003E\u003CAllowedMethods\u003EDELETE,GET,HEAD,MERGE,POST,OPTIONS,PUT,PATCH\u003C/AllowedMethods\u003E\u003CAllowedHeaders\u003E*\u003C/AllowedHeaders\u003E\u003CExposedHeaders\u003E*\u003C/ExposedHeaders\u003E\u003CMaxAgeInSeconds\u003E86400\u003C/MaxAgeInSeconds\u003E\u003C/CorsRule\u003E\u003C/Cors\u003E\u003C/StorageServiceProperties\u003E",
       "StatusCode": 202,
@@ -146,7 +146,7 @@
         "x-ms-client-request-id": "e5c44def-9848-dc61-4668-c62b4168692b",
 <<<<<<< HEAD
         "x-ms-request-id": "1ae956a9-001a-0055-12f3-6926c7000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
 =======
         "x-ms-request-id": "f7abbd84-c01a-0017-5936-f09f47000000",
         "x-ms-version": "2020-04-08"

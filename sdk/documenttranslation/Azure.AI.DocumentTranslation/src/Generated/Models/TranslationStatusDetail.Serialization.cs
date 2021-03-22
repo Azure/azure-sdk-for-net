@@ -7,9 +7,10 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.DocumentTranslation.Models;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     public partial class TranslationStatusDetail
     {

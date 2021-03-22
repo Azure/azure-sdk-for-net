@@ -18,6 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class DataFlowRenameDataFlowOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of DataFlowRenameDataFlowOperation for mocking. </summary>
+        protected DataFlowRenameDataFlowOperation()
+        {
+        }
+
         internal DataFlowRenameDataFlowOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowRenameDataFlowOperation");

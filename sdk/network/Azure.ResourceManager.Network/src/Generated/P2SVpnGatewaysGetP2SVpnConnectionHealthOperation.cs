@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class P2SVpnGatewaysGetP2SVpnConnectionHealthOperation : Operation<P2SVpnGateway>, IOperationSource<P2SVpnGateway>
     {
         private readonly ArmOperationHelpers<P2SVpnGateway> _operation;
+
+        /// <summary> Initializes a new instance of P2SVpnGatewaysGetP2SVpnConnectionHealthOperation for mocking. </summary>
+        protected P2SVpnGatewaysGetP2SVpnConnectionHealthOperation()
+        {
+        }
+
         internal P2SVpnGatewaysGetP2SVpnConnectionHealthOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<P2SVpnGateway>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "P2SVpnGatewaysGetP2SVpnConnectionHealthOperation");

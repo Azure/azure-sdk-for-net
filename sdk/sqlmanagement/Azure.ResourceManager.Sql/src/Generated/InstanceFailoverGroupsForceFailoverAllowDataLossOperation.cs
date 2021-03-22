@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class InstanceFailoverGroupsForceFailoverAllowDataLossOperation : Operation<InstanceFailoverGroup>, IOperationSource<InstanceFailoverGroup>
     {
         private readonly ArmOperationHelpers<InstanceFailoverGroup> _operation;
+
+        /// <summary> Initializes a new instance of InstanceFailoverGroupsForceFailoverAllowDataLossOperation for mocking. </summary>
+        protected InstanceFailoverGroupsForceFailoverAllowDataLossOperation()
+        {
+        }
+
         internal InstanceFailoverGroupsForceFailoverAllowDataLossOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<InstanceFailoverGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "InstanceFailoverGroupsForceFailoverAllowDataLossOperation");

@@ -104,7 +104,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await _topicScope.DisposeAsync();
         }
 
-        protected (JobHost, IHost) BuildHost<TJobClass>(Action<IHostBuilder> configurationDelegate = null, bool startHost = true)
+        protected (JobHost JobHost, IHost Host) BuildHost<TJobClass>(Action<IHostBuilder> configurationDelegate = null, bool startHost = true)
         {
             var hostBuilder = new HostBuilder()
                .ConfigureAppConfiguration(builder =>
