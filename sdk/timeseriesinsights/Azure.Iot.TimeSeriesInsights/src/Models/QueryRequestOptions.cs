@@ -21,7 +21,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// </summary>
         /// <remarks>
         /// For filter examples, check out the TSX documentation
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/time-series-insights/reference-time-series-expression-syntax">here.</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax">here.</see>.
         /// </remarks>
         public string Filter { get; set; }
 
