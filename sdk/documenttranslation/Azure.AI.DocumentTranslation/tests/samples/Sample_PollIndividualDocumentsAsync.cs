@@ -16,12 +16,15 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            Uri sourceUrl = new Uri("");
-            Uri targetUrl = new Uri("");
+            Uri sourceUri = new Uri("");
+            Uri targetUri = new Uri("");
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var input = new TranslationConfiguration(sourceUrl, targetUrl, "es");
+            var input = new TranslationConfiguration(sourceUri, targetUri, "es");
+
+            #region Snippet:PollIndividualDocumentsAsync
+
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             TimeSpan pollingInterval = new TimeSpan(1000);
@@ -50,6 +53,8 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
                     Console.WriteLine($"  Message: {document.Error.Message}");
                 }
             }
+
+            #endregion
         }
     }
 }

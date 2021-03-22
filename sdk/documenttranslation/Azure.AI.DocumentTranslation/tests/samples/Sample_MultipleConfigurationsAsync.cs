@@ -18,23 +18,23 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            Uri sourceUrl1 = new Uri("");
-            Uri sourceUrl2 = new Uri("");
-            Uri targetUrl1_1 = new Uri("");
-            Uri targetUrl1_2 = new Uri("");
-            Uri targetUrl2_1 = new Uri("");
-            Uri targetUrl2_2 = new Uri("");
+            Uri sourceUri1 = new Uri("");
+            Uri sourceUri2 = new Uri("");
+            Uri targetUri1_1 = new Uri("");
+            Uri targetUri1_2 = new Uri("");
+            Uri targetUri2_1 = new Uri("");
+            Uri targetUri2_2 = new Uri("");
             Uri glossaryUrl = new Uri("");
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:MultipleConfigurationsAsync
 
-            var configuration1 = new TranslationConfiguration(sourceUrl1, targetUrl1_1, "es", new TranslationGlossary(glossaryUrl));
-            configuration1.AddTarget(targetUrl1_2, "it");
+            var configuration1 = new TranslationConfiguration(sourceUri1, targetUri1_1, "es", new TranslationGlossary(glossaryUrl));
+            configuration1.AddTarget(targetUri1_2, "it");
 
-            var configuration2 = new TranslationConfiguration(sourceUrl2, targetUrl2_1, "it");
-            configuration2.AddTarget(targetUrl2_2, "es", new TranslationGlossary(glossaryUrl));
+            var configuration2 = new TranslationConfiguration(sourceUri2, targetUri2_1, "it");
+            configuration2.AddTarget(targetUri2_2, "es", new TranslationGlossary(glossaryUrl));
 
             var inputs = new List<TranslationConfiguration>()
                 {

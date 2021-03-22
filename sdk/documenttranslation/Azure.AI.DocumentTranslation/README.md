@@ -111,7 +111,7 @@ The following section provides several code snippets using the `client` [created
 Start a translation operation to translate documents in the source container and write the translated files to the target container. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:StartTranslation
-var input = new TranslationConfiguration(sourceUrl, targetUrl, "es");
+var input = new TranslationConfiguration(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = client.StartTranslation(input);
 
@@ -196,11 +196,11 @@ foreach (DocumentStatusDetail docStatus in docs)
 Start a translation operation to translate documents in multiple source containers to multiple target containers in different languages. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:MultipleConfigurations
-var configuration1 = new TranslationConfiguration(sourceUrl1, targetUrl1_1, "es", new TranslationGlossary(glossaryUrl));
-configuration1.AddTarget(targetUrl1_2, "it");
+var configuration1 = new TranslationConfiguration(sourceUri1, targetUri1_1, "es", new TranslationGlossary(glossaryUrl));
+configuration1.AddTarget(targetUri1_2, "it");
 
-var configuration2 = new TranslationConfiguration(sourceUrl2, targetUrl2_1, "it");
-configuration2.AddTarget(targetUrl2_2, "es", new TranslationGlossary(glossaryUrl));
+var configuration2 = new TranslationConfiguration(sourceUri2, targetUri2_1, "it");
+configuration2.AddTarget(targetUri2_2, "es", new TranslationGlossary(glossaryUrl));
 
 var inputs = new List<TranslationConfiguration>()
     {
@@ -248,7 +248,7 @@ foreach (DocumentStatusDetail document in operation.GetValues())
 Start a translation operation to translate documents in the source container and write the translated files to the target container. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:StartTranslationAsync
-var input = new TranslationConfiguration(sourceUrl, targetUrl, "es");
+var input = new TranslationConfiguration(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
@@ -327,11 +327,11 @@ await foreach (DocumentStatusDetail docStatus in docs)
 Start a translation operation to translate documents in multiple source containers to multiple target containers in different languages. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:MultipleConfigurationsAsync
-var configuration1 = new TranslationConfiguration(sourceUrl1, targetUrl1_1, "es", new TranslationGlossary(glossaryUrl));
-configuration1.AddTarget(targetUrl1_2, "it");
+var configuration1 = new TranslationConfiguration(sourceUri1, targetUri1_1, "es", new TranslationGlossary(glossaryUrl));
+configuration1.AddTarget(targetUri1_2, "it");
 
-var configuration2 = new TranslationConfiguration(sourceUrl2, targetUrl2_1, "it");
-configuration2.AddTarget(targetUrl2_2, "es", new TranslationGlossary(glossaryUrl));
+var configuration2 = new TranslationConfiguration(sourceUri2, targetUri2_1, "it");
+configuration2.AddTarget(targetUri2_2, "es", new TranslationGlossary(glossaryUrl));
 
 var inputs = new List<TranslationConfiguration>()
     {

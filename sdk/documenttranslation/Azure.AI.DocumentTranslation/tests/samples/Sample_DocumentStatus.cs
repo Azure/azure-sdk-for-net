@@ -16,12 +16,12 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            Uri sourceUrl = new Uri("");
-            Uri targetUrl = new Uri("");
+            Uri sourceUri = new Uri("");
+            Uri targetUri = new Uri("");
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var input = new TranslationConfiguration(sourceUrl, targetUrl, "es");
+            var input = new TranslationConfiguration(sourceUri, targetUri, "es");
             DocumentTranslationOperation operation = client.StartTranslation(input);
 
             var documentscompleted = new HashSet<string>();
