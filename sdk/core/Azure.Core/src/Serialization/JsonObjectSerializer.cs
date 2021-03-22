@@ -26,6 +26,11 @@ namespace Azure.Core.Serialization
         private readonly JsonSerializerOptions _options;
 
         /// <summary>
+        /// A shared instance of <see cref="JsonObjectSerializer"/>, initialized with the default options.
+        /// </summary>
+        public static JsonObjectSerializer Default { get; } = new JsonObjectSerializer();
+
+        /// <summary>
         /// Initializes new instance of <see cref="JsonObjectSerializer"/>.
         /// </summary>
         public JsonObjectSerializer() : this(new JsonSerializerOptions())

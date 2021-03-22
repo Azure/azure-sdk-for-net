@@ -60,7 +60,7 @@ Console.WriteLine($"Sms id: {sendResult.MessageId}");
 To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the `SmsClient` with a list of recipient's phone numbers.
 You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags.
 ```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
-Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
+AsyncPageable<SmsSendResult> results = smsClient.SendAsync(
     from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
     to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
     message: "Weekly Promotion!",
@@ -68,8 +68,7 @@ Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
     {
         Tag = "marketing", // custom tags
     });
-IEnumerable<SmsSendResult> results = response.Value;
-foreach (SmsSendResult result in results)
+await foreach (SmsSendResult result in results)
 {
     Console.WriteLine($"Sms id: {result.MessageId}");
     Console.WriteLine($"Send Result Successful: {result.Successful}");
@@ -83,16 +82,15 @@ Please use the `Successful` flag to validate each individual result to verify if
 ```C# Snippet:Azure_Communication_Sms_Tests_Troubleshooting
 try
 {
-    Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
+    AsyncPageable<SmsSendResult> results = smsClient.SendAsync(
         from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
         to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
         message: "Weekly Promotion!",
         options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
-    {
-        Tag = "marketing", // custom tags
-    });
-    IEnumerable<SmsSendResult> results = response.Value;
-    foreach (SmsSendResult result in results)
+        {
+            Tag = "marketing", // custom tags
+        });
+    await foreach (SmsSendResult result in results)
     {
         if (result.Successful)
         {
@@ -112,7 +110,8 @@ catch (RequestFailedException ex)
 ```
 
 ## Next steps
-[Read more about SMS in Azure Communication Services][nextsteps]
+- [Read more about SMS in Azure Communication Services][nextsteps]
+- For a basic guide on how to configure Delivery Reporting for your SMS messages please refer to the [Handle SMS Events quickstart][handle_sms_events].
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
@@ -130,6 +129,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[handle_sms_events]: https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/handle-sms-events
 [package]: https://www.nuget.org/packages/Azure.Communication.Sms
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nextsteps]:https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/send?pivots=programming-language-csharp

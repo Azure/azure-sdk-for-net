@@ -466,6 +466,40 @@ Describe "Platform Matrix Post Transformation" -Tag "transform" {
         $matrix[7].parameters.operatingSystem | Should -Be "windows-2019"
         $matrix[7].parameters.additionalArguments | Should -Be "--enableWindowsFoo"
     }
+
+    It "Should parse a config with an empty base matrix" {
+        $matrixConfigForIncludeOnly = @"
+{
+    "include": [
+        {
+            "operatingSystem": "windows-2019",
+            "framework": "net461"
+        }
+    ]
+}
+"@
+
+        $config = GetMatrixConfigFromJson $matrixConfigForIncludeOnly
+        [Array]$matrix = GenerateMatrix $config "all"
+        $matrix.Length | Should -Be 1
+        $matrix[0].name | Should -Be "windows2019_net461"
+    }
+
+    It "Should parse a config with an empty include" {
+        $matrixConfigForIncludeOnly = @"
+{
+    "matrix": {
+        "operatingSystem": "windows-2019",
+        "framework": "net461"
+    }
+}
+"@
+
+        $config = GetMatrixConfigFromJson $matrixConfigForIncludeOnly
+        [Array]$matrix = GenerateMatrix $config "all"
+        $matrix.Length | Should -Be 1
+        $matrix[0].name | Should -Be "windows2019_net461"
+    }
 }
 
 Describe "Platform Matrix Generation With Object Fields" -Tag "objectfields" {

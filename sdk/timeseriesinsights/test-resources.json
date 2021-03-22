@@ -45,7 +45,15 @@
       },
       "defaultValue": [
         {
-          "name": "iothub-connection-device-id",
+          "name": "building",
+          "type": "string"
+        },
+        {
+          "name": "floor",
+          "type": "string"
+        },
+        {
+          "name": "room",
           "type": "string"
         }
       ]
@@ -85,7 +93,11 @@
   "variables": {
     "rbacOwnerRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635', subscription().subscriptionId)]",
     "storageAccountName": "[concat('tsi', uniqueString(resourceGroup().id))]",
-    "eventSourceResourceId": "[resourceId(parameters('resourceGroup'), 'Microsoft.Devices/IotHubs', parameters('iotHubName'))]"
+    "eventSourceResourceId": "[resourceId(parameters('resourceGroup'), 'Microsoft.Devices/IotHubs', parameters('iotHubName'))]",
+    "userIdentityName": "userIdentity",
+    "roleAssignmentName": "[guid(resourceGroup().name)]",
+    "ownerRoleDefinitionId": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+    "deviceName": "device1"
   },
   "resources": [
     {
@@ -117,6 +129,48 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Devices/IotHubs', parameters('iotHubName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "apiVersion": "2018-11-30",
+      "name": "[variables('userIdentityName')]",
+      "location": "[resourceGroup().location]"
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2018-09-01-preview",
+      "name": "[variables('roleAssignmentName')]",
+      "properties": {
+        "roleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/{1}', subscription().subscriptionId, variables('ownerRoleDefinitionId'))]",
+        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userIdentityName')), '2018-11-30').principalId]",
+        "principalType": "ServicePrincipal"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userIdentityName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "createIotHubDevice",
+      "kind": "AzureCLI",
+      "location": "[resourceGroup().location]",
+      "identity": {
+        "type": "UserAssigned",
+        "userAssignedIdentities": {
+          "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userIdentityName'))]": {}
+        }
+      },
+      "properties": {
+        "azCliVersion": "2.9.1",
+        "retentionInterval": "P1D",
+        "arguments": "[format('{0} {1}', parameters('iotHubName'), variables('deviceName'))]",
+        "scriptContent": "      az extension add --name azure-iot -y\r\n  \r\n      az iot hub device-identity create --hub-name $1 --device-id $2\r\n      connectionstring=$(az iot hub device-identity connection-string show --hub-name $1 --device-id $2 -o tsv)\r\n      \r\n      result=\"{\\\"device-connection-string\\\":\"\\\"\"$connectionstring\"\\\"\"}\"\r\n      echo $result | jq -c > $AZ_SCRIPTS_OUTPUT_PATH    \r\n      "
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userIdentityName'))]",
+        "[resourceId('Microsoft.Authorization/roleAssignments', variables('roleAssignmentName'))]"
       ]
     },
     {
@@ -190,6 +244,17 @@
     "TIMESERIESINSIGHTS_URL": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.TimeSeriesInsights/environments', parameters('environmentName'))).dataAccessFqdn]"
+    },
+    "IOTHUB_CONNECTION_STRING": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deploymentScripts', 'createIotHubDevice')).outputs['device-connection-string']]"
+    }
+  },
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.3.1.62928",
+      "templateHash": "2613984384433687728"
     }
   }
 }

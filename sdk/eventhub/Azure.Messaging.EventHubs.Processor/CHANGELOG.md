@@ -1,7 +1,12 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
+## 5.4.0-beta.2 (Unreleased)
 
+## 5.4.0-beta.1 (2021-03-17)
+
+### Changes
+
+- Updating package bindings for `Azure.Messaging.EventHubs` to synchronize on v5.4.0-beta.1.
 
 ## 5.3.1 (2021-03-09)
 

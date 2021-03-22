@@ -416,9 +416,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
-
-                // ensure message are completed
-                await Task.Delay(2000);
             }
         }
 

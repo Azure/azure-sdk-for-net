@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> Update compliance information. </summary>
     public partial class UpdateCompliance

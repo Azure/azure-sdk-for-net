@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation : Operation<VpnClientConnectionHealthDetailListResult>, IOperationSource<VpnClientConnectionHealthDetailListResult>
     {
         private readonly ArmOperationHelpers<VpnClientConnectionHealthDetailListResult> _operation;
+
+        /// <summary> Initializes a new instance of VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation for mocking. </summary>
+        protected VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation()
+        {
+        }
+
         internal VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VpnClientConnectionHealthDetailListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualNetworkGatewaysGetVpnclientConnectionHealthOperation");

@@ -597,7 +597,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await receiver.RenewMessageLockAsync(receivedMessage);
 
-                Assert.True(receivedMessage.LockedUntil >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
+                Assert.Greater(receivedMessage.LockedUntil, firstLockedUntilUtcTime);
 
                 // Complete Messages
                 await receiver.CompleteMessageAsync(receivedMessage.LockToken);

@@ -9,11 +9,11 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.PhoneNumbers;
+using Azure.Communication.PhoneNumbers.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The InternalPhoneNumbers service client. </summary>
     internal partial class InternalPhoneNumbersClient
@@ -324,14 +324,14 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<PurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<InternalPurchasePhoneNumbersOperation> StartPurchasePhoneNumbersAsync(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartPurchasePhoneNumbers");
             scope.Start();
             try
             {
                 var originalResponse = await RestClient.PurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
-                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+                return new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -343,14 +343,14 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <summary> Purchases phone numbers. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual PurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
+        public virtual InternalPurchasePhoneNumbersOperation StartPurchasePhoneNumbers(string searchId = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.StartPurchasePhoneNumbers");
             scope.Start();
             try
             {
                 var originalResponse = RestClient.PurchasePhoneNumbers(searchId, cancellationToken);
-                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+                return new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -417,7 +417,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual async Task<ReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<InternalReleasePhoneNumberOperation> StartReleasePhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -429,7 +429,7 @@ namespace Azure.Communication.PhoneNumbers.Models
             try
             {
                 var originalResponse = await RestClient.ReleasePhoneNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
-                return new ReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
+                return new InternalReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -442,7 +442,7 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="phoneNumber"> Phone number to be released, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
-        public virtual ReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
+        public virtual InternalReleasePhoneNumberOperation StartReleasePhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             if (phoneNumber == null)
             {
@@ -454,7 +454,7 @@ namespace Azure.Communication.PhoneNumbers.Models
             try
             {
                 var originalResponse = RestClient.ReleasePhoneNumber(phoneNumber, cancellationToken);
-                return new ReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
+                return new InternalReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
             }
             catch (Exception e)
             {

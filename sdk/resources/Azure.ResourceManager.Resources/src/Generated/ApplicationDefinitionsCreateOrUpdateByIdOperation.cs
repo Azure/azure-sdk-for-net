@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Resources
     public partial class ApplicationDefinitionsCreateOrUpdateByIdOperation : Operation<ApplicationDefinition>, IOperationSource<ApplicationDefinition>
     {
         private readonly ArmOperationHelpers<ApplicationDefinition> _operation;
+
+        /// <summary> Initializes a new instance of ApplicationDefinitionsCreateOrUpdateByIdOperation for mocking. </summary>
+        protected ApplicationDefinitionsCreateOrUpdateByIdOperation()
+        {
+        }
+
         internal ApplicationDefinitionsCreateOrUpdateByIdOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ApplicationDefinition>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ApplicationDefinitionsCreateOrUpdateByIdOperation");

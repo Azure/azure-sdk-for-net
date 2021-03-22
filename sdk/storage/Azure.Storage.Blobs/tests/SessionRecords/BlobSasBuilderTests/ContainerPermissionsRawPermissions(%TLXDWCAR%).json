@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "0d66681f-9c8c-337b-a1f3-e74d098096b1",
         "x-ms-date": "Tue, 14 Jul 2020 01:14:15 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -29,7 +29,7 @@
         ],
         "x-ms-client-request-id": "0d66681f-9c8c-337b-a1f3-e74d098096b1",
         "x-ms-request-id": "7234b598-601e-0032-737c-5952da000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -43,7 +43,7 @@
         ],
         "x-ms-client-request-id": "3993d208-efe1-872a-0334-e27cc43a057b",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -57,7 +57,7 @@
         ],
         "x-ms-client-request-id": "3993d208-efe1-872a-0334-e27cc43a057b",
         "x-ms-request-id": "a2116ce6-d01e-002b-647c-597eb2000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seandevtest.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-137bf8ec-e92f-072a-1de1-ffb3a248fdb7\u0022\u003E\u003CBlobs /\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -74,7 +74,7 @@
         "x-ms-client-request-id": "3645dcf9-5ced-75d0-55f4-56954fb97d36",
         "x-ms-date": "Tue, 14 Jul 2020 01:14:15 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -87,7 +87,7 @@
         ],
         "x-ms-client-request-id": "3645dcf9-5ced-75d0-55f4-56954fb97d36",
         "x-ms-request-id": "a2116d2d-d01e-002b-257c-597eb2000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     }

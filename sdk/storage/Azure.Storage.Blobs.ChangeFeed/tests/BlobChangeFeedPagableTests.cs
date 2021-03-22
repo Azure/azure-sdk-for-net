@@ -11,8 +11,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class BlobChangeFeedPagableTests : ChangeFeedTestBase
     {
-        public BlobChangeFeedPagableTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public BlobChangeFeedPagableTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

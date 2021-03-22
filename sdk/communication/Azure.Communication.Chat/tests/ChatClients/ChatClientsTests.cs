@@ -22,8 +22,8 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         private const string Page1ReadReceiptsApiResponsePayload = "{\"value\":[{\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000101\"},\"chatMessageId\":\"1\",\"readOn\":\"2020-12-15T00:00:01Z\"},{\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000102\"},\"chatMessageId\":\"2\",\"readOn\":\"2020-12-15T00:00:02Z\"},{\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000103\"},\"chatMessageId\":\"3\",\"readOn\":\"2020-12-15T00:00:03Z\"}],\"nextLink\":\"nextLink\"}";
         private const string Page2ReadReceiptsApiResponsePayload = "{\"value\":[{\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000104\"},\"chatMessageId\":\"4\",\"readOn\":\"2020-12-15T00:00:04Z\"},{\"senderCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000105\"},\"chatMessageId\":\"5\",\"readOn\":\"2020-12-15T00:00:05Z\"}]}";
 
-        private const string CreateChatThreadWithErrorsApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing errors\",\"createdOn\":\"2020-12-18T18:14:33Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}},\"errors\":{\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}}";
-        private const string AddParticipantsdWithErrorsApiResponsePayload = "{\"errors\":{\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}}";
+        private const string CreateChatThreadWithErrorsApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing errors\",\"createdOn\":\"2020-12-18T18:14:33Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}},\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}";
+        private const string AddParticipantsdWithErrorsApiResponsePayload = "{\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}";
 
         private const string CreateChatThreadSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}}}}";
 
@@ -217,10 +217,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatThreadClient chatThreadClient = CreateMockChatThreadClient(201, SendMessageApiResponsePayload);
 
             //act
-            string messageId = await chatThreadClient.SendMessageAsync("Send Message Test");
+            SendChatMessageResult sendChatMessageResult = await chatThreadClient.SendMessageAsync("Send Message Test");
 
             //assert
-            Assert.AreEqual("1", messageId);
+            Assert.AreEqual("1", sendChatMessageResult.Id);
         }
 
         [Test]
@@ -365,10 +365,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         {
             //arrange
             var threadId = "19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2";
-            ChatClient chatClient = CreateMockChatClient(200, GetThreadApiResponsePayload);
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(200, GetThreadApiResponsePayload);
 
             //act
-            ChatThread chatThread = await chatClient.GetChatThreadAsync(threadId);
+            ChatThreadProperties chatThread = await chatThreadClient.GetPropertiesAsync();
 
             //assert
             Assert.AreEqual(threadId, chatThread.Id);
@@ -397,12 +397,12 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatClient chatClient = CreateMockChatClient(200, GetThreadsApiResponsePayload);
 
             //act
-            AsyncPageable<ChatThreadInfo> chatThreadsInfo = chatClient.GetChatThreadsInfoAsync();
+            AsyncPageable<ChatThreadItem> chatThreads = chatClient.GetChatThreadsAsync();
 
             //assert
 
             int idCounter = 0;
-            await foreach (ChatThreadInfo chatThread in chatThreadsInfo)
+            await foreach (ChatThreadItem chatThread in chatThreads)
             {
                 idCounter++;
                 Assert.AreEqual($"{idCounter}", chatThread.Id);
@@ -455,10 +455,10 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             ChatThreadClient chatThreadClient = CreateMockChatThreadClient(201, AddParticipantApiResponsePayload);
 
             //act
-            AddChatParticipantsResult AddParticipantResponse = await chatThreadClient.AddParticipantAsync(chatParticipant);
+            Response AddParticipantResponse = await chatThreadClient.AddParticipantAsync(chatParticipant);
 
             //assert
-            Assert.IsNull(AddParticipantResponse.Errors);
+            Assert.AreEqual(201, AddParticipantResponse.Status);
         }
 
         [Test]
@@ -471,7 +471,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             AddChatParticipantsResult AddParticipantsResponse = await chatThreadClient.AddParticipantsAsync(new List<ChatParticipant>());
 
             //assert
-            Assert.IsNull(AddParticipantsResponse.Errors);
+            Assert.AreEqual(0, AddParticipantsResponse.InvalidParticipants.Count);
         }
 
         [Test]
@@ -499,11 +499,11 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync("", new List<ChatParticipant>() { chatParticipant});
 
             //assert
-            AsssertParticipantError(createChatThreadResult.Errors.InvalidParticipants.First(x => x.Code == "401"), "Authentication failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678");
-            AsssertParticipantError(createChatThreadResult.Errors.InvalidParticipants.First(x => x.Code == "403"), "Permissions check failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679");
-            AsssertParticipantError(createChatThreadResult.Errors.InvalidParticipants.First(x => x.Code == "404"), "Not found", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677");
+            AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "401"), "Authentication failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678");
+            AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "403"), "Permissions check failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679");
+            AsssertParticipantError(createChatThreadResult.InvalidParticipants.First(x => x.Code == "404"), "Not found", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677");
 
-            Assert.AreEqual(3, createChatThreadResult.Errors.InvalidParticipants.Count);
+            Assert.AreEqual(3, createChatThreadResult.InvalidParticipants.Count);
             Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).RawId);
             Assert.AreEqual("Topic for testing errors", createChatThreadResult.ChatThread.Topic);
             Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
@@ -519,13 +519,32 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             AddChatParticipantsResult addChatParticipantsResult = await chatThreadClient.AddParticipantsAsync(new List<ChatParticipant>());
 
             //assert
-            AsssertParticipantError(addChatParticipantsResult.Errors.InvalidParticipants.First(x => x.Code == "401"), "Authentication failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678");
-            AsssertParticipantError(addChatParticipantsResult.Errors.InvalidParticipants.First(x => x.Code == "403"), "Permissions check failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679");
-            AsssertParticipantError(addChatParticipantsResult.Errors.InvalidParticipants.First(x => x.Code == "404"), "Not found", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677");
-            Assert.AreEqual(3, addChatParticipantsResult.Errors.InvalidParticipants.Count);
+            AsssertParticipantError(addChatParticipantsResult.InvalidParticipants.First(x => x.Code == "401"), "Authentication failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678");
+            AsssertParticipantError(addChatParticipantsResult.InvalidParticipants.First(x => x.Code == "403"), "Permissions check failed", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679");
+            AsssertParticipantError(addChatParticipantsResult.InvalidParticipants.First(x => x.Code == "404"), "Not found", "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677");
+            Assert.AreEqual(3, addChatParticipantsResult.InvalidParticipants.Count);
         }
 
-        private void AsssertParticipantError(CommunicationError chatParticipantError, string expectedMessage, string expectedTarget)
+        [Test]
+        public async Task AddParticipantFailureShouldThrowError()
+        {
+            //arrange
+            var id = "8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-0464-274b-b274-5a3a0d000101";
+            ChatParticipant chatParticipant = new ChatParticipant(new CommunicationUserIdentifier(id));
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(401);
+            try
+            {
+                //act
+                await chatThreadClient.AddParticipantAsync(chatParticipant);
+            }
+            catch (RequestFailedException requestFailedException)
+            {
+                //assert
+                Assert.AreEqual(401, requestFailedException.Status);
+            }
+        }
+
+        private void AsssertParticipantError(ChatError chatParticipantError, string expectedMessage, string expectedTarget)
         {
             Assert.AreEqual(expectedMessage, chatParticipantError.Message);
             Assert.AreEqual(expectedTarget, chatParticipantError.Target);

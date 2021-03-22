@@ -16,8 +16,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class SegmentTests : ChangeFeedTestBase
     {
-        public SegmentTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public SegmentTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 

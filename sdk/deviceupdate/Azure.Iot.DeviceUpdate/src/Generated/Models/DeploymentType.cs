@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> Supported deployment types. </summary>
     public readonly partial struct DeploymentType : IEquatable<DeploymentType>
