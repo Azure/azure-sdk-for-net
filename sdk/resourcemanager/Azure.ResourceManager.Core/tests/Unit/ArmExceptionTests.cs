@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Core.Tests.Unit
 
         private static readonly string TestAssetPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Unit", "TestAssets", "ArmException");
 
-        private IDictionary<string, string?> headers = new Dictionary<string, string?>
+        private readonly IDictionary<string, string?> HttpHeaders = new Dictionary<string, string?>
         {
             { "Content-Type", AppJsonPrefix },
         };
 
         [TestCase("ArmExceptionSimpleV1.json")]
-        //[TestCase("ArmExceptionSimpleV2.json")]
+        [TestCase("ArmExceptionSimpleV2.json")]
         public void CreateExceptionTests(string jsonAssetFileName)
         {
             //var clientDiagnostics = GetClientDiagnostics();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Core.Tests.Unit
             mock.SetupGet(res => res.Headers).Returns(responseHeaders);
             mock.Protected()
                 .Setup<bool>("TryGetHeader", ItExpr.IsAny<string>(), ItExpr.Ref<string>.IsAny)
-                .Returns(new TryGetHeaderCallback((string name, out string? value) => headers.TryGetValue(name, out value)));
+                .Returns(new TryGetHeaderCallback((string name, out string? value) => HttpHeaders.TryGetValue(name, out value)));
 
             return mock.Object;
         }

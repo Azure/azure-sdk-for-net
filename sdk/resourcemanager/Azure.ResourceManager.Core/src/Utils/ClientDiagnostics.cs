@@ -3,7 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
+using ErrorResponse = Azure.ResourceManager.Core.Resources.ErrorResponse;
 
 #nullable enable
 
@@ -11,48 +14,55 @@ namespace Azure.Core.Pipeline
 {
     internal sealed partial class ClientDiagnostics : DiagnosticScopeFactory
     {
+        private const string V2Wrapper = "error";
+
+#pragma warning disable CA1822 // Mark members as static
         internal ArmException CreateArmExceptionWithContent(Response response)
+#pragma warning restore CA1822 // Mark members as static
         {
+            // TODO. 1. Should we append Http ReasonPhrase to Message?
             string? content = ReadContentAsync(response, false).EnsureCompleted();
 
-            string message = string.Empty;
-            string errorCode = string.Empty;
-            IDictionary<string, string>? additionalInfo = new Dictionary<string, string>();
-
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            ExtractFailureContent(content, response.Headers, ref message, ref errorCode, ref additionalInfo);
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-
-            var exception = new ArmException(response.Status, message??string.Empty, null);
-
-            if (additionalInfo != null)
+            // Check for v1 or v2 exception
+            var jsonDoc = JsonDocument.Parse(content);
+            if (!jsonDoc.RootElement.TryGetProperty(V2Wrapper, out JsonElement rootJson))
             {
-                foreach (KeyValuePair<string, string> keyValuePair in additionalInfo)
+                rootJson = jsonDoc.RootElement;
+            }
+
+            var error = ErrorResponse.DeserializeErrorResponse(rootJson);
+            var exception = CreateArmException(error, response.Status);
+
+            // TODO: Set other properties on the top exception
+            return exception;
+        }
+
+        private ArmException CreateArmException(ErrorResponse error, int httpStatus=0)
+        {
+            var exception = new ArmException(httpStatus, error.Message, null)
+            {
+                Code = error.Code,
+                Target = error.Target
+            };
+
+            // Populate Details property
+            var details = new List<ArmException>();
+            foreach (var errorItem in error.Details)
+            {
+                details.Add(CreateArmException(errorItem));
+            }
+            exception.Details = details.ToArray();
+
+            // Populate AdditionalInfo via Data
+            if (error.AdditionalInfo != null)
+            {
+                foreach (var item in error.AdditionalInfo)
                 {
-                    exception.Data.Add(keyValuePair.Key, keyValuePair.Value);
+                    exception.Data.Add(item.Type, item.Info);
                 }
             }
 
             return exception;
         }
-
-#pragma warning disable CA1822 // Member can be static
-        partial void ExtractFailureContent(
-#pragma warning disable CA1801 // Review unused parameters
-            string? content,
-#pragma warning restore CA1801 // Review unused parameters
-#pragma warning disable CA1801 // Review unused parameters
-            ResponseHeaders responseHeaders,
-#pragma warning restore CA1801 // Review unused parameters
-            ref string? message,
-            ref string? errorCode,
-            ref IDictionary<string, string>? additionalInfo)
-        {
-            message = "hello";
-            errorCode = "yes";
-
-            additionalInfo?.Add("Yes", "sir");
-        }
-#pragma warning restore CA1822
     }
 }

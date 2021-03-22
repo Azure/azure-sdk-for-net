@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets and set the Code of the ARM exception.
         /// </summary>
-        public string Code { get; private set; }
+        public string Code { get; internal set; }
 
         /// <summary>
         /// Gets and set the Target of the ARM exception.
         /// </summary>
-        public string Target { get; private set; }
+        public string Target { get; internal set; }
 
         /// <summary>
         /// Gets and set the Details of the ARM exception.
         /// </summary>
-        public ArmException[]? Details { get; private set; }
+        public ArmException[]? Details { get; internal set; }
 
         /// <summary>
         /// Gets and set the AdditionalInfo of the ARM exception.
