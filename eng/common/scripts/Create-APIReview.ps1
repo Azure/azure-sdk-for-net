@@ -10,6 +10,7 @@ Param (
   [string] $APILabel,
   [string] $PackageName,
   [string] $SourceBranch,
+  [string] $DefaultBranch,
   [string] $ConfigFileDir = ""
 )
 
@@ -94,12 +95,18 @@ if ($packages)
         # Get package info from json file created before updating version to daily dev
         $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
         $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
+        if ($version -eq $null)
+        {
+            Write-Host "Version info is not available for package. Please check if version follows Azure SDK package versioning guielines."
+            exit 1
+        }
+
         Write-Host "Version: $($version)"
         Write-Host "SDK Type: $($pkgInfo.SdkType)"
 
         # Run create review step only if build is triggered from master branch or if version is GA.
         # This is to avoid invalidating review status by a build triggered from feature branch
-        if ( ($SourceBranch -eq "master") -or (-not $version.IsPrerelease))
+        if ( ($SourceBranch -eq $DefaultBranch) -or (-not $version.IsPrerelease))
         {
             Write-Host "Submitting API Review for package $($pkg)"
             $response = Submit-APIReview -packagename $pkg -filePath $pkgPath -uri $APIViewUri -apiKey $APIKey -apiLabel $APILabel
