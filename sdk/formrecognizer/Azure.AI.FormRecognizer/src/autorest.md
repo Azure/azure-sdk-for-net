@@ -6,8 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/58a20b09f1563a66c9301ed3ba1e5b433f5f5ff4/specification/cognitiveservices/data-plane/FormRecognizer/preview/v2.1-preview.3/FormRecognizer.json
+tag: release_2_1_preview.3
+require:
+    - https://github.com/Azure/azure-rest-api-specs/blob/58a20b09f1563a66c9301ed3ba1e5b433f5f5ff4/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 ```
 
 
