@@ -32,40 +32,6 @@ namespace Azure.AI.DocumentTranslation
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
         /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="credential">A <see cref="TokenCredential"/> used to
-        /// authenticate requests to the service, such as DefaultAzureCredential.</param>
-        /// <param name="options"><see cref="DocumentTranslationClientOptions"/> that allow
-        /// callers to configure how requests are sent to the service.</param>
-        public DocumentTranslationClient(Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(options, nameof(options));
-
-            _options = options;
-            _clientDiagnostics = new ClientDiagnostics(options);
-
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
-            _serviceRestClient = new DocumentTranslationRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="DocumentTranslationClient"/>
-        /// </summary>
-        /// <param name="endpoint">A <see cref="Uri"/> to the service the client
-        /// sends requests to.  Endpoint can be found in the Azure portal.</param>
-        /// <param name="credential">A <see cref="TokenCredential"/> used to
-        /// authenticate requests to the service, such as DefaultAzureCredential.</param>
-        public DocumentTranslationClient(Uri endpoint, TokenCredential credential)
-            : this(endpoint, credential, new DocumentTranslationClientOptions())
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="DocumentTranslationClient"/>
-        /// </summary>
-        /// <param name="endpoint">A <see cref="Uri"/> to the service the client
-        /// sends requests to.  Endpoint can be found in the Azure portal.</param>
         /// <param name="credential">The API key used to access
         /// the service. This will allow you to update the API key
         /// without creating a new client.</param>
