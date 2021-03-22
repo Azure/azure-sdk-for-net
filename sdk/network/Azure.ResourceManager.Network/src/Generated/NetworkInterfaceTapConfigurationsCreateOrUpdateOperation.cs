@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkInterfaceTapConfigurationsCreateOrUpdateOperation : Operation<NetworkInterfaceTapConfiguration>, IOperationSource<NetworkInterfaceTapConfiguration>
     {
         private readonly ArmOperationHelpers<NetworkInterfaceTapConfiguration> _operation;
+
+        /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationsCreateOrUpdateOperation for mocking. </summary>
+        protected NetworkInterfaceTapConfigurationsCreateOrUpdateOperation()
+        {
+        }
+
         internal NetworkInterfaceTapConfigurationsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<NetworkInterfaceTapConfiguration>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "NetworkInterfaceTapConfigurationsCreateOrUpdateOperation");
