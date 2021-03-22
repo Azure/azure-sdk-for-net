@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Core
             return results;
         }
 
-        internal string LoadApiVersion(ProvidersOperations providers, ResourceIdentifier id, CancellationToken cancellationToken)
+        private string LoadApiVersion(ProvidersOperations providers, ResourceIdentifier id, CancellationToken cancellationToken)
         {
             var results = providers.Get(id.Type.Namespace, null, cancellationToken);
             foreach (var type in results.Value.ResourceTypes)
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Core
                     return type.ApiVersions[0];
                 }
             }
-            return string.Empty;
+            return null;
         }
 
-        internal async Task<string> LoadApiVersionAsync(ProvidersOperations providers, ResourceIdentifier id, CancellationToken cancellationToken)
+        private async Task<string> LoadApiVersionAsync(ProvidersOperations providers, ResourceIdentifier id, CancellationToken cancellationToken)
         {
             var results = await providers.GetAsync(id.Type.Namespace, null, cancellationToken).ConfigureAwait(false);
             foreach (var type in results.Value.ResourceTypes)
@@ -89,27 +89,48 @@ namespace Azure.ResourceManager.Core
                     return type.ApiVersions[0];
                 }
             }
-            return string.Empty;
+            return null;
+        }
+
+        internal string TyrGetApiVersion(ProvidersOperations providers, ResourceIdentifier resourceId, CancellationToken cancellationToken)
+        {
+            string val;
+            if (TryGetApiVersion(resourceId, out val))
+            {
+                return val;
+            }
+            return LoadApiVersion(providers, resourceId, cancellationToken);
+        }
+
+        internal async Task<string> TyrGetApiVersionAsync(ProvidersOperations providers, ResourceIdentifier resourceId, CancellationToken cancellationToken)
+        {
+            string val;
+            if (TryGetApiVersion(resourceId, out val))
+            {
+                return val;
+            }
+            return await LoadApiVersionAsync(providers, resourceId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the API version give a resource ID if it exist, else will return null.
         /// </summary>
         /// <returns> API version string. </returns>
-        public string TryGetApiVersion(string resourceId)
+        public bool TryGetApiVersion(string resourceId, out string val)
         {
             PropertyWrapper propertyWrapper;
             if (_loadedResourceToApiVersions.TryGetValue(resourceId, out propertyWrapper))
             {
-                return propertyWrapper.Info.GetValue(propertyWrapper.PropertyObject).ToString();
+                val = propertyWrapper.Info.GetValue(propertyWrapper.PropertyObject).ToString();
+                return true;
             }
 
-            string val;
             if (_nonLoadedResourceToApiVersion.TryGetValue(resourceId, out val))
             {
-                return val;
+                return true;
             }
-            return null;
+            val = null;
+            return false;
         }
 
         /// <summary>
