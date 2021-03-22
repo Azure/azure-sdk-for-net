@@ -653,7 +653,7 @@ namespace Azure.Messaging.ServiceBus
         private async Task RunReceiveTaskAsync(
             CancellationToken cancellationToken)
         {
-            List<Task> tasks = new List<Task>(MaxConcurrentCalls + 1);
+            List<Task> tasks = new List<Task>(MaxConcurrentCalls + _receiverManagers.Count);
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
