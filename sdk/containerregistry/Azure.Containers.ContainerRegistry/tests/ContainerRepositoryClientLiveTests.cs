@@ -34,37 +34,40 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         public async Task ImportImage(string tag)
         {
-            var credential = new AzureCredentials(
-                new ServicePrincipalLoginInformation
-                {
-                    ClientId = TestEnvironment.ClientId,
-                    ClientSecret = TestEnvironment.ClientSecret,
-                },
-                TestEnvironment.TenantId,
-                AzureEnvironment.AzureGlobalCloud);
-
-            var _registryClient = new ContainerRegistryManagementClient(credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
-            _registryClient.SubscriptionId = TestEnvironment.SubscriptionId;
-
-            var importSource = new ImportSource
+            if (TestEnvironment.IsTestModeLive)
             {
-                SourceImage = "library/hello-world",
-                RegistryUri = "registry.hub.docker.com"
-            };
-
-            await _registryClient.Registries.ImportImageAsync(
-                resourceGroupName: TestEnvironment.ResourceGroup,
-                registryName: TestEnvironment.Registry,
-                parameters:
-                    new ImportImageParameters
+                var credential = new AzureCredentials(
+                    new ServicePrincipalLoginInformation
                     {
-                        Mode = ImportMode.Force,
-                        Source = importSource,
-                        TargetTags = new List<string>()
+                        ClientId = TestEnvironment.ClientId,
+                        ClientSecret = TestEnvironment.ClientSecret,
+                    },
+                    TestEnvironment.TenantId,
+                    AzureEnvironment.AzureGlobalCloud);
+
+                var _registryClient = new ContainerRegistryManagementClient(credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
+                _registryClient.SubscriptionId = TestEnvironment.SubscriptionId;
+
+                var importSource = new ImportSource
+                {
+                    SourceImage = "library/hello-world",
+                    RegistryUri = "registry.hub.docker.com"
+                };
+
+                await _registryClient.Registries.ImportImageAsync(
+                    resourceGroupName: TestEnvironment.ResourceGroup,
+                    registryName: TestEnvironment.Registry,
+                    parameters:
+                        new ImportImageParameters
                         {
+                            Mode = ImportMode.Force,
+                            Source = importSource,
+                            TargetTags = new List<string>()
+                            {
                             $"library/hello-world:{tag}"
-                        }
-                    });
+                            }
+                        });
+            }
         }
 
         [RecordedTest]
