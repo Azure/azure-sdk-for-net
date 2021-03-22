@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Secrets;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using NUnit.Framework;
@@ -444,16 +445,16 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             SetPages(client,
                 new[]
                 {
-                    CreateSecret("Section--Secret1", "Value1")
+                    CreateSecret("Section---Secret1", "Value1")
                 },
                 new[]
                 {
-                    CreateSecret("Section:Secret1", "Value1")
+                    CreateSecret("Section--Secret1", "Value1")
                 }
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManagerMultiDash()))
             {
                 provider.Load();
 
@@ -469,16 +470,20 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             SetPages(client,
                 new[]
                 {
-                    CreateSecret("Section--Secret1", "Value1", updated: new DateTimeOffset(new DateTime(2038, 1, 19), TimeSpan.Zero))
+                    CreateSecret("Section----Secret1", "Value1", updated: new DateTimeOffset(new DateTime(2038, 1, 19), TimeSpan.Zero))
                 },
                 new[]
                 {
-                    CreateSecret("Section:Secret1", "Value2", updated: new DateTimeOffset(new DateTime(2038, 1, 20), TimeSpan.Zero))
+                    CreateSecret("Section---Secret1", "Value2", updated: new DateTimeOffset(new DateTime(2038, 1, 20), TimeSpan.Zero))
+                },
+                new[]
+                {
+                    CreateSecret("Section--Secret1", "Value3", updated: new DateTimeOffset(new DateTime(2038, 1, 18), TimeSpan.Zero))
                 }
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManagerMultiDash()))
             {
                 provider.Load();
 
@@ -617,6 +622,17 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 _releaseTaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
                 _signalTaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
                 releaseTaskCompletionSource.SetResult(null);
+            }
+        }
+
+        private class KeyVaultSecretManagerMultiDash : KeyVaultSecretManager
+        {
+            public override string GetKey(KeyVaultSecret secret)
+            {
+                return secret.Name
+                            .Replace("----", ConfigurationPath.KeyDelimiter)
+                            .Replace("---", ConfigurationPath.KeyDelimiter)
+                            .Replace("--", ConfigurationPath.KeyDelimiter);
             }
         }
     }
