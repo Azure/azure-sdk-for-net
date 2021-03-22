@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> The status of the delete operation. </returns>
-        public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
+        public ArmResponse Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDeleteById(Id, _apiVersion, cancellationToken).WaitForCompletion(cancellationToken));
+            return ArmResponse.FromResponse(Operations.StartDeleteById(Id, _apiVersion, cancellationToken).WaitForCompletion(cancellationToken));
         }
 
         /// <summary>
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> A <see cref="Task"/> that on completion returns the status of the delete operation. </returns>
-        public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartDeleteByIdAsync(Id, _apiVersion, cancellationToken).ConfigureAwait(false);
             var result = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-            return new ArmResponse(result);
+            return ArmResponse.FromResponse(result);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartDeleteById(Id, _apiVersion, cancellationToken));
+            return new VoidArmOperation(Operations.StartDeleteById(Id, _apiVersion, cancellationToken));
         }
 
         /// <summary>
@@ -86,15 +86,13 @@ namespace Azure.ResourceManager.Core
         public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartDeleteByIdAsync(Id, _apiVersion, cancellationToken).ConfigureAwait(false);
-            return new ArmVoidOperation(operation);
+            return new VoidArmOperation(operation);
         }
 
         /// <inheritdoc/>
         public ArmResponse<GenericResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             GenericResource resource = GetResource();
-
-            // Potential optimization on tags set, remove NOOP to bypass the call.
             resource.Data.Tags[key] = value;
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 Operations.StartUpdateById(Id, _apiVersion, resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),

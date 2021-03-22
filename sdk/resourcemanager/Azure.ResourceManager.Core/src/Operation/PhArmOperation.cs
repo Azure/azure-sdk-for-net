@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Core
         /// <param name="wrapped"> The results to wrap. </param>
         /// <param name="converter"> The function used to convert from existing type to new type. </param>
         public PhArmOperation(Operation<TModel> wrapped, Func<TModel, TOperations> converter)
-            : base(null)
         {
             _wrapped = wrapped;
             _converter = converter;

@@ -16,14 +16,14 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> The status of the delete operation. </returns>
-        ArmResponse<Response> Delete(CancellationToken cancellationToken = default);
+        ArmResponse Delete(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete the resource.
         /// </summary>
         /// <param name="cancellationToken"> A token allowing immediate cancellation of any blocking call performed during the deletion. </param>
         /// <returns> A <see cref="Task"/> that on completion returns the status of the delete operation. </returns>
-        Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default);
+        Task<ArmResponse> DeleteAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete the resource.

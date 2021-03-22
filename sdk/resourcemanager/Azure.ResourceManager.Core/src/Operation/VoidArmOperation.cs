@@ -10,32 +10,31 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Generic ARM long running operation class for operations with no returned value
     /// </summary>
-    public sealed class ArmVoidOperation : ArmOperation<Response>
+    internal sealed class VoidArmOperation : ArmOperation
     {
-        private readonly Operation<Response> _wrapped;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArmVoidOperation"/> class.
+        /// Initializes a new instance of the <see cref="VoidArmOperation"/> class.
         /// </summary>
         /// <param name="other"> The operation that has a response which has no body. </param>
-        public ArmVoidOperation(Operation<Response> other)
-            : base(null)
+        public VoidArmOperation(Operation<Response> other)
         {
             if (other is null)
                 throw new ArgumentNullException(nameof(other));
 
             _wrapped = other;
+            IsLongRunningOperation = true;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArmVoidOperation"/> class.
+        /// Initializes a new instance of the <see cref="VoidArmOperation"/> class.
         /// </summary>
         /// <param name="other"> The response which has no body. </param>
-        public ArmVoidOperation(Response other)
-            : base(other)
+        public VoidArmOperation(Response other)
         {
             if (other is null)
                 throw new ArgumentNullException(nameof(other));
+
+            SyncValue = other;
         }
 
         /// <inheritdoc/>
@@ -45,10 +44,10 @@ namespace Azure.ResourceManager.Core
         public override Response Value => SyncValue;
 
         /// <inheritdoc/>
-        public override bool HasCompleted => CompletedSynchronously || _wrapped.HasCompleted;
+        public override bool HasCompleted => !IsLongRunningOperation || _wrapped.HasCompleted;
 
         /// <inheritdoc/>
-        public override bool HasValue => CompletedSynchronously || _wrapped.HasValue;
+        public override bool HasValue => !IsLongRunningOperation || _wrapped.HasValue;
 
         /// <inheritdoc/>
         public override Response GetRawResponse()

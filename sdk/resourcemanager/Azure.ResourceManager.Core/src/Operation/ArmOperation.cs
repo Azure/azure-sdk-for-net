@@ -11,8 +11,17 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Abstract class for long-running or synchronous applications.
     /// </summary>
+    public abstract class ArmOperation : ArmOperation<Response>, IOperationSource<Response>
+    {
+    }
+
+    /// <summary>
+    /// Abstract class for long-running or synchronous applications.
+    /// </summary>
     /// <typeparam name="TOperations"> The <see cref="OperationsBase"/> to return representing the result of the ArmOperation. </typeparam>
-    public abstract class ArmOperation<TOperations> : Operation<TOperations>
+#pragma warning disable SA1402 // File may only contain a single type
+    public abstract class ArmOperation<TOperations> : Operation<TOperations>, IOperationSource<TOperations>
+#pragma warning restore SA1402 // File may only contain a single type
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmOperation{TOperations}"/> class for mocking.
@@ -22,24 +31,26 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArmOperation{TOperations}"/> class.
+        /// Gets or sets the SyncValue
         /// </summary>
-        /// <param name="syncValue"> The <see cref="OperationsBase"/> representing the result of the ArmOperation. </param>
-        protected ArmOperation(TOperations syncValue)
+        protected TOperations SyncValue { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not this is an LRO
+        /// </summary>
+        protected bool IsLongRunningOperation { get; set; }
+
+        /// <inheritdoc/>
+        public TOperations CreateResult(Response response, CancellationToken cancellationToken)
         {
-            CompletedSynchronously = syncValue != null;
-            SyncValue = syncValue;
+            throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Gets a value indicating whether or not the operation completed synchronously.
-        /// </summary>
-        protected bool CompletedSynchronously { get; }
-
-        /// <summary>
-        /// Gets the <see cref="OperationsBase"/> representing the result of the ArmOperation.
-        /// </summary>
-        protected TOperations SyncValue { get; }
+        /// <inheritdoc/>
+        public ValueTask<TOperations> CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Waits for the completion of the long running operations.
@@ -65,7 +76,6 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         public ArmResponse<TOperations> WaitForCompletion(int pollingInterval, CancellationToken cancellationToken = default)
         {
-            var polling = TimeSpan.FromSeconds(pollingInterval);
             while (true)
             {
                 UpdateStatus(cancellationToken);
