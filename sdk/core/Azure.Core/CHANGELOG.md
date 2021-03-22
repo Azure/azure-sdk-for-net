@@ -1,6 +1,6 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.11.0 (2021-03-22)
 
 ### Added
 
@@ -12,7 +12,7 @@
 
 - Check the `JsonIgnoreAttribute.Condition` property added in .NET 5 when discovering members with `JsonObjectSerializer`.
 - `ETag` now returns `string.Empty` if it is constructed with a null value.
-- Keep-Alive connections are recycled every 300 seconds to observe DNS changes. 
+- Keep-Alive connections are recycled every 300 seconds to observe DNS changes.
 
 ## 1.10.0 (2021-03-09)
 
