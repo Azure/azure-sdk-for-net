@@ -9,7 +9,7 @@ parameters:
   TargetDocRepoName: ''
   TargetDocRepoOwner: ''
   PRBranchName: 'master-rdme'
-  SourceBranchName: $(DefaultBranch)
+  SourceBranchName: ''
   PRLabels: 'auto-merge'
   ArtifactName: ''
   Language: ''
