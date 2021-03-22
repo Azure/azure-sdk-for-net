@@ -61,7 +61,7 @@ namespace Azure.Identity
 
             if (TokenCache != null)
             {
-                await TokenCache.RegisterCache(async, client.UserTokenCache, cancellationToken).ConfigureAwait(false);
+                await TokenCache.RegisterCache(async, client is IConfidentialClientApplication cca ? cca.AppTokenCache : client.UserTokenCache, cancellationToken).ConfigureAwait(false);
             }
 
             asyncLock.SetValue(client);
