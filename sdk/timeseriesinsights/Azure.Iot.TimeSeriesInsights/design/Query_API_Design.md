@@ -173,10 +173,12 @@ public virtual AsyncPageable<QueryResultPage> QueryAggregateSeriesAsync(
     {
         /// <summary>
         /// Interval size is specified in ISO-8601 duration format. All intervals are the same size.
+        /// </summary>
+        /// <remarks>
         /// One month is always converted to 30 days, and one year is always 365 days.
         /// Examples: 1 minute is "PT1M", 1 millisecond is "PT0.001S".
-        /// For more information, <see href="https://www.w3.org/TR/xmlschema-2/#duration"/>
-        /// </summary>
+        /// For more information, see <see href="https://www.w3.org/TR/xmlschema-2/#duration">duration</see>.
+        /// </remarks>
         public string Interval { get; set; }
     }
 ```

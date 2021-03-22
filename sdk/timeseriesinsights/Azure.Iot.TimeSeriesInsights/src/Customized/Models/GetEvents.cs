@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// Get Events query. Allows to retrieve raw events for a given Time Series ID and search span.
+    /// Get Events query. Allows to retrieve raw events for a given Time Series Id and search span.
     /// </summary>
     [CodeGenModel("GetEvents")]
     [CodeGenSuppress("GetEvents", typeof(IEnumerable<object>), typeof(DateTimeRange))]

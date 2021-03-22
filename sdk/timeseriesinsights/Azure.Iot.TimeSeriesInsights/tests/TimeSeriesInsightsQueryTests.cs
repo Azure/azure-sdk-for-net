@@ -20,6 +20,8 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(10);
 
         private const int MaxNumberOfRetries = 10;
+        private const string Humidity = "Humidity";
+        private const string Temperature = "Temperature";
 
         public TimeSeriesInsightsQueryTests(bool isAsync)
             : base(isAsync)
@@ -44,18 +46,18 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
             {
                 // Send some events to the IoT hub
                 await SendEventsToHubAsync(
-                    deviceClient,
-                    tsiId,
-                    modelSettings.TimeSeriesIdProperties.ToArray(),
-                    2)
+                        deviceClient,
+                        tsiId,
+                        modelSettings.TimeSeriesIdProperties.ToArray(),
+                        2)
                     .ConfigureAwait(false);
 
                 // Act
 
                 // Get events from last 1 minute
-                DateTimeOffset now = DateTimeOffset.UtcNow;
-                DateTimeOffset endTime = now.AddMinutes(1);
-                DateTimeOffset startTime = now.AddMinutes(-1);
+                DateTimeOffset now = Recording.UtcNow;
+                DateTimeOffset endTime = now.AddMinutes(10);
+                DateTimeOffset startTime = now.AddMinutes(-10);
 
                 // This retry logic was added as the TSI instance are not immediately available after creation
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
@@ -75,10 +77,10 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
 
                 // Send more events to the hub
                 await SendEventsToHubAsync(
-                    deviceClient,
-                    tsiId,
-                    modelSettings.TimeSeriesIdProperties.ToArray(),
-                    2)
+                        deviceClient,
+                        tsiId,
+                        modelSettings.TimeSeriesIdProperties.ToArray(),
+                        2)
                     .ConfigureAwait(false);
 
                 // This retry logic was added as the TSI instance are not immediately available after creation
@@ -89,7 +91,10 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     await foreach (QueryResultPage eventPage in queryEventsPages)
                     {
                         eventPage.Timestamps.Should().HaveCount(4);
-                        eventPage.Timestamps.Should().OnlyContain(timeStamp => timeStamp >= startTime).And.OnlyContain(timeStamp => timeStamp <= endTime);
+                        eventPage.Timestamps.Should()
+                        .OnlyContain(timeStamp => timeStamp >= startTime)
+                        .And
+                         .OnlyContain(timeStamp => timeStamp <= endTime);
                         eventPage.Properties.Should().NotBeEmpty();
                         eventPage.Properties.First().Should().NotBeNull();
                     }
@@ -99,8 +104,8 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
 
                 // Send 2 events with a special condition that can be used later to query on
                 IDictionary<string, object> messageBase = BuildMessageBase(modelSettings.TimeSeriesIdProperties.ToArray(), tsiId);
-                messageBase["Temperature"] = 1.2;
-                messageBase["Humidity"] = 3.4;
+                messageBase[Temperature] = 1.2;
+                messageBase[Humidity] = 3.4;
                 string messageBody = JsonSerializer.Serialize(messageBase);
                 var message = new Message(Encoding.ASCII.GetBytes(messageBody))
                 {
@@ -115,18 +120,18 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
 
                 // Query for the two events with a filter
 
-                // Only project Temperature and Building values
+                // Only project Temperature and one of the Id properties
                 var projectedProperties = new List<EventProperty>
                 {
-                    new EventProperty()
+                    new EventProperty
                     {
-                        Name = "Temperature",
+                        Name = Temperature,
                         Type = "Double",
                     },
-                    new EventProperty()
+                    new EventProperty
                     {
-                        Name = "building",
-                        Type = "String",
+                        Name = modelSettings.TimeSeriesIdProperties.First().Name,
+                        Type = modelSettings.TimeSeriesIdProperties.First().Type.ToString(),
                     }
                 };
 
@@ -143,11 +148,12 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     await foreach (QueryResultPage eventPage in queryEventsPages)
                     {
                         eventPage.Timestamps.Should().HaveCount(2);
-                        eventPage.Properties.Should().NotBeEmpty().And.HaveCount(2);
+                        eventPage.Properties.Should().HaveCount(2);
                         eventPage.Properties.First().Should().NotBeNull();
-                        eventPage.Properties.First().Name.Should().Be("Temperature");
-                        eventPage.Properties[1].Name.Should().Be("building");
+                        eventPage.Properties.First().Name.Should().Be(Temperature);
+                        eventPage.Properties[1].Name.Should().Be(modelSettings.TimeSeriesIdProperties.First().Name);
                     }
+
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);
 
@@ -157,29 +163,29 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                 await foreach (QueryResultPage eventPage in queryEventsPagesWithFilter)
                 {
                     eventPage.Timestamps.Should().HaveCount(1);
-                    eventPage.Properties.Should().NotBeEmpty().And.HaveCount(2);
+                    eventPage.Properties.Should().HaveCount(2);
                     eventPage.Properties.First().Should().NotBeNull();
-                    eventPage.Properties.First().Name.Should().Be("Temperature");
-                    eventPage.Properties[1].Name.Should().Be("building");
+                    eventPage.Properties.First().Name.Should().Be(Temperature);
+                    eventPage.Properties[1].Name.Should().Be(modelSettings.TimeSeriesIdProperties.First().Name);
                 }
 
-                // Query for all the events using a timespan
-                AsyncPageable<QueryResultPage> queryEventsPagesWithTimespan = tsiClient.QueryEventsAsync(tsiId, TimeSpan.FromMinutes(10));
-                await foreach (QueryResultPage eventPage in queryEventsPagesWithTimespan)
+                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
-                    eventPage.Timestamps.Should().HaveCount(6);
-                    eventPage.Timestamps.Should().OnlyContain(timeStamp => timeStamp >= startTime).And.OnlyContain(timeStamp => timeStamp <= endTime);
-                    eventPage.Properties.Should().NotBeEmpty();
-                    eventPage.Properties.First().Should().NotBeNull();
-                }
+                    // Query for all the events using a timespan
+                    AsyncPageable<QueryResultPage> queryEventsPagesWithTimespan = tsiClient.QueryEventsAsync(tsiId, TimeSpan.FromMinutes(20), endTime);
+                    await foreach (QueryResultPage eventPage in queryEventsPagesWithTimespan)
+                    {
+                        eventPage.Timestamps.Should().HaveCount(6);
+                        eventPage.Timestamps.Should()
+                            .OnlyContain(timeStamp => timeStamp >= startTime)
+                            .And
+                             .OnlyContain(timeStamp => timeStamp <= endTime);
+                        eventPage.Properties.Should().NotBeEmpty();
+                        eventPage.Properties.First().Should().NotBeNull();
+                    }
 
-                // Query for all the events using a timespan and an old end date
-                AsyncPageable<QueryResultPage> queryEventsPagesWithOldTimespan = tsiClient
-                    .QueryEventsAsync(tsiId, TimeSpan.FromMinutes(1), DateTimeOffset.UtcNow.AddDays(-1));
-                await foreach (QueryResultPage eventPage in queryEventsPagesWithOldTimespan)
-                {
-                    eventPage.Timestamps.Should().HaveCount(0);
-                }
+                    return null;
+                }, MaxNumberOfRetries, s_retryDelay);
             }
             finally
             {
@@ -199,8 +205,8 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
             {
                 double currentTemperature = minTemperature + rand.NextDouble() * 15;
                 double currentHumidity = minHumidity + rand.NextDouble() * 20;
-                messageBase["Temperature"] = currentTemperature;
-                messageBase["Humidity"] = currentHumidity;
+                messageBase[Temperature] = currentTemperature;
+                messageBase[Humidity] = currentHumidity;
                 string messageBody = JsonSerializer.Serialize(messageBase);
                 var message = new Message(Encoding.ASCII.GetBytes(messageBody))
                 {

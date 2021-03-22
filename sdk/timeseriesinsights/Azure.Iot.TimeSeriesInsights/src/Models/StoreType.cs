@@ -20,7 +20,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary>
         /// Time Series Insights warm store.
         /// </summary>
-        public static StoreType WarmStore { get; }  = new StoreType(WarmStoreValue);
+        public static StoreType WarmStore { get; } = new StoreType(WarmStoreValue);
 
         /// <summary>
         /// Time Series Insights cold store.
