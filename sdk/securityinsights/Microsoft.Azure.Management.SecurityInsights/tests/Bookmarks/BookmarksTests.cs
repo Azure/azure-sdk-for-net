@@ -22,8 +22,8 @@ namespace SecurityInsights.Tests
     {
         #region Test setup
 
-        private static string ResourceGroup = "ndicola-azsposh";
-        private static string WorkspaceName = "azsposh";
+        private static string ResourceGroup = "ndicola-pfsense";
+        private static string WorkspaceName = "ndicola-pfsense";
 
         public static TestEnvironment TestEnvironment { get; private set; }
 

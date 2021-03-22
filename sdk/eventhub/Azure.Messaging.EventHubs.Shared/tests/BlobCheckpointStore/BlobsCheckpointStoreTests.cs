@@ -1843,7 +1843,7 @@ namespace Azure.Messaging.EventHubs.Tests
             internal IEnumerable<BlobItem> Blobs;
             internal Exception GetBlobsAsyncException;
             internal Action<BlobTraits, BlobStates, string, CancellationToken> GetBlobsAsyncCallback;
-            internal Dictionary<string, MockBlobClient> BlobClients = new ();
+            internal Dictionary<string, MockBlobClient> BlobClients = new();
 
             public MockBlobContainerClient(string accountName = "blobAccount",
                                            string containerName = "container",

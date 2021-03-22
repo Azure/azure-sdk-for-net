@@ -34,7 +34,10 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
+        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
+        /// <param name="expirationDate">The expiration date for the invitation
+        /// and share subscription.</param>
         /// <param name="invitationId">unique invitation id</param>
         /// <param name="invitationStatus">The status of the invitation.
         /// Possible values include: 'Pending', 'Accepted', 'Rejected',
@@ -57,9 +60,10 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// resource</param>
         /// <param name="userName">Name of the user who created the
         /// resource</param>
-        public Invitation(string id = default(string), string name = default(string), string type = default(string), string invitationId = default(string), string invitationStatus = default(string), System.DateTime? respondedAt = default(System.DateTime?), System.DateTime? sentAt = default(System.DateTime?), string targetActiveDirectoryId = default(string), string targetEmail = default(string), string targetObjectId = default(string), string userEmail = default(string), string userName = default(string))
-            : base(id, name, type)
+        public Invitation(string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), System.DateTime? expirationDate = default(System.DateTime?), string invitationId = default(string), string invitationStatus = default(string), System.DateTime? respondedAt = default(System.DateTime?), System.DateTime? sentAt = default(System.DateTime?), string targetActiveDirectoryId = default(string), string targetEmail = default(string), string targetObjectId = default(string), string userEmail = default(string), string userName = default(string))
+            : base(id, name, systemData, type)
         {
+            ExpirationDate = expirationDate;
             InvitationId = invitationId;
             InvitationStatus = invitationStatus;
             RespondedAt = respondedAt;
@@ -76,6 +80,13 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the expiration date for the invitation and share
+        /// subscription.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.expirationDate")]
+        public System.DateTime? ExpirationDate { get; set; }
 
         /// <summary>
         /// Gets unique invitation id

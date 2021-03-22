@@ -15,7 +15,7 @@ namespace Azure.Iot.TimeSeriesInsights
         internal static TimeSeriesHierarchyOrError DeserializeTimeSeriesHierarchyOrError(JsonElement element)
         {
             Optional<TimeSeriesHierarchy> hierarchy = default;
-            Optional<TsiErrorBody> error = default;
+            Optional<TimeSeriesOperationError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hierarchy"))
@@ -35,7 +35,7 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = TsiErrorBody.DeserializeTsiErrorBody(property.Value);
+                    error = TimeSeriesOperationError.DeserializeTimeSeriesOperationError(property.Value);
                     continue;
                 }
             }

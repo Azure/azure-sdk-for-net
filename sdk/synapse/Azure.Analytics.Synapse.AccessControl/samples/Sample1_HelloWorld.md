@@ -10,8 +10,8 @@ To interact with Azure Synapse, you need to instantiate a `AccessControlClient`.
 // Replace the string below with your actual endpoint url.
 string endpoint = "<my-endpoint-url>";
 
-RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(endpoint, new DefaultAzureCredential());
-RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(endpoint, new DefaultAzureCredential());
+RoleAssignmentsClient roleAssignmentsClient = new RoleAssignmentsClient(new Uri(endpoint), new DefaultAzureCredential());
+RoleDefinitionsClient definitionsClient = new RoleDefinitionsClient(new Uri(endpoint), new DefaultAzureCredential());
 ```
 
 ## Create a role assignment

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation : Operation<ServiceEndpointPolicyDefinition>, IOperationSource<ServiceEndpointPolicyDefinition>
     {
         private readonly ArmOperationHelpers<ServiceEndpointPolicyDefinition> _operation;
+
+        /// <summary> Initializes a new instance of ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation for mocking. </summary>
+        protected ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation()
+        {
+        }
+
         internal ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ServiceEndpointPolicyDefinition>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ServiceEndpointPolicyDefinitionsCreateOrUpdateOperation");

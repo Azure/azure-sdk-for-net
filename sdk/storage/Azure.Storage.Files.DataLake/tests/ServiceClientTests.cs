@@ -24,7 +24,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_Uri()
         {
             // Arrange
@@ -39,7 +39,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(uri, serviceClient.Uri);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_SharedKey()
         {
             // Arrange
@@ -56,7 +56,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(uri, serviceClient.Uri);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_TokenCredential()
         {
             // Arrange
@@ -71,7 +71,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(uri, serviceClient.Uri);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_ConnectionString_RoundTrip()
         {
             // Arrage
@@ -92,7 +92,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_ConnectionString_GenerateSas()
         {
             // Arrage
@@ -124,7 +124,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
@@ -141,7 +141,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
             // Arrange
@@ -156,7 +156,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(fileSystems);
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_AzureSasCredential_VerifyNoSasInUri()
         {
             // Arrange
@@ -170,7 +170,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetUserDelegationKey()
         {
             // Arrange
@@ -183,7 +183,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetUserDelegationKey_Error()
         {
             // Arrange
@@ -195,7 +195,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetFileSystemsAsync()
         {
             // Arrange
@@ -213,7 +213,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetFileSystemsAsync_Marker()
         {
             DataLakeServiceClient service = GetServiceClient_SharedKey();
@@ -233,7 +233,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsTrue(fileSystems.Any(c => test.FileSystem.Uri == InstrumentClient(service.GetFileSystemClient(c.Name)).Uri));
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task GetFileSystemsAsync_MaxResults()
         {
@@ -252,7 +252,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(1, page.Values.Count());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetFileSystemsAsync_Prefix()
         {
             DataLakeServiceClient service = GetServiceClient_SharedKey();
@@ -270,7 +270,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(items.Single(c => c.Name == fileSystemName));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetFileSystemsAsync_Metadata()
         {
             DataLakeServiceClient service = GetServiceClient_SharedKey();
@@ -290,7 +290,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 items.Where(i => i.Name == test.FileSystem.Name).FirstOrDefault().Properties.Metadata);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task GetFileSystemsAsync_Deleted()
         {
@@ -312,7 +312,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(fileSystemItem.Properties.RemainingRetentionDays);
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task GetFileSystemsAsync_Error()
         {
@@ -329,7 +329,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateFileSystemAsync()
         {
             var name = GetNewFileSystemName();
@@ -346,7 +346,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteFileSystemAsync()
         {
             var name = GetNewFileSystemName();
@@ -358,7 +358,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 async () => await fileSystem.GetPropertiesAsync());
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UndeleteFileSystemAsync()
         {
@@ -387,7 +387,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             await response.Value.DeleteAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UndeleteFileSystemAsync_Error()
         {
@@ -529,8 +529,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         //    await fileSystem.DeleteAsync();
         //}
 
-            #region GenerateSasTests
-            [Test]
+        #region GenerateSasTests
+        [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
@@ -561,7 +561,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(serviceClient3.CanGenerateAccountSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_GetFileSystemClient()
         {
             // Arrange
@@ -595,7 +595,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsFalse(fileSystemClient3.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateAccountSas_Mockable()
         {
             // Act
@@ -612,7 +612,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsTrue(serviceClient.Object.CanGenerateAccountSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
@@ -643,7 +643,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateAccountSas_Builder()
         {
             // Arrange
@@ -679,7 +679,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateAccountSas_WrongService_Service()
         {
             var constants = new TestConstants(this);
@@ -718,7 +718,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
         #endregion
 
-        [Test]
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.

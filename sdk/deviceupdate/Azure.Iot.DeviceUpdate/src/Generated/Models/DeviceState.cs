@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> The deployment device state. </summary>
     internal readonly partial struct DeviceState : IEquatable<DeviceState>

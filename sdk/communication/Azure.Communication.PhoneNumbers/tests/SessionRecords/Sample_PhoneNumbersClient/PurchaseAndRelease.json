@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://live-testing.communication.azure.com/availablePhoneNumbers/countries/US/:search?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/availablePhoneNumbers/countries/US/:search?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -42,7 +42,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/search_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.comphoneNumbers/operations/search_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -78,7 +78,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/search_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/search_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -114,7 +114,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/search_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/search_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -150,7 +150,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/search_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/search_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -186,7 +186,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/availablePhoneNumbers/searchResults/802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/availablePhoneNumbers/searchResults/802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -230,7 +230,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/availablePhoneNumbers/:purchase?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/availablePhoneNumbers/:purchase?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -264,7 +264,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/purchase_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -298,7 +298,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/purchase_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -332,7 +332,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/purchase_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -366,7 +366,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/purchase_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_802ce504-8699-49ae-89f0-4c441a886eaf?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -400,7 +400,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -533,7 +533,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/Sanitized/capabilities?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/Sanitized/capabilities?api-version=2021-03-07",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -572,7 +572,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/capabilities_c2961bba-2da4-4e6c-b92e-cda0775c65c2?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/capabilities_c2961bba-2da4-4e6c-b92e-cda0775c65c2?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -608,7 +608,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/capabilities_c2961bba-2da4-4e6c-b92e-cda0775c65c2?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/capabilities_c2961bba-2da4-4e6c-b92e-cda0775c65c2?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -644,7 +644,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/capabilities_c2961bba-2da4-4e6c-b92e-cda0775c65c2?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/capabilities_c2961bba-2da4-4e6c-b92e-cda0775c65c2?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -680,7 +680,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/\u002BSanitized?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/\u002BSanitized?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -723,7 +723,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -856,7 +856,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/Sanitized?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/Sanitized?api-version=2021-03-07",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -886,7 +886,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/release_3402e46d-2189-4c92-b56b-18a519850493?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_3402e46d-2189-4c92-b56b-18a519850493?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -920,7 +920,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/release_3402e46d-2189-4c92-b56b-18a519850493?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_3402e46d-2189-4c92-b56b-18a519850493?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -954,7 +954,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/release_3402e46d-2189-4c92-b56b-18a519850493?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_3402e46d-2189-4c92-b56b-18a519850493?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -988,7 +988,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1105,7 +1105,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://live-testing.communication.azure.com/;accesskey=Kg==",
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "681638112"
   }
 }

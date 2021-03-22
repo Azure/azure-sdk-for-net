@@ -22,7 +22,9 @@ namespace Azure.Storage.Files.Shares.Tests
         ShareClientOptions.ServiceVersion.V2020_02_10,
         ShareClientOptions.ServiceVersion.V2020_04_08,
         ShareClientOptions.ServiceVersion.V2020_06_12,
-        ShareClientOptions.ServiceVersion.V2020_08_04)]
+        ShareClientOptions.ServiceVersion.V2020_08_04,
+        RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public class FileTestBase : StorageTestBase
     {
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
@@ -43,7 +45,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public ShareClientOptions GetOptions()
         {
-            var options = new ShareClientOptions
+            var options = new ShareClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =

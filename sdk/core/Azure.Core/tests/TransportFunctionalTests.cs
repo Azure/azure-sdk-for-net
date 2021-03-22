@@ -38,6 +38,8 @@ namespace Azure.Core.Tests
                 new object[] { RequestContent.Create(new ReadOnlyMemory<byte>(new byte[10])), 10 },
                 new object[] { RequestContent.Create(new ReadOnlyMemory<byte>(new byte[10]).Slice(5)), 5 },
                 new object[] { RequestContent.Create(new ReadOnlySequence<byte>(new byte[10])), 10 },
+                new object[] { RequestContent.Create(new BinaryData("Hello, world")), 12 },
+                new object[] { RequestContent.Create(new BinaryData(new byte[10])), 10 },
             };
 
         [TestCaseSource(nameof(ContentWithLength))]

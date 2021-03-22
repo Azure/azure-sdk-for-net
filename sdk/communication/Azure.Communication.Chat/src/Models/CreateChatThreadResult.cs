@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 namespace Azure.Communication.Chat
 {
     /// <summary> Result of the create chat thread operation. </summary>
@@ -10,13 +12,13 @@ namespace Azure.Communication.Chat
         /// <param name="createChatThreadResultInternal"> Chat thread. </param>
         internal CreateChatThreadResult(CreateChatThreadResultInternal createChatThreadResultInternal)
         {
-            ChatThread = new ChatThread(createChatThreadResultInternal.ChatThread);
-            Errors = createChatThreadResultInternal.Errors;
+            ChatThread = new ChatThreadProperties(createChatThreadResultInternal.ChatThread);
+            InvalidParticipants = createChatThreadResultInternal.InvalidParticipants;
         }
 
         /// <summary> Chat thread. </summary>
-        public ChatThread ChatThread { get; }
+        public ChatThreadProperties ChatThread { get; }
         /// <summary> Errors encountered during the creation of the chat thread. </summary>
-        public CreateChatThreadErrors Errors { get; }
+        public IReadOnlyList<ChatError> InvalidParticipants { get; }
     }
 }

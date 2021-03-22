@@ -134,7 +134,7 @@ namespace Azure.Messaging.EventGrid
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="AcsSmsReceivedEventData"/> system event.
         /// </summary>
-        public const string ACSSMSReceived = "Microsoft.Communication.SMSReceived";
+        public const string AcsSmsReceived = "Microsoft.Communication.SMSReceived";
         #endregion
 
         #region ContainerRegistry events
@@ -169,25 +169,25 @@ namespace Azure.Messaging.EventGrid
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="IotHubDeviceCreatedEventData"/> system event.
         /// </summary>
-        public const string IoTHubDeviceCreated = "Microsoft.Devices.DeviceCreated";
+        public const string IotHubDeviceCreated = "Microsoft.Devices.DeviceCreated";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="IotHubDeviceDeletedEventData"/> system event.
         /// </summary>
-        public const string IoTHubDeviceDeleted = "Microsoft.Devices.DeviceDeleted";
+        public const string IotHubDeviceDeleted = "Microsoft.Devices.DeviceDeleted";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="IotHubDeviceConnectedEventData"/> system event.
         /// </summary>
-        public const string IoTHubDeviceConnected = "Microsoft.Devices.DeviceConnected";
+        public const string IotHubDeviceConnected = "Microsoft.Devices.DeviceConnected";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="IotHubDeviceDisconnectedEventData"/> system event.
         /// </summary>
-        public const string IoTHubDeviceDisconnected = "Microsoft.Devices.DeviceDisconnected";
+        public const string IotHubDeviceDisconnected = "Microsoft.Devices.DeviceDisconnected";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
@@ -208,8 +208,9 @@ namespace Azure.Messaging.EventGrid
         /// <see cref="SubscriptionDeletedEventData"/> system event.
         /// </summary>
         public const string EventGridSubscriptionDeleted = "Microsoft.EventGrid.SubscriptionDeletedEvent";
+        #endregion
 
-        // Event Hub Events
+        #region Event Hub Events
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="EventHubCaptureFileCreatedEventData"/> system event.
@@ -687,15 +688,15 @@ namespace Azure.Messaging.EventGrid
         #region Redis
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="RedisExportRDBCompletedEventData"/> system event.
+        /// <see cref="RedisExportRdbCompletedEventData"/> system event.
         /// </summary>
-        public const string RedisExportRDBCompleted = "Microsoft.Cache.ExportRDBCompleted";
+        public const string RedisExportRdbCompleted = "Microsoft.Cache.ExportRDBCompleted";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
-        /// <see cref="RedisImportRDBCompletedEventData"/> system event.
+        /// <see cref="RedisImportRdbCompletedEventData"/> system event.
         /// </summary>
-        public const string RedisImportRDBCompleted = "Microsoft.Cache.ImportRDBCompleted";
+        public const string RedisImportRdbCompleted = "Microsoft.Cache.ImportRDBCompleted";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the

@@ -77,6 +77,7 @@
     <PackageReference Update="Azure.Core.Amqp" Version="1.0.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.10" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.3.1" />
+    <PackageReference Update="Azure.Messaging.EventGrid" Version="4.0.0" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.2" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.0.2" />
@@ -122,7 +123,7 @@
     All should have PrivateAssets="All" set so they don't become pacakge dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210302.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20210319.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20200929.2" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="1.3.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
@@ -131,7 +132,7 @@
     <PackageReference Update="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Update="SauceControl.InheritDoc" Version="1.2.0" PrivateAssets="All" />
-    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
+    <PackageReference Update="StyleCop.Analyzers" Version="1.2.0-beta.333" PrivateAssets="All" />
   </ItemGroup>
 
   <!--
@@ -161,7 +162,7 @@
     <PackageReference Update="Microsoft.Azure.Core.Spatial" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Core.NewtonsoftJson" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Devices" Version="1.19.0" />
-    <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.27.0" />
+    <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.35.0" />
     <PackageReference Update="Microsoft.Azure.Graph.RBAC" Version="2.2.2-preview" />
     <PackageReference Update="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
     <PackageReference Update="Microsoft.Azure.Management.ContainerRegistry" Version="2.0.0" />

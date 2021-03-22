@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class PrivateLinkServicesDeletePrivateEndpointConnectionOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of PrivateLinkServicesDeletePrivateEndpointConnectionOperation for mocking. </summary>
+        protected PrivateLinkServicesDeletePrivateEndpointConnectionOperation()
+        {
+        }
+
         internal PrivateLinkServicesDeletePrivateEndpointConnectionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "PrivateLinkServicesDeletePrivateEndpointConnectionOperation");

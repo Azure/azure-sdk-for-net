@@ -105,7 +105,7 @@ namespace Azure.Communication.PhoneNumbers
         }
         #endregion protected constructors
 
-        /// <summary> Releases an acquired phone number. </summary>
+        /// <summary> Releases an purchased phone number. </summary>
         /// <param name="phoneNumber"> Phone number to be released, e.g. +14255550123. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
@@ -118,7 +118,8 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 var originalResponse = await RestClient.ReleasePhoneNumberAsync(phoneNumber, cancellationToken).ConfigureAwait(false);
-                return new ReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
+                return new ReleasePhoneNumberOperation(
+                    new InternalReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse));
             }
             catch (Exception e)
             {
@@ -127,7 +128,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        /// <summary> Releases an acquired phone number. </summary>
+        /// <summary> Releases an purchased phone number. </summary>
         /// <param name="phoneNumber"> Phone number to be released, e.g. +14255550123. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
@@ -140,7 +141,8 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 var originalResponse = RestClient.ReleasePhoneNumber(phoneNumber, cancellationToken);
-                return new ReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse);
+                return new ReleasePhoneNumberOperation(
+                    new InternalReleasePhoneNumberOperation(_clientDiagnostics, _pipeline, RestClient.CreateReleasePhoneNumberRequest(phoneNumber).Request, originalResponse));
             }
             catch (Exception e)
             {
@@ -197,12 +199,12 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        /// <summary> Gets the details of the given acquired phone number. </summary>
+        /// <summary> Gets the details of the given purchased phone number. </summary>
         /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +14255550123. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AcquiredPhoneNumber>> GetPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PurchasedPhoneNumber>> GetPurchasedPhoneNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumber)}");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumber)}");
             scope.Start();
             try
             {
@@ -215,12 +217,12 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        /// <summary> Gets the details of the given acquired phone number. </summary>
+        /// <summary> Gets the details of the given purchased phone number. </summary>
         /// <param name="phoneNumber"> The acquired phone number whose details are to be fetched in E.164 format, e.g. +14255550123. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AcquiredPhoneNumber> GetPhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
+        public virtual Response<PurchasedPhoneNumber> GetPurchasedPhoneNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
-            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumber)}");
+            using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumber)}");
             scope.Start();
             try
             {
@@ -243,7 +245,8 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 var originalResponse = await RestClient.PurchasePhoneNumbersAsync(searchId, cancellationToken).ConfigureAwait(false);
-                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+                return new PurchasePhoneNumbersOperation(
+                    new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse));
             }
             catch (Exception e)
             {
@@ -262,7 +265,8 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 var originalResponse = RestClient.PurchasePhoneNumbers(searchId, cancellationToken);
-                return new PurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse);
+                return new PurchasePhoneNumbersOperation(
+                    new InternalPurchasePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreatePurchasePhoneNumbersRequest(searchId).Request, originalResponse));
             }
             catch (Exception e)
             {
@@ -329,13 +333,13 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        /// <summary> Gets the list of all acquired phone numbers. </summary>
+        /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<AcquiredPhoneNumber> GetPhoneNumbersAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AcquiredPhoneNumber>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PurchasedPhoneNumber>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumbers)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
                 scope.Start();
                 try
                 {
@@ -348,9 +352,9 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            async Task<Page<AcquiredPhoneNumber>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PurchasedPhoneNumber>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumbers)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
                 scope.Start();
                 try
                 {
@@ -366,13 +370,13 @@ namespace Azure.Communication.PhoneNumbers
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        /// <summary> Gets the list of all acquired phone numbers. </summary>
+        /// <summary> Gets the list of all purchased phone numbers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<AcquiredPhoneNumber> GetPhoneNumbers(CancellationToken cancellationToken = default)
+        public virtual Pageable<PurchasedPhoneNumber> GetPurchasedPhoneNumbers(CancellationToken cancellationToken = default)
         {
-            Page<AcquiredPhoneNumber> FirstPageFunc(int? pageSizeHint)
+            Page<PurchasedPhoneNumber> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumbers)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
                 scope.Start();
                 try
                 {
@@ -385,9 +389,9 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            Page<AcquiredPhoneNumber> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PurchasedPhoneNumber> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPhoneNumbers)}");
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetPurchasedPhoneNumbers)}");
                 scope.Start();
                 try
                 {

@@ -304,7 +304,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 }
                 await Task.WhenAll(completionSources.Select(source => source.Task));
                 await processor.StopProcessingAsync();
-                Assert.AreEqual(numThreads, messageCt);
+                // greater or equal because the same message may be received multiple times
+                Assert.GreaterOrEqual(messageCt, numThreads);
             }
         }
 

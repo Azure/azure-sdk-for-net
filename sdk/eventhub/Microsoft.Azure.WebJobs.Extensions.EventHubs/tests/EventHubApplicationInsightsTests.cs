@@ -380,7 +380,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        private (JobHost, IHost) BuildHost<T>()
+        private (JobHost JobHost, IHost Host) BuildHost<T>()
         {
             var (jobHost, host) = base.BuildHost<T>(builder =>
             {

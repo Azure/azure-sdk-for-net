@@ -24,7 +24,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClient(bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.ConnectionString,
+                    TestEnvironment.LiveTestConnectionString,
                     InstrumentClientOptions(new PhoneNumbersClientOptions()));
 
             // We always create the instrumented client to suppress the instrumentation check
@@ -40,7 +40,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         protected PhoneNumbersClient CreateClientWithTokenCredential(TokenCredential token, bool isInstrumented = true)
         {
             var client = new PhoneNumbersClient(
-                    TestEnvironment.Endpoint,
+                    TestEnvironment.LiveTestEndpoint,
                     token,
                     InstrumentClientOptions(new PhoneNumbersClientOptions()));
 

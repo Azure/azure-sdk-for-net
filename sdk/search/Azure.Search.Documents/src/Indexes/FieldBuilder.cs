@@ -229,7 +229,7 @@ namespace Azure.Search.Documents.Indexes
             return info.Properties
                 .Select(prop => (prop.Name, BuildField(prop)))
                 .Where(pair => pair.Item2 != null)
-                .ToDictionary(pair => pair.Item1, pair => pair.Item2);
+                .ToDictionary(pair => pair.Name, pair => pair.Item2);
         }
 
         private static IDataTypeInfo GetDataTypeInfo(Type propertyType, IMemberNameConverter nameProvider)

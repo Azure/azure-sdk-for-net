@@ -16,16 +16,16 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary> Initializes a new instance of TypesBatchResponse. </summary>
         internal TypesBatchResponse()
         {
-            Get = new ChangeTrackingList<TimeSeriesTypeOrError>();
-            Put = new ChangeTrackingList<TimeSeriesTypeOrError>();
-            Delete = new ChangeTrackingList<TsiErrorBody>();
+            Get = new ChangeTrackingList<TimeSeriesTypeOperationResult>();
+            Put = new ChangeTrackingList<TimeSeriesTypeOperationResult>();
+            Delete = new ChangeTrackingList<TimeSeriesOperationError>();
         }
 
         /// <summary> Initializes a new instance of TypesBatchResponse. </summary>
         /// <param name="get"> List of types or error objects corresponding by position to the &quot;get&quot; array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="put"> List of types or error objects corresponding by position to the &quot;put&quot; array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </param>
         /// <param name="delete"> List of error objects corresponding by position to the &quot;delete&quot; array in the request - null when the operation is successful. </param>
-        internal TypesBatchResponse(IReadOnlyList<TimeSeriesTypeOrError> @get, IReadOnlyList<TimeSeriesTypeOrError> put, IReadOnlyList<TsiErrorBody> delete)
+        internal TypesBatchResponse(IReadOnlyList<TimeSeriesTypeOperationResult> @get, IReadOnlyList<TimeSeriesTypeOperationResult> put, IReadOnlyList<TimeSeriesOperationError> delete)
         {
             Get = @get;
             Put = put;
@@ -33,10 +33,10 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary> List of types or error objects corresponding by position to the &quot;get&quot; array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
-        public IReadOnlyList<TimeSeriesTypeOrError> Get { get; }
+        public IReadOnlyList<TimeSeriesTypeOperationResult> Get { get; }
         /// <summary> List of types or error objects corresponding by position to the &quot;put&quot; array in the request. Type object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
-        public IReadOnlyList<TimeSeriesTypeOrError> Put { get; }
+        public IReadOnlyList<TimeSeriesTypeOperationResult> Put { get; }
         /// <summary> List of error objects corresponding by position to the &quot;delete&quot; array in the request - null when the operation is successful. </summary>
-        public IReadOnlyList<TsiErrorBody> Delete { get; }
+        public IReadOnlyList<TimeSeriesOperationError> Delete { get; }
     }
 }

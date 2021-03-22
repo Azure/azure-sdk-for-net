@@ -25,7 +25,9 @@ namespace Azure.Storage.Test.Shared
         BlobClientOptions.ServiceVersion.V2020_02_10,
         BlobClientOptions.ServiceVersion.V2020_04_08,
         BlobClientOptions.ServiceVersion.V2020_06_12,
-        BlobClientOptions.ServiceVersion.V2020_08_04)]
+        BlobClientOptions.ServiceVersion.V2020_08_04,
+        RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public abstract class BlobTestBase : StorageTestBase
     {
         protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
@@ -309,7 +311,7 @@ namespace Azure.Storage.Test.Shared
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
-                Version = ToSasVersion(_serviceVersion)
+                Version = Constants.DefaultSasVersion
             };
             builder.SetPermissions(permissions);
             return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());

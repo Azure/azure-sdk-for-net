@@ -20,6 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class DatasetCreateOrUpdateDatasetOperation : Operation<DatasetResource>, IOperationSource<DatasetResource>
     {
         private readonly ArmOperationHelpers<DatasetResource> _operation;
+
+        /// <summary> Initializes a new instance of DatasetCreateOrUpdateDatasetOperation for mocking. </summary>
+        protected DatasetCreateOrUpdateDatasetOperation()
+        {
+        }
+
         internal DatasetCreateOrUpdateDatasetOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<DatasetResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatasetCreateOrUpdateDatasetOperation");
