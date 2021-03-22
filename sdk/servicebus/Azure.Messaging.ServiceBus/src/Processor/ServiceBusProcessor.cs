@@ -39,6 +39,8 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly SemaphoreSlim _messageHandlerSemaphore;
 
+        private readonly int _maxConcurrentCalls;
+
         /// <summary>
         /// The primitive for ensuring that the service is not overloaded with
         /// accept session requests.
@@ -214,16 +216,16 @@ namespace Azure.Messaging.ServiceBus
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
 
-            int maxCalls = isSessionEntity ?
+            _maxConcurrentCalls = isSessionEntity ?
                 (_sessionIds.Length > 0 ?
                     Math.Min(_sessionIds.Length, MaxConcurrentSessions) :
                     MaxConcurrentSessions) * MaxConcurrentCallsPerSession :
                 MaxConcurrentCalls;
 
             _messageHandlerSemaphore = new SemaphoreSlim(
-                maxCalls,
-                maxCalls);
-            var maxAcceptSessions = Math.Min(maxCalls, 2 * Environment.ProcessorCount);
+                _maxConcurrentCalls,
+                _maxConcurrentCalls);
+            var maxAcceptSessions = Math.Min(_maxConcurrentCalls, 2 * Environment.ProcessorCount);
             MaxConcurrentAcceptSessionsSemaphore = new SemaphoreSlim(
                 maxAcceptSessions,
                 maxAcceptSessions);
@@ -653,7 +655,7 @@ namespace Azure.Messaging.ServiceBus
         private async Task RunReceiveTaskAsync(
             CancellationToken cancellationToken)
         {
-            List<Task> tasks = new List<Task>(MaxConcurrentCalls + _receiverManagers.Count);
+            List<Task> tasks = new List<Task>(_maxConcurrentCalls + _receiverManagers.Count);
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
@@ -670,7 +672,8 @@ namespace Azure.Messaging.ServiceBus
                         // other than TaskCanceledExceptions
                         tasks.Add(ReceiveAndProcessMessagesAsync(receiverManager, cancellationToken));
                     }
-                    if (tasks.Count > MaxConcurrentCalls)
+
+                    if (tasks.Count > _maxConcurrentCalls)
                     {
                         tasks.RemoveAll(t => t.IsCompleted);
                     }
