@@ -9,7 +9,7 @@ Retrieve raw events for a given Time Series Id and search span.
 
 Examples: https://github.com/Azure/azure-rest-api-specs/tree/master/specification/timeseriesinsights/data-plane/Microsoft.TimeSeriesInsights/stable/2020-07-31/examples
 
-Tsx Expressions: https://docs.microsoft.com/en-us/rest/api/time-series-insights/reference-time-series-expression-syntax
+Tsx Expressions: https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax
 
 
 ```csharp
@@ -126,7 +126,7 @@ public virtual AsyncPageable<QueryResultPage> QueryAggregateSeriesAsync(
         /// </summary>
         /// <remarks>
         /// For filter examples, check out the TSX documentation
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/time-series-insights/reference-time-series-expression-syntax">here.</see>.
+        /// <see href="https://docs.microsoft.com/rest/api/time-series-insights/reference-time-series-expression-syntax">here.</see>.
         /// </remarks>
         public string Filter { get; set; }
 
