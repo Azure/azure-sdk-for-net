@@ -65,8 +65,7 @@
       "RequestBody": {
         "StringTypeProperty": "This is the original",
         "PartitionKey": "somPartition",
-        "RowKey": "1",
-        "Timestamp": null
+        "RowKey": "1"
       },
       "StatusCode": 204,
       "ResponseHeaders": {
@@ -226,8 +225,7 @@
       "RequestBody": {
         "StringTypeProperty": "This is the original",
         "PartitionKey": "somPartition",
-        "RowKey": "1",
-        "Timestamp": null
+        "RowKey": "1"
       },
       "StatusCode": 204,
       "ResponseHeaders": {

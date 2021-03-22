@@ -60,7 +60,6 @@
       "RequestBody": {
         "PartitionKey": "somPartition",
         "RowKey": "01",
-        "Timestamp": null,
         "MyFoo": "Two"
       },
       "StatusCode": 204,
