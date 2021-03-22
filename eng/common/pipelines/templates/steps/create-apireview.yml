@@ -14,6 +14,7 @@ steps:
           -APIKey $(azuresdk-apiview-apikey)
           -APILabel "Auto Review - $(Build.SourceVersion)"
           -PackageName ${{artifact.name}}
+          -SourceBranch $(Build.SourceBranch)
           -ConfigFileDir '${{parameters.ConfigFileDir}}'
         pwsh: true
         workingDirectory: $(Pipeline.Workspace)
