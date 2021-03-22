@@ -79,17 +79,13 @@
         }
     ],
     "outputs": {
-        "DOCUMENTTRANSLATION_TEST_API_KEY": {
+        "DOCUMENT_TRANSLATION_API_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts', variables('uniqueSubDomainName')), '2017-04-18').key1]"
         },
-        "DOCUMENTTRANSLATION_TEST_ENDPOINT": {
+        "DOCUMENT_TRANSLATION_ENDPOINT": {
             "type": "string",
             "value": "[variables('endpointValue')]"
-        },
-        "BASENAME":{
-            "type": "string",
-            "value": "[parameters('baseName')]"
         }
     }
 }
