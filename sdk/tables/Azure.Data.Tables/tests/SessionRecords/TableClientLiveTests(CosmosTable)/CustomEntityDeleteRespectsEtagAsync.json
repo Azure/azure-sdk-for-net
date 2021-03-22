@@ -43,7 +43,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "105",
+        "Content-Length": "88",
         "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
         "traceparent": "00-42652001589a0446bbfef4d4471325ed-8380c6a7210d014b-00",
@@ -176,7 +176,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "105",
+        "Content-Length": "88",
         "Content-Type": "application/json",
         "DataServiceVersion": "3.0",
         "traceparent": "00-9cdd0c11186d2845a23faac056545cbf-0aa2dd9aad7c824c-00",
