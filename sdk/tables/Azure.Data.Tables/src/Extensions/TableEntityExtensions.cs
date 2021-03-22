@@ -60,6 +60,10 @@ namespace Azure.Data.Tables
             // Remove the ETag property, as it does not need to be serialized
             annotatedDictionary.Remove(TableConstants.PropertyNames.ETag);
 
+            // Remove the Timestamp property, as it is controlled by the service not the client.
+            annotatedDictionary.Remove(TableConstants.PropertyNames.TimeStamp);
+            annotatedDictionary.Remove(TableConstants.PropertyNames.TimeStamp.ToOdataTypeString());
+
             return annotatedDictionary;
         }
     }

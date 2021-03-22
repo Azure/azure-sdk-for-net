@@ -2,6 +2,9 @@
 
 ## 12.0.0-beta.7 (Unreleased)
 
+### Changed
+
+- Removed `Timestamp` property from the sent entity JSON since it has no effect
 
 ## 12.0.0-beta.6 (2021-03-09)
 
