@@ -122,6 +122,54 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        [TestCase(AccountSasPermissions.All)]
+        [TestCase(AccountSasPermissions.SetImmutabilityPolicy)]
+        public async Task SetImmutibilityPolicyAsync_SetLegalHold_AccoutnSas(AccountSasPermissions sasPermissions)
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container, GetNewBlobName());
+
+            BlobServiceClient sharedKeyServiceClient = InstrumentClient(
+                GetServiceClient_OAuthAccount_SharedKey());
+            Uri serviceSasUri = sharedKeyServiceClient.GenerateAccountSasUri(
+                sasPermissions,
+                Recording.UtcNow.AddDays(1),
+                AccountSasResourceTypes.All);
+            BlobBaseClient sasBlobClient = InstrumentClient(new BlobServiceClient(serviceSasUri, GetOptions())
+                .GetBlobContainerClient(vlwContainer.Container.Name)
+                .GetBlobBaseClient(blob.Name));
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
+
+            // Act
+            Response<BlobImmutabilityPolicy> response = await sasBlobClient.SetImmutabilityPolicyAsync(
+                immutabilityPolicy: immutabilityPolicy);
+
+            // Assert
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, response.Value.ExpiriesOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
+
+            // Act
+            Response<BlobLegalHoldInfo> legalHoldResponse = await sasBlobClient.SetLegalHoldAsync(legalHoldEnabled: false);
+
+            // Assert
+            Assert.IsFalse(legalHoldResponse.Value.LegalHoldEnabled);
+
+            // Wait for immutability policy to expire.
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         [TestCase(BlobContainerSasPermissions.All)]
         [TestCase(BlobContainerSasPermissions.SetImmutabilityPolicy)]
         public async Task SetImmutibilityPolicyAsync_SetLegalHold_ContainerSas(BlobContainerSasPermissions sasPermissions)
@@ -161,6 +209,172 @@ namespace Azure.Storage.Blobs.Test
 
             // Wait for immutability policy to expire.
             await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        [TestCase(BlobSasPermissions.All)]
+        [TestCase(BlobSasPermissions.SetImmutabilityPolicy)]
+        public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobSas(BlobSasPermissions sasPermissions)
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container, GetNewBlobName());
+
+            BlobBaseClient sharedKeyBlob = InstrumentClient(
+                GetServiceClient_OAuthAccount_SharedKey()
+                    .GetBlobContainerClient(vlwContainer.Container.Name)
+                    .GetBlobBaseClient(blob.Name));
+            Uri blobSasUri = sharedKeyBlob.GenerateSasUri(sasPermissions, Recording.UtcNow.AddDays(1));
+            BlobBaseClient sasBlobClient = InstrumentClient(new BlobBaseClient(blobSasUri, GetOptions()));
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
+
+            // Act
+            Response<BlobImmutabilityPolicy> response = await sasBlobClient.SetImmutabilityPolicyAsync(
+                immutabilityPolicy: immutabilityPolicy);
+
+            // Assert
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, response.Value.ExpiriesOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
+
+            // Act
+            Response<BlobLegalHoldInfo> legalHoldResponse = await sasBlobClient.SetLegalHoldAsync(legalHoldEnabled: false);
+
+            // Assert
+            Assert.IsFalse(legalHoldResponse.Value.LegalHoldEnabled);
+
+            // Wait for immutability policy to expire.
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        [TestCase(SnapshotSasPermissions.All)]
+        [TestCase(SnapshotSasPermissions.SetImmutabilityPolicy)]
+        public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobSnapshotSas(SnapshotSasPermissions sasPermissions)
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container, GetNewBlobName());
+
+            Response<BlobSnapshotInfo> snapshotResponse = await blob.CreateSnapshotAsync();
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = vlwContainer.Container.Name,
+                BlobName = blob.Name,
+                ExpiresOn = Recording.UtcNow.AddDays(1),
+                Snapshot = snapshotResponse.Value.Snapshot
+            };
+            blobSasBuilder.SetPermissions(sasPermissions);
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigOAuth.AccountName, TestConfigOAuth.AccountKey);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                Snapshot = snapshotResponse.Value.Snapshot,
+                Sas = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            BlobBaseClient sasBlobSnapshotClient = InstrumentClient(new BlobBaseClient(uriBuilder.ToUri(), GetOptions()));
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
+
+            // Act
+            Response<BlobImmutabilityPolicy> response = await sasBlobSnapshotClient.SetImmutabilityPolicyAsync(
+                immutabilityPolicy: immutabilityPolicy);
+
+            // Assert
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, response.Value.ExpiriesOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
+
+            // Act
+            Response<BlobLegalHoldInfo> legalHoldResponse = await sasBlobSnapshotClient.SetLegalHoldAsync(legalHoldEnabled: false);
+
+            // Assert
+            Assert.IsFalse(legalHoldResponse.Value.LegalHoldEnabled);
+
+            // Wait for immutability policy to expire.
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
+
+            // Delete blob snapshot.
+            await blob.WithSnapshot(snapshotResponse.Value.Snapshot).DeleteAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        [TestCase(BlobVersionSasPermissions.All)]
+        [TestCase(BlobVersionSasPermissions.SetImmutabilityPolicy)]
+        public async Task SetImmutibilityPolicyAsync_SetLegalHold_BlobVersionSas(BlobVersionSasPermissions sasPermissions)
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container, GetNewBlobName());
+
+            IDictionary<string, string> metadata = BuildMetadata();
+            Response<BlobInfo> metadataResponse = await blob.SetMetadataAsync(metadata);
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder
+            {
+                BlobContainerName = vlwContainer.Container.Name,
+                BlobName = blob.Name,
+                ExpiresOn = Recording.UtcNow.AddDays(1),
+                Version = metadataResponse.Value.VersionId
+            };
+            blobSasBuilder.SetPermissions(sasPermissions);
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigOAuth.AccountName, TestConfigOAuth.AccountKey);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(blob.Uri)
+            {
+                VersionId = metadataResponse.Value.VersionId,
+                Sas = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            BlobBaseClient sasBlobSnapshotClient = InstrumentClient(new BlobBaseClient(uriBuilder.ToUri(), GetOptions()));
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
+                PolicyMode = BlobImmutabilityPolicyMode.Locked
+            };
+
+            // The service rounds Immutability Policy Expiry to the nearest second.
+            DateTimeOffset expectedImmutabilityPolicyExpiry = RoundToNearestSecond(immutabilityPolicy.ExpiriesOn.Value);
+
+            // Act
+            Response<BlobImmutabilityPolicy> response = await sasBlobSnapshotClient.SetImmutabilityPolicyAsync(
+                immutabilityPolicy: immutabilityPolicy);
+
+            // Assert
+            Assert.AreEqual(expectedImmutabilityPolicyExpiry, response.Value.ExpiriesOn);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
+
+            // Act
+            Response<BlobLegalHoldInfo> legalHoldResponse = await sasBlobSnapshotClient.SetLegalHoldAsync(legalHoldEnabled: false);
+
+            // Assert
+            Assert.IsFalse(legalHoldResponse.Value.LegalHoldEnabled);
+
+            // Wait for immutability policy to expire.
+            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
+
+            // Delete blob snapshot.
+            //await blob.WithVersion(snapshotResponse.Value.Snapshot).DeleteAsync();
         }
 
         [Test]
