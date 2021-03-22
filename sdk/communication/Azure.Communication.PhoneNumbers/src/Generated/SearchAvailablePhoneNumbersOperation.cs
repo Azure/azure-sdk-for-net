@@ -21,6 +21,11 @@ namespace Azure.Communication.PhoneNumbers
     {
         private readonly ArmOperationHelpers<PhoneNumberSearchResult> _operation;
 
+        /// <summary> Initializes a new instance of SearchAvailablePhoneNumbersOperation for mocking. </summary>
+        protected SearchAvailablePhoneNumbersOperation()
+        {
+        }
+
         /// <inheritdoc />
         public override PhoneNumberSearchResult Value => _operation.Value;
 

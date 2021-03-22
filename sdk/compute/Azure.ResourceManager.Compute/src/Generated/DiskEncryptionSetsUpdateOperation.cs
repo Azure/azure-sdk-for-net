@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class DiskEncryptionSetsUpdateOperation : Operation<DiskEncryptionSet>, IOperationSource<DiskEncryptionSet>
     {
         private readonly ArmOperationHelpers<DiskEncryptionSet> _operation;
+
+        /// <summary> Initializes a new instance of DiskEncryptionSetsUpdateOperation for mocking. </summary>
+        protected DiskEncryptionSetsUpdateOperation()
+        {
+        }
+
         internal DiskEncryptionSetsUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<DiskEncryptionSet>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DiskEncryptionSetsUpdateOperation");

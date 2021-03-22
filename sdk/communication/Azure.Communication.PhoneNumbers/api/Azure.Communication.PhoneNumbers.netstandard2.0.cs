@@ -62,7 +62,7 @@ namespace Azure.Communication.PhoneNumbers
     }
     public partial class SearchAvailablePhoneNumbersOperation : Azure.Operation<Azure.Communication.PhoneNumbers.Models.PhoneNumberSearchResult>
     {
-        internal SearchAvailablePhoneNumbersOperation() { }
+        protected SearchAvailablePhoneNumbersOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -75,7 +75,7 @@ namespace Azure.Communication.PhoneNumbers
     }
     public partial class UpdatePhoneNumberCapabilitiesOperation : Azure.Operation<Azure.Communication.PhoneNumbers.Models.AcquiredPhoneNumber>
     {
-        internal UpdatePhoneNumberCapabilitiesOperation() { }
+        protected UpdatePhoneNumberCapabilitiesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

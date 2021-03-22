@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class DataFlowCreateOrUpdateDataFlowOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.DataFlowResource>
     {
-        internal DataFlowCreateOrUpdateDataFlowOperation() { }
+        protected DataFlowCreateOrUpdateDataFlowOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class DataFlowDebugSessionCreateDataFlowDebugSessionOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.CreateDataFlowDebugSessionResponse>
     {
-        internal DataFlowDebugSessionCreateDataFlowDebugSessionOperation() { }
+        protected DataFlowDebugSessionCreateDataFlowDebugSessionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class DataFlowDebugSessionExecuteCommandOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.DataFlowDebugCommandResponse>
     {
-        internal DataFlowDebugSessionExecuteCommandOperation() { }
+        protected DataFlowDebugSessionExecuteCommandOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -88,7 +88,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class DataFlowDeleteDataFlowOperation : Azure.Operation<Azure.Response>
     {
-        internal DataFlowDeleteDataFlowOperation() { }
+        protected DataFlowDeleteDataFlowOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class DataFlowRenameDataFlowOperation : Azure.Operation<Azure.Response>
     {
-        internal DataFlowRenameDataFlowOperation() { }
+        protected DataFlowRenameDataFlowOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -129,7 +129,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class DatasetCreateOrUpdateDatasetOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.DatasetResource>
     {
-        internal DatasetCreateOrUpdateDatasetOperation() { }
+        protected DatasetCreateOrUpdateDatasetOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class DatasetDeleteDatasetOperation : Azure.Operation<Azure.Response>
     {
-        internal DatasetDeleteDatasetOperation() { }
+        protected DatasetDeleteDatasetOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class DatasetRenameDatasetOperation : Azure.Operation<Azure.Response>
     {
-        internal DatasetRenameDatasetOperation() { }
+        protected DatasetRenameDatasetOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -196,7 +196,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class LibraryCreateOperation : Azure.Operation<Azure.Response>
     {
-        internal LibraryCreateOperation() { }
+        protected LibraryCreateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -209,7 +209,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class LibraryDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal LibraryDeleteOperation() { }
+        protected LibraryDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -222,7 +222,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class LibraryFlushOperation : Azure.Operation<Azure.Response>
     {
-        internal LibraryFlushOperation() { }
+        protected LibraryFlushOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -250,7 +250,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class LinkedServiceCreateOrUpdateLinkedServiceOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceResource>
     {
-        internal LinkedServiceCreateOrUpdateLinkedServiceOperation() { }
+        protected LinkedServiceCreateOrUpdateLinkedServiceOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -263,7 +263,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class LinkedServiceDeleteLinkedServiceOperation : Azure.Operation<Azure.Response>
     {
-        internal LinkedServiceDeleteLinkedServiceOperation() { }
+        protected LinkedServiceDeleteLinkedServiceOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -293,7 +293,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class LinkedServiceRenameLinkedServiceOperation : Azure.Operation<Azure.Response>
     {
-        internal LinkedServiceRenameLinkedServiceOperation() { }
+        protected LinkedServiceRenameLinkedServiceOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -323,7 +323,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class NotebookCreateOrUpdateNotebookOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.NotebookResource>
     {
-        internal NotebookCreateOrUpdateNotebookOperation() { }
+        protected NotebookCreateOrUpdateNotebookOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -336,7 +336,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class NotebookDeleteNotebookOperation : Azure.Operation<Azure.Response>
     {
-        internal NotebookDeleteNotebookOperation() { }
+        protected NotebookDeleteNotebookOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -349,7 +349,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class NotebookRenameNotebookOperation : Azure.Operation<Azure.Response>
     {
-        internal NotebookRenameNotebookOperation() { }
+        protected NotebookRenameNotebookOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -379,7 +379,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class PipelineCreateOrUpdatePipelineOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.PipelineResource>
     {
-        internal PipelineCreateOrUpdatePipelineOperation() { }
+        protected PipelineCreateOrUpdatePipelineOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -392,7 +392,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class PipelineDeletePipelineOperation : Azure.Operation<Azure.Response>
     {
-        internal PipelineDeletePipelineOperation() { }
+        protected PipelineDeletePipelineOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -405,7 +405,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class PipelineRenamePipelineOperation : Azure.Operation<Azure.Response>
     {
-        internal PipelineRenamePipelineOperation() { }
+        protected PipelineRenamePipelineOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -450,7 +450,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.SparkJobDefinitionResource>
     {
-        internal SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation() { }
+        protected SparkJobDefinitionCreateOrUpdateSparkJobDefinitionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -463,7 +463,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class SparkJobDefinitionDebugSparkJobDefinitionOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.SparkBatchJob>
     {
-        internal SparkJobDefinitionDebugSparkJobDefinitionOperation() { }
+        protected SparkJobDefinitionDebugSparkJobDefinitionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -476,7 +476,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class SparkJobDefinitionDeleteSparkJobDefinitionOperation : Azure.Operation<Azure.Response>
     {
-        internal SparkJobDefinitionDeleteSparkJobDefinitionOperation() { }
+        protected SparkJobDefinitionDeleteSparkJobDefinitionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -489,7 +489,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class SparkJobDefinitionExecuteSparkJobDefinitionOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.SparkBatchJob>
     {
-        internal SparkJobDefinitionExecuteSparkJobDefinitionOperation() { }
+        protected SparkJobDefinitionExecuteSparkJobDefinitionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -502,7 +502,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class SparkJobDefinitionRenameSparkJobDefinitionOperation : Azure.Operation<Azure.Response>
     {
-        internal SparkJobDefinitionRenameSparkJobDefinitionOperation() { }
+        protected SparkJobDefinitionRenameSparkJobDefinitionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -539,7 +539,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class SqlScriptCreateOrUpdateSqlScriptOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.SqlScriptResource>
     {
-        internal SqlScriptCreateOrUpdateSqlScriptOperation() { }
+        protected SqlScriptCreateOrUpdateSqlScriptOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -552,7 +552,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class SqlScriptDeleteSqlScriptOperation : Azure.Operation<Azure.Response>
     {
-        internal SqlScriptDeleteSqlScriptOperation() { }
+        protected SqlScriptDeleteSqlScriptOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -565,7 +565,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class SqlScriptRenameSqlScriptOperation : Azure.Operation<Azure.Response>
     {
-        internal SqlScriptRenameSqlScriptOperation() { }
+        protected SqlScriptRenameSqlScriptOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -601,7 +601,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class TriggerCreateOrUpdateTriggerOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.TriggerResource>
     {
-        internal TriggerCreateOrUpdateTriggerOperation() { }
+        protected TriggerCreateOrUpdateTriggerOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -614,7 +614,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class TriggerDeleteTriggerOperation : Azure.Operation<Azure.Response>
     {
-        internal TriggerDeleteTriggerOperation() { }
+        protected TriggerDeleteTriggerOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -638,7 +638,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class TriggerStartTriggerOperation : Azure.Operation<Azure.Response>
     {
-        internal TriggerStartTriggerOperation() { }
+        protected TriggerStartTriggerOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -651,7 +651,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class TriggerStopTriggerOperation : Azure.Operation<Azure.Response>
     {
-        internal TriggerStopTriggerOperation() { }
+        protected TriggerStopTriggerOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -664,7 +664,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class TriggerSubscribeTriggerToEventsOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.TriggerSubscriptionOperationStatus>
     {
-        internal TriggerSubscribeTriggerToEventsOperation() { }
+        protected TriggerSubscribeTriggerToEventsOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -677,7 +677,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     }
     public partial class TriggerUnsubscribeTriggerFromEventsOperation : Azure.Operation<Azure.Analytics.Synapse.Artifacts.Models.TriggerSubscriptionOperationStatus>
     {
-        internal TriggerUnsubscribeTriggerFromEventsOperation() { }
+        protected TriggerUnsubscribeTriggerFromEventsOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

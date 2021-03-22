@@ -21,6 +21,12 @@ namespace Azure.ResourceManager.Network
     {
         private readonly ArmOperationHelpers<AsyncPageable<BastionShareableLink>> _operation;
         private readonly Func<string, Task<Response>> _nextPageFunc;
+
+        /// <summary> Initializes a new instance of NetworkManagementPutBastionShareableLinkOperation for mocking. </summary>
+        protected NetworkManagementPutBastionShareableLinkOperation()
+        {
+        }
+
         internal NetworkManagementPutBastionShareableLinkOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, Func<string, Task<Response>> nextPageFunc)
         {
             _operation = new ArmOperationHelpers<AsyncPageable<BastionShareableLink>>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkManagementPutBastionShareableLinkOperation");
