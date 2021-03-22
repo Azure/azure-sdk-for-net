@@ -299,7 +299,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         services.Configure<EventHubOptions>(options =>
                         {
-                            options.InitialOffsetOptions.Type = "FromStart";
+                            options.InitialOffsetOptions.Type = OffsetType.FromStart;
                         });
                     });
                     ConfigureTestEventHub(builder);
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         services.Configure<EventHubOptions>(options =>
                         {
-                            options.InitialOffsetOptions.Type = "FromEnd";
+                            options.InitialOffsetOptions.Type = OffsetType.FromEnd;
                         });
                     });
                     ConfigureTestEventHub(builder);
@@ -377,9 +377,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         services.Configure<EventHubOptions>(options =>
                         {
-                            options.InitialOffsetOptions.Type = "FromEnqueuedTime";
+                            options.InitialOffsetOptions.Type = OffsetType.FromEnqueuedTime;
                             // for some reason, this doesn't seem to work if including milliseconds in the format
-                            options.InitialOffsetOptions.EnqueuedTimeUTC = _initialOffsetEnqueuedTimeUTC.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                            options.InitialOffsetOptions.EnqueuedTimeUtc = _initialOffsetEnqueuedTimeUTC;
                         });
                     });
                     ConfigureTestEventHub(builder);
