@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Azure.Core.GeoJson;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
-using Microsoft.Spatial;
 using NUnit.Framework;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
@@ -66,10 +66,7 @@ namespace Azure.Search.Documents.Tests
                     (SearchFieldDataType.Boolean, nameof(ReflectableModel.Flag)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.Time)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.TimeWithoutOffset)),
-#if EXPERIMENTAL_SPATIAL
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPoint)),
-#endif
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint)),
                 };
 
                 (SearchFieldDataType, string)[] primitivePropertyTestData =
@@ -123,18 +120,11 @@ namespace Azure.Search.Documents.Tests
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetIEnumerable)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetList)),
                     (SearchFieldDataType.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetICollection)),
-#if EXPERIMENTAL_SPATIAL
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointArray)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointIList)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointIEnumerable)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointList)),
                     (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeoPointICollection)),
-#endif
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointArray)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIList)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointIEnumerable)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointList)),
-                    (SearchFieldDataType.GeographyPoint, nameof(ReflectableModel.GeographyPointICollection)),
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexArray)),
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexIList)),
                     (SearchFieldDataType.Complex, nameof(ReflectableModel.ComplexIEnumerable)),
@@ -459,7 +449,7 @@ namespace Azure.Search.Documents.Tests
                         Assert.AreEqual(SearchFieldDataType.String, field.Type);
                         break;
 
-                    case nameof(ModelWithSpatialProperties.GeographyPoint):
+                    case nameof(ModelWithSpatialProperties.GeoPoint):
                         Assert.AreEqual(SearchFieldDataType.GeographyPoint, field.Type);
                         break;
 
@@ -626,17 +616,7 @@ namespace Azure.Search.Documents.Tests
             [SimpleField(IsKey = true)]
             public string ID { get; set; }
 
-            public GeographyPoint GeographyPoint { get; set; }
-
-            public GeographyLineString GeographyLineString { get; set; }
-
-            public GeographyPolygon GeographyPolygon { get; set; }
-
-            public GeometryPoint GeometryPoint { get; set; }
-
-            public GeometryLineString GeometryLineString { get; set; }
-
-            public GeometryPolygon GeometryPolygon { get; set; }
+            public GeoPoint GeoPoint { get; set; }
         }
     }
 }

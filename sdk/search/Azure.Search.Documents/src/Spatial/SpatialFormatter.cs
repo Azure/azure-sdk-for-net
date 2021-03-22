@@ -122,60 +122,88 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Encodes a polygon for use in OData filters.
         /// </summary>
-        /// <param name="line">The <see cref="GeographyLineStringProxy"/> to encode.</param>
+        /// <param name="line">The <see cref="GeoLineStringProxy"/> to encode.</param>
         /// <returns>The OData filter-encoded POLYGON string.</returns>
         /// <exception cref="ArgumentException">The <paramref name="line"/> has fewer than 4 points, or the first and last points do not match.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="line"/> or <see cref="GeographyLineStringProxy.Points"/> is null.</exception>
-        public static string EncodePolygon(GeographyLineStringProxy line)
-    {
-        Argument.AssertNotNull(line, nameof(line));
-        Argument.AssertNotNull(line.Points, $"{nameof(line)}.{nameof(line.Points)}");
-
-        if (line.Points.Count < 4)
+        /// <exception cref="ArgumentNullException"><paramref name="line"/> or <see cref="GeoLineStringProxy.Coordinates"/> is null.</exception>
+        public static string EncodePolygon(GeoLineStringProxy line)
         {
-            throw new ArgumentException(
-                $"A GeographyLineString must have at least four Points to form a searchable polygon.",
-                $"{nameof(line)}");
-        }
-        else if (line.Points[0] != line.Points[line.Points.Count - 1])
-        {
-            throw new ArgumentException(
-                $"A GeographyLineString must have matching first and last Points to form a searchable polygon.",
-                $"{nameof(line)}");
-        }
+            Argument.AssertNotNull(line, nameof(line));
+            Argument.AssertNotNull(line.Coordinates, $"{nameof(line)}.{nameof(line.Coordinates)}");
 
-        StringBuilder odata = new StringBuilder("geography'POLYGON((");
-
-        bool first = true;
-        foreach (GeographyPointProxy point in line.Points)
-        {
-            if (!first)
+            if (line.Coordinates.Count < 4)
             {
-                odata.Append(',');
+                throw new ArgumentException(
+                    $"A GeographyLineString must have at least four Points to form a searchable polygon.",
+                    $"{nameof(line)}");
             }
-            else
+            else if (line.Coordinates[0] != line.Coordinates[line.Coordinates.Count - 1])
             {
-                first = false;
+                throw new ArgumentException(
+                    $"A GeographyLineString must have matching first and last Points to form a searchable polygon.",
+                    $"{nameof(line)}");
             }
 
-            odata.Append(JsonSerialization.Double(point.Longitude, CultureInfo.InvariantCulture))
-                .Append(' ')
-                .Append(JsonSerialization.Double(point.Latitude, CultureInfo.InvariantCulture));
+            StringBuilder odata = new StringBuilder("geography'POLYGON((");
+
+            bool first = true;
+            foreach (GeoPositionProxy position in line.Coordinates)
+            {
+                if (!first)
+                {
+                    odata.Append(',');
+                }
+                else
+                {
+                    first = false;
+                }
+
+                odata.Append(JsonSerialization.Double(position.Longitude, CultureInfo.InvariantCulture))
+                    .Append(' ')
+                    .Append(JsonSerialization.Double(position.Latitude, CultureInfo.InvariantCulture));
+            }
+
+            return odata
+                .Append("))'")
+                .ToString();
         }
 
-        return odata
-            .Append("))'")
-            .ToString();
-    }
+        public static string EncodePolygon(GeoLinearRingProxy linearRing)
+        {
+            Argument.AssertNotNull(linearRing, nameof(linearRing));
+
+            StringBuilder odata = new ("geography'POLYGON((");
+
+            bool first = true;
+            foreach (GeoPositionProxy position in linearRing.Coordinates)
+            {
+                if (!first)
+                {
+                    odata.Append(',');
+                }
+                else
+                {
+                    first = false;
+                }
+
+                odata.Append(JsonSerialization.Double(position.Longitude, CultureInfo.InvariantCulture))
+                    .Append(' ')
+                    .Append(JsonSerialization.Double(position.Latitude, CultureInfo.InvariantCulture));
+            }
+
+            return odata
+                .Append("))'")
+                .ToString();
+        }
 
         /// <summary>
         /// Encodes a polygon for use in OData filters.
-        /// <seealso cref="EncodePolygon(GeographyLineStringProxy)"/>
+        /// <seealso cref="EncodePolygon(GeoLineStringProxy)"/>
         /// </summary>
-        /// <param name="polygon">The <see cref="GeographyPolygonProxy"/> to encode.</param>
+        /// <param name="polygon">The <see cref="GeoPolygonProxy"/> to encode.</param>
         /// <returns>The OData filter-encoded POLYGON string.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="polygon"/> or <see cref="GeographyPolygonProxy.Rings"/> is null.</exception>
-        public static string EncodePolygon(GeographyPolygonProxy polygon)
+        /// <exception cref="ArgumentNullException"><paramref name="polygon"/> or <see cref="GeoPolygonProxy.Rings"/> is null.</exception>
+        public static string EncodePolygon(GeoPolygonProxy polygon)
         {
             Argument.AssertNotNull(polygon, nameof(polygon));
             Argument.AssertNotNull(polygon.Rings, $"{nameof(polygon)}.{nameof(polygon.Rings)}");

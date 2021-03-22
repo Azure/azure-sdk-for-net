@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections;
-using Microsoft.Spatial;
+using Azure.Core.GeoJson;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Spatial
@@ -13,103 +13,105 @@ namespace Azure.Search.Documents.Tests.Spatial
         [TestCase(null, false)]
         [TestCase(typeof(object), false)]
         [TestCase(typeof(int), false)]
-        [TestCase(typeof(GeographyPoint), true)]
-        [TestCase(typeof(GeometryPoint), false)]
-        [TestCase(typeof(GeographyPosition), false)]
-        [TestCase(typeof(GeometryPosition), false)]
-        [TestCase(typeof(GeographyPolygon), true)]
-        [TestCase(typeof(GeometryPolygon), false)]
-        [TestCase(typeof(GeographyLineString), true)]
-        [TestCase(typeof(GeometryLineString), false)]
+        [TestCase(typeof(GeoPoint), true)]
+        [TestCase(typeof(GeoPointCollection), false)]
+        [TestCase(typeof(GeoPosition), false)]
+        [TestCase(typeof(GeoLinearRing), false)]
+        [TestCase(typeof(GeoPolygon), true)]
+        [TestCase(typeof(GeoPolygonCollection), false)]
+        [TestCase(typeof(GeoLineString), true)]
+        [TestCase(typeof(GeoLineStringCollection), false)]
         public void CanCreate(Type type, bool expected) =>
             Assert.AreEqual(expected, SpatialProxyFactory.CanCreate(type));
 
         [Test]
         public void CreateNull()
         {
-            Assert.IsFalse(SpatialProxyFactory.TryCreate(null, out GeographyProxy proxy));
+            Assert.IsFalse(SpatialProxyFactory.TryCreate(null, out GeoObjectProxy proxy));
             Assert.IsNull(proxy);
         }
 
         [Test]
         public void CreateGeographyPoint()
         {
-            GeographyPoint point = GeographyFactory.Point(1.0, 2.0);
-            GeographyPointProxy proxy = new GeographyPointProxy(point);
+            GeoPoint point = new (1.0, 2.0);
+            GeoPointProxy proxy = new (point);
 
             Assert.AreSame(point, proxy.Value);
-            Assert.AreEqual(1.0, proxy.Latitude);
-            Assert.AreEqual(2.0, proxy.Longitude);
+            Assert.AreEqual(1.0, proxy.Coordinates.Longitude);
+            Assert.AreEqual(2.0, proxy.Coordinates.Latitude);
         }
 
         [Test]
         public void CreateGeographyPolygon()
         {
-            GeographyPolygon polygon = GeographyFactory
-                .Polygon()
-                .Ring(0.0, 0.0)
-                .LineTo(1.0, 0.0)
-                .LineTo(1.0, 1.0)
-                .LineTo(0.0, 1.0)
-                .LineTo(0.0, 0.0);
-            GeographyPolygonProxy proxy = new GeographyPolygonProxy(polygon);
+            GeoPolygon polygon = new (new GeoPosition[]
+            {
+                new GeoPosition(0.0, 0.0),
+                new GeoPosition(1.0, 0.0),
+                new GeoPosition(1.0, 1.0),
+                new GeoPosition(0.0, 1.0),
+                new GeoPosition(0.0, 0.0),
+            });
+
+            GeoPolygonProxy proxy = new (polygon);
 
             Assert.AreSame(polygon, proxy.Value);
             Assert.AreEqual(1, proxy.Rings.Count);
 
-            GeographyLineString line0 = polygon.Rings[0];
-            GeographyLineStringProxy proxyLine0 = proxy.Rings[0];
-            Assert.AreSame(line0, proxyLine0.Value);
-            Assert.AreEqual(5, line0.Points.Count);
-            Assert.AreEqual(line0.Points.Count, proxyLine0.Points.Count);
+            GeoLinearRing ring0 = polygon.Rings[0];
+            GeoLinearRingProxy proxyRing0 = proxy.Rings[0];
+            Assert.AreSame(ring0, proxyRing0.Value);
+            Assert.AreEqual(5, ring0.Coordinates.Count);
+            Assert.AreEqual(ring0.Coordinates.Count, proxyRing0.Coordinates.Count);
 
-            for (int i = 0; i < line0.Points.Count; i++)
+            for (int i = 0; i < ring0.Coordinates.Count; i++)
             {
-                Assert.AreEqual(line0.Points[i].Latitude, proxyLine0.Points[i].Latitude);
-                Assert.AreEqual(line0.Points[i].Longitude, proxyLine0.Points[i].Longitude);
+                Assert.AreEqual(ring0.Coordinates[i].Latitude, proxyRing0.Coordinates[i].Latitude);
+                Assert.AreEqual(ring0.Coordinates[i].Longitude, proxyRing0.Coordinates[i].Longitude);
             }
         }
 
         [Test]
         public void CreateGeographyLineString()
         {
-            GeographyLineString line = GeographyFactory
-                .LineString(0.0, 0.0)
-                .LineTo(1.0, 0.0)
-                .LineTo(1.0, 1.0)
-                .LineTo(0.0, 1.0)
-                .LineTo(0.0, 0.0);
-            GeographyLineStringProxy proxy = new GeographyLineStringProxy(line);
+            GeoLineString line = new (new GeoPosition[]
+            {
+                new GeoPosition(0.0, 0.0),
+                new GeoPosition(1.0, 0.0),
+                new GeoPosition(1.0, 1.0),
+                new GeoPosition(0.0, 1.0),
+                new GeoPosition(0.0, 0.0),
+            });
+
+            GeoLineStringProxy proxy = new (line);
 
             Assert.AreSame(line, proxy.Value);
-            Assert.AreEqual(5, line.Points.Count);
-            Assert.AreEqual(line.Points.Count, proxy.Points.Count);
+            Assert.AreEqual(5, line.Coordinates.Count);
+            Assert.AreEqual(line.Coordinates.Count, proxy.Coordinates.Count);
 
-            for (int i = 0; i < line.Points.Count; i++)
+            for (int i = 0; i < line.Coordinates.Count; i++)
             {
-                Assert.AreEqual(line.Points[i].Latitude, proxy.Points[i].Latitude);
-                Assert.AreEqual(line.Points[i].Longitude, proxy.Points[i].Longitude);
+                Assert.AreEqual(line.Coordinates[i].Latitude, proxy.Coordinates[i].Latitude);
+                Assert.AreEqual(line.Coordinates[i].Longitude, proxy.Coordinates[i].Longitude);
             }
         }
 
         [TestCaseSource(nameof(CreateFailsData))]
         public void CreateFails(object value)
         {
-            Assert.IsFalse(SpatialProxyFactory.TryCreate(value, out GeographyProxy proxy));
+            Assert.IsFalse(SpatialProxyFactory.TryCreate(value, out GeoObjectProxy proxy));
             Assert.IsNull(proxy);
         }
 
         [TestCase(null, false)]
         [TestCase(typeof(object), false)]
         [TestCase(typeof(int), false)]
-        [TestCase(typeof(GeographyPoint), true)]
-        [TestCase(typeof(GeometryPoint), false)]
-        [TestCase(typeof(GeographyPosition), false)]
-        [TestCase(typeof(GeometryPosition), false)]
-        [TestCase(typeof(GeographyPolygon), false)]
-        [TestCase(typeof(GeometryPolygon), false)]
-        [TestCase(typeof(GeographyLineString), false)]
-        [TestCase(typeof(GeometryLineString), false)]
+        [TestCase(typeof(GeoPoint), true)]
+        [TestCase(typeof(GeoLinearRing), false)]
+        [TestCase(typeof(GeoLineString), false)]
+        [TestCase(typeof(GeoPolygon), false)]
+        [TestCase(typeof(GeoPosition), false)]
         public void IsSupportedPoint(Type type, bool expected) =>
             Assert.AreEqual(expected, SpatialProxyFactory.IsSupportedPoint(type));
 
@@ -117,21 +119,19 @@ namespace Azure.Search.Documents.Tests.Spatial
         {
             new TestCaseData(new object()),
             new TestCaseData(1),
-            new TestCaseData(GeometryFactory.Point(1.0, 2.0)),
-            new TestCaseData(new GeometryPosition(1.0, 2.0)),
-            new TestCaseData(GeographyFactory
-                .Polygon()
-                .Ring(0.0, 0.0)
-                .LineTo(1.0, 0.0)
-                .LineTo(1.0, 1.0)
-                .LineTo(0.0, 1.0)
-                .LineTo(0.0, 0.0)),
-            new TestCaseData(GeographyFactory
-                .LineString(0.0, 0.0)
-                .LineTo(1.0, 0.0)
-                .LineTo(1.0, 1.0)
-                .LineTo(0.0, 1.0)
-                .LineTo(0.0, 0.0)),
+            new TestCaseData(new GeoPosition(1.0, 2.0)),
+            //new TestCaseData(new GeoLineString(new GeoPosition[]
+            //{
+            //    new GeoPosition(0.0, 0.0),
+            //    new GeoPosition(1.0, 0.0),
+            //})),
+            //new TestCaseData(new GeoPolygon(new GeoPosition[]
+            //{
+            //    new GeoPosition(0.0, 0.0),
+            //    new GeoPosition(1.0, 0.0),
+            //    new GeoPosition(1.0, 1.0),
+            //    new GeoPosition(0.0, 0.0),
+            //})),
         };
     }
 }
