@@ -353,7 +353,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 // send one at a time so they will have slightly different enqueued times
                 await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
-                await Task.Delay(1000);
+                // There seems to be a resolution of 1 second when using FromEnqueuedTime, so delay 2s between 
+                // each event.
+                await Task.Delay(2000);
             }
             var consumer = new EventHubConsumerClient(
                 EventHubConsumerClient.DefaultConsumerGroupName,
@@ -378,7 +380,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         services.Configure<EventHubOptions>(options =>
                         {
                             options.InitialOffsetOptions.Type = OffsetType.FromEnqueuedTime;
-                            // for some reason, this doesn't seem to work if including milliseconds in the format
                             options.InitialOffsetOptions.EnqueuedTimeUtc = _initialOffsetEnqueuedTimeUTC;
                         });
                     });
@@ -658,6 +659,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMultipleEvents([EventHubTrigger(TestHubName, Connection = TestHubName)] EventData[] events)
             {
+                Assert.LessOrEqual(events.Length, ExpectedEventsCount);
                 foreach (EventData eventData in events)
                 {
                     string message = Encoding.UTF8.GetString(eventData.Body.ToArray());

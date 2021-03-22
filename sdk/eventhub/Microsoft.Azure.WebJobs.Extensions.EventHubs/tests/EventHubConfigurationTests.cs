@@ -129,7 +129,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
-        [TestCase("fromEnqueuedTime", "2020-09-13 12:00:00Z")]
+        [TestCase("fromEnqueuedTime", "2020-09-13T12:00Z")]
         [TestCase("fromenqueuedtime", "2020-09-13 12:00:00Z")]
         public void CanParseInitialOffsetFromConfig_EnqueuedTime(string offsetType, string enqueuedTime)
         {
