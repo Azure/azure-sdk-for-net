@@ -1,28 +1,43 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Resources.Models;
-using ErrorResponse = Azure.ResourceManager.Core.Resources.ErrorResponse;
+using Azure.ResourceManager.Core.Resources;
 
 #nullable enable
 
 namespace Azure.Core.Pipeline
 {
-    internal sealed partial class ClientDiagnostics : DiagnosticScopeFactory
+    internal sealed partial class ClientDiagnostics
     {
         private const string V2Wrapper = "error";
 
 #pragma warning disable CA1822 // Mark members as static
-        internal ArmException CreateArmExceptionWithContent(Response response)
+        public async Task<ArmException> CreateArmExceptionAsync(Response response)
+#pragma warning restore CA1822 // Mark members as static
+        {
+            var content = await ReadContentAsync(response, true).ConfigureAwait(false);
+
+            return CreateArmExceptionWithContent(content, response);
+        }
+
+#pragma warning disable CA1822 // Mark members as static
+        public ArmException CreateArmException(Response response)
+#pragma warning restore CA1822 // Mark members as static
+        {
+            var content = ReadContentAsync(response, false).EnsureCompleted();
+
+            return CreateArmExceptionWithContent(content, response);
+        }
+
+#pragma warning disable CA1822 // Mark members as static
+        private ArmException CreateArmExceptionWithContent(string? content, Response response)
 #pragma warning restore CA1822 // Mark members as static
         {
             // TODO. 1. Should we append Http ReasonPhrase to Message?
-            string? content = ReadContentAsync(response, false).EnsureCompleted();
-
             // Check for v1 or v2 exception
             var jsonDoc = JsonDocument.Parse(content);
             if (!jsonDoc.RootElement.TryGetProperty(V2Wrapper, out JsonElement rootJson))

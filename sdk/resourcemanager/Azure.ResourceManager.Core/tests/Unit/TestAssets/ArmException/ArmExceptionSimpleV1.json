@@ -1,4 +1,24 @@
 {
     "code": "400",
-    "message": "error message"
+    "message": "message",
+    "target": "target",
+    "details": [
+        {
+            "code": "400",
+            "message": "message",
+            "target": "target",
+            "additionalInfo": [
+                {
+                    "type": "additionalInfo_type1",
+                    "info": "additionalInfo_info1"
+                }
+            ]
+        }
+    ],
+    "additionalInfo": [
+        {
+            "type": "additionalInfo_type1",
+            "info": "additionalInfo_info1"
+        }
+    ] 
 }
