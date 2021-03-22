@@ -449,7 +449,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 },
                 new[]
                 {
-                    CreateSecret("Section--Secret1", "Value1")
+                    CreateSecret("Section--Secret1", "Value2")
                 }
             );
 
