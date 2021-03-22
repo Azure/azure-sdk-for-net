@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Elastic", "Microsoft.Azure.Management.Elastic.csproj", "{A13D9D8F-F28F-4F6E-84FB-264F8952BB64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.Elastic.Tests", "..\tests\Microsoft.Azure.Management.Elastic.Tests.csproj", "{66D31DED-EA68-4430-9A40-0DE5932ADF1B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A13D9D8F-F28F-4F6E-84FB-264F8952BB64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A13D9D8F-F28F-4F6E-84FB-264F8952BB64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A13D9D8F-F28F-4F6E-84FB-264F8952BB64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A13D9D8F-F28F-4F6E-84FB-264F8952BB64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D31DED-EA68-4430-9A40-0DE5932ADF1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D31DED-EA68-4430-9A40-0DE5932ADF1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D31DED-EA68-4430-9A40-0DE5932ADF1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D31DED-EA68-4430-9A40-0DE5932ADF1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {802642E3-3D18-4A05-B4FA-A5F55FF934E5}
+	EndGlobalSection
+EndGlobal
