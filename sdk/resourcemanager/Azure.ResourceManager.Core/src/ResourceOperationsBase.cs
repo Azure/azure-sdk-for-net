@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"></param>
-        protected ResourceOperationsBase(ClientContext clientContext, string id)
+        internal ResourceOperationsBase(ClientContext clientContext, string id)
             : base(clientContext, id)
         {
         }
