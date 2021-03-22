@@ -18,21 +18,13 @@ namespace Azure.AI.DocumentTranslation.Tests
 
         public DocumentTranslationClient GetClient(
             AzureKeyCredential credential = default,
-            DocumentTranslationClientOptions options = default,
-            bool useTokenCredential = default)
+            DocumentTranslationClientOptions options = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             options ??= new DocumentTranslationClientOptions();
 
-            if (useTokenCredential)
-            {
-                return InstrumentClient(new DocumentTranslationClient(endpoint, TestEnvironment.Credential, InstrumentClientOptions(options)));
-            }
-            else
-            {
-                credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
-                return InstrumentClient(new DocumentTranslationClient(endpoint, credential, InstrumentClientOptions(options)));
-            }
+            credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
+            return InstrumentClient(new DocumentTranslationClient(endpoint, credential, InstrumentClientOptions(options)));
         }
     }
 }
