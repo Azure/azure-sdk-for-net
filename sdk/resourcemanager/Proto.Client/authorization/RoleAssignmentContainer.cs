@@ -55,7 +55,7 @@ namespace Proto.Authorization
         /// <summary>
         /// Gets the resource type of the resource being created.
         /// </summary>
-        private RoleAssignmentsOperations Operations { get; } 
+        private RoleAssignmentsOperations Operations { get; }
 
         /// <summary>
         /// Create a role assignment. This method blocks until the RoleAssignment is created on the service.

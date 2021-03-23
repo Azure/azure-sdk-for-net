@@ -24,6 +24,11 @@ namespace Proto.Compute
         {
         }
 
+        /// <summary>
+        /// Typed Resource Identifier for the container.
+        /// </summary>
+        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
+
         private VirtualMachinesOperations Operations => new ComputeManagementClient(
             BaseUri,
             Id.SubscriptionId,

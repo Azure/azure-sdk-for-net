@@ -30,6 +30,11 @@ namespace Proto.Network
             ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkInterfaces;
 
         /// <inheritdoc/>
+        /// <summary>
+        /// Typed Resource Identifier for the container.
+        /// </summary>
+        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
+
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
         /// <inheritdoc/>

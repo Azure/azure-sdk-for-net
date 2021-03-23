@@ -24,6 +24,11 @@ namespace Proto.Compute
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
+        /// <summary>
+        /// Typed Resource Identifier for the container.
+        /// </summary>
+        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
+
         /// <inheritdoc/>
         public override ArmResponse<AvailabilitySet> CreateOrUpdate(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
         {
@@ -36,6 +41,7 @@ namespace Proto.Compute
         /// <inheritdoc/>
         public async override Task<ArmResponse<AvailabilitySet>> CreateOrUpdateAsync(string name, AvailabilitySetData resourceDetails, CancellationToken cancellationToken = default)
         {
+            var containerId = Id as ResourceGroupResourceIdentifier;
             var response = await Operations.CreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<AvailabilitySet, Azure.ResourceManager.Compute.Models.AvailabilitySet>(
                 response,

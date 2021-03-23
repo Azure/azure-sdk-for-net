@@ -59,7 +59,7 @@ namespace Proto.Authorization
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private RoleAssignmentsOperations Operations { get; } 
+        private RoleAssignmentsOperations Operations { get; }
 
         /// <inheritdoc/>
         public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)

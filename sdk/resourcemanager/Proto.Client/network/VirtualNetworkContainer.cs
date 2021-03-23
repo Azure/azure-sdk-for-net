@@ -27,6 +27,11 @@ namespace Proto.Network
         {
         }
 
+        /// <summary>
+        /// Typed Resource Identifier for the container.
+        /// </summary>
+        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
+
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
