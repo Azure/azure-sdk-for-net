@@ -5,24 +5,25 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Identity;
 using Azure.Test.Perf;
 
-namespace Azure.Template.Perf
+namespace Azure.Identity.Perf
 {
     public class CacheReadWithDiskPersistencePerf : PerfTest<CountOptions>
     {
+        private IdentityPerfEnvironment _environment;
         private ClientSecretCredential _credential;
         private readonly TokenRequestContext _tokenRequestContext = new(new[] { "https://storage.azure.com/.default" });
 
         public CacheReadWithDiskPersistencePerf(CountOptions options) : base(options)
         {
+            _environment = new IdentityPerfEnvironment();
+
             _credential = new ClientSecretCredential(
-                Environment.GetEnvironmentVariable("AZURE_TENANT_ID"),
-                Environment.GetEnvironmentVariable("AZURE_CLIENT_ID"),
-                Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET"),
-                new ClientSecretCredentialOptions{ TokenCachePersistenceOptions = new TokenCachePersistenceOptions()}
-                );
+                _environment.TenantId,
+                _environment.ClientId,
+                _environment.ClientSecret,
+                new ClientSecretCredentialOptions { TokenCachePersistenceOptions = new TokenCachePersistenceOptions() });
 
             _credential.GetToken(_tokenRequestContext);
         }

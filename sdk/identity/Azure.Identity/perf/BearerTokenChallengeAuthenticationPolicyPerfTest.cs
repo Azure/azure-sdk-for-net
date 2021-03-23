@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Test.Perf;
 
-namespace Azure.Template.Perf
+namespace Azure.Identity.Perf
 {
     public class BearerTokenChallengeAuthenticationPolicyPerfTest : PerfTest<CountOptions>
     {
