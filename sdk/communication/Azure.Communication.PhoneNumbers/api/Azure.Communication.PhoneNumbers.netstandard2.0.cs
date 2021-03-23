@@ -153,46 +153,6 @@ namespace Azure.Communication.PhoneNumbers.Models
         public Azure.Communication.PhoneNumbers.Models.BillingFrequency BillingFrequency { get { throw null; } }
         public string ISOCurrencySymbol { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PhoneNumberOperationStatus : System.IEquatable<Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PhoneNumberOperationStatus(string value) { throw null; }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus Failed { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus NotStarted { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus Running { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus left, Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus right) { throw null; }
-        public static implicit operator Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus left, Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PhoneNumberOperationType : System.IEquatable<Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PhoneNumberOperationType(string value) { throw null; }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType Purchase { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType ReleasePhoneNumber { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType Search { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType UpdatePhoneNumberCapabilities { get { throw null; } }
-        public bool Equals(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType left, Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType right) { throw null; }
-        public static implicit operator Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType left, Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class PhoneNumberSearchResult
     {
         internal PhoneNumberSearchResult() { }
