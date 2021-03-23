@@ -82,7 +82,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -151,7 +151,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -211,7 +211,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -271,7 +271,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -331,7 +331,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -391,7 +391,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -451,7 +451,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -511,7 +511,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -577,7 +577,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -640,7 +640,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -700,7 +700,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ]
       },
       "ResponseHeaders": {
@@ -766,7 +766,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
-          "Microsoft.Azure.Management.Datadog.MicrosoftDatadogClient/0.1.0"
+          "Microsoft.Azure.Management.Elastic.MicrosoftElasticClient/0.1.0"
         ]
       },
       "ResponseHeaders": {
