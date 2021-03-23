@@ -97,7 +97,7 @@ if ($packages)
         $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
         if ($version -eq $null)
         {
-            Write-Host "Version info is not available for package. Please check if version follows Azure SDK package versioning guielines."
+            Write-Host "Version info is not available for package $PackageName, because version '$(pkgInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
             exit 1
         }
 
@@ -122,7 +122,7 @@ if ($packages)
             }
             else
             {
-                # Return error code if status code is 201 for track2 data plane package
+                # Return error code if status code is 201 for new data plane package
                 if ($pkgInfo.SdkType -eq "client" -and $pkgInfo.IsNewSdk)
                 {
                     if ($respCode -eq '201')
@@ -140,7 +140,7 @@ if ($packages)
                 }
                 else
                 {
-                    Write-Host "API review is not approved for package $($PackageName). Management and track1 package can be released without API review approval."
+                    Write-Host "API review is not approved for package $($PackageName), however it is not required for this package type so it can still be released without API review approval."
                 }
             } 
         }
