@@ -23,7 +23,11 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                StartPatchSettingTest(context, "Manual", false);
+                var patchSetting = new PatchSettings
+                {
+                    PatchMode = "Manual"
+                };
+                StartPatchSettingTest(context, patchSetting, false);
             }
         }
 
@@ -32,7 +36,11 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                StartPatchSettingTest(context, "AutomaticByOS", true);
+                var patchSetting = new PatchSettings
+                {
+                    PatchMode = "AutomaticByOS"
+                };
+                StartPatchSettingTest(context, patchSetting, true);
             }
         }
 
@@ -41,11 +49,41 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                StartPatchSettingTest(context, "AutomaticByPlatform", true);
+                var patchSetting = new PatchSettings
+                {
+                    PatchMode = "AutomaticByPlatform"
+                };
+                StartPatchSettingTest(context, patchSetting, true);
             }
         }
 
-        private void StartPatchSettingTest(MockContext context, string patchSettingMode, bool enableAutomaticUpdates)
+        [Fact()]
+        public void TestVMWithSettingWindowsConfigurationPatchSettingsAssessmentModeOfImageDefault()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var patchSetting = new PatchSettings
+                {
+                    AssessmentMode = "ImageDefault"
+                };
+                StartPatchSettingTest(context, patchSetting, false);
+            }
+        }
+
+        [Fact()]
+        public void TestVMWithSettingWindowsConfigurationPatchSettingsAssessmentModeOfAutomaticByPlatform()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var patchSetting = new PatchSettings
+                {
+                    AssessmentMode = "AutomaticByPlatform"
+                };
+                StartPatchSettingTest(context, patchSetting, true);
+            }
+        }
+
+        private void StartPatchSettingTest(MockContext context, PatchSettings patchSetting, bool enableAutomaticUpdates)
         {
             EnsureClientsInitialized(context);
 
@@ -53,10 +91,6 @@ namespace Compute.Tests
 
             // The following variables are defined here to allow validation
             string autoLogonContent = null;
-            var patchSetting = new PatchSettings
-            {
-                PatchMode = patchSettingMode
-            };
 
             Action<VirtualMachine> configureWindowsConfigurationPatchSetting = inputVM =>
             {
@@ -65,7 +99,7 @@ namespace Compute.Tests
             };
 
             Action<VirtualMachine> validateWindowsConfigurationPatchSetting =
-                outputVM => ValidateWinPatchSetting(patchSetting.PatchMode, enableAutomaticUpdates, autoLogonContent, outputVM);
+                outputVM => ValidateWinPatchSetting(patchSetting, enableAutomaticUpdates, autoLogonContent, outputVM);
 
             TestVMWithOSProfile(
                 rgName: rgName,
@@ -75,7 +109,7 @@ namespace Compute.Tests
             
         }
 
-        private void ValidateWinPatchSetting(string patchSettingMode, bool enableAutomaticUpdates, string autoLogonContent, VirtualMachine outputVM)
+        private void ValidateWinPatchSetting(PatchSettings patchSetting, bool enableAutomaticUpdates, string autoLogonContent, VirtualMachine outputVM)
         {
             var osProfile = outputVM.OsProfile;
 
@@ -84,11 +118,28 @@ namespace Compute.Tests
 
             Assert.True(osProfile.WindowsConfiguration.ProvisionVMAgent != null && osProfile.WindowsConfiguration.ProvisionVMAgent.Value);
             Assert.True(osProfile.WindowsConfiguration.EnableAutomaticUpdates != null && osProfile.WindowsConfiguration.EnableAutomaticUpdates.Value == enableAutomaticUpdates);
-            
-            // PatchSetting
+
+            // PatchSetting checks
             Assert.NotNull(osProfile.WindowsConfiguration.PatchSettings);
-            Assert.NotNull(osProfile.WindowsConfiguration.PatchSettings.PatchMode);
-            Assert.Equal(osProfile.WindowsConfiguration.PatchSettings.PatchMode, patchSettingMode);
+            if (patchSetting.PatchMode != null)
+            {
+                Assert.NotNull(osProfile.WindowsConfiguration.PatchSettings.PatchMode);
+                Assert.Equal(osProfile.WindowsConfiguration.PatchSettings.PatchMode, patchSetting.PatchMode);
+            }
+            else
+            {
+                Assert.Null(osProfile.WindowsConfiguration.PatchSettings.PatchMode);
+            }
+
+            if (patchSetting.AssessmentMode != null)
+            {
+                Assert.NotNull(osProfile.WindowsConfiguration.PatchSettings.AssessmentMode);
+                Assert.Equal(osProfile.WindowsConfiguration.PatchSettings.AssessmentMode, patchSetting.AssessmentMode);
+            }
+            else
+            {
+                Assert.Null(osProfile.WindowsConfiguration.PatchSettings.AssessmentMode);
+            }
         }
 
         private void TestVMWithOSProfile(
