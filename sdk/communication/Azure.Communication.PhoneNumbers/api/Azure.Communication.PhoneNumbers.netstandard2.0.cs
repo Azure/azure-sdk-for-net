@@ -36,7 +36,7 @@ namespace Azure.Communication.PhoneNumbers
     }
     public partial class PurchasePhoneNumbersOperation : Azure.Operation
     {
-        internal PurchasePhoneNumbersOperation() { }
+        protected PurchasePhoneNumbersOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
@@ -47,7 +47,7 @@ namespace Azure.Communication.PhoneNumbers
     }
     public partial class ReleasePhoneNumberOperation : Azure.Operation
     {
-        internal ReleasePhoneNumberOperation() { }
+        protected ReleasePhoneNumberOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override string Id { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
