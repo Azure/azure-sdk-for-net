@@ -22,6 +22,7 @@ namespace Azure.AI.DocumentTranslation
         /// <see cref="DocumentTranslationClient.GetGlossaryFormatsAsync(System.Threading.CancellationToken)"/>.</param>
         public DocumentTranslationInput(Uri sourceUri, Uri targetUri, string targetLanguageCode, TranslationGlossary glossary = default)
         {
+            Targets = new List<TranslationTarget>();
             Source = new TranslationSource(sourceUri);
             var target = new TranslationTarget(targetUri, targetLanguageCode);
             if (glossary != null)
