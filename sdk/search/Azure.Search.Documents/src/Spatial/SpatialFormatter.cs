@@ -73,7 +73,7 @@ namespace Azure.Search.Documents
         {
             Argument.AssertNotNull(linearRing, nameof(linearRing));
 
-            StringBuilder odata = new ("geography'POLYGON((");
+            StringBuilder odata = new("geography'POLYGON((");
 
             bool first = true;
             foreach (GeoPosition position in linearRing.Coordinates)
@@ -144,7 +144,7 @@ namespace Azure.Search.Documents
 #pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentException(
                     $"A GeoLineString must have matching first and last Coordinates to form a searchable polygon.",
-                    $"{nameof(line)}.{nameof(line.Points)}");
+                    $"{nameof(line)}.{nameof(line.Coordinates)}");
 #pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
 
@@ -176,7 +176,7 @@ namespace Azure.Search.Documents
         {
             Argument.AssertNotNull(linearRing, nameof(linearRing));
 
-            StringBuilder odata = new ("geography'POLYGON((");
+            StringBuilder odata = new("geography'POLYGON((");
 
             bool first = true;
             foreach (GeoPositionProxy position in linearRing.Coordinates)

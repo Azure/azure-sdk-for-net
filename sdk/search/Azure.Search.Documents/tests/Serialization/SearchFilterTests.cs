@@ -174,17 +174,10 @@ namespace Azure.Search.Documents.Tests
                 "geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')",
                 SearchFilter.Create($"geo.intersects(Foo, {line})"));
 
-            //GeoPolygon polygon = new GeoPolygon(new[] { line });
-            //Assert.AreEqual(
-            //    "geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')",
-            //    SearchFilter.Create($"geo.intersects(Foo, {polygon})"));
-
             Assert.Throws<ArgumentException>(() => SearchFilter.Create(
                 $"{new GeoLineString(new[] { new GeoPosition(0, 0) })}"));
             Assert.Throws<ArgumentException>(() => SearchFilter.Create(
                 $"{new GeoLineString(new[] { new GeoPosition(0, 0), new GeoPosition(0, 0), new GeoPosition(0, 0), new GeoPosition(1, 1) })}"));
-            //Assert.Throws<ArgumentException>(() => SearchFilter.Create(
-            //    $"{new GeoPolygon(new[] { line, line })}"));
         }
 
         [TestCaseSource(nameof(GetMicrosoftSpatialPointsData))]
@@ -193,7 +186,7 @@ namespace Azure.Search.Documents.Tests
 
         private static IEnumerable GetMicrosoftSpatialPointsData()
         {
-            GeoPoint point = new (2.0, 3.0);
+            GeoPoint point = new(2.0, 3.0);
 
             yield return new TestCaseData(SearchFilter.Create($"geo.distance({point}, Foo) < 3"));
             yield return new TestCaseData(SearchFilter.Create($"geo.distance({new GeoPoint (2.0, 3.0, 5.0)}, Foo) < 3"));
@@ -205,22 +198,22 @@ namespace Azure.Search.Documents.Tests
 
         private static IEnumerable GetMicrosoftSpatialPolygonsData()
         {
-            GeoLineString line = new (new GeoPosition[]
+            GeoLineString line = new(new GeoPosition[]
             {
-                new (0, 0),
-                new (0, 1),
-                new (1, 1),
-                new (0, 0),
+                new(0, 0),
+                new(0, 1),
+                new(1, 1),
+                new(0, 0),
             });
 
             yield return new TestCaseData(line).Returns("geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')");
 
-            GeoPolygon polygon = new (new GeoPosition[]
+            GeoPolygon polygon = new(new GeoPosition[]
             {
-                new (0, 0),
-                new (0, 1),
-                new (1, 1),
-                new (0, 0),
+                new(0, 0),
+                new(0, 1),
+                new(1, 1),
+                new(0, 0),
             });
 
             yield return new TestCaseData(polygon).Returns("geo.intersects(Foo, geography'POLYGON((0 0,0 1,1 1,0 0))')");
@@ -236,10 +229,10 @@ namespace Azure.Search.Documents.Tests
         private static IEnumerable GetMicrosoftSpatialPolygonsThrowsData()
         {
             // Require >= 4 points.
-            GeoLineString line = new (new GeoPosition[]
+            GeoLineString line = new(new GeoPosition[]
             {
-                new (0, 0),
-                new (1, 1),
+                new(0, 0),
+                new(1, 1),
             });
 
             yield return new TestCaseData(
@@ -247,12 +240,12 @@ namespace Azure.Search.Documents.Tests
                 "A GeoLineString must have at least four Coordinates to form a searchable polygon.");
 
             // Requires that first and last points are the same.
-            line = new (new GeoPosition[]
+            line = new(new GeoPosition[]
             {
-                new (0, 0),
-                new (0, 1),
-                new (1, 0),
-                new (1, 1),
+                new(0, 0),
+                new(0, 1),
+                new(1, 0),
+                new(1, 1),
             });
 
             yield return new TestCaseData(
@@ -260,10 +253,10 @@ namespace Azure.Search.Documents.Tests
                 "A GeoLineString must have matching first and last Coordinates to form a searchable polygon.");
 
             // Require that polygons define exactly 1 ring.
-            GeoPolygon polygon = new (new GeoLinearRing[]
+            GeoPolygon polygon = new(new GeoLinearRing[]
             {
-                new (new GeoPosition[] { new (0, 0), new (0, 1), new (1, 1), new (0, 0) }),
-                new (new GeoPosition[] { new (2, 2), new (2, 3), new (3, 3), new (2, 2) }),
+                new(new GeoPosition[] { new(0, 0), new(0, 1), new(1, 1), new(0, 0) }),
+                new(new GeoPosition[] { new(2, 2), new(2, 3), new(3, 3), new(2, 2) }),
             });
 
             yield return new TestCaseData(

@@ -75,7 +75,7 @@ namespace Azure.Search.Documents
             {
                 IReadOnlyList<object> list = GetPropertyValue<IReadOnlyList<object>>(ref property, name);
 
-                List<T> _proxies = new (list.Count);
+                List<T> _proxies = new(list.Count);
                 for (int i = 0; i < list.Count; i++)
                 {
                     T proxy = factory(list[i]);
@@ -105,10 +105,10 @@ namespace Azure.Search.Documents
                 IEnumerable<GeoPosition> _list = GetPropertyValue<IEnumerable<GeoPosition>>(ref property, name);
                 var list = new List<GeoPosition>(_list);
 
-                List<GeoPositionProxy> _proxies = new (list.Count);
+                List<GeoPositionProxy> _proxies = new(list.Count);
                 for (int i = 0; i < list.Count; i++)
                 {
-                    GeoPositionProxy proxy = new (list[i]);
+                    GeoPositionProxy proxy = new(list[i]);
                     _proxies.Add(proxy);
                 }
 

@@ -34,8 +34,8 @@ namespace Azure.Search.Documents.Tests.Spatial
         [Test]
         public void CreateGeographyPoint()
         {
-            GeoPoint point = new (1.0, 2.0);
-            GeoPointProxy proxy = new (point);
+            GeoPoint point = new(1.0, 2.0);
+            GeoPointProxy proxy = new(point);
 
             Assert.AreSame(point, proxy.Value);
             Assert.AreEqual(1.0, proxy.Coordinates.Longitude);
@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Tests.Spatial
         [Test]
         public void CreateGeographyPolygon()
         {
-            GeoPolygon polygon = new (new GeoPosition[]
+            GeoPolygon polygon = new(new GeoPosition[]
             {
                 new GeoPosition(0.0, 0.0),
                 new GeoPosition(1.0, 0.0),
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Tests.Spatial
                 new GeoPosition(0.0, 0.0),
             });
 
-            GeoPolygonProxy proxy = new (polygon);
+            GeoPolygonProxy proxy = new(polygon);
 
             Assert.AreSame(polygon, proxy.Value);
             Assert.AreEqual(1, proxy.Rings.Count);
@@ -75,7 +75,7 @@ namespace Azure.Search.Documents.Tests.Spatial
         [Test]
         public void CreateGeographyLineString()
         {
-            GeoLineString line = new (new GeoPosition[]
+            GeoLineString line = new(new GeoPosition[]
             {
                 new GeoPosition(0.0, 0.0),
                 new GeoPosition(1.0, 0.0),
@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Tests.Spatial
                 new GeoPosition(0.0, 0.0),
             });
 
-            GeoLineStringProxy proxy = new (line);
+            GeoLineStringProxy proxy = new(line);
 
             Assert.AreSame(line, proxy.Value);
             Assert.AreEqual(5, line.Coordinates.Count);
@@ -120,18 +120,6 @@ namespace Azure.Search.Documents.Tests.Spatial
             new TestCaseData(new object()),
             new TestCaseData(1),
             new TestCaseData(new GeoPosition(1.0, 2.0)),
-            //new TestCaseData(new GeoLineString(new GeoPosition[]
-            //{
-            //    new GeoPosition(0.0, 0.0),
-            //    new GeoPosition(1.0, 0.0),
-            //})),
-            //new TestCaseData(new GeoPolygon(new GeoPosition[]
-            //{
-            //    new GeoPosition(0.0, 0.0),
-            //    new GeoPosition(1.0, 0.0),
-            //    new GeoPosition(1.0, 1.0),
-            //    new GeoPosition(0.0, 0.0),
-            //})),
         };
     }
 }

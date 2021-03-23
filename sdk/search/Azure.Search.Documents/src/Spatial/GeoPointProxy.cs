@@ -25,7 +25,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Gets the coordinates.
         /// </summary>
-        public GeoPositionProxy Coordinates => new (GetPropertyValue<Core.GeoJson.GeoPosition>(ref s_coordinatesProperty, nameof(Coordinates)));
+        public GeoPositionProxy Coordinates => new(GetPropertyValue<Core.GeoJson.GeoPosition>(ref s_coordinatesProperty, nameof(Coordinates)));
 
         /// <summary>
         /// Determines whether the <paramref name="left"/> has the same values as the <paramref name="right"/> value.
