@@ -73,7 +73,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                 await s_semaphore.WaitAsync().ConfigureAwait(false);
 
                 // Create a device
-                var iotHubConnectionString = TestEnvironment.IoTHubConnectionString;
+                string iotHubConnectionString = TestEnvironment.IoTHubConnectionString;
                 using var registryManager = RegistryManager.CreateFromConnectionString(iotHubConnectionString);
                 string deviceId = await GetUniqueDeviceIdAsync((deviceId) => registryManager.GetDeviceAsync(deviceId)).ConfigureAwait(false);
                 var requestDevice = new Device(deviceId);
@@ -132,7 +132,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
 
         private async Task<string> GetUniqueDeviceIdAsync(Func<string, Task<Device>> getDevice)
         {
-            var id = Recording.GenerateAlphaNumericId("TSI_E2E_");
+            string id = Recording.GenerateAlphaNumericId("TSI_E2E_");
 
             for (int i = 0; i < MaxTries; i++)
             {
