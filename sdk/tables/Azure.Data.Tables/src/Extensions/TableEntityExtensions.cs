@@ -61,8 +61,8 @@ namespace Azure.Data.Tables
             annotatedDictionary.Remove(TableConstants.PropertyNames.ETag);
 
             // Remove the Timestamp property, as it is controlled by the service not the client.
-            annotatedDictionary.Remove(TableConstants.PropertyNames.TimeStamp);
-            annotatedDictionary.Remove(TableConstants.PropertyNames.TimeStamp.ToOdataTypeString());
+            annotatedDictionary.Remove(TableConstants.PropertyNames.Timestamp);
+            annotatedDictionary.Remove(TableConstants.PropertyNames.Timestamp.ToOdataTypeString());
 
             return annotatedDictionary;
         }

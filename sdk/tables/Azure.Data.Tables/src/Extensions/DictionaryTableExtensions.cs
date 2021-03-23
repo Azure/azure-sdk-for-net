@@ -65,8 +65,8 @@ namespace Azure.Data.Tables
             }
 
             // Remove the Timestamp property, as it is controlled by the service not the client.
-            annotatedDictionary.Remove(TableConstants.PropertyNames.TimeStamp);
-            annotatedDictionary.Remove(TableConstants.PropertyNames.TimeStamp.ToOdataTypeString());
+            annotatedDictionary.Remove(TableConstants.PropertyNames.Timestamp);
+            annotatedDictionary.Remove(TableConstants.PropertyNames.Timestamp.ToOdataTypeString());
 
             return annotatedDictionary;
         }
@@ -123,9 +123,9 @@ namespace Azure.Data.Tables
 
             // The Timestamp property is not annotated, since it is a known system property
             // so we must cast it without a type annotation
-            if (entity.TryGetValue(TableConstants.PropertyNames.TimeStamp, out var value) && value is string)
+            if (entity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var value) && value is string)
             {
-                entity[TableConstants.PropertyNames.TimeStamp] = DateTimeOffset.Parse(entity[TableConstants.PropertyNames.TimeStamp] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                entity[TableConstants.PropertyNames.Timestamp] = DateTimeOffset.Parse(entity[TableConstants.PropertyNames.Timestamp] as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
 
             // Remove odata metadata.
