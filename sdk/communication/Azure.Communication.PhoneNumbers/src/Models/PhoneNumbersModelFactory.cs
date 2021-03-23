@@ -30,13 +30,5 @@ namespace Azure.Communication.PhoneNumbers.Models
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
         public static PhoneNumberCost PhoneNumberCost(double amount, string currencyCode, string billingFrequency)
             => new PhoneNumberCost(amount, currencyCode, billingFrequency);
-
-        /// <summary> Initializes a new instance of <see cref="ReleasePhoneNumberResult"/>. </summary>
-        public static ReleasePhoneNumberResult ReleasePhoneNumberResult()
-            => new ReleasePhoneNumberResult();
-
-        /// <summary> Initializes a new instance of <see cref="PurchasePhoneNumbersResult"/>. </summary>
-        public static PurchasePhoneNumbersResult PurchasePhoneNumbersResult()
-            => new PurchasePhoneNumbersResult();
     }
 }
