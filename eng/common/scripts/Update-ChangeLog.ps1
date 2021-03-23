@@ -54,7 +54,6 @@ if ($null -eq [AzureEngSemanticVersion]::ParseVersionString($Version))
 $PkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
 $ChangeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $PkgProperties.ChangeLogPath
 
-
 if ($ChangeLogEntries.Contains($Version))
 {
     if ($ChangeLogEntries[$Version].ReleaseStatus -eq $ReleaseStatus)

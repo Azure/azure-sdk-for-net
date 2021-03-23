@@ -12,8 +12,8 @@ namespace Azure.Storage.Test
 {
     public class StorageSharedKeyCredentialsTests : CommonTestBase
     {
-        public StorageSharedKeyCredentialsTests(bool async)
-            : base(async, null /* RecordedTestMode.Record to re-record */)
+        public StorageSharedKeyCredentialsTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record to re-record */)
         {
         }
 

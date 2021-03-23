@@ -8,7 +8,7 @@
 using Azure;
 using Azure.Core;
 
-namespace Azure.Iot.DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     internal partial class UpdatesGetOperationHeaders
     {

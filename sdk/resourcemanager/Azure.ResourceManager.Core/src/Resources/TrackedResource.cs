@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Generic representation of a tracked resource.  All tracked resources should extend this class
     /// </summary>
+    [ReferenceType]
     public abstract class TrackedResource<TIdentifier> : Resource<TIdentifier> where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>

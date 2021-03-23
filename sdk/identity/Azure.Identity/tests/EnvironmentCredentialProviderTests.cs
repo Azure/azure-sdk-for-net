@@ -58,7 +58,7 @@ namespace Azure.Identity.Tests
         [Test]
         public void CredentialConstructionClientCertificate()
         {
-            using (new TestEnvVar(new ()
+            using (new TestEnvVar(new()
             {
                 { "AZURE_CLIENT_ID", "mockclientid" },
                 { "AZURE_TENANT_ID", "mocktenantid" },

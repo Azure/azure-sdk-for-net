@@ -8,6 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using FluentAssertions;
+using Microsoft.Azure.Devices.Client;
 using NUnit.Framework;
 
 namespace Azure.Iot.TimeSeriesInsights.Tests
@@ -59,6 +60,13 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                     TestEnvironment.TimeSeriesInsightsHostname,
                     new FakeTokenCredential(),
                     InstrumentClientOptions(new TimeSeriesInsightsClientOptions())));
+        }
+
+        protected DeviceClient GetDeviceClient()
+        {
+            return DeviceClient.CreateFromConnectionString(
+                TestEnvironment.IoTHubConnectionString,
+                Microsoft.Azure.Devices.Client.TransportType.Mqtt);
         }
 
         protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsClient tsiClient, int numOfIdKeys)

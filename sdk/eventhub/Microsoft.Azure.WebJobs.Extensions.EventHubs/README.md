@@ -77,6 +77,18 @@ The Event Hub Output Binding allows a function to send Event Hub events.
 
 Please follow the [Azure Event Hubs output binding](https://docs.microsoft.com/azure/azure-functions/functions-bindings-event-hubs-output?tabs=csharp) to learn more about Event Hub bindings.
 
+### Supported types
+
+The following types are supported for trigger and output bindings:
+
+- `EventData`
+- `string` - value would be encoded using UTF8 encoding
+- `BinaryData`
+- `byte[]`
+- Custom model types will be JSON-serialized using Newtonsoft.Json 
+- `IAsyncCollector<T>` of any of the above types for batch triggers
+- `EventHubProducerClient` for output bindings
+
 ## Examples
 
 ### Sending individual event

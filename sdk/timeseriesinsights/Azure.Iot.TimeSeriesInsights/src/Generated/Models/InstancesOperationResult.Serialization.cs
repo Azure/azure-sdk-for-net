@@ -15,7 +15,7 @@ namespace Azure.Iot.TimeSeriesInsights
         internal static InstancesOperationResult DeserializeInstancesOperationResult(JsonElement element)
         {
             Optional<TimeSeriesInstance> instance = default;
-            Optional<InstancesOperationError> error = default;
+            Optional<TimeSeriesOperationError> error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instance"))
@@ -35,7 +35,7 @@ namespace Azure.Iot.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = InstancesOperationError.DeserializeInstancesOperationError(property.Value);
+                    error = TimeSeriesOperationError.DeserializeTimeSeriesOperationError(property.Value);
                     continue;
                 }
             }

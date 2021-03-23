@@ -29,7 +29,7 @@ namespace Azure.Storage.Cryptography
         /// <param name="async">Whether to wrap the content encryption key asynchronously.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The wrapped stream to read from and the encryption metadata for the wrapped stream.</returns>
-        public async Task<(Stream ciphertext, EncryptionData encryptionData)> EncryptInternal(
+        public async Task<(Stream Ciphertext, EncryptionData EncryptionData)> EncryptInternal(
             Stream plaintext,
             bool async,
             CancellationToken cancellationToken)
@@ -70,7 +70,7 @@ namespace Azure.Storage.Cryptography
         /// <param name="async">Whether to wrap the content encryption key asynchronously.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>The encrypted data and the encryption metadata for the wrapped stream.</returns>
-        public async Task<(byte[] ciphertext, EncryptionData encryptionData)> BufferedEncryptInternal(
+        public async Task<(byte[] Ciphertext, EncryptionData EncryptionData)> BufferedEncryptInternal(
             Stream plaintext,
             bool async,
             CancellationToken cancellationToken)

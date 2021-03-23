@@ -224,7 +224,7 @@ namespace Azure.Storage.Blobs.Specialized
                 authenticationPolicy);
         }
 
-        private (ServiceRestClient, ContainerRestClient) BuildRestClients()
+        private (ServiceRestClient ServiceClient, ContainerRestClient ContainerClient) BuildRestClients()
         {
             BlobUriBuilder uriBuilder = new BlobUriBuilder(_uri);
             uriBuilder.BlobContainerName = null;
@@ -526,7 +526,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A tuple containing the batch sub-operation messages merged into a
         /// single multipart/mixed content stream and content type.
         /// </returns>
-        private async Task<(Stream, string)> MergeOperationRequests(
+        private async Task<(Stream ContentStream, string ContentType)> MergeOperationRequests(
             IList<HttpMessage> messages,
             bool async,
             CancellationToken cancellationToken)

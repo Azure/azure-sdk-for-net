@@ -1,7 +1,7 @@
 # Release History
 
 ## 12.7.0-beta.3 (Unreleased)
-
+- Aligned storage URL parsing with other platforms.
 
 ## 12.7.0-beta.2 (2021-03-09)
 - Changed error codes from numerical (404) to descriptive (PathNotFound).

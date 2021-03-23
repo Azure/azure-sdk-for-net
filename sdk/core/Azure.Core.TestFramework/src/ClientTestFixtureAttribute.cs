@@ -92,9 +92,9 @@ namespace Azure.Core.TestFramework
             }
         }
 
-        private List<(TestFixtureAttribute suite, bool isAsync, object serviceVersion, object parameter)> GeneratePermutations()
+        private List<(TestFixtureAttribute Suite, bool IsAsync, object ServiceVersion, object Parameter)> GeneratePermutations()
         {
-            var result = new List<(TestFixtureAttribute suite, bool isAsync, object serviceVersion, object parameter)>();
+            var result = new List<(TestFixtureAttribute Suite, bool IsAsync, object ServiceVersion, object Parameter)>();
 
             if (_serviceVersions.Any())
             {

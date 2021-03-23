@@ -308,7 +308,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>A tuple indicating whether a claim was attempted and any ownership that was claimed.  The claimed ownership will be <c>null</c> if no claim was attempted or if the claim attempt failed.</returns>
         ///
-        private ValueTask<(bool wasClaimAttempted, EventProcessorPartitionOwnership claimedPartition)> FindAndClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> completeOwnershipEnumerable,
+        private ValueTask<(bool WasClaimAttempted, EventProcessorPartitionOwnership ClaimedPartition)> FindAndClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> completeOwnershipEnumerable,
                                                                                                                                   HashSet<string> unclaimedPartitions,
                                                                                                                                   int partitionCount,
                                                                                                                                   CancellationToken cancellationToken)
@@ -504,7 +504,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         /// <returns>A tuple indicating whether a claim was attempted and the claimed ownership. The claimed ownership will be <c>null</c> if the claim attempt failed.</returns>
         ///
-        private async Task<(bool wasClaimAttempted, EventProcessorPartitionOwnership claimedPartition)> ClaimOwnershipAsync(string partitionId,
+        private async Task<(bool WasClaimAttempted, EventProcessorPartitionOwnership ClaimedPartition)> ClaimOwnershipAsync(string partitionId,
                                                                                                                             IEnumerable<EventProcessorPartitionOwnership> completeOwnershipEnumerable,
                                                                                                                             CancellationToken cancellationToken)
         {

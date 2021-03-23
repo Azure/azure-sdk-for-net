@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class SecurityPartnerProvidersCreateOrUpdateOperation : Operation<SecurityPartnerProvider>, IOperationSource<SecurityPartnerProvider>
     {
         private readonly ArmOperationHelpers<SecurityPartnerProvider> _operation;
+
+        /// <summary> Initializes a new instance of SecurityPartnerProvidersCreateOrUpdateOperation for mocking. </summary>
+        protected SecurityPartnerProvidersCreateOrUpdateOperation()
+        {
+        }
+
         internal SecurityPartnerProvidersCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<SecurityPartnerProvider>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "SecurityPartnerProvidersCreateOrUpdateOperation");

@@ -4,7 +4,7 @@
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Iot.DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary>
     /// Device management service client.

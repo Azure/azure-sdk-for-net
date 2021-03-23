@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteCircuitsListRoutesTableSummaryOperation : Operation<ExpressRouteCircuitsRoutesTableSummaryListResult>, IOperationSource<ExpressRouteCircuitsRoutesTableSummaryListResult>
     {
         private readonly ArmOperationHelpers<ExpressRouteCircuitsRoutesTableSummaryListResult> _operation;
+
+        /// <summary> Initializes a new instance of ExpressRouteCircuitsListRoutesTableSummaryOperation for mocking. </summary>
+        protected ExpressRouteCircuitsListRoutesTableSummaryOperation()
+        {
+        }
+
         internal ExpressRouteCircuitsListRoutesTableSummaryOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ExpressRouteCircuitsRoutesTableSummaryListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ExpressRouteCircuitsListRoutesTableSummaryOperation");

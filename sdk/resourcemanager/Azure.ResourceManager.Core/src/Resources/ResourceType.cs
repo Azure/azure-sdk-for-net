@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Implicit operator for initializing a <see cref="ResourceType"/> instance from a string.
         /// </summary>
-        /// <param name="other"> String to be conferted into a <see cref="ResourceType"/> object. </param>
+        /// <param name="other"> String to be converted into a <see cref="ResourceType"/> object. </param>
         public static implicit operator ResourceType(string other)
         {
             if (other is null)
@@ -101,6 +101,7 @@ namespace Azure.ResourceManager.Core
             return new ResourceType(other);
         }
 
+        /// <summary>
         /// <summary>
         /// Compares two <see cref="ResourceType"/> objects.
         /// </summary>
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.Core
 
             var resourceObj = obj as ResourceType;
 
-            if (resourceObj != null)
+            if (!(resourceObj is null))
                 return Equals(resourceObj);
 
             var stringObj = obj as string;
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Core
                     throw new ArgumentOutOfRangeException(nameof(resourceIdOrType));
                 }
                 Namespace = parts[1];
-                
+
                 Type = string.Join("/", parts.Skip(2).Take(parts.Count - 3));
             }
             // Handle resource types (Micsrsoft.Compute/virtualMachines, Microsoft.Network/virtualNetworks/subnets)

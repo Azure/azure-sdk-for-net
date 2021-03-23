@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://live-testing.communication.azure.com/availablePhoneNumbers/countries/US/:search?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/availablePhoneNumbers/countries/US/:search?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -42,7 +42,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/search_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/search_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -78,7 +78,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/search_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/search_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -114,7 +114,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/search_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/search_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -150,7 +150,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/search_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/search_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -186,7 +186,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/search_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/search_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -222,7 +222,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/availablePhoneNumbers/searchResults/1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/availablePhoneNumbers/searchResults/1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -266,7 +266,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/availablePhoneNumbers/:purchase?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/availablePhoneNumbers/:purchase?api-version=2021-03-07",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -300,7 +300,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/purchase_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -334,7 +334,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/purchase_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -368,7 +368,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/purchase_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -402,7 +402,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/purchase_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -436,7 +436,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/purchase_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/purchase_1c469383-f782-4fa2-8290-9c36778313cd?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -470,7 +470,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -603,7 +603,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/Sanitized/capabilities?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/Sanitized/capabilities?api-version=2021-03-07",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -642,7 +642,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/capabilities_2f43a5e9-1292-486b-8f00-f7d29f265f30?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/capabilities_2f43a5e9-1292-486b-8f00-f7d29f265f30?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -678,7 +678,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/capabilities_2f43a5e9-1292-486b-8f00-f7d29f265f30?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/capabilities_2f43a5e9-1292-486b-8f00-f7d29f265f30?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -714,7 +714,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/capabilities_2f43a5e9-1292-486b-8f00-f7d29f265f30?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/capabilities_2f43a5e9-1292-486b-8f00-f7d29f265f30?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -750,7 +750,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/capabilities_2f43a5e9-1292-486b-8f00-f7d29f265f30?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/capabilities_2f43a5e9-1292-486b-8f00-f7d29f265f30?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -786,7 +786,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/\u002BSanitized?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/\u002BSanitized?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -829,7 +829,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -962,7 +962,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/Sanitized?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/Sanitized?api-version=2021-03-07",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -992,7 +992,7 @@
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/release_59c132b3-545c-4292-89de-18f823fe8b8a?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_59c132b3-545c-4292-89de-18f823fe8b8a?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1026,7 +1026,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/release_59c132b3-545c-4292-89de-18f823fe8b8a?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_59c132b3-545c-4292-89de-18f823fe8b8a?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1060,7 +1060,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/release_59c132b3-545c-4292-89de-18f823fe8b8a?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_59c132b3-545c-4292-89de-18f823fe8b8a?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1094,7 +1094,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers/operations/release_59c132b3-545c-4292-89de-18f823fe8b8a?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers/operations/release_59c132b3-545c-4292-89de-18f823fe8b8a?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -1128,7 +1128,7 @@
       }
     },
     {
-      "RequestUri": "https://live-testing.communication.azure.com/phoneNumbers?api-version=2021-03-07",
+      "RequestUri": "https://sanitized.communication.azure.com/phoneNumbers?api-version=2021-03-07",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -1245,7 +1245,7 @@
     }
   ],
   "Variables": {
-    "COMMUNICATION_CONNECTION_STRING": "endpoint=https://live-testing.communication.azure.com/;accesskey=Kg==",
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://sanitized.communication.azure.com/;accesskey=Kg==",
     "RandomSeed": "1498271171"
   }
 }

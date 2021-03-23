@@ -1,6 +1,14 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
+## 5.4.0-beta.2 (Unreleased)
+
+## 5.4.0-beta.1 (2021-03-17)
+
+### Changes
+
+#### New Features
+
+- Returned the idempotent publishing feature to the public API surface.
 
 
 ## 5.3.1 (2021-03-09)

@@ -453,7 +453,7 @@ namespace Azure.Test.Perf
                 {
                     while (writtenOperations < (rate * sw.Elapsed.TotalSeconds))
                     {
-                        _pendingOperations.Writer.TryWrite(ValueTuple.Create(sw.Elapsed, sw));
+                        _pendingOperations.Writer.TryWrite((sw.Elapsed, sw));
                         writtenOperations++;
                     }
 

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     /// <summary> Enums containing high level error codes. </summary>
     public readonly partial struct DocumentTranslationErrorCode : IEquatable<DocumentTranslationErrorCode>

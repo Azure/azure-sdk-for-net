@@ -145,6 +145,9 @@
 # ServiceLabel: %Cognitive - Translator %Service Attention
 #/<NotInRepo>/            @swmachan
 
+# PRLabel: %Cognitive - Translator
+/sdk/documenttranslation/                     @maririos
+
 # ServiceLabel: %Cognitive - Speech %Service Attention
 #/<NotInRepo>/            @robch @oscholz
 
@@ -206,8 +209,11 @@
 # ServiceLabel: %Container Instances %Service Attention
 /sdk/containerinstance/Microsoft.Azure.Management.ContainerInstance/            @dkkapur
 
+# ServiceLabel: %Container Registry
+/sdk/containerregistry/   @annelo-msft
+
 # ServiceLabel: %Container Registry %Service Attention
-/sdk/containerregistry/            @toddysm @yugangw-MSFT
+/sdk/containerregistry/Microsoft.*/ @toddysm @yugangw-MSFT
 
 # ServiceLabel: %Cosmos %Service Attention
 /sdk/cosmosdb/          @Wmengmsft @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar @southpolesteve

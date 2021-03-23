@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     /// <summary> Storage type of the input documents source string. </summary>
     public readonly partial struct StorageType : IEquatable<StorageType>

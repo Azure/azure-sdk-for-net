@@ -721,7 +721,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = Enumerable.Range(1, NumberOfPartitions).Select(p => p.ToString()).ToArray();
 
             var storageManager = new InMemoryStorageManager((s) => Console.WriteLine(s));
-            string[] CollectVersions() => storageManager.Ownership.OrderBy(pair => pair.Key.Item4).Select(pair => pair.Value.Version).ToArray();
+            string[] CollectVersions() => storageManager.Ownership.OrderBy(pair => pair.Key.PartitionId).Select(pair => pair.Value.Version).ToArray();
 
             var now = DateTimeOffset.UtcNow;
 

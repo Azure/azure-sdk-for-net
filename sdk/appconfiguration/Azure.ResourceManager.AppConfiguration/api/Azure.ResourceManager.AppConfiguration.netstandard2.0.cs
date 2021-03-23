@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppConfiguration
     }
     public partial class ConfigurationStoresCreateOperation : Azure.Operation<Azure.ResourceManager.AppConfiguration.Models.ConfigurationStore>
     {
-        internal ConfigurationStoresCreateOperation() { }
+        protected ConfigurationStoresCreateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppConfiguration
     }
     public partial class ConfigurationStoresDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ConfigurationStoresDeleteOperation() { }
+        protected ConfigurationStoresDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppConfiguration
     }
     public partial class ConfigurationStoresUpdateOperation : Azure.Operation<Azure.ResourceManager.AppConfiguration.Models.ConfigurationStore>
     {
-        internal ConfigurationStoresUpdateOperation() { }
+        protected ConfigurationStoresUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppConfiguration
     }
     public partial class PrivateEndpointConnectionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.AppConfiguration.Models.PrivateEndpointConnection>
     {
-        internal PrivateEndpointConnectionsCreateOrUpdateOperation() { }
+        protected PrivateEndpointConnectionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppConfiguration
     }
     public partial class PrivateEndpointConnectionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal PrivateEndpointConnectionsDeleteOperation() { }
+        protected PrivateEndpointConnectionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

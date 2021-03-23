@@ -88,9 +88,9 @@ try
         to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
         message: "Weekly Promotion!",
         options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
-    {
-        Tag = "marketing", // custom tags
-    });
+        {
+            Tag = "marketing", // custom tags
+        });
     IEnumerable<SmsSendResult> results = response.Value;
     foreach (SmsSendResult result in results)
     {
@@ -112,7 +112,8 @@ catch (RequestFailedException ex)
 ```
 
 ## Next steps
-[Read more about SMS in Azure Communication Services][nextsteps]
+- [Read more about SMS in Azure Communication Services][nextsteps]
+- For a basic guide on how to configure Delivery Reporting for your SMS messages please refer to the [Handle SMS Events quickstart][handle_sms_events].
 
 ## Contributing
 This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
@@ -130,6 +131,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
 [communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
 [communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[handle_sms_events]: https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/handle-sms-events
 [package]: https://www.nuget.org/packages/Azure.Communication.Sms
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nextsteps]:https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/send?pivots=programming-language-csharp

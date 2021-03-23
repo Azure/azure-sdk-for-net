@@ -16,7 +16,7 @@
         "x-ms-deleted-share-name": "test-share-306f5ee7-8216-4d99-d24f-f5eecfe65cd0",
         "x-ms-deleted-share-version": "01D60F8BB59A4652",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 404,
@@ -31,7 +31,7 @@
         "x-ms-client-request-id": "e3eff9ae-ea62-cace-3bd4-eab7fa2eb117",
         "x-ms-error-code": "ShareNotFound",
         "x-ms-request-id": "b0202f86-e01a-0031-6f1a-f41732000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
