@@ -38,7 +38,7 @@ az group create --name <your-resource-name> --location <location>
 az cognitiveservices account create \
     --name <your-resource-name> \
     --resource-group <your-resource-group-name> \
-    --kind Translator \
+    --kind TextTranslation \
     --sku <sku> \
     --location <location> \
     --yes
