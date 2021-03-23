@@ -106,6 +106,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [NonParallelizable]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
