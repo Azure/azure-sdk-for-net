@@ -13,10 +13,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using Microsoft.Rest;
 
     /// <summary>
-    /// Exception thrown for an invalid response with ComputerVisionError
-    /// information.
+    /// Exception thrown for an invalid response with
+    /// ComputerVisionErrorResponse information.
     /// </summary>
-    public partial class ComputerVisionErrorException : RestException
+    public partial class ComputerVisionErrorResponseException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.
@@ -31,30 +31,30 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Gets or sets the body object.
         /// </summary>
-        public ComputerVisionError Body { get; set; }
+        public ComputerVisionErrorResponse Body { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionErrorException class.
+        /// Initializes a new instance of the ComputerVisionErrorResponseException class.
         /// </summary>
-        public ComputerVisionErrorException()
+        public ComputerVisionErrorResponseException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionErrorException class.
+        /// Initializes a new instance of the ComputerVisionErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
-        public ComputerVisionErrorException(string message)
+        public ComputerVisionErrorResponseException(string message)
             : this(message, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionErrorException class.
+        /// Initializes a new instance of the ComputerVisionErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
         /// <param name="innerException">Inner exception.</param>
-        public ComputerVisionErrorException(string message, System.Exception innerException)
+        public ComputerVisionErrorResponseException(string message, System.Exception innerException)
             : base(message, innerException)
         {
         }
