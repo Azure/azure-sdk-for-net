@@ -15,14 +15,16 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory)
     return $null
   }
 
-  $projectPaths = (Resolve-Path (Join-Path $projDirPath "*.csproj")).path
-  if ($projectPaths -is [array] -and $projectPaths.Count -gt 1)
-  {
-    LogWarning "There is more than on csproj file in the projectpath/src directory. First project picked."
-    $projectPath = $projectPaths[0]
+  $projectPaths = @(Resolve-Path (Join-Path $projDirPath "*.csproj"))
+  
+  if ($projectpaths.Count -ge 1) {
+    $projectPath = $projectPaths[0].path
+    if ($projectPaths.Count -gt 1) {
+      LogWarning "There is more than on csproj file in the projectpath/src directory. First project picked."
+    }
   }
   else {
-    $projectPath = $projectPaths
+    return $null
   }
 
   if ($projectPath -and (Test-Path $projectPath))
