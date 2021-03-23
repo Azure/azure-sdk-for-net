@@ -37,8 +37,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(5),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -80,9 +80,6 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.AreEqual(expectedImmutabilityPolicyExpiry, downloadResponse.Value.Details.ImmutabilityPolicyExpiresOn);
             Assert.AreEqual(immutabilityPolicy.PolicyMode, downloadResponse.Value.Details.ImmutabilityPolicyMode);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -95,8 +92,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -115,9 +112,6 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.AreEqual(expectedImmutabilityPolicyExpiry, response.Value.ExpiriesOn);
             Assert.AreEqual(immutabilityPolicy.PolicyMode, response.Value.PolicyMode);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -143,8 +137,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -163,9 +157,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(legalHoldResponse.Value.LegalHoldEnabled);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -186,8 +177,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -206,9 +197,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(legalHoldResponse.Value.LegalHoldEnabled);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -231,8 +219,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -251,9 +239,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(legalHoldResponse.Value.LegalHoldEnabled);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -288,8 +273,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -309,8 +294,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsFalse(legalHoldResponse.Value.LegalHoldEnabled);
 
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
+            await sasBlobSnapshotClient.DeleteImmutabilityPolicyAsync();
 
             // Delete blob snapshot.
             await blob.WithSnapshot(snapshotResponse.Value.Snapshot).DeleteAsync();
@@ -349,8 +333,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(1),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -369,9 +353,6 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert
             Assert.IsFalse(legalHoldResponse.Value.LegalHoldEnabled);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
 
             // Delete blob snapshot.
             //await blob.WithVersion(snapshotResponse.Value.Snapshot).DeleteAsync();
@@ -558,8 +539,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -579,9 +560,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
             Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -594,8 +572,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -615,9 +593,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
             Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -640,8 +615,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -661,9 +636,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
             Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -681,8 +653,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -712,9 +684,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
             Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -728,8 +697,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -749,9 +718,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
             Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         [Test]
@@ -765,8 +731,8 @@ namespace Azure.Storage.Blobs.Test
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
             {
-                ExpiriesOn = Recording.UtcNow.AddSeconds(2),
-                PolicyMode = BlobImmutabilityPolicyMode.Locked
+                ExpiriesOn = Recording.UtcNow.AddMinutes(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
             };
 
             // The service rounds Immutability Policy Expiry to the nearest second.
@@ -795,9 +761,6 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
             Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
-
-            // Wait for immutability policy to expire.
-            await WaitForImmutabilityPolicyToExpire(expectedImmutabilityPolicyExpiry);
         }
 
         private async Task <DisposingVersionLevelWormContainer> GetTestVersionLevelWormContainer(TenantConfiguration tenantConfiguration)
@@ -871,10 +834,20 @@ namespace Azure.Storage.Blobs.Test
         {
             if (Container != null)
             {
-                await foreach (BlobItem blobItem in Container.GetBlobsAsync())
+                await foreach (BlobItem blobItem in Container.GetBlobsAsync(BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold))
                 {
                     BlobClient blobClient = Container.GetBlobClient(blobItem.Name);
-                    await blobClient.SetLegalHoldAsync(false);
+
+                    if (blobItem.Properties.HasLegalHold)
+                    {
+                        await blobClient.SetLegalHoldAsync(false);
+                    }
+
+                    if (blobItem.Properties.ImmutabilityPolicyMode != null)
+                    {
+                        await blobClient.DeleteImmutabilityPolicyAsync();
+                    }
+
                     await blobClient.DeleteIfExistsAsync();
                 }
 
