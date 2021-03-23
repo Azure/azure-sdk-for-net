@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -101,6 +103,62 @@ namespace Azure.ResourceManager.Core
             }
 
             return other.Model;
+        }
+
+        /// <summary>
+        /// Serialize the input Sku object.
+        /// </summary>
+        /// <param name="writer"> Input Json writer. </param>
+        /// <param name="value"> Input GenericResourceData object. </param>
+        internal static void Serialize(Utf8JsonWriter writer, GenericResourceData value)
+        {
+            if (writer is null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(value.Location))
+            {
+                writer.WritePropertyName("location");
+                writer.WriteStringValue(value.Location);
+            }
+            if (Optional.IsCollectionDefined(value.Tags))
+            {
+                writer.WritePropertyName("tags");
+                writer.WriteStartObject();
+                foreach (var item in value.Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WriteEndObject();
+        }
+
+        /// <summary>
+        /// Deserialize the input Json object.
+        /// </summary>
+        /// <param name="element"> The Json object need to be deserialized. </param>
+        internal static GenericResourceData Deserialize(JsonElement element)
+        {
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> location = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("location"))
+                {
+                    location = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new GenericResourceData(id.Value, location.Value);
         }
     }
 }
