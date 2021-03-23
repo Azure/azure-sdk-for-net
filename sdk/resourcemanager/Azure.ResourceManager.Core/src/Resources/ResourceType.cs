@@ -102,7 +102,6 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// <summary>
         /// Compares two <see cref="ResourceType"/> objects.
         /// </summary>
         /// <param name="source"> First <see cref="ResourceType"/> object. </param>
