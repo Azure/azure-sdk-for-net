@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using FluentAssertions;
+using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Client;
 using NUnit.Framework;
 
@@ -23,6 +25,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
         // Based on testing, the max length of models can be 27 only and works well for other resources as well. This can be updated when required.
         protected static readonly int MaxIdLength = 27;
+
+        private static readonly SemaphoreSlim s_semaphore = new SemaphoreSlim(1, 1);
 
         public E2eTestBase(bool isAsync)
          : base(isAsync, TestSettings.Instance.TestMode)
@@ -62,11 +66,35 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     InstrumentClientOptions(new TimeSeriesInsightsClientOptions())));
         }
 
-        protected DeviceClient GetDeviceClient()
+        protected async Task<DeviceClient> GetDeviceClient()
         {
-            return DeviceClient.CreateFromConnectionString(
-                TestEnvironment.IoTHubConnectionString,
-                Microsoft.Azure.Devices.Client.TransportType.Mqtt);
+            try
+            {
+                await s_semaphore.WaitAsync().ConfigureAwait(false);
+
+                // Create a device
+                string iotHubConnectionString = TestEnvironment.IoTHubConnectionString;
+                using var registryManager = RegistryManager.CreateFromConnectionString(iotHubConnectionString);
+                string deviceId = await GetUniqueDeviceIdAsync((deviceId) => registryManager.GetDeviceAsync(deviceId)).ConfigureAwait(false);
+                var requestDevice = new Device(deviceId);
+
+                // Add the device to the device manager
+                Device device = await registryManager.AddDeviceAsync(requestDevice).ConfigureAwait(false);
+                await Task.Delay(5000).ConfigureAwait(false);
+                await registryManager.CloseAsync().ConfigureAwait(false);
+
+                // Create a device client
+                string iotHubHostName = HostNameHelper.GetHostName(iotHubConnectionString);
+                string deviceConnectinString = $"HostName={iotHubHostName};DeviceId={device.Id};SharedAccessKey={device.Authentication.SymmetricKey.PrimaryKey}";
+                DeviceClient deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectinString, Microsoft.Azure.Devices.Client.TransportType.Mqtt);
+                await deviceClient.OpenAsync().ConfigureAwait(false);
+
+                return deviceClient;
+            }
+            finally
+            {
+                s_semaphore.Release();
+            }
         }
 
         protected async Task<TimeSeriesId> GetUniqueTimeSeriesInstanceIdAsync(TimeSeriesInsightsClient tsiClient, int numOfIdKeys)
@@ -78,7 +106,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 var id = new List<string>();
                 for (int i = 0; i < numOfIdKeys; i++)
                 {
-                    id.Add(Recording.GenerateAlphaNumericId(string.Empty, 5));
+                    id.Add(Recording.GenerateAlphaNumericId(string.Empty));
                 }
 
                 TimeSeriesId tsId = numOfIdKeys switch
@@ -100,6 +128,23 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             }
 
             throw new Exception($"Unique Id could not be found");
+        }
+
+        private async Task<string> GetUniqueDeviceIdAsync(Func<string, Task<Device>> getDevice)
+        {
+            string id = Recording.GenerateAlphaNumericId("TSI_E2E_");
+
+            for (int i = 0; i < MaxTries; i++)
+            {
+                Device device = await getDevice(id).ConfigureAwait(false);
+                if (device == null)
+                {
+                    return id;
+                }
+                id = Recording.GenerateAlphaNumericId("TSI_E2E_");
+            }
+
+            throw new Exception($"Unique Id could not be found.");
         }
     }
 }
