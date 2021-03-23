@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Iot.TimeSeriesInsights.Tests
 {
-    [Parallelizable(ParallelScope.None)]
+    [LiveOnly]
     public class TimeSeriesInsightsQueryTests : E2eTestBase
     {
         private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(10);
@@ -29,12 +29,11 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
         }
 
         [Test]
-        [Ignore("This test is flakey when running on the net-core pipeline. Ignoring and investigating for now as net-core wants to ship.")]
         public async Task TimeSeriesInsightsQuery_GetEventsLifecycle()
         {
             // Arrange
             TimeSeriesInsightsClient tsiClient = GetClient();
-            DeviceClient deviceClient = GetDeviceClient();
+            DeviceClient deviceClient = await GetDeviceClient().ConfigureAwait(false);
 
             // Figure out what the Time Series Id is composed of
             TimeSeriesModelSettings modelSettings = await tsiClient.GetModelSettingsAsync().ConfigureAwait(false);
