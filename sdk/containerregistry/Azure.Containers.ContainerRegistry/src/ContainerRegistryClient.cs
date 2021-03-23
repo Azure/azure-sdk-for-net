@@ -16,6 +16,7 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly Uri _endpoint;
         private readonly HttpPipeline _pipeline;
+        private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
 
@@ -36,19 +37,14 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
 
-            // TODO: Solve:
-            // 1. What pipeline to use for RefreshTokensRestClient - how to reason about this from a customer perspective?
-            // 2. Is it ok that we share a ClientDiagnostics type?
-
-            _tokenExchangeClient = new RefreshTokensRestClient(_clientDiagnostics, HttpPipelineBuilder.Build(options), endpoint.AbsoluteUri);
-            _acrTokenClient = new AccessTokensRestClient(_clientDiagnostics, HttpPipelineBuilder.Build(options), endpoint.AbsoluteUri);
-
-            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryCredentialsPolicy(credential, AcrAadScope, _tokenExchangeClient, _acrTokenClient));
-
+            _endpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            _endpoint = endpoint;
+            _acrAuthPipeline = HttpPipelineBuilder.Build(options);
+            _tokenExchangeClient = new RefreshTokensRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
+            _acrTokenClient = new AccessTokensRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryCredentialsPolicy(credential, AcrAadScope, _tokenExchangeClient, _acrTokenClient));
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 
