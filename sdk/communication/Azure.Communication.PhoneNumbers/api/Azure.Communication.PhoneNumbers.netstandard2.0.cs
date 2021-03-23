@@ -34,31 +34,27 @@ namespace Azure.Communication.PhoneNumbers
         public string AreaCode { get { throw null; } set { } }
         public int? Quantity { get { throw null; } set { } }
     }
-    public partial class PurchasePhoneNumbersOperation : Azure.Operation<Azure.Communication.PhoneNumbers.Models.PurchasePhoneNumbersResult>
+    public partial class PurchasePhoneNumbersOperation : Azure.Operation
     {
         protected PurchasePhoneNumbersOperation() { }
         public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public override Azure.Communication.PhoneNumbers.Models.PurchasePhoneNumbersResult Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.PhoneNumbers.Models.PurchasePhoneNumbersResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.PhoneNumbers.Models.PurchasePhoneNumbersResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class ReleasePhoneNumberOperation : Azure.Operation<Azure.Communication.PhoneNumbers.Models.ReleasePhoneNumberResult>
+    public partial class ReleasePhoneNumberOperation : Azure.Operation
     {
         protected ReleasePhoneNumberOperation() { }
         public override bool HasCompleted { get { throw null; } }
-        public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
-        public override Azure.Communication.PhoneNumbers.Models.ReleasePhoneNumberResult Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.PhoneNumbers.Models.ReleasePhoneNumberResult>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.Communication.PhoneNumbers.Models.ReleasePhoneNumberResult>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Response> WaitForCompletionResponseAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class SearchAvailablePhoneNumbersOperation : Azure.Operation<Azure.Communication.PhoneNumbers.Models.PhoneNumberSearchResult>
     {
@@ -157,46 +153,6 @@ namespace Azure.Communication.PhoneNumbers.Models
         public Azure.Communication.PhoneNumbers.Models.BillingFrequency BillingFrequency { get { throw null; } }
         public string ISOCurrencySymbol { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PhoneNumberOperationStatus : System.IEquatable<Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PhoneNumberOperationStatus(string value) { throw null; }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus Failed { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus NotStarted { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus Running { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus left, Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus right) { throw null; }
-        public static implicit operator Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus left, Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PhoneNumberOperationType : System.IEquatable<Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PhoneNumberOperationType(string value) { throw null; }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType Purchase { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType ReleasePhoneNumber { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType Search { get { throw null; } }
-        public static Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType UpdatePhoneNumberCapabilities { get { throw null; } }
-        public bool Equals(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType left, Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType right) { throw null; }
-        public static implicit operator Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType left, Azure.Communication.PhoneNumbers.Models.PhoneNumberOperationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class PhoneNumberSearchResult
     {
         internal PhoneNumberSearchResult() { }
@@ -212,8 +168,6 @@ namespace Azure.Communication.PhoneNumbers.Models
     {
         public static Azure.Communication.PhoneNumbers.Models.PhoneNumberCost PhoneNumberCost(double amount, string currencyCode, string billingFrequency) { throw null; }
         public static Azure.Communication.PhoneNumbers.Models.PurchasedPhoneNumber PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, Azure.Communication.PhoneNumbers.Models.PhoneNumberType phoneNumberType, Azure.Communication.PhoneNumbers.Models.PhoneNumberCapabilities capabilities, Azure.Communication.PhoneNumbers.Models.PhoneNumberAssignmentType assignmentType, System.DateTimeOffset purchaseDate, Azure.Communication.PhoneNumbers.Models.PhoneNumberCost cost) { throw null; }
-        public static Azure.Communication.PhoneNumbers.Models.PurchasePhoneNumbersResult PurchasePhoneNumbersResult() { throw null; }
-        public static Azure.Communication.PhoneNumbers.Models.ReleasePhoneNumberResult ReleasePhoneNumberResult() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PhoneNumberType : System.IEquatable<Azure.Communication.PhoneNumbers.Models.PhoneNumberType>
@@ -244,13 +198,5 @@ namespace Azure.Communication.PhoneNumbers.Models
         public string PhoneNumber { get { throw null; } }
         public Azure.Communication.PhoneNumbers.Models.PhoneNumberType PhoneNumberType { get { throw null; } }
         public System.DateTimeOffset PurchaseDate { get { throw null; } }
-    }
-    public partial class PurchasePhoneNumbersResult
-    {
-        internal PurchasePhoneNumbersResult() { }
-    }
-    public partial class ReleasePhoneNumberResult
-    {
-        internal ReleasePhoneNumberResult() { }
     }
 }

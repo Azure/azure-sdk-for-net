@@ -21,6 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<CommunicationIdentifierModel> removedByCommunicationIdentifier = default;
             Optional<AcsChatThreadParticipantProperties> participantRemoved = default;
             Optional<long> version = default;
+            Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,13 +65,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("transactionId"))
+                {
+                    transactionId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("threadId"))
                 {
                     threadId = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsChatParticipantRemovedFromThreadEventData(threadId.Value, Optional.ToNullable(time), removedByCommunicationIdentifier.Value, participantRemoved.Value, Optional.ToNullable(version));
+            return new AcsChatParticipantRemovedFromThreadEventData(transactionId.Value, threadId.Value, Optional.ToNullable(time), removedByCommunicationIdentifier.Value, participantRemoved.Value, Optional.ToNullable(version));
         }
 
         internal partial class AcsChatParticipantRemovedFromThreadEventDataConverter : JsonConverter<AcsChatParticipantRemovedFromThreadEventData>

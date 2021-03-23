@@ -105,6 +105,7 @@ namespace Azure.AI.DocumentTranslation
         public override string Id { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public Azure.AI.DocumentTranslation.TranslationStatus Status { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.AsyncPageable<Azure.AI.DocumentTranslation.DocumentStatusDetail> Value { get { throw null; } }
         public virtual void Cancel(System.Threading.CancellationToken cancellationToken) { }
         public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken) { throw null; }

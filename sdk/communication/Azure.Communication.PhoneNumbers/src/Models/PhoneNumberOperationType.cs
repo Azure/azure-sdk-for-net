@@ -3,7 +3,7 @@
 
 namespace Azure.Communication.PhoneNumbers.Models
 {
-    internal partial class AcquiredPhoneNumbers
+    internal readonly partial struct PhoneNumberOperationType
     {
     }
 }

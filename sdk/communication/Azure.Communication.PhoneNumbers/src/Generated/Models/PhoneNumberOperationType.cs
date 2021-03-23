@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.PhoneNumbers.Models
 {
     /// <summary> The type of operation, e.g. Search. </summary>
-    public readonly partial struct PhoneNumberOperationType : IEquatable<PhoneNumberOperationType>
+    internal readonly partial struct PhoneNumberOperationType : IEquatable<PhoneNumberOperationType>
     {
         private readonly string _value;
 
