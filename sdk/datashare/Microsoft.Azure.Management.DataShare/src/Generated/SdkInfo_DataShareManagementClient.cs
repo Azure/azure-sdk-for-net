@@ -41,14 +41,9 @@ namespace Microsoft.Azure.Management.DataShare
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
       public static readonly String GithubCommidId = "5c2185adda8aa915a391ae182c1f02cc587f4f79";
-      public static readonly String CodeGenerationErrors = "npm notice 
-npm notice New minor version of npm available! 7.1.0 -> 7.6.3
-npm notice Changelog: <https://github.com/npm/cli/releases/tag/v7.6.3>
-npm notice Run `npm install -g npm@7.6.3` to update!
-npm notice"
+      public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
   }
 }
-
 
