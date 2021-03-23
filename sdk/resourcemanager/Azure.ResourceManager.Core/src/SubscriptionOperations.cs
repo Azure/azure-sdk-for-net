@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public virtual async Task<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, AzureResourceManagerClientOptions, Task<T>> func)
+        public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, AzureResourceManagerClientOptions, AsyncPageable<T>> func)
         {
-            return await func(BaseUri, Credential, ClientOptions).ConfigureAwait(false);
+            return func(BaseUri, Credential, ClientOptions);
         }
 
         /// <summary>

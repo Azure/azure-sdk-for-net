@@ -142,16 +142,13 @@
   <!--TODO: update build targets - ADO 5668-->
   <PropertyGroup>
     <MgmtCoreShared>$(MSBuildThisFileDirectory)/../common/ManagementCoreShared</MgmtCoreShared>
+    <IsOldTrack2 Condition="'$(IsOldTrack2)' == ''">false</IsOldTrack2>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsOldTrack2)' == 'false'">
     <Compile Include="$(MgmtCoreShared)/**/*.cs"
                  Link="Shared/Management/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
-  
-  <!--<ItemGroup Condition="'$(IsOldTrack2)' == ''">
-     <IsOldTrack2>false</IsOldTrack2>
-  </ItemGroup>-->
   
   <!--TODO: end-->
   <!-- *********** Management Client Library Override section ************* -->

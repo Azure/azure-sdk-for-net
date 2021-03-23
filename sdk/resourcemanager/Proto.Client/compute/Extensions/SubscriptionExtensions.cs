@@ -50,9 +50,9 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="subscription"> The <see cref="SubscriptionOperations" /> instance the method will execute against. </param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public static async Task<AsyncPageable<VirtualMachine>> ListVirtualMachinesAsync(this SubscriptionOperations subscription)
+        public static AsyncPageable<VirtualMachine> ListVirtualMachinesAsync(this SubscriptionOperations subscription)
         {
-            return await subscription.ListResourcesAsync(async
+            return subscription.ListResourcesAsync(
                 (baseUri, credential, options) =>
                 {
                     ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.Subscription, credential, options);
@@ -124,7 +124,7 @@ namespace Proto.Compute
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailabilitySet> ListAvailabilitySetsAsync(this SubscriptionOperations subscription)
         {
-            return subscription.ListResources(
+            return subscription.ListResourcesAsync(
                 (baseUri, credential, options) =>
                 {
                     ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.Subscription, credential, options);
