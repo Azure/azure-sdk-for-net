@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         // The purpose of overriding this method is to protect against an InvalidOperationException
         // that is being thrown by the generated code. More specifically, the exception is being thrown
-        // when trying to deserialize the "delete" property. A coveration has started with the Time Series
+        // when trying to deserialize the "delete" property. A coversation has started with the Time Series
         // Insights team on take a closer look on the thrown exception.
 
         internal static TypesBatchResponse DeserializeTypesBatchResponse(JsonElement element)
