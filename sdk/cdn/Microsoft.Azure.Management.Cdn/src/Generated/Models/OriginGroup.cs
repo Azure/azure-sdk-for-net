@@ -129,13 +129,16 @@ namespace Microsoft.Azure.Management.Cdn.Models
             {
                 HealthProbeSettings.Validate();
             }
-            if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes > 50)
+            if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "TrafficRestorationTimeToHealedOrNewEndpointsInMinutes", 50);
-            }
-            if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "TrafficRestorationTimeToHealedOrNewEndpointsInMinutes", 0);
+                if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes > 50)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "TrafficRestorationTimeToHealedOrNewEndpointsInMinutes", 50);
+                }
+                if (TrafficRestorationTimeToHealedOrNewEndpointsInMinutes < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "TrafficRestorationTimeToHealedOrNewEndpointsInMinutes", 0);
+                }
             }
             if (ResponseBasedOriginErrorDetectionSettings != null)
             {
