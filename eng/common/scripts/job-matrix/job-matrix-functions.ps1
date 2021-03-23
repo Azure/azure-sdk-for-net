@@ -350,7 +350,7 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Hashtabl
             $importPath = $_.Value
         }
     }
-    if (!$matrix -or !$importPath) {
+    if ((!$matrix -and !$importPath) -or !$importPath) {
         return $matrix, @()
     }
 
