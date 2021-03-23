@@ -2055,6 +2055,140 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(blobUri, dataLakeUriBuilder.ToUri());
         }
 
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task GetDeletedPathsAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string fileName = GetNewFileName();
+            DataLakeFileClient fileClient = InstrumentClient(test.FileSystem.GetFileClient(fileName));
+            await fileClient.CreateAsync();
+            await fileClient.DeleteAsync();
+
+            // Act
+            AsyncPageable<PathHierarchyDeletedItem> response = test.FileSystem.GetDeletedPathsAsync();
+            IList<PathHierarchyDeletedItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(1, paths.Count);
+            Assert.IsTrue(paths[0].IsPath);
+            Assert.IsNull(paths[0].Prefix);
+            Assert.AreEqual(fileName, paths[0].Path.Name);
+            Assert.IsNotNull(paths[0].Path.DeletedOn);
+            Assert.IsNotNull(paths[0].Path.DeletionId);
+            Assert.IsNotNull(paths[0].Path.RemainingRetentionDays);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task GetDeletedPathsAsync_Path()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
+            await directoryClient.CreateAsync();
+            string fileName = GetNewFileName();
+            DataLakeFileClient fileClient1 = InstrumentClient(directoryClient.GetFileClient(fileName));
+            await fileClient1.CreateAsync();
+            await fileClient1.DeleteAsync();
+
+            DataLakeFileClient fileClient2 = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await fileClient2.CreateAsync();
+            await fileClient2.DeleteAsync();
+
+            // Act
+            AsyncPageable<PathHierarchyDeletedItem> response = test.FileSystem.GetDeletedPathsAsync(
+                path: directoryName);
+            IList<PathHierarchyDeletedItem> paths = await response.ToListAsync();
+
+            // Assert
+            Assert.AreEqual(1, paths.Count);
+            Assert.AreEqual($"{directoryName}/{fileName}", paths[0].Path.Name);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task GetDeletedPathsAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystem = service.GetFileSystemClient(GetNewFileSystemName());
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                fileSystem.GetDeletedPathsAsync().ToListAsync(),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RestorePathAsync()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            string directoryName = GetNewDirectoryName();
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
+            await directoryClient.CreateAsync();
+            await directoryClient.DeleteAsync();
+
+            AsyncPageable<PathHierarchyDeletedItem> response = test.FileSystem.GetDeletedPathsAsync();
+            IList<PathHierarchyDeletedItem> paths = await response.ToListAsync();
+            string deletionId = paths[0].Path.DeletionId;
+
+            // Act
+            DataLakePathClient restoredPathClient = await test.FileSystem.RestorePathAsync(
+                deletedPath: directoryName,
+                deletionId: deletionId);
+
+            // Assert
+            await restoredPathClient.GetPropertiesAsync();
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RestorePathAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeFileSystemClient fileSystem = service.GetFileSystemClient(GetNewFileSystemName());
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                fileSystem.RestorePathAsync(
+                    deletedPath: GetNewDirectoryName(),
+                    deletionId: "132502020374991873"),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        [Test]
+        [TestCase("!'();[]@&%=+$,#äÄöÖüÜß;")]
+        [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
+        [TestCase(" my cool directory ")]
+        [TestCase("directory")]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task RestorePathAsync_SpecialCharacters(string directoryName)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directoryClient = InstrumentClient(test.FileSystem.GetDirectoryClient(directoryName));
+            await directoryClient.CreateAsync();
+            await directoryClient.DeleteAsync();
+
+            AsyncPageable<PathHierarchyDeletedItem> response = test.FileSystem.GetDeletedPathsAsync();
+            IList<PathHierarchyDeletedItem> paths = await response.ToListAsync();
+            string deletionId = paths[0].Path.DeletionId;
+
+            // Act
+            DataLakePathClient restoredPathClient = await test.FileSystem.RestorePathAsync(
+                deletedPath: directoryName,
+                deletionId: deletionId);
+
+            // Assert
+            await restoredPathClient.GetPropertiesAsync();
+        }
+
         //[Test]
         //[Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
