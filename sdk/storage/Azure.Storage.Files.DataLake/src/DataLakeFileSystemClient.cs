@@ -115,6 +115,16 @@ namespace Azure.Storage.Files.DataLake
         /// </summary>
         internal virtual FileSystemRestClient FileSystemRestClient => _fileSystemRestClient;
 
+        /// <summary>
+        /// FileSystemRestClient pointed at the blob endpoint.
+        /// </summary>
+        private readonly FileSystemRestClient _blobFileSystemRestClient;
+
+        /// <summary>
+        /// FileSystemRestClient pointed at the blob endpoint.
+        /// </summary>
+        internal virtual FileSystemRestClient BlobFileSystemRestClient => _blobFileSystemRestClient;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
@@ -221,7 +231,9 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _clientConfiguration);
 
-            _fileSystemRestClient = BuildFileSystemRestClient(_uri);
+            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_uri);
+            _fileSystemRestClient = dfsFileSystemRestClient;
+            _blobFileSystemRestClient = blobFileSystemRestClient;
         }
 
         /// <summary>
@@ -387,7 +399,9 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _clientConfiguration);
 
-            _fileSystemRestClient = BuildFileSystemRestClient(fileSystemUri);
+            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(fileSystemUri);
+            _fileSystemRestClient = dfsFileSystemRestClient;
+            _blobFileSystemRestClient = blobFileSystemRestClient;
         }
 
         /// <summary>
@@ -416,20 +430,32 @@ namespace Azure.Storage.Files.DataLake
                 _blobUri,
                 _clientConfiguration);
 
-            _fileSystemRestClient = BuildFileSystemRestClient(fileSystemUri);
+            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(fileSystemUri);
+            _fileSystemRestClient = dfsFileSystemRestClient;
+            _blobFileSystemRestClient = blobFileSystemRestClient;
         }
 
-        private FileSystemRestClient BuildFileSystemRestClient(Uri uri)
+        private (FileSystemRestClient DfsFileSystemRestClient, FileSystemRestClient BlobFileSystemRestClient) BuildFileSystemRestClients(Uri uri)
         {
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(uri);
             string fileSystemName = uriBuilder.FileSystemName;
             uriBuilder.FileSystemName = null;
-            return new FileSystemRestClient(
+
+            FileSystemRestClient dfsFileSystemRestClient = new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
                 url: uriBuilder.ToDfsUri().ToString(),
                 fileSystem: fileSystemName,
                 version: _clientConfiguration.Version.ToVersionString());
+
+            FileSystemRestClient blobFileSystemRestClient = new FileSystemRestClient(
+                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
+                pipeline: _clientConfiguration.Pipeline,
+                url: uriBuilder.ToDfsUri().ToString(),
+                fileSystem: fileSystemName,
+                version: _clientConfiguration.Version.ToVersionString());
+
+            return (dfsFileSystemRestClient, blobFileSystemRestClient);
         }
 
         /// <summary>
@@ -2702,7 +2728,7 @@ namespace Azure.Storage.Files.DataLake
 
                     if (async)
                     {
-                        response = await FileSystemRestClient.ListBlobHierarchySegmentAsync(
+                        response = await BlobFileSystemRestClient.ListBlobHierarchySegmentAsync(
                             delimiter: null,
                             prefix: path,
                             marker: continuation,
@@ -2714,7 +2740,7 @@ namespace Azure.Storage.Files.DataLake
                     }
                     else
                     {
-                        response = FileSystemRestClient.ListBlobHierarchySegment(
+                        response = BlobFileSystemRestClient.ListBlobHierarchySegment(
                             delimiter: null,
                             prefix: path,
                             marker: continuation,
