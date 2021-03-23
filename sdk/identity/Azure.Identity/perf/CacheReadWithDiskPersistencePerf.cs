@@ -19,8 +19,8 @@ namespace Azure.Template.Perf
         {
             _credential = new ClientSecretCredential(
                 Environment.GetEnvironmentVariable("AZURE_TENANT_ID"),
-                Environment.GetEnvironmentVariable("__AZURE_CLIENT_ID"),
-                Environment.GetEnvironmentVariable("__AZURE_CLIENT_SECRET"),
+                Environment.GetEnvironmentVariable("AZURE_CLIENT_ID"),
+                Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET"),
                 new ClientSecretCredentialOptions{ TokenCachePersistenceOptions = new TokenCachePersistenceOptions()}
                 );
 
