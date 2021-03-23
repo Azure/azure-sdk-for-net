@@ -66,13 +66,25 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Implicit operator for initializing a <see cref="ResourceType"/> instance from a string.
         /// </summary>
-        /// <param name="other"> String to be conferted into a <see cref="ResourceType"/> object. </param>
+        /// <param name="other"> String to be converted into a <see cref="ResourceType"/> object. </param>
         public static implicit operator ResourceType(string other)
         {
             if (other is null)
                 return null;
 
             return new ResourceType(other);
+        }
+
+        /// <summary>
+        /// Implicit operator for initializing a string instance from a ResourceType.
+        /// </summary>
+        /// <param name="other"> <see cref="ResourceType"/> to be converted into a string object. </param>
+        public static implicit operator string(ResourceType other)
+        {
+            if (other is null)
+                return null;
+
+            return other.ToString();
         }
 
         /// <summary>
@@ -175,7 +187,7 @@ namespace Azure.ResourceManager.Core
             int compareResult = 0;
             if ((compareResult = string.Compare(Namespace, other.Namespace, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
                 (compareResult = string.Compare(Type, other.Type, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (other.Parent != null))
+                (!(other.Parent is null)))
             {
                 return Parent.CompareTo(other.Parent);
             }
@@ -236,7 +248,7 @@ namespace Azure.ResourceManager.Core
 
             var resourceObj = obj as ResourceType;
 
-            if (resourceObj != null)
+            if (!(resourceObj is null))
                 return Equals(resourceObj);
 
             var stringObj = obj as string;
@@ -311,7 +323,7 @@ namespace Azure.ResourceManager.Core
                     throw new ArgumentOutOfRangeException(nameof(resourceIdOrType));
                 }
                 Namespace = parts[1];
-                
+
                 Type = string.Join("/", parts.Skip(2).Take(parts.Count - 3));
             }
             // Handle resource types (Micsrsoft.Compute/virtualMachines, Microsoft.Network/virtualNetworks/subnets)

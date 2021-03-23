@@ -8,6 +8,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the base resource used by all azure resources.
     /// </summary>
+    [ReferenceType]
     public abstract class Resource : IEquatable<Resource>, IEquatable<string>, IComparable<Resource>,
         IComparable<string>
     {
