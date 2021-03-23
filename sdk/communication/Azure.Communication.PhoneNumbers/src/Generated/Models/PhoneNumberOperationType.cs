@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The type of operation, e.g. Search. </summary>
     internal readonly partial struct PhoneNumberOperationType : IEquatable<PhoneNumberOperationType>

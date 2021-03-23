@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    [CodeGenModel("PhoneNumberOperationStatus")]
-    internal readonly partial struct PhoneNumberOperationStatus
+    [CodeGenModel("PhoneNumberCapabilityType")]
+    public readonly partial struct PhoneNumberCapabilityType
     {
     }
 }

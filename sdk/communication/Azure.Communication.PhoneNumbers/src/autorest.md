@@ -12,3 +12,12 @@ input-file:
 title: Phone numbers
 payload-flattening-threshold: 3
 ```
+
+### Move all the models to the main namespace
+```yaml
+directive:
+  from: swagger-document
+  where: $.definitions.*
+  transform: >
+    $["x-namespace"] = "Azure.Communication.PhoneNumbers"
+```

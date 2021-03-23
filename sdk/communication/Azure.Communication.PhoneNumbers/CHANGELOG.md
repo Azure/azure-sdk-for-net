@@ -6,6 +6,7 @@
 - Added protected constructor to PurchasePhoneNumbersOperation and ReleasePhoneNumberOperation for mocking.
 
 ### Breaking Changes
+- All models are moved from Azure.Communication.PhoneNumbers.Models namespace to Azure.Communication.PhoneNumbers.
 - AcquiredPhoneNumber class is renamed to PurchasedPhoneNumber.
 - PhoneNumbersClient methods renamed:
   - GetPhoneNumber -> GetPurchasedPhoneNumber.
@@ -15,6 +16,8 @@
 - PhoneNumbersModelFactory static method AcquiredPhoneNumber is renamed to PurchasedPhoneNumber.
 - PurchasePhoneNumbersOperation and ReleasePhoneNumberOperation extend Operation instead of Operation<Response>.
 - Removed PhoneNumberOperationStatus and PhoneNumberOperationType.
+- Renamed ISOCurrencySymbol property to IsoCurrencySymbol in PhoneNumberCost.
+- Renamed threeLetterISOCountryName parameter to threeLetterIsoCountryName in PhoneNumbersClient.StartSearchAvailablePhoneNumbers and PhoneNumbersClient.StartSearchAvailablePhoneNumbersAsync.
 
 ## 1.0.0-beta.5 (2021-03-09)
 
