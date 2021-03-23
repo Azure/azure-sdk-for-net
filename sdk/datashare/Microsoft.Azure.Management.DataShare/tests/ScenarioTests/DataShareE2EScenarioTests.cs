@@ -27,7 +27,8 @@ namespace DataShare.Tests.ScenarioTests
         [Trait(TraitName.TestType, TestType.Scenario)]
         public async Task DataShareE2E()
         {
-            Account expectedAccount = new Account(identity, "DataShareId", shareName,default(SystemData), "Microsoft.DataShare", ScenarioTestBase<DataShareE2EScenarioTests>.AccountLocation); 
+            //Account expectedAccount = new Account(identity, "DataShareId", shareName,default(SystemData), "Microsoft.DataShare", ScenarioTestBase<DataShareE2EScenarioTests>.AccountLocation);
+            Account expectedAccount = new Account(identity, "DataShareId", shareName, "Microsoft.DataShare", ScenarioTestBase<DataShareE2EScenarioTests>.AccountLocation);
             string subscriptionIdVal = Environment.GetEnvironmentVariable(subscriptionId);
 
         Func<DataShareManagementClient, Task> action = async (client) =>
