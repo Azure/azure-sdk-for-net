@@ -446,20 +446,21 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
-<!-- TODO: Add link -->
-![Impressions]()
+<!-- TODO: Add correct link -->
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
 
 
 <!-- LINKS -->
 [documenttranslation_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/src
-[documenttranslation_docs]: https://docs.microsoft.com/en-us/azure/cognitive-services/translator/document-translation/
+<!--TODO: remove /overview -->
+[documenttranslation_docs]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview
 <!-- TODO: Add correct link -->
 [documenttranslation_refdocs]: https://aka.ms/azsdk-net-documenttranslation-ref-docs
 <!-- TODO: Add correct link -->
-[documenttranslation_nuget_package]: https://www.nuget.org/packages/Azure.AI.DocumentTranslation
+[documenttranslation_nuget_package]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview
 [documenttranslation_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/README.md
 <!-- TODO: Add correct link -->
-[documenttranslation_rest_api]: https://docs.microsoft.com/en-us/rest/api/cognitiveservices/translator/documenttranslation
+[documenttranslation_rest_api]: https://docs.microsoft.com/rest/api/cognitiveservices/translator/documenttranslation
 [cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
