@@ -11,7 +11,9 @@ namespace DataShare.Tests.ScenarioTests
     public class AccountScenarioTests : ScenarioTestBase<AccountScenarioTests>
     {
         private const string shareName = "sdktestingshare";
-        public Account ExpectedAccount = new Account(identity, "DataShareId", shareName, default(SystemData), "Microsoft.DataShare", ScenarioTestBase<DataShareE2EScenarioTests>.AccountLocation);
+        //public Account ExpectedAccount = new Account(identity, "DataShareId", shareName, default(SystemData), "Microsoft.DataShare", ScenarioTestBase<DataShareE2EScenarioTests>.AccountLocation);
+        public Account ExpectedAccount = new Account(identity, "DataShareId", shareName, "Microsoft.DataShare", ScenarioTestBase<DataShareE2EScenarioTests>.AccountLocation);
+
 
         [Fact]
         public async Task AccountCrud()
