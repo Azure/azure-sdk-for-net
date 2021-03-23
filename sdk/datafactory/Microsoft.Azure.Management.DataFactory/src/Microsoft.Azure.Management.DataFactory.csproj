@@ -16,6 +16,8 @@
 - Added AAD auth to CosmosDb LinkedService
 - Added authHeaders to HTTP/REST/OData LinkedService
 - Added MultiFactor auth to SFTP LinkedService
+- Added UAMI to Identity
+- Added privateEndpointConnection apis to DataFactory
   ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

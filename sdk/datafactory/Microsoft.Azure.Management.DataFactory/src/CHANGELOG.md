@@ -8,6 +8,8 @@
 - Added AAD auth to CosmosDb LinkedService
 - Added authHeaders to HTTP/REST/OData LinkedService
 - Added MultiFactor auth to SFTP LinkedService
+- Added UAMI to Identity
+- Added privateEndpointConnection apis to DataFactory
 
 ## Version 4.15.0
 ###  Feature Additions
