@@ -19,7 +19,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'EncryptionAtRestWithCustomerKey',
         /// 'EncryptionAtRestWithPlatformAndCustomerKeys'</param>
         /// <param name="activeKey">Active Key of the encryption</param>
-        /// <param name="tags">Resource tags</param>
         public DiskEncryptionSetUpdate(string encryptionType = default(string), KeyForDiskEncryptionSet activeKey = default(KeyForDiskEncryptionSet))
         {
             EncryptionType = encryptionType;
