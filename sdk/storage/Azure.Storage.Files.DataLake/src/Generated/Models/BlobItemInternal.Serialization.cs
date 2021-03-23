@@ -5,66 +5,51 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class BlobItemInternal
     {
-        internal static BlobItemInternal DeserializeBlobItemInternal(JsonElement element)
+        internal static BlobItemInternal DeserializeBlobItemInternal(XElement element)
         {
             string name = default;
             bool deleted = default;
             string snapshot = default;
-            Optional<string> versionId = default;
-            Optional<bool> isCurrentVersion = default;
+            string versionId = default;
+            bool? isCurrentVersion = default;
             BlobPropertiesInternal properties = default;
-            Optional<string> deletionId = default;
-            foreach (var property in element.EnumerateObject())
+            string deletionId = default;
+            if (element.Element("Name") is XElement nameElement)
             {
-                if (property.NameEquals("Name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("Deleted"))
-                {
-                    deleted = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("Snapshot"))
-                {
-                    snapshot = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("VersionId"))
-                {
-                    versionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("IsCurrentVersion"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    isCurrentVersion = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("Properties"))
-                {
-                    properties = BlobPropertiesInternal.DeserializeBlobPropertiesInternal(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("DeletionId"))
-                {
-                    deletionId = property.Value.GetString();
-                    continue;
-                }
+                name = (string)nameElement;
             }
-            return new BlobItemInternal(name, deleted, snapshot, versionId.Value, Optional.ToNullable(isCurrentVersion), properties, deletionId.Value);
+            if (element.Element("Deleted") is XElement deletedElement)
+            {
+                deleted = (bool)deletedElement;
+            }
+            if (element.Element("Snapshot") is XElement snapshotElement)
+            {
+                snapshot = (string)snapshotElement;
+            }
+            if (element.Element("VersionId") is XElement versionIdElement)
+            {
+                versionId = (string)versionIdElement;
+            }
+            if (element.Element("IsCurrentVersion") is XElement isCurrentVersionElement)
+            {
+                isCurrentVersion = (bool?)isCurrentVersionElement;
+            }
+            if (element.Element("Properties") is XElement propertiesElement)
+            {
+                properties = BlobPropertiesInternal.DeserializeBlobPropertiesInternal(propertiesElement);
+            }
+            if (element.Element("DeletionId") is XElement deletionIdElement)
+            {
+                deletionId = (string)deletionIdElement;
+            }
+            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, deletionId);
         }
     }
 }

@@ -5,23 +5,19 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class BlobPrefix
     {
-        internal static BlobPrefix DeserializeBlobPrefix(JsonElement element)
+        internal static BlobPrefix DeserializeBlobPrefix(XElement element)
         {
             string name = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.Element("Name") is XElement nameElement)
             {
-                if (property.NameEquals("Name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
+                name = (string)nameElement;
             }
             return new BlobPrefix(name);
         }

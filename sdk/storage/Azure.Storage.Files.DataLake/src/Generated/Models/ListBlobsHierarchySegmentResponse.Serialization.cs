@@ -5,72 +5,56 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class ListBlobsHierarchySegmentResponse
     {
-        internal static ListBlobsHierarchySegmentResponse DeserializeListBlobsHierarchySegmentResponse(JsonElement element)
+        internal static ListBlobsHierarchySegmentResponse DeserializeListBlobsHierarchySegmentResponse(XElement element)
         {
             string serviceEndpoint = default;
             string containerName = default;
-            Optional<string> prefix = default;
-            Optional<string> marker = default;
-            Optional<int> maxResults = default;
-            Optional<string> delimiter = default;
+            string prefix = default;
+            string marker = default;
+            int? maxResults = default;
+            string delimiter = default;
             BlobHierarchyListSegment segment = default;
-            Optional<string> nextMarker = default;
-            foreach (var property in element.EnumerateObject())
+            string nextMarker = default;
+            if (element.Attribute("ServiceEndpoint") is XAttribute serviceEndpointAttribute)
             {
-                if (property.NameEquals("ServiceEndpoint"))
-                {
-                    serviceEndpoint = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ContainerName"))
-                {
-                    containerName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("Prefix"))
-                {
-                    prefix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("Marker"))
-                {
-                    marker = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("MaxResults"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    maxResults = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("Delimiter"))
-                {
-                    delimiter = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("Segment"))
-                {
-                    segment = BlobHierarchyListSegment.DeserializeBlobHierarchyListSegment(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("NextMarker"))
-                {
-                    nextMarker = property.Value.GetString();
-                    continue;
-                }
+                serviceEndpoint = (string)serviceEndpointAttribute;
             }
-            return new ListBlobsHierarchySegmentResponse(serviceEndpoint, containerName, prefix.Value, marker.Value, Optional.ToNullable(maxResults), delimiter.Value, segment, nextMarker.Value);
+            if (element.Attribute("ContainerName") is XAttribute containerNameAttribute)
+            {
+                containerName = (string)containerNameAttribute;
+            }
+            if (element.Element("Prefix") is XElement prefixElement)
+            {
+                prefix = (string)prefixElement;
+            }
+            if (element.Element("Marker") is XElement markerElement)
+            {
+                marker = (string)markerElement;
+            }
+            if (element.Element("MaxResults") is XElement maxResultsElement)
+            {
+                maxResults = (int?)maxResultsElement;
+            }
+            if (element.Element("Delimiter") is XElement delimiterElement)
+            {
+                delimiter = (string)delimiterElement;
+            }
+            if (element.Element("Blobs") is XElement blobsElement)
+            {
+                segment = BlobHierarchyListSegment.DeserializeBlobHierarchyListSegment(blobsElement);
+            }
+            if (element.Element("NextMarker") is XElement nextMarkerElement)
+            {
+                nextMarker = (string)nextMarkerElement;
+            }
+            return new ListBlobsHierarchySegmentResponse(serviceEndpoint, containerName, prefix, marker, maxResults, delimiter, segment, nextMarker);
         }
     }
 }

@@ -6,46 +6,30 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Xml.Linq;
 using Azure.Core;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
     internal partial class BlobHierarchyListSegment
     {
-        internal static BlobHierarchyListSegment DeserializeBlobHierarchyListSegment(JsonElement element)
+        internal static BlobHierarchyListSegment DeserializeBlobHierarchyListSegment(XElement element)
         {
-            Optional<IReadOnlyList<BlobPrefix>> blobPrefixes = default;
+            IReadOnlyList<BlobPrefix> blobPrefixes = default;
             IReadOnlyList<BlobItemInternal> blobItems = default;
-            foreach (var property in element.EnumerateObject())
+            var array = new List<BlobPrefix>();
+            foreach (var e in element.Elements("BlobPrefix"))
             {
-                if (property.NameEquals("BlobPrefixes"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<BlobPrefix> array = new List<BlobPrefix>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BlobPrefix.DeserializeBlobPrefix(item));
-                    }
-                    blobPrefixes = array;
-                    continue;
-                }
-                if (property.NameEquals("BlobItems"))
-                {
-                    List<BlobItemInternal> array = new List<BlobItemInternal>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BlobItemInternal.DeserializeBlobItemInternal(item));
-                    }
-                    blobItems = array;
-                    continue;
-                }
+                array.Add(BlobPrefix.DeserializeBlobPrefix(e));
             }
-            return new BlobHierarchyListSegment(Optional.ToList(blobPrefixes), blobItems);
+            blobPrefixes = array;
+            var array0 = new List<BlobItemInternal>();
+            foreach (var e in element.Elements("Blob"))
+            {
+                array0.Add(BlobItemInternal.DeserializeBlobItemInternal(e));
+            }
+            blobItems = array0;
+            return new BlobHierarchyListSegment(blobPrefixes, blobItems);
         }
     }
 }

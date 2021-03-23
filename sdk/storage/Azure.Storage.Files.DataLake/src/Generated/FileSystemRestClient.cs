@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.DataLake.Models;
@@ -441,7 +442,7 @@ namespace Azure.Storage.Files.DataLake
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -463,8 +464,11 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     {
                         ListBlobsHierarchySegmentResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(document.RootElement);
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                        {
+                            value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement);
+                        }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -490,8 +494,11 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     {
                         ListBlobsHierarchySegmentResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(document.RootElement);
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                        {
+                            value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement);
+                        }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -509,7 +516,7 @@ namespace Azure.Storage.Files.DataLake
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("x-ms-version", version);
-            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
@@ -538,8 +545,11 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     {
                         ListBlobsHierarchySegmentResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(document.RootElement);
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                        {
+                            value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement);
+                        }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
@@ -572,8 +582,11 @@ namespace Azure.Storage.Files.DataLake
                 case 200:
                     {
                         ListBlobsHierarchySegmentResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(document.RootElement);
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                        {
+                            value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement);
+                        }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
