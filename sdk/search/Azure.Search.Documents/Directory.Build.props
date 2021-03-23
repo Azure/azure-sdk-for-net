@@ -7,8 +7,7 @@
 
     <!-- Use Azure.Core.Experimental's Spatial features -->
     <!-- (Note: a number of tests will need re-recording if you disable) -->
-    <UseAzureCoreExperimentalSpatial Condition="'$(UseAzureCoreExperimentalSpatial)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalSpatial>
-    <DefineConstants Condition="'$(UseAzureCoreExperimentalSpatial)' == 'true'">EXPERIMENTAL_SPATIAL;$(DefineConstants)</DefineConstants>
+    <UseAzureCoreExperimentalSpatial Condition="'$(UseAzureCoreExperimentalSpatial)' == ''">true</UseAzureCoreExperimentalSpatial>
 
     <!-- Use Azure.Core.Experimental's DynamicData features (stubbed out in Search for now) -->
     <UseAzureCoreExperimentalDynamic Condition="'$(UseAzureCoreExperimentalDynamic)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalDynamic>
