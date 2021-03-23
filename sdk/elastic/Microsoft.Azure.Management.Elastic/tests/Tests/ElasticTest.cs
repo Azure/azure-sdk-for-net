@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Elastic.Tests.Tests
                 ElasticMonitorResource rp = CreateResource(context, rgName, resourceName);
                 Assert.NotNull(rp);
 
-                // DeleteResource(context, rgName, resourceName);
+                DeleteResource(context, rgName, resourceName);
                 DeleteResourceGroup(context, rgName);
             }
         }
@@ -43,6 +43,13 @@ namespace Microsoft.Azure.Management.Elastic.Tests.Tests
                     )
             );
         }
+
+        private void DeleteResource(MockContext context, string rgName, string resourceName)
+        {
+            MicrosoftElasticClient client = GetMicrosoftElasticClient(context);
+            client.Monitors.Delete(rgName, resourceName);
+        }
+
 
         private ResourceGroup CreateResourceGroup(MockContext context, string rgName)
         {

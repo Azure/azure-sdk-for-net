@@ -70,7 +70,7 @@
       "RequestUri": "/subscriptions/38916dd1-dbdc-4e79-8262-cc5727a8e96b/resourceGroups/elastic-sdk-test-rg/providers/Microsoft.Elastic/monitors/elastic-sdk-test-resource?api-version=2020-07-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzg5MTZkZDEtZGJkYy00ZTc5LTgyNjItY2M1NzI3YThlOTZiL3Jlc291cmNlR3JvdXBzL2VsYXN0aWMtc2RrLXRlc3QtcmcvcHJvdmlkZXJzL01pY3Jvc29mdC5FbGFzdGljL21vbml0b3JzL2VsYXN0aWMtc2RrLXRlc3QtcmVzb3VyY2U/YXBpLXZlcnNpb249MjAyMC0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"drawdown_testing_20200904_Monthly\"\r\n  },\r\n  \"properties\": {\r\n    \"userInfo\": {\r\n      \"name\": \"Mama Baba\",\r\n      \"emailAddress\": \"liftrdevredmond@microsoft.com\",\r\n      \"phoneNumber\": \"+1 (425) 5381111\"\r\n    }\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"westus2\"\r\n}",
+      "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"drawdown_testing_20200904_Monthly\"\r\n  },\r\n  \"properties\": {\r\n    \"userInfo\": {\r\n      \"name\": \"Mama Baba\",\r\n      \"emailAddress\": \"liftrelasticdev@microsoft.com\",\r\n      \"phoneNumber\": \"+1 (425) 5381111\"\r\n    }\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"westus2\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "b227cba2-336e-4120-b7b7-dd379a1cea84"
