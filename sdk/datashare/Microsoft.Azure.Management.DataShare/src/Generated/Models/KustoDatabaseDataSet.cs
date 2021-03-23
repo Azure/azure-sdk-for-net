@@ -37,7 +37,6 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// database.</param>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
-        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
         /// <param name="dataSetId">Unique id for identifying a data set
         /// resource</param>
@@ -45,8 +44,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// <param name="provisioningState">Provisioning state of the kusto
         /// database data set. Possible values include: 'Succeeded',
         /// 'Creating', 'Deleting', 'Moving', 'Failed'</param>
-        public KustoDatabaseDataSet(string kustoDatabaseResourceId, string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), string dataSetId = default(string), string location = default(string), string provisioningState = default(string))
-            : base(id, name, systemData, type)
+        public KustoDatabaseDataSet(string kustoDatabaseResourceId, string id = default(string), string name = default(string), string type = default(string), string dataSetId = default(string), string location = default(string), string provisioningState = default(string))
+            : base(id, name, type)
         {
             DataSetId = dataSetId;
             KustoDatabaseResourceId = kustoDatabaseResourceId;

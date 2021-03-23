@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// </summary>
         /// <param name="id">The resource id of the azure resource</param>
         /// <param name="name">Name of the azure resource</param>
-        /// <param name="systemData">System Data of the Azure resource.</param>
         /// <param name="type">Type of the azure resource</param>
         /// <param name="createdAt">Time at which the share was
         /// created.</param>
@@ -49,8 +48,8 @@ namespace Microsoft.Azure.Management.DataShare.Models
         /// resource</param>
         /// <param name="userName">Name of the user who created the
         /// resource</param>
-        public Share(string id = default(string), string name = default(string), SystemData systemData = default(SystemData), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string description = default(string), string provisioningState = default(string), string shareKind = default(string), string terms = default(string), string userEmail = default(string), string userName = default(string))
-            : base(id, name, systemData, type)
+        public Share(string id = default(string), string name = default(string), string type = default(string), System.DateTime? createdAt = default(System.DateTime?), string description = default(string), string provisioningState = default(string), string shareKind = default(string), string terms = default(string), string userEmail = default(string), string userName = default(string))
+            : base(id, name, type)
         {
             CreatedAt = createdAt;
             Description = description;
