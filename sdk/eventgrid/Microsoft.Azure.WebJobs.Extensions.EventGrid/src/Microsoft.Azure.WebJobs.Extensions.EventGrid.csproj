@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../../extensions/Microsoft.Azure.WebJobs.Extensions.Clients/src/Microsoft.Azure.WebJobs.Extensions.Clients.csproj" />
-    <ProjectReference Include="../../Azure.Messaging.EventGrid/src/Azure.Messaging.EventGrid.csproj" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Azure.Messaging.EventGrid" />
   </ItemGroup>
 
 </Project>
