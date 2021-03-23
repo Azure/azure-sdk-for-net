@@ -27,7 +27,7 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Scenarios
 
             for (int i = 0; i < Options.Count; i++)
             {
-                string name = $"s{i}-{GetRandomName()}";
+                string name = GetRandomName($"s{i}-");
 
                 tasks.Add(Client.SetSecretAsync(name, "value"));
                 _secretNames[i] = name;

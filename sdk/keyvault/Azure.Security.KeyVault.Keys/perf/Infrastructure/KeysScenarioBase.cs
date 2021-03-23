@@ -10,21 +10,15 @@ namespace Azure.Security.KeyVault.Keys.Perf.Infrastructure
 {
     public abstract class KeysScenarioBase<T> : PerfTest<T> where T : PerfOptions
     {
-        private readonly Random _rand;
-
         protected KeysScenarioBase(T options) : base(options)
         {
-            _rand = new Random();
+            Random = new Random();
 
-            KeyName = $"k-{GetRandomName()}";
+            KeyName = GetRandomName("k-");
 
             Client = new KeyClient(
                 PerfTestEnvironment.Instance.VaultUri,
-                PerfTestEnvironment.Instance.Credential,
-                new()
-                {
-                    Transport = PerfTransport.Create(Options),
-                });
+                PerfTestEnvironment.Instance.Credential);
         }
 
         protected KeyClient Client { get; }
@@ -33,9 +27,9 @@ namespace Azure.Security.KeyVault.Keys.Perf.Infrastructure
 
         protected string KeyName { get; }
 
-        protected Random Random => _rand;
+        protected Random Random { get; }
 
-        protected string GetRandomName() => _rand.Next().ToString();
+        protected string GetRandomName(string prefix = null) => $"{prefix}{Guid.NewGuid():n}";
 
         public override async Task GlobalSetupAsync()
         {

@@ -10,26 +10,16 @@ namespace Azure.Security.KeyVault.Certificates.Perf.Infrastructure
 {
     public abstract class CertificatesScenarioBase<T> : PerfTest<T> where T : PerfOptions
     {
-        private readonly Random _rand;
-
         protected CertificatesScenarioBase(T options) : base(options)
         {
-            _rand = new Random();
-
-            CertificateClientOptions clientOptions = new()
-            {
-                Transport = PerfTransport.Create(Options),
-            };
-
             Client = new CertificateClient(
                 PerfTestEnvironment.Instance.VaultUri,
-                PerfTestEnvironment.Instance.Credential,
-                clientOptions);
+                PerfTestEnvironment.Instance.Credential);
         }
 
         protected CertificateClient Client { get; }
 
-        protected string GetRandomName() => _rand.Next().ToString();
+        protected string GetRandomName(string prefix = null) => $"{prefix}{Guid.NewGuid():n}";
 
         protected async Task DeleteCertificatesAsync(params string[] names)
         {

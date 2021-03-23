@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Certificates.Perf.Scenarios
         {
             await base.GlobalSetupAsync();
 
-            _certificateName = $"c-{GetRandomName()}";
+            _certificateName = GetRandomName("c-");
             CertificateOperation operation = await Client.StartCreateCertificateAsync(_certificateName, new(WellKnownIssuerNames.Self, "CN=Azure SDK")
             {
                 KeyType = CertificateKeyType.Rsa,

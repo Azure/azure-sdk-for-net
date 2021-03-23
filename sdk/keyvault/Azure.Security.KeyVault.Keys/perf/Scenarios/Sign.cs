@@ -24,16 +24,6 @@ namespace Azure.Security.KeyVault.Keys.Perf.Scenarios
             _hasher = SHA256.Create();
         }
 
-        public override async Task GlobalSetupAsync()
-        {
-            await base.GlobalSetupAsync();
-
-            // CryptographyClient caches the public key so signing once removes the initial request from metrics.
-            Regenerate();
-
-            await CryptographyClient.SignAsync(s_algorithm, _digest);
-        }
-
         public override async Task SetupAsync()
         {
             await base.SetupAsync();

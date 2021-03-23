@@ -22,7 +22,7 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Scenarios
         {
             await base.GlobalSetupAsync();
 
-            _secretName = $"s-{GetRandomName()}";
+            _secretName = GetRandomName("s-");
             await Client.SetSecretAsync(_secretName, SecretValue);
         }
 

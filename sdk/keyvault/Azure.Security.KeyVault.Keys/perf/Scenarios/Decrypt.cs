@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Keys.Perf.Scenarios
 
         public override void Run(CancellationToken cancellationToken)
         {
-            DecryptResult result = CryptographyClient.Decrypt(EncryptionAlgorithm.RsaOaep256, _ciphertext);
+            DecryptResult result = CryptographyClient.Decrypt(s_algorithm, _ciphertext);
             byte[] plaintext = result.Plaintext;
 
 #if DEBUG

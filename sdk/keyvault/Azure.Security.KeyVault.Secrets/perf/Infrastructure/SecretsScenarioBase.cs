@@ -16,20 +16,14 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Infrastructure
         {
             _rand = new Random();
 
-            SecretClientOptions clientOptions = new()
-            {
-                Transport = PerfTransport.Create(Options),
-            };
-
             Client = new SecretClient(
                 PerfTestEnvironment.Instance.VaultUri,
-                PerfTestEnvironment.Instance.Credential,
-                clientOptions);
+                PerfTestEnvironment.Instance.Credential);
         }
 
         protected SecretClient Client { get; }
 
-        protected string GetRandomName() => _rand.Next().ToString();
+        protected string GetRandomName(string prefix = null) => $"{prefix}{Guid.NewGuid():n}";
 
         protected async Task DeleteSecretsAsync(params string[] names)
         {
