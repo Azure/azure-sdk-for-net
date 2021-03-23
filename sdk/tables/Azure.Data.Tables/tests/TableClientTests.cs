@@ -143,6 +143,20 @@ namespace Azure.Tables.Tests
             Assert.ThrowsAsync<NotSupportedException>(async () => await client.AddEntityAsync(entityToCreate).ConfigureAwait(false));
         }
 
+        [Test]
+        public void CreatedTableEntityPropertiesAreSerializedProperly()
+        {
+            var entity = new TableEntity { PartitionKey = "partitionKey", RowKey = "01", Timestamp = DateTime.Now, ETag = ETag.All };
+            entity["MyFoo"] = "Bar";
+
+            var dictEntity = entity.ToOdataAnnotatedDictionary();
+
+            Assert.That(dictEntity["PartitionKey"], Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
+            Assert.That(dictEntity["RowKey"], Is.EqualTo(entity.RowKey), "The entities should be equivalent");
+            Assert.That(dictEntity["MyFoo"], Is.EqualTo(entity["MyFoo"].ToString()), "The entities should be equivalent");
+            Assert.That(dictEntity.Keys, Is.EquivalentTo(new[] { "PartitionKey", "RowKey", "MyFoo" }), "Only PK, RK, and user properties should be sent");
+        }
+
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
