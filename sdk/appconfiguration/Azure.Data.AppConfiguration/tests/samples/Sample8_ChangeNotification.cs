@@ -19,15 +19,14 @@ namespace Azure.Data.AppConfiguration.Samples
 #region Snippet:AzConfigSample8_ChangeNotification
         public void HandleEventGridNotification(string data)
         {
-            var events = EventGridEvent.Parse(data);
+            var events = EventGridEvent.ParseMany(new BinaryData(data));
 
             foreach (EventGridEvent eventGridEvent in events)
             {
                 if (eventGridEvent.TryGetSystemEventData(out object systemData) &&
                     systemData is AppConfigurationKeyValueModifiedEventData valueModifiedEventData)
                 {
-                    // TODO: Uncomment when EventGrid is updated with a definition that includes SyncToken
-                    // SharedConfigurationClient.AddSyncToken(valueModifiedEventData.SyncToken);
+                    SharedConfigurationClient.UpdateSyncToken(valueModifiedEventData.SyncToken);
 
                     Response<ConfigurationSetting> updatedSetting = SharedConfigurationClient.GetConfigurationSetting(valueModifiedEventData.Key, valueModifiedEventData.Label);
                     Console.WriteLine($"Setting was updated. Key: {updatedSetting.Value.Key} Value: {updatedSetting.Value.Value}");
