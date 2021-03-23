@@ -16,9 +16,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
     public class LightweightPkcs8DecoderTests
     {
         [Test]
-        [Ignore("Temporarily disable until https://github.com/Azure/azure-sdk-for-net/pull/19612")]
-        public void VerifyECDecoderPrime256v1Imported() =>
-            VerifyECDecoder(EcPrime256v1PrivateKeyImported, CertificateKeyCurveName.P256K, @"DFTTJrKrtao7G/B0bK5yv+mX0/3Sefv2MS1gzd6DfYH2ASe9Tw7rSbLjZ8wM0p7I/opbIG1+zHhpYqOGnQNQyw==", EcPrime256v1CertificateImported);
+        public void VerifyECDecoderPrime256v1Imported()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                Assert.Ignore("The curve is not supported by the current platform");
+            }
+
+            VerifyECDecoder(EcPrime256v1PrivateKeyImported, CertificateKeyCurveName.P256, @"DFTTJrKrtao7G/B0bK5yv+mX0/3Sefv2MS1gzd6DfYH2ASe9Tw7rSbLjZ8wM0p7I/opbIG1+zHhpYqOGnQNQyw==", EcPrime256v1CertificateImported);
+        }
 
         [Test]
         public void VerifyECDecoderSecp256k1() =>
@@ -94,7 +100,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             catch (Exception ex) when (
                 (ex is CryptographicException || (ex is TargetInvocationException && ex.InnerException is CryptographicException)) &&
                 RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
-                keyCurveName == CertificateKeyCurveName.P256K)
+                keyCurveName == CertificateKeyCurveName.P256 || keyCurveName == CertificateKeyCurveName.P256K)
             {
                 Assert.Ignore("The curve is not supported by the current platform");
             }
