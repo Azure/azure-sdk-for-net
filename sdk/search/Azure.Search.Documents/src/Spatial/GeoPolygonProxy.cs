@@ -8,31 +8,31 @@ using System.Reflection;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Proxy for a Microsoft.Spatial.GeographyPolygon class.
+    /// Proxy for a <see cref="Azure.Core.GeoJson.GeoPolygon"/> class.
     /// </summary>
-    internal class GeographyPolygonProxy : GeographyProxy
+    internal sealed class GeoPolygonProxy : GeoObjectProxy
     {
         private static PropertyInfo s_ringsProperty;
-        private IReadOnlyList<GeographyLineStringProxy> _rings;
+        private IReadOnlyList<GeoLinearRingProxy> _rings;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GeographyPolygonProxy"/> class.
+        /// Creates a new instance of the <see cref="GeoPolygonProxy"/> class.
         /// </summary>
-        /// <param name="value">The Microsoft.Spatial.GeographyPolygon object to proxy.</param>
+        /// <param name="value">The <see cref="Azure.Core.GeoJson.GeoPolygon"/> object to proxy.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public GeographyPolygonProxy(object value) : base(value)
+        public GeoPolygonProxy(object value) : base(value)
         {
         }
 
         /// <summary>
-        /// Gets the collection of rings.
+        /// Gets the proxy for <see cref="Azure.Core.GeoJson.GeoPolygon.Rings"/> collection.
         /// </summary>
-        public IReadOnlyList<GeographyLineStringProxy> Rings =>
+        public IReadOnlyList<GeoLinearRingProxy> Rings =>
             GetCollectionPropertyValue(
                 ref s_ringsProperty,
                 ref _rings,
                 nameof(Rings),
-                value => new GeographyLineStringProxy(value));
+                value => new GeoLinearRingProxy(value));
 
         /// <inheritdoc/>
         public override string ToString() => SpatialFormatter.EncodePolygon(this);

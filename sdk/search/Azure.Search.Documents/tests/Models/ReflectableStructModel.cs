@@ -6,16 +6,12 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
-using Microsoft.Spatial;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
 #pragma warning disable SA1402 // File may only contain a single type
 #pragma warning disable SA1649 // File name should match first type name
 
-// TODO: Remove when https://github.com/Azure/azure-sdk-for-net/issues/11166 is completed.
 namespace Azure.Search.Documents.Tests
 {
     public struct ReflectableAddressStruct
@@ -107,11 +103,7 @@ namespace Azure.Search.Documents.Tests
 
         public int? NullableInt { get; set; }
 
-#if EXPERIMENTAL_SPATIAL
         public GeoPoint GeoPoint { get; set; }
-#endif
-
-        public GeographyPoint GeographyPoint { get; set; }
 
         public int[] IntArray { get; set; }
 
@@ -173,7 +165,6 @@ namespace Azure.Search.Documents.Tests
 
         public ICollection<DateTimeOffset> DateTimeOffsetICollection { get; set; }
 
-#if EXPERIMENTAL_SPATIAL
         public GeoPoint[] GeoPointArray { get; set; }
 
         public IList<GeoPoint> GeoPointIList { get; set; }
@@ -183,17 +174,6 @@ namespace Azure.Search.Documents.Tests
         public IEnumerable<GeoPoint> GeoPointIEnumerable { get; set; }
 
         public ICollection<GeoPoint> GeoPointICollection { get; set; }
-#endif
-
-        public GeographyPoint[] GeographyPointArray { get; set; }
-
-        public IList<GeographyPoint> GeographyPointIList { get; set; }
-
-        public List<GeographyPoint> GeographyPointList { get; set; }
-
-        public IEnumerable<GeographyPoint> GeographyPointIEnumerable { get; set; }
-
-        public ICollection<GeographyPoint> GeographyPointICollection { get; set; }
 
         public ReflectableComplexStruct? Complex { get; set; }
 

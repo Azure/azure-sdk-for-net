@@ -4,35 +4,35 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Proxy for a Microsoft.Spatial.GeographyLineString class.
+    /// Proxy for a <see cref="Azure.Core.GeoJson.GeoLinearRing"/> class.
     /// </summary>
-    internal class GeographyLineStringProxy : GeographyProxy
+    internal sealed class GeoLinearRingProxy : GeoObjectProxy
     {
         private static PropertyInfo s_pointsProperty;
-        private IReadOnlyList<GeographyPointProxy> _points;
+        private IReadOnlyList<GeoPositionProxy> _points;
 
         /// <summary>
-        /// Creates a new instance of the <see cref="GeographyLineStringProxy"/> class.
+        /// Creates a new instance of the <see cref="GeoLineStringProxy"/> class.
         /// </summary>
-        /// <param name="value">The Microsoft.Spatial.GeographyLineString object to proxy.</param>
+        /// <param name="value">The <see cref="Azure.Core.GeoJson.GeoLinearRing"/> object to proxy.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is null.</exception>
-        public GeographyLineStringProxy(object value) : base(value)
+        public GeoLinearRingProxy(object value) : base(value)
         {
         }
 
         /// <summary>
-        /// Gets the point collection.
+        /// Gets the proxy for <see cref="Azure.Core.GeoJson.GeoLinearRing.Coordinates"/> collection.
         /// </summary>
-        public IReadOnlyList<GeographyPointProxy> Points =>
+        public IReadOnlyList<GeoPositionProxy> Coordinates =>
             GetCollectionPropertyValue(
                 ref s_pointsProperty,
                 ref _points,
-                nameof(Points),
-                value => new GeographyPointProxy(value));
+                nameof(Coordinates));
 
         /// <inheritdoc/>
         public override string ToString() => SpatialFormatter.EncodePolygon(this);

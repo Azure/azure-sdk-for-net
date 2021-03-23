@@ -29,7 +29,6 @@
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Azure.Security.KeyVault.Keys" />
-    <PackageReference Include="Microsoft.Spatial" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,7 +39,4 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
-
-  <!-- Pull in Microsoft.Azure.Core.Spatial -->
-  <Import Project="..\..\..\core\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.props" />
 </Project>

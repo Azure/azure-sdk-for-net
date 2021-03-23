@@ -8,9 +8,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
@@ -184,9 +182,7 @@ namespace Azure.Search.Documents.Tests
                             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                             Converters =
                             {
-#if EXPERIMENTAL_SPATIAL
                                 new GeoJsonConverter()
-#endif
                             }
                         })
                 });
