@@ -65,9 +65,12 @@ class MatrixParameter {
 
     [String]CreateDisplayName([Hashtable]$displayNamesLookup)
     {
-        $displayName = $this.Value.ToString()
-        if ($this.Value -is [PSCustomObject]) {
+        if ($null -eq $this.Value) {
+            $displayName = ""
+        } elseif ($this.Value -is [PSCustomObject]) {
             $displayName = $this.Name
+        } else {
+            $displayName = $this.Value.ToString()
         }
 
         if ($displayNamesLookup.ContainsKey($displayName)) {
