@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventGrid
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="AcsChatParticipantAddedToThreadEventData"/> system event.
         /// </summary>
-        public const string AcsChatParticipantAddedToThread = "Microsoft.Communication.ChatParticipantAddedToThread";
+        public const string AcsChatParticipantAddedToThread = "Microsoft.Communication.ChatThreadParticipantAdded";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
@@ -44,7 +44,7 @@ namespace Azure.Messaging.EventGrid
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
         /// <see cref="AcsChatParticipantRemovedFromThreadEventData"/> system event.
         /// </summary>
-        public const string AcsChatParticipantRemovedFromThread = "Microsoft.Communication.ChatParticipantRemovedFromThread";
+        public const string AcsChatParticipantRemovedFromThread = "Microsoft.Communication.ChatThreadParticipantRemoved";
 
         /// <summary>
         /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
@@ -135,6 +135,12 @@ namespace Azure.Messaging.EventGrid
         /// <see cref="AcsSmsReceivedEventData"/> system event.
         /// </summary>
         public const string AcsSmsReceived = "Microsoft.Communication.SMSReceived";
+
+        /// <summary>
+        /// The value of the Event Type stored in <see cref="EventGridEvent.EventType"/> and <see cref="CloudEvent.Type"/> for the
+        /// <see cref="AcsRecordingFileStatusUpdatedEventData"/> system event.
+        /// </summary>
+        public const string AcsRecordingFileStatusUpdated = "Microsoft.Communication.RecordingFileStatusUpdated";
         #endregion
 
         #region ContainerRegistry events
