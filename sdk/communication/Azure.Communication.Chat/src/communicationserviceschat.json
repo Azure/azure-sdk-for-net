@@ -3,7 +3,7 @@
     "info": {
         "title": "Azure Communication Chat Service",
         "description": "Azure Communication Chat Service",
-        "version": "2021-03-01-preview5"
+        "version": "2021-03-07"
     },
     "paths": {
         "/chat/threads/{chatThreadId}/readReceipts": {
@@ -850,8 +850,8 @@
                 "parameters": [
                     {
                         "in": "header",
-                        "name": "idempotency-token",
-                        "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Idempotency-Token and get back an appropriate response without the server executing the request multiple times. The value of the Idempotency-Token is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs.",
+                        "name": "repeatability-Request-Id",
+                        "description": "If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs.",
                         "type": "string"
                     },
                     {
