@@ -50,6 +50,7 @@ namespace Azure.Messaging.EventGrid
             { SystemEventNames.AcsChatThreadWithUserDeleted, AcsChatThreadWithUserDeletedEventData.DeserializeAcsChatThreadWithUserDeletedEventData },
             { SystemEventNames.AcsSmsDeliveryReportReceived, AcsSmsDeliveryReportReceivedEventData.DeserializeAcsSmsDeliveryReportReceivedEventData },
             { SystemEventNames.AcsSmsReceived, AcsSmsReceivedEventData.DeserializeAcsSmsReceivedEventData },
+            { SystemEventNames.AcsRecordingFileStatusUpdated, AcsRecordingFileStatusUpdatedEventData.DeserializeAcsRecordingFileStatusUpdatedEventData },
 
             // ContainerRegistry events
             { SystemEventNames.ContainerRegistryImagePushed, ContainerRegistryImagePushedEventData.DeserializeContainerRegistryImagePushedEventData },

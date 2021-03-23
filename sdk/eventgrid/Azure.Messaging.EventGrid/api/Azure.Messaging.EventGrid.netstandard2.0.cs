@@ -66,9 +66,9 @@ namespace Azure.Messaging.EventGrid
         public const string AcsChatMessageEditedInThread = "Microsoft.Communication.ChatMessageEditedInThread";
         public const string AcsChatMessageReceived = "Microsoft.Communication.ChatMessageReceived";
         public const string AcsChatMessageReceivedInThread = "Microsoft.Communication.ChatMessageReceivedInThread";
-        public const string AcsChatParticipantAddedToThread = "Microsoft.Communication.ChatParticipantAddedToThread";
+        public const string AcsChatParticipantAddedToThread = "Microsoft.Communication.ChatThreadParticipantAdded";
         public const string AcsChatParticipantAddedToThreadWithUser = "Microsoft.Communication.ChatParticipantAddedToThreadWithUser";
-        public const string AcsChatParticipantRemovedFromThread = "Microsoft.Communication.ChatParticipantRemovedFromThread";
+        public const string AcsChatParticipantRemovedFromThread = "Microsoft.Communication.ChatThreadParticipantRemoved";
         public const string AcsChatParticipantRemovedFromThreadWithUser = "Microsoft.Communication.ChatParticipantRemovedFromThreadWithUser";
         public const string AcsChatThreadCreated = "Microsoft.Communication.ChatThreadCreated";
         public const string AcsChatThreadCreatedWithUser = "Microsoft.Communication.ChatThreadCreatedWithUser";
@@ -76,6 +76,7 @@ namespace Azure.Messaging.EventGrid
         public const string AcsChatThreadPropertiesUpdated = "Microsoft.Communication.ChatThreadPropertiesUpdated";
         public const string AcsChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
         public const string AcsChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
+        public const string AcsRecordingFileStatusUpdated = "Microsoft.Communication.RecordingFileStatusUpdated";
         public const string AcsSmsDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
         public const string AcsSmsReceived = "Microsoft.Communication.SMSReceived";
         public const string AppConfigurationKeyValueDeleted = "Microsoft.AppConfiguration.KeyValueDeleted";
@@ -188,6 +189,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AcsChatEventInThreadBaseProperties() { }
         public string ThreadId { get { throw null; } }
+        public string TransactionId { get { throw null; } }
     }
     public partial class AcsChatMessageDeletedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventBaseProperties
     {
@@ -329,6 +331,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel DeletedByCommunicationIdentifier { get { throw null; } }
         public System.DateTimeOffset? DeleteTime { get { throw null; } }
     }
+    public partial class AcsRecordingChunkInfoProperties
+    {
+        internal AcsRecordingChunkInfoProperties() { }
+        public string DocumentId { get { throw null; } }
+        public string EndReason { get { throw null; } }
+        public long? Index { get { throw null; } }
+    }
+    public partial class AcsRecordingFileStatusUpdatedEventData
+    {
+        internal AcsRecordingFileStatusUpdatedEventData() { }
+        public long? RecordingDurationMs { get { throw null; } }
+        public System.DateTimeOffset? RecordingStartTime { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties RecordingStorageInfo { get { throw null; } }
+        public string SessionEndReason { get { throw null; } }
+    }
+    public partial class AcsRecordingStorageInfoProperties
+    {
+        internal AcsRecordingStorageInfoProperties() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties> RecordingChunks { get { throw null; } }
+    }
     public partial class AcsSmsDeliveryAttemptProperties
     {
         internal AcsSmsDeliveryAttemptProperties() { }
@@ -343,6 +365,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string DeliveryStatus { get { throw null; } }
         public string DeliveryStatusDetails { get { throw null; } }
         public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
+        public string Tag { get { throw null; } }
     }
     public partial class AcsSmsEventBaseProperties
     {
