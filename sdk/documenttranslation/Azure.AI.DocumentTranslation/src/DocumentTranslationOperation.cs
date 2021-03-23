@@ -15,6 +15,9 @@ namespace Azure.AI.DocumentTranslation
     /// <summary> Tracks the status of a long-running operation for translating documents. </summary>
     public class DocumentTranslationOperation : PageableOperation<DocumentStatusDetail>
     {
+        // TODO: Respect retry after #19442
+        private readonly TimeSpan DefaultPollingInterval = TimeSpan.FromSeconds(30);
+
         /// <summary>Provides communication with the Translator Cognitive Service through its REST API.</summary>
         private readonly DocumentTranslationRestClient _serviceClient;
 
@@ -191,7 +194,7 @@ namespace Azure.AI.DocumentTranslation
         /// An API call is then made to retrieve the status of the documents.
         /// </remarks>
         public override ValueTask<Response<AsyncPageable<DocumentStatusDetail>>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
-            WaitForCompletionAsync(OperationHelpers.DefaultPollingInterval, cancellationToken);
+            WaitForCompletionAsync(DefaultPollingInterval, cancellationToken);
 
         /// <summary>
         /// Periodically calls the server till the long-running operation completes.
