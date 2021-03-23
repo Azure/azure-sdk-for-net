@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Communication
     }
     public partial class CommunicationServiceCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Communication.Models.CommunicationServiceResource>
     {
-        internal CommunicationServiceCreateOrUpdateOperation() { }
+        protected CommunicationServiceCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Communication
     }
     public partial class CommunicationServiceDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal CommunicationServiceDeleteOperation() { }
+        protected CommunicationServiceDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

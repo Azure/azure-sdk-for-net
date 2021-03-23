@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Spark
     }
     public partial class SparkBatchOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkBatchJob>
     {
-        internal SparkBatchOperation() { }
+        protected SparkBatchOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Spark
     }
     public partial class SparkSessionOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkSession>
     {
-        internal SparkSessionOperation() { }
+        protected SparkSessionOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Spark
     }
     public partial class SparkStatementOperation : Azure.Operation<Azure.Analytics.Synapse.Spark.Models.SparkStatement>
     {
-        internal SparkStatementOperation() { }
+        protected SparkStatementOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

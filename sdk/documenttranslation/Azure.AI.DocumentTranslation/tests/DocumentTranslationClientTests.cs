@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.DocumentTranslation.Tests
@@ -27,25 +25,10 @@ namespace Azure.AI.DocumentTranslation.Tests
         [Test]
         public void ConstructorRequiresTheEndpoint()
         {
-            var tokenCredential = new DefaultAzureCredential();
             var keyCredential = new AzureKeyCredential("key");
 
-            Assert.Throws<ArgumentNullException>(() => new DocumentTranslationClient(null, tokenCredential));
-            Assert.Throws<ArgumentNullException>(() => new DocumentTranslationClient(null, tokenCredential, new DocumentTranslationClientOptions()));
             Assert.Throws<ArgumentNullException>(() => new DocumentTranslationClient(null, keyCredential));
             Assert.Throws<ArgumentNullException>(() => new DocumentTranslationClient(null, keyCredential, new DocumentTranslationClientOptions()));
-        }
-
-        /// <summary>
-        /// Verifies functionality of the <see cref="DocumentTranslationClient"/> constructors.
-        /// </summary>
-        [Test]
-        public void ConstructorRequiresTheTokenCredential()
-        {
-            var endpoint = new Uri("http://localhost");
-
-            Assert.Throws<ArgumentNullException>(() => new DocumentTranslationClient(endpoint, default(TokenCredential)));
-            Assert.Throws<ArgumentNullException>(() => new DocumentTranslationClient(endpoint, default(TokenCredential), new DocumentTranslationClientOptions()));
         }
 
         /// <summary>
@@ -67,10 +50,8 @@ namespace Azure.AI.DocumentTranslation.Tests
         public void ConstructorRequiresTheOptions()
         {
             var endpoint = new Uri("http://localhost");
-            var tokenCredential = new DefaultAzureCredential();
             var keyCredential = new AzureKeyCredential("key");
 
-            Assert.Throws<ArgumentNullException>(() => new DocumentTranslationClient(endpoint, tokenCredential, null));
             Assert.Throws<ArgumentNullException>(() => new DocumentTranslationClient(endpoint, keyCredential, null));
         }
 

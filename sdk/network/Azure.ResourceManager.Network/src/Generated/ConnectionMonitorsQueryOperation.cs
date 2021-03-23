@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class ConnectionMonitorsQueryOperation : Operation<ConnectionMonitorQueryResult>, IOperationSource<ConnectionMonitorQueryResult>
     {
         private readonly ArmOperationHelpers<ConnectionMonitorQueryResult> _operation;
+
+        /// <summary> Initializes a new instance of ConnectionMonitorsQueryOperation for mocking. </summary>
+        protected ConnectionMonitorsQueryOperation()
+        {
+        }
+
         internal ConnectionMonitorsQueryOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ConnectionMonitorQueryResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ConnectionMonitorsQueryOperation");

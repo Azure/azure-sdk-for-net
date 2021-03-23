@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class ApplicationGatewaysStartOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of ApplicationGatewaysStartOperation for mocking. </summary>
+        protected ApplicationGatewaysStartOperation()
+        {
+        }
+
         internal ApplicationGatewaysStartOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ApplicationGatewaysStartOperation");
