@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Keys
             _response = response.GetRawResponse();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReleasePhoneNumberOperation" /> for mocking. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoverDeletedKeyOperation" /> for mocking. </summary>
         protected RecoverDeletedKeyOperation() {}
 
         /// <inheritdoc/>
