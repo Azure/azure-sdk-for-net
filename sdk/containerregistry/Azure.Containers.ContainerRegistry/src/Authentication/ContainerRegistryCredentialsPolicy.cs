@@ -12,7 +12,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary>
     /// Challenge-based authentication policy for Container Registry Service.
     ///
-    /// The challenge-based authorization flow is illustrated in the following steps.
+    /// The challenge-based authorization flow for ACR is illustrated in the following steps.
     /// For example, GET /api/v1/acr/repositories translates into the following calls.
     ///
     /// Step 1: GET /api/v1/acr/repositories
@@ -55,11 +55,10 @@ namespace Azure.Containers.ContainerRegistry
             var scope = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "scope");
 
             string acrAccessToken = string.Empty;
-            var aadTokenRequestContext = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
             if (async)
             {
                 // Step 3: Exchange AAD Access Token for ACR Refresh Token
-                string acrRefreshToken = await ExchangeAadAccessTokenForAcrRefreshTokenAsync(message, service, aadTokenRequestContext, true).ConfigureAwait(false);
+                string acrRefreshToken = await ExchangeAadAccessTokenForAcrRefreshTokenAsync(message, service, true).ConfigureAwait(false);
 
                 // Step 4: Send in acrRefreshToken and get back acrAccessToken
                 acrAccessToken = await ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, true).ConfigureAwait(false);
@@ -67,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry
             else
             {
                 // Step 3: Exchange AAD Access Token for ACR Refresh Token
-                string acrRefreshToken = ExchangeAadAccessTokenForAcrRefreshTokenAsync(message, service, aadTokenRequestContext, false).EnsureCompleted();
+                string acrRefreshToken = ExchangeAadAccessTokenForAcrRefreshTokenAsync(message, service, false).EnsureCompleted();
 
                 // Step 4: Send in acrRefreshToken and get back acrAccessToken
                 acrAccessToken = ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, false).EnsureCompleted();
@@ -80,10 +79,9 @@ namespace Azure.Containers.ContainerRegistry
             return true;
         }
 
-        private async Task<string> ExchangeAadAccessTokenForAcrRefreshTokenAsync(HttpMessage message, string service, TokenRequestContext context, bool async)
+        private async Task<string> ExchangeAadAccessTokenForAcrRefreshTokenAsync(HttpMessage message, string service, bool async)
         {
-            string aadAuthHeader = await GetAuthorizationHeader(message, context, async).ConfigureAwait(false);
-            string aadAccessToken = aadAuthHeader.Remove(0, "Bearer ".Length);
+            string aadAccessToken = GetAuthorizationHeader(message);
 
             Response<RefreshToken> acrRefreshToken = null;
             if (async)
@@ -119,27 +117,15 @@ namespace Azure.Containers.ContainerRegistry
             return acrAccessToken.Value.AccessTokenValue;
         }
 
-        private static Dictionary<string, string> ParseChallengeValues(HttpMessage message)
+        private static string GetAuthorizationHeader(HttpMessage message)
         {
-            string bearerValue = string.Empty;
-            string challenge = string.Empty;
-            if (message.Response.Headers.TryGetValue(HttpHeader.Names.WwwAuthenticate, out bearerValue))
+            string aadAuthHeader;
+            if (!message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out aadAuthHeader))
             {
-                if (bearerValue.StartsWith("Bearer ", StringComparison.InvariantCulture))
-                {
-                    challenge = bearerValue.Remove(0, "Bearer ".Length);
-                }
+                throw new InvalidOperationException("Failed to retrieve Authentication header from message request.")
             }
 
-            string[] elements = challenge.Split(',');
-            Dictionary<string, string> challengeValues = new Dictionary<string, string>();
-            foreach (var element in elements)
-            {
-                string[] keyAndValue = element.Split('=');
-                challengeValues[keyAndValue[0]] = keyAndValue[1].Trim('"');
-            }
-
-            return challengeValues;
+            return aadAuthHeader.Remove(0, "Bearer ".Length);
         }
     }
 }

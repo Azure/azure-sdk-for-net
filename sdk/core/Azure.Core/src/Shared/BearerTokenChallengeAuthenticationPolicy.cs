@@ -142,21 +142,6 @@ namespace Azure.Core.Pipeline
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
 
-        protected async Task<string> GetAuthorizationHeader(HttpMessage message, TokenRequestContext context, bool async)
-        {
-            string headerValue;
-            if (async)
-            {
-                headerValue = await _accessTokenCache.GetHeaderValueAsync(message, context, async).ConfigureAwait(false);
-            }
-            else
-            {
-                headerValue = _accessTokenCache.GetHeaderValueAsync(message, context, async).EnsureCompleted();
-            }
-
-            return headerValue;
-        }
-
         private class AccessTokenCache
         {
             private readonly object _syncObj = new object();
