@@ -6,13 +6,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "53",
+        "Content-Length": "62",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210322.1",
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210323.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "bff4718714da47a74bc1d971fac97d10",
+        "x-ms-client-request-id": "f3927c7261e8fee9f7877806974f32cd",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -20,9 +20,9 @@
         "get": {
           "timeSeriesIds": [
             [
-              "ATJOd",
-              "Wph8A",
-              "Gw6BV"
+              "E73SiJpV",
+              "9coPcncf",
+              "lPb3kvBP"
             ]
           ]
         }
@@ -32,19 +32,19 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Mon, 22 Mar 2021 18:47:50 GMT",
+        "Date": "Tue, 23 Mar 2021 09:36:33 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "f411be09-1bd4-4b71-bca7-7537d55ab106"
+        "x-ms-request-id": "af4a07b7-e376-4148-a0d8-ec79d2580c1c"
       },
       "ResponseBody": {
         "get": [
           {
             "error": {
               "code": "ResourceNotFound",
-              "message": "Time series instance with time series ID \u0027[\u0022ATJOd\u0022,\u0022Wph8A\u0022,\u0022Gw6BV\u0022]\u0027 is not found.",
+              "message": "Time series instance with time series ID \u0027[\u0022E73SiJpV\u0022,\u00229coPcncf\u0022,\u0022lPb3kvBP\u0022]\u0027 is not found.",
               "innerError": {
                 "code": "InstanceNotFound"
               }
@@ -59,13 +59,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "53",
+        "Content-Length": "62",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210322.1",
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210323.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "e3413e3a84166f34755f1ded67730e20",
+        "x-ms-client-request-id": "53d928c61c82f1dd15a4eda29e483f02",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -73,9 +73,9 @@
         "get": {
           "timeSeriesIds": [
             [
-              "H29oO",
-              "BAWLL",
-              "EFY7A"
+              "URxe0512",
+              "kzGdILcS",
+              "5n2yiWW5"
             ]
           ]
         }
@@ -85,19 +85,19 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Mon, 22 Mar 2021 18:47:50 GMT",
+        "Date": "Tue, 23 Mar 2021 09:36:33 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "07179f70-e758-47ac-8035-c5dcaf1dd184"
+        "x-ms-request-id": "a461903a-8f00-4320-9310-e714fdc592d5"
       },
       "ResponseBody": {
         "get": [
           {
             "error": {
               "code": "ResourceNotFound",
-              "message": "Time series instance with time series ID \u0027[\u0022H29oO\u0022,\u0022BAWLL\u0022,\u0022EFY7A\u0022]\u0027 is not found.",
+              "message": "Time series instance with time series ID \u0027[\u0022URxe0512\u0022,\u0022kzGdILcS\u0022,\u00225n2yiWW5\u0022]\u0027 is not found.",
               "innerError": {
                 "code": "InstanceNotFound"
               }
@@ -112,13 +112,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "191",
+        "Content-Length": "209",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210322.1",
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210323.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "5a04a608c8accfd65b02b3d9efda4105",
+        "x-ms-client-request-id": "52a117b874cdc1bb11fd66a685ef245f",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -126,17 +126,17 @@
         "put": [
           {
             "timeSeriesId": [
-              "ATJOd",
-              "Wph8A",
-              "Gw6BV"
+              "E73SiJpV",
+              "9coPcncf",
+              "lPb3kvBP"
             ],
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393"
           },
           {
             "timeSeriesId": [
-              "H29oO",
-              "BAWLL",
-              "EFY7A"
+              "URxe0512",
+              "kzGdILcS",
+              "5n2yiWW5"
             ],
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393"
           }
@@ -147,12 +147,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Mon, 22 Mar 2021 18:47:50 GMT",
+        "Date": "Tue, 23 Mar 2021 09:36:33 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "26bd85fe-133d-459a-b614-cf03db48c74c"
+        "x-ms-request-id": "ce240a65-83f3-46d8-b98e-5080e25dd114"
       },
       "ResponseBody": {
         "put": [
@@ -167,13 +167,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "79",
+        "Content-Length": "97",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210322.1",
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210323.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "f3f2464d842636374bf869105e776f49",
+        "x-ms-client-request-id": "d8fd0c2d709635f8b9a15e9d47d4db57",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -181,14 +181,14 @@
         "get": {
           "timeSeriesIds": [
             [
-              "ATJOd",
-              "Wph8A",
-              "Gw6BV"
+              "E73SiJpV",
+              "9coPcncf",
+              "lPb3kvBP"
             ],
             [
-              "H29oO",
-              "BAWLL",
-              "EFY7A"
+              "URxe0512",
+              "kzGdILcS",
+              "5n2yiWW5"
             ]
           ]
         }
@@ -198,12 +198,79 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Mon, 22 Mar 2021 18:47:50 GMT",
+        "Date": "Tue, 23 Mar 2021 09:36:33 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "1bd5e503-0b6e-4b25-b268-5ae1e4933b02"
+        "x-ms-request-id": "3bda56c7-062b-48d0-88d1-58f3d76f5fe8"
+      },
+      "ResponseBody": {
+        "get": [
+          {
+            "error": {
+              "code": "ResourceNotFound",
+              "message": "Time series instance with time series ID \u0027[\u0022E73SiJpV\u0022,\u00229coPcncf\u0022,\u0022lPb3kvBP\u0022]\u0027 is not found.",
+              "innerError": {
+                "code": "InstanceNotFound"
+              }
+            }
+          },
+          {
+            "error": {
+              "code": "ResourceNotFound",
+              "message": "Time series instance with time series ID \u0027[\u0022URxe0512\u0022,\u0022kzGdILcS\u0022,\u00225n2yiWW5\u0022]\u0027 is not found.",
+              "innerError": {
+                "code": "InstanceNotFound"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/instances/$batch?api-version=2020-07-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "97",
+        "Content-Type": "application/json",
+        "User-Agent": [
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210323.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+        ],
+        "x-ms-client-request-id": "9089c7b1fac6518e6c174284b6366b26",
+        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "get": {
+          "timeSeriesIds": [
+            [
+              "E73SiJpV",
+              "9coPcncf",
+              "lPb3kvBP"
+            ],
+            [
+              "URxe0512",
+              "kzGdILcS",
+              "5n2yiWW5"
+            ]
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
+        "Content-Type": "application/json",
+        "Date": "Tue, 23 Mar 2021 09:36:42 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-request-id": "af033d96-ae6c-48e2-8c3d-274a984eaa3f"
       },
       "ResponseBody": {
         "get": [
@@ -211,9 +278,9 @@
             "instance": {
               "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
               "timeSeriesId": [
-                "ATJOd",
-                "Wph8A",
-                "Gw6BV"
+                "E73SiJpV",
+                "9coPcncf",
+                "lPb3kvBP"
               ]
             }
           },
@@ -221,9 +288,9 @@
             "instance": {
               "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
               "timeSeriesId": [
-                "H29oO",
-                "BAWLL",
-                "EFY7A"
+                "URxe0512",
+                "kzGdILcS",
+                "5n2yiWW5"
               ]
             }
           }
@@ -236,13 +303,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "246",
+        "Content-Length": "264",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210322.1",
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210323.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "21a0181e1b8084fa6fcd0eb35fc671e3",
+        "x-ms-client-request-id": "bef50e22936533997dab6b7f2d737e82",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -250,21 +317,21 @@
         "update": [
           {
             "timeSeriesId": [
-              "ATJOd",
-              "Wph8A",
-              "Gw6BV"
+              "E73SiJpV",
+              "9coPcncf",
+              "lPb3kvBP"
             ],
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "name": "instanceQGIaJ3JK"
+            "name": "instancezlWGdMs2"
           },
           {
             "timeSeriesId": [
-              "H29oO",
-              "BAWLL",
-              "EFY7A"
+              "URxe0512",
+              "kzGdILcS",
+              "5n2yiWW5"
             ],
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "name": "instancenxV1Lmhk"
+            "name": "instanceUgqKxGU9"
           }
         ]
       },
@@ -273,12 +340,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Mon, 22 Mar 2021 18:47:50 GMT",
+        "Date": "Tue, 23 Mar 2021 09:36:42 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "e55a2978-dd74-48d7-8b2d-e07cec2ea27c"
+        "x-ms-request-id": "454fb852-ef8a-40ca-a319-18f2708cdcc9"
       },
       "ResponseBody": {
         "update": [
@@ -296,18 +363,18 @@
         "Content-Length": "57",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210322.1",
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210323.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "34c76a92183fb9bb23808cb4fc2266f1",
+        "x-ms-client-request-id": "ba1d3835495f4a0b5b41715a61623c4e",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "get": {
           "names": [
-            "instanceQGIaJ3JK",
-            "instancenxV1Lmhk"
+            "instancezlWGdMs2",
+            "instanceUgqKxGU9"
           ]
         }
       },
@@ -316,12 +383,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Mon, 22 Mar 2021 18:47:50 GMT",
+        "Date": "Tue, 23 Mar 2021 09:36:42 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "5955e040-954b-46cf-8cd9-8b4ebfdd88c2"
+        "x-ms-request-id": "8fb2e55d-8e2b-41e8-a850-0c00118a7586"
       },
       "ResponseBody": {
         "get": [
@@ -329,22 +396,22 @@
             "instance": {
               "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
               "timeSeriesId": [
-                "ATJOd",
-                "Wph8A",
-                "Gw6BV"
+                "E73SiJpV",
+                "9coPcncf",
+                "lPb3kvBP"
               ],
-              "name": "instanceQGIaJ3JK"
+              "name": "instancezlWGdMs2"
             }
           },
           {
             "instance": {
               "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
               "timeSeriesId": [
-                "H29oO",
-                "BAWLL",
-                "EFY7A"
+                "URxe0512",
+                "kzGdILcS",
+                "5n2yiWW5"
               ],
-              "name": "instancenxV1Lmhk"
+              "name": "instanceUgqKxGU9"
             }
           }
         ]
@@ -357,10 +424,10 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210322.1",
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210323.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "46f1cd784ed7f7c8bf16b97c846f12a1",
+        "x-ms-client-request-id": "a762059cad41ecc0f44014a0fbec1bab",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -370,651 +437,203 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Mon, 22 Mar 2021 18:47:50 GMT",
+        "Date": "Tue, 23 Mar 2021 09:36:42 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "c9fcb851-b10e-4e98-a479-14f1ad2bee6d"
+        "x-ms-request-id": "bd2c3ec1-232d-4d7f-b91d-3983429fac13"
       },
       "ResponseBody": {
         "instances": [
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "0VBLZ",
-              "DOZCQ",
-              "I1kMo"
+              "4wzf4b92",
+              "JuySZgMR",
+              "9SNC9aLM"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "2JofZ",
-              "ty3iF",
-              "pVaUF"
+              "5DhMbTV4",
+              "x7CeLsyT",
+              "VmOgzQZO"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "3idCj",
-              "YpLj0",
-              "f4IrO"
+              "a3U5WXvQ",
+              "cMH5lXkK",
+              "gbxaO2h5"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "5LI7S",
-              "rwTX5",
-              "MGWrK"
+              "am5ideo7",
+              "gSwtPghT",
+              "faJyAXL2"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "5Z12Y",
-              "sm8SC",
-              "9ty18"
+              "avTPsvaL",
+              "0UT0LqMp",
+              "8cHcUBeo"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "6eGyV",
-              "uJ3G1",
-              "bOz70"
+              "ccu9mszE",
+              "CzMRhQlU",
+              "n6822fch"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "890jQ",
-              null,
-              "EgbFw"
+              "cnaw5QVW",
+              "KrepBMJK",
+              "ru3EVicc"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "8tCfe",
-              "znHXP",
-              "u05EA"
+              "D3RjBoCN",
+              "BI8HVM6P",
+              "XKhGGZTt"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "8wO4G",
-              "UKR3v",
-              "0BcWk"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "9lgRY",
-              "WNUMf",
-              "HMW9N"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "9q9oX",
-              "q4BwA",
-              "FV6BZ"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "ATJOd",
-              "Wph8A",
-              "Gw6BV"
+              "E73SiJpV",
+              "9coPcncf",
+              "lPb3kvBP"
             ],
-            "name": "instanceQGIaJ3JK"
+            "name": "instancezlWGdMs2"
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "AxC60",
-              "3mdL3",
-              "L9sqd"
+              "F1yjoY3U",
+              "fqNoHtJJ",
+              "S3H3wwXV"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "biTUE",
-              "NUvUj",
-              "YAhbV"
+              "gimnTQDr",
+              "kb9mzYFv",
+              "XDIHJsyG"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "BTWOM",
-              "rOtjM",
-              "3xF9b"
+              "HkinV12B",
+              "7D4Eamrn",
+              "0vJnYkat"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "DGu7z",
-              "1T7r6",
-              "Ib7nQ"
+              "lbwuxBqV",
+              "FHJt2N0L",
+              "mcEL6Fw0"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "dkhWI",
-              "lDcPz",
-              "Ce7yD"
+              "m16u2Vsc",
+              "3gpyBQMk",
+              "p42LUhZA"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "dTER8",
-              "ioMkQ",
-              "aX8hG"
+              "OYRj6FtK",
+              "rh9ep92Y",
+              "0W429uxB"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "DZ1Z0",
-              "0EL57",
-              "BG7kZ"
+              "PECHvfyo",
+              "6S9OXXTw",
+              "19kM6Ll0"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "EEnuU",
-              "XmSpe",
-              "GhCJn"
+              "SedqHEXL",
+              "ypeQhLTD",
+              "2R4Ha50k"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "eu68I",
-              "7uSH5",
-              "Lk4I5"
+              "tmWffVoP",
+              "BLEC2KQ3",
+              "s2gFV3OO"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "euxPu",
-              "j44oA",
-              "a08F7"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "FaZbW",
-              "aM57l",
-              "Y24MV"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "fLlaE",
-              "XN4vD",
-              "rXcgy"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "fQfco",
-              "B8kYo",
-              "7Ef7i"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "FRNUE",
-              "TVeW5",
-              "3Xhvs"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "g3146",
-              "t6gA2",
-              "TlLCn"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "g3rFS",
-              "kJ4xx",
-              "yT8dT"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "gmITz",
-              "vQ5rd",
-              "SC1gb"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "gprPf",
-              "m8OmO",
-              "FI9Fz"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "GZtsI",
-              "rksLE",
-              "u5Xxv"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "H29oO",
-              "BAWLL",
-              "EFY7A"
+              "URxe0512",
+              "kzGdILcS",
+              "5n2yiWW5"
             ],
-            "name": "instancenxV1Lmhk"
+            "name": "instanceUgqKxGU9"
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "hBgp5",
-              "ant5K",
-              "4GEO7"
+              "vwYDGQLi",
+              "a69Fx2zJ",
+              "NOba2ubz"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "HsBvG",
-              "gGAZK",
-              "84Ue6"
+              "wfzexoFW",
+              "ffJKxeYa",
+              "PUAV2QeF"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "InipO",
-              "t2QBK",
-              "abVWq"
+              "wwL9qCfu",
+              "EbfFa4Ru",
+              "8PaboQFk"
             ]
           },
           {
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
             "timeSeriesId": [
-              "JWB03",
-              "kHWIG",
-              "96RGs"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "jzWxk",
-              "SVhDy",
-              "D2Q1S"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "Ka30a",
-              "26jwg",
-              "NLyFw"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "kDy6V",
-              "B1Ca3",
-              "pvZ7m"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "KFVs0",
-              "8OU7g",
-              "fRBqZ"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "kG04H",
-              "FFWNV",
-              "tVV8g"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "knlKm",
-              null,
-              "doFl4"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "l7UAM",
-              "6MIcn",
-              "JYNh2"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "L8fvu",
-              "6POhd",
-              "adesG"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "LzLOE",
-              "7ybpK",
-              "y7OMp"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "MFDln",
-              "aNYFJ",
-              "4Fica"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "mmWG1",
-              "rgGpf",
-              "ppkjx"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "Msxvy",
-              "kUkTa",
-              "THY87"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "n39rK",
-              "NVRzr",
-              "QemwW"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "NA2zc",
-              "gm2al",
-              "XXZRx"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "o6thh",
-              "9VAWy",
-              "cxLoA"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "OleAp",
-              "W92bR",
-              "mqLan"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "OSriZ",
-              "t2imm",
-              "YIjf6"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "oZbvK",
-              null,
-              "UokjR"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "pKZEw",
-              "ADTjI",
-              "ndcFB"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "PT35K",
-              "INd8V",
-              "qPTii"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "PvEAo",
-              "OS9pe",
-              "pf7is"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "Q2Wnr",
-              "n7uIj",
-              "0rn8s"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "Qnyab",
-              "QXMnt",
-              "7DhqU"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "ROpWL",
-              "H9BJ2",
-              "G6cFs"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "RvL6C",
-              "PCYGw",
-              "psRXY"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "rYpTK",
-              "moMWz",
-              "XpwNW"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "SajgA",
-              "HHqmu",
-              "L38IR"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "sbHIv",
-              "v778H",
-              "SWbn7"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "SIAsg",
-              "vYHMM",
-              "t5kDe"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "sptmc",
-              "JEEfs",
-              "4YbEs"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "tcZwq",
-              "B14W4",
-              "vcXHJ"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "TpUy5",
-              "GDjLP",
-              "MhELv"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "ttmEa",
-              "QcX3g",
-              "5rHJL"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "ULFmz",
-              "NlmoU",
-              "KhpDi"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "v9ws4",
-              "CNTPr",
-              "tzbfW"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "VeisK",
-              "i8vIu",
-              "mBlo6"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "wvUZJ",
-              "bfmNd",
-              "EyMJr"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "xo0CG",
-              "x3jso",
-              "v5lOU"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "YFqSF",
-              "9PCm4",
-              "KrFRt"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "yty86",
-              "lOy0X",
-              "jET7P"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "z605y",
-              "8uAq0",
-              "yBSDa"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "z8AvX",
-              "FzOr9",
-              "Dqbz7"
-            ]
-          },
-          {
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-            "timeSeriesId": [
-              "zIWMB",
-              null,
-              "sCYyD"
+              "xaKu2zRv",
+              "VFAOrdm8",
+              "vDiUalv1"
             ]
           }
         ],
-        "continuationToken": "aXsic2tpcCI6MTAwMCwidGFrZSI6MTAwMCwicmVxdWVzdEhhc2hDb2RlIjoxOTQ3MjUzNzgyLCJlbnZpcm9ubWVudElkIjoiNTRjYzQ4MjMtZjI5Zi00MzNjLTkxOWYtNTBiOTBjMjBlYTc4In0="
+        "continuationToken": "aXsic2tpcCI6MTAwMCwidGFrZSI6MTAwMCwicmVxdWVzdEhhc2hDb2RlIjoxOTQ3MjUzNzgyLCJlbnZpcm9ubWVudElkIjoiN2RhNWU1NjQtMTI3NS00YjQwLWI1ZWMtZGZmZjBmMGExMWFhIn0="
       }
     },
     {
@@ -1024,12 +643,12 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210322.1",
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210323.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "6582a4004b93065b5ce7fd008e45874c",
+        "x-ms-client-request-id": "ddf616edc000d9dd02ab6224223fd21b",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
-        "x-ms-continuation": "aXsic2tpcCI6MTAwMCwidGFrZSI6MTAwMCwicmVxdWVzdEhhc2hDb2RlIjoxOTQ3MjUzNzgyLCJlbnZpcm9ubWVudElkIjoiNTRjYzQ4MjMtZjI5Zi00MzNjLTkxOWYtNTBiOTBjMjBlYTc4In0=",
+        "x-ms-continuation": "aXsic2tpcCI6MTAwMCwidGFrZSI6MTAwMCwicmVxdWVzdEhhc2hDb2RlIjoxOTQ3MjUzNzgyLCJlbnZpcm9ubWVudElkIjoiN2RhNWU1NjQtMTI3NS00YjQwLWI1ZWMtZGZmZjBmMGExMWFhIn0=",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1038,12 +657,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Mon, 22 Mar 2021 18:47:50 GMT",
+        "Date": "Tue, 23 Mar 2021 09:36:42 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "e4233440-ce36-4633-912e-1b07e8805f86"
+        "x-ms-request-id": "4c08efd5-eda0-4819-8194-dbf5a6b88eda"
       },
       "ResponseBody": {
         "instances": []
@@ -1058,33 +677,33 @@
         "Content-Length": "22",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210322.1",
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210323.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "913b1d662bd5430ca1cf75295f3e34b3",
+        "x-ms-client-request-id": "27e21c6fd71188407831c51f356b4e6f",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "searchString": "ATJ"
+        "searchString": "E73"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Mon, 22 Mar 2021 18:47:50 GMT",
+        "Date": "Tue, 23 Mar 2021 09:36:42 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "c3b4e9bc-78dc-48d0-9eb9-23d160733acb"
+        "x-ms-request-id": "52abd816-3da7-4752-a636-9992356000f3"
       },
       "ResponseBody": {
         "suggestions": [
           {
-            "searchString": "ATJOd",
-            "highlightedSearchString": "\u003Chit\u003EATJ\u003C/hit\u003EOd"
+            "searchString": "E73SiJpV",
+            "highlightedSearchString": "\u003Chit\u003EE73\u003C/hit\u003ESiJpV"
           }
         ]
       }
@@ -1095,13 +714,13 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "82",
+        "Content-Length": "100",
         "Content-Type": "application/json",
         "User-Agent": [
-          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210322.1",
+          "azsdk-net-Iot.TimeSeriesInsights/1.0.0-alpha.20210323.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "57b4eb6d009f2c5d72eae9f050c8687a",
+        "x-ms-client-request-id": "4b6cc5255e6cdc4e2888a4964b9bc9b5",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -1109,14 +728,14 @@
         "delete": {
           "timeSeriesIds": [
             [
-              "ATJOd",
-              "Wph8A",
-              "Gw6BV"
+              "E73SiJpV",
+              "9coPcncf",
+              "lPb3kvBP"
             ],
             [
-              "H29oO",
-              "BAWLL",
-              "EFY7A"
+              "URxe0512",
+              "kzGdILcS",
+              "5n2yiWW5"
             ]
           ]
         }
@@ -1126,12 +745,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Mon, 22 Mar 2021 18:47:50 GMT",
+        "Date": "Tue, 23 Mar 2021 09:36:42 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "3a1f16d7-674e-4be1-b81f-7eeb091ce50a"
+        "x-ms-request-id": "501e906a-f430-4a50-a6e5-7da2e00674ba"
       },
       "ResponseBody": {
         "delete": [
@@ -1142,7 +761,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2052630005",
+    "RandomSeed": "1228320732",
     "TIMESERIESINSIGHTS_URL": "fakeHost.api.wus2.timeseriesinsights.azure.com"
   }
 }
