@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobVersionListResult
+    internal partial class JobVersionListResult
     {
         internal static JobVersionListResult DeserializeJobVersionListResult(JsonElement element)
         {

@@ -12,6 +12,7 @@ namespace Azure.Identity.Tests.Mock
 
         public Action<TokenCredential> OnCreateEnvironmentCredential { get; set; }
         public Action<TokenCredential> OnCreateAzureCliCredential { get; set; }
+        public Action<bool, TokenCredential> OnCreateAzurePowerShellCredential { get; set; }
         public Action<string, TokenCredential> OnCreateManagedIdentityCredential { get; set; }
         public Action<string, string, TokenCredential> OnCreateSharedTokenCacheCredential { get; set; }
         public Action<string, TokenCredential> OnCreateInteractiveBrowserCredential { get; set; }
@@ -50,6 +51,15 @@ namespace Azure.Identity.Tests.Mock
             TokenCredential cred = new MockTokenCredential();
 
             OnCreateAzureCliCredential?.Invoke(cred);
+
+            return cred;
+        }
+
+        public override TokenCredential CreateAzurePowerShellCredential(bool useLegacyPowerShell)
+        {
+            TokenCredential cred = new MockTokenCredential();
+
+            OnCreateAzurePowerShellCredential?.Invoke(useLegacyPowerShell, cred);
 
             return cred;
         }

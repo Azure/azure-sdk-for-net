@@ -9,7 +9,7 @@ Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -Sdk
 #Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-subscriptions-2020-01" -SdkGenerationDirectory "$PSScriptRoot\Generated\Subscriptions"
 
 # Generate package with policy tag
-# Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-policy-2019-09" -SdkGenerationDirectory "$PSScriptRoot\Generated"
+# Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-policy-2020-09" -SdkGenerationDirectory "$PSScriptRoot\GeneratedPolicy202009"
 
 # Generate package with deployment scripts
 # Start-AutoRestCodeGeneration -ResourceProvider "resources/resource-manager" -SdkRepoRootPath "$PSScriptRoot\..\..\..\.." -AutoRestVersion "v2" -AutoRestCodeGenerationFlags "--tag=package-deploymentscripts-2019-10-preview" -SdkGenerationDirectory "$PSScriptRoot\Generated\DeploymentScripts"

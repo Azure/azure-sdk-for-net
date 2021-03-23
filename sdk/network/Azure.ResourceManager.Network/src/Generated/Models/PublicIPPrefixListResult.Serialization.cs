@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PublicIPPrefixListResult
+    internal partial class PublicIPPrefixListResult
     {
         internal static PublicIPPrefixListResult DeserializePublicIPPrefixListResult(JsonElement element)
         {

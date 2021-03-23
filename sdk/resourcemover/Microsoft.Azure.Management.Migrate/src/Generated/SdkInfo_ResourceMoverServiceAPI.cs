@@ -19,10 +19,10 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Migrate", "MoveCollections", "2019-10-01-preview"),
-                new Tuple<string, string, string>("Migrate", "MoveResources", "2019-10-01-preview"),
-                new Tuple<string, string, string>("Migrate", "OperationsDiscovery", "2019-10-01-preview"),
-                new Tuple<string, string, string>("Migrate", "UnresolvedDependencies", "2019-10-01-preview"),
+                new Tuple<string, string, string>("Migrate", "MoveCollections", "2021-01-01"),
+                new Tuple<string, string, string>("Migrate", "MoveResources", "2021-01-01"),
+                new Tuple<string, string, string>("Migrate", "OperationsDiscovery", "2021-01-01"),
+                new Tuple<string, string, string>("Migrate", "UnresolvedDependencies", "2021-01-01"),
               }.AsEnumerable();
           }
       }
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/resourcemover/resource-manager/readme.md --csharp --version=V2 --reflect-api-versions --csharp-sdks-folder=C:\\GithubRepo\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "3b1545ce83f3fa8a437f181ebfabd3bd4fa8e3e2";
+      public static readonly String GithubCommidId = "7fd1f02a5ccdd088c6df561be0c36d2ff902a36d";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

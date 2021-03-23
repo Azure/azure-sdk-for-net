@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class ShareChangeLeaseHeaders
+    internal partial class ShareChangeLeaseHeaders
     {
         private readonly Response _response;
         public ShareChangeLeaseHeaders(Response response)

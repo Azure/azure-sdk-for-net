@@ -1,13 +1,58 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
+
+
+## 1.0.0-beta.3 (2021-02-09)
 
 ### New Features
 - Added support for AAD authentication in `MetricsAdvisorClient` and `MetricsAdvisorAdministrationClient`.
 
+### Breaking Changes
+- The constructor of the `DataFeed` class is now parameterless. Required properties should be set via setters.
+- The constructor of the `DataFeedSchema` class is now parameterless. Metrics can be added directly to `MetricColumns`.
+- The constructor of the `DataFeedIngestionSettings` class is now parameterless. Required properties should be set via setters.
+- The constructor of the `AnomalyDetectionConfiguration` class is now parameterless. Required properties should be set via setters.
+- The constructor of the `MetricSingleSeriesDetectionCondition` class is now parameterless. Dimension columns can be added directly to `SeriesKey`.
+- The constructor of the `MetricSeriesGroupDetectionCondition` class is now parameterless. Dimension columns can be added directly to `SeriesGroupKey`.
+- The constructor of the `AnomalyAlertConfiguration` class is now parameterless. Required properties should be set via setters.
+- The constructor of the `EmailNotificationHook` and `WebNotificationHook` are now parameterless. Required properies should be set via setters.
+- In `MetricsAdvisorAdministratorClient`, changed return types of sync and async `CreateDataFeed` methods to a `Response<DataFeed>` containing the created data feed.
+- In `MetricsAdvisorAdministratorClient`, changed return types of sync and async `CreateDetectionConfiguration` methods to a `Response<AnomalyDetectionConfiguration>` containing the created configuration.
+- In `MetricsAdvisorAdministratorClient`, changed return types of sync and async `CreateAlertConfiguration` methods to a `Response<AnomalyAlertConfiguration>` containing the created configuration.
+- In `MetricsAdvisorAdministratorClient`, changed return types of sync and async `CreateHook` methods to a `Response<NotificationHook>` containing the created hook.
+- In `MetricsAdvisorClient`, changed return types of sync and async `AddMetricFeedback` methods to a `Response<MetricFeedback>` containing the added feedback.
+- In `DataFeed`, added property setters to `Name`, `DataSource`, `Granularity`, `IngestionSettings`, and `Schema`.
+- In `DataFeedIngestionSettings`, added a property setter to `IngestionStartTime`.
+- In `AnomalyDetectionConfiguration`, added property setters to `MetricId`, `Name`, and `WholeSeriesDetectionConditions`.
+- In `AnomalyAlertConfiguration`, added a property setter to `Name`.
+- In `MetricAnomalyAlertSnoozeCondition`, added property setters to `AutoSnooze`, `IsOnlyForSuccessive`, and `SnoozeScope`.
+- In `MetricBoundaryCondition`, added a property setter to `Direction`.
+- In `SeverityCondition`, added property setters to `MaximumAlertSeverity` and `MinimumAlertSeverity`.
+- In `NotificationHook`, added a property setter to `Name`.
+- In `WebNotificationHook`, added a property setter to `Endpoint`.
+- In `DataFeed`, removed the setters of the properties `Administrators` and `Viewers`.
+- In `DataFeedSchema`, removed the setter of the property `DimensionColumns`.
+- In `DataFeedRollupSettings`, removed the setter of the property `AutoRollupGroupByColumnNames`.
+- In `AnomalyDetectionConfiguration`, removed the setters of the properties `SeriesDetectionConditions` and `SeriesGroupDetectionConditions`.
+- In `WebNotificationHook`, removed the setter of the property `Headers`.
+- In `GetAnomaliesForDetectionConfigurationFilter`, removed the setter of the property `SeriesGroupKeys`. Keys can be added directly to the property.
+- In `GetMetricSeriesDefinitionsOptions`, removed the setter of the property `DimensionCombinationsToFilter`. Keys combinations can be added directly to the property.
+- In `GetValuesOfDimensionWithAnomaliesOptions`, removed the setter of the property `DimensionToFilter`. Dimension columns can be added directly to the property.
+- `DataFeed.SourceType` is now nullable. It will be null whenever `DataFeed.DataSource` is null.
+- `DataFeed.IngestionStartTime` is now nullable.
+- `MetricsAdvisorAdministrationClient.CreateDataFeed` sync and async methods now throw an `ArgumentException` if required properties are not set properly.
+- `MetricsAdvisorAdministrationClient.CreateDetectionConfiguration` sync and async methods now throw an `ArgumentException` if required properties are not set properly.
+- `MetricsAdvisorAdministrationClient.CreateAlertConfiguration` sync and async methods now throw an `ArgumentException` if required properties are not set properly.
+- In `MetricsAdvisorKeyCredential`, renamed the parameter `key` to `subscriptionKey` in the method `UpdateSubscriptionKey`.
+- In `MetricsAdvisorKeyCredential`, renamed the parameter `key` to `apiKey` in the method `UpdateApiKey`.
+- In `GetMetricSeriesDataOptions`, removed the parameter `seriesToFilter` from the constructor. Keys can be added directly to `SeriesToFilter`.
+- In `FeedbackDimensionFilter`, removed the parameter `dimensionFilter` from the constructor. Dimension columns can be added directly to `DimensionFilter`.
+
 ### Key Bug Fixes
 - Fixed a bug in which setting `WebNotificationHook.CertificatePassword` would actually set the property `Username` instead.
 - Fixed a bug in which an `ArgumentNullException` was thrown when getting a `DataFeed` from the service as a Viewer.
+- Fixed a bug in which a data feed's administrators and viewers could not be set during creation.
 
 ## 1.0.0-beta.2 (2020-11-10)
 

@@ -20,8 +20,8 @@ namespace Azure.AI.MetricsAdvisor
         /// <summary>
         /// Initializes a new instance of the <see cref="MetricsAdvisorKeyCredential"/> class.
         /// </summary>
-        /// <param name="subscriptionKey">Key to use to authenticate with the Azure service.</param>
-        /// <param name="apiKey">Key to use to authenticate the user with the Metrics Advisor service. Used to identify administrators.</param>
+        /// <param name="subscriptionKey">The subscription key to use to authenticate with the Azure service.</param>
+        /// <param name="apiKey">The API key to use to authenticate the user with the Metrics Advisor service. Used to identify administrators.</param>
         /// <exception cref="ArgumentNullException"><paramref name="subscriptionKey"/> or <paramref name="apiKey"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="subscriptionKey"/> or <paramref name="apiKey"/> is empty.</exception>
         public MetricsAdvisorKeyCredential(string subscriptionKey, string apiKey)
@@ -43,29 +43,29 @@ namespace Azure.AI.MetricsAdvisor
         }
 
         /// <summary>
-        /// Updates the service key. This is intended to be used when you've regenerated
-        /// your service key and want to update long lived clients.
+        /// Updates the subscription key. This is intended to be used when you've regenerated
+        /// your subscription key and want to update long lived clients.
         /// </summary>
-        /// <param name="key">Key to authenticate the service against.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="key"/> is empty.</exception>
-        public void UpdateSubscriptionKey(string key)
+        /// <param name="subscriptionKey">The subscription key to authenticate the service against.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="subscriptionKey"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="subscriptionKey"/> is empty.</exception>
+        public void UpdateSubscriptionKey(string subscriptionKey)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-            SubscriptionKey = key;
+            Argument.AssertNotNullOrEmpty(subscriptionKey, nameof(subscriptionKey));
+            SubscriptionKey = subscriptionKey;
         }
 
         /// <summary>
         /// Updates the API key. This is intended to be used when you've regenerated your
         /// API key and want to update long lived clients.
         /// </summary>
-        /// <param name="key">Key to use to authenticate the user with the Metrics Advisor service. Used to identify administrators.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is null.</exception>
-        /// <exception cref="ArgumentException"><paramref name="key"/> is empty.</exception>
-        public void UpdateApiKey(string key)
+        /// <param name="apiKey">The API key to use to authenticate the user with the Metrics Advisor service. Used to identify administrators.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="apiKey"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="apiKey"/> is empty.</exception>
+        public void UpdateApiKey(string apiKey)
         {
-            Argument.AssertNotNullOrEmpty(key, nameof(key));
-            ApiKey = key;
+            Argument.AssertNotNullOrEmpty(apiKey, nameof(apiKey));
+            ApiKey = apiKey;
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <PkgVersion>0.12.0-dev.20190813.1</PkgVersion>
+    <PkgVersion>0.12.0-dev.20210304.2</PkgVersion>
     <PkgLocalDir>$(NuGetPackageRoot)\microsoft.internal.netsdkbuild.mgmt.tools\$(PkgVersion)\Sdk</PkgLocalDir>
   </PropertyGroup>
 
   <!-- during execution of tasks tests, this conditional import will satisfy the import resolution. And you will have to manually execute a target to restore the package
   Again this is strickly for build tools tests that will be run against this repo -->
   <Import Condition="Exists($(PkgLocalDir))" Project="$(PkgLocalDir)\CI.Bootstrap.targets" />
-  <Import Condition="!Exists($(PkgLocalDir))" Project="CI.Bootstrap.targets" Sdk="Microsoft.Internal.NetSdkBuild.Mgmt.Tools" Version="0.12.0-dev.20190813.1" />
+  <Import Condition="!Exists($(PkgLocalDir))" Project="CI.Bootstrap.targets" Sdk="Microsoft.Internal.NetSdkBuild.Mgmt.Tools" Version="0.12.0-dev.20210304.2" />
   <Import Project="$(RepoRoot)\tools\bootstrapTools\bootstrap.targets" />
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

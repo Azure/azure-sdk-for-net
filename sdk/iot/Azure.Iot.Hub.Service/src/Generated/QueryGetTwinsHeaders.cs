@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Iot.Hub.Service
 {
-    internal class QueryGetTwinsHeaders
+    internal partial class QueryGetTwinsHeaders
     {
         private readonly Response _response;
         public QueryGetTwinsHeaders(Response response)

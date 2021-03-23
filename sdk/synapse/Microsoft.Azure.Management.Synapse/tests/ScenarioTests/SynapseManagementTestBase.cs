@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.Synapse.Tests
             Context = SynapseMockContext.Start(this.GetType(), methodName);
             CommonData = new CommonTestFixture();
             SynapseClient = Context.GetServiceClient<SynapseManagementClient>();
+            SynapseClient.BaseUri = new Uri("https://eastus2euap.management.azure.com");
             SynapseManagementHelper = new SynapseManagementHelper(CommonData, Context);
 
             if (IsRecordMode)

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues
 {
-    internal class MessagesDequeueHeaders
+    internal partial class MessagesDequeueHeaders
     {
         private readonly Response _response;
         public MessagesDequeueHeaders(Response response)

@@ -16,11 +16,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public static class PatchAssessmentState
     {
-        public const string Installed = "Installed";
-        public const string Failed = "Failed";
-        public const string Excluded = "Excluded";
-        public const string NotSelected = "NotSelected";
-        public const string Pending = "Pending";
+        public const string Unknown = "Unknown";
         public const string Available = "Available";
     }
 }

@@ -7,6 +7,6 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/838c5092f11e8ca26e262b1f1099d5c5cdfedc3f/specification/communication/data-plane/Microsoft.CommunicationServicesSms/preview/2020-07-20-preview1/communicationservicessms.json
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/83d782b99cb85a9b2f5ef22774584541dd0ff997/specification/communication/data-plane/Microsoft.CommunicationServicesSms/stable/2021-03-07/communicationservicessms.json
 payload-flattening-threshold: 10
 ```

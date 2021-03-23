@@ -5,7 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.ServiceBus;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
@@ -14,10 +14,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
     internal class NonNullConverterValueBinder<TInput> : IOrderedValueBinder
     {
         private readonly ServiceBusEntity _entity;
-        private readonly IConverter<TInput, Message> _converter;
+        private readonly IConverter<TInput, ServiceBusMessage> _converter;
         private readonly Guid _functionInstanceId;
 
-        public NonNullConverterValueBinder(ServiceBusEntity entity, IConverter<TInput, Message> converter,
+        public NonNullConverterValueBinder(ServiceBusEntity entity, IConverter<TInput, ServiceBusMessage> converter,
             Guid functionInstanceId)
         {
             _entity = entity;
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
         public string ToInvokeString()
         {
-            return _entity.MessageSender.Path;
+            return _entity.MessageSender.EntityPath;
         }
 
         public Task SetValueAsync(object value, CancellationToken cancellationToken)
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             }
 
             Debug.Assert(value is TInput);
-            Message message = _converter.Convert((TInput)value);
+            ServiceBusMessage message = _converter.Convert((TInput)value);
             Debug.Assert(message != null);
 
             return _entity.SendAndCreateEntityIfNotExistsAsync(message, _functionInstanceId, cancellationToken);

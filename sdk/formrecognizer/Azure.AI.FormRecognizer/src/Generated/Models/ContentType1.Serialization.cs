@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal static class ContentType1Extensions
+    internal static partial class ContentType1Extensions
     {
         public static string ToSerialString(this ContentType1 value) => value switch
         {

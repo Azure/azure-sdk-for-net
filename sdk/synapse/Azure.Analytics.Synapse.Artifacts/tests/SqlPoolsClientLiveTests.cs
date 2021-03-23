@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGet()
         {
             SqlPoolsClient client = CreateClient();

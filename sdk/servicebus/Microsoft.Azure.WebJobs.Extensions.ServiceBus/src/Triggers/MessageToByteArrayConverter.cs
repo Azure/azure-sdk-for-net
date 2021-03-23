@@ -7,13 +7,13 @@ using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Converters;
-using Microsoft.Azure.ServiceBus;
+using Azure.Messaging.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 {
-    internal class MessageToByteArrayConverter : IAsyncConverter<Message, byte[]>
+    internal class MessageToByteArrayConverter : IAsyncConverter<ServiceBusReceivedMessage, byte[]>
     {
-        public Task<byte[]> ConvertAsync(Message input, CancellationToken cancellationToken)
+        public Task<byte[]> ConvertAsync(ServiceBusReceivedMessage input, CancellationToken cancellationToken)
         {
             if (input == null)
             {
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            return Task.FromResult(input.Body);
+            return Task.FromResult(input.Body.ToArray());
         }
     }
 }

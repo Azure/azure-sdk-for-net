@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues
 {
-    internal class QueueDeleteHeaders
+    internal partial class QueueDeleteHeaders
     {
         private readonly Response _response;
         public QueueDeleteHeaders(Response response)

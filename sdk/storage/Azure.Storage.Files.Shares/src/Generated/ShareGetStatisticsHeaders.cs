@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class ShareGetStatisticsHeaders
+    internal partial class ShareGetStatisticsHeaders
     {
         private readonly Response _response;
         public ShareGetStatisticsHeaders(Response response)

@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Keys
 {
     /// <summary>
-    /// The properties needed to create an Elliptic Curve key using the <see cref="KeyClient"/>.
+    /// The properties needed to create an RSA key using the <see cref="KeyClient"/>.
     /// </summary>
     public class CreateRsaKeyOptions : CreateKeyOptions
     {

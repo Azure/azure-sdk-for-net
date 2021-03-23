@@ -12,11 +12,6 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareMetrics
     {
         /// <summary>
-        /// Constructor.
-        /// </summary>
-        public ShareMetrics() { }
-
-        /// <summary>
         /// Indicates whether metrics should generate summary statistics for called API operations.
         /// </summary>
         [CodeGenMember("IncludeAPIs")]
@@ -29,6 +24,26 @@ namespace Azure.Storage.Files.Shares.Models
         {
             Version = version;
             Enabled = enabled;
+        }
+
+        /// <summary>
+        /// Creates a new ShareMetrics instance.
+        /// </summary>
+        public ShareMetrics()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new ShareMetrics instance.
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal ShareMetrics(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                RetentionPolicy = new Azure.Storage.Files.Shares.Models.ShareRetentionPolicy();
+            }
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetDataFlows()
         {
             DataFlowClient client = CreateClient();
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             Assert.GreaterOrEqual((await dataFlows.ToListAsync()).Count, 1);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetDataFlow()
         {
             DataFlowClient client = CreateClient();
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             Assert.AreEqual (flow.Name, dataFlow.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RenameDataFlow()
         {
             DataFlowClient client = CreateClient();
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             await operation.WaitForCompletionAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteDataFlow()
         {
             DataFlowClient client = CreateClient();

@@ -57,6 +57,13 @@ namespace Azure.Identity
         public string ManagedIdentityClientId { get; set; } = GetNonEmptyStringOrNull(EnvironmentVariables.ClientId);
 
         /// <summary>
+        /// Set this if you want to use PowerShell (version 5 or lower) for getting the token
+        /// instead of PowerShell Core (version 6 or higher) which is the version used by default.
+        /// This can be set to true only on Windows OS.
+        /// </summary>
+        public bool UseLegacyPowerShell { get; set; }
+
+        /// <summary>
         /// Specifies whether the <see cref="EnvironmentCredential"/> will be excluded from the authentication flow. Setting to true disables reading
         /// authentication details from the process' environment variables.
         /// </summary>
@@ -72,7 +79,7 @@ namespace Azure.Identity
         /// Specifies whether the <see cref="SharedTokenCacheCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
         /// Setting to true disables single sign on authentication with development tools which write to the shared token cache.
         /// </summary>
-        public bool ExcludeSharedTokenCacheCredential { get; set; }
+        public bool ExcludeSharedTokenCacheCredential { get; set; } = true;
 
         /// <summary>
         /// Specifies whether the <see cref="InteractiveBrowserCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
@@ -99,5 +106,10 @@ namespace Azure.Identity
         {
             return !string.IsNullOrEmpty(str) ? str : null;
         }
+
+        /// <summary>
+        /// Specifies whether the <see cref="AzurePowerShellCredential"/> will be excluded from the <see cref="DefaultAzureCredential"/> authentication flow.
+        /// </summary>
+        public bool ExcludeAzurePowerShellCredential { get; set; }
     }
 }

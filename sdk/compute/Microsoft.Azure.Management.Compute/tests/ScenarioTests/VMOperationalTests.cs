@@ -385,7 +385,7 @@ namespace Compute.Tests
                                                        virtualMachine.AvailabilitySet = null;
                                                        virtualMachine.BillingProfile = new BillingProfile { MaxPrice = -1 };
                                                    },
-                                                   vmSize: VirtualMachineSizeTypes.StandardA1);
+                                                   vmSize: VirtualMachineSizeTypes.StandardA1V2);
                     m_CrpClient.VirtualMachines.SimulateEviction(rg1Name, vm1.Name);
                     passed = true;
                 }

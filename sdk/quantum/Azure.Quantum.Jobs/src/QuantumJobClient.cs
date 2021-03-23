@@ -38,14 +38,14 @@ namespace Azure.Quantum.Jobs
             }
 
             var authPolicy = new BearerTokenAuthenticationPolicy(credential, "https://quantum.microsoft.com");
+            var diagnostics = new ClientDiagnostics(options);
+            var pipeline = HttpPipelineBuilder.Build(options, authPolicy);
+            var endpoint = new Uri($"https://{location}.quantum.azure.com");
 
-            _jobs = new JobsRestClient(
-                new ClientDiagnostics(options),
-                HttpPipelineBuilder.Build(options, authPolicy),
-                subscriptionId,
-                resourceGroupName,
-                workspaceName,
-                new Uri($"https://{location}.quantum.azure.com"));
+            _jobs = new JobsRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
+            _providers = new ProvidersRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
+            _quotas = new QuotasRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
+            _storage = new StorageRestClient(diagnostics, pipeline, subscriptionId, resourceGroupName, workspaceName, endpoint);
         }
 
         /// <summary> Get job by id. </summary>
@@ -83,7 +83,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="job"> The complete metadata of the job to submit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="job"/> is null. </exception>
-        public virtual Response<JobDetails> Create(string jobId, JobDetails job, CancellationToken cancellationToken = default)
+        public virtual Response<JobDetails> CreateJob(string jobId, JobDetails job, CancellationToken cancellationToken = default)
         {
             return _jobs.Create(jobId, job, cancellationToken);
         }
@@ -93,7 +93,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="job"> The complete metadata of the job to submit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="job"/> is null. </exception>
-        public virtual async Task<Response<JobDetails>> CreateAsync(string jobId, JobDetails job, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobDetails>> CreateJobAsync(string jobId, JobDetails job, CancellationToken cancellationToken = default)
         {
             return await _jobs.CreateAsync(jobId, job, cancellationToken).ConfigureAwait(false);
         }
@@ -102,7 +102,7 @@ namespace Azure.Quantum.Jobs
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual Response Cancel(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response CancelJob(string jobId, CancellationToken cancellationToken = default)
         {
             return _jobs.Cancel(jobId, cancellationToken);
         }
@@ -111,9 +111,55 @@ namespace Azure.Quantum.Jobs
         /// <param name="jobId"> Id of the job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
-        public virtual async Task<Response> CancelAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelJobAsync(string jobId, CancellationToken cancellationToken = default)
         {
             return await _jobs.CancelAsync(jobId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get provider status. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<ProviderStatus> GetProviderStatus(CancellationToken cancellationToken = default)
+        {
+            return PageResponseEnumerator.CreateEnumerable(cont => ToPage(string.IsNullOrEmpty(cont) ? _providers.GetStatus() : _providers.GetStatusNextPage(cont)));
+        }
+
+        /// <summary> Get provider status. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ProviderStatus> GetProviderStatusAsync(CancellationToken cancellationToken = default)
+        {
+            return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(string.IsNullOrEmpty(cont) ? await _providers.GetStatusAsync().ConfigureAwait(false) : await _providers.GetStatusNextPageAsync(cont).ConfigureAwait(false)));
+        }
+
+        /// <summary> Get quota status. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<QuantumJobQuota> GetQuotas(CancellationToken cancellationToken = default)
+        {
+            return PageResponseEnumerator.CreateEnumerable(cont => ToPage(string.IsNullOrEmpty(cont) ? _quotas.List() : _quotas.ListNextPage(cont)));
+        }
+
+        /// <summary> Get quota status. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<QuantumJobQuota> GetQuotasAsync(CancellationToken cancellationToken = default)
+        {
+            return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(string.IsNullOrEmpty(cont) ? await _quotas.ListAsync().ConfigureAwait(false) : await _quotas.ListNextPageAsync(cont).ConfigureAwait(false)));
+        }
+
+        /// <summary> Gets a URL with SAS token for a container/blob in the storage account associated with the workspace. The SAS URL can be used to upload job input and/or download job output. </summary>
+        /// <param name="blobDetails"> The details (name and container) of the blob to store or download data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobDetails"/> is null. </exception>
+        public virtual Response<SasUriResponse> GetStorageSasUri(BlobDetails blobDetails, CancellationToken cancellationToken = default)
+        {
+            return _storage.SasUri(blobDetails, cancellationToken);
+        }
+
+        /// <summary> Gets a URL with SAS token for a container/blob in the storage account associated with the workspace. The SAS URL can be used to upload job input and/or download job output. </summary>
+        /// <param name="blobDetails"> The details (name and container) of the blob to store or download data. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="blobDetails"/> is null. </exception>
+        public virtual async Task<Response<SasUriResponse>> GetStorageSasUriAsync(BlobDetails blobDetails, CancellationToken cancellationToken = default)
+        {
+            return await _storage.SasUriAsync(blobDetails, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Initializes a new instance of QuantumJobClient for mocking. </summary>
@@ -124,6 +170,15 @@ namespace Azure.Quantum.Jobs
         private static Page<JobDetails> ToPage(Response<JobDetailsList> list) =>
             Page.FromValues(list.Value.Values, list.Value.NextLink, list.GetRawResponse());
 
+        private static Page<ProviderStatus> ToPage(Response<ProviderStatusList> list) =>
+            Page.FromValues(list.Value.Values, list.Value.NextLink, list.GetRawResponse());
+
+        private static Page<QuantumJobQuota> ToPage(Response<QuantumJobQuotaList> list) =>
+            Page.FromValues(list.Value.Values, list.Value.NextLink, list.GetRawResponse());
+
         private JobsRestClient _jobs;
+        private ProvidersRestClient _providers;
+        private QuotasRestClient _quotas;
+        private StorageRestClient _storage;
     }
 }

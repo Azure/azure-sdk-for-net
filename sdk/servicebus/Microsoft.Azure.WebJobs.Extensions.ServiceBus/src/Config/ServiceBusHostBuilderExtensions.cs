@@ -44,6 +44,39 @@ namespace Microsoft.Extensions.Hosting
                         config[Constants.DefaultConnectionSettingStringName];
 
                     IConfigurationSection section = config.GetSection(path);
+
+                    bool? autoCompleteMessages = section.GetValue(
+                        "MessageHandlerOptions:AutoComplete",
+                        section.GetValue<bool?>("SessionHandlerOptions:AutoComplete"));
+                    autoCompleteMessages ??= section.GetValue<bool?>("BatchOptions:AutoComplete");
+                    if (autoCompleteMessages != null)
+                    {
+                        options.AutoCompleteMessages = autoCompleteMessages.Value;
+                    }
+
+                    options.PrefetchCount = section.GetValue(
+                        "PrefetchCount",
+                        options.PrefetchCount);
+
+                    var maxAutoLockDuration = section.GetValue(
+                        "MessageHandlerOptions:MaxAutoRenewDuration",
+                        section.GetValue<TimeSpan?>("SessionHandlerOptions:MaxAutoRenewDuration"));
+
+                    if (maxAutoLockDuration != null)
+                    {
+                        options.MaxAutoLockRenewalDuration = maxAutoLockDuration.Value;
+                    }
+
+                    options.MaxConcurrentCalls = section.GetValue(
+                        "MessageHandlerOptions:MaxConcurrentCalls",
+                        options.MaxConcurrentCalls);
+
+                    options.MaxConcurrentSessions = section.GetValue(
+                        "SessionHandlerOptions:MaxConcurrentSessions",
+                        options.MaxConcurrentSessions);
+
+                    options.SessionIdleTimeout = section.GetValue("SessionHandlerOptions:MessageWaitTime", options.SessionIdleTimeout);
+
                     section.Bind(options);
 
                     configure(options);

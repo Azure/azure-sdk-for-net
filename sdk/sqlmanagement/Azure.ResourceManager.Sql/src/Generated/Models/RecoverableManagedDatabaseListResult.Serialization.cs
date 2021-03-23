@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RecoverableManagedDatabaseListResult
+    internal partial class RecoverableManagedDatabaseListResult
     {
         internal static RecoverableManagedDatabaseListResult DeserializeRecoverableManagedDatabaseListResult(JsonElement element)
         {

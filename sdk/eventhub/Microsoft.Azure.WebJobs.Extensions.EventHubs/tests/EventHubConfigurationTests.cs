@@ -8,6 +8,7 @@ using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
@@ -36,20 +37,18 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubOptions options = CreateOptionsFromConfig();
 
             Assert.AreEqual(123, options.MaxBatchSize);
-            Assert.AreEqual(TimeSpan.FromSeconds(33), options.EventProcessorOptions.MaximumWaitTime);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
-            Assert.AreEqual(true, options.InvokeFunctionAfterReceiveTimeout);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
             Assert.AreEqual("FromEnqueuedTime", options.InitialOffsetOptions.Type);
             Assert.AreEqual("2020-09-13T12:00Z", options.InitialOffsetOptions.EnqueuedTimeUTC);
-            Assert.AreEqual(5, options.RetryOptions.MaximumRetries);
-            Assert.AreEqual(TimeSpan.FromSeconds(1), options.RetryOptions.Delay);
-            Assert.AreEqual(TimeSpan.FromMinutes(1), options.RetryOptions.MaximumDelay);
-            Assert.AreEqual(TimeSpan.FromSeconds(90), options.RetryOptions.TryTimeout);
-            Assert.AreEqual(EventHubsRetryMode.Fixed, options.RetryOptions.Mode);
+            Assert.AreEqual(5, options.ClientRetryOptions.MaximumRetries);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), options.ClientRetryOptions.Delay);
+            Assert.AreEqual(TimeSpan.FromMinutes(1), options.ClientRetryOptions.MaximumDelay);
+            Assert.AreEqual(TimeSpan.FromSeconds(90), options.ClientRetryOptions.TryTimeout);
+            Assert.AreEqual(EventHubsRetryMode.Fixed, options.ClientRetryOptions.Mode);
             Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, options.ConnectionOptions.TransportType);
         }
 
@@ -58,26 +57,23 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = CreateOptionsFromConfig();
 
-            string format = options.Format();
+            string format = ((IOptionsFormatter) options).Format();
             JObject iObj = JObject.Parse(format);
             EventHubOptions result = iObj.ToObject<EventHubOptions>();
 
             Assert.AreEqual(123, result.MaxBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
-            Assert.True(result.InvokeFunctionAfterReceiveTimeout);
             Assert.AreEqual(123, result.PrefetchCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(33), result.MaximumWaitTime);
             Assert.AreEqual(TimeSpan.FromSeconds(31), result.PartitionOwnershipExpirationInterval);
             Assert.AreEqual(TimeSpan.FromSeconds(21), result.LoadBalancingUpdateInterval);
-            Assert.AreEqual(LoadBalancingStrategy.Balanced, result.LoadBalancingStrategy);
             Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type);
             Assert.AreEqual("2020-09-13T12:00Z", result.InitialOffsetOptions.EnqueuedTimeUTC);
-            Assert.AreEqual(5, result.RetryOptions.MaximumRetries);
-            Assert.AreEqual(TimeSpan.FromSeconds(1), result.RetryOptions.Delay);
-            Assert.AreEqual(TimeSpan.FromMinutes(1), result.RetryOptions.MaximumDelay);
-            Assert.AreEqual(TimeSpan.FromSeconds(90), result.RetryOptions.TryTimeout);
-            Assert.AreEqual(EventHubsRetryMode.Fixed, result.RetryOptions.Mode);
+            Assert.AreEqual(5, result.ClientRetryOptions.MaximumRetries);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), result.ClientRetryOptions.Delay);
+            Assert.AreEqual(TimeSpan.FromMinutes(1), result.ClientRetryOptions.MaximumDelay);
+            Assert.AreEqual(TimeSpan.FromSeconds(90), result.ClientRetryOptions.TryTimeout);
+            Assert.AreEqual(EventHubsRetryMode.Fixed, result.ClientRetryOptions.Mode);
             Assert.AreEqual(EventHubsTransportType.AmqpWebSockets, result.ConnectionOptions.TransportType);
         }
 
@@ -87,10 +83,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             EventHubOptions options = CreateOptionsFromConfigBackCompat();
 
             Assert.AreEqual(123, options.MaxBatchSize);
-            Assert.AreEqual(TimeSpan.FromSeconds(33), options.EventProcessorOptions.MaximumWaitTime);
             Assert.AreEqual(true, options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
             Assert.AreEqual(123, options.EventProcessorOptions.PrefetchCount);
-            Assert.AreEqual(true, options.InvokeFunctionAfterReceiveTimeout);
             Assert.AreEqual(5, options.BatchCheckpointFrequency);
             Assert.AreEqual(31, options.EventProcessorOptions.PartitionOwnershipExpirationInterval.TotalSeconds);
             Assert.AreEqual(21, options.EventProcessorOptions.LoadBalancingUpdateInterval.TotalSeconds);
@@ -103,16 +97,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         {
             EventHubOptions options = CreateOptionsFromConfigBackCompat();
 
-            string format = options.Format();
+            string format = ((IOptionsFormatter) options).Format();
             JObject iObj = JObject.Parse(format);
             EventHubOptions result = iObj.ToObject<EventHubOptions>();
 
             Assert.AreEqual(123, result.MaxBatchSize);
             Assert.AreEqual(5, result.BatchCheckpointFrequency);
             Assert.True(result.TrackLastEnqueuedEventProperties);
-            Assert.True(result.InvokeFunctionAfterReceiveTimeout);
             Assert.AreEqual(123, result.PrefetchCount);
-            Assert.AreEqual(TimeSpan.FromSeconds(33), result.MaximumWaitTime);
             Assert.AreEqual(TimeSpan.FromSeconds(31), result.PartitionOwnershipExpirationInterval);
             Assert.AreEqual(TimeSpan.FromSeconds(21), result.LoadBalancingUpdateInterval);
             Assert.AreEqual("FromEnqueuedTime", result.InitialOffsetOptions.Type);
@@ -125,21 +117,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var values = new Dictionary<string, string>
             {
                 { $"{extensionPath}:MaxBatchSize", "123" },
-                { $"{extensionPath}:MaximumWaitTime", "00:00:33" },
                 { $"{extensionPath}:TrackLastEnqueuedEventProperties", "true" },
                 { $"{extensionPath}:PrefetchCount", "123" },
-                { $"{extensionPath}:InvokeFunctionAfterReceiveTimeout", "true" },
                 { $"{extensionPath}:BatchCheckpointFrequency", "5" },
                 { $"{extensionPath}:PartitionOwnershipExpirationInterval", "00:00:31" },
                 { $"{extensionPath}:LoadBalancingUpdateInterval", "00:00:21" },
                 { $"{extensionPath}:LoadBalancingStrategy", "0" },
                 { $"{extensionPath}:InitialOffsetOptions:Type", "FromEnqueuedTime" },
                 { $"{extensionPath}:InitialOffsetOptions:EnqueuedTimeUTC", "2020-09-13T12:00Z" },
-                { $"{extensionPath}:RetryOptions:MaximumRetries", "5" },
-                { $"{extensionPath}:RetryOptions:Delay", "00:00:01" },
-                { $"{extensionPath}:RetryOptions:MaxDelay", "00:01:00" },
-                { $"{extensionPath}:RetryOptions:TryTimeout", "00:01:30" },
-                { $"{extensionPath}:RetryOptions:Mode", "0" },
+                { $"{extensionPath}:ClientRetryOptions:MaximumRetries", "5" },
+                { $"{extensionPath}:ClientRetryOptions:Delay", "00:00:01" },
+                { $"{extensionPath}:ClientRetryOptions:MaxDelay", "00:01:00" },
+                { $"{extensionPath}:ClientRetryOptions:TryTimeout", "00:01:30" },
+                { $"{extensionPath}:ClientRetryOptions:Mode", "0" },
                 { $"{extensionPath}:ConnectionOptions:TransportType", "1" },
             };
 

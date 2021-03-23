@@ -99,8 +99,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         public async Task GetMetricSeriesDefinitionsWithOptionalDimensionFilter()
         {
-            var cityFilter = new List<string>() { "Belo Horizonte", "Los Angeles", "Osaka" };
-            var categoryFilter = new List<string>() { "__SUM__", "Shoes Handbags & Sunglasses" };
+            var cityFilter = new List<string>() { "Belo Horizonte", "Chennai", "Hong Kong" };
+            var categoryFilter = new List<string>() { "__SUM__", "Outdoors" };
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -150,10 +150,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             seriesKey2.AddDimensionColumn("city", "Koltaka");
             seriesKey2.AddDimensionColumn("category", "__SUM__");
 
-            var seriesKeys = new List<DimensionKey>() { seriesKey1, seriesKey2 };
             var returnedKeys = new List<DimensionKey>();
 
-            var options = new GetMetricSeriesDataOptions(seriesKeys, SamplingStartTime, SamplingEndTime);
+            var options = new GetMetricSeriesDataOptions(SamplingStartTime, SamplingEndTime)
+            {
+                SeriesToFilter = { seriesKey1, seriesKey2 }
+            };
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(MetricId, options))
             {
@@ -175,7 +177,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 returnedKeys.Add(seriesData.Definition.SeriesKey);
             }
 
-            Assert.That(seriesKeys, Is.EquivalentTo(returnedKeys));
+            Assert.That(returnedKeys.Count, Is.EqualTo(2));
+            Assert.That(returnedKeys.Contains(seriesKey1));
+            Assert.That(returnedKeys.Contains(seriesKey2));
         }
 
         [RecordedTest]

@@ -3,9 +3,11 @@ variables:
   OfficialBuildId: $(Build.BuildNumber)
   ConvertToProjectReferenceOption: ''
   skipComponentGovernanceDetection: true
+  NugetSecurityAnalysisWarningLevel: 'none'
   ${{ if ne(variables['System.TeamProject'], 'internal') }}:
     BuildConfiguration: 'Debug'
   ${{ if eq(variables['System.TeamProject'], 'internal') }}:
     BuildConfiguration: 'Release'
   DocFxVersion: 'v2.56.1'
   CollectCoverage: false
+  DECODE_PERCENTS: false

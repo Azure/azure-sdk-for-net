@@ -1,39 +1,34 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/prebuilt/businessCard/analyze?includeTextDetails=false\u0026locale=not-locale",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/businessCard/analyze?includeTextDetails=false\u0026locale=not-locale",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "22",
-        "Content-Type": "application/json",
+        "Content-Length": "915108",
+        "Content-Type": "image/jpeg",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-33b9eca0cf9666479bb91c9a916575f7-ca5f58fb0d4bb949-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201015.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "0c00f61b3fe264147a8e75f31ac2e787",
+        "traceparent": "00-f33a5664b4236945aa909a3087dd6bda-3da9cdcf9f18ec46-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210216.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "4129cb8977d771e2afba7ce485dd5238",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": {
-        "source": "Sanitized"
-      },
+      "RequestBody": null,
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "55631c36-da76-4a9e-a119-516e38209262",
+        "apim-request-id": "d7d67ea2-a650-4a10-a7eb-e48a34bc38de",
         "Content-Length": "200",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 15 Oct 2020 23:59:01 GMT",
+        "Date": "Wed, 17 Feb 2021 00:20:24 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "655"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "1228"
       },
       "ResponseBody": {
         "error": {
           "code": "UnsupportedLocale",
           "innerError": {
-            "requestId": "55631c36-da76-4a9e-a119-516e38209262"
+            "requestId": "d7d67ea2-a650-4a10-a7eb-e48a34bc38de"
           },
           "message": "Locale unsupported. Supported locales include en-AU, en-CA, en-GB, en-IN and en-US."
         }
@@ -42,7 +37,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
-    "RandomSeed": "1101271057"
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-canada-central.cognitiveservices.azure.com/",
+    "RandomSeed": "662925835"
   }
 }

@@ -8,12 +8,7 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The data stored in Optimized Row Columnar (ORC) format. </summary>
-    internal partial class OrcFormat : DatasetStorageFormat
+    public partial class OrcFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of OrcFormat. </summary>
-        internal OrcFormat()
-        {
-            Type = "OrcFormat";
-        }
     }
 }

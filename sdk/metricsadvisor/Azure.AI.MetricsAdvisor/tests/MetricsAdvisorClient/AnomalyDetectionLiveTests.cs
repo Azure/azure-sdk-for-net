@@ -324,10 +324,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var options = new GetValuesOfDimensionWithAnomaliesOptions(SamplingStartTime, SamplingEndTime)
-            {
-                DimensionToFilter = new DimensionKey()
-            };
+            var options = new GetValuesOfDimensionWithAnomaliesOptions(SamplingStartTime, SamplingEndTime);
 
             options.DimensionToFilter.AddDimensionColumn("category", "Handmade");
 

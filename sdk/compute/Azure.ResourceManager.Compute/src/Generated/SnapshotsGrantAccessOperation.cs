@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class SnapshotsGrantAccessOperation : Operation<AccessUri>, IOperationSource<AccessUri>
     {
         private readonly ArmOperationHelpers<AccessUri> _operation;
+
+        /// <summary> Initializes a new instance of SnapshotsGrantAccessOperation for mocking. </summary>
+        protected SnapshotsGrantAccessOperation()
+        {
+        }
+
         internal SnapshotsGrantAccessOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<AccessUri>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SnapshotsGrantAccessOperation");

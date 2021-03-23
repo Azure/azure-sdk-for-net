@@ -25,12 +25,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// The minimum severity an anomaly must have to be able to trigger alerts.
         /// </summary>
         [CodeGenMember("MinAlertSeverity")]
-        public AnomalySeverity MinimumAlertSeverity { get; }
+        public AnomalySeverity MinimumAlertSeverity { get; set; }
 
         /// <summary>
         /// The maximum severity an anomaly must have to be able to trigger alerts.
         /// </summary>
         [CodeGenMember("MaxAlertSeverity")]
-        public AnomalySeverity MaximumAlertSeverity { get; }
+        public AnomalySeverity MaximumAlertSeverity { get; set; }
     }
 }

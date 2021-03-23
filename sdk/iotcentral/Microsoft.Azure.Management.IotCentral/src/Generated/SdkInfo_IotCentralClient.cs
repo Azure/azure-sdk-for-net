@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.IotCentral
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/iotcentral/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.output-folder=C:\\Users\\pochen\\Github\\azure-sdk-for-net\\sdk\\iotcentral\\Microsoft.Azure.Management.IotCentral\\src\\Generated";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "b5851f013e3e954c7356e7d7384ae5188f6944ca";
+      public static readonly String GithubCommidId = "42fdd45e761f87132e85ed77caf30d5cac81aee5";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

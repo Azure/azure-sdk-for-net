@@ -159,6 +159,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
             Assert.AreEqual(options.ReceiveMode, processor.ReceiveMode);
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(options.SessionIdleTimeout, processor.SessionIdleTimeout);
             Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
             Assert.IsFalse(processor.IsClosed);
             Assert.IsFalse(processor.IsProcessing);
@@ -181,15 +182,15 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 () => options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(-1),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
             Assert.That(
-                () => options.MaxReceiveWaitTime = TimeSpan.FromSeconds(0),
+                () => options.SessionIdleTimeout = TimeSpan.FromSeconds(0),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
             Assert.That(
-                () => options.MaxReceiveWaitTime = TimeSpan.FromSeconds(-1),
+                () => options.SessionIdleTimeout = TimeSpan.FromSeconds(-1),
                 Throws.InstanceOf<ArgumentOutOfRangeException>());
 
             // should not throw
             options.PrefetchCount = 0;
-            options.MaxReceiveWaitTime = TimeSpan.FromSeconds(1);
+            options.SessionIdleTimeout = TimeSpan.FromSeconds(1);
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
         }
 

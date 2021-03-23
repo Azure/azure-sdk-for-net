@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <seealso cref="EventHubProducerClientOptions.EnableIdempotentPartitions" />
         ///
-        public long? ProducerGroupId  { get; set; }
+        public long? ProducerGroupId { get; set; }
 
         /// <summary>
         ///   The owner level indicates that a publishing is intended to be performed exclusively for events in the

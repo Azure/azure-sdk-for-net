@@ -28,35 +28,37 @@ namespace Azure.AI.MetricsAdvisor.Samples
             //@@ string metricId = "<metricId>";
             string configurationName = "Sample anomaly detection configuration";
 
-            var hardThresholdSuppressCondition = new SuppressCondition(1, 100);
-            var hardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down, hardThresholdSuppressCondition)
+            var detectionConfiguration = new AnomalyDetectionConfiguration()
+            {
+                MetricId = metricId,
+                Name = configurationName,
+                WholeSeriesDetectionConditions = new MetricWholeSeriesDetectionCondition()
+            };
+
+            var detectCondition = detectionConfiguration.WholeSeriesDetectionConditions;
+
+            var hardSuppress = new SuppressCondition(1, 100);
+            detectCondition.HardThresholdCondition = new HardThresholdCondition(AnomalyDetectorDirection.Down, hardSuppress)
             {
                 LowerBound = 5.0
             };
 
-            var smartDetectionSuppressCondition = new SuppressCondition(4, 50);
-            var smartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartDetectionSuppressCondition);
+            var smartSuppress = new SuppressCondition(4, 50);
+            detectCondition.SmartDetectionCondition = new SmartDetectionCondition(10.0, AnomalyDetectorDirection.Up, smartSuppress);
 
-            var detectionCondition = new MetricWholeSeriesDetectionCondition()
-            {
-                HardThresholdCondition = hardThresholdCondition,
-                SmartDetectionCondition = smartDetectionCondition,
-                CrossConditionsOperator = DetectionConditionsOperator.Or
-            };
+            detectCondition.CrossConditionsOperator = DetectionConditionsOperator.Or;
 
-            var detectionConfiguration = new AnomalyDetectionConfiguration(metricId, configurationName, detectionCondition);
+            Response<AnomalyDetectionConfiguration> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
 
-            Response<string> response = await adminClient.CreateDetectionConfigurationAsync(detectionConfiguration);
+            AnomalyDetectionConfiguration createdDetectionConfiguration = response.Value;
 
-            string detectionConfigurationId = response.Value;
-
-            Console.WriteLine($"Anomaly detection configuration ID: {detectionConfigurationId}");
+            Console.WriteLine($"Anomaly detection configuration ID: {createdDetectionConfiguration.Id}");
             #endregion
 
             // Delete the created anomaly detection configuration to clean up the Metrics Advisor resource.
             // Do not perform this step if you intend to keep using the configuration.
 
-            await adminClient.DeleteDetectionConfigurationAsync(detectionConfigurationId);
+            await adminClient.DeleteDetectionConfigurationAsync(createdDetectionConfiguration.Id);
         }
 
         [Test]

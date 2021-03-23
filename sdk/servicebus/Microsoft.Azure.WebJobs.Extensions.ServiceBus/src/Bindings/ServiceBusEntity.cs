@@ -4,18 +4,17 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
+using Azure.Messaging.ServiceBus;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 {
     internal class ServiceBusEntity
     {
-        public MessageSender MessageSender { get; set; }
+        public ServiceBusSender MessageSender { get; set; }
 
         public EntityType EntityType { get; set; } = EntityType.Queue;
 
-        public Task SendAndCreateEntityIfNotExistsAsync(Message message, Guid functionInstanceId, CancellationToken cancellationToken)
+        public Task SendAndCreateEntityIfNotExistsAsync(ServiceBusMessage message, Guid functionInstanceId, CancellationToken cancellationToken)
         {
             return MessageSender.SendAndCreateEntityIfNotExists(message, functionInstanceId, cancellationToken);
         }

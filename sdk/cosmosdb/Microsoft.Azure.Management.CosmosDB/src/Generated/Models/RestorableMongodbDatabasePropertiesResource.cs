@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The resource of an Azure Cosmos DB MongoDB database event
+    /// </summary>
     public partial class RestorableMongodbDatabasePropertiesResource
     {
         /// <summary>
@@ -33,12 +36,11 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="operationType">The operation type of this database
         /// event. Possible values include: 'Create', 'Replace', 'Delete',
         /// 'SystemOperation'</param>
-        /// <param name="eventTimestamp">The timestamp of this database
-        /// event.</param>
-        /// <param name="ownerId">The name of this restorable MongoDB
+        /// <param name="eventTimestamp">The time when this database event
+        /// happened.</param>
+        /// <param name="ownerId">The name of this MongoDB database.</param>
+        /// <param name="ownerResourceId">The resource ID of this MongoDB
         /// database.</param>
-        /// <param name="ownerResourceId">The resource Id of this restorable
-        /// MongoDB database.</param>
         public RestorableMongodbDatabasePropertiesResource(string _rid = default(string), string operationType = default(string), string eventTimestamp = default(string), string ownerId = default(string), string ownerResourceId = default(string))
         {
             this._rid = _rid;
@@ -68,19 +70,19 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public string OperationType { get; private set; }
 
         /// <summary>
-        /// Gets the timestamp of this database event.
+        /// Gets the time when this database event happened.
         /// </summary>
         [JsonProperty(PropertyName = "eventTimestamp")]
         public string EventTimestamp { get; private set; }
 
         /// <summary>
-        /// Gets the name of this restorable MongoDB database.
+        /// Gets the name of this MongoDB database.
         /// </summary>
         [JsonProperty(PropertyName = "ownerId")]
         public string OwnerId { get; private set; }
 
         /// <summary>
-        /// Gets the resource Id of this restorable MongoDB database.
+        /// Gets the resource ID of this MongoDB database.
         /// </summary>
         [JsonProperty(PropertyName = "ownerResourceId")]
         public string OwnerResourceId { get; private set; }

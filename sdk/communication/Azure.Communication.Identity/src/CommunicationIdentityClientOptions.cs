@@ -12,9 +12,9 @@ namespace Azure.Communication.Identity
     public class CommunicationIdentityClientOptions : ClientOptions
     {
         /// <summary>
-        /// The latest version of the token service.
+        /// The latest version of the identity service.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V1;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_03_07;
 
         internal string ApiVersion { get; }
 
@@ -25,7 +25,7 @@ namespace Azure.Communication.Identity
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V1 => "2021-03-07",
+                ServiceVersion.V2021_03_07 => "2021-03-07",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -36,9 +36,11 @@ namespace Azure.Communication.Identity
         public enum ServiceVersion
         {
             /// <summary>
-            /// The V1 of the token service.
+            /// The V2021_03_07 of the identity service.
             /// </summary>
-            V1 = 1
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+            V2021_03_07 = 1,
+#pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }
 }

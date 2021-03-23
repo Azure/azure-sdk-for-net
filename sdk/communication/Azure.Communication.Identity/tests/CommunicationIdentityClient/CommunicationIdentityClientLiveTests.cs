@@ -29,13 +29,13 @@ namespace Azure.Communication.Identity.Tests
         }
 
         [Test]
-        [TestCase(AuthMethod.ConnectionString, "chat", TestName = "IssuingTokenWithSingleScopeWithConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, "chat", TestName = "IssuingTokenWithSingleScopeWithKeyCredential")]
-        [TestCase(AuthMethod.TokenCredential, "chat", TestName = "IssuingTokenWithSingleScopeWithTokenCredential")]
-        [TestCase(AuthMethod.ConnectionString, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithConnectionString")]
-        [TestCase(AuthMethod.KeyCredential, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithKeyCredential")]
-        [TestCase(AuthMethod.TokenCredential, "chat", "voip", TestName = "IssuingTokenWithMultipleScopesWithTokenCredential")]
-        public async Task IssuingTokenGeneratesTokenAndIdentityWithScopes(AuthMethod authMethod, params string[] scopes)
+        [TestCase(AuthMethod.ConnectionString, "chat", TestName = "GettingTokenWithSingleScopeWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, "chat", TestName = "GettingTokenWithSingleScopeWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, "chat", TestName = "GettingTokenWithSingleScopeWithTokenCredential")]
+        [TestCase(AuthMethod.ConnectionString, "chat", "voip", TestName = "GettingTokenWithMultipleScopesWithConnectionString")]
+        [TestCase(AuthMethod.KeyCredential, "chat", "voip", TestName = "GettingTokenWithMultipleScopesWithKeyCredential")]
+        [TestCase(AuthMethod.TokenCredential, "chat", "voip", TestName = "GettingTokenWithMultipleScopesWithTokenCredential")]
+        public async Task GetTokenGeneratesTokenAndIdentityWithScopes(AuthMethod authMethod, params string[] scopes)
         {
             CommunicationIdentityClient client = authMethod switch
             {
@@ -46,7 +46,7 @@ namespace Azure.Communication.Identity.Tests
             };
 
             Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
-            Response<AccessToken> tokenResponse = await client.IssueTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
+            Response<AccessToken> tokenResponse = await client.GetTokenAsync(userResponse.Value, scopes: scopes.Select(x => new CommunicationTokenScope(x)));
             Assert.IsNotNull(tokenResponse.Value);
             Assert.IsFalse(string.IsNullOrWhiteSpace(tokenResponse.Value.Token));
             ValidateScopesIfNotSanitized();

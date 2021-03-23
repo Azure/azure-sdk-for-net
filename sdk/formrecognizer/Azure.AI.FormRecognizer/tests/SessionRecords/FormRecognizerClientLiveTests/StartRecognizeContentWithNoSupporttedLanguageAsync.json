@@ -1,18 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/layout/analyze?language=not%20language",
+      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/layout/analyze?language=not%20language",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "22",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-fc93c62bc1a098478adc000978fe574e-6e6f9cc6094ea64f-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201111.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "traceparent": "00-ac9b9b7be37c9946b3b2fd6229a24563-cb7c9aa221efc241-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210128.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "df0aa2b9951521d1e53fe305515526f1",
         "x-ms-return-client-request-id": "true"
       },
@@ -21,13 +18,13 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "42f51b5f-bf5c-4153-b263-f2c0e41e1362",
+        "apim-request-id": "3b59b86e-610f-4c8a-9508-0f0571c633b2",
         "Content-Length": "121",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 11 Nov 2020 20:58:36 GMT",
+        "Date": "Thu, 28 Jan 2021 22:19:58 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "3"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "2"
       },
       "ResponseBody": {
         "error": {
@@ -39,7 +36,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-canada-central.cognitiveservices.azure.com/",
     "RandomSeed": "1798371418"
   }
 }

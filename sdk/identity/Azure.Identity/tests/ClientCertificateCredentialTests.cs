@@ -52,15 +52,18 @@ namespace Azure.Identity.Tests
             ClientCertificateCredential invalidPemCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-invalid-data.pem"));
             ClientCertificateCredential unknownFormatCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.unknown"));
             ClientCertificateCredential encryptedCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert-password-protected.pfx"));
+            ClientCertificateCredential unsupportedCertCredential = new ClientCertificateCredential(tenantId, clientId, Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "ec-cert.pem"));
 
             Assert.Throws<CredentialUnavailableException>(() => missingFileCredential.GetToken(tokenContext));
             Assert.Throws<CredentialUnavailableException>(() => invalidPemCredential.GetToken(tokenContext));
             Assert.Throws<CredentialUnavailableException>(() => unknownFormatCredential.GetToken(tokenContext));
             Assert.Throws<CredentialUnavailableException>(() => encryptedCredential.GetToken(tokenContext));
+            Assert.Throws<CredentialUnavailableException>(() => unsupportedCertCredential.GetToken(tokenContext));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await missingFileCredential.GetTokenAsync(tokenContext));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await invalidPemCredential.GetTokenAsync(tokenContext));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await unknownFormatCredential.GetTokenAsync(tokenContext));
             Assert.ThrowsAsync<CredentialUnavailableException>(async () => await encryptedCredential.GetTokenAsync(tokenContext));
+            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await unsupportedCertCredential.GetTokenAsync(tokenContext));
         }
 
         [TestCase(true)]

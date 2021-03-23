@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Storage.Models
 {
     /// <summary> The storage account SAS definition list result. </summary>
-    public partial class SasDefinitionListResult
+    internal partial class SasDefinitionListResult
     {
         /// <summary> Initializes a new instance of SasDefinitionListResult. </summary>
         internal SasDefinitionListResult()

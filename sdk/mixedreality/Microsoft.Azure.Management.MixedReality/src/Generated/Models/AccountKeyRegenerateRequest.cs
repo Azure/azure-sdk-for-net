@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// Initializes a new instance of the AccountKeyRegenerateRequest
         /// class.
         /// </summary>
-        /// <param name="serial">serial of key to be regenerated</param>
+        /// <param name="serial">Serial of key to be regenerated</param>
         public AccountKeyRegenerateRequest(int? serial = default(int?))
         {
             Serial = serial;

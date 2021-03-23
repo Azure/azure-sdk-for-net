@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
@@ -42,7 +43,23 @@ namespace Azure.DigitalTwins.Core
             var memoryStream = new MemoryStream();
 
             objectSerializer.Serialize(memoryStream, obj, typeof(T), cancellationToken);
+            memoryStream.Seek(0, SeekOrigin.Begin);
 
+            return memoryStream;
+        }
+
+        /// <summary>
+        /// Serializes a JsonElement and writes it into a memory stream.
+        /// </summary>
+        /// <param name="item">JsonElement to be deserialized into a stream.</param>
+        /// <returns>A binary representation of the object written to a stream.</returns>
+        internal static MemoryStream WriteJsonElementToStream(JsonElement item)
+        {
+            var memoryStream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(memoryStream);
+
+            item.WriteTo(writer);
+            writer.Flush();
             memoryStream.Seek(0, SeekOrigin.Begin);
 
             return memoryStream;

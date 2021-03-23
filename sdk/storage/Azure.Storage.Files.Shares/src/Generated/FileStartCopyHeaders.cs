@@ -12,7 +12,7 @@ using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class FileStartCopyHeaders
+    internal partial class FileStartCopyHeaders
     {
         private readonly Response _response;
         public FileStartCopyHeaders(Response response)

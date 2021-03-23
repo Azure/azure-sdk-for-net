@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues
 {
-    internal class QueueSetMetadataHeaders
+    internal partial class QueueSetMetadataHeaders
     {
         private readonly Response _response;
         public QueueSetMetadataHeaders(Response response)

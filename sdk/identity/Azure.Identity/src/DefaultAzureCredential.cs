@@ -143,7 +143,7 @@ namespace Azure.Identity
             }
         }
 
-        private static async ValueTask<(AccessToken, TokenCredential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
+        private static async ValueTask<(AccessToken Token, TokenCredential Credential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
         {
             List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();
 
@@ -174,7 +174,7 @@ namespace Azure.Identity
             }
 
             int i = 0;
-            TokenCredential[] chain = new TokenCredential[7];
+            TokenCredential[] chain = new TokenCredential[8];
 
             if (!options.ExcludeEnvironmentCredential)
             {
@@ -204,6 +204,11 @@ namespace Azure.Identity
             if (!options.ExcludeAzureCliCredential)
             {
                 chain[i++] = factory.CreateAzureCliCredential();
+            }
+
+            if (!options.ExcludeAzurePowerShellCredential)
+            {
+                chain[i++] = factory.CreateAzurePowerShellCredential(options.UseLegacyPowerShell);
             }
 
             if (!options.ExcludeInteractiveBrowserCredential)

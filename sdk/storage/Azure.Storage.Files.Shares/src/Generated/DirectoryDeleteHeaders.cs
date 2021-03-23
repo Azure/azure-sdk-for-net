@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class DirectoryDeleteHeaders
+    internal partial class DirectoryDeleteHeaders
     {
         private readonly Response _response;
         public DirectoryDeleteHeaders(Response response)

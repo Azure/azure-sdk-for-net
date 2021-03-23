@@ -6,28 +6,34 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "92",
+        "Content-Length": "127",
         "Content-Type": "application/json",
-        "traceparent": "00-c8900e218d9f6045b95cd1f8217b3bc1-0d2cfce97a3e144f-00",
-        "User-Agent": "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210119.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-128d06e8cf6bb041ad6073e6093ebc5f-a9739ffacdeb524e-00",
+        "User-Agent": [
+          "azsdk-net-AI.MetricsAdvisor/1.0.0-alpha.20210205.1",
+          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "e57fbf5659278075d2a85f55bd2c8a16",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "startTime": "2020-10-01T00:00:00Z",
         "endTime": "2020-10-31T00:00:00Z",
-        "dimensionName": "city"
+        "dimensionName": "city",
+        "dimensionFilter": {
+          "dimension": {}
+        }
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4c4f2457-e9c9-4a75-b1b3-bc24571fc90c",
+        "apim-request-id": "a3eef0d6-8a48-46c0-b262-aaf6065d522d",
         "Content-Length": "692",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 19 Jan 2021 17:42:42 GMT",
+        "Date": "Fri, 05 Feb 2021 20:34:54 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "153",
-        "x-request-id": "4c4f2457-e9c9-4a75-b1b3-bc24571fc90c"
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "4353",
+        "X-Request-ID": "a3eef0d6-8a48-46c0-b262-aaf6065d522d"
       },
       "ResponseBody": {
         "value": [

@@ -36,13 +36,6 @@ namespace Microsoft.Azure.WebJobs
 }
 namespace Microsoft.Azure.WebJobs.ServiceBus
 {
-    public partial class BatchOptions
-    {
-        public BatchOptions() { }
-        public bool AutoComplete { get { throw null; } set { } }
-        public int MaxMessageCount { get { throw null; } set { } }
-        public System.TimeSpan OperationTimeout { get { throw null; } set { } }
-    }
     public static partial class Constants
     {
         public const string AzureWebsiteSku = "WEBSITE_SKU";
@@ -58,31 +51,51 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     }
     public partial class MessageProcessor
     {
-        public MessageProcessor(Microsoft.Azure.ServiceBus.Core.MessageReceiver messageReceiver, Microsoft.Azure.ServiceBus.MessageHandlerOptions messageOptions) { }
-        public Microsoft.Azure.ServiceBus.MessageHandlerOptions MessageOptions { get { throw null; } }
-        protected Microsoft.Azure.ServiceBus.Core.MessageReceiver MessageReceiver { get { throw null; } set { } }
-        public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.ServiceBus.Message message, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.ServiceBus.Message message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public MessageProcessor(Azure.Messaging.ServiceBus.ServiceBusProcessor processor) { }
+        public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions messageActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions messageActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class MessagingProvider
     {
         public MessagingProvider(Microsoft.Extensions.Options.IOptions<Microsoft.Azure.WebJobs.ServiceBus.ServiceBusOptions> serviceBusOptions) { }
-        public virtual Microsoft.Azure.ServiceBus.ClientEntity CreateClientEntity(string entityPath, string connectionString) { throw null; }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusReceiver CreateBatchMessageReceiver(string entityPath, string connectionString) { throw null; }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusClient CreateClient(string connectionString) { throw null; }
         public virtual Microsoft.Azure.WebJobs.ServiceBus.MessageProcessor CreateMessageProcessor(string entityPath, string connectionString) { throw null; }
-        public virtual Microsoft.Azure.ServiceBus.Core.MessageReceiver CreateMessageReceiver(string entityPath, string connectionString) { throw null; }
-        public virtual Microsoft.Azure.ServiceBus.Core.MessageSender CreateMessageSender(string entityPath, string connectionString) { throw null; }
-        public virtual Microsoft.Azure.ServiceBus.SessionClient CreateSessionClient(string entityPath, string connectionString) { throw null; }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusSender CreateMessageSender(string entityPath, string connectionString) { throw null; }
+        public virtual Azure.Messaging.ServiceBus.ServiceBusProcessor CreateProcessor(string entityPath, string connectionString) { throw null; }
         public virtual Microsoft.Azure.WebJobs.ServiceBus.SessionMessageProcessor CreateSessionMessageProcessor(string entityPath, string connectionString) { throw null; }
+    }
+    public partial class ServiceBusMessageActions
+    {
+        internal ServiceBusMessageActions() { }
+        public virtual System.Threading.Tasks.Task AbandonMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task CompleteMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task DeadLetterMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task DeadLetterMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, string deadLetterReason, string deadLetterErrorDescription = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task DeferMessageAsync(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Collections.Generic.IDictionary<string, object> propertiesToModify = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceBusOptions : Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter
     {
         public ServiceBusOptions() { }
-        public Microsoft.Azure.WebJobs.ServiceBus.BatchOptions BatchOptions { get { throw null; } set { } }
+        public bool AutoCompleteMessages { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
-        public Microsoft.Azure.ServiceBus.MessageHandlerOptions MessageHandlerOptions { get { throw null; } set { } }
+        public System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ExceptionHandler { get { throw null; } set { } }
+        public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
+        public int MaxConcurrentCalls { get { throw null; } set { } }
+        public int MaxConcurrentSessions { get { throw null; } set { } }
+        public int MaxMessages { get { throw null; } set { } }
         public int PrefetchCount { get { throw null; } set { } }
-        public Microsoft.Azure.ServiceBus.SessionHandlerOptions SessionHandlerOptions { get { throw null; } set { } }
+        public Azure.Messaging.ServiceBus.ServiceBusRetryOptions RetryOptions { get { throw null; } set { } }
+        public System.TimeSpan? SessionIdleTimeout { get { throw null; } set { } }
+        public Azure.Messaging.ServiceBus.ServiceBusTransportType TransportType { get { throw null; } set { } }
+        public System.Net.IWebProxy WebProxy { get { throw null; } set { } }
         public string Format() { throw null; }
+    }
+    public partial class ServiceBusSessionMessageActions : Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions
+    {
+        internal ServiceBusSessionMessageActions() { }
+        public virtual System.Threading.Tasks.Task<System.BinaryData> GetSessionStateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SetSessionStateAsync(System.BinaryData sessionState, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceBusWebJobsStartup : Microsoft.Azure.WebJobs.Hosting.IWebJobsStartup
     {
@@ -91,11 +104,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     }
     public partial class SessionMessageProcessor
     {
-        public SessionMessageProcessor(Microsoft.Azure.ServiceBus.ClientEntity clientEntity, Microsoft.Azure.ServiceBus.SessionHandlerOptions sessionHandlerOptions) { }
-        protected Microsoft.Azure.ServiceBus.ClientEntity ClientEntity { get { throw null; } set { } }
-        public Microsoft.Azure.ServiceBus.SessionHandlerOptions SessionHandlerOptions { get { throw null; } }
-        public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.ServiceBus.IMessageSession session, Microsoft.Azure.ServiceBus.Message message, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.ServiceBus.IMessageSession session, Microsoft.Azure.ServiceBus.Message message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public SessionMessageProcessor(Azure.Messaging.ServiceBus.ServiceBusSessionProcessor processor) { }
+        public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusSessionMessageActions sessionActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusSessionMessageActions sessionActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Hosting

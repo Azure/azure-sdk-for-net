@@ -128,7 +128,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString) : this(consumerGroup, connectionString, null, null)
@@ -152,7 +152,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -174,7 +174,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubConsumerClient(string consumerGroup,
                                       string connectionString,
@@ -543,7 +543,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(ReadEventOptions, CancellationToken)"/>
         ///
         public virtual IAsyncEnumerable<PartitionEvent> ReadEventsAsync(CancellationToken cancellationToken = default) => ReadEventsAsync(null, cancellationToken);
@@ -574,7 +574,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
         ///
         public virtual IAsyncEnumerable<PartitionEvent> ReadEventsAsync(ReadEventOptions readOptions,
@@ -607,7 +607,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   process, rather than competing for them.
         /// </remarks>
         ///
-        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor" />
+        /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
         /// <seealso cref="ReadEventsAsync(CancellationToken)"/>
         /// <seealso cref="ReadEventsAsync(ReadEventOptions, CancellationToken)"/>
         ///

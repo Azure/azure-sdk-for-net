@@ -63,7 +63,7 @@ namespace Azure.Search.Documents
         /// to control the number of attempts we will make to submit an indexing
         /// action.
         /// </summary>
-        public int MaxRetries { get; set; } = 3;
+        public int MaxRetriesPerIndexAction { get; set; } = 3;
 
         /// <summary>
         /// The initial retry delay. The delay will increase exponentially with
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents
         /// is used to add delay between additional batch submissions when our
         /// requests are being throttled by the service.
         /// </summary>
-        public TimeSpan RetryDelay { get; set; } = TimeSpan.FromSeconds(0.8);
+        public TimeSpan ThrottlingDelay { get; set; } = TimeSpan.FromSeconds(0.8);
 
         /// <summary>
         /// The maximum permissible delay between retry attempts.  Note that
@@ -82,7 +82,7 @@ namespace Azure.Search.Documents
         /// property is used to add delay between additional batch
         /// submissions when our requests are being throttled by the service.
         /// </summary>
-        public TimeSpan MaxRetryDelay { get; set; } = TimeSpan.FromMinutes(1);
+        public TimeSpan MaxThrottlingDelay { get; set; } = TimeSpan.FromMinutes(1);
 
         /// <summary>
         /// Gets or sets a function that can be used to access the index key

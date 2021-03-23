@@ -49,6 +49,11 @@ namespace Microsoft.Azure.Management.CosmosDB
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -195,6 +200,16 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// Gets the IRestorableMongodbResourcesOperations.
         /// </summary>
         public virtual IRestorableMongodbResourcesOperations RestorableMongodbResources { get; private set; }
+
+        /// <summary>
+        /// Gets the ICassandraClustersOperations.
+        /// </summary>
+        public virtual ICassandraClustersOperations CassandraClusters { get; private set; }
+
+        /// <summary>
+        /// Gets the ICassandraDataCentersOperations.
+        /// </summary>
+        public virtual ICassandraDataCentersOperations CassandraDataCenters { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateLinkResourcesOperations.
@@ -473,9 +488,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             RestorableMongodbDatabases = new RestorableMongodbDatabasesOperations(this);
             RestorableMongodbCollections = new RestorableMongodbCollectionsOperations(this);
             RestorableMongodbResources = new RestorableMongodbResourcesOperations(this);
+            CassandraClusters = new CassandraClustersOperations(this);
+            CassandraDataCenters = new CassandraDataCentersOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2021-03-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

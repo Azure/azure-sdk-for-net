@@ -7,14 +7,14 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.InteropExtensions;
+using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 {
-    internal class MessageToStringConverter : IAsyncConverter<Message, string>
+    internal class MessageToStringConverter : IAsyncConverter<ServiceBusReceivedMessage, string>
     {
-        public async Task<string> ConvertAsync(Message input, CancellationToken cancellationToken)
+        public async Task<string> ConvertAsync(ServiceBusReceivedMessage input, CancellationToken cancellationToken)
         {
             if (input == null)
             {
@@ -24,7 +24,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             {
                 return null;
             }
-            Stream stream = new MemoryStream(input.Body);
+
+            Stream stream = input.Body.ToStream();
 
             TextReader reader = new StreamReader(stream, StrictEncodings.Utf8);
             try
@@ -45,12 +46,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 
                 try
                 {
-                    return input.GetBody<string>();
+                    var serializer = DataContractBinarySerializer<string>.Instance;
+                    stream.Position = 0;
+                    return (string)serializer.ReadObject(stream);
                 }
                 catch
                 {
                     // always possible to get a valid string from the message
-                    return Encoding.UTF8.GetString(input.Body, 0, input.Body.Length);
+                    return input.Body.ToString();
                 }
             }
             finally

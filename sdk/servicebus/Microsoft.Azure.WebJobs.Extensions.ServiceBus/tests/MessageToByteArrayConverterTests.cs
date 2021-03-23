@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.ServiceBus.Triggers;
-using Microsoft.Azure.ServiceBus;
 using NUnit.Framework;
+using Azure.Messaging.ServiceBus;
+using System;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
@@ -22,8 +23,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
         [TestCase(null)]
         public async Task ConvertAsync_ReturnsExpectedResults(string contentType)
         {
-            Message message = new Message(Encoding.UTF8.GetBytes(TestString));
-            message.ContentType = contentType;
+            ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(
+                body: new BinaryData(TestString),
+                contentType: contentType);
             MessageToByteArrayConverter converter = new MessageToByteArrayConverter();
 
             byte[] result = await converter.ConvertAsync(message, CancellationToken.None);

@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
         public string ToInvokeString()
         {
-            return _entity.MessageSender.Path;
+            return _entity.MessageSender.EntityPath;
         }
     }
 }

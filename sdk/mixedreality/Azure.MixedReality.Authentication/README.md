@@ -20,8 +20,11 @@ token from the STS that can be used to access Mixed Reality services.
         - [Interactive authentication with DefaultAzureCredential](#interactive-authentication-with-defaultazurecredential)
   - [Key concepts](#key-concepts)
     - [MixedRealityStsClient](#mixedrealitystsclient)
+    - [Thread safety](#thread-safety)
+    - [Additional concepts](#additional-concepts)
   - [Examples](#examples)
     - [Retrieve an access token](#retrieve-an-access-token)
+      - [Using the access token in a Mixed Reality client library](#using-the-access-token-in-a-mixed-reality-client-library)
   - [Troubleshooting](#troubleshooting)
   - [Next steps](#next-steps)
     - [Client libraries supporting authentication with Mixed Reality Authentication](#client-libraries-supporting-authentication-with-mixed-reality-authentication)
@@ -48,7 +51,7 @@ dotnet add package Azure.MixedReality.Authentication
 Add a package reference:
 
 ```xml
-<PackageReference Include="Azure.MixedReality.Authentication" Version="1.0.0-preview.1" />
+<PackageReference Include="Azure.MixedReality.Authentication" Version="1.0.0" />
 ```
 
 ### Prerequisites
@@ -146,6 +149,22 @@ The `MixedRealityStsClient` is the client library used to access the Mixed Reali
 
 Tokens obtained from the Mixed Reality STS have a lifetime of **24 hours**.
 
+### Thread safety
+
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
+
 ## Examples
 
 ### Retrieve an access token
@@ -159,10 +178,28 @@ AccessToken token = await client.GetTokenAsync(accountId);
 
 See the authentication examples [above](#authenticate-the-client) for more complex authentication scenarios.
 
+#### Using the access token in a Mixed Reality client library
+
+Some Mixed Reality client libraries might accept an access token in place of a credential. For example:
+
+```csharp
+// GetMixedRealityAccessTokenFromWebService is a hypothetical method that retrieves
+// a Mixed Reality access token from a web service. The web service would use the
+// MixedRealityStsClient and credentials to obtain an access token to be returned
+// to the client.
+AccessToken accessToken = await GetMixedRealityAccessTokenFromWebService();
+
+SpatialAnchorsAccount account = new SpatialAnchorsAccount(accountId, accountDomain);
+SpatialAnchorsClient client = new SpatialAnchorsClient(account, accessToken);
+```
+
+Note: The `SpatialAnchorsClient` usage above is hypothetical and may not reflect the actual library. Consult the
+documentation for the client library you're using to determine if and how this might be supported.
+
 ## Troubleshooting
 
-- See [Error Handling](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#error-handling) for Azure.Identity.
-- See [Logging](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#logging) for Azure.Identity.
+- [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception)
+- [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md)
 
 ## Next steps
 

@@ -4,7 +4,13 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: keyvault
-    TimeoutInMinutes: 120
+    MaxParallel: 5
+    TimeoutInMinutes: 180
+    AdditionalMatrixConfigs:
+      - Name: keyvault_test_matrix_addons
+        Path: sdk/keyvault/platform-matrix.json
+        Selection: sparse
+        GenerateVMJobs: true
     EnvVars:
       # Runs samples with live tests.
       # THIS VARIABLE IS A ONE-OFF WORKAROUND FOR KEYVAULT TESTS SPECIFICALLY, DON'T COPY IT

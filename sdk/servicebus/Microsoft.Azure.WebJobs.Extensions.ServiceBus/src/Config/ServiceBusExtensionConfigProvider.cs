@@ -2,7 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.Azure.ServiceBus;
+using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
@@ -72,12 +73,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             Options.ExceptionHandler = (e) =>
             {
                 LogExceptionReceivedEvent(e, _loggerFactory);
+                return Task.CompletedTask;
             };
 
             context
-                .AddConverter<Message, string>(new MessageToStringConverter())
-                .AddConverter<Message, byte[]>(new MessageToByteArrayConverter())
-                .AddOpenConverter<Message, OpenType.Poco>(typeof(MessageToPocoConverter<>));
+                .AddConverter(new MessageToStringConverter())
+                .AddConverter(new MessageToByteArrayConverter())
+                .AddOpenConverter<ServiceBusReceivedMessage, OpenType.Poco>(typeof(MessageToPocoConverter<>));
 
             // register our trigger binding provider
             ServiceBusTriggerAttributeBindingProvider triggerBindingProvider = new ServiceBusTriggerAttributeBindingProvider(_nameResolver, _options, _messagingProvider, _configuration, _loggerFactory, _converterManager);
@@ -89,13 +91,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             context.AddBindingRule<ServiceBusAttribute>().Bind(bindingProvider);
         }
 
-        internal static void LogExceptionReceivedEvent(ExceptionReceivedEventArgs e, ILoggerFactory loggerFactory)
+        internal static void LogExceptionReceivedEvent(ProcessErrorEventArgs e, ILoggerFactory loggerFactory)
         {
             try
             {
-                var ctxt = e.ExceptionReceivedContext;
+                var errorSource = e.ErrorSource;
                 var logger = loggerFactory?.CreateLogger(LogCategories.Executor);
-                string message = $"Message processing error (Action={ctxt.Action}, ClientId={ctxt.ClientId}, EntityPath={ctxt.EntityPath}, Endpoint={ctxt.Endpoint})";
+                //TODO new SDK does not expose client ID in event args or on clients
+                string message = $"Message processing error (Action={errorSource}, EntityPath={e.EntityPath}, Endpoint={e.FullyQualifiedNamespace})";
 
                 var logLevel = GetLogLevel(e.Exception);
                 logger?.Log(logLevel, 0, message, e.Exception, (s, ex) => message);

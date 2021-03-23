@@ -24,7 +24,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2020-04-08";
+        public const string DefaultSasVersion = "2020-06-12";
 
         /// <summary>
         /// The default size of staged blocks when uploading small blobs.
@@ -93,6 +93,16 @@ namespace Azure.Storage
 
         public const string CommaString = ",";
         public const char CommaChar = ',';
+
+        public const string ContentTypeApplicationXml = "application/xml";
+        public const string ContentTypeApplicationJson = "application/json";
+
+        public const string ErrorPropertyKey = "error";
+        public const string DetailPropertyKey = "detail";
+        public const string MessagePropertyKey = "message";
+        public const string CodePropertyKey = "code";
+
+        public const string Iso8601Format = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ";
 
         /// <summary>
         /// Storage Connection String constant values.
@@ -176,6 +186,8 @@ namespace Azure.Storage
             public const int HttpsPort = 443;
             public const string UriSubDomain = "blob";
             public const int QuickQueryDownloadSize = 4 * Constants.MB;
+            public const string MetadataHeaderPrefix = "x-ms-meta-";
+            public const string ObjectReplicationRulesHeaderPrefix = "x-ms-or-";
 
             internal static class Append
             {

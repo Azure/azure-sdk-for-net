@@ -24,8 +24,12 @@ namespace Microsoft.Azure.Management.CosmosDB
     public static partial class RestorableSqlDatabasesOperationsExtensions
     {
             /// <summary>
-            /// Lists all the restorable Azure Cosmos DB SQL databases available under the
-            /// restorable account.
+            /// Show the event feed of all mutations done on all the Azure Cosmos DB SQL
+            /// databases under the restorable account.  This helps in scenario where
+            /// database was accidentally deleted to get the deletion time.  This API
+            /// requires
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
+            /// permission
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -42,8 +46,12 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
-            /// Lists all the restorable Azure Cosmos DB SQL databases available under the
-            /// restorable account.
+            /// Show the event feed of all mutations done on all the Azure Cosmos DB SQL
+            /// databases under the restorable account.  This helps in scenario where
+            /// database was accidentally deleted to get the deletion time.  This API
+            /// requires
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
+            /// permission
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

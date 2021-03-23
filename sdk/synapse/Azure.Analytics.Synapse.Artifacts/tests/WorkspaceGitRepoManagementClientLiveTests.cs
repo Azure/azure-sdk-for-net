@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18079 - Difficulties getting these to work - 'GitHubClientId is invalid'?")]
-        [Test]
+        [RecordedTest]
         public async Task TestGetWorkspace()
         {
             WorkspaceGitRepoManagementClient client = TriggerRunClient();

@@ -36,9 +36,10 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $TenantId,
 
-    [Parameter(ParameterSetName = 'Provisioner')]
+    # Azure SDK Developer Playground subscription
+    [Parameter()]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
-    [string] $SubscriptionId,
+    [string] $SubscriptionId = 'faa080af-c1d8-40ad-9cce-e1a450ca5b57',
 
     [Parameter(ParameterSetName = 'Provisioner', Mandatory = $true)]
     [ValidatePattern('^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$')]
@@ -141,8 +142,6 @@ try {
     $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
     $templateFileName = 'test-resources.json'
     $templateFiles = @()
-    # Azure SDK Developer Playground
-    $defaultSubscription = "faa080af-c1d8-40ad-9cce-e1a450ca5b57"
 
     Write-Verbose "Checking for '$templateFileName' files under '$root'"
     Get-ChildItem -Path $root -Filter $templateFileName -Recurse | ForEach-Object {
@@ -201,19 +200,32 @@ try {
         # Make sure the user is logged in to create a service principal.
         $context = Get-AzContext;
         if (!$context) {
-            Log "You are not logged in; connecting to 'Azure SDK Developer Playground'"
-            $context = (Connect-AzAccount -Subscription $defaultSubscription).Context
+            $subscriptionName = $SubscriptionId
+
+            # Use cache of well-known team subs without having to be authenticated.
+            $wellKnownSubscriptions = @{
+                'faa080af-c1d8-40ad-9cce-e1a450ca5b57' = 'Azure SDK Developer Playground'
+                'a18897a6-7e44-457d-9260-f2854c0aca42' = 'Azure SDK Engineering System'
+                '2cd617ea-1866-46b1-90e3-fffb087ebf9b' = 'Azure SDK Test Resources'
+            }
+
+            if ($wellKnownSubscriptions.ContainsKey($SubscriptionId)) {
+                $subscriptionName = '{0} ({1})' -f $wellKnownSubscriptions[$SubscriptionId], $SubscriptionId
+            }
+
+            Log "You are not logged in; connecting to $subscriptionName"
+            $context = (Connect-AzAccount -Subscription $SubscriptionId).Context
         }
 
         # If no test application ID is specified during an interactive session, create a new service principal.
         if (!$TestApplicationId) {
 
             # Cache the created service principal in this session for frequent reuse.
-            $servicePrincipal = if ($AzureTestPrincipal) {
-                Log "TestApplicationId was not specified; loading the cached service principal"
+            $servicePrincipal = if ($AzureTestPrincipal -and (Get-AzADServicePrincipal -ApplicationId $AzureTestPrincipal.ApplicationId)) {
+                Log "TestApplicationId was not specified; loading cached service principal '$($AzureTestPrincipal.ApplicationId)'"
                 $AzureTestPrincipal
             } else {
-                Log "TestApplicationId was not specified; creating a new service principal"
+                Log 'TestApplicationId was not specified; creating a new service principal'
                 $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner
 
                 Log "Created service principal '$AzureTestPrincipal'"
@@ -582,6 +594,8 @@ is passed to the ARM template as 'tenantId'.
 .PARAMETER SubscriptionId
 Optional subscription ID to use for new resources when logging in as a
 provisioner. You can also use Set-AzContext if not provisioning.
+
+The default is the Azure SDK Developer Playground subscription ID.
 
 .PARAMETER ProvisionerApplicationId
 The AAD Application ID used to provision test resources when a provisioner is

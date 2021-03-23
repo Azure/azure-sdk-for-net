@@ -3,15 +3,11 @@
 
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary>
     /// KeyPhrasesTaskParameters.
     /// </summary>
     [CodeGenModel("KeyPhrasesTaskParameters")]
-    public partial class KeyPhrasesTaskParameters
-    {
-        /// <summary> ModelVersion. </summary>
-        public string ModelVersion { get; set; } = "latest";
-    }
+    internal partial class KeyPhrasesTaskParameters { }
 }

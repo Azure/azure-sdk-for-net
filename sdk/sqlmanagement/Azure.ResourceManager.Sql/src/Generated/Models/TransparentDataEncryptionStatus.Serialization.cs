@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class TransparentDataEncryptionStatusExtensions
+    internal static partial class TransparentDataEncryptionStatusExtensions
     {
         public static string ToSerialString(this TransparentDataEncryptionStatus value) => value switch
         {

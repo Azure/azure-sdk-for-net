@@ -1,0 +1,173 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://smstestapp.communication.azure.com/phoneNumbers?api-version=2021-03-07",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Date": "Tue, 16 Mar 2021 20:49:39 GMT",
+        "traceparent": "00-1e3619296ebe294eb9beee2bfdee75bf-a0134ee69353ce49-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.0.0-alpha.20210316.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "57914b5847fc57ab7d329f21e9d2526a",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 16 Mar 2021 20:49:44 GMT",
+        "MS-CV": "MwoU8xEhu0uv\u002BLXcraMd9g.0",
+        "Request-Context": "appId=",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "04xlRYAAAAABUmLjMFu3PQqBAB6i1Sv4aWVZSMzBFREdFMDMxMwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Processing-Time": "4995ms"
+      },
+      "ResponseBody": {
+        "phoneNumbers": [
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "inbound",
+              "sms": "inbound\u002Boutbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "2021-02-09T23:03:57.6969271\u002B00:00",
+            "cost": {
+              "amount": 2.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "inbound\u002Boutbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "2021-02-10T17:51:13.4876763\u002B00:00",
+            "cost": {
+              "amount": 2.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "inbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "2021-02-10T17:52:41.818335\u002B00:00",
+            "cost": {
+              "amount": 2.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "inbound\u002Boutbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "2021-02-10T18:01:46.4199999\u002B00:00",
+            "cost": {
+              "amount": 2.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "none",
+              "sms": "inbound\u002Boutbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "2021-03-09T15:01:55.0949003\u002B00:00",
+            "cost": {
+              "amount": 2.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "inbound",
+              "sms": "inbound\u002Boutbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "2021-03-09T15:03:04.7513808\u002B00:00",
+            "cost": {
+              "amount": 2.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "inbound",
+              "sms": "inbound\u002Boutbound"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "2000-01-01T00:00:00\u002B00:00",
+            "cost": {
+              "amount": 2.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          },
+          {
+            "id": "Sanitized",
+            "phoneNumber": "Sanitized",
+            "countryCode": "US",
+            "phoneNumberType": "TollFree",
+            "capabilities": {
+              "calling": "inbound\u002Boutbound",
+              "sms": "none"
+            },
+            "assignmentType": "Application",
+            "purchaseDate": "2020-09-18T15:03:19.5370985\u002B00:00",
+            "cost": {
+              "amount": 2.0,
+              "currencyCode": "USD",
+              "billingFrequency": "Monthly"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_COMMUNICATION_LIVETEST_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=3z7dN2ZEcANlOejjlHaJUfqdC4SyuzdiHbaMcFR0tNRK37KDZ14HUuhIybbBgt6oSQwUwu5TnF5cYFm22Lh/xg==",
+    "RandomSeed": "136581784"
+  }
+}

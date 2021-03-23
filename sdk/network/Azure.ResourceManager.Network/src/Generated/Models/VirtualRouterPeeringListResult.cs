@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListVirtualRouterPeerings API service call. </summary>
-    public partial class VirtualRouterPeeringListResult
+    internal partial class VirtualRouterPeeringListResult
     {
         /// <summary> Initializes a new instance of VirtualRouterPeeringListResult. </summary>
         internal VirtualRouterPeeringListResult()

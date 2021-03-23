@@ -12,7 +12,7 @@ namespace Azure.AI.TextAnalytics
     /// KeyPhraseExtractionTasksItem.
     /// </summary>
     [CodeGenModel("TasksStateTasksKeyPhraseExtractionTasksItem")]
-    public partial class KeyPhraseExtractionTasksItem
+    internal partial class KeyPhraseExtractionTasksItem
     {
         /// <summary> Initializes a new instance of KeyPhraseExtractionTasksItem. </summary>
         internal KeyPhraseExtractionTasksItem(KeyPhraseExtractionTasksItem task, IDictionary<string, int> idToIndexMap) : base(task.LastUpdateDateTime, task.Name, task.Status)

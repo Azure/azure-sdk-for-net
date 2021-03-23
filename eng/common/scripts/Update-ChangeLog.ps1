@@ -12,13 +12,10 @@ param (
   [String]$ServiceDirectory,
   [Parameter(Mandatory = $true)]
   [String]$PackageName,
-  [String]$Unreleased=$True,
-  [String]$ReplaceLatestEntryTitle = $False,
+  [Boolean]$Unreleased = $true,
+  [Boolean]$ReplaceLatestEntryTitle = $false,
   [String]$ReleaseDate
 )
-
-[Boolean]$Unreleased = [System.Convert]::ToBoolean($Unreleased)
-[Boolean]$ReplaceLatestEntryTitle = [System.Convert]::ToBoolean($ReplaceLatestEntryTitle)
 
 . (Join-Path $PSScriptRoot common.ps1)
 
@@ -56,7 +53,6 @@ if ($null -eq [AzureEngSemanticVersion]::ParseVersionString($Version))
 
 $PkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
 $ChangeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $PkgProperties.ChangeLogPath
-
 
 if ($ChangeLogEntries.Contains($Version))
 {

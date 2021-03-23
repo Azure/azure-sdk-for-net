@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -15,13 +14,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="FeedbackDimensionFilter"/> class.
         /// </summary>
-        /// <param name="dimensionFilter">Filters the result by series. Only feedbacks for the series in the time series group specified will be returned.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="dimensionFilter"/> is null.</exception>
-        public FeedbackDimensionFilter(DimensionKey dimensionFilter)
+        public FeedbackDimensionFilter()
         {
-            Argument.AssertNotNull(dimensionFilter, nameof(dimensionFilter));
-
-            DimensionFilter = dimensionFilter;
+            DimensionFilter = new DimensionKey();
         }
 
         /// <summary> Initializes a new instance of FeedbackDimensionFilter. </summary>

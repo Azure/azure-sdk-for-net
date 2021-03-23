@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    internal static class TimeAggregationOperatorExtensions
+    internal static partial class TimeAggregationOperatorExtensions
     {
         public static string ToSerialString(this TimeAggregationOperator value) => value switch
         {

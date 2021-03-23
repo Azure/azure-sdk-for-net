@@ -740,7 +740,7 @@ namespace Compute.Tests.DiskRPTests
                 EnsureClientsInitialized(context);
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
-                var desName = "longlivedSwaggerDES";
+                var desName = "DESforTest";
                 Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
                 disk.Location = location;
 
@@ -748,7 +748,7 @@ namespace Compute.Tests.DiskRPTests
                 {
                     m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
                     // Get DiskEncryptionSet
-                    DiskEncryptionSet desOut = m_CrpClient.DiskEncryptionSets.Get("longrunningrg-centraluseuap", desName);
+                    DiskEncryptionSet desOut = m_CrpClient.DiskEncryptionSets.Get("RGforSDKtestResources", desName);
                     Assert.NotNull(desOut);
                     disk.Encryption = new Encryption
                     {
@@ -763,7 +763,7 @@ namespace Compute.Tests.DiskRPTests
                     Assert.Equal(desOut.Id.ToLower(), diskOut.Encryption.DiskEncryptionSetId.ToLower());
                     Assert.Equal(EncryptionType.EncryptionAtRestWithCustomerKey, diskOut.Encryption.Type);
 
-                    IPage<string> diskUri = m_CrpClient.DiskEncryptionSets.ListAssociatedResources("longrunningrg-centraluseuap", desName);
+                    IPage<string> diskUri = m_CrpClient.DiskEncryptionSets.ListAssociatedResources("RGforSDKtestResources", desName);
                     List<string>diskUriString = diskUri.ToList().ConvertAll(r => r.ToString().ToLower());
                     Assert.Contains(diskOut.Id.ToLower().ToString(), diskUriString);
                     m_CrpClient.Disks.Delete(rgName, diskName);
@@ -822,7 +822,7 @@ namespace Compute.Tests.DiskRPTests
                 EnsureClientsInitialized(context);
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
-                var desName = "longlivedSwaggerDES";
+                var desName = "DESforTest";
                 Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
                 disk.Location = location;
 
@@ -838,7 +838,7 @@ namespace Compute.Tests.DiskRPTests
                     Assert.Equal(EncryptionType.EncryptionAtRestWithPlatformKey, diskOut.Encryption.Type);
 
                     // Update Disk with CustomerManagedKey
-                    DiskEncryptionSet desOut = m_CrpClient.DiskEncryptionSets.Get("longrunningrg-centraluseuap", desName);
+                    DiskEncryptionSet desOut = m_CrpClient.DiskEncryptionSets.Get("RGforSDKtestResources", desName);
                     Assert.NotNull(desOut);
                     disk.Encryption = new Encryption
                     {
@@ -1056,8 +1056,8 @@ namespace Compute.Tests.DiskRPTests
 
         protected DiskEncryptionSet GenerateDefaultDiskEncryptionSet(string location, string encryptionType = EncryptionType.EncryptionAtRestWithCustomerKey)
         {
-            string testVaultId = @"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourcegroups/swagger/providers/Microsoft.KeyVault/vaults/swaggervault";
-            string encryptionKeyUri = @"https://swaggervault.vault.azure.net/keys/diskRPSSEKey/4780bcaf12384596b75cf63731f2046c";
+            string testVaultId = @"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourcegroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/KeyVaultforTest";
+            string encryptionKeyUri = @"https://keyvaultfortest.vault.azure.net/keys/KeyforTest/d2312bdc83184b77ae469668c5595e53";
 
             var des = new DiskEncryptionSet
             {

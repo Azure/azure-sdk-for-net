@@ -9,7 +9,7 @@ using Azure.Storage.Blobs.Models;
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// Propeties of a Blob
+    /// Properties of a Blob
     /// </summary>
     public partial class BlobProperties
     {

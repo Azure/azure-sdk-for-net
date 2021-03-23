@@ -211,7 +211,7 @@ namespace Azure.Identity.Tests
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", "{}");
-            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }), vscAdapter) { ManagedIdentitySourceFactory = () => default };
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }, new TestProcess{Error = "'PowerShell' is not recognized"}), vscAdapter) { ManagedIdentitySourceFactory = () => default };
             var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -222,11 +222,12 @@ namespace Azure.Identity.Tests
                 scopes = diagnosticListener.Scopes;
             }
 
-            Assert.AreEqual(4, scopes.Count);
+            Assert.AreEqual(5, scopes.Count);
             Assert.AreEqual($"{nameof(DefaultAzureCredential)}.{nameof(DefaultAzureCredential.GetToken)}", scopes[0].Name);
             Assert.AreEqual($"{nameof(VisualStudioCredential)}.{nameof(VisualStudioCredential.GetToken)}", scopes[1].Name);
             Assert.AreEqual($"{nameof(VisualStudioCodeCredential)}.{nameof(VisualStudioCodeCredential.GetToken)}", scopes[2].Name);
             Assert.AreEqual($"{nameof(AzureCliCredential)}.{nameof(AzureCliCredential.GetToken)}", scopes[3].Name);
+            Assert.AreEqual($"{nameof(AzurePowerShellCredential)}.{nameof(AzurePowerShellCredential.GetToken)}", scopes[4].Name);
         }
 
         [Test]

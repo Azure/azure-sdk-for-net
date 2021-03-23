@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues
 {
-    internal class MessageIdDeleteHeaders
+    internal partial class MessageIdDeleteHeaders
     {
         private readonly Response _response;
         public MessageIdDeleteHeaders(Response response)

@@ -6,14 +6,12 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.Media</PackageId>
         <Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
-        <Version>3.0.3</Version>
+        <Version>3.0.4</Version>
         <AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
         <PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
         <PackageReleaseNotes>
             <![CDATA[
-        This SDK is using 2020-05-01 version of the API
-        
-        * Fixed a bug with AssemblyFile version.
+        For detailed release notes, see: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/mediaservices/Microsoft.Azure.Management.Media/CHANGELOG.md
             ]]>
         </PackageReleaseNotes>
     </PropertyGroup>

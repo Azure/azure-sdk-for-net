@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    internal class MachineLearningComputeCreateOrUpdateHeaders
+    internal partial class MachineLearningComputeCreateOrUpdateHeaders
     {
         private readonly Response _response;
         public MachineLearningComputeCreateOrUpdateHeaders(Response response)

@@ -42,7 +42,9 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// IP configuration is the primary.</param>
         /// <param name="loadBalancerBackendAddressPools">Gets or sets the
         /// references of the load balancer backend address pools.</param>
-        public NicIpConfigurationResourceSettings(string name = default(string), string privateIpAddress = default(string), string privateIpAllocationMethod = default(string), SubnetReference subnet = default(SubnetReference), bool? primary = default(bool?), IList<LoadBalancerBackendAddressPoolReference> loadBalancerBackendAddressPools = default(IList<LoadBalancerBackendAddressPoolReference>))
+        /// <param name="loadBalancerNatRules">Gets or sets the references of
+        /// the load balancer NAT rules.</param>
+        public NicIpConfigurationResourceSettings(string name = default(string), string privateIpAddress = default(string), string privateIpAllocationMethod = default(string), SubnetReference subnet = default(SubnetReference), bool? primary = default(bool?), IList<LoadBalancerBackendAddressPoolReference> loadBalancerBackendAddressPools = default(IList<LoadBalancerBackendAddressPoolReference>), IList<LoadBalancerNatRuleReference> loadBalancerNatRules = default(IList<LoadBalancerNatRuleReference>), PublicIpReference publicIp = default(PublicIpReference))
         {
             Name = name;
             PrivateIpAddress = privateIpAddress;
@@ -50,6 +52,8 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
             Subnet = subnet;
             Primary = primary;
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
+            LoadBalancerNatRules = loadBalancerNatRules;
+            PublicIp = publicIp;
             CustomInit();
         }
 
@@ -95,6 +99,17 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover.Models
         /// </summary>
         [JsonProperty(PropertyName = "loadBalancerBackendAddressPools")]
         public IList<LoadBalancerBackendAddressPoolReference> LoadBalancerBackendAddressPools { get; set; }
+
+        /// <summary>
+        /// Gets or sets the references of the load balancer NAT rules.
+        /// </summary>
+        [JsonProperty(PropertyName = "loadBalancerNatRules")]
+        public IList<LoadBalancerNatRuleReference> LoadBalancerNatRules { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "publicIp")]
+        public PublicIpReference PublicIp { get; set; }
 
     }
 }

@@ -15,14 +15,14 @@
         "User-Agent": [
           "FxVersion/4.6.29518.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "105"
+          "104"
         ]
       },
       "ResponseHeaders": {
@@ -54,7 +54,7 @@
           "Mon, 08 Feb 2021 19:22:54 GMT"
         ],
         "Content-Length": [
-          "252"
+          "249"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -81,7 +81,7 @@
         "User-Agent": [
           "FxVersion/4.6.29518.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
         ],
         "Content-Type": [
@@ -150,7 +150,7 @@
         "User-Agent": [
           "FxVersion/4.6.29518.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
         ]
       },
@@ -213,7 +213,7 @@
         "User-Agent": [
           "FxVersion/4.6.29518.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
         ]
       },
@@ -249,7 +249,7 @@
           "Mon, 08 Feb 2021 19:23:31 GMT"
         ],
         "Content-Length": [
-          "776"
+          "775"
         ],
         "Content-Type": [
           "application/json"
@@ -276,7 +276,7 @@
         "User-Agent": [
           "FxVersion/4.6.29518.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
         ]
       },
@@ -312,7 +312,7 @@
           "Mon, 08 Feb 2021 19:23:31 GMT"
         ],
         "Content-Length": [
-          "764"
+          "763"
         ],
         "Content-Type": [
           "application/json"
@@ -339,7 +339,7 @@
         "User-Agent": [
           "FxVersion/4.6.29518.01",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "OSVersion/Microsoft.Windows.10.0.18363.",
           "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
         ]
       },
@@ -518,7 +518,7 @@
           "Mon, 08 Feb 2021 19:24:12 GMT"
         ],
         "Content-Length": [
-          "184"
+          "183"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -582,7 +582,7 @@
           "Mon, 08 Feb 2021 19:24:12 GMT"
         ],
         "Content-Length": [
-          "515"
+          "514"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -658,7 +658,7 @@
           "Mon, 08 Feb 2021 19:24:13 GMT"
         ],
         "Content-Length": [
-          "634"
+          "633"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -722,7 +722,7 @@
           "Mon, 08 Feb 2021 19:24:43 GMT"
         ],
         "Content-Length": [
-          "634"
+          "633"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"

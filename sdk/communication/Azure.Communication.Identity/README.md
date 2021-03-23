@@ -14,7 +14,7 @@ Azure Communication Identity is managing tokens for Azure Communication Services
 Install the Azure Communication Identity client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Communication.Identity --version 1.0.0-beta.3
+dotnet add package Azure.Communication.Identity --version 1.0.0-beta.5
 ```
 
 ### Prerequisites
@@ -41,7 +41,15 @@ var connectionString = "<connection_string>";
 var client = new CommunicationIdentityClient(connectionString);
 ```
 
-Clients also have the option to authenticate using a valid token.
+Or alternatively using the endpoint and access key acquired from an Azure Communication Resources in the [Azure Portal][azure_portal].
+
+```C# Snippet:CreateCommunicationIdentityFromAccessKey
+var endpoint = new Uri("https://my-resource.communication.azure.com");
+var accessKey = "<access_key>";
+var client = new CommunicationIdentityClient(endpoint, new AzureKeyCredential(accessKey));
+```
+
+Clients also have the option to authenticate using a valid Active Directory token.
 
 ```C# Snippet:CreateCommunicationIdentityFromToken
 var endpoint = new Uri("https://my-resource.communication.azure.com");
@@ -53,9 +61,23 @@ var client = new CommunicationIdentityClient(endpoint, tokenCredential);
 
 `CommunicationIdentityClient` provides the functionalities to manage user access tokens: creating new ones and revoking them.
 
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
+
 ## Examples
 
-### Create a new identity
+### Creating a new user
 
 ```C# Snippet:CreateCommunicationUserAsync
 Response<CommunicationUserIdentifier> userResponse = await client.CreateUserAsync();
@@ -63,14 +85,22 @@ CommunicationUserIdentifier user = userResponse.Value;
 Console.WriteLine($"User id: {user.Id}");
 ```
 
-### Issuing a token for an existing user
+### Getting a token for an existing user
 
 ```C# Snippet:CreateCommunicationTokenAsync
-Response<AccessToken> tokenResponse = await client.IssueTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
+Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
 string token = tokenResponse.Value.Token;
 DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
 Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
+```
+
+### Creating a user and a token in the same request
+```C# Snippet:CreateCommunicationUserAndToken
+Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat });
+var (user, token) = response.Value;
+Console.WriteLine($"User id: {user.Id}");
+Console.WriteLine($"Token: {token.Token}");
 ```
 
 ### Revoking a user's tokens

@@ -15,7 +15,7 @@ namespace Azure.Data.AppConfiguration.Performance
         private static string _json = "{\"a\":{\"b\":5}}";
 
         private static dynamic _expandoObject = new ExpandoObject();
-        private static dynamic _dynamicJson = DynamicJson.Parse(_json);
+        private static dynamic _jsonData = JsonData.FromString(_json);
         private static dynamic _dynamicNewtonsoftJson = JObject.Parse(_json);
 
         static DynamicReadingBenchmark()
@@ -31,9 +31,9 @@ namespace Azure.Data.AppConfiguration.Performance
         }
 
         [Benchmark]
-        public int ReadDynamicJson()
+        public int ReadJsonData()
         {
-            return _dynamicJson.a.b;
+            return _jsonData.a.b;
         }
         [Benchmark]
         public int ReadNewtonsoftJson()

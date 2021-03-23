@@ -125,6 +125,16 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual ISqlPoolReplicationLinksOperations SqlPoolReplicationLinks { get; private set; }
 
         /// <summary>
+        /// Gets the ISqlPoolMaintenanceWindowsOperations.
+        /// </summary>
+        public virtual ISqlPoolMaintenanceWindowsOperations SqlPoolMaintenanceWindows { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlPoolMaintenanceWindowOptionsOperations.
+        /// </summary>
+        public virtual ISqlPoolMaintenanceWindowOptionsOperations SqlPoolMaintenanceWindowOptions { get; private set; }
+
+        /// <summary>
         /// Gets the ISqlPoolTransparentDataEncryptionsOperations.
         /// </summary>
         public virtual ISqlPoolTransparentDataEncryptionsOperations SqlPoolTransparentDataEncryptions { get; private set; }
@@ -148,6 +158,11 @@ namespace Microsoft.Azure.Management.Synapse
         /// Gets the ISqlPoolSensitivityLabelsOperations.
         /// </summary>
         public virtual ISqlPoolSensitivityLabelsOperations SqlPoolSensitivityLabels { get; private set; }
+
+        /// <summary>
+        /// Gets the ISqlPoolRecommendedSensitivityLabelsOperations.
+        /// </summary>
+        public virtual ISqlPoolRecommendedSensitivityLabelsOperations SqlPoolRecommendedSensitivityLabels { get; private set; }
 
         /// <summary>
         /// Gets the ISqlPoolSchemasOperations.
@@ -295,6 +310,11 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
 
         /// <summary>
+        /// Gets the IPrivateLinkHubPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkHubPrivateLinkResourcesOperations PrivateLinkHubPrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; private set; }
@@ -330,14 +350,19 @@ namespace Microsoft.Azure.Management.Synapse
         public virtual IWorkspaceManagedSqlServerVulnerabilityAssessmentsOperations WorkspaceManagedSqlServerVulnerabilityAssessments { get; private set; }
 
         /// <summary>
+        /// Gets the IWorkspaceManagedSqlServerEncryptionProtectorOperations.
+        /// </summary>
+        public virtual IWorkspaceManagedSqlServerEncryptionProtectorOperations WorkspaceManagedSqlServerEncryptionProtector { get; private set; }
+
+        /// <summary>
         /// Gets the IWorkspaceManagedSqlServerUsagesOperations.
         /// </summary>
         public virtual IWorkspaceManagedSqlServerUsagesOperations WorkspaceManagedSqlServerUsages { get; private set; }
 
         /// <summary>
-        /// Gets the IWorkspaceManagedSqlServerRecoverableSqlpoolsOperations.
+        /// Gets the IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations.
         /// </summary>
-        public virtual IWorkspaceManagedSqlServerRecoverableSqlpoolsOperations WorkspaceManagedSqlServerRecoverableSqlpools { get; private set; }
+        public virtual IWorkspaceManagedSqlServerRecoverableSqlPoolsOperations WorkspaceManagedSqlServerRecoverableSqlPools { get; private set; }
 
         /// <summary>
         /// Gets the IKeysOperations.
@@ -595,11 +620,14 @@ namespace Microsoft.Azure.Management.Synapse
             SqlPoolDataWarehouseUserActivities = new SqlPoolDataWarehouseUserActivitiesOperations(this);
             SqlPoolRestorePoints = new SqlPoolRestorePointsOperations(this);
             SqlPoolReplicationLinks = new SqlPoolReplicationLinksOperations(this);
+            SqlPoolMaintenanceWindows = new SqlPoolMaintenanceWindowsOperations(this);
+            SqlPoolMaintenanceWindowOptions = new SqlPoolMaintenanceWindowOptionsOperations(this);
             SqlPoolTransparentDataEncryptions = new SqlPoolTransparentDataEncryptionsOperations(this);
             SqlPoolBlobAuditingPolicies = new SqlPoolBlobAuditingPoliciesOperations(this);
             SqlPoolOperations = new SqlPoolOperations(this);
             SqlPoolUsages = new SqlPoolUsagesOperations(this);
             SqlPoolSensitivityLabels = new SqlPoolSensitivityLabelsOperations(this);
+            SqlPoolRecommendedSensitivityLabels = new SqlPoolRecommendedSensitivityLabelsOperations(this);
             SqlPoolSchemas = new SqlPoolSchemasOperations(this);
             SqlPoolTables = new SqlPoolTablesOperations(this);
             SqlPoolTableColumns = new SqlPoolTableColumnsOperations(this);
@@ -629,6 +657,7 @@ namespace Microsoft.Azure.Management.Synapse
             IntegrationRuntimeMonitoringData = new IntegrationRuntimeMonitoringDataOperations(this);
             IntegrationRuntimeStatus = new IntegrationRuntimeStatusOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            PrivateLinkHubPrivateLinkResources = new PrivateLinkHubPrivateLinkResourcesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkHubs = new PrivateLinkHubsOperations(this);
             PrivateEndpointConnectionsPrivateLinkHub = new PrivateEndpointConnectionsPrivateLinkHubOperations(this);
@@ -636,11 +665,12 @@ namespace Microsoft.Azure.Management.Synapse
             WorkspaceManagedSqlServerExtendedBlobAuditingPolicies = new WorkspaceManagedSqlServerExtendedBlobAuditingPoliciesOperations(this);
             WorkspaceManagedSqlServerSecurityAlertPolicy = new WorkspaceManagedSqlServerSecurityAlertPolicyOperations(this);
             WorkspaceManagedSqlServerVulnerabilityAssessments = new WorkspaceManagedSqlServerVulnerabilityAssessmentsOperations(this);
+            WorkspaceManagedSqlServerEncryptionProtector = new WorkspaceManagedSqlServerEncryptionProtectorOperations(this);
             WorkspaceManagedSqlServerUsages = new WorkspaceManagedSqlServerUsagesOperations(this);
-            WorkspaceManagedSqlServerRecoverableSqlpools = new WorkspaceManagedSqlServerRecoverableSqlpoolsOperations(this);
+            WorkspaceManagedSqlServerRecoverableSqlPools = new WorkspaceManagedSqlServerRecoverableSqlPoolsOperations(this);
             Keys = new KeysOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-06-01-preview";
+            ApiVersion = "2020-12-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

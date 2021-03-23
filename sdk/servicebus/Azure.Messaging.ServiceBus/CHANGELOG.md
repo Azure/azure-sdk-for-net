@@ -1,16 +1,32 @@
 # Release History
 
-## 7.1.0-beta.1 (Unreleased)
+## 7.2.0-beta.2 (Unreleased)
+
+
+## 7.2.0-beta.1 (2021-03-08)
+### Added
+- Added `EnableCrossEntityTransactions` property to `ServiceBusClientOptions` to support transactions spanning multiple entities.
+- Added `SessionIdleTimeout` property to `ServiceBusSessionProcessorOptions` to allow configuration of when to switch to the next session when using the session processor. 
+
+### Key Bug Fixes
+- Fixed issue where batch size calculation was not taking diagnostic tracing information into account.
+- Retry on authorization failures to reduce likelihood of transient failures bubbling up to user application.
+- Reduce maximum refresh interval to prevent Timer exceptions involving long-lived SAS tokens.
+
+## 7.1.0 (2021-02-09)
 
 ### Acknowledgments
 Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
 
 - Aaron Dandy _([GitHub](https://github.com/aarondandy))_
 
+### Added
+- Added virtual keyword to all client properties to enable mocking scenarios.
+- Added `ServiceBusModelFactory.ServiceBusMessageBatch` to allow mocking a `ServiceBusMessageBatch`.
+
 ### Key Bug Fixes
-
 - Fixed an issue with the `ServiceBusProcessor` where closing and disposing or disposing multiple times resulted in an exception.  (A community contribution, courtesy of _[aarondandy](https://github.com/aarondandy)_)
-
+- Fixed issue with batch size calculation when using `ServiceBusMessageBatch`.
 
 ## 7.0.1 (2021-01-12)
 

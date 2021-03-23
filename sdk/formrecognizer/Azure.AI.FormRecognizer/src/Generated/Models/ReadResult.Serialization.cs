@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
@@ -20,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Models
             float width = default;
             float height = default;
             LengthUnit unit = default;
-            Optional<Language> language = default;
+            Optional<FormRecognizerLanguage> language = default;
             Optional<IReadOnlyList<TextLine>> lines = default;
             Optional<IReadOnlyList<SelectionMark>> selectionMarks = default;
             foreach (var property in element.EnumerateObject())
@@ -57,7 +58,7 @@ namespace Azure.AI.FormRecognizer.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    language = new Language(property.Value.GetString());
+                    language = new FormRecognizerLanguage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lines"))
@@ -79,7 +80,7 @@ namespace Azure.AI.FormRecognizer.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        selectionMarks = null;
                         continue;
                     }
                     List<SelectionMark> array = new List<SelectionMark>();

@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetDataset()
         {
             DatasetClient client = CreateClient();
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestCreateDataset()
         {
             DatasetClient client = CreateClient();
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             Assert.AreEqual(datasetName, dataset.Name);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestDeleteDataset()
         {
             DatasetClient client = CreateClient();

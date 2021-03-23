@@ -566,6 +566,52 @@ namespace Microsoft.Azure.Management.Migrate.ResourceMover
             }
 
             /// <summary>
+            /// List of the move resources for which an arm resource is required for.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
+            /// </param>
+            /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
+            /// </param>
+            /// <param name='sourceId'>
+            /// The sourceId for which the api is invoked.
+            /// </param>
+            public static RequiredForResourcesCollection ListRequiredFor(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName, string sourceId)
+            {
+                return operations.ListRequiredForAsync(resourceGroupName, moveCollectionName, sourceId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List of the move resources for which an arm resource is required for.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name.
+            /// </param>
+            /// <param name='moveCollectionName'>
+            /// The Move Collection Name.
+            /// </param>
+            /// <param name='sourceId'>
+            /// The sourceId for which the api is invoked.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RequiredForResourcesCollection> ListRequiredForAsync(this IMoveCollectionsOperations operations, string resourceGroupName, string moveCollectionName, string sourceId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListRequiredForWithHttpMessagesAsync(resourceGroupName, moveCollectionName, sourceId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes a move collection.
             /// </summary>
             /// <param name='operations'>

@@ -5,21 +5,21 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
-using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.InteropExtensions;
 using Newtonsoft.Json;
 using System.Globalization;
+using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Triggers;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 {
     // Convert from Message --> T
-    internal class MessageToPocoConverter<TElement> : IConverter<Message, TElement>
+    internal class MessageToPocoConverter<TElement> : IConverter<ServiceBusReceivedMessage, TElement>
     {
         public MessageToPocoConverter()
         {
         }
 
-        public TElement Convert(Message message)
+        public TElement Convert(ServiceBusReceivedMessage message)
         {
             // 1. If ContentType is "application/json" deserialize as JSON
             // 2. If ContentType is not "application/json" attempt to deserialize using Message.GetBody, which will handle cases like XML object serialization
@@ -33,7 +33,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             {
                 try
                 {
-                    return message.GetBody<TElement>();
+                    var serializer = DataContractBinarySerializer<TElement>.Instance;
+                    return (TElement)serializer.ReadObject(message.Body.ToStream());
                 }
                 catch (SerializationException)
                 {
@@ -42,9 +43,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             }
         }
 
-        private static TElement DeserializeJsonObject(Message message)
+        private static TElement DeserializeJsonObject(ServiceBusReceivedMessage message)
         {
-            string contents = StrictEncodings.Utf8.GetString(message.Body);
+            string contents = StrictEncodings.Utf8.GetString(message.Body.ToArray());
 
             try
             {

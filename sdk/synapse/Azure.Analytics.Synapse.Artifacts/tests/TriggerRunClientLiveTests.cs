@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18079 - Missing or invalid pipeline references for trigger but no obvious place to put pipeline?")]
-        [Test]
+        [RecordedTest]
         public async Task TestQueryRuns()
         {
             TriggerClient triggerClient = CreateTriggerClient();
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18079 - Missing or invalid pipeline references for trigger but no obvious place to put pipeline?")]
-        [Test]
+        [RecordedTest]
         public async Task TestCancelRerun()
         {
             TriggerClient triggerClient = CreateTriggerClient();

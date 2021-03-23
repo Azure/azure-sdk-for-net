@@ -28,7 +28,7 @@ namespace Azure.Messaging.ServiceBus
         private readonly ServiceBusProcessor _innerProcessor;
 
         /// <inheritdoc cref="ServiceBusProcessor.EntityPath"/>
-        public string EntityPath => _innerProcessor.EntityPath;
+        public virtual string EntityPath => _innerProcessor.EntityPath;
 
         /// <summary>
         /// Gets the ID to identify this processor. This can be used to correlate logs and exceptions.
@@ -37,16 +37,16 @@ namespace Azure.Messaging.ServiceBus
         internal string Identifier => _innerProcessor.Identifier;
 
         /// <inheritdoc cref="ServiceBusProcessor.ReceiveMode"/>
-        public ServiceBusReceiveMode ReceiveMode => _innerProcessor.ReceiveMode;
+        public virtual ServiceBusReceiveMode ReceiveMode => _innerProcessor.ReceiveMode;
 
         /// <inheritdoc cref="ServiceBusProcessor.PrefetchCount"/>
-        public int PrefetchCount => _innerProcessor.PrefetchCount;
+        public virtual int PrefetchCount => _innerProcessor.PrefetchCount;
 
         /// <inheritdoc cref="ServiceBusProcessor.IsProcessing"/>
-        public bool IsProcessing => _innerProcessor.IsProcessing;
+        public virtual bool IsProcessing => _innerProcessor.IsProcessing;
 
         /// <inheritdoc cref="ServiceBusProcessor.AutoCompleteMessages"/>
-        public bool AutoCompleteMessages => _innerProcessor.AutoCompleteMessages;
+        public virtual bool AutoCompleteMessages => _innerProcessor.AutoCompleteMessages;
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusSessionProcessor"/> has been closed.
@@ -55,7 +55,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         ///   <c>true</c> if the processor is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed => _innerProcessor.IsClosed;
+        public virtual bool IsClosed => _innerProcessor.IsClosed;
 
         /// <summary>
         /// Gets the maximum duration within which the session lock will be
@@ -67,21 +67,36 @@ namespace Azure.Messaging.ServiceBus
         /// <remarks>The session lock renewal can continue for sometime in the background
         /// after completion of message and result in a few false SessionLockLost exceptions temporarily.
         /// </remarks>
-        public TimeSpan MaxAutoLockRenewalDuration => _innerProcessor.MaxAutoLockRenewalDuration;
+        public virtual TimeSpan MaxAutoLockRenewalDuration => _innerProcessor.MaxAutoLockRenewalDuration;
 
         /// <summary>Gets the maximum number of sessions that will be processed concurrently by the processor.
         /// The default value is 8.</summary>
-        public int MaxConcurrentSessions => _innerProcessor.MaxConcurrentSessions;
+        public virtual int MaxConcurrentSessions => _innerProcessor.MaxConcurrentSessions;
 
         /// <summary>
         /// Gets the maximum number of calls to the callback the processor will initiate per session.
         /// Thus the total number of callbacks will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
         /// The default value is 1.
         /// </summary>
-        public int MaxConcurrentCallsPerSession => _innerProcessor.MaxConcurrentCallsPerSession;
+        public virtual int MaxConcurrentCallsPerSession => _innerProcessor.MaxConcurrentCallsPerSession;
 
         /// <inheritdoc cref="ServiceBusProcessor.FullyQualifiedNamespace"/>
-        public string FullyQualifiedNamespace => _innerProcessor.FullyQualifiedNamespace;
+        public virtual string FullyQualifiedNamespace => _innerProcessor.FullyQualifiedNamespace;
+
+        /// <summary>
+        /// Gets the maximum amount of time to wait for a message to be received for the
+        /// currently active session. After this time has elapsed, the processor will close the session
+        /// and attempt to process another session.
+        /// If not specified, the <see cref="ServiceBusRetryOptions.TryTimeout"/> will be used.
+        /// </summary>
+        public virtual TimeSpan? SessionIdleTimeout => _innerProcessor.MaxReceiveWaitTime;
+
+        /// <summary>
+        /// Gets the transaction group associated with the processor. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// </summary>
+        public virtual string TransactionGroup => _innerProcessor.TransactionGroup;
 
         internal ServiceBusSessionProcessor(
             ServiceBusConnection connection,

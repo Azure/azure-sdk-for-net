@@ -1,0 +1,19 @@
+{
+  "@id": "dtmi:com:example:Building;1",
+  "@type": "Interface",
+  "displayName": "Building",
+  "contents": [
+    {
+      "@type": "Property",
+      "name": "name",
+      "schema": "string",
+      "writable": true
+    },
+    {
+      "@type": "Relationship",
+      "name": "contains",
+      "target": "dtmi:com:example:Room;1"
+    }
+  ],
+  "@context": "dtmi:dtdl:context;2"
+}

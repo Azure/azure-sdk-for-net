@@ -23,6 +23,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, entities.Count);
             Assert.AreEqual("Microsoft", entities.FirstOrDefault().Text);
             Assert.AreEqual(3, entities.FirstOrDefault().Offset);
+            Assert.AreEqual(9, entities.FirstOrDefault().Length);
         }
 
         [Test]
@@ -40,10 +41,12 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, entitiesWithUnicodeCodePoint.Count);
             Assert.AreEqual("Microsoft", entitiesWithUnicodeCodePoint.FirstOrDefault().Text);
             Assert.AreEqual(2, entitiesWithUnicodeCodePoint.FirstOrDefault().Offset);
+            Assert.AreEqual(9, entitiesWithUnicodeCodePoint.FirstOrDefault().Length);
 
             Assert.AreEqual(1, entitiesWithUtf16CodeUnit.Count);
             Assert.AreEqual("Microsoft", entitiesWithUtf16CodeUnit.FirstOrDefault().Text);
             Assert.AreEqual(3, entitiesWithUtf16CodeUnit.FirstOrDefault().Offset);
+            Assert.AreEqual(9, entitiesWithUtf16CodeUnit.FirstOrDefault().Length);
         }
 
         [Test]
@@ -57,6 +60,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, entities.Count);
             Assert.AreEqual("Microsoft", entities.FirstOrDefault().Text);
             Assert.AreEqual(4, entities.FirstOrDefault().Offset);
+            Assert.AreEqual(9, entities.FirstOrDefault().Length);
         }
 
         [Test]
@@ -70,6 +74,7 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(1, entities.Count);
             Assert.AreEqual("Bill Gates", entities.FirstOrDefault().Text);
             Assert.AreEqual(3, entities.FirstOrDefault().Offset);
+            Assert.AreEqual(10, entities.FirstOrDefault().Length);
         }
 
         [Test]

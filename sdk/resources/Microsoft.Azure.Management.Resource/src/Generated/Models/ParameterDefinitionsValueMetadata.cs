@@ -38,11 +38,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="displayName">The display name for the
         /// parameter.</param>
         /// <param name="description">The description of the parameter.</param>
-        public ParameterDefinitionsValueMetadata(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string displayName = default(string), string description = default(string))
+        /// <param name="strongType">Used when assigning the policy definition
+        /// through the portal. Provides a context aware list of values for the
+        /// user to choose from.</param>
+        /// <param name="assignPermissions">Set to true to have Azure portal
+        /// create role assignments on the resource ID or resource scope value
+        /// of this parameter during policy assignment. This property is useful
+        /// in case you wish to assign permissions outside the assignment
+        /// scope.</param>
+        public ParameterDefinitionsValueMetadata(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string displayName = default(string), string description = default(string), string strongType = default(string), bool? assignPermissions = default(bool?))
         {
             AdditionalProperties = additionalProperties;
             DisplayName = displayName;
             Description = description;
+            StrongType = strongType;
+            AssignPermissions = assignPermissions;
             CustomInit();
         }
 
@@ -69,6 +79,23 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets used when assigning the policy definition through the
+        /// portal. Provides a context aware list of values for the user to
+        /// choose from.
+        /// </summary>
+        [JsonProperty(PropertyName = "strongType")]
+        public string StrongType { get; set; }
+
+        /// <summary>
+        /// Gets or sets set to true to have Azure portal create role
+        /// assignments on the resource ID or resource scope value of this
+        /// parameter during policy assignment. This property is useful in case
+        /// you wish to assign permissions outside the assignment scope.
+        /// </summary>
+        [JsonProperty(PropertyName = "assignPermissions")]
+        public bool? AssignPermissions { get; set; }
 
     }
 }

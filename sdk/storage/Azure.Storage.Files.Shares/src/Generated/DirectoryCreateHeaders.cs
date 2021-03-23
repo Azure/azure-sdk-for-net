@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class DirectoryCreateHeaders
+    internal partial class DirectoryCreateHeaders
     {
         private readonly Response _response;
         public DirectoryCreateHeaders(Response response)

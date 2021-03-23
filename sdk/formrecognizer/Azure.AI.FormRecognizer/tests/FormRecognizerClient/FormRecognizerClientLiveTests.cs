@@ -7,8 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Azure.AI.FormRecognizer.Tests
 {
@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void FormRecognizerClientCannotAuthenticateWithFakeApiKey()
         {
             var client = CreateFormRecognizerClient(apiKey: "fakeKey");
@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         #region StartRecognizeContent
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeContentCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -69,7 +69,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform operations.
         /// </summary>
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeContentPopulatesFormPagePdf(bool useStream)
@@ -121,7 +121,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 Assert.IsNotNull(line.Appearance);
                 Assert.IsNotNull(line.Appearance.Style);
-                Assert.AreEqual(TextStyle.Other, line.Appearance.Style.Name);
+                Assert.AreEqual(TextStyleName.Other, line.Appearance.Style.Name);
                 Assert.Greater(line.Appearance.Style.Confidence, 0f);
             }
 
@@ -176,7 +176,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeContentPopulatesFormPageJpg(bool useStream)
@@ -232,11 +232,11 @@ namespace Azure.AI.FormRecognizer.Tests
 
                 if (lineIndex == 45)
                 {
-                    Assert.AreEqual(TextStyle.Handwriting, line.Appearance.Style.Name);
+                    Assert.AreEqual(TextStyleName.Handwriting, line.Appearance.Style.Name);
                 }
                 else
                 {
-                    Assert.AreEqual(TextStyle.Other, line.Appearance.Style.Name);
+                    Assert.AreEqual(TextStyleName.Other, line.Appearance.Style.Name);
                 }
             }
 
@@ -289,7 +289,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeContentCanParseMultipageForm(bool useStream)
@@ -330,7 +330,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeContentCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -353,7 +353,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.SelectionMarks.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeContentCanParseMultipageFormWithBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -392,7 +392,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public void StartRecognizeContentThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -410,7 +410,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public void StartRecognizeContentFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -420,7 +420,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeContentWithSelectionMarks(bool useStream)
@@ -450,7 +450,7 @@ namespace Azure.AI.FormRecognizer.Tests
             ValidateFormPage(formPage, includeFieldElements: true, expectedPageNumber: 1);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("1", 1)]
         [TestCase("1-2", 2)]
         public async Task StartRecognizeContentWithOnePageArgument(string pages, int expected)
@@ -461,7 +461,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = new List<string> { pages } });
+                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages =  { pages } });
             }
 
             FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
@@ -469,7 +469,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(expected, formPages.Count);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("1", "3", 2)]
         [TestCase("1-2", "3", 3)]
         public async Task StartRecognizeContentWithMultiplePageArgument(string page1, string page2, int expected)
@@ -480,7 +480,7 @@ namespace Azure.AI.FormRecognizer.Tests
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = new List<string> { page1, page2 } });
+                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = { page1, page2 } });
             }
 
             FormPageCollection formPages = await operation.WaitForCompletionAsync(PollingInterval);
@@ -488,16 +488,14 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(expected, formPages.Count);
         }
 
-        [Test]
-        [TestCase("en")]
-        [TestCase("")]
-        public async Task StartRecognizeContentWithLanguage(string language)
+        [RecordedTest]
+        public async Task StartRecognizeContentWithLanguage()
         {
             var client = CreateFormRecognizerClient();
             RecognizeContentOperation operation;
 
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-            operation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { Language = language } );
+            operation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { Language = FormRecognizerLanguage.En } );
 
             await operation.WaitForCompletionAsync(PollingInterval);
             Assert.IsTrue(operation.HasValue);
@@ -507,7 +505,7 @@ namespace Azure.AI.FormRecognizer.Tests
             ValidateFormPage(formPage, includeFieldElements: true, expectedPageNumber: 1);
         }
 
-        [Test]
+        [RecordedTest]
         public void StartRecognizeContentWithNoSupporttedLanguage()
         {
             var client = CreateFormRecognizerClient();
@@ -521,7 +519,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         #region StartRecognizeReceipts
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeReceiptsCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -551,9 +549,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform analysis of receipts.
         /// </summary>
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -662,9 +660,9 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(form.Fields["Total"].Value.AsFloat(), Is.EqualTo(1203.39).Within(0.0001));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -776,9 +774,9 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.That(form.Fields["Total"].Value.AsFloat(), Is.EqualTo(14.50).Within(0.0001));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -832,7 +830,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeReceiptsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -863,7 +861,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeReceiptsCanParseMultipageFormWithBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -915,7 +913,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public void StartRecognizeReceiptsThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -933,7 +931,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
-        [Test]
+        [RecordedTest]
+        [Ignore("Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public void StartRecognizeReceiptsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -943,16 +942,14 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
 
-        [Test]
-        [TestCase("en-US")]
-        [TestCase("")]
-        public async Task StartRecognizeReceiptsWithSupportedLocale(string locale)
+        [RecordedTest]
+        public async Task StartRecognizeReceiptsWithSupportedLocale()
         {
             var client = CreateFormRecognizerClient();
             var options = new RecognizeReceiptsOptions()
             {
                 IncludeFieldElements = true,
-                Locale = locale
+                Locale = FormRecognizerLocale.EnUS
             };
             RecognizeReceiptsOperation operation;
 
@@ -981,13 +978,18 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, receiptPage.Tables.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public void StartRecognizeReceiptsWithWrongLocale()
         {
             var client = CreateFormRecognizerClient();
 
-            var receiptUri = FormRecognizerTestEnvironment.CreateUri(TestFile.ReceiptJpg);
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsFromUriAsync(receiptUri, new RecognizeReceiptsOptions() { Locale = "not-locale" }));
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            RequestFailedException ex;
+
+            using (Recording.DisableRequestBodyRecording())
+            {
+                ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeReceiptsAsync(stream, new RecognizeReceiptsOptions() { Locale = "not-locale" }));
+            }
             Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
         }
 
@@ -995,7 +997,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         #region StartRecognizeBusinessCards
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeBusinessCardsCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -1021,9 +1023,9 @@ namespace Azure.AI.FormRecognizer.Tests
                 expectedLastPageNumber: 1);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
-        [TestCase(false) ]
+        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1128,9 +1130,9 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("Contoso", companyNames.FirstOrDefault().Value.AsString());
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1235,7 +1237,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("Contoso", companyNames.FirstOrDefault().Value.AsString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeBusinessCardsIncludeFieldElements()
         {
             var client = CreateFormRecognizerClient();
@@ -1259,7 +1261,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 expectedLastPageNumber: 1);
        }
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeBusinessCardsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -1291,7 +1293,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.SelectionMarks.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public void StartRecognizeBusinessCardsThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -1309,7 +1311,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
-        [Test]
+        [RecordedTest]
+        [Ignore("Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public void StartRecognizeBusinessCardsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -1319,9 +1322,9 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public async Task StartRecognizeBusinessCardsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1381,11 +1384,62 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
+        [RecordedTest]
+        public async Task StartRecognizeBusinessCardsWithSupportedLocale()
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeBusinessCardsOptions()
+            {
+                IncludeFieldElements = true,
+                Locale = FormRecognizerLocale.EnUS
+            };
+            RecognizeBusinessCardsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var businessCard = recognizedForms.Single();
+
+            ValidatePrebuiltForm(
+                businessCard,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+
+            Assert.Greater(businessCard.Fields.Count, 0);
+
+            var businessCardPage = businessCard.Pages.Single();
+
+            Assert.Greater(businessCardPage.Lines.Count, 0);
+            Assert.AreEqual(0, businessCardPage.SelectionMarks.Count);
+            Assert.AreEqual(0, businessCardPage.Tables.Count);
+        }
+
+        [RecordedTest]
+        public void StartRecognizeBusinessCardsWithWrongLocale()
+        {
+            var client = CreateFormRecognizerClient();
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
+            RequestFailedException ex;
+
+            using (Recording.DisableRequestBodyRecording())
+            {
+                ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsAsync(stream, new RecognizeBusinessCardsOptions() { Locale = "not-locale" }));
+            }
+            Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
+        }
+
         #endregion
 
         #region StartRecognizeInvoices
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeInvoicesCanAuthenticateWithTokenCredential()
         {
             var client = CreateFormRecognizerClient(useTokenCredential: true);
@@ -1411,9 +1465,9 @@ namespace Azure.AI.FormRecognizer.Tests
                 expectedLastPageNumber: 1);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public async Task StartRecognizeInvoicesPopulatesExtractedPdf(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1479,9 +1533,9 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(2017, dueDate.Year);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public async Task StartRecognizeInvoicesPopulatesExtractedTiff(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1553,7 +1607,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(2017, dueDate.Year);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeInvoicesIncludeFieldElements()
         {
             var client = CreateFormRecognizerClient();
@@ -1577,7 +1631,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 expectedLastPageNumber: 1);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeInvoicesCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -1608,9 +1662,9 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.SelectionMarks.Count);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
-        [TestCase(false)]
+        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public async Task StartRecognizeInvoicesCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1669,7 +1723,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 expectedLastPageNumber: 2);
         }
 
-        [Test]
+        [RecordedTest]
         public void StartRecognizeInvoicesThrowsForDamagedFile()
         {
             var client = CreateFormRecognizerClient();
@@ -1687,7 +1741,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
-        [Test]
+        [RecordedTest]
+        [Ignore("Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public void StartRecognizeInvoicesFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -1697,16 +1752,14 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
         }
 
-        [Test]
-        [TestCase("en-US")]
-        [TestCase("")]
-        public async Task StartRecognizeInvoicesWithSupportedLocale(string locale)
+        [RecordedTest]
+        public async Task StartRecognizeInvoicesWithSupportedLocale()
         {
             var client = CreateFormRecognizerClient();
             var options = new RecognizeInvoicesOptions()
             {
                 IncludeFieldElements = true,
-                Locale = locale
+                Locale = FormRecognizerLocale.EnUS
             };
             RecognizeInvoicesOperation operation;
 
@@ -1735,13 +1788,18 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(1, receiptPage.Tables.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public void StartRecognizeInvoicesWithWrongLocale()
         {
             var client = CreateFormRecognizerClient();
 
-            var receiptUri = FormRecognizerTestEnvironment.CreateUri(TestFile.ReceiptJpg);
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesFromUriAsync(receiptUri, new RecognizeInvoicesOptions() { Locale = "not-locale" }));
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoicePdf);
+            RequestFailedException ex;
+
+            using (Recording.DisableRequestBodyRecording())
+            {
+                ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesAsync(stream, new RecognizeInvoicesOptions() { Locale = "not-locale" }));
+            }
             Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
         }
 
@@ -1749,7 +1807,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         #region StartRecognizeCustomForms
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsCanAuthenticateWithTokenCredential(bool useTrainingLabels)
@@ -1796,7 +1854,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform analysis based on a custom labeled model.
         /// </summary>
-        [Test]
+        [RecordedTest]
         [TestCase(true, true)]
         [TestCase(true, false)]
         [TestCase(false, true)]
@@ -1855,7 +1913,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("948284", form.Fields[name].ValueData.Text);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsWithLabelsAndSelectionMarks(bool includeFieldElements)
@@ -1891,7 +1949,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("Selected", form.Fields[name].ValueData.Text);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageForm(bool useStream)
@@ -1950,7 +2008,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -1983,7 +2041,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseMultipageFormWithBlankPage(bool useStream)
@@ -2038,7 +2096,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeCustomFormsWithLabelsCanParseDifferentTypeOfForm()
         {
             var client = CreateFormRecognizerClient();
@@ -2069,7 +2127,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and perform analysis based on a custom labeled model.
         /// </summary>
-        [Test]
+        [RecordedTest]
         [TestCase(true, true)]
         [TestCase(true, false)]
         [TestCase(false, true)]
@@ -2131,7 +2189,7 @@ namespace Azure.AI.FormRecognizer.Tests
             // Assert.AreEqual("Hero Limited", form.Fields[name].LabelData.Text);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageForm(bool useStream)
@@ -2171,19 +2229,23 @@ namespace Azure.AI.FormRecognizer.Tests
                     includeFieldElements: true,
                     expectedFirstPageNumber: expectedPageNumber,
                     expectedLastPageNumber: expectedPageNumber);
-
-                // Basic sanity test to make sure pages are ordered correctly.
-                var expectedLabelData = formIndex == 0 ? "__Address__1" : "Company Name:";
-                var expectedValueData = formIndex == 0 ? "Contoso Ltd. 2345 Dogwood Lane Birch, Kansas 98123" : "Southridge Video";
-
-                FormField fieldInPage = recognizedForm.Fields.Values.Where(field => field.LabelData.Text.Contains(expectedLabelData)).FirstOrDefault();
-                Assert.IsNotNull(fieldInPage);
-                Assert.IsNotNull(fieldInPage.ValueData);
-                Assert.AreEqual(expectedValueData, fieldInPage.ValueData.Text);
             }
+
+            // Basic sanity test to make sure pages are ordered correctly.
+
+            FormPage firstFormPage = recognizedForms[0].Pages.Single();
+            FormTable firstFormTable = firstFormPage.Tables.Single();
+
+            Assert.True(firstFormTable.Cells.Any(c => c.Text == "Gold Sponsor"));
+
+            FormField secondFormFieldInPage = recognizedForms[1].Fields.Values.Where(field => field.LabelData.Text.Contains("Company Name:")).FirstOrDefault();
+
+            Assert.IsNotNull(secondFormFieldInPage);
+            Assert.IsNotNull(secondFormFieldInPage.ValueData);
+            Assert.AreEqual("Southridge Video", secondFormFieldInPage.ValueData.Text);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseBlankPage()
         {
             var client = CreateFormRecognizerClient();
@@ -2217,7 +2279,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false, Ignore = "https://github.com/Azure/azure-sdk-for-net/issues/12319")]
         public async Task StartRecognizeCustomFormsWithoutLabelsCanParseMultipageFormWithBlankPage(bool useStream)
@@ -2281,7 +2343,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsThrowsForDamagedFile(bool useTrainingLabels)
@@ -2308,7 +2370,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
-        [Test]
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/19375")]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
@@ -2352,6 +2415,14 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.NotNull(line.BoundingBox.Points);
                 Assert.AreEqual(4, line.BoundingBox.Points.Length);
                 Assert.NotNull(line.Text);
+
+                if (line.Appearance != null)
+                {
+                    Assert.IsNotNull(line.Appearance.Style);
+                    // TODO: Enable once service bug is fixed => https://github.com/Azure/azure-sdk-for-net/issues/18216
+                   // Assert.IsTrue(line.Appearance.Style.Name == StyleName.Handwriting || line.Appearance.Style.Name == StyleName.Other);
+                    Assert.Greater(line.Appearance.Style.Confidence, 0f);
+                }
 
                 Assert.NotNull(line.Words);
                 Assert.Greater(line.Words.Count, 0);

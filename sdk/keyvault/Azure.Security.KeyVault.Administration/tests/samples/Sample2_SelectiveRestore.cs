@@ -16,6 +16,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         { }
 
         [RecordedTest]
+        [Ignore("Recording is out of date; requires service attention: https://github.com/Azure/azure-sdk-for-net/issues/18501")]
         public async Task BackupAndRestoreSampleAsync()
         {
             var blobStorageUrl = TestEnvironment.StorageUri;

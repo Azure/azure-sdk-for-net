@@ -141,9 +141,14 @@ namespace Azure.Core
             public static string Host => "Host";
 
             /// <summary>
-            /// Returns <code>"Content-Disposition"</code>
+            /// Returns <code>"Content-Disposition"</code>.
             /// </summary>
             public static string ContentDisposition => "Content-Disposition";
+
+            /// <summary>
+            /// Returns <code>"WWW-Authenticate"</code>.
+            /// </summary>
+            public static string WwwAuthenticate => "WWW-Authenticate";
         }
 
 #pragma warning disable CA1034 // Nested types should not be visible

@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   The identifier of the producer group for which publishing is being performed.
         /// </summary>
         ///
-        public long? ProducerGroupId  { get; set; }
+        public long? ProducerGroupId { get; set; }
 
         /// <summary>
         ///   The owner level for which publishing is being performed.

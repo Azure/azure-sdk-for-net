@@ -85,12 +85,18 @@ namespace Microsoft.Extensions.Azure
 
         internal static TokenCredential CreateCredential(IConfiguration configuration, TokenCredentialOptions identityClientOptions = null)
         {
+            var credentialType = configuration["credential"];
             var clientId = configuration["clientId"];
             var tenantId = configuration["tenantId"];
             var clientSecret = configuration["clientSecret"];
             var certificate = configuration["clientCertificate"];
             var certificateStoreName = configuration["clientCertificateStoreName"];
             var certificateStoreLocation = configuration["clientCertificateStoreLocation"];
+
+            if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
+            {
+                return new ManagedIdentityCredential(clientId);
+            }
 
             if (!string.IsNullOrWhiteSpace(tenantId) &&
                 !string.IsNullOrWhiteSpace(clientId) &&

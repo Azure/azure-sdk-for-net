@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 createWithManagedDisks: hasManagedDisks,
                 createWithPublicIpAddress: false,
                 subnet: vmssSubnet);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
 
             VirtualMachineScaleSetVMInstanceView vmInstanceViewResponse =
                 await VirtualMachineScaleSetVMsOperations.GetInstanceViewAsync(rgName, vmScaleSet.Name, "0");

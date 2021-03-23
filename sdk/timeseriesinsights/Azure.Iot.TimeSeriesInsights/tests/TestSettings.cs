@@ -17,6 +17,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
     {
         public const string TsiEnvironmentVariablesPrefix = "TIMESERIESINSIGHTS";
         public const string TestModeEnvVariable = "AZURE_TEST_MODE";
+        public const string IoTHubConnectionStringEnvironmentVariable = "IOTHUB_CONNECTION_STRING";
 
         // If these environment variables exist in the environment, their values will replace (supersede) config.json values.
 

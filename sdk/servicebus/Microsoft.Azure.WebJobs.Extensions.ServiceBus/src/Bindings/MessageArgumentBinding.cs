@@ -4,7 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.ServiceBus;
+using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
@@ -13,7 +13,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
     {
         public Type ValueType
         {
-            get { return typeof(Message); }
+            get { return typeof(ServiceBusMessage); }
         }
 
         public Task<IValueProvider> BindAsync(ServiceBusEntity value, ValueBindingContext context)
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
             public Type Type
             {
-                get { return typeof(Message); }
+                get { return typeof(ServiceBusMessage); }
             }
 
             public Task<object> GetValueAsync()
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
             public string ToInvokeString()
             {
-                return _entity.MessageSender.Path;
+                return _entity.MessageSender.EntityPath;
             }
 
             /// <summary>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
                     return;
                 }
 
-                var message = (Message)value;
+                var message = (ServiceBusMessage)value;
 
                 await _entity.SendAndCreateEntityIfNotExistsAsync(message, _functionInstanceId, cancellationToken).ConfigureAwait(false);
             }

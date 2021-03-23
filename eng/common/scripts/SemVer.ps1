@@ -13,7 +13,7 @@ Components: Major.Minor.Patch-PrereleaseLabel.PrereleaseNumber.BuildNumber
 Note: A builtin Powershell version of SemVer exists in 'System.Management.Automation'. At this time, it does not parsing of PrereleaseNumber. It's name is also type accelerated to 'SemVer'.
 #>
 
-class AzureEngSemanticVersion {
+class AzureEngSemanticVersion : IComparable {
   [int] $Major
   [int] $Minor
   [int] $Patch
@@ -34,7 +34,6 @@ class AzureEngSemanticVersion {
   # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
   # Validation: https://regex101.com/r/vkijKf/426
   static [string] $SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:(?<presep>-?)(?<prelabel>[a-zA-Z]+)(?:(?<prenumsep>\.?)(?<prenumber>[0-9]{1,8})(?:(?<buildnumsep>\.?)(?<buildnumber>\d{1,3}))?)?)?"
-  static [string] $ParseLanguage = $Language
 
   static [AzureEngSemanticVersion] ParseVersionString([string] $versionString)
   {
@@ -68,7 +67,9 @@ class AzureEngSemanticVersion {
       $this.Minor = [int]$matches.Minor
       $this.Patch = [int]$matches.Patch
 
-      if ([AzureEngSemanticVersion]::ParseLanguage -eq "python") {
+      # If Language exists and is set to python setup the python conventions.
+      $parseLanguage = (Get-Variable -Name "Language" -ValueOnly -ErrorAction "Ignore")
+      if ($parseLanguage -eq "python") {
         $this.SetupPythonConventions()
       }
       else {
@@ -177,6 +178,31 @@ class AzureEngSemanticVersion {
     $this.DefaultAlphaReleaseLabel = "alpha"
   }
 
+  [int] CompareTo($other)
+  {
+    if ($other -isnot [AzureEngSemanticVersion]) {
+      throw "Cannot compare $other with $this"
+    }
+
+    $ret = $this.Major.CompareTo($other.Major)
+    if ($ret) { return $ret }
+
+    $ret = $this.Minor.CompareTo($other.Minor)
+    if ($ret) { return $ret }
+
+    $ret = $this.Patch.CompareTo($other.Patch)
+    if ($ret) { return $ret }
+
+    # Mimic PowerShell that uses case-insensitive comparisons by default.
+    $ret = [string]::Compare($this.PrereleaseLabel, $other.PrereleaseLabel, $true)
+    if ($ret) { return $ret }
+
+    $ret = $this.PrereleaseNumber.CompareTo($other.PrereleaseNumber)
+    if ($ret) { return $ret }
+
+    return ([int] $this.BuildNumber).CompareTo([int] $other.BuildNumber)
+  }
+
   static [string[]] SortVersionStrings([string[]] $versionStrings)
   {
     $versions = $versionStrings | ForEach-Object { [AzureEngSemanticVersion]::ParseVersionString($_) }
@@ -186,14 +212,12 @@ class AzureEngSemanticVersion {
 
   static [AzureEngSemanticVersion[]] SortVersions([AzureEngSemanticVersion[]] $versions)
   {
-    return ($versions | `
-            Sort-Object -Descending -Property `
-              Major, Minor, Patch, PrereleaseLabel, PrereleaseNumber, `
-              @{ Expression = { [int]$_.BuildNumber }; Descending = $true })
+    return $versions | Sort-Object -Descending
   }
 
   static [void] QuickTests()
   {
+    $global:Language = ""
     $versions = @(
       "1.0.1", 
       "2.0.0", 
@@ -257,7 +281,7 @@ class AzureEngSemanticVersion {
       Write-Host "Error: alpha string did not correctly round trip with ToString. Expected: $($alphaVerString), Actual: $($alphaVer)"
     }
 
-    [AzureEngSemanticVersion]::ParseLanguage = "python"
+    $global:Language = "python"
     $pythonAlphaVerString = "1.2.3a20200828009"
     $pythonAlphaVer = [AzureEngSemanticVersion]::new($pythonAlphaVerString)
     if (!$pythonAlphaVer.IsPrerelease) {
@@ -290,7 +314,7 @@ class AzureEngSemanticVersion {
       }
     }
 
-    [AzureEngSemanticVersion]::ParseLanguage = ""
+    $global:Language = ""
 
     $gaVerString = "1.2.3"
     $gaVer = [AzureEngSemanticVersion]::ParseVersionString($gaVerString)

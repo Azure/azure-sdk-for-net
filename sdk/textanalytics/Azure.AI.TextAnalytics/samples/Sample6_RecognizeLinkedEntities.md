@@ -41,6 +41,7 @@ try
         {
             Console.WriteLine($"    Match Text: {match.Text}");
             Console.WriteLine($"    Offset: {match.Offset}");
+            Console.WriteLine($"    Length: {match.Length}");
             Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
         }
         Console.WriteLine("");
@@ -110,6 +111,7 @@ foreach (RecognizeLinkedEntitiesResult entitiesInDocument in entitiesInDocuments
             {
                 Console.WriteLine($"    Match Text: {match.Text}");
                 Console.WriteLine($"    Offset: {match.Offset}");
+                Console.WriteLine($"    Length: {match.Length}");
                 Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
             }
             Console.WriteLine("");
@@ -187,6 +189,7 @@ foreach (RecognizeLinkedEntitiesResult entitiesInDocument in entitiesPerDocument
             {
                 Console.WriteLine($"    Match Text: {match.Text}");
                 Console.WriteLine($"    Offset: {match.Offset}");
+                Console.WriteLine($"    Length: {match.Length}");
                 Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
             }
             Console.WriteLine("");

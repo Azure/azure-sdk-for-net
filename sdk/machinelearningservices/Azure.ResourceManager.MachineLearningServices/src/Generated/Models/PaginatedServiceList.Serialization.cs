@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
-    public partial class PaginatedServiceList
+    internal partial class PaginatedServiceList
     {
         internal static PaginatedServiceList DeserializePaginatedServiceList(JsonElement element)
         {

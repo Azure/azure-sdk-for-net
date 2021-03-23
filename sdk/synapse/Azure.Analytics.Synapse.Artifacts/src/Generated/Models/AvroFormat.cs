@@ -8,12 +8,7 @@
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The data stored in Avro format. </summary>
-    internal partial class AvroFormat : DatasetStorageFormat
+    public partial class AvroFormat : DatasetStorageFormat
     {
-        /// <summary> Initializes a new instance of AvroFormat. </summary>
-        internal AvroFormat()
-        {
-            Type = "AvroFormat";
-        }
     }
 }

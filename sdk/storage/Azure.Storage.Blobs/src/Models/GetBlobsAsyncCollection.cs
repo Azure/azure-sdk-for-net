@@ -37,17 +37,35 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
-            Response<BlobsFlatSegment> response = await _client.GetBlobsInternal(
-                continuationToken,
-                _traits,
-                _states,
-                _prefix,
-                pageSizeHint,
-                async,
-                cancellationToken).ConfigureAwait(false);
+            Response<ListBlobsFlatSegmentResponse> response;
+
+            if (async)
+            {
+                response = await _client.GetBlobsInternal(
+                    marker: continuationToken,
+                    traits: _traits,
+                    states: _states,
+                    prefix: _prefix,
+                    pageSizeHint: pageSizeHint,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                response = _client.GetBlobsInternal(
+                    marker: continuationToken,
+                    traits: _traits,
+                    states: _states,
+                    prefix: _prefix,
+                    pageSizeHint: pageSizeHint,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .EnsureCompleted();
+            }
 
             return Page<BlobItem>.FromValues(
-                response.Value.BlobItems.ToBlobItems().ToArray(),
+                response.Value.Segment.BlobItems.ToBlobItems().ToArray(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal static class UpgradeModeExtensions
+    internal static partial class UpgradeModeExtensions
     {
         public static string ToSerialString(this UpgradeMode value) => value switch
         {

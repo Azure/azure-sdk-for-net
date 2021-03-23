@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> List of encryption scopes requested, and if paging is required, a URL to the next page of encryption scopes. </summary>
-    public partial class EncryptionScopeListResult
+    internal partial class EncryptionScopeListResult
     {
         /// <summary> Initializes a new instance of EncryptionScopeListResult. </summary>
         internal EncryptionScopeListResult()

@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             ));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGet()
         {
             IntegrationRuntimesClient client = CreateClient();
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestList()
         {
             IntegrationRuntimesClient client = CreateClient();

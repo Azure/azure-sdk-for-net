@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
@@ -12,5 +11,10 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("State")]
     public partial struct TextAnalyticsOperationStatus
     {
+        [CodeGenMember("PartiallyCompletedValue")]
+        private const string PartiallySucceededValue = "partiallySucceeded";
+
+        /// <summary> partiallyCompleted. </summary>
+        public static TextAnalyticsOperationStatus PartiallySucceeded { get; } = new TextAnalyticsOperationStatus(PartiallySucceededValue);
     }
 }

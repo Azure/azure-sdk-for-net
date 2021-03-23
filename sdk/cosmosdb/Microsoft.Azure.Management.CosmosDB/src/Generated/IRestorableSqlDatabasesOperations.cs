@@ -24,8 +24,12 @@ namespace Microsoft.Azure.Management.CosmosDB
     public partial interface IRestorableSqlDatabasesOperations
     {
         /// <summary>
-        /// Lists all the restorable Azure Cosmos DB SQL databases available
-        /// under the restorable account.
+        /// Show the event feed of all mutations done on all the Azure Cosmos
+        /// DB SQL databases under the restorable account.  This helps in
+        /// scenario where database was accidentally deleted to get the
+        /// deletion time.  This API requires
+        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
+        /// permission
         /// </summary>
         /// <param name='location'>
         /// Cosmos DB region, with spaces between words and each word
@@ -40,7 +44,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

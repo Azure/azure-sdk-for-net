@@ -11,11 +11,6 @@ namespace Azure.Storage.Queues.Models
     [CodeGenModel("Logging")]
     public partial class QueueAnalyticsLogging
     {
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        public QueueAnalyticsLogging() { }
-
         internal QueueAnalyticsLogging(
             string version,
             bool delete,
@@ -28,6 +23,26 @@ namespace Azure.Storage.Queues.Models
             Read = read;
             Write = write;
             RetentionPolicy = retentionPolicy;
+        }
+
+        /// <summary>
+        /// Creates a new QueueAnalyticsLogging instance
+        /// </summary>
+        public QueueAnalyticsLogging()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new QueueAnalyticsLogging instance
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal QueueAnalyticsLogging(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                RetentionPolicy = new Azure.Storage.Queues.Models.QueueRetentionPolicy();
+            }
         }
     }
 }

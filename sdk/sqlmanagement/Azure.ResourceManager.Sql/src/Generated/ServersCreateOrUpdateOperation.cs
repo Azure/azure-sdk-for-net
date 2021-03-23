@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ServersCreateOrUpdateOperation : Operation<Server>, IOperationSource<Server>
     {
         private readonly ArmOperationHelpers<Server> _operation;
+
+        /// <summary> Initializes a new instance of ServersCreateOrUpdateOperation for mocking. </summary>
+        protected ServersCreateOrUpdateOperation()
+        {
+        }
+
         internal ServersCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Server>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServersCreateOrUpdateOperation");

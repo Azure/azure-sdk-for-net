@@ -25,12 +25,12 @@ if (Test-Path $EngScriptsLanguageSettings) {
   . $EngScriptsLanguageSettings
 }
 
-if (-not $LanguageShort)
+if (!(Get-Variable -Name "LanguageShort" -ValueOnly -ErrorAction "Ignore"))
 {
-  $LangaugeShort = $Language
+  $LanguageShort = $Language
 }
 
-if (-not $LanguageDisplayName)
+if (!(Get-Variable -Name "LanguageDisplayName" -ValueOnly -ErrorAction "Ignore"))
 {
   $LanguageDisplayName = $Language
 }

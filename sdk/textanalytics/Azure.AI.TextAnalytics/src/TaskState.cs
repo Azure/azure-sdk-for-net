@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics
     /// TaskState.
     /// </summary>
     [CodeGenModel("TaskState")]
-    public partial class TaskState
+    internal partial class TaskState
     {
         /// <summary> Initializes a new instance of TaskState. </summary>
         /// <param name="lastUpdateDateTime"> . </param>

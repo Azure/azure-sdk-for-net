@@ -149,7 +149,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString) : this(connectionString, null, null)
         {
@@ -171,7 +171,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       EventHubProducerClientOptions clientOptions) : this(connectionString, null, clientOptions)
@@ -191,7 +191,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       string eventHubName) : this(connectionString, eventHubName, null)
@@ -212,7 +212,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         public EventHubProducerClient(string connectionString,
                                       string eventHubName,
@@ -492,64 +492,6 @@ namespace Azure.Messaging.EventHubs.Producer
         }
 
         /// <summary>
-        ///   Sends the <see cref="EventData" /> to the associated Event Hub.  To avoid the
-        ///   overhead associated with measuring and validating the size in the client, validation will
-        ///   be delegated to the Event Hubs service and is deferred until the operation is invoked.
-        ///   The call will fail if the size of the specified <paramref name="eventData"/> exceeds the
-        ///   maximum allowable size of a single event.
-        /// </summary>
-        ///
-        /// <param name="eventData">The event data to send.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>
-        ///   A task to be resolved on when the operation has completed; if no exception is thrown when awaited, the
-        ///   Event Hubs service has acknowledge receipt and assumed responsibility for delivery of the event.
-        /// </returns>
-        ///
-        /// <seealso cref="SendAsync(EventData, SendEventOptions, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
-        /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
-        ///
-        internal virtual async Task SendAsync(EventData eventData,
-                                              CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(eventData, nameof(eventData));
-            await SendAsync(new[] { eventData }, null, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        ///   Sends the <see cref="EventData" /> to the associated Event Hub.  To avoid the
-        ///   overhead associated with measuring and validating the size in the client, validation will
-        ///   be delegated to the Event Hubs service and is deferred until the operation is invoked.
-        ///   The call will fail if the size of the specified <paramref name="eventData"/> exceeds the
-        ///   maximum allowable size of a single event.
-        /// </summary>
-        ///
-        /// <param name="eventData">The event data to send.</param>
-        /// <param name="options">The set of options to consider when sending this batch.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>
-        ///   A task to be resolved on when the operation has completed; if no exception is thrown when awaited, the
-        ///   Event Hubs service has acknowledge receipt and assumed responsibility for delivery of the event.
-        /// </returns>
-        ///
-        /// <seealso cref="SendAsync(EventData, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, CancellationToken)" />
-        /// <seealso cref="SendAsync(IEnumerable{EventData}, SendEventOptions, CancellationToken)" />
-        /// <seealso cref="SendAsync(EventDataBatch, CancellationToken)" />
-        ///
-        internal virtual async Task SendAsync(EventData eventData,
-                                              SendEventOptions options,
-                                              CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(eventData, nameof(eventData));
-            await SendAsync(new[] { eventData }, options, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
         ///   Sends a set of events to the associated Event Hub as a single operation.  To avoid the
         ///   overhead associated with measuring and validating the size in the client, validation will
         ///   be delegated to the Event Hubs service and is deferred until the operation is invoked.
@@ -624,8 +566,8 @@ namespace Azure.Messaging.EventHubs.Producer
 
             var events = eventBatch switch
             {
-               IReadOnlyList<EventData> eventList => eventList,
-               _ => eventBatch.ToList()
+                IReadOnlyList<EventData> eventList => eventList,
+                _ => eventBatch.ToList()
             };
 
             if (events.Count == 0)
@@ -858,7 +800,6 @@ namespace Azure.Messaging.EventHubs.Producer
             }
 
             using DiagnosticScope scope = CreateDiagnosticScope(diagnosticIdentifiers);
-
             var pooledProducer = PartitionProducerPool.GetPooledProducer(options.PartitionId, PartitionProducerLifespan);
 
             while (!cancellationToken.IsCancellationRequested)
@@ -871,7 +812,8 @@ namespace Azure.Messaging.EventHubs.Producer
                     return;
                 }
                 catch (EventHubsException eventHubException)
-                    when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
+                    when (eventHubException.Reason == EventHubsException.FailureReason.ClientClosed
+                        && ShouldRecreateProducer(pooledProducer.TransportProducer, options.PartitionId))
                 {
                     if (++attempts >= MaximumCreateProducerAttempts)
                     {
