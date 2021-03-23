@@ -3,8 +3,8 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ContainerRegistryClient
     {
         protected ContainerRegistryClient() { }
-        public ContainerRegistryClient(System.Uri endpoint, string username, string password) { }
-        public ContainerRegistryClient(System.Uri endpoint, string username, string password, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
+        public ContainerRegistryClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ContainerRegistryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
         public virtual Azure.Pageable<string> GetRepositories(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<string> GetRepositoriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -19,8 +19,8 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ContainerRepositoryClient
     {
         protected ContainerRepositoryClient() { }
-        public ContainerRepositoryClient(System.Uri endpoint, string repository, string username, string password) { }
-        public ContainerRepositoryClient(System.Uri endpoint, string repository, string username, string password, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
+        public ContainerRepositoryClient(System.Uri endpoint, string repository, Azure.Core.TokenCredential credential) { }
+        public ContainerRepositoryClient(System.Uri endpoint, string repository, Azure.Core.TokenCredential credential, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Response DeleteTag(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteTagAsync(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
