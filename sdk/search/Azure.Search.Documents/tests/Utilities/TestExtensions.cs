@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.GeoJson;
+using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -162,34 +163,34 @@ namespace Azure.Search.Documents.Tests
         public static GeoPoint CreateDynamicPoint(double longitude, double latitude) =>
             CreatePoint(longitude, latitude);
 
-        ///// <summary>
-        ///// Converts the <see cref="GeographyPoint"/> to a <see cref="SearchDocument"/>.
-        ///// </summary>
-        ///// <param name="value">The <see cref="GeographyPoint"/> to convert.</param>
-        ///// <returns>A <see cref="SearchDocument"/> for the given <paramref name="value"/>.</returns>
-        //public static SearchDocument AsDocument(this GeographyPoint value)
-        //{
-        //    if (value == null)
-        //    {
-        //        return null;
-        //    }
+        /// <summary>
+        /// Converts the <see cref="GeoPoint"/> to a <see cref="SearchDocument"/>.
+        /// </summary>
+        /// <param name="value">The <see cref="GeoPoint"/> to convert.</param>
+        /// <returns>A <see cref="SearchDocument"/> for the given <paramref name="value"/>.</returns>
+        public static SearchDocument AsDocument(this GeoPoint value)
+        {
+            if (value == null)
+            {
+                return null;
+            }
 
-        //    List<double> coords = new List<double>
-        //    {
-        //        value.Longitude,
-        //        value.Latitude,
-        //    };
+            List<double> coords = new List<double>
+            {
+                value.Coordinates.Longitude,
+                value.Coordinates.Latitude,
+            };
 
-        //    if (value.Z != null)
-        //    {
-        //        coords.Add(value.Z.Value);
-        //    }
+            if (value.Coordinates.Altitude != null)
+            {
+                coords.Add(value.Coordinates.Altitude.Value);
+            }
 
-        //    return new SearchDocument()
-        //    {
-        //        ["type"] = "Point",
-        //        ["coordinates"] = coords.ToArray()
-        //    };
-        //}
+            return new SearchDocument()
+            {
+                ["type"] = "Point",
+                ["coordinates"] = coords.ToArray()
+            };
+        }
     }
 }
