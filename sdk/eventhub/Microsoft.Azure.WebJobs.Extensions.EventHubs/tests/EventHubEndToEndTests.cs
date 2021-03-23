@@ -346,16 +346,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_InitialOffsetFromEnqueuedTime()
         {
-            // Mark the time now and send a message which should be the only one that is picked up when we run the actual test host
-
             var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
             for (int i = 0; i < 3; i++)
             {
                 // send one at a time so they will have slightly different enqueued times
                 await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
-                // There seems to be a resolution of 1 second when using FromEnqueuedTime, so delay 2s between
-                // each event.
-                await Task.Delay(2000);
+                await Task.Delay(1000);
             }
             var consumer = new EventHubConsumerClient(
                 EventHubConsumerClient.DefaultConsumerGroupName,
@@ -380,7 +376,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         services.Configure<EventHubOptions>(options =>
                         {
                             options.InitialOffsetOptions.Type = OffsetType.FromEnqueuedTime;
-                            options.InitialOffsetOptions.EnqueuedTimeUtc = _initialOffsetEnqueuedTimeUTC;
+                            // for some reason, this doesn't seem to work reliably if including milliseconds in the format
+                            var dto = DateTimeOffset.Parse(_initialOffsetEnqueuedTimeUTC.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                            options.InitialOffsetOptions.EnqueuedTimeUtc = dto;
                         });
                     });
                     ConfigureTestEventHub(builder);
