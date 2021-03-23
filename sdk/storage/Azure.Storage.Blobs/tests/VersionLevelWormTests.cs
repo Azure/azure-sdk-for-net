@@ -426,6 +426,45 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task DeleteImmutibilityPolicyAsync()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = await GetNewBlobClient(vlwContainer.Container);
+
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy
+            {
+                ExpiriesOn = Recording.UtcNow.AddSeconds(5),
+                PolicyMode = BlobImmutabilityPolicyMode.Unlocked
+            };
+
+            await blob.SetImmutabilityPolicyAsync(immutabilityPolicy);
+
+            // Act
+            await blob.DeleteImmutabilityPolicyAsync();
+
+            // Assert
+            Response<BlobProperties> propertiesResponse = await blob.GetPropertiesAsync();
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
+            Assert.IsNull(propertiesResponse.Value.ImmutabilityPolicyMode);
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
+        public async Task DeleteImmutibilityPolicyAsync_Error()
+        {
+            // Arrange
+            await using DisposingVersionLevelWormContainer vlwContainer = await GetTestVersionLevelWormContainer(TestConfigOAuth);
+            BlobBaseClient blob = InstrumentClient(vlwContainer.Container.GetBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.DeleteImmutabilityPolicyAsync(),
+                e => Assert.AreEqual(BlobErrorCode.BlobNotFound.ToString(), e.ErrorCode));
+        }
+
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task SetLegalHoldAsync()
         {
             // Arrange
