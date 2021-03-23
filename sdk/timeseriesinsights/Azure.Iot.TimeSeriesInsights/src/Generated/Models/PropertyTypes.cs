@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The type of the property that is either stored in events or computed by a calculation. </summary>
     public readonly partial struct PropertyTypes : IEquatable<PropertyTypes>

@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
     /// Result of an operation on a particular time series type. Type object is set when operation

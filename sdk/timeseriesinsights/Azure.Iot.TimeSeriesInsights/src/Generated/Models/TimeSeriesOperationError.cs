@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> A particular API error with an error code and a message. </summary>
     public partial class TimeSeriesOperationError : IReadOnlyDictionary<string, object>

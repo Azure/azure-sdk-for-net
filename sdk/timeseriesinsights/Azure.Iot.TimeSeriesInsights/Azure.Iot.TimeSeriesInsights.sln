@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Iot.TimeSeriesInsights", "src\Azure.Iot.TimeSeriesInsights.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.IoT.TimeSeriesInsights", "src\Azure.IoT.TimeSeriesInsights.csproj", "{E33D09D9-D809-472C-82E6-6A26BDB86FC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Iot.TimeSeriesInsights.Tests", "tests\Azure.Iot.TimeSeriesInsights.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.IoT.TimeSeriesInsights.Tests", "tests\Azure.IoT.TimeSeriesInsights.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{8052009B-2126-44A3-88CD-4F3B17894C64}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E58C2830-EF72-433E-A60E-3D20DBED196D}"
 	ProjectSection(SolutionItems) = preProject
-		api\Azure.Iot.TimeSeriesInsights.netstandard2.0.cs = api\Azure.Iot.TimeSeriesInsights.netstandard2.0.cs
+		api\Azure.IoT.TimeSeriesInsights.netstandard2.0.cs = api\Azure.IoT.TimeSeriesInsights.netstandard2.0.cs
 		..\ci.yml = ..\ci.yml
 		..\Export-TsiApis.ps1 = ..\Export-TsiApis.ps1
 		..\Print-MyEnvData.ps1 = ..\Print-MyEnvData.ps1

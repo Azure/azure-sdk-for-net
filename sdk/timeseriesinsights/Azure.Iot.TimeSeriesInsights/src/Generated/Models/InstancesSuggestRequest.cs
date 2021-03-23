@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Request to get search string suggestions for time series instances search based on prefix text. </summary>
     public partial class InstancesSuggestRequest

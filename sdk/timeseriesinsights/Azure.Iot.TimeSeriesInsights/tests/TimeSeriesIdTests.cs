@@ -10,7 +10,7 @@ using Azure.Core.TestFramework;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Azure.Iot.TimeSeriesInsights.Tests
+namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     public class TimeSeriesIdTests : E2eTestBase
     {

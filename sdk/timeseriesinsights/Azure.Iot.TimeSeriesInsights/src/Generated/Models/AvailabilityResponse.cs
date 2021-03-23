@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Response of Get Availability operation. When environment has no data, availability property is null. </summary>
     public partial class AvailabilityResponse

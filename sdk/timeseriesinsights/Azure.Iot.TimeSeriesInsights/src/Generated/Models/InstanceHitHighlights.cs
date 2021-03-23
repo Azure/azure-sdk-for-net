@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.IoT.TimeSeriesInsights.Models
 {
     /// <summary> Highlighted text of time series instance to be displayed to the user. Highlighting inserts &lt;hit&gt; and &lt;/hit&gt; tags in the portions of text that matched the search string. Do not use any of the highlighted properties to do further API calls. </summary>
     public partial class InstanceHitHighlights

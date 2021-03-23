@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Iot.TimeSeriesInsights.Samples
+namespace Azure.IoT.TimeSeriesInsights.Samples
 {
     internal static class SampleLogger
     {

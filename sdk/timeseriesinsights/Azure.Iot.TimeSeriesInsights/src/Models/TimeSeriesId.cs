@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
     /// A single Time Series Id value that is composed of up to 3 primitive values that uniquely identifies a Time Series instance. The

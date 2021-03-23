@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
     /// Get Events query. Allows to retrieve raw events for a given Time Series Id and search span.

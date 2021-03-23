@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Category used in categorical variables. A category is defined by &apos;label&apos; and the &apos;values&apos; that are assigned this label. </summary>
     public partial class TimeSeriesAggregateCategory

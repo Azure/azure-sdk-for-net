@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Result of a batch operation on a particular time series type. Type object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
     public partial class TimeSeriesTypeOperationResult

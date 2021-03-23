@@ -3,10 +3,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Iot.TimeSeriesInsights.Models;
-using static Azure.Iot.TimeSeriesInsights.Samples.SampleLogger;
+using static Azure.IoT.TimeSeriesInsights.Samples.SampleLogger;
 
-namespace Azure.Iot.TimeSeriesInsights.Samples
+namespace Azure.IoT.TimeSeriesInsights.Samples
 {
     internal class TimeSeriesInsightsLifecycleSamples
     {

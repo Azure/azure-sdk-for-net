@@ -11,7 +11,7 @@ using FluentAssertions;
 using Microsoft.Azure.Devices.Client;
 using NUnit.Framework;
 
-namespace Azure.Iot.TimeSeriesInsights.Tests
+namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     /// <summary>
     /// This class will initialize all the settings and create and instance of the Time Series Insights client.

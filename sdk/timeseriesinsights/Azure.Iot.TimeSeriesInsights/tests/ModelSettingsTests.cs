@@ -4,11 +4,11 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Iot.TimeSeriesInsights.Models;
+using Azure.IoT.TimeSeriesInsights.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Azure.Iot.TimeSeriesInsights.Tests
+namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     public class ModelSettingsTests : E2eTestBase
     {

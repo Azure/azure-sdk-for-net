@@ -3,7 +3,7 @@
 
 using CommandLine;
 
-namespace Azure.Iot.TimeSeriesInsights.Samples
+namespace Azure.IoT.TimeSeriesInsights.Samples
 {
     /// <summary>
     /// A class used to parse the parameters passed into the sample

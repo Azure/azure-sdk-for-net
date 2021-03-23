@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.IoT.TimeSeriesInsights.Models
 {
     /// <summary> Definition of how time series hierarchy tree levels are created. </summary>
     public partial class TimeSeriesHierarchySource

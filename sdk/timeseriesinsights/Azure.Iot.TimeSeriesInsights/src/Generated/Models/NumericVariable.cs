@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Numeric variable represents a single continuous numeric signal that can be reconstructed using interpolation. </summary>
     public partial class NumericVariable : TimeSeriesVariable

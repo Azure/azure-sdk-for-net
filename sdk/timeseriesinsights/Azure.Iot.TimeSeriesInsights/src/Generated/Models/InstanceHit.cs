@@ -7,9 +7,9 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.Iot.TimeSeriesInsights.Models;
+using Azure.IoT.TimeSeriesInsights.Models;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Time series instance that is returned by instances search call. Returned instance matched the search request and contains highlighted text to be displayed to the user if it is set to &apos;true&apos;. </summary>
     public partial class InstanceHit

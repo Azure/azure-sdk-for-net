@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights.Tests
+namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     /// <summary>
     /// This class is used for providing incorrect credentials to the service when making requests.

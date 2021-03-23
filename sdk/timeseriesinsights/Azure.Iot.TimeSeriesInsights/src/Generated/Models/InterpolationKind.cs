@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.IoT.TimeSeriesInsights.Models
 {
     /// <summary> The type of interpolation technique : &quot;Linear&quot; or &quot;Step&quot;. </summary>
     public readonly partial struct InterpolationKind : IEquatable<InterpolationKind>

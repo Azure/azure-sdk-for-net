@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.Iot.TimeSeriesInsights.Tests
+namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     public class TimeSeriesInsightsTestEnvironment : TestEnvironment
     {

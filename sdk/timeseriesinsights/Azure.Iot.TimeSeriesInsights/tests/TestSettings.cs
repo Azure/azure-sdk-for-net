@@ -7,7 +7,7 @@ using System.Reflection;
 using Azure.Core.TestFramework;
 using Microsoft.Extensions.Configuration;
 
-namespace Azure.Iot.TimeSeriesInsights.Tests
+namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     /// <summary>
     /// These are the settings that will be used by the end-to-end tests.

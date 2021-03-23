@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Get Series query. Allows to retrieve time series of calculated variable values from events for a given Time Series ID and search span. </summary>
     public partial class GetSeries

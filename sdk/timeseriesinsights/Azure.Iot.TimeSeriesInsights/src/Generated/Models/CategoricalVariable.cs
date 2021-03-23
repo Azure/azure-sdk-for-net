@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Categorical variable represents signal that needs to be analyzed based on the count or duration of occurrence of limited set of defined values. </summary>
     public partial class CategoricalVariable : TimeSeriesVariable

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Event availability information when environment contains events. Contains time range of events and approximate distribution of events over time. </summary>
     public partial class EventAvailability

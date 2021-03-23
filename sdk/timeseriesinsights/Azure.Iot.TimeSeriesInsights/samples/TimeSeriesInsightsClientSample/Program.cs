@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Azure.Identity;
 using CommandLine;
 
-namespace Azure.Iot.TimeSeriesInsights.Samples
+namespace Azure.IoT.TimeSeriesInsights.Samples
 {
     public class Program
     {

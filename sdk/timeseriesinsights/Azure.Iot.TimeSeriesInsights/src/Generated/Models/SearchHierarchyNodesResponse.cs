@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> The hierarchy nodes which contains the instances matching the query based on the input. May be empty or null. </summary>
     public partial class SearchHierarchyNodesResponse

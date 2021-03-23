@@ -12,7 +12,7 @@ using FluentAssertions;
 using Microsoft.Azure.Devices.Client;
 using NUnit.Framework;
 
-namespace Azure.Iot.TimeSeriesInsights.Tests
+namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     [Parallelizable(ParallelScope.None)]
     public class TimeSeriesInsightsQueryTests : E2eTestBase

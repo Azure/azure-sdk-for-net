@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
     /// Time Series Insights operation error with an error code and a message.

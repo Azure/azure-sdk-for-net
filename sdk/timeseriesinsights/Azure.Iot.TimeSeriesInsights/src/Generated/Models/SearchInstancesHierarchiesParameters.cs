@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Parameter of how to return time series instance hierarchies by search instances call. </summary>
     public partial class SearchInstancesHierarchiesParameters

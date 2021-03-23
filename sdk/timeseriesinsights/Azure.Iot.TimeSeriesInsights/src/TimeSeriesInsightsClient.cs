@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
     /// The Time Series Insights client.
@@ -257,7 +257,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesInstance}"/> of Time Series instances belonging to the TSI environment and the http response.</returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         public virtual AsyncPageable<TimeSeriesInstance> GetInstancesAsync(CancellationToken cancellationToken = default)
         {
@@ -381,7 +381,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is <c>null</c>.
@@ -484,7 +484,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is <c>null</c>.
@@ -585,7 +585,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>A list of suggested search strings to be used for further search for Time Series instances or hierarchies.</returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         public virtual async Task<Response<SearchSuggestion[]>> GetSearchSuggestionsAsync(
             string searchString,
@@ -658,7 +658,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// A <seealso cref="TimeSeriesOperationError"/> object will be set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesInstances"/> is <c>null</c>.
@@ -765,7 +765,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesInstances"/> is <c>null</c>.
@@ -863,7 +863,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// Error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is <c>null</c>.
@@ -966,7 +966,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// Error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is <c>null</c>.
@@ -1312,7 +1312,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is <c>null</c>.
@@ -1415,7 +1415,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is <c>null</c>.

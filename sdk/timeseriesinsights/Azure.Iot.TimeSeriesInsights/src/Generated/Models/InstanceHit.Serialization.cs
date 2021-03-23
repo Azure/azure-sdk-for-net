@@ -8,9 +8,9 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Iot.TimeSeriesInsights.Models;
+using Azure.IoT.TimeSeriesInsights.Models;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     public partial class InstanceHit
     {

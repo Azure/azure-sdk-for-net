@@ -9,7 +9,7 @@ using System;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights.Models
+namespace Azure.IoT.TimeSeriesInsights.Models
 {
     public partial class InterpolationBoundary : IUtf8JsonSerializable
     {

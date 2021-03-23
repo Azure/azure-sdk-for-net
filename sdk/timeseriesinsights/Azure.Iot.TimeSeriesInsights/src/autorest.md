@@ -1,4 +1,4 @@
-# Azure.Iot.TimeSeriesInsights
+# Azure.IoT.TimeSeriesInsights
 
 ## Azure Time Series Insights swagger
 
@@ -33,7 +33,7 @@ directive:
   from: timeseriesinsights.json
   where: $.definitions.*
   transform: >
-    $["x-namespace"] = "Azure.Iot.TimeSeriesInsights"
+    $["x-namespace"] = "Azure.IoT.TimeSeriesInsights"
     
 # It is highly recommended that you generate the REST layer from the official source. However, in this case we are using a local file because there are a couple of minor issues fixed in the local swagger. These fixes should be made on the official source.
 input-file: $(this-folder)/swagger/timeseriesinsights.json

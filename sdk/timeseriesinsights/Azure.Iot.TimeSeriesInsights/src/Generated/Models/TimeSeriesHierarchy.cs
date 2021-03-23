@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
-using Azure.Iot.TimeSeriesInsights.Models;
+using Azure.IoT.TimeSeriesInsights.Models;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Time series hierarchy organizes time series instances into a tree. </summary>
     public partial class TimeSeriesHierarchy

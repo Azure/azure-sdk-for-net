@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Iot.TimeSeriesInsights
+namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
     /// The options for <see cref="TimeSeriesInsightsClient"/>
