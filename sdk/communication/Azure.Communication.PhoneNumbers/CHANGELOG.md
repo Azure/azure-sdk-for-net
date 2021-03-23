@@ -10,8 +10,8 @@
   - GetPhoneNumbers -> GetPurchasedPhoneNumbers.
   - GetPhoneNumbersAsync -> GetPurchasedPhoneNumbersAsync.
 - PhoneNumbersModelFactory static method AcquiredPhoneNumber is renamed to PurchasedPhoneNumber.
-- PurchasePhoneNumbersOperation extends Operation<PurchasePhoneNumbersResult> instead of Operation<Response>.
-- ReleasePhoneNumberOperation extends Operation<ReleasePhoneNumberResult> instead of Operation<Response>.
+- PurchasePhoneNumbersOperation extends Operation instead of Operation<Response>.
+- ReleasePhoneNumberOperation extends Operation instead of Operation<Response>.
 
 ## 1.0.0-beta.5 (2021-03-09)
 
