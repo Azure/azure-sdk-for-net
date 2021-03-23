@@ -25,23 +25,6 @@ namespace Azure.Template.Perf
             _message.BufferResponse = true;
             _message.Request.Method = RequestMethod.Get;
             _message.Request.Uri.Reset(new Uri("https://example.com"));
-
-            var cred = new ClientSecretCredential(
-    "72f988bf-86f1-41af-91ab-2d7cd011db47",
-    "72922900-c1f3-4e6e-b264-11461d084c0b",
-    "83ea2c0d-df4f-443b-8fea-d76e97851288",
-    new ClientSecretCredentialOptions()
-    {
-        Diagnostics = { IsLoggingEnabled = true },
-        TokenCachePersistenceOptions = new TokenCachePersistenceOptions()
-    });
-            var options2 = new SharedTokenCacheCredentialOptions(new TokenCachePersistenceOptions()) { Diagnostics = { IsLoggingEnabled = true } };
-            //options2.Username = "identitytestuser@azuresdkplayground.onmicrosoft.com";
-            //options2.TenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
-            var cred2 = new SharedTokenCacheCredential(options2);
-
-            var token = cred.GetToken(new TokenRequestContext(new[] { "https://storage.azure.com/.default" }), default);
-            var token2 = cred2.GetToken(new TokenRequestContext(new[] { "https://storage.azure.com/.default" }), default);
         }
 
         public override void Run(CancellationToken cancellationToken)

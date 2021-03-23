@@ -10,17 +10,19 @@ using Azure.Test.Perf;
 
 namespace Azure.Template.Perf
 {
-    public class CacheReadPerf : PerfTest<CountOptions>
+    public class CacheReadWithDiskPersistencePerf : PerfTest<CountOptions>
     {
         private ClientSecretCredential _credential;
         private readonly TokenRequestContext _tokenRequestContext = new(new[] { "https://storage.azure.com/.default" });
 
-        public CacheReadPerf(CountOptions options) : base(options)
+        public CacheReadWithDiskPersistencePerf(CountOptions options) : base(options)
         {
             _credential = new ClientSecretCredential(
                 Environment.GetEnvironmentVariable("AZURE_TENANT_ID"),
                 Environment.GetEnvironmentVariable("__AZURE_CLIENT_ID"),
-                Environment.GetEnvironmentVariable("__AZURE_CLIENT_SECRET"));
+                Environment.GetEnvironmentVariable("__AZURE_CLIENT_SECRET"),
+                new ClientSecretCredentialOptions{ TokenCachePersistenceOptions = new TokenCachePersistenceOptions()}
+                );
 
             _credential.GetToken(_tokenRequestContext);
         }
