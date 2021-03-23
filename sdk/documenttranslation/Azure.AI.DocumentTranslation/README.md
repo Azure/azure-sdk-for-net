@@ -1,5 +1,10 @@
 # Azure Cognitive Services Document Translation client library for .NET
-Document Translation is a cloud-based feature of the Azure Translator service and is part of the Azure Cognitive Service family of REST APIs. The Document Translation API translates documents to and from 90 languages and dialects while preserving document structure and data format.
+
+Azure Cognitive Services Document Translation is a cloud service that translates documents to and from 90 languages and dialects while preserving document structure and data format. Use the client library for Document Translation to:
+
+* Translate numerous, large files from an Azure Blob Storage container to a target container in your language of choice.
+* Check the translation status and progress of each document in the translation job.
+* Apply a custom translation model or glossaries to tailor translation to your specific case.
 
 [Source code][documenttranslation_client_src] | [Package (NuGet)][documenttranslation_nuget_package] | [API reference documentation][documenttranslation_refdocs] | [Product documentation][documenttranslation_docs] | [Samples][documenttranslation_samples]
 
@@ -9,7 +14,7 @@ Document Translation is a cloud-based feature of the Azure Translator service an
 Install the Azure Document Translation client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.AI.DocumentTranslation
+dotnet add package Azure.AI.DocumentTranslation --prerelease
 ```
 
 ### Prerequisites
@@ -17,11 +22,12 @@ dotnet add package Azure.AI.DocumentTranslation
 * An existing Cognitive Services or Translator resource.
 
 #### Create a Cognitive Services or Translator resource
-Translator supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Translator access only, create a Translator resource.
+Document Translation supports [single-service access][single_service] only.
+To access the service, create a Translator resource.
 
 You can create either resource using: 
 
-**Option 1:** [Azure Portal][cognitive_resource_portal].
+**Option 1:** [Azure Portal][azure_portal_create_DT_resource].
 
 **Option 2:** [Azure CLI][cognitive_resource_cli]. 
 
@@ -48,8 +54,11 @@ For more information about creating the resource or how to get the location and 
 ### Authenticate the client
 In order to interact with the Document Translation service, you'll need to create an instance of the [DocumentTranslationClient][documenttranslation_client_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
+#### Looking up the endpoint
+For Document Translation you will need to use a [Custom Domain Endpoint][custom_domain_endpoint] using the name of you Translator resource.
+
 #### Get API Key
-You can get the `endpoint` and `API key` from the Cognitive Services resource or Translator resource information in the [Azure Portal][azure_portal].
+You can get the `endpoint` and `API key` from the Translator resource information in the [Azure Portal][azure_portal].
 
 Alternatively, use the [Azure CLI][azure_cli] snippet below to get the API key from the Translator resource.
 
@@ -72,13 +81,45 @@ var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCreden
 ## Key concepts
 
 ### DocumentTranslationClient
-A `DocumentTranslationClient` is the primary interface for developers using the Document Translation client library.  It provides both synchronous and asynchronous operations to access the Document Translation service.
+A `DocumentTranslationClient` is the primary interface for developers using the Document Translation client library.  It provides both synchronous and asynchronous methods to perform the following operations:
+
+ - Creating a translation job to translate documents in your source container(s) and write results to you target container(s).
+ - Enumerating all past and current translation jobs.
+ - Identifying supported glossary and document formats.
+
+### Translation Input
+To start a translation operation you need to create one instance or a list of `DocumentTranslationConfiguration`. 
+
+A single source URL to documents can be translated to many different languages:
+
+```C# Snippet:DocumentTranslationSingleInput
+var input = new TranslationConfiguration(sourceSasUri, frenchTargetSasUri, "fr");
+input.AddTarget(arabicTargetSasUri, "ar");
+input.AddTarget(spanishTargetSasUri, "es", new TranslationGlossary(spanishGlossarySasUri));
+```
+
+Or multiple different sources can be provided each with their own targets.
+
+```C# Snippet:DocumentTranslationMultipleInputs
+var inputs = new List<TranslationConfiguration>
+{
+    new TranslationConfiguration(source1SasUri, spanishTargetSasUri, "es"),
+    new TranslationConfiguration(
+        source: new TranslationSource(source2SasUri),
+        targets: new List<TranslationTarget>
+        {
+            new TranslationTarget(frenchTargetSasUri, "fr"),
+            new TranslationTarget(spanishTargetSasUri, "es")
+        }),
+    new TranslationConfiguration(source1SasUri, spanishTargetSasUri, "es", new TranslationGlossary(spanishGlossarySasUri)),
+};
+```
 
 ### Long-Running Operations
 
 Document Translation is implemented as a [**long-running operation**][dotnet_lro_guidelines].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed successfully or failed.
 
-For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#start-translation-asynchronously).
+For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns a `PageableOperation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#start-translation-asynchronously).
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -461,7 +502,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [documenttranslation_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/README.md
 <!-- TODO: Add correct link -->
 [documenttranslation_rest_api]: https://docs.microsoft.com/rest/api/cognitiveservices/translator/documenttranslation
-[cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
+[custom_domain_endpoint]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#what-is-the-custom-domain-endpoint
+[single_service]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account?tabs=singleservice%2Cwindows
+[azure_portal_create_DT_resource]: https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesTextTranslation
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 

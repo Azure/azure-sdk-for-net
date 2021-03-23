@@ -50,5 +50,39 @@ namespace Azure.AI.DocumentTranslation.Samples
             }
             #endregion
         }
+
+        [Test]
+        public void DocumentTranslationInput()
+        {
+            Uri sourceSasUri = new Uri("");
+            Uri frenchTargetSasUri = new Uri("");
+            Uri arabicTargetSasUri = new Uri("");
+            Uri spanishGlossarySasUri = new Uri("");
+            Uri spanishTargetSasUri = new Uri("");
+
+            #region Snippet:DocumentTranslationSingleInput
+            var input = new TranslationConfiguration(sourceSasUri, frenchTargetSasUri, "fr");
+            input.AddTarget(arabicTargetSasUri, "ar");
+            input.AddTarget(spanishTargetSasUri, "es", new TranslationGlossary(spanishGlossarySasUri));
+            #endregion
+
+            Uri source1SasUri = new Uri("");
+            Uri source2SasUri = new Uri("");
+
+            #region Snippet:DocumentTranslationMultipleInputs
+            var inputs = new List<TranslationConfiguration>
+            {
+                new TranslationConfiguration(source1SasUri, spanishTargetSasUri, "es"),
+                new TranslationConfiguration(
+                    source: new TranslationSource(source2SasUri),
+                    targets: new List<TranslationTarget>
+                    {
+                        new TranslationTarget(frenchTargetSasUri, "fr"),
+                        new TranslationTarget(spanishTargetSasUri, "es")
+                    }),
+                new TranslationConfiguration(source1SasUri, spanishTargetSasUri, "es", new TranslationGlossary(spanishGlossarySasUri)),
+            };
+            #endregion
+        }
     }
 }
