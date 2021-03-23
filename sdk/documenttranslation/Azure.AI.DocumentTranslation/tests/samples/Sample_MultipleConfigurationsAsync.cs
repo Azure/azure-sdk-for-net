@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -14,27 +13,35 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
+        [Ignore("Samples not working yet")]
         public async Task MultipleConfigurationsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            Uri sourceUri1 = new Uri("");
-            Uri sourceUri2 = new Uri("");
-            Uri targetUri1_1 = new Uri("");
-            Uri targetUri1_2 = new Uri("");
-            Uri targetUri2_1 = new Uri("");
-            Uri targetUri2_2 = new Uri("");
-            Uri glossaryUrl = new Uri("");
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
+            Uri source1SasUriUri = new Uri("<source1 SAS URI>");
+            Uri source2SasUri = new Uri("<source2 SAS URI>");
+            Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
+            Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
+            Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
+            Uri frenchGlossarySasUri = new Uri("<french glossary SAS URI>");
+
             #region Snippet:MultipleConfigurationsAsync
 
-            var configuration1 = new TranslationConfiguration(sourceUri1, targetUri1_1, "es", new TranslationGlossary(glossaryUrl));
-            configuration1.AddTarget(targetUri1_2, "it");
+            //@@ Uri source1SasUriUri = <source1 SAS URI>;
+            //@@ Uri source2SasUri = <source2 SAS URI>;
+            //@@ Uri frenchTargetSasUri = <french target SAS URI>;
+            //@@ Uri arabicTargetSasUri = <arabic target SAS URI>;
+            //@@ Uri spanishTargetSasUri = <spanish target SAS URI>;
+            //@@ Uri frenchGlossarySasUri = <french glossary SAS URI>;
 
-            var configuration2 = new TranslationConfiguration(sourceUri2, targetUri2_1, "it");
-            configuration2.AddTarget(targetUri2_2, "es", new TranslationGlossary(glossaryUrl));
+            var configuration1 = new TranslationConfiguration(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+            configuration1.AddTarget(spanishTargetSasUri, "es");
+
+            var configuration2 = new TranslationConfiguration(source2SasUri, arabicTargetSasUri, "ar");
+            configuration2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
 
             var inputs = new List<TranslationConfiguration>()
                 {

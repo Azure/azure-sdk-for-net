@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.AI.DocumentTranslation.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -12,6 +13,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
+        [Ignore("Samples not working yet")]
         public void OperationsHistory()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -21,43 +23,39 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
 
             #region Snippet:OperationsHistory
 
-            Pageable<TranslationStatusDetail> operationsStatus = client.GetTranslations();
-
             int operationsCount = 0;
             int totalDocs = 0;
             int docsCancelled = 0;
             int docsSucceeded = 0;
-            int maxDocs = 0;
-            TranslationStatusDetail largestOperation = null;
+            int docsFailed = 0;
 
-            foreach (TranslationStatusDetail operationStatus in operationsStatus)
+            TimeSpan pollingInterval = new TimeSpan(1000);
+
+            foreach (TranslationStatusDetail translationStatus in client.GetTranslations())
             {
-                operationsCount++;
-                totalDocs += operationStatus.DocumentsTotal;
-                docsCancelled += operationStatus.DocumentsCancelled;
-                docsSucceeded += operationStatus.DocumentsSucceeded;
-                if (totalDocs > maxDocs)
+                if (!translationStatus.HasCompleted)
                 {
-                    maxDocs = totalDocs;
-                    largestOperation = operationStatus;
+                    DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.TranslationId, client);
+
+                    while (!operation.HasCompleted)
+                    {
+                        Thread.Sleep(pollingInterval);
+                        operation.UpdateStatus();
+                    }
                 }
+
+                operationsCount++;
+                totalDocs += translationStatus.DocumentsTotal;
+                docsCancelled += translationStatus.DocumentsCancelled;
+                docsSucceeded += translationStatus.DocumentsSucceeded;
+                docsFailed += translationStatus.DocumentsFailed;
             }
 
             Console.WriteLine($"# of operations: {operationsCount}");
             Console.WriteLine($"Total Documents: {totalDocs}");
-            Console.WriteLine($"DocumentsSucceeded: {docsSucceeded}");
+            Console.WriteLine($"Succeeded Document: {docsSucceeded}");
+            Console.WriteLine($"Failed Document: {docsFailed}");
             Console.WriteLine($"Cancelled Documents: {docsCancelled}");
-
-            Console.WriteLine($"Largest operation is {largestOperation.TranslationId} and has the documents:");
-
-            DocumentTranslationOperation operation = new DocumentTranslationOperation(largestOperation.TranslationId, client);
-
-            Pageable<DocumentStatusDetail> docs = operation.GetAllDocumentsStatus();
-
-            foreach (DocumentStatusDetail docStatus in docs)
-            {
-                Console.WriteLine($"Document {docStatus.LocationUri} has status {docStatus.Status}");
-            }
 
             #endregion
         }

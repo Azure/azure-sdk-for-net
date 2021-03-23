@@ -11,6 +11,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
+        [Ignore("Samples not working yet")]
         public async Task OperationsHistoryAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -20,43 +21,32 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
 
             #region Snippet:OperationsHistoryAsync
 
-            AsyncPageable<TranslationStatusDetail> operationsStatus = client.GetTranslationsAsync();
-
             int operationsCount = 0;
             int totalDocs = 0;
             int docsCancelled = 0;
             int docsSucceeded = 0;
-            int maxDocs = 0;
-            TranslationStatusDetail largestOperation = null;
+            int docsFailed = 0;
 
-            await foreach (TranslationStatusDetail operationStatus in operationsStatus)
+            await foreach (TranslationStatusDetail translationStatus in client.GetTranslationsAsync())
             {
-                operationsCount++;
-                totalDocs += operationStatus.DocumentsTotal;
-                docsCancelled += operationStatus.DocumentsCancelled;
-                docsSucceeded += operationStatus.DocumentsSucceeded;
-                if (totalDocs > maxDocs)
+                if (!translationStatus.HasCompleted)
                 {
-                    maxDocs = totalDocs;
-                    largestOperation = operationStatus;
+                    DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.TranslationId, client);
+                    await operation.WaitForCompletionAsync();
                 }
+
+                operationsCount++;
+                totalDocs += translationStatus.DocumentsTotal;
+                docsCancelled += translationStatus.DocumentsCancelled;
+                docsSucceeded += translationStatus.DocumentsSucceeded;
+                docsFailed += translationStatus.DocumentsFailed;
             }
 
             Console.WriteLine($"# of operations: {operationsCount}");
             Console.WriteLine($"Total Documents: {totalDocs}");
-            Console.WriteLine($"DocumentsSucceeded: {docsSucceeded}");
+            Console.WriteLine($"Succeeded Document: {docsSucceeded}");
+            Console.WriteLine($"Failed Document: {docsFailed}");
             Console.WriteLine($"Cancelled Documents: {docsCancelled}");
-
-            Console.WriteLine($"Largest operation is {largestOperation} and has the documents:");
-
-            DocumentTranslationOperation operation = new DocumentTranslationOperation(largestOperation.TranslationId, client);
-
-            AsyncPageable<DocumentStatusDetail> docs = operation.GetAllDocumentsStatusAsync();
-
-            await foreach (DocumentStatusDetail docStatus in docs)
-            {
-                Console.WriteLine($"Document {docStatus.LocationUri} has status {docStatus.Status}");
-            }
 
             #endregion
         }

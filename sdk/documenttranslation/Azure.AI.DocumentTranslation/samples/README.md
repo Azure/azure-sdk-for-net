@@ -5,33 +5,24 @@ languages:
 products:
 - azure
 - azure-cognitive-services
-- azure-text-analytics
-name: Azure Text Analytics samples for .NET
-description: Samples for the Azure.AI.TextAnalytics client library
+- azure-document-translation
+name: Azure DocumentTranslation samples for .NET
+description: Samples for the Azure.AI.DocumentTranslation client library
 ---
 
-# Azure Text Analytics client SDK Samples
-Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and includes the following main functions: 
-* Language Detection
-* Sentiment Analysis
-* Key Phrase Extraction
-* Named Entity Recognition
-* Personally Identifiable Information (PII) Recognition
-* Linked Entity Recognition
-* Healthcare Recognition
+# Azure Document Translation client SDK Samples
+Azure Cognitive Services Document Translation is a cloud service that translates documents to and from 90 languages and dialects while preserving document structure and data format. Use the client library for Document Translation to:
+
+* Translate numerous, large files from an Azure Blob Storage container to a target container in your language of choice.
+* Check the translation status and progress of each document in the translation operation.
+* Apply a custom translation model or glossaries to tailor translation to your specific case.
 
 ## Common scenarios samples
-- [Detect Language](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample1_DetectLanguage.md)
-- [Analyze Sentiment](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2_AnalyzeSentiment.md)
-- [Extract Key Phrases](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample3_ExtractKeyPhrases.md)
-- [Recognize Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample4_RecognizeEntities.md)
-- [Recognize PII Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample5_RecognizePiiEntities.md)
-- [Recognize Linked Entities](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample6_RecognizeLinkedEntities.md)
-- [Recognize Healthcare Entities](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_RecognizeHealthcareEntities.md)
+- [Start Translation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample1_StartTranslation.md)
+- [Poll Documents Status](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample2_PollIndividualDocuments.md)
+- [Operations History](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample3_OperationsHistory.md)
 
 ## Advanced samples
-- [Analyze Sentiment with Opinion Mining](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample2.1_AnalyzeSentimentWithOpinionMining.md)
-- [Running multiple actions in one or more documents](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_AnalyzeBatchActions.md)
-- [Mock client](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/textanalytics/Azure.AI.TextAnalytics/samples/Sample_MockClient.md)
+- [Multiple Configurations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample4_MultipleConfigurations.md)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

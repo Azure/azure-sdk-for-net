@@ -3,7 +3,7 @@
 Azure Cognitive Services Document Translation is a cloud service that translates documents to and from 90 languages and dialects while preserving document structure and data format. Use the client library for Document Translation to:
 
 * Translate numerous, large files from an Azure Blob Storage container to a target container in your language of choice.
-* Check the translation status and progress of each document in the translation job.
+* Check the translation status and progress of each document in the translation operation.
 * Apply a custom translation model or glossaries to tailor translation to your specific case.
 
 [Source code][documenttranslation_client_src] | [Package (NuGet)][documenttranslation_nuget_package] | [API reference documentation][documenttranslation_refdocs] | [Product documentation][documenttranslation_docs] | [Samples][documenttranslation_samples]
@@ -19,9 +19,9 @@ dotnet add package Azure.AI.DocumentTranslation --prerelease
 
 ### Prerequisites
 * An [Azure subscription][azure_sub].
-* An existing Cognitive Services or Translator resource.
+* An existing Translator resource.
 
-#### Create a Cognitive Services or Translator resource
+#### Create a Translator resource
 Document Translation supports [single-service access][single_service] only.
 To access the service, create a Translator resource.
 
@@ -58,7 +58,7 @@ In order to interact with the Document Translation service, you'll need to creat
 For Document Translation you will need to use a [Custom Domain Endpoint][custom_domain_endpoint] using the name of you Translator resource.
 
 #### Get API Key
-You can get the `endpoint` and `API key` from the Translator resource information in the [Azure Portal][azure_portal].
+You can get the `API key` from the Translator resource information in the [Azure Portal][azure_portal].
 
 Alternatively, use the [Azure CLI][azure_cli] snippet below to get the API key from the Translator resource.
 
@@ -83,8 +83,8 @@ var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCreden
 ### DocumentTranslationClient
 A `DocumentTranslationClient` is the primary interface for developers using the Document Translation client library.  It provides both synchronous and asynchronous methods to perform the following operations:
 
- - Creating a translation job to translate documents in your source container(s) and write results to you target container(s).
- - Enumerating all past and current translation jobs.
+ - Creating a translation operation to translate documents in your source container(s) and write results to you target container(s).
+ - Enumerating all past and current translation operations.
  - Identifying supported glossary and document formats.
 
 ### Translation Input
@@ -93,14 +93,22 @@ To start a translation operation you need to create one instance or a list of `D
 A single source URL to documents can be translated to many different languages:
 
 ```C# Snippet:DocumentTranslationSingleInput
+Uri sourceSasUri = <source SAS URI>;
+Uri frenchTargetSasUri = <french target SAS URI>;
+Uri arabicTargetSasUri = <arabic target SAS URI>;
+Uri spanishTargetSasUri = <spanish target SAS URI>;
+
 var input = new TranslationConfiguration(sourceSasUri, frenchTargetSasUri, "fr");
 input.AddTarget(arabicTargetSasUri, "ar");
-input.AddTarget(spanishTargetSasUri, "es", new TranslationGlossary(spanishGlossarySasUri));
+input.AddTarget(spanishTargetSasUri, "es");
 ```
 
 Or multiple different sources can be provided each with their own targets.
 
 ```C# Snippet:DocumentTranslationMultipleInputs
+Uri source1SasUri = <source1 SAS URI>;
+Uri source2SasUri = <source2 SAS URI>;
+
 var inputs = new List<TranslationConfiguration>
 {
     new TranslationConfiguration(source1SasUri, spanishTargetSasUri, "es"),
@@ -111,9 +119,10 @@ var inputs = new List<TranslationConfiguration>
             new TranslationTarget(frenchTargetSasUri, "fr"),
             new TranslationTarget(spanishTargetSasUri, "es")
         }),
-    new TranslationConfiguration(source1SasUri, spanishTargetSasUri, "es", new TranslationGlossary(spanishGlossarySasUri)),
 };
 ```
+
+Note that documents written to a target container must have unique names. So you can't translate a source container into a target container twice or have sources with the same documents translated into the same target container.
 
 ### Long-Running Operations
 
@@ -137,21 +146,25 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 The following section provides several code snippets using the `client` [created above](#create-documenttranslationclient-with-api-key-credential), and covers the main functions of Document Translation.
-
-### Sync Examples
-* [Start Translation](#start-translation)
-* [Operations History](#get-operations-hisotry)
-* [Multiple Configurations](#start-translation-with-multiple-configurations)
+Note: our `DocumentTranslationClient` provides both synchronous and asynchronous methods
 
 ### Async Examples
 * [Start Translation Asynchronously](#start-translation-asynchronously)
-* [Operations History Asynchronously](#get-operations-hisotry-asynchronously)
+* [Operations History Asynchronously](#get-operations-history-asynchronously)
 * [Multiple Configurations Asynchronously](#start-translation-with-multiple-configurations-asynchronously)
+
+### Sync Examples
+* [Start Translation](#start-translation)
+* [Operations History](#get-operations-history)
+* [Multiple Configurations](#start-translation-with-multiple-configurations)
 
 ### Start Translation
 Start a translation operation to translate documents in the source container and write the translated files to the target container. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:StartTranslation
+Uri sourceUri = <source SAS URI>;
+Uri targetUri = <target SAS URI>;
+
 var input = new TranslationConfiguration(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = client.StartTranslation(input);
@@ -194,54 +207,57 @@ foreach (DocumentStatusDetail document in operation.GetValues())
 Get History of all submitted translation operations
 
 ```C# Snippet:OperationsHistory
-Pageable<TranslationStatusDetail> operationsStatus = client.GetTranslations();
-
 int operationsCount = 0;
 int totalDocs = 0;
 int docsCancelled = 0;
 int docsSucceeded = 0;
-int maxDocs = 0;
-TranslationStatusDetail largestOperation = null;
+int docsFailed = 0;
 
-foreach (TranslationStatusDetail operationStatus in operationsStatus)
+TimeSpan pollingInterval = new TimeSpan(1000);
+
+foreach (TranslationStatusDetail translationStatus in client.GetTranslations())
 {
-    operationsCount++;
-    totalDocs += operationStatus.DocumentsTotal;
-    docsCancelled += operationStatus.DocumentsCancelled;
-    docsSucceeded += operationStatus.DocumentsSucceeded;
-    if (totalDocs > maxDocs)
+    if (!translationStatus.HasCompleted)
     {
-        maxDocs = totalDocs;
-        largestOperation = operationStatus;
+        DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.TranslationId, client);
+
+        while (!operation.HasCompleted)
+        {
+            Thread.Sleep(pollingInterval);
+            operation.UpdateStatus();
+        }
     }
+
+    operationsCount++;
+    totalDocs += translationStatus.DocumentsTotal;
+    docsCancelled += translationStatus.DocumentsCancelled;
+    docsSucceeded += translationStatus.DocumentsSucceeded;
+    docsFailed += translationStatus.DocumentsFailed;
 }
 
 Console.WriteLine($"# of operations: {operationsCount}");
 Console.WriteLine($"Total Documents: {totalDocs}");
-Console.WriteLine($"DocumentsSucceeded: {docsSucceeded}");
+Console.WriteLine($"Succeeded Document: {docsSucceeded}");
+Console.WriteLine($"Failed Document: {docsFailed}");
 Console.WriteLine($"Cancelled Documents: {docsCancelled}");
-
-Console.WriteLine($"Largest operation is {largestOperation.TranslationId} and has the documents:");
-
-DocumentTranslationOperation operation = new DocumentTranslationOperation(largestOperation.TranslationId, client);
-
-Pageable<DocumentStatusDetail> docs = operation.GetAllDocumentsStatus();
-
-foreach (DocumentStatusDetail docStatus in docs)
-{
-    Console.WriteLine($"Document {docStatus.LocationUri} has status {docStatus.Status}");
-}
 ```
 
 ### Start Translation with Multiple Configurations
 Start a translation operation to translate documents in multiple source containers to multiple target containers in different languages. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:MultipleConfigurations
-var configuration1 = new TranslationConfiguration(sourceUri1, targetUri1_1, "es", new TranslationGlossary(glossaryUrl));
-configuration1.AddTarget(targetUri1_2, "it");
+Uri source1SasUriUri = <source1 SAS URI>;
+Uri source2SasUri = <source2 SAS URI>;
+Uri frenchTargetSasUri = <french target SAS URI>;
+Uri arabicTargetSasUri = <arabic target SAS URI>;
+Uri spanishTargetSasUri = <spanish target SAS URI>;
+Uri frenchGlossarySasUri = <french glossary SAS URI>;
 
-var configuration2 = new TranslationConfiguration(sourceUri2, targetUri2_1, "it");
-configuration2.AddTarget(targetUri2_2, "es", new TranslationGlossary(glossaryUrl));
+var configuration1 = new TranslationConfiguration(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+configuration1.AddTarget(spanishTargetSasUri, "es");
+
+var configuration2 = new TranslationConfiguration(source2SasUri, arabicTargetSasUri, "ar");
+configuration2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
 
 var inputs = new List<TranslationConfiguration>()
     {
@@ -289,6 +305,9 @@ foreach (DocumentStatusDetail document in operation.GetValues())
 Start a translation operation to translate documents in the source container and write the translated files to the target container. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:StartTranslationAsync
+Uri sourceUri = <source SAS URI>;
+Uri targetUri = <target SAS URI>;
+
 var input = new TranslationConfiguration(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
@@ -325,54 +344,50 @@ await foreach (DocumentStatusDetail document in operationResult.Value)
 Get History of all submitted translation operations
 
 ```C# Snippet:OperationsHistoryAsync
-AsyncPageable<TranslationStatusDetail> operationsStatus = client.GetTranslationsAsync();
-
 int operationsCount = 0;
 int totalDocs = 0;
 int docsCancelled = 0;
 int docsSucceeded = 0;
-int maxDocs = 0;
-TranslationStatusDetail largestOperation = null;
+int docsFailed = 0;
 
-await foreach (TranslationStatusDetail operationStatus in operationsStatus)
+await foreach (TranslationStatusDetail translationStatus in client.GetTranslationsAsync())
 {
-    operationsCount++;
-    totalDocs += operationStatus.DocumentsTotal;
-    docsCancelled += operationStatus.DocumentsCancelled;
-    docsSucceeded += operationStatus.DocumentsSucceeded;
-    if (totalDocs > maxDocs)
+    if (!translationStatus.HasCompleted)
     {
-        maxDocs = totalDocs;
-        largestOperation = operationStatus;
+        DocumentTranslationOperation operation = new DocumentTranslationOperation(translationStatus.TranslationId, client);
+        await operation.WaitForCompletionAsync();
     }
+
+    operationsCount++;
+    totalDocs += translationStatus.DocumentsTotal;
+    docsCancelled += translationStatus.DocumentsCancelled;
+    docsSucceeded += translationStatus.DocumentsSucceeded;
+    docsFailed += translationStatus.DocumentsFailed;
 }
 
 Console.WriteLine($"# of operations: {operationsCount}");
 Console.WriteLine($"Total Documents: {totalDocs}");
-Console.WriteLine($"DocumentsSucceeded: {docsSucceeded}");
+Console.WriteLine($"Succeeded Document: {docsSucceeded}");
+Console.WriteLine($"Failed Document: {docsFailed}");
 Console.WriteLine($"Cancelled Documents: {docsCancelled}");
-
-Console.WriteLine($"Largest operation is {largestOperation} and has the documents:");
-
-DocumentTranslationOperation operation = new DocumentTranslationOperation(largestOperation.TranslationId, client);
-
-AsyncPageable<DocumentStatusDetail> docs = operation.GetAllDocumentsStatusAsync();
-
-await foreach (DocumentStatusDetail docStatus in docs)
-{
-    Console.WriteLine($"Document {docStatus.LocationUri} has status {docStatus.Status}");
-}
 ```
 
 ### Start Translation with Multiple Configurations Asynchronously
 Start a translation operation to translate documents in multiple source containers to multiple target containers in different languages. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
 ```C# Snippet:MultipleConfigurationsAsync
-var configuration1 = new TranslationConfiguration(sourceUri1, targetUri1_1, "es", new TranslationGlossary(glossaryUrl));
-configuration1.AddTarget(targetUri1_2, "it");
+Uri source1SasUriUri = <source1 SAS URI>;
+Uri source2SasUri = <source2 SAS URI>;
+Uri frenchTargetSasUri = <french target SAS URI>;
+Uri arabicTargetSasUri = <arabic target SAS URI>;
+Uri spanishTargetSasUri = <spanish target SAS URI>;
+Uri frenchGlossarySasUri = <french glossary SAS URI>;
 
-var configuration2 = new TranslationConfiguration(sourceUri2, targetUri2_1, "it");
-configuration2.AddTarget(targetUri2_2, "es", new TranslationGlossary(glossaryUrl));
+var configuration1 = new TranslationConfiguration(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+configuration1.AddTarget(spanishTargetSasUri, "es");
+
+var configuration2 = new TranslationConfiguration(source2SasUri, arabicTargetSasUri, "ar");
+configuration2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
 
 var inputs = new List<TranslationConfiguration>()
     {
@@ -419,11 +434,13 @@ await foreach (DocumentStatusDetail document in operation.GetValuesAsync())
 ## Troubleshooting
 
 ### General
-When you interact with the Cognitive Services Document Translation client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][textanalytics_rest_api] requests.
+When you interact with the Cognitive Services Document Translation client library using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][documenttranslation_rest_api] requests.
 
 For example, if you submit a request with an empty targets list, a `400` error is returned, indicating "Bad Request".
 
 ```C# Snippet:BadRequest
+var invalidConfiguration = new TranslationConfiguration(new TranslationSource(sourceSasUri, new List<TranslationTarget>());
+
 try
 {
     DocumentTranslationOperation operation = client.StartTranslation(invalidConfiguration);
@@ -487,21 +504,20 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
-<!-- TODO: Add correct link -->
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fdocumenttranslation%2FAzure.AI.DocumentTranslation%2FREADME.png)
 
 
 <!-- LINKS -->
 [documenttranslation_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/src
 <!--TODO: remove /overview -->
 [documenttranslation_docs]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview
-<!-- TODO: Add correct link -->
+<!-- TODO: Add correct link when available -->
 [documenttranslation_refdocs]: https://aka.ms/azsdk-net-documenttranslation-ref-docs
-<!-- TODO: Add correct link -->
+<!-- TODO: Add correct link when available -->
 [documenttranslation_nuget_package]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview
 [documenttranslation_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/README.md
-<!-- TODO: Add correct link -->
-[documenttranslation_rest_api]: https://docs.microsoft.com/rest/api/cognitiveservices/translator/documenttranslation
+<!-- TODO: Add correct link when available -->
+[documenttranslation_rest_api]: https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/TranslatorText/preview/v1.0-preview.1/TranslatorBatch.json
 [custom_domain_endpoint]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#what-is-the-custom-domain-endpoint
 [single_service]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account?tabs=singleservice%2Cwindows
 [azure_portal_create_DT_resource]: https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesTextTranslation
@@ -511,7 +527,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [documenttranslation_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/src/DocumentTranslationClient.cs
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
-<!-- TODO: Add correct link -->
+<!-- TODO: Add correct link when available -->
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/document-translation/overview
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md
 

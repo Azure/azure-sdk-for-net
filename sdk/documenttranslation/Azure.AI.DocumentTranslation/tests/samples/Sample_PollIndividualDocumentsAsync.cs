@@ -12,18 +12,23 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
+        [Ignore("Samples not working yet")]
         public async Task PollIndividualDocumentsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            Uri sourceUri = new Uri("");
-            Uri targetUri = new Uri("");
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var input = new TranslationConfiguration(sourceUri, targetUri, "es");
+            Uri sourceUri = new Uri("<source SAS URI>");
+            Uri targetUri = new Uri("<target SAS URI>");
 
             #region Snippet:PollIndividualDocumentsAsync
+
+            //@@ Uri sourceUri = <source SAS URI>;
+            //@@ Uri targetUri = <target SAS URI>;
+
+            var input = new TranslationConfiguration(sourceUri, targetUri, "es");
 
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 

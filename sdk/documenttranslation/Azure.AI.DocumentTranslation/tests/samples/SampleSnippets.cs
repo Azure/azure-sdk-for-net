@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using Azure.AI.DocumentTranslation.Tests;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.DocumentTranslation.Samples
@@ -16,6 +15,7 @@ namespace Azure.AI.DocumentTranslation.Samples
     public partial class SampleSnippets : SamplesBase<DocumentTranslationTestEnvironment>
     {
         [Test]
+        [Ignore("Samples not working yet")]
         public void CreateDocumentTranslationClient()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -29,6 +29,7 @@ namespace Azure.AI.DocumentTranslation.Samples
         }
 
         [Test]
+        [Ignore("Samples not working yet")]
         public void BadRequestSnippet()
         {
             string endpoint = TestEnvironment.Endpoint;
@@ -40,6 +41,9 @@ namespace Azure.AI.DocumentTranslation.Samples
             var invalidConfiguration = new TranslationConfiguration(new TranslationSource(new Uri(endpoint)), new List<TranslationTarget>());
 
             #region Snippet:BadRequest
+
+            //@@ var invalidConfiguration = new TranslationConfiguration(new TranslationSource(sourceSasUri, new List<TranslationTarget>());
+
             try
             {
                 DocumentTranslationOperation operation = client.StartTranslation(invalidConfiguration);
@@ -52,24 +56,32 @@ namespace Azure.AI.DocumentTranslation.Samples
         }
 
         [Test]
+        [Ignore("Samples not working yet")]
         public void DocumentTranslationInput()
         {
-            Uri sourceSasUri = new Uri("");
-            Uri frenchTargetSasUri = new Uri("");
-            Uri arabicTargetSasUri = new Uri("");
-            Uri spanishGlossarySasUri = new Uri("");
-            Uri spanishTargetSasUri = new Uri("");
+            Uri sourceSasUri = new Uri("<source SAS URI>");
+            Uri frenchTargetSasUri = new Uri("<french target SAS URI>");
+            Uri arabicTargetSasUri = new Uri("<arabic target SAS URI>");
+            Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
 
             #region Snippet:DocumentTranslationSingleInput
+            //@@ Uri sourceSasUri = <source SAS URI>;
+            //@@ Uri frenchTargetSasUri = <french target SAS URI>;
+            //@@ Uri arabicTargetSasUri = <arabic target SAS URI>;
+            //@@ Uri spanishTargetSasUri = <spanish target SAS URI>;
+
             var input = new TranslationConfiguration(sourceSasUri, frenchTargetSasUri, "fr");
             input.AddTarget(arabicTargetSasUri, "ar");
-            input.AddTarget(spanishTargetSasUri, "es", new TranslationGlossary(spanishGlossarySasUri));
+            input.AddTarget(spanishTargetSasUri, "es");
             #endregion
 
-            Uri source1SasUri = new Uri("");
-            Uri source2SasUri = new Uri("");
+            Uri source1SasUri = new Uri("<source1 SAS URI>");
+            Uri source2SasUri = new Uri("<source2 SAS URI>");
 
             #region Snippet:DocumentTranslationMultipleInputs
+            //@@ Uri source1SasUri = <source1 SAS URI>;
+            //@@ Uri source2SasUri = <source2 SAS URI>;
+
             var inputs = new List<TranslationConfiguration>
             {
                 new TranslationConfiguration(source1SasUri, spanishTargetSasUri, "es"),
@@ -80,7 +92,6 @@ namespace Azure.AI.DocumentTranslation.Samples
                         new TranslationTarget(frenchTargetSasUri, "fr"),
                         new TranslationTarget(spanishTargetSasUri, "es")
                     }),
-                new TranslationConfiguration(source1SasUri, spanishTargetSasUri, "es", new TranslationGlossary(spanishGlossarySasUri)),
             };
             #endregion
         }
