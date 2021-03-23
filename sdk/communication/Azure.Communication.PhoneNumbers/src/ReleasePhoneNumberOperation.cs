@@ -17,6 +17,9 @@ namespace Azure.Communication.PhoneNumbers
         internal ReleasePhoneNumberOperation(InternalReleasePhoneNumberOperation operation)
             => _operation = operation;
 
+        /// <summary> Initializes a new instance of <see cref="ReleasePhoneNumberOperation" /> for mocking. </summary>
+        protected ReleasePhoneNumberOperation() {}
+
         /// <inheritdoc />
         public override string Id => _operation.Id;
 
