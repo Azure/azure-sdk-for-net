@@ -122,7 +122,7 @@ namespace Azure.Containers.ContainerRegistry
             string aadAuthHeader;
             if (!message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out aadAuthHeader))
             {
-                throw new InvalidOperationException("Failed to retrieve Authentication header from message request.")
+                throw new InvalidOperationException("Failed to retrieve Authentication header from message request.");
             }
 
             return aadAuthHeader.Remove(0, "Bearer ".Length);

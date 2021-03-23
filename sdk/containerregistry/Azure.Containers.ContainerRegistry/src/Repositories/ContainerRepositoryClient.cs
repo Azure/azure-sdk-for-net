@@ -40,6 +40,7 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(repository, nameof(repository));
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
 
             Endpoint = endpoint;
             _repository = repository;
@@ -47,8 +48,8 @@ namespace Azure.Containers.ContainerRegistry
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
-            _tokenExchangeClient = new RefreshTokensRestClient(_clientDiagnostics, _pipeline, endpoint.AbsoluteUri);
-            _acrTokenClient = new AccessTokensRestClient(_clientDiagnostics, _pipeline, endpoint.AbsoluteUri);
+            _tokenExchangeClient = new RefreshTokensRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
+            _acrTokenClient = new AccessTokensRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
             _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryCredentialsPolicy(credential, AcrAadScope, _tokenExchangeClient, _acrTokenClient));
             _restClient = new ContainerRegistryRepositoryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);

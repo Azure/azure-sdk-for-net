@@ -36,6 +36,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+            Argument.AssertNotNull(options, nameof(options));
 
             _endpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
