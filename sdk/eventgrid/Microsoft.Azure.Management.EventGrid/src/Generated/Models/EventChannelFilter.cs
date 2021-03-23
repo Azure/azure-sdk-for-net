@@ -31,10 +31,14 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the EventChannelFilter class.
         /// </summary>
+        /// <param name="enableAdvancedFilteringOnArrays">Allows advanced
+        /// filters to be evaluated against an array of values instead of
+        /// expecting a singular value.</param>
         /// <param name="advancedFilters">An array of advanced filters that are
         /// used for filtering event channels.</param>
-        public EventChannelFilter(IList<AdvancedFilter> advancedFilters = default(IList<AdvancedFilter>))
+        public EventChannelFilter(bool? enableAdvancedFilteringOnArrays = default(bool?), IList<AdvancedFilter> advancedFilters = default(IList<AdvancedFilter>))
         {
+            EnableAdvancedFilteringOnArrays = enableAdvancedFilteringOnArrays;
             AdvancedFilters = advancedFilters;
             CustomInit();
         }
@@ -43,6 +47,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets allows advanced filters to be evaluated against an
+        /// array of values instead of expecting a singular value.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableAdvancedFilteringOnArrays")]
+        public bool? EnableAdvancedFilteringOnArrays { get; set; }
 
         /// <summary>
         /// Gets or sets an array of advanced filters that are used for

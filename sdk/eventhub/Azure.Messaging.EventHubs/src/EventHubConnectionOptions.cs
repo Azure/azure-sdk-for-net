@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 using System.Net;
 
@@ -18,6 +19,8 @@ namespace Azure.Messaging.EventHubs
         ///   service.
         /// </summary>
         ///
+        /// <value>The default transport is AMQP over TCP.</value>
+        ///
         public EventHubsTransportType TransportType { get; set; } = EventHubsTransportType.AmqpTcp;
 
         /// <summary>
@@ -29,7 +32,20 @@ namespace Azure.Messaging.EventHubs
         ///   use, specifying a proxy is an invalid option.
         /// </remarks>
         ///
-        public IWebProxy Proxy { get; set; } = null;
+        public IWebProxy Proxy { get; set; }
+
+        /// <summary>
+        ///   The address to use for establishing a connection to the Event Hubs service, allowing network requests to be
+        ///   routed through any application gateways or other paths needed for the host environment.
+        /// </summary>
+        ///
+        /// <value>
+        ///   This address will override the default endpoint of the Event Hubs namespace when making the network request
+        ///   to the service.  The default endpoint specified in a connection string or by a fully qualified namespace will
+        ///   still be needed to negotiate the connection with the Event Hubs service.
+        /// </value>
+        ///
+        public Uri CustomEndpointAddress { get; set; }
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

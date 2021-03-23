@@ -34,9 +34,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// class.
         /// </summary>
         /// <param name="tags">Tags of the system topic.</param>
-        public SystemTopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="identity">Resource identity information.</param>
+        public SystemTopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo))
         {
             Tags = tags;
+            Identity = identity;
             CustomInit();
         }
 
@@ -50,6 +52,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource identity information.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityInfo Identity { get; set; }
 
     }
 }

@@ -5,7 +5,6 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -23,62 +22,84 @@ namespace Azure.AI.TextAnalytics.Samples
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:TextAnalyticsSample3ExtractKeyPhrasesBatch
+            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
+                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
+                                We tried again today and it was amazing. Everyone in my family liked the trail although
+                                it was too challenging for the less athletic among us.
+                                Not necessarily recommended for small children.
+                                A hotel close to the trail offers services for childcare in case you want that.";
+
+            string documentB = @"Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia
+                                sabía de nuestra celebración y me ayudaron a tenerle una sorpresa a mi pareja.
+                                La habitación estaba limpia y decorada como yo había pedido. Una gran experiencia.
+                                El próximo año volveremos.";
+
+            string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
+                                They had great amenities that included an indoor pool, a spa, and a bar.
+                                The spa offered couples massages which were really good. 
+                                The spa was clean and felt very peaceful. Overall the whole experience was great.
+                                We will definitely come back.";
+
             var documents = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1", "Microsoft was founded by Bill Gates and Paul Allen.")
+                new TextDocumentInput("1", documentA)
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("2", "Text Analytics is one of the Azure Cognitive Services.")
+                new TextDocumentInput("2", documentB)
+                {
+                     Language = "es",
+                },
+                new TextDocumentInput("3", documentC)
                 {
                      Language = "en",
                 },
-                new TextDocumentInput("3", "My cat might need to see a veterinarian.")
-                {
-                     Language = "en",
-                }
+                new TextDocumentInput("4", string.Empty)
             };
 
-            ExtractKeyPhrasesResultCollection results = client.ExtractKeyPhrasesBatch(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
-            #endregion
+            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
+            Response<ExtractKeyPhrasesResultCollection> response = client.ExtractKeyPhrasesBatch(documents, options);
+            ExtractKeyPhrasesResultCollection keyPhrasesInDocuments = response.Value;
 
             int i = 0;
-            Debug.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{results.ModelVersion}\"");
-            Debug.WriteLine("");
+            Console.WriteLine($"Results of Azure Text Analytics \"Extract Key Phrases\" Model, version: \"{keyPhrasesInDocuments.ModelVersion}\"");
+            Console.WriteLine("");
 
-            foreach (ExtractKeyPhrasesResult result in results)
+            foreach (ExtractKeyPhrasesResult keyPhrases in keyPhrasesInDocuments)
             {
                 TextDocumentInput document = documents[i++];
 
-                Debug.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\", Text=\"{document.Text}\"):");
+                Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
 
-                if (result.HasError)
+                if (keyPhrases.HasError)
                 {
-                    Debug.WriteLine($"    Document error: {result.Error.ErrorCode}.");
-                    Debug.WriteLine($"    Message: {result.Error.Message}.");
+                    Console.WriteLine("  Error!");
+                    Console.WriteLine($"  Document error: {keyPhrases.Error.ErrorCode}.");
+                    Console.WriteLine($"  Message: {keyPhrases.Error.Message}");
                 }
                 else
                 {
-                    Debug.WriteLine($"    Extracted the following {result.KeyPhrases.Count()} key phrases:");
+                    Console.WriteLine($"  Extracted the following {keyPhrases.KeyPhrases.Count()} key phrases:");
 
-                    foreach (string keyPhrase in result.KeyPhrases)
+                    foreach (string keyPhrase in keyPhrases.KeyPhrases)
                     {
-                        Debug.WriteLine($"        {keyPhrase}");
+                        Console.WriteLine($"    {keyPhrase}");
                     }
 
-                    Debug.WriteLine($"    Document statistics:");
-                    Debug.WriteLine($"        Character count (in Unicode graphemes): {result.Statistics.CharacterCount}");
-                    Debug.WriteLine($"        Transaction count: {result.Statistics.TransactionCount}");
-                    Debug.WriteLine("");
+                    Console.WriteLine($"  Document statistics:");
+                    Console.WriteLine($"    Character count: {keyPhrases.Statistics.CharacterCount}");
+                    Console.WriteLine($"    Transaction count: {keyPhrases.Statistics.TransactionCount}");
                 }
+                Console.WriteLine("");
             }
 
-            Debug.WriteLine($"Batch operation statistics:");
-            Debug.WriteLine($"    Document count: {results.Statistics.DocumentCount}");
-            Debug.WriteLine($"    Valid document count: {results.Statistics.ValidDocumentCount}");
-            Debug.WriteLine($"    Invalid document count: {results.Statistics.InvalidDocumentCount}");
-            Debug.WriteLine($"    Transaction count: {results.Statistics.TransactionCount}");
-            Debug.WriteLine("");
+            Console.WriteLine($"Batch operation statistics:");
+            Console.WriteLine($"  Document count: {keyPhrasesInDocuments.Statistics.DocumentCount}");
+            Console.WriteLine($"  Valid document count: {keyPhrasesInDocuments.Statistics.ValidDocumentCount}");
+            Console.WriteLine($"  Invalid document count: {keyPhrasesInDocuments.Statistics.InvalidDocumentCount}");
+            Console.WriteLine($"  Transaction count: {keyPhrasesInDocuments.Statistics.TransactionCount}");
+            Console.WriteLine("");
+            #endregion
         }
     }
 }

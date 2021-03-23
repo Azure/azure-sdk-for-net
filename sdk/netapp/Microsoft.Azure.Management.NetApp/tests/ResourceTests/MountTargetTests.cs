@@ -8,11 +8,13 @@ using System.Net;
 using System.Reflection;
 using Xunit;
 using System;
+using System.Threading;
 
 namespace NetApp.Tests.ResourceTests
 {
     public class MountTargetTests : TestBase
     {
+        private const int delay = 5000;
         [Fact]
         public void ListMountTargets()
         {
@@ -30,7 +32,15 @@ namespace NetApp.Tests.ResourceTests
                 
                 // clean up - delete the volumes, pool and account
                 netAppMgmtClient.Volumes.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
                 netAppMgmtClient.Pools.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1);
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }
                 netAppMgmtClient.Accounts.Delete(ResourceUtils.resourceGroup, ResourceUtils.accountName1);
             }
         }

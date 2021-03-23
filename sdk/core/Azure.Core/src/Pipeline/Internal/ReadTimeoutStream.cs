@@ -27,7 +27,21 @@ namespace Azure.Core.Pipeline
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            return _stream.Read(buffer, offset, count);
+            var source = StartTimeout(default, out bool dispose);
+            try
+            {
+                return _stream.Read(buffer, offset, count);
+            }
+            // We dispose stream on timeout so catch and check if cancellation token was cancelled
+            catch (ObjectDisposedException)
+            {
+                source.Token.ThrowIfCancellationRequested();
+                throw;
+            }
+            finally
+            {
+                StopTimeout(source, dispose);
+            }
         }
 
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
@@ -35,7 +49,9 @@ namespace Azure.Core.Pipeline
             var source = StartTimeout(cancellationToken, out bool dispose);
             try
             {
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                 return await _stream.ReadAsync(buffer, offset, count, source.Token).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
             }
             // We dispose stream on timeout so catch and check if cancellation token was cancelled
             catch (ObjectDisposedException)
@@ -76,7 +92,7 @@ namespace Azure.Core.Pipeline
         private void InitializeTokenSource()
         {
             _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationTokenSource.Token.Register(() => DisposeStream());
+            _cancellationTokenSource.Token.Register(static state => ((ReadTimeoutStream)state!).DisposeStream(), this);
         }
 
         private void DisposeStream()
@@ -122,7 +138,10 @@ namespace Azure.Core.Pipeline
         {
             try
             {
-                _stream.ReadTimeout = (int) _readTimeout.TotalMilliseconds;
+                if (_stream.CanTimeout)
+                {
+                    _stream.ReadTimeout = (int) _readTimeout.TotalMilliseconds;
+                }
             }
             catch
             {

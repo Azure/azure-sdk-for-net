@@ -17,6 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of CommonGramTokenFilter. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="commonWords"> The set of common words. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="commonWords"/> is null. </exception>
         public CommonGramTokenFilter(string name, IEnumerable<string> commonWords) : base(name)
         {
             if (name == null)
@@ -28,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(commonWords));
             }
 
-            CommonWords = commonWords.ToArray();
+            CommonWords = commonWords.ToList();
             ODataType = "#Microsoft.Azure.Search.CommonGramTokenFilter";
         }
 
@@ -45,9 +46,6 @@ namespace Azure.Search.Documents.Indexes.Models
             UseQueryMode = useQueryMode;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.CommonGramTokenFilter";
         }
-
-        /// <summary> The set of common words. </summary>
-        public IList<string> CommonWords { get; set; }
         /// <summary> A value indicating whether common words matching will be case insensitive. Default is false. </summary>
         public bool? IgnoreCase { get; set; }
         /// <summary> A value that indicates whether the token filter is in query mode. When in query mode, the token filter generates bigrams and then removes common words and single terms followed by a common word. Default is false. </summary>

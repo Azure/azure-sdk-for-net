@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    internal static class SearchQueryTypeExtensions
+    internal static partial class SearchQueryTypeExtensions
     {
         public static string ToSerialString(this SearchQueryType value) => value switch
         {

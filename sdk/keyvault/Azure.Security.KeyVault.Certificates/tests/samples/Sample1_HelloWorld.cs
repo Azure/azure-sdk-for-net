@@ -6,7 +6,6 @@ using NUnit.Framework;
 using System;
 using System.Diagnostics;
 using System.Threading;
-using Azure.Security.KeyVault.Tests;
 
 namespace Azure.Security.KeyVault.Certificates.Samples
 {
@@ -22,7 +21,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             string keyVaultUrl = TestEnvironment.KeyVaultUrl;
 
             #region Snippet:CertificatesSample1CertificateClient
-            var client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
+            CertificateClient client = new CertificateClient(new Uri(keyVaultUrl), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CertificatesSample1CreateCertificate
@@ -38,7 +37,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             #endregion
 
             #region Snippet:CertificatesSample1GetCertificateWithPolicy
-            KeyVaultCertificateWithPolicy certificate = client.GetCertificate(certName);
+            Response<KeyVaultCertificateWithPolicy> certificateResponse = client.GetCertificate(certName);
+            KeyVaultCertificateWithPolicy certificate = certificateResponse.Value;
 
             Debug.WriteLine($"Certificate was returned with name {certificate.Name} which expires {certificate.Properties.ExpiresOn}");
             #endregion
@@ -47,8 +47,8 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             CertificateProperties certificateProperties = certificate.Properties;
             certificateProperties.Enabled = false;
 
-            KeyVaultCertificate updatedCert = client.UpdateCertificateProperties(certificateProperties);
-            Debug.WriteLine($"Certificate enabled set to '{updatedCert.Properties.Enabled}'");
+            Response<KeyVaultCertificate> updatedCertResponse = client.UpdateCertificateProperties(certificateProperties);
+            Debug.WriteLine($"Certificate enabled set to '{updatedCertResponse.Value.Properties.Enabled}'");
             #endregion
 
             #region Snippet:CertificatesSample1CreateCertificateWithNewVersion

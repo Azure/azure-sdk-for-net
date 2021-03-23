@@ -296,7 +296,7 @@ namespace Azure.Core.Tests
             Assert.IsTrue(e.GetProperty<double>("seconds") > 0);
         }
 
-        protected (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int maxRetries = 3)
+        protected (HttpPipelinePolicy Policy, AsyncGate<TimeSpan, object> Gate) CreateRetryPolicy(int maxRetries = 3)
         {
             var policy = new RetryPolicyMock(_mode, maxRetries, TimeSpan.FromSeconds(3), maxDelay: TimeSpan.MaxValue);
             return (policy, policy.DelayGate);

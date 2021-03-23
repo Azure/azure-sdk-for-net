@@ -240,6 +240,39 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListBySystemTopicWithHttpMessagesAsync(string resourceGroupName, string systemTopicName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get delivery attributes for an event subscription.
+        /// </summary>
+        /// <remarks>
+        /// Get all delivery attributes for an event subscription.
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='systemTopicName'>
+        /// Name of the system topic.
+        /// </param>
+        /// <param name='eventSubscriptionName'>
+        /// Name of the event subscription to be created. Event subscription
+        /// names must be between 3 and 100 characters in length and use
+        /// alphanumeric letters only.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DeliveryAttributeListResult>> GetDeliveryAttributesWithHttpMessagesAsync(string resourceGroupName, string systemTopicName, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update an event subscription for a system topic.
         /// </summary>
         /// <remarks>

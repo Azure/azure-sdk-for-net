@@ -1,15 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Cognitive Services ComputerVision SDK</AssemblyTitle>
     <Description>This client library provides access to the Microsoft Cognitive Services ComputerVision APIs.</Description>
-    <Version>6.0.0-preview.1</Version>
+    <Version>6.1.0-beta.1</Version>
+    <ApiCompatVersion>6.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Computer Vision;Computer Vision API;Computer Vision SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
     Changes in this release:
-    1. Remove `TextRecognitionMode` parameter in `BatchReadFile` OCR operation;
-    2. Correct OCR `OperationStatus` enum value;
-    3. Correct OCR `BoundingBox` type.
+    1. Updating the description visual feature for analyze image method and the describe image method.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

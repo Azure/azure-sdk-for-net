@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.Azure.Amqp;
-using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp.Transaction;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -36,8 +35,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             try
             {
-                FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
-                Controller controller = await faultTolerantController.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                Controller controller = await GetController(timeout).ConfigureAwait(false);
+
                 AmqpTransactionId = await controller.DeclareAsync().ConfigureAwait(false);
                 ServiceBusEventSource.Log.TransactionDeclared(_transactionId, AmqpTransactionId);
                 return this;
@@ -48,6 +47,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _transactionManager.RemoveEnlistment(_transactionId);
                 throw;
             }
+        }
+
+        private async Task<Controller> GetController(TimeSpan timeout)
+        {
+            FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
+            Controller controller = await faultTolerantController.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            return controller;
         }
 
         protected override void OnSafeClose(AmqpTransactionEnlistment value)
@@ -61,17 +67,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         void IPromotableSinglePhaseNotification.SinglePhaseCommit(SinglePhaseEnlistment singlePhaseEnlistment)
         {
             _transactionManager.RemoveEnlistment(_transactionId);
-            TaskExtensionHelper.Schedule(() => SinglePhaseCommitAsync(singlePhaseEnlistment));
+            _ = SinglePhaseCommitAsync(singlePhaseEnlistment);
         }
 
         private async Task SinglePhaseCommitAsync(SinglePhaseEnlistment singlePhaseEnlistment)
         {
             try
             {
-                FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
-                Controller controller = await faultTolerantController.GetOrCreateAsync(_timeout)
-                    .ConfigureAwait(false);
-
+                Controller controller = await GetController(_timeout).ConfigureAwait(false);
                 await controller.DischargeAsync(AmqpTransactionId, fail: false).ConfigureAwait(false);
                 singlePhaseEnlistment.Committed();
                 ServiceBusEventSource.Log.TransactionDischarged(
@@ -94,17 +97,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         void IPromotableSinglePhaseNotification.Rollback(SinglePhaseEnlistment singlePhaseEnlistment)
         {
             _transactionManager.RemoveEnlistment(_transactionId);
-            TaskExtensionHelper.Schedule(() => RollbackAsync(singlePhaseEnlistment));
+            _ = RollbackAsync(singlePhaseEnlistment);
         }
 
         private async Task RollbackAsync(SinglePhaseEnlistment singlePhaseEnlistment)
         {
             try
             {
-                FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
-                Controller controller = await faultTolerantController.GetOrCreateAsync(_timeout)
-                    .ConfigureAwait(false);
-
+                Controller controller = await GetController(_timeout).ConfigureAwait(false);
                 await controller.DischargeAsync(AmqpTransactionId, fail: true).ConfigureAwait(false);
                 singlePhaseEnlistment.Aborted();
                 ServiceBusEventSource.Log.TransactionDischarged(_transactionId, AmqpTransactionId, true);

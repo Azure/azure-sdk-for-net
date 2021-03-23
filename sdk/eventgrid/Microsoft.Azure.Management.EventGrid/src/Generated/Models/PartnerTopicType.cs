@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="partnerName">Official name of the partner.</param>
         /// <param name="topicTypeName">Name of the partner topic type. This
         /// name should be unique among all partner topic types names.</param>

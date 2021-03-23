@@ -7,7 +7,7 @@ param (
   $artifactLocation, # the root of the artifact folder. DevOps $(System.ArtifactsDirectory)
   $workingDirectory, # directory that package artifacts will be extracted into for examination (if necessary)
   $packageRepository, # used to indicate destination against which we will check the existing version.
-  # valid options: PyPI, Nuget, NPM, Maven, C
+  # valid options: PyPI, Nuget, NPM, Maven, C, CPP
   # used by CreateTags
   $releaseSha, # the SHA for the artifacts. DevOps: $(Release.Artifacts.<artifactAlias>.SourceVersion) or $(Build.SourceVersion)
 
@@ -18,15 +18,13 @@ param (
   [switch]$continueOnError = $false
 )
 
-Write-Host "> $PSCommandPath $args"
-
-. (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
+. (Join-Path $PSScriptRoot common.ps1)
 
 $apiUrl = "https://api.github.com/repos/$repoId"
 Write-Host "Using API URL $apiUrl"
 
 # VERIFY PACKAGES
-$pkgList = VerifyPackages -pkgRepository $packageRepository -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
+$pkgList = VerifyPackages -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
 
 if ($pkgList) {
   Write-Host "Given the visible artifacts, github releases will be created for the following:"

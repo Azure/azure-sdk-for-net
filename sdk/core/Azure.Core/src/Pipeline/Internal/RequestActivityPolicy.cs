@@ -27,37 +27,29 @@ namespace Azure.Core.Pipeline
 
         public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            if (!_isDistributedTracingEnabled ||
+                !s_diagnosticSource.IsEnabled())
+            {
+                return ProcessNextAsync(message, pipeline, true);
+            }
+
             return ProcessAsync(message, pipeline, true);
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            if (!_isDistributedTracingEnabled ||
+                !s_diagnosticSource.IsEnabled())
+            {
+                ProcessNextAsync(message, pipeline, false).EnsureCompleted();
+                return;
+            }
+
             ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
-        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            if (!_isDistributedTracingEnabled)
-            {
-                if (isAsync)
-                {
-                    await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
-                }
-                else
-                {
-                    ProcessNextAsync(message, pipeline, false).EnsureCompleted();
-                }
-
-                return;
-            }
-
-            if (!s_diagnosticSource.IsEnabled())
-            {
-                await ProcessNextAsync(message, pipeline, isAsync).ConfigureAwait(false);
-
-                return;
-            }
-
             var activity = new Activity("Azure.Core.Http.Request");
             activity.AddTag("http.method", message.Request.Method.Method);
             activity.AddTag("http.url", message.Request.Uri.ToString());
@@ -87,7 +79,7 @@ namespace Azure.Core.Pipeline
 
             try
             {
-                if (isAsync)
+                if (async)
                 {
                     await ProcessNextAsync(message, pipeline, true).ConfigureAwait(false);
                 }
@@ -112,17 +104,19 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private static async ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool isAsync)
+        private static ValueTask ProcessNextAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            Activity currentActivity = Activity.Current;
+            Activity? currentActivity = Activity.Current;
 
             if (currentActivity != null)
             {
+                var currentActivityId = currentActivity.Id ?? string.Empty;
+
                 if (currentActivity.IsW3CFormat())
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
-                        message.Request.Headers.Add(TraceParentHeaderName, currentActivity.Id);
+                        message.Request.Headers.Add(TraceParentHeaderName, currentActivityId);
                         if (currentActivity.TryGetTraceState(out string? traceStateString) && traceStateString != null)
                         {
                             message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
@@ -133,18 +127,19 @@ namespace Azure.Core.Pipeline
                 {
                     if (!message.Request.Headers.Contains(RequestIdHeaderName))
                     {
-                        message.Request.Headers.Add(RequestIdHeaderName, currentActivity.Id);
+                        message.Request.Headers.Add(RequestIdHeaderName, currentActivityId);
                     }
                 }
             }
 
-            if (isAsync)
+            if (async)
             {
-                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
+                return ProcessNextAsync(message, pipeline);
             }
             else
             {
                 ProcessNext(message, pipeline);
+                return default;
             }
         }
     }

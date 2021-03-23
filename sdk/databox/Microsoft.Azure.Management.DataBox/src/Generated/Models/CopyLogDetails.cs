@@ -10,11 +10,13 @@
 
 namespace Microsoft.Azure.Management.DataBox.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Details for log generated during copy.
     /// </summary>
+    [Newtonsoft.Json.JsonObject("CopyLogDetails")]
     public partial class CopyLogDetails
     {
         /// <summary>

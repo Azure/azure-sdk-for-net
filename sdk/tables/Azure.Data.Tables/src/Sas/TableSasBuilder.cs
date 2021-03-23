@@ -10,7 +10,8 @@ namespace Azure.Data.Tables.Sas
     /// <summary>
     /// <see cref="TableSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage table.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas" />.
+    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+    /// Constructing an Account SAS</see>.
     /// </summary>
     public class TableSasBuilder
     {
@@ -33,11 +34,12 @@ namespace Azure.Data.Tables.Sas
         /// Initializes an instance of a <see cref="TableSasBuilder"/>.
         /// </summary>
         /// <param name="tableName">The name of the table being made accessible with the shared access signature.</param>
-        /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "racwdl".</param>
+        /// <param name="rawPermissions">The permissions associated with the shared access signature. This string should contain one or more of the following permission characters in this order: "raud".</param>
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
         public TableSasBuilder(string tableName, string rawPermissions, DateTimeOffset expiresOn)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(rawPermissions, nameof(tableName));
 
             TableName = tableName;
             ExpiresOn = expiresOn;
@@ -45,13 +47,38 @@ namespace Azure.Data.Tables.Sas
         }
 
         /// <summary>
+        /// Initializes a new instance of <see cref="TableSasBuilder"/> based on an existing Uri containing a shared acccess signature.
+        /// </summary>
+        /// <param name="uri">The Uri to parse.</param>
+        /// <returns></returns>
+        public TableSasBuilder(Uri uri)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+
+            var uriBuilder = new TableUriBuilder(uri);
+
+            TableName = uriBuilder.Tablename;
+            ExpiresOn = uriBuilder.Sas.ExpiresOn;
+            Identifier = uriBuilder.Sas.Identifier;
+            IPRange = uriBuilder.Sas.IPRange;
+            PartitionKeyEnd = uriBuilder.Sas.EndPartitionKey;
+            PartitionKeyStart = uriBuilder.Sas.StartPartitionKey;
+            Protocol = uriBuilder.Sas.Protocol;
+            RowKeyEnd = uriBuilder.Sas.EndRowKey;
+            RowKeyStart = uriBuilder.Sas.StartRowKey;
+            StartsOn = uriBuilder.Sas.StartsOn;
+            Version = uriBuilder.Sas.Version;
+            SetPermissions(uriBuilder.Sas.Permissions);
+        }
+
+        /// <summary>
         /// The optional signed protocol field specifies the protocol
         /// permitted for a request made with the SAS.  Possible values are
-        /// <see cref="SasProtocol.HttpsAndHttp"/>,
-        /// <see cref="SasProtocol.Https"/>, and
-        /// <see cref="SasProtocol.None"/>.
+        /// <see cref="TableSasProtocol.HttpsAndHttp"/>,
+        /// <see cref="TableSasProtocol.Https"/>, and
+        /// <see cref="TableSasProtocol.None"/>.
         /// </summary>
-        public SasProtocol Protocol { get; set; }
+        public TableSasProtocol Protocol { get; set; }
 
         /// <summary>
         /// Optionally specify the time at which the shared access signature
@@ -85,7 +112,7 @@ namespace Azure.Data.Tables.Sas
         /// When specifying a range of IP addresses, note that the range is
         /// inclusive.
         /// </summary>
-        public SasIPRange IPRange { get; set; }
+        public TableSasIPRange IPRange { get; set; }
 
         /// <summary>
         /// An optional unique value up to 64 characters in length that
@@ -96,7 +123,7 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// The name of the table being made accessible.
         /// </summary>
-        public string TableName { get; }
+        public string TableName { get; set; }
 
         /// <summary>
         /// The optional start of the partition key values range being made available.
@@ -164,8 +191,8 @@ namespace Azure.Data.Tables.Sas
 
             EnsureState();
 
-            var startTime = SasExtensions.FormatTimesForSasSigning(StartsOn);
-            var expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
+            var startTime = TableSasExtensions.FormatTimesForSasSigning(StartsOn);
+            var expiryTime = TableSasExtensions.FormatTimesForSasSigning(ExpiresOn);
 
             // String to sign: http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             var stringToSign = string.Join("\n",
@@ -175,7 +202,7 @@ namespace Azure.Data.Tables.Sas
                 GetCanonicalName(sharedKeyCredential.AccountName, TableName),
                 Identifier,
                 IPRange.ToString(),
-                SasExtensions.ToProtocolString(Protocol),
+                TableSasExtensions.ToProtocolString(Protocol),
                 Version,
                 PartitionKeyStart,
                 RowKeyStart,
@@ -184,6 +211,7 @@ namespace Azure.Data.Tables.Sas
             var signature = TableSharedKeyCredential.ComputeSasSignature(sharedKeyCredential, stringToSign);
             var p = new TableSasQueryParameters(
                 version: Version,
+                resourceTypes: default,
                 tableName: TableName,
                 partitionKeyStart: PartitionKeyStart,
                 partitionKeyEnd: PartitionKeyEnd,

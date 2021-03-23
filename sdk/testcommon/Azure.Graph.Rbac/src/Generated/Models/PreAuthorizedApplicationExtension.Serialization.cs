@@ -16,7 +16,7 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Conditions != null)
+            if (Optional.IsCollectionDefined(Conditions))
             {
                 writer.WritePropertyName("conditions");
                 writer.WriteStartArray();
@@ -31,32 +31,26 @@ namespace Azure.Graph.Rbac.Models
 
         internal static PreAuthorizedApplicationExtension DeserializePreAuthorizedApplicationExtension(JsonElement element)
         {
-            IList<string> conditions = default;
+            Optional<IList<string>> conditions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditions"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     conditions = array;
                     continue;
                 }
             }
-            return new PreAuthorizedApplicationExtension(conditions);
+            return new PreAuthorizedApplicationExtension(Optional.ToList(conditions));
         }
     }
 }

@@ -32,8 +32,6 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature("hub", "keyName", "key", "TOkEn!", DateTimeOffset.UtcNow.AddHours(4));
 
             yield return new object[] { new SharedAccessSignatureCredential(signature), true };
-            yield return new object[] { new EventHubSharedKeyCredential("blah", "foo"), true };
-            yield return new object[] { new EventHubTokenCredential(new EventHubSharedKeyCredential("blah", "foo"), "hub"), true };
             yield return new object[] { new EventHubTokenCredential(credentialMock, "thing"), false };
             yield return new object[] { credentialMock, false };
         }

@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="source">Source of the event channel. This represents a
         /// unique resource in the partner's resource model.</param>
         /// <param name="destination">Represents the destination of an event
@@ -59,7 +59,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// custom description for the customer partner topic.
         /// This will be helpful to remove any ambiguity of the origin of
         /// creation of the partner topic for the customer.</param>
-        public EventChannel(string id = default(string), string name = default(string), string type = default(string), EventChannelSource source = default(EventChannelSource), EventChannelDestination destination = default(EventChannelDestination), string provisioningState = default(string), string partnerTopicReadinessState = default(string), System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), EventChannelFilter filter = default(EventChannelFilter), string partnerTopicFriendlyDescription = default(string))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public EventChannel(string id = default(string), string name = default(string), string type = default(string), EventChannelSource source = default(EventChannelSource), EventChannelDestination destination = default(EventChannelDestination), string provisioningState = default(string), string partnerTopicReadinessState = default(string), System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), EventChannelFilter filter = default(EventChannelFilter), string partnerTopicFriendlyDescription = default(string), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Source = source;
@@ -69,6 +71,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             ExpirationTimeIfNotActivatedUtc = expirationTimeIfNotActivatedUtc;
             Filter = filter;
             PartnerTopicFriendlyDescription = partnerTopicFriendlyDescription;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -129,6 +132,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerTopicFriendlyDescription")]
         public string PartnerTopicFriendlyDescription { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
     }
 }

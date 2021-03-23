@@ -34,12 +34,16 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the DataBoxHeavyAccountCopyLogDetails
         /// class.
         /// </summary>
-        /// <param name="accountName">Destination account name.</param>
+        /// <param name="accountName">Account name.</param>
         /// <param name="copyLogLink">Link for copy logs.</param>
-        public DataBoxHeavyAccountCopyLogDetails(string accountName = default(string), IList<string> copyLogLink = default(IList<string>))
+        /// <param name="copyVerboseLogLink">Link for copy verbose logs. This
+        /// will be set only when the LogCollectionLevel is set to
+        /// verbose.</param>
+        public DataBoxHeavyAccountCopyLogDetails(string accountName = default(string), IList<string> copyLogLink = default(IList<string>), IList<string> copyVerboseLogLink = default(IList<string>))
         {
             AccountName = accountName;
             CopyLogLink = copyLogLink;
+            CopyVerboseLogLink = copyVerboseLogLink;
             CustomInit();
         }
 
@@ -49,7 +53,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets destination account name.
+        /// Gets account name.
         /// </summary>
         [JsonProperty(PropertyName = "accountName")]
         public string AccountName { get; private set; }
@@ -59,6 +63,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "copyLogLink")]
         public IList<string> CopyLogLink { get; private set; }
+
+        /// <summary>
+        /// Gets link for copy verbose logs. This will be set only when the
+        /// LogCollectionLevel is set to verbose.
+        /// </summary>
+        [JsonProperty(PropertyName = "copyVerboseLogLink")]
+        public IList<string> CopyVerboseLogLink { get; private set; }
 
     }
 }

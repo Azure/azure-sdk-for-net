@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace Azure.Messaging.ServiceBus.Primitives
 {
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable
     internal sealed class ConcurrentExpiringSet<TKey>
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         public readonly ConcurrentDictionary<TKey, DateTimeOffset> dictionary;
 

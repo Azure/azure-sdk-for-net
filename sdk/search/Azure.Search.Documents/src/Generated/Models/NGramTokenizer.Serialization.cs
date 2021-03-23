@@ -16,17 +16,17 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MinGram != null)
+            if (Optional.IsDefined(MinGram))
             {
                 writer.WritePropertyName("minGram");
                 writer.WriteNumberValue(MinGram.Value);
             }
-            if (MaxGram != null)
+            if (Optional.IsDefined(MaxGram))
             {
                 writer.WritePropertyName("maxGram");
                 writer.WriteNumberValue(MaxGram.Value);
             }
-            if (TokenChars != null)
+            if (Optional.IsCollectionDefined(TokenChars))
             {
                 writer.WritePropertyName("tokenChars");
                 writer.WriteStartArray();
@@ -45,9 +45,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static NGramTokenizer DeserializeNGramTokenizer(JsonElement element)
         {
-            int? minGram = default;
-            int? maxGram = default;
-            IList<TokenCharacterKind> tokenChars = default;
+            Optional<int> minGram = default;
+            Optional<int> maxGram = default;
+            Optional<IList<TokenCharacterKind>> tokenChars = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -56,6 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minGram = property.Value.GetInt32();
@@ -65,6 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxGram = property.Value.GetInt32();
@@ -74,6 +76,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TokenCharacterKind> array = new List<TokenCharacterKind>();
@@ -95,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new NGramTokenizer(odataType, name, minGram, maxGram, tokenChars);
+            return new NGramTokenizer(odataType, name, Optional.ToNullable(minGram), Optional.ToNullable(maxGram), Optional.ToList(tokenChars));
         }
     }
 }

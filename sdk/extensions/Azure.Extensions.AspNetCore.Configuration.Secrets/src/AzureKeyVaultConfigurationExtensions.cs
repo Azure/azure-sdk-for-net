@@ -44,8 +44,9 @@ namespace Microsoft.Extensions.Configuration
             TokenCredential credential,
             KeyVaultSecretManager manager)
         {
-            return AddAzureKeyVault(configurationBuilder, new AzureKeyVaultConfigurationOptions(vaultUri, credential)
+            return AddAzureKeyVault(configurationBuilder, new AzureKeyVaultConfigurationOptions
             {
+                Client = new SecretClient(vaultUri, credential),
                 Manager = manager
             });
         }
@@ -73,9 +74,42 @@ namespace Microsoft.Extensions.Configuration
         /// Adds an <see cref="IConfigurationProvider"/> that reads configuration values from the Azure KeyVault.
         /// </summary>
         /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
+        /// <param name="vaultUri">Azure Key Vault uri.</param>
+        /// <param name="credential">The credential to to use for authentication.</param>
         /// <param name="options">The <see cref="AzureKeyVaultConfigurationOptions"/> to use.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
-        private static IConfigurationBuilder AddAzureKeyVault(this IConfigurationBuilder configurationBuilder, AzureKeyVaultConfigurationOptions options)
+        public static IConfigurationBuilder AddAzureKeyVault(
+            this IConfigurationBuilder configurationBuilder,
+            Uri vaultUri,
+            TokenCredential credential,
+            AzureKeyVaultConfigurationOptions options)
+        {
+            return configurationBuilder.AddAzureKeyVault(new SecretClient(vaultUri, credential), options);
+        }
+
+        /// <summary>
+        /// Adds an <see cref="IConfigurationProvider"/> that reads configuration values from the Azure KeyVault.
+        /// </summary>
+        /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
+        /// <param name="client">The <see cref="SecretClient"/> to use for retrieving values.</param>
+        /// <param name="options">The <see cref="AzureKeyVaultConfigurationOptions"/> to use.</param>
+        /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
+        public static IConfigurationBuilder AddAzureKeyVault(
+            this IConfigurationBuilder configurationBuilder,
+            SecretClient client,
+            AzureKeyVaultConfigurationOptions options)
+        {
+            options.Client = client;
+            return configurationBuilder.AddAzureKeyVault(options);
+        }
+
+        /// <summary>
+        /// Adds an <see cref="IConfigurationProvider"/> that reads configuration values from the Azure KeyVault.
+        /// </summary>
+        /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
+        /// <param name="options">The <see cref="AzureKeyVaultConfigurationOptions"/> to use.</param>
+        /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
+        internal static IConfigurationBuilder AddAzureKeyVault(this IConfigurationBuilder configurationBuilder, AzureKeyVaultConfigurationOptions options)
         {
             Argument.AssertNotNull(configurationBuilder, nameof(configurationBuilder));
             Argument.AssertNotNull(options, nameof(configurationBuilder));

@@ -3,7 +3,6 @@ using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Newtonsoft.Json;
 using SecurityCenter.Tests.Helpers;
 using Xunit;
 
@@ -42,8 +41,8 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var appWhitelistingGroups = securityCenterClient.AdaptiveApplicationControls.List();
-                ValidateAppWhitelistingGroups(appWhitelistingGroups);
+                var adaptiveApplicationControlGroups = securityCenterClient.AdaptiveApplicationControls.List();
+                ValidateApplicationControlGroups(adaptiveApplicationControlGroups);
             }
         }
 
@@ -53,15 +52,15 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var appWhitelistingGroup = new AppWhitelistingGroup(
+                var adaptiveApplicationControlGroup = new AdaptiveApplicationControlGroup(
                     name: "TestGroup",
                     protectionMode: new ProtectionMode("Audit", "None", "None"),
                     configurationStatus: "NoStatus",
                     sourceSystem: "Azure_AppLocker");
 
-                var createdGroup = securityCenterClient.AdaptiveApplicationControls.Put("TestGroup", appWhitelistingGroup);
+                var createdGroup = securityCenterClient.AdaptiveApplicationControls.Put("TestGroup", adaptiveApplicationControlGroup);
 
-                ValidateCreatedApplicationWhitelistingGroup(createdGroup, securityCenterClient.AscLocation, "TestGroup");
+                ValidateCreatedAdaptiveApplicationControlGroup(createdGroup, securityCenterClient.AscLocation, "TestGroup");
             }
         }
 
@@ -73,7 +72,7 @@ namespace SecurityCenter.Tests
                 var securityCenterClient = GetSecurityCenterClient(context);
                 var group = securityCenterClient.AdaptiveApplicationControls.Get("TestGroup");
 
-                ValidateApplicationWhitelistingGroup(group);
+                ValidateAdaptiveApplicationControlGroup(group);
             }
         }
 
@@ -82,32 +81,32 @@ namespace SecurityCenter.Tests
         #region Validations
 
 
-        private void ValidateAppWhitelistingGroups(AppWhitelistingGroups appWhitelistingGroups)
+        private void ValidateApplicationControlGroups(AdaptiveApplicationControlGroups adaptiveApplicationControlGroups)
         {
-            Assert.NotEmpty(appWhitelistingGroups.Value);
+            Assert.NotNull(adaptiveApplicationControlGroups.Value);
 
-            appWhitelistingGroups.Value.ForEach(ValidateApplicationWhitelistingGroup);
+            adaptiveApplicationControlGroups.Value.ForEach(ValidateAdaptiveApplicationControlGroup);
         }
 
-        private void ValidateApplicationWhitelistingGroup(AppWhitelistingGroup appWhitelistingGroup)
+        private void ValidateAdaptiveApplicationControlGroup(AdaptiveApplicationControlGroup adaptiveApplicationControlGroup)
         {
-            Assert.NotNull(appWhitelistingGroup);
-            Assert.NotNull(appWhitelistingGroup.VmRecommendations);
-            Assert.NotNull(appWhitelistingGroup.PathRecommendations);
-            Assert.NotNull(appWhitelistingGroup.ConfigurationStatus);
-            Assert.NotNull(appWhitelistingGroup.EnforcementMode);
-            Assert.NotNull(appWhitelistingGroup.Issues);
-            Assert.NotNull(appWhitelistingGroup.ProtectionMode);
-            Assert.NotNull(appWhitelistingGroup.SourceSystem);
+            Assert.NotNull(adaptiveApplicationControlGroup);
+            Assert.NotNull(adaptiveApplicationControlGroup.VmRecommendations);
+            Assert.NotNull(adaptiveApplicationControlGroup.PathRecommendations);
+            Assert.NotNull(adaptiveApplicationControlGroup.ConfigurationStatus);
+            Assert.NotNull(adaptiveApplicationControlGroup.EnforcementMode);
+            Assert.NotNull(adaptiveApplicationControlGroup.Issues);
+            Assert.NotNull(adaptiveApplicationControlGroup.ProtectionMode);
+            Assert.NotNull(adaptiveApplicationControlGroup.SourceSystem);
         }
 
-        private void ValidateCreatedApplicationWhitelistingGroup(AppWhitelistingGroup appWhitelistingGroup, string ascLocation, string groupName)
+        private void ValidateCreatedAdaptiveApplicationControlGroup(AdaptiveApplicationControlGroup adaptiveApplicationControlGroup, string ascLocation, string groupName)
         {
-            Assert.NotNull(appWhitelistingGroup);
-            Assert.NotNull(appWhitelistingGroup.Id);
-            Assert.Equal(groupName, appWhitelistingGroup.Name);
-            Assert.Equal("Microsoft.Security/applicationWhitelistings", appWhitelistingGroup.Type);
-            Assert.Equal(ascLocation, appWhitelistingGroup.Location);
+            Assert.NotNull(adaptiveApplicationControlGroup);
+            Assert.NotNull(adaptiveApplicationControlGroup.Id);
+            Assert.Equal(groupName, adaptiveApplicationControlGroup.Name);
+            Assert.Equal("Microsoft.Security/applicationWhitelistings", adaptiveApplicationControlGroup.Type);
+            Assert.Equal(ascLocation, adaptiveApplicationControlGroup.Location);
         }
 
         #endregion

@@ -2,19 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
-using Azure.Messaging.ServiceBus.Diagnostics;
-using Azure.Messaging.ServiceBus.Primitives;
-using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Encoding;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -35,7 +28,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private static TimeSpan CredentialRefreshBuffer { get; } = TimeSpan.FromMinutes(5);
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private bool _closed = false;
+        private bool _closed;
 
         /// <summary>The currently active token to use for authorization with the Service Bus service.</summary>
         private AccessToken _accessToken;
@@ -98,7 +91,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 Scheme = options.TransportType.GetUriScheme(),
                 Host = host
-
             }.Uri;
 
             Credential = credential;
@@ -106,8 +98,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 ServiceEndpoint,
                 credential,
                 options.TransportType,
-                options.Proxy);
-
+                options.WebProxy,
+                options.EnableCrossEntityTransactions);
         }
 
         /// <summary>
@@ -116,23 +108,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="entityPath">The entity path to send the message to.</param>
-        /// <param name="viaEntityPath">The entity path to route the message through. Useful when using transactions.</param>
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="identifier">The identifier for the sender.</param>
         ///
         /// <returns>A <see cref="TransportSender"/> configured in the requested manner.</returns>
         public override TransportSender CreateSender(
             string entityPath,
-            string viaEntityPath,
             ServiceBusRetryPolicy retryPolicy,
             string identifier)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
             return new AmqpSender
             (
                 entityPath,
-                viaEntityPath,
                 ConnectionScope,
                 retryPolicy,
                 identifier
@@ -146,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="entityPath"></param>
         ///
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="receiveMode">The <see cref="ReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
+        /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
         /// <param name="identifier"></param>
         /// <param name="sessionId"></param>
@@ -157,13 +146,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         public override TransportReceiver CreateReceiver(
             string entityPath,
             ServiceBusRetryPolicy retryPolicy,
-            ReceiveMode receiveMode,
+            ServiceBusReceiveMode receiveMode,
             uint prefetchCount,
             string identifier,
             string sessionId,
             bool isSessionReceiver)
         {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
+            Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
             return new AmqpReceiver
             (
@@ -175,32 +164,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 identifier,
                 sessionId,
                 isSessionReceiver
-            );
-        }
-
-        /// <summary>
-        ///   Creates a rule manager strongly aligned with the active protocol and transport,
-        ///   responsible for adding, removing and getting rules from the Service Bus subscription.
-        /// </summary>
-        ///
-        /// <param name="subscriptionPath">The path of the Service Bus subscription to which the rule manager is bound.</param>
-        /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
-        /// <param name="identifier">The identifier for the rule manager.</param>
-        ///
-        /// <returns>A <see cref="TransportRuleManager"/> configured in the requested manner.</returns>
-        public override TransportRuleManager CreateRuleManager(
-            string subscriptionPath,
-            ServiceBusRetryPolicy retryPolicy,
-            string identifier)
-        {
-            Argument.AssertNotClosed(_closed, nameof(AmqpClient));
-
-            return new AmqpRuleManager
-            (
-                subscriptionPath,
-                ConnectionScope,
-                retryPolicy,
-                identifier
             );
         }
 

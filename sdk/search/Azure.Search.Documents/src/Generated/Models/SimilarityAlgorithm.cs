@@ -10,11 +10,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Base type for similarity algorithms. Similarity algorithms are used to calculate scores that tie queries to documents. The higher the score, the more relevant the document is to that specific query. Those scores are used to rank the search results. </summary>
     public partial class SimilarityAlgorithm
     {
-        /// <summary> Initializes a new instance of SimilarityAlgorithm. </summary>
-        public SimilarityAlgorithm()
-        {
-            ODataType = null;
-        }
 
         /// <summary> Initializes a new instance of SimilarityAlgorithm. </summary>
         /// <param name="oDataType"> . </param>

@@ -54,7 +54,11 @@ namespace Microsoft.Azure.ServiceBus.Core
         int prefetchCount;
         long lastPeekedSequenceNumber;
         MessageReceivePump receivePump;
+        // Cancellation token to cancel the message pump. Once this is fired, all future message handling operations registered by application will be
+        // cancelled. 
         CancellationTokenSource receivePumpCancellationTokenSource;
+        // Cancellation token to cancel the inflight message handling operations registered by application in the message pump. 
+        CancellationTokenSource runningTaskCancellationTokenSource;
 
         /// <summary>
         /// Creates a new MessageReceiver from a <see cref="ServiceBusConnectionStringBuilder"/>.
@@ -900,6 +904,57 @@ namespace Microsoft.Azure.ServiceBus.Core
         }
 
         /// <summary>
+        /// Unregister message handler from the receiver if there is an active message handler registered. This operation waits for the completion
+        /// of inflight receive and message handling operations to finish and unregisters future receives on the message handler which previously 
+        /// registered. 
+        /// </summary>
+        /// <param name="inflightMessageHandlerTasksWaitTimeout"> is the maximum waitTimeout for inflight message handling tasks.</param>
+        public async Task UnregisterMessageHandlerAsync(TimeSpan inflightMessageHandlerTasksWaitTimeout)
+        {
+            this.ThrowIfClosed();
+
+            if (inflightMessageHandlerTasksWaitTimeout <= TimeSpan.Zero)
+            {
+                throw Fx.Exception.ArgumentOutOfRange(nameof(inflightMessageHandlerTasksWaitTimeout), inflightMessageHandlerTasksWaitTimeout, Resources.TimeoutMustBePositiveNonZero.FormatForUser(nameof(inflightMessageHandlerTasksWaitTimeout), inflightMessageHandlerTasksWaitTimeout));
+            }
+
+            MessagingEventSource.Log.UnregisterMessageHandlerStart(this.ClientId);
+            lock (this.messageReceivePumpSyncLock)
+            {
+                if (this.receivePump == null || this.receivePumpCancellationTokenSource.IsCancellationRequested)
+                {
+                    // Silently return if handler has already been unregistered. 
+                    return;
+                }
+
+                this.receivePumpCancellationTokenSource.Cancel();
+                this.receivePumpCancellationTokenSource.Dispose();
+            }
+
+            Stopwatch stopWatch = Stopwatch.StartNew();
+            while (this.receivePump != null
+                && stopWatch.Elapsed < inflightMessageHandlerTasksWaitTimeout
+                && this.receivePump.maxConcurrentCallsSemaphoreSlim.CurrentCount < this.receivePump.registerHandlerOptions.MaxConcurrentCalls)
+            {
+                // We can proceed when the inflight tasks are done. 
+                if (this.receivePump.maxConcurrentCallsSemaphoreSlim.CurrentCount == this.receivePump.registerHandlerOptions.MaxConcurrentCalls)
+                {
+                    break;
+                }
+
+                await Task.Delay(10).ConfigureAwait(false);
+            }
+
+            lock (this.messageReceivePumpSyncLock)
+            {
+                this.runningTaskCancellationTokenSource.Cancel();
+                this.runningTaskCancellationTokenSource.Dispose();
+                this.receivePump = null;
+            }
+            MessagingEventSource.Log.UnregisterMessageHandlerStop(this.ClientId);
+        }
+
+        /// <summary>
         /// Registers a <see cref="ServiceBusPlugin"/> to be used with this receiver.
         /// </summary>
         public override void RegisterPlugin(ServiceBusPlugin serviceBusPlugin)
@@ -1003,6 +1058,9 @@ namespace Microsoft.Azure.ServiceBus.Core
                 {
                     this.receivePumpCancellationTokenSource.Cancel();
                     this.receivePumpCancellationTokenSource.Dispose();
+                    // For back-compatibility 
+                    this.runningTaskCancellationTokenSource.Cancel();
+                    this.runningTaskCancellationTokenSource.Dispose();
                     this.receivePump = null;
                 }
             }
@@ -1279,7 +1337,9 @@ namespace Microsoft.Azure.ServiceBus.Core
                 }
 
                 this.receivePumpCancellationTokenSource = new CancellationTokenSource();
-                this.receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token);
+                this.runningTaskCancellationTokenSource = new CancellationTokenSource();
+
+                this.receivePump = new MessageReceivePump(this, registerHandlerOptions, callback, this.ServiceBusConnection.Endpoint, this.receivePumpCancellationTokenSource.Token, this.runningTaskCancellationTokenSource.Token);
             }
 
             try
@@ -1295,6 +1355,8 @@ namespace Microsoft.Azure.ServiceBus.Core
                     {
                         this.receivePumpCancellationTokenSource.Cancel();
                         this.receivePumpCancellationTokenSource.Dispose();
+                        this.runningTaskCancellationTokenSource.Cancel();
+                        this.runningTaskCancellationTokenSource.Dispose();
                         this.receivePump = null;
                     }
                 }
@@ -1426,7 +1488,7 @@ namespace Microsoft.Azure.ServiceBus.Core
 
                     throw new MessageLockLostException(Resources.MessageLockLost);
                 }
-
+                
                 throw AmqpExceptionHelper.GetClientException(exception);
             }
         }
@@ -1560,7 +1622,7 @@ namespace Microsoft.Azure.ServiceBus.Core
             amqpLinkSettings.AddProperty(AmqpClientConstants.EntityTypeName, AmqpClientConstants.EntityTypeManagement);
 
             var endpointUri = new Uri(this.ServiceBusConnection.Endpoint, entityPath);
-            string[] claims = { ClaimConstants.Manage, ClaimConstants.Listen };
+            string[] claims = { ClaimConstants.Listen };
             var amqpRequestResponseLinkCreator = new AmqpRequestResponseLinkCreator(
                 entityPath,
                 this.ServiceBusConnection,

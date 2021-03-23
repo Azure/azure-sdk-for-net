@@ -6,9 +6,8 @@
 #nullable disable
 
 using System;
-using Azure.AI.FormRecognizer;
 
-namespace Azure.AI.FormRecognizer.Training
+namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Status and result of the queued copy operation. </summary>
     internal partial class CopyOperationResult

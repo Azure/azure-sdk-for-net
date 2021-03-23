@@ -26,7 +26,10 @@ namespace Azure.Core.TestFramework
             }
 
             var type = result.GetType();
-            if (type.Name.EndsWith("Client"))
+            // We don't want to instrument generated rest clients.
+            if ((type.Name.EndsWith("Client") && !type.Name.EndsWith("RestClient")) ||
+                // Generated ARM clients will have a property containing the sub-client that ends with Operations.
+                (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")))
             {
                 invocation.ReturnValue = _testBase.InstrumentClient(type, result, Array.Empty<IInterceptor>());
             }

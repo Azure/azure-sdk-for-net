@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> Server response for get tenant service principals API call. </summary>
-    public partial class ServicePrincipalListResult
+    internal partial class ServicePrincipalListResult
     {
         /// <summary> Initializes a new instance of ServicePrincipalListResult. </summary>
         internal ServicePrincipalListResult()
         {
+            Value = new ChangeTrackingList<ServicePrincipal>();
         }
 
         /// <summary> Initializes a new instance of ServicePrincipalListResult. </summary>

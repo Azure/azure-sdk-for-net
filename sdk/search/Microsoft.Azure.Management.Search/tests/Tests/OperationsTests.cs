@@ -63,12 +63,12 @@ namespace Microsoft.Azure.Management.Search.Tests
                             operation: "Regenerate Admin Key",
                             description: "Regenerates the admin key.")),
                     new Operation(
-                        name: "Microsoft.Search/searchServices/queryKey/read",
+                        name: "Microsoft.Search/searchServices/listQueryKeys/action",
                         display: new OperationDisplay(
                             provider: "Microsoft Search",
                             resource: "API Keys",
-                            operation: "Get Query Key",
-                            description: "Reads the query keys.")),
+                            operation: "Get Query Keys",
+                            description: "Returns the list of query API keys for the given Azure Search service.")),
                     new Operation(
                         name: "Microsoft.Search/searchServices/createQueryKey/action",
                         display: new OperationDisplay(
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                             operation: "Create Query Key",
                             description: "Creates the query key.")),
                     new Operation(
-                        name: "Microsoft.Search/searchServices/queryKey/delete",
+                        name: "Microsoft.Search/searchServices/deleteQueryKey/delete",
                         display: new OperationDisplay(
                             provider: "Microsoft Search",
                             resource: "API Keys",
@@ -89,7 +89,63 @@ namespace Microsoft.Azure.Management.Search.Tests
                             provider: "Microsoft Search",
                             resource: "Service Name Availability",
                             operation: "Check Service Name Availability",
-                            description: "Checks availability of the service name."))
+                            description: "Checks availability of the service name.")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/privateEndpointConnectionProxies/validate/action",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Private Endpoint Connection Proxy",
+                            operation: "Validate Private Endpoint Connection Proxy",
+                            description: "Validates a private endpoint connection create call from NRP side")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/privateEndpointConnectionProxies/write",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Private Endpoint Connection Proxy",
+                            operation: "Create Private Endpoint Connection Proxy",
+                            description: "Creates a private endpoint connection proxy with the specified parameters or updates the properties or tags for the specified private endpoint connection proxy")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/privateEndpointConnectionProxies/read",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Private Endpoint Connection Proxy",
+                            operation: "Get Private Endpoint Connection Proxy",
+                            description: "Returns the list of private endpoint connection proxies or gets the properties for the specified private endpoint connection proxy")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/privateEndpointConnectionProxies/delete",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Private Endpoint Connection Proxy",
+                            operation: "Delete Private Endpoint Connection Proxy",
+                            description: "Deletes an existing private endpoint connection proxy")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/sharedPrivateLinkResources/write",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Shared Private Link Resource",
+                            operation: "Create Shared Private Link Resource",
+                            description: "Creates a new shared private link resource with the specified parameters or updates the properties for the specified shared private link resource")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/sharedPrivateLinkResources/read",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Shared Private Link Resource",
+                            operation: "Get Shared Private Link Resource",
+                            description: "Returns the list of shared private link resources or gets the properties for the specified shared private link resource")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/sharedPrivateLinkResources/delete",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Shared Private Link Resource",
+                            operation: "Delete Shared Private Link Resource",
+                            description: "Deletes an existing shared private link resource")),
+                    new Operation(
+                        name: "Microsoft.Search/searchServices/sharedPrivateLinkResources/operationStatuses/read",
+                        display: new OperationDisplay(
+                            provider: "Microsoft Search",
+                            resource: "Shared Private Link Resource",
+                            operation: "Get Operation Status",
+                            description: "Get the details of a long running shared private link resource operation"))
                 };
 
                 Operation[] actualOperations = searchMgmt.Operations.List().ToArray();

@@ -414,7 +414,7 @@ namespace Microsoft.Azure.Management.EventGrid
             ExtensionTopics = new ExtensionTopicsOperations(this);
             TopicTypes = new TopicTypesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-04-01-preview";
+            ApiVersion = "2020-10-15-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -452,6 +452,8 @@ namespace Microsoft.Azure.Management.EventGrid
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<EventSubscriptionDestination>("endpointType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeadLetterDestination>("endpointType"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeadLetterDestination>("endpointType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeliveryAttributeMapping>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeliveryAttributeMapping>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

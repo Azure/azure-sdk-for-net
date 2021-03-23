@@ -23,12 +23,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (IgnoreCase != null)
+            if (Optional.IsDefined(IgnoreCase))
             {
                 writer.WritePropertyName("ignoreCase");
                 writer.WriteBooleanValue(IgnoreCase.Value);
             }
-            if (Expand != null)
+            if (Optional.IsDefined(Expand))
             {
                 writer.WritePropertyName("expand");
                 writer.WriteBooleanValue(Expand.Value);
@@ -43,8 +43,8 @@ namespace Azure.Search.Documents.Indexes.Models
         internal static SynonymTokenFilter DeserializeSynonymTokenFilter(JsonElement element)
         {
             IList<string> synonyms = default;
-            bool? ignoreCase = default;
-            bool? expand = default;
+            Optional<bool> ignoreCase = default;
+            Optional<bool> expand = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -54,14 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     synonyms = array;
                     continue;
@@ -70,6 +63,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ignoreCase = property.Value.GetBoolean();
@@ -79,6 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expand = property.Value.GetBoolean();
@@ -95,7 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SynonymTokenFilter(odataType, name, synonyms, ignoreCase, expand);
+            return new SynonymTokenFilter(odataType, name, synonyms, Optional.ToNullable(ignoreCase), Optional.ToNullable(expand));
         }
     }
 }

@@ -46,6 +46,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// region of a resource cannot be changed once it is created, but if
         /// an identical geo region is specified on update, the request will
         /// succeed.</param>
+        /// <param name="extendedLocation">Optional. Set the extended location
+        /// of the resource. If not set, the storage account will be created in
+        /// Azure main region. Otherwise it will be created in the specified
+        /// extended location</param>
         /// <param name="tags">Gets or sets a list of key value pairs that
         /// describe the resource. These tags can be used for viewing and
         /// grouping this resource (across resource groups). A maximum of 15
@@ -76,11 +80,27 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// values include: 'Disabled', 'Enabled'</param>
         /// <param name="routingPreference">Maintains information about the
         /// network routing choice opted by the user for data transfer</param>
-        public StorageAccountCreateParameters(Sku sku, string kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference))
+        /// <param name="allowBlobPublicAccess">Allow or disallow public access
+        /// to all blobs or containers in the storage account. The default
+        /// interpretation is true for this property.</param>
+        /// <param name="minimumTlsVersion">Set the minimum TLS version to be
+        /// permitted on requests to storage. The default interpretation is TLS
+        /// 1.0 for this property. Possible values include: 'TLS1_0', 'TLS1_1',
+        /// 'TLS1_2'</param>
+        /// <param name="allowSharedKeyAccess">Indicates whether the storage
+        /// account permits requests to be authorized with the account access
+        /// key via Shared Key. If false, then all requests, including shared
+        /// access signatures, must be authorized with Azure Active Directory
+        /// (Azure AD). The default value is null, which is equivalent to
+        /// true.</param>
+        /// <param name="enableNfsV3">NFS 3.0 protocol support enabled if set
+        /// to true.</param>
+        public StorageAccountCreateParameters(Sku sku, string kind, string location, ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?))
         {
             Sku = sku;
             Kind = kind;
             Location = location;
+            ExtendedLocation = extendedLocation;
             Tags = tags;
             Identity = identity;
             CustomDomain = customDomain;
@@ -92,6 +112,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             IsHnsEnabled = isHnsEnabled;
             LargeFileSharesState = largeFileSharesState;
             RoutingPreference = routingPreference;
+            AllowBlobPublicAccess = allowBlobPublicAccess;
+            MinimumTlsVersion = minimumTlsVersion;
+            AllowSharedKeyAccess = allowSharedKeyAccess;
+            EnableNfsV3 = enableNfsV3;
             CustomInit();
         }
 
@@ -123,6 +147,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional. Set the extended location of the resource.
+        /// If not set, the storage account will be created in Azure main
+        /// region. Otherwise it will be created in the specified extended
+        /// location
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Gets or sets a list of key value pairs that describe the resource.
@@ -207,6 +240,38 @@ namespace Microsoft.Azure.Management.Storage.Models
         public RoutingPreference RoutingPreference { get; set; }
 
         /// <summary>
+        /// Gets or sets allow or disallow public access to all blobs or
+        /// containers in the storage account. The default interpretation is
+        /// true for this property.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowBlobPublicAccess")]
+        public bool? AllowBlobPublicAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets set the minimum TLS version to be permitted on
+        /// requests to storage. The default interpretation is TLS 1.0 for this
+        /// property. Possible values include: 'TLS1_0', 'TLS1_1', 'TLS1_2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
+        public string MinimumTlsVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the storage account permits requests
+        /// to be authorized with the account access key via Shared Key. If
+        /// false, then all requests, including shared access signatures, must
+        /// be authorized with Azure Active Directory (Azure AD). The default
+        /// value is null, which is equivalent to true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowSharedKeyAccess")]
+        public bool? AllowSharedKeyAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets NFS 3.0 protocol support enabled if set to true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isNfsV3Enabled")]
+        public bool? EnableNfsV3 { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -229,6 +294,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
             if (CustomDomain != null)
             {

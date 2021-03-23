@@ -40,9 +40,8 @@ namespace Azure.Search.Documents.Indexes.Models
         {
         }
 
-        private SearchSuggester()
-        {
-        }
+        /// <summary> The list of field names to which the suggester applies. Each field must be searchable. </summary>
+        public IList<string> SourceFields { get; }
 
         [CodeGenMember("searchMode")]
         private string SearchMode { get; } = AnalyzingInfixMatching;

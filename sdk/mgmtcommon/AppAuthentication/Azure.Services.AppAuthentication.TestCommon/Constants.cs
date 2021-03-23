@@ -28,7 +28,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string NotInProperFormatError = "not in a proper format. Expected format is Key1=Value1;Key2=Value2;";
         public static readonly string NoMethodWorkedToGetTokenError = "methods to get an access token, but none of them worked";
         public static readonly string ProgramNotFoundError = "No such file";
-        public static readonly string FailedToGetTokenError = "Access token could not be acquired";
         public static readonly string MustUseHttpsError = "must use https";
         public static readonly string CannotBeNullError = "Value cannot be null";
         public static readonly string NoConnectionString = "[No connection string specified]";
@@ -71,6 +70,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string CertificateConnStringThumbprintCurrentUser = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=CurrentUser";
         public static readonly string CertificateConnStringSubjectNameCurrentUser = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateSubjectName=123;CertificateStoreLocation=CurrentUser";
         public static readonly string CertificateConnStringKeyVaultCertificateSecretIdentifier = $"RunAs=App;AppId={TestAppId};KeyVaultCertificateSecretIdentifier=SecretIdentifier";
+        public static readonly string CertificateConnStringKeyVaultCertificateSecretIdentifierUserAssignedMsi = $"RunAs=App;AppId={TestAppId};KeyVaultCertificateSecretIdentifier=SecretIdentifier;KeyVaultAppId={TestUserAssignedManagedIdentityId}";
         public static readonly string CertificateConnStringKeyVaultCertificateSecretIdentifierWithOptionalTenantId = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};KeyVaultCertificateSecretIdentifier=SecretIdentifier";
         public static readonly string ClientSecretConnString = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};AppKey={ClientSecret}";
         public static readonly string ConnectionStringEnvironmentVariableName = "AzureServicesAuthConnectionString";
@@ -92,6 +92,11 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string MsiAppServiceHeaderEnv = "IDENTITY_HEADER";
         public static readonly string MsiEndpoint = "http://localhost:3748/oauth2/token";
 
+        public static readonly string MsiServiceFabricEndpointEnv = MsiAppServiceEndpointEnv;
+        public static readonly string MsiServiceFabricHeaderEnv = MsiAppServiceHeaderEnv;
+        public static readonly string MsiServiceFabricThumbprintEnv = "IDENTITY_SERVER_THUMBPRINT";
+        public static readonly string MsiServiceFabricApiVersionEnv = "IDENTITY_API_VERSION";
+
         // Unit test certificate
         //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="Certificate is used for tests only")] 
         public static readonly string TestCert = "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";
@@ -109,10 +114,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string ServiceConfigFileArgument = "C:\\Program Files (x86)\\Microsoft Visual Studio\\Preview\\Enterprise\\Common7\\servicehub.config.json";
         public static readonly string ServiceConfigFileArgumentName = "--serviceConfigFile";
         public static readonly string LocalAppDataEnv = "LOCALAPPDATA";
-        public static readonly string TokenProviderFileNotFound = "Visual Studio Token provider file not found at ";
-        public static readonly string TokenProviderExceptionMessage = "Exception for Visual Studio token provider";
         public static readonly string PreferenceNotFound = "'Preference' was not found";
-        public static readonly string TokenProviderFileFormatExceptionMessage = "VisualStudio Token Provider File is not in the expected format.";
 
         // Test files path
         public static readonly string TestFilesPath = "TestFiles";

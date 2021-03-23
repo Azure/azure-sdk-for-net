@@ -36,14 +36,19 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="paths">List of paths using which data within the
         /// container can be partitioned</param>
         /// <param name="kind">Indicates the kind of algorithm used for
-        /// partitioning. Possible values include: 'Hash', 'Range'</param>
+        /// partitioning. For MultiHash, multiple partition keys (upto three
+        /// maximum) are supported for container create. Possible values
+        /// include: 'Hash', 'Range', 'MultiHash'</param>
         /// <param name="version">Indicates the version of the partition key
         /// definition</param>
-        public ContainerPartitionKey(IList<string> paths = default(IList<string>), string kind = default(string), int? version = default(int?))
+        /// <param name="systemKey">Indicates if the container is using a
+        /// system generated partition key</param>
+        public ContainerPartitionKey(IList<string> paths = default(IList<string>), string kind = default(string), int? version = default(int?), bool? systemKey = default(bool?))
         {
             Paths = paths;
             Kind = kind;
             Version = version;
+            SystemKey = systemKey;
             CustomInit();
         }
 
@@ -61,7 +66,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 
         /// <summary>
         /// Gets or sets indicates the kind of algorithm used for partitioning.
-        /// Possible values include: 'Hash', 'Range'
+        /// For MultiHash, multiple partition keys (upto three maximum) are
+        /// supported for container create. Possible values include: 'Hash',
+        /// 'Range', 'MultiHash'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
@@ -71,6 +78,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public int? Version { get; set; }
+
+        /// <summary>
+        /// Gets indicates if the container is using a system generated
+        /// partition key
+        /// </summary>
+        [JsonProperty(PropertyName = "systemKey")]
+        public bool? SystemKey { get; private set; }
 
         /// <summary>
         /// Validate the object.

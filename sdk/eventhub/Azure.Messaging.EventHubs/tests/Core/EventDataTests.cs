@@ -32,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var streamData = bodyStream.ToArray();
             Assert.That(streamData, Is.Not.Null, "There should have been data in the stream.");
-            Assert.That(streamData, Is.EqualTo(eventData.Body.ToArray()), "The body data and the data read from the stream should agree.");
+            Assert.That(streamData, Is.EqualTo(eventData.EventBody.ToArray()), "The body data and the data read from the stream should agree.");
         }
 
         /// <summary>
@@ -55,6 +55,29 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="EventData.CommitPublishingState "/>
+        ///   property.
+        /// </summary>
+        ///
+        [Test]
+        public void CommitPublishingSequenceNumberTransitionsState()
+        {
+            var expectedSequence = 8675309;
+
+            var eventData = new EventData(Array.Empty<byte>())
+            {
+                PendingPublishSequenceNumber = expectedSequence
+            };
+
+            Assert.That(eventData.PendingPublishSequenceNumber, Is.EqualTo(expectedSequence), "The pending sequence number should have been set.");
+
+            eventData.CommitPublishingState();
+
+            Assert.That(eventData.PublishedSequenceNumber, Is.EqualTo(expectedSequence), "The published sequence number should have been set.");
+            Assert.That(eventData.PendingPublishSequenceNumber, Is.EqualTo(default(int?)), "The pending sequence number should have been cleared.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="EventData.Clone" />
         ///   method.
         /// </summary>
@@ -64,8 +87,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sourceEvent = new EventData(
                 new byte[] { 0x21, 0x22 },
-                new Dictionary<string, object> { {"Test", 123 } },
-                new Dictionary<string, object> { { "System", "Hello" }},
+                new Dictionary<string, object> { { "Test", 123 } },
+                new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
                 666777,
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
@@ -73,7 +96,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 111222,
                 999888,
                 DateTimeOffset.Parse("2012-03-04T09:00:00Z"),
-                DateTimeOffset.Parse("2003-09-27T15:00:00Z"));
+                DateTimeOffset.Parse("2003-09-27T15:00:00Z"),
+                787878,
+                987654);
 
             var clone = sourceEvent.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");
@@ -92,8 +117,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sourceEvent = new EventData(
                 new byte[] { 0x21, 0x22 },
-                new Dictionary<string, object> { {"Test", 123 } },
-                new Dictionary<string, object> { { "System", "Hello" }},
+                new Dictionary<string, object> { { "Test", 123 } },
+                new Dictionary<string, object> { { "System", "Hello" } },
                 33334444,
                 666777,
                 DateTimeOffset.Parse("2015-10-27T00:00:00Z"),
@@ -101,7 +126,9 @@ namespace Azure.Messaging.EventHubs.Tests
                 111222,
                 999888,
                 DateTimeOffset.Parse("2012-03-04T09:00:00Z"),
-                DateTimeOffset.Parse("2003-09-27T15:00:00Z"));
+                DateTimeOffset.Parse("2003-09-27T15:00:00Z"),
+                787878,
+                987654);
 
             var clone = sourceEvent.Clone();
             Assert.That(clone, Is.Not.Null, "The clone should not be null.");

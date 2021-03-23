@@ -3,14 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents
+namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
     /// Azure Cognitive Search client that can be used to manage indexes on a Search service.
@@ -20,8 +22,9 @@ namespace Azure.Search.Documents
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SearchClientOptions.ServiceVersion _version;
+        private readonly ObjectSerializer _serializer;
 
-        private ServiceRestClient _serviceClient;
+        private SearchServiceRestClient _serviceClient;
         private IndexesRestClient _indexesClient;
         private SynonymMapsRestClient _synonymMapsClient;
         private string _serviceName;
@@ -38,7 +41,7 @@ namespace Azure.Search.Documents
         /// <param name="credential">
         /// Required. The API key credential used to authenticate requests against the Search service.
         /// You need to use an admin key to perform any operations on the SearchIndexClient.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Cognitive Search.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see> for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when the <paramref name="endpoint"/> is not using HTTPS.</exception>
@@ -54,7 +57,7 @@ namespace Azure.Search.Documents
         /// <param name="credential">
         /// Required. The API key credential used to authenticate requests against the Search service.
         /// You need to use an admin key to perform any operations on the SearchIndexClient.
-        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys"/> for more information about API keys in Azure Cognitive Search.
+        /// See <see href="https://docs.microsoft.com/azure/search/search-security-api-keys">Create and manage api-keys for an Azure Cognitive Search service</see> for more information about API keys in Azure Cognitive Search.
         /// </param>
         /// <param name="options">Client configuration options for connecting to Azure Cognitive Search.</param>
         /// <exception cref="ArgumentNullException">Thrown when the <paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
@@ -70,9 +73,40 @@ namespace Azure.Search.Documents
 
             options ??= new SearchClientOptions();
             Endpoint = endpoint;
+            _serializer = options.Serializer;
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = options.Build(credential);
             _version = options.Version;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchIndexClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">Required. The URI endpoint of the Search service. This is likely to be similar to "https://{search_service}.search.windows.net". The URI must use HTTPS.</param>
+        /// <param name="serializer">An optional customized serializer to use for search documents.</param>
+        /// <param name="pipeline">The authenticated <see cref="HttpPipeline"/> used for sending requests to the Search Service.</param>
+        /// <param name="diagnostics">The <see cref="Azure.Core.Pipeline.ClientDiagnostics"/> used to provide tracing support for the client library.</param>
+        /// <param name="version">The REST API version of the Search Service to use when making requests.</param>
+        internal SearchIndexClient(
+            Uri endpoint,
+            ObjectSerializer serializer,
+            HttpPipeline pipeline,
+            ClientDiagnostics diagnostics,
+            SearchClientOptions.ServiceVersion version)
+        {
+            Debug.Assert(endpoint != null);
+            Debug.Assert(string.Equals(endpoint.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase));
+            Debug.Assert(pipeline != null);
+            Debug.Assert(diagnostics != null);
+            Debug.Assert(
+                SearchClientOptions.ServiceVersion.V2020_06_30 <= version &&
+                version <= SearchClientOptions.LatestVersion);
+
+            Endpoint = endpoint;
+            _serializer = serializer;
+            _clientDiagnostics = diagnostics;
+            _pipeline = pipeline;
+            _version = version;
         }
 
         /// <summary>
@@ -88,9 +122,9 @@ namespace Azure.Search.Documents
             _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
-        /// Gets the generated <see cref="ServiceRestClient"/> to make requests.
+        /// Gets the generated <see cref="SearchServiceRestClient"/> to make requests.
         /// </summary>
-        private ServiceRestClient ServiceClient => LazyInitializer.EnsureInitialized(ref _serviceClient, () => new ServiceRestClient(
+        private SearchServiceRestClient ServiceClient => LazyInitializer.EnsureInitialized(ref _serviceClient, () => new SearchServiceRestClient(
             _clientDiagnostics,
             _pipeline,
             Endpoint.ToString(),
@@ -137,6 +171,7 @@ namespace Azure.Search.Documents
             return new SearchClient(
                 Endpoint,
                 indexName,
+                _serializer,
                 _pipeline,
                 _clientDiagnostics,
                 _version);
@@ -227,16 +262,16 @@ namespace Azure.Search.Documents
         /// Shows how an analyzer breaks text into tokens.
         /// </summary>
         /// <param name="indexName">The name of the index used to test an analyzer.</param>
-        /// <param name="analyzeRequest">The <see cref="AnalyzeRequest"/> containing the text and analyzer or analyzer components to test.</param>
+        /// <param name="options">The <see cref="AnalyzeTextOptions"/> containing the text and analyzer or analyzer components to test.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing a list of <see cref="AnalyzedTokenInfo"/> for analyzed text.
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="analyzeRequest"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<IReadOnlyList<AnalyzedTokenInfo>> AnalyzeText(
             string indexName,
-            AnalyzeRequest analyzeRequest,
+            AnalyzeTextOptions options,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(AnalyzeText)}");
@@ -245,7 +280,7 @@ namespace Azure.Search.Documents
             {
                 Response<AnalyzeResult> result = IndexesClient.Analyze(
                     indexName,
-                    analyzeRequest,
+                    options,
                     cancellationToken);
 
                 return Response.FromValue(result.Value.Tokens, result.GetRawResponse());
@@ -261,16 +296,16 @@ namespace Azure.Search.Documents
         /// Shows how an analyzer breaks text into tokens.
         /// </summary>
         /// <param name="indexName">The name of the index used to test an analyzer.</param>
-        /// <param name="analyzeRequest">The <see cref="AnalyzeRequest"/> containing the text and analyzer or analyzer components to test.</param>
+        /// <param name="options">The <see cref="AnalyzeTextOptions"/> containing the text and analyzer or analyzer components to test.</param>
         /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
         /// <returns>
         /// The <see cref="Response{T}"/> from the server containing a list of <see cref="AnalyzedTokenInfo"/> for analyzed text.
         /// </returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="analyzeRequest"/> is null.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexName"/> or <paramref name="options"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<IReadOnlyList<AnalyzedTokenInfo>>> AnalyzeTextAsync(
             string indexName,
-            AnalyzeRequest analyzeRequest,
+            AnalyzeTextOptions options,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(AnalyzeText)}");
@@ -279,7 +314,7 @@ namespace Azure.Search.Documents
             {
                 Response<AnalyzeResult> result = await IndexesClient.AnalyzeAsync(
                     indexName,
-                    analyzeRequest,
+                    options,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -379,6 +414,9 @@ namespace Azure.Search.Documents
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(index, nameof(index));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateIndex)}");
             scope.Start();
             try
@@ -424,6 +462,9 @@ namespace Azure.Search.Documents
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(index, nameof(index));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateIndex)}");
             scope.Start();
             try
@@ -492,11 +533,17 @@ namespace Azure.Search.Documents
         public virtual Response DeleteIndex(
             SearchIndex index,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => DeleteIndex(
+            CancellationToken cancellationToken = default)
+        {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(index, nameof(index));
+
+            return DeleteIndex(
                 index?.Name,
                 index?.ETag,
                 onlyIfUnchanged,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes a search index and all the documents it contains.
@@ -513,12 +560,18 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteIndexAsync(
             SearchIndex index,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => await DeleteIndexAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(index, nameof(index));
+
+            return await DeleteIndexAsync(
                 index?.Name,
                 index?.ETag,
                 onlyIfUnchanged,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private Response DeleteIndex(
             string indexName,
@@ -631,11 +684,11 @@ namespace Azure.Search.Documents
         public virtual Pageable<SearchIndex> GetIndexes(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
             {
-                return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -647,13 +700,13 @@ namespace Azure.Search.Documents
                         cancellationToken);
 
                     return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -665,11 +718,11 @@ namespace Azure.Search.Documents
         public virtual AsyncPageable<SearchIndex> GetIndexesAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexes)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -677,18 +730,18 @@ namespace Azure.Search.Documents
                     }
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
-                        Constants.All,
-                        cancellationToken)
+                            Constants.All,
+                            cancellationToken)
                         .ConfigureAwait(false);
 
                     return Page<SearchIndex>.FromValues(result.Value.Indexes, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -700,11 +753,11 @@ namespace Azure.Search.Documents
         public virtual Pageable<string> GetIndexNames(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
             {
-                return PageResponseEnumerator.CreateEnumerable((continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -717,13 +770,13 @@ namespace Azure.Search.Documents
 
                     IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
                     return Page<string>.FromValues(names, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -735,11 +788,11 @@ namespace Azure.Search.Documents
         public virtual AsyncPageable<string> GetIndexNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
-            scope.Start();
-            try
+            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
             {
-                return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(GetIndexNames)}");
+                scope.Start();
+                try
                 {
                     if (continuationToken != null)
                     {
@@ -747,19 +800,19 @@ namespace Azure.Search.Documents
                     }
 
                     Response<ListIndexesResult> result = await IndexesClient.ListAsync(
-                        Constants.NameKey,
-                        cancellationToken)
+                            Constants.NameKey,
+                            cancellationToken)
                         .ConfigureAwait(false);
 
                     IReadOnlyList<string> names = result.Value.Indexes.Select(value => value.Name).ToArray();
                     return Page<string>.FromValues(names, null, result.GetRawResponse());
-                });
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            });
         }
 
         /// <summary>
@@ -900,6 +953,9 @@ namespace Azure.Search.Documents
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateSynonymMap)}");
             scope.Start();
             try
@@ -938,6 +994,9 @@ namespace Azure.Search.Documents
             bool onlyIfUnchanged = false,
             CancellationToken cancellationToken = default)
         {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexClient)}.{nameof(CreateOrUpdateSynonymMap)}");
             scope.Start();
             try
@@ -1005,11 +1064,17 @@ namespace Azure.Search.Documents
         public virtual Response DeleteSynonymMap(
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => DeleteSynonymMap(
+            CancellationToken cancellationToken = default)
+        {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+
+            return DeleteSynonymMap(
                 synonymMap?.Name,
                 synonymMap?.ETag,
                 onlyIfUnchanged,
                 cancellationToken);
+        }
 
         /// <summary>
         /// Deletes a synonym map.
@@ -1026,12 +1091,18 @@ namespace Azure.Search.Documents
         public virtual async Task<Response> DeleteSynonymMapAsync(
             SynonymMap synonymMap,
             bool onlyIfUnchanged = false,
-            CancellationToken cancellationToken = default) => await DeleteSynonymMapAsync(
+            CancellationToken cancellationToken = default)
+        {
+            // Generated client validates indexName parameter first, which is not a parameter of this method.
+            Argument.AssertNotNull(synonymMap, nameof(synonymMap));
+
+            return await DeleteSynonymMapAsync(
                 synonymMap?.Name,
                 synonymMap?.ETag,
                 onlyIfUnchanged,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private Response DeleteSynonymMap(
             string synonymMapName,

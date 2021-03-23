@@ -31,6 +31,12 @@ namespace Azure.Messaging.EventHubs.Core
         public abstract long SizeInBytes { get; }
 
         /// <summary>
+        ///   The flags specifying the set of special transport features that have been opted-into.
+        /// </summary>
+        ///
+        public abstract TransportProducerFeatures ActiveFeatures { get; }
+
+        /// <summary>
         ///   The count of events contained in the batch.
         /// </summary>
         ///

@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 namespace Microsoft.Azure.Search.Serialization
 {
     /// <summary>
-    /// Converts between <c cref="GeographyPoint">Microsoft.Spatial.GeographyPoint</c> objects and Geo-JSON points.
+    /// Converts between <see cref="Microsoft.Spatial.GeographyPoint" /> objects and Geo-JSON points.
     /// </summary>
     internal class GeoJsonPointConverter : JsonConverter
     {

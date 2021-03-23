@@ -34,16 +34,22 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="virtualNetwork">Reference to an existing virtual
         /// network.</param>
+        /// <param name="subnet">Reference to an existing subnet.</param>
         /// <param name="ipAddress">IP Address belonging to the referenced
         /// virtual network.</param>
         /// <param name="networkInterfaceIPConfiguration">Reference to IP
         /// address defined in network interfaces.</param>
+        /// <param name="loadBalancerFrontendIPConfiguration">Reference to the
+        /// frontend ip address configuration defined in regional
+        /// loadbalancer.</param>
         /// <param name="name">Name of the backend address.</param>
-        public LoadBalancerBackendAddress(VirtualNetwork virtualNetwork = default(VirtualNetwork), string ipAddress = default(string), NetworkInterfaceIPConfiguration networkInterfaceIPConfiguration = default(NetworkInterfaceIPConfiguration), string name = default(string))
+        public LoadBalancerBackendAddress(SubResource virtualNetwork = default(SubResource), SubResource subnet = default(SubResource), string ipAddress = default(string), SubResource networkInterfaceIPConfiguration = default(SubResource), SubResource loadBalancerFrontendIPConfiguration = default(SubResource), string name = default(string))
         {
             VirtualNetwork = virtualNetwork;
+            Subnet = subnet;
             IpAddress = ipAddress;
             NetworkInterfaceIPConfiguration = networkInterfaceIPConfiguration;
+            LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
             Name = name;
             CustomInit();
         }
@@ -57,7 +63,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets reference to an existing virtual network.
         /// </summary>
         [JsonProperty(PropertyName = "properties.virtualNetwork")]
-        public VirtualNetwork VirtualNetwork { get; set; }
+        public SubResource VirtualNetwork { get; set; }
+
+        /// <summary>
+        /// Gets or sets reference to an existing subnet.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subnet")]
+        public SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets IP Address belonging to the referenced virtual
@@ -67,10 +79,17 @@ namespace Microsoft.Azure.Management.Network.Models
         public string IpAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets reference to IP address defined in network interfaces.
+        /// Gets reference to IP address defined in network interfaces.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkInterfaceIPConfiguration")]
-        public NetworkInterfaceIPConfiguration NetworkInterfaceIPConfiguration { get; set; }
+        public SubResource NetworkInterfaceIPConfiguration { get; private set; }
+
+        /// <summary>
+        /// Gets or sets reference to the frontend ip address configuration
+        /// defined in regional loadbalancer.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.loadBalancerFrontendIPConfiguration")]
+        public SubResource LoadBalancerFrontendIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets name of the backend address.
@@ -78,18 +97,5 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (VirtualNetwork != null)
-            {
-                VirtualNetwork.Validate();
-            }
-        }
     }
 }

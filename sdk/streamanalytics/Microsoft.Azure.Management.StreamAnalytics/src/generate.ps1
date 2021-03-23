@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "streamanalytics/resource-manager" -AutoRestVersion "v2"

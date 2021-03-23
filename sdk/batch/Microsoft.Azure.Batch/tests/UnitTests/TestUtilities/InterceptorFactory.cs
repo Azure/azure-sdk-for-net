@@ -114,7 +114,7 @@ namespace Azure.Batch.Unit.Tests.TestUtilities
                 });
         }
 
-        public static IEnumerable<Protocol.RequestInterceptor> CreateGetRequestInterceptor<TOptions, TResponse, TResponseHeaders>(TResponse valueToReturn, TResponseHeaders headersToReturn = default(TResponseHeaders))
+        public static IEnumerable<Protocol.RequestInterceptor> CreateGetRequestInterceptor<TOptions, TResponse, TResponseHeaders>(TResponse valueToReturn, TResponseHeaders headersToReturn = default)
             where TOptions : Protocol.Models.IOptions, new()
         {
             yield return new Protocol.RequestInterceptor(req =>

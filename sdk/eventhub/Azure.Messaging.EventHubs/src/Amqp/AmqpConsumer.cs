@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         private static readonly IReadOnlyList<EventData> EmptyEventSet = Array.Empty<EventData>();
 
         /// <summary>Indicates whether or not this instance has been closed.</summary>
-        private volatile bool _closed = false;
+        private volatile bool _closed;
 
         /// <summary>
         ///   Indicates whether or not this consumer has been closed.
@@ -121,6 +121,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="partitionId">The identifier of the Event Hub partition from which events will be received.</param>
         /// <param name="eventPosition">The position of the event in the partition where the consumer should begin reading.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
+        /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="connectionScope">The AMQP connection context for operations .</param>
@@ -143,6 +144,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                             bool trackLastEnqueuedEventProperties,
                             long? ownerLevel,
                             uint? prefetchCount,
+                            long? prefetchSizeInBytes,
                             AmqpConnectionScope connectionScope,
                             AmqpMessageConverter messageConverter,
                             EventHubsRetryPolicy retryPolicy)
@@ -170,6 +172,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         partitionId,
                         CurrentEventPosition,
                         prefetchCount ?? DefaultPrefetchCount,
+                        prefetchSizeInBytes,
                         ownerLevel,
                         trackLastEnqueuedEventProperties,
                         timeout,
@@ -185,23 +188,30 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   Receives a batch of <see cref="EventData" /> from the Event Hub partition.
         /// </summary>
         ///
-        /// <param name="maximumMessageCount">The maximum number of messages to receive in this batch.</param>
-        /// <param name="maximumWaitTime">The maximum amount of time to wait to build up the requested message count for the batch; if not specified, the per-try timeout specified by the retry policy will be used.</param>
+        /// <param name="maximumEventCount">The maximum number of messages to receive in this batch.</param>
+        /// <param name="maximumWaitTime">The maximum amount of time to wait for events to become available, if no events can be read from the prefetch queue.  If not specified, the per-try timeout specified by the retry policy will be used.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>The batch of <see cref="EventData" /> from the Event Hub partition this consumer is associated with.  If no events are present, an empty set is returned.</returns>
         ///
-        public override async Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumMessageCount,
+        /// <remarks>
+        ///   When events are available in the prefetch queue, they will be used to form the batch as quickly as possible without waiting for additional events from the
+        ///   Event Hubs service to try and meet the requested <paramref name="maximumEventCount" />.  When no events are available in prefetch, the receiver will wait up
+        ///   to the <paramref name="maximumWaitTime"/> for events to be read from the service.  Once any events are available, they will be used to form the batch immediately.
+        /// </remarks>
+        ///
+        public override async Task<IReadOnlyList<EventData>> ReceiveAsync(int maximumEventCount,
                                                                           TimeSpan? maximumWaitTime,
                                                                           CancellationToken cancellationToken)
         {
             Argument.AssertNotClosed(_closed, nameof(AmqpConsumer));
-            Argument.AssertAtLeast(maximumMessageCount, 1, nameof(maximumMessageCount));
+            Argument.AssertAtLeast(maximumEventCount, 1, nameof(maximumEventCount));
 
             var receivedEventCount = 0;
             var failedAttemptCount = 0;
             var tryTimeout = RetryPolicy.CalculateTryTimeout(0);
             var waitTime = (maximumWaitTime ?? tryTimeout);
+            var operationId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
             var link = default(ReceivingAmqpLink);
             var retryDelay = default(TimeSpan?);
             var amqpMessages = default(IEnumerable<AmqpMessage>);
@@ -220,7 +230,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         // used for this operation; validate the token state before attempting link creation and
                         // again after the operation completes to provide best efforts in respecting it.
 
-                        EventHubsEventSource.Log.EventReceiveStart(EventHubName, ConsumerGroup, PartitionId);
+                        EventHubsEventSource.Log.EventReceiveStart(EventHubName, ConsumerGroup, PartitionId, operationId);
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout)).ConfigureAwait(false);
@@ -228,7 +238,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         var messagesReceived = await Task.Factory.FromAsync
                         (
-                            (callback, state) => link.BeginReceiveMessages(maximumMessageCount, waitTime, callback, state),
+                            (callback, state) => link.BeginReceiveMessages(maximumEventCount, waitTime, callback, state),
                             (asyncResult) => link.EndReceiveMessages(asyncResult, out amqpMessages),
                             TaskCreationOptions.RunContinuationsAsynchronously
                         ).ConfigureAwait(false);
@@ -291,9 +301,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                         ++failedAttemptCount;
                         retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
-                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
+                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!_closed) && (!cancellationToken.IsCancellationRequested))
                         {
-                            EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, activeEx.Message);
+                            EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, operationId, activeEx.Message);
                             await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
@@ -320,12 +330,12 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch (Exception ex)
             {
-                EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, ex.Message);
+                EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, operationId, ex.Message);
                 throw;
             }
             finally
             {
-                EventHubsEventSource.Log.EventReceiveComplete(EventHubName, ConsumerGroup, PartitionId, receivedEventCount);
+                EventHubsEventSource.Log.EventReceiveComplete(EventHubName, ConsumerGroup, PartitionId, operationId, failedAttemptCount, receivedEventCount);
             }
         }
 
@@ -381,6 +391,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <param name="partitionId">The identifier of the Event Hub partition to which the link is bound.</param>
         /// <param name="eventStartingPosition">The place within the partition's event stream to begin consuming events.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.</param>
+        /// <param name="prefetchSizeInBytes">The cache size of the prefetch queue. When set, the link makes a best effort to ensure prefetched messages fit into the specified size.</param>
         /// <param name="ownerLevel">The relative priority to associate with the link; for a non-exclusive link, this value should be <c>null</c>.</param>
         /// <param name="trackLastEnqueuedEventProperties">Indicates whether information on the last enqueued event on the partition is sent as events are received.</param>
         /// <param name="timeout">The timeout to apply when creating the link.</param>
@@ -392,6 +403,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                                                                       string partitionId,
                                                                       EventPosition eventStartingPosition,
                                                                       uint prefetchCount,
+                                                                      long? prefetchSizeInBytes,
                                                                       long? ownerLevel,
                                                                       bool trackLastEnqueuedEventProperties,
                                                                       TimeSpan timeout,
@@ -407,6 +419,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     eventStartingPosition,
                     timeout,
                     prefetchCount,
+                    prefetchSizeInBytes,
                     ownerLevel,
                     trackLastEnqueuedEventProperties,
                     cancellationToken).ConfigureAwait(false);

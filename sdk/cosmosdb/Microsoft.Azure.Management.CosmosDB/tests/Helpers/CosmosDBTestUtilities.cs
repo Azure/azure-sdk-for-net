@@ -9,7 +9,7 @@ namespace CosmosDB.Tests
     public class CosmosDBTestUtilities
     {
         // Location to run tests.
-        public static string LOCATION = "eastus";
+        public static string LOCATION = "eastus2";
 
         public static CosmosDBManagementClient GetCosmosDBClient(MockContext context, RecordedDelegatingHandler handler)
         {

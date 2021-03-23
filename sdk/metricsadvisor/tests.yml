@@ -1,0 +1,20 @@
+trigger: none
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: metricsadvisor
+    EnvVars:
+      METRICSADVISOR_ACCOUNT_NAME: "js-metrics-advisor"
+      METRICSADVISOR_SUBSCRIPTION_KEY: $(metricsadvisor-test-subscription-key)
+      METRICSADVISOR_PRIMARY_API_KEY: $(net-metricsadvisor-test-api-key)
+      METRICSADVISOR_DATA_FEED_ID: "9860df01-e740-40ec-94a2-6351813552ba"
+      METRICSADVISOR_METRIC_ID: "27e3015f-04fd-44ba-a20b-bc529a0aebae"
+      METRICSADVISOR_DETECTION_CONFIGURATION_ID: "fb5a6ed6-2b9e-4b72-8b0c-0046ead1c15c"
+      METRICSADVISOR_ALERT_CONFIGURATION_ID: "204a211a-c5f4-45f3-a30e-512fb25d1d2c"
+      METRICSADVISOR_HOOK_ID: "e3499688-99c9-4a6c-bbcb-6866fcd593a5"
+      METRICSADVISOR_ALERT_ID: "17548749000"
+      METRICSADVISOR_INCIDENT_ID: "2c8a72ba0e8eb41643cc0e5cff368412-17548749000"
+      METRICSADVISOR_FEEDBACK_ID: "50a63795-d631-43ae-9a05-d744df4b986d"
+      METRICSADVISOR_SQL_SERVER_CONNECTION_STRING: $(metricsadvisor-test-sql-server-connection-string)
+      METRICSADVISOR_SQL_SERVER_QUERY: "select * from adsample2 where Timestamp = @StartTime and City = 'Mexico City' and Category = 'Shoes Handbags & Sunglasses'"

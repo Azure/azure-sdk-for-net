@@ -77,6 +77,11 @@ namespace Microsoft.Azure.Management.Peering
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the ICdnPeeringPrefixesOperations.
+        /// </summary>
+        public virtual ICdnPeeringPrefixesOperations CdnPeeringPrefixes { get; private set; }
+
+        /// <summary>
         /// Gets the ILegacyPeeringsOperations.
         /// </summary>
         public virtual ILegacyPeeringsOperations LegacyPeerings { get; private set; }
@@ -382,6 +387,7 @@ namespace Microsoft.Azure.Management.Peering
         /// </summary>
         private void Initialize()
         {
+            CdnPeeringPrefixes = new CdnPeeringPrefixesOperations(this);
             LegacyPeerings = new LegacyPeeringsOperations(this);
             Operations = new Operations(this);
             PeerAsns = new PeerAsnsOperations(this);
@@ -396,7 +402,7 @@ namespace Microsoft.Azure.Management.Peering
             PeeringServiceProviders = new PeeringServiceProvidersOperations(this);
             PeeringServices = new PeeringServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2020-04-01";
+            ApiVersion = "2020-10-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

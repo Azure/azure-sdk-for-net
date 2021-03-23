@@ -11,46 +11,36 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class ServicePrincipalListResult
+    internal partial class ServicePrincipalListResult
     {
         internal static ServicePrincipalListResult DeserializeServicePrincipalListResult(JsonElement element)
         {
-            IReadOnlyList<ServicePrincipal> value = default;
-            string odataNextLink = default;
+            Optional<IReadOnlyList<ServicePrincipal>> value = default;
+            Optional<string> odataNextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServicePrincipal> array = new List<ServicePrincipal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ServicePrincipal.DeserializeServicePrincipal(item));
-                        }
+                        array.Add(ServicePrincipal.DeserializeServicePrincipal(item));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("odata.nextLink"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataNextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ServicePrincipalListResult(value, odataNextLink);
+            return new ServicePrincipalListResult(Optional.ToList(value), odataNextLink.Value);
         }
     }
 }

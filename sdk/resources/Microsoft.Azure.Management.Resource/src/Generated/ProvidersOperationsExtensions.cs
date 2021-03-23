@@ -56,6 +56,43 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Registers a management group with a resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider to register.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            public static void RegisterAtManagementGroupScope(this IProvidersOperations operations, string resourceProviderNamespace, string groupId)
+            {
+                operations.RegisterAtManagementGroupScopeAsync(resourceProviderNamespace, groupId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Registers a management group with a resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// The namespace of the resource provider to register.
+            /// </param>
+            /// <param name='groupId'>
+            /// The management group ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RegisterAtManagementGroupScopeAsync(this IProvidersOperations operations, string resourceProviderNamespace, string groupId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RegisterAtManagementGroupScopeWithHttpMessagesAsync(resourceProviderNamespace, groupId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Registers a subscription with a resource provider.
             /// </summary>
             /// <param name='operations'>

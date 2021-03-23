@@ -98,10 +98,10 @@ namespace KeyVault.Management.Tests
                 ObjectId = objectIdGuid,
                 Permissions = new Permissions
                 {
-                    Keys = new string[] { "all" },
-                    Secrets = new string[] { "all" },
-                    Certificates = new string[] { "all" },
-                    Storage = new string[] { "all" },
+                    Keys = new string[] { KeyPermissions.All },
+                    Secrets = new string[] { SecretPermissions.All },
+                    Certificates = new string[] { CertificatePermissions.All },
+                    Storage = new string[] { StoragePermissions.All },
                 }
             };
 

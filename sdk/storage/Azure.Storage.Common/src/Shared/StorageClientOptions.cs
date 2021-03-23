@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -41,6 +40,24 @@ namespace Azure.Storage
         public static HttpPipelinePolicy AsPolicy(this StorageSharedKeyCredential credential) =>
             new StorageSharedKeyPipelinePolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)));
+
+        /// <summary>
+        /// Get an authentication policy to sign Storage requests.
+        /// </summary>
+        /// <param name="credential">Credential to use.</param>
+        /// <param name="resourceUri">Resource Uri. Must not contain shared access signature.</param>
+        /// <returns>An authentication policy.</returns>
+        public static HttpPipelinePolicy AsPolicy<TUriBuilder>(this AzureSasCredential credential, Uri resourceUri)
+        {
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNull(credential, nameof(credential));
+            var queryParameters = resourceUri.GetQueryParameters();
+            if (queryParameters.ContainsKey("sig"))
+            {
+                throw Errors.SasCredentialRequiresUriWithoutSas<TUriBuilder>(resourceUri);
+            }
+            return new AzureSasCredentialSynchronousPolicy(credential);
+        }
 
         /// <summary>
         /// Get an authentication policy to sign Storage requests.

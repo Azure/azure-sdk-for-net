@@ -1,5 +1,12 @@
 # Release History
 
+## 3.2.0-preview.5 (Unreleased)
+
+## 3.2.0-preview.4 (2021-02-25)
+### Fixed
+- ExampleId attribute in label APIs could not hold int values
+- ArmTokenParameter parameter name had a typo
+
 ## 3.2.0-preview.3 (Unreleased)
 ### Added
 - Enable nesting of children in luis models
@@ -16,3 +23,5 @@
 - Issue where AzureAccount Api are not able to be authenticated ([#8023](https://github.com/Azure/azure-sdk-for-net/issues/8023))
 
 ## 3.2.0-preview.1 (2019-10-30)
+
+

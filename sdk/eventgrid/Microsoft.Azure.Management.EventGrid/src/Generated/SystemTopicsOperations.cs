@@ -314,8 +314,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='systemTopicName'>
         /// Name of the system topic.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the system topic.
+        /// <param name='systemTopicUpdateParameters'>
+        /// SystemTopic update information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -323,10 +323,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SystemTopic>> UpdateWithHttpMessagesAsync(string resourceGroupName, string systemTopicName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SystemTopic>> UpdateWithHttpMessagesAsync(string resourceGroupName, string systemTopicName, SystemTopicUpdateParameters systemTopicUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<SystemTopic> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, systemTopicName, tags, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<SystemTopic> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, systemTopicName, systemTopicUpdateParameters, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1113,7 +1113,7 @@ namespace Microsoft.Azure.Management.EventGrid
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1174,8 +1174,8 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='systemTopicName'>
         /// Name of the system topic.
         /// </param>
-        /// <param name='tags'>
-        /// Tags of the system topic.
+        /// <param name='systemTopicUpdateParameters'>
+        /// SystemTopic update information.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1198,7 +1198,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SystemTopic>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string systemTopicName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SystemTopic>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string systemTopicName, SystemTopicUpdateParameters systemTopicUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1212,14 +1212,13 @@ namespace Microsoft.Azure.Management.EventGrid
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "systemTopicName");
             }
+            if (systemTopicUpdateParameters == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "systemTopicUpdateParameters");
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            SystemTopicUpdateParameters systemTopicUpdateParameters = new SystemTopicUpdateParameters();
-            if (tags != null)
-            {
-                systemTopicUpdateParameters.Tags = tags;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

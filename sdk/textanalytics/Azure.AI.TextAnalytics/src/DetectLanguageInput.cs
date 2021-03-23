@@ -7,13 +7,13 @@ namespace Azure.AI.TextAnalytics
     /// An input to the detect language operation.  This object allows the
     /// caller to specify a unique document id, as well as the full text of a
     /// document and a hint indicating the document's country of origin to assist
-    /// the text analytics predictive model in detecting the document's language.
+    /// the Text Analytics predictive model in detecting the document's language.
     /// </summary>
     public class DetectLanguageInput : TextAnalyticsInput
     {
         /// <summary>
-        /// A wildcard that allows to set CountryHint to None
-        /// so the servide model doesn't use any default CountryHint.
+        /// A wild card that allows to set CountryHint to None
+        /// so the service model doesn't use any default CountryHint.
         /// </summary>
         public const string None = "";
 
@@ -28,7 +28,7 @@ namespace Azure.AI.TextAnalytics
         public DetectLanguageInput(string id, string text) : base(id, text) { }
 
         /// <summary>
-        /// Gets or sets a hint to assist the text analytics model in predicting
+        /// Gets or sets a hint to assist the Text Analytics model in predicting
         /// the language the document is written in.  If unspecified, this value
         /// will be set to the default country hint in <see cref="TextAnalyticsClientOptions"/>
         /// in the request sent to the service.

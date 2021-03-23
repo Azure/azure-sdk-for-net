@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -16,6 +17,7 @@ namespace Azure.Graph.Rbac.Models
     {
         /// <summary> Initializes a new instance of GroupAddMemberParameters. </summary>
         /// <param name="url"> A member object URL, such as &quot;https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd&quot;, where &quot;0b1f9851-1bf0-433f-aec3-cb9272f093dc&quot; is the tenantId and &quot;f260bbc4-c254-447b-94cf-293b5ec434dd&quot; is the objectId of the member (user, application, servicePrincipal, group) to be added. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public GroupAddMemberParameters(string url)
         {
             if (url == null)
@@ -24,16 +26,7 @@ namespace Azure.Graph.Rbac.Models
             }
 
             Url = url;
-            AdditionalProperties = new Dictionary<string, object>();
-        }
-
-        /// <summary> Initializes a new instance of GroupAddMemberParameters. </summary>
-        /// <param name="url"> A member object URL, such as &quot;https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd&quot;, where &quot;0b1f9851-1bf0-433f-aec3-cb9272f093dc&quot; is the tenantId and &quot;f260bbc4-c254-447b-94cf-293b5ec434dd&quot; is the objectId of the member (user, application, servicePrincipal, group) to be added. </param>
-        /// <param name="additionalProperties"> . </param>
-        internal GroupAddMemberParameters(string url, IDictionary<string, object> additionalProperties)
-        {
-            Url = url;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> A member object URL, such as &quot;https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd&quot;, where &quot;0b1f9851-1bf0-433f-aec3-cb9272f093dc&quot; is the tenantId and &quot;f260bbc4-c254-447b-94cf-293b5ec434dd&quot; is the objectId of the member (user, application, servicePrincipal, group) to be added. </summary>
@@ -51,23 +44,23 @@ namespace Azure.Graph.Rbac.Models
         public ICollection<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public ICollection<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Count"/>
         int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public void Add(string key, object value) => AdditionalProperties.Add(key, value);
         /// <inheritdoc />
         public bool Remove(string key) => AdditionalProperties.Remove(key);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.IsReadOnly"/>
         bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Add"/>
         void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Remove"/>
         bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Contains"/>
         bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.CopyTo"/>
         void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
-        /// <inheritdoc />
+        /// <inheritdoc cref="ICollection{T}.Clear"/>
         void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
         /// <inheritdoc />
         public object this[string key]

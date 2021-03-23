@@ -33,10 +33,6 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// Initializes a new instance of the SignalRCreateOrUpdateProperties
         /// class.
         /// </summary>
-        /// <param name="hostNamePrefix">Prefix for the hostName of the SignalR
-        /// service. Retained for future use.
-        /// The hostname will be of format:
-        /// &amp;lt;hostNamePrefix&amp;gt;.service.signalr.net.</param>
         /// <param name="features">List of SignalR featureFlags. e.g.
         /// ServiceMode.
         ///
@@ -50,11 +46,15 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// in terms of different FeatureFlags.</param>
         /// <param name="cors">Cross-Origin Resource Sharing (CORS)
         /// settings.</param>
-        public SignalRCreateOrUpdateProperties(string hostNamePrefix = default(string), IList<SignalRFeature> features = default(IList<SignalRFeature>), SignalRCorsSettings cors = default(SignalRCorsSettings))
+        /// <param name="upstream">Upstream settings when the Azure SignalR is
+        /// in server-less mode.</param>
+        /// <param name="networkACLs">Network ACLs</param>
+        public SignalRCreateOrUpdateProperties(IList<SignalRFeature> features = default(IList<SignalRFeature>), SignalRCorsSettings cors = default(SignalRCorsSettings), ServerlessUpstreamSettings upstream = default(ServerlessUpstreamSettings), SignalRNetworkACLs networkACLs = default(SignalRNetworkACLs))
         {
-            HostNamePrefix = hostNamePrefix;
             Features = features;
             Cors = cors;
+            Upstream = upstream;
+            NetworkACLs = networkACLs;
             CustomInit();
         }
 
@@ -62,15 +62,6 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets prefix for the hostName of the SignalR service.
-        /// Retained for future use.
-        /// The hostname will be of format:
-        /// &amp;amp;lt;hostNamePrefix&amp;amp;gt;.service.signalr.net.
-        /// </summary>
-        [JsonProperty(PropertyName = "hostNamePrefix")]
-        public string HostNamePrefix { get; set; }
 
         /// <summary>
         /// Gets or sets list of SignalR featureFlags. e.g. ServiceMode.
@@ -92,6 +83,19 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         [JsonProperty(PropertyName = "cors")]
         public SignalRCorsSettings Cors { get; set; }
+
+        /// <summary>
+        /// Gets or sets upstream settings when the Azure SignalR is in
+        /// server-less mode.
+        /// </summary>
+        [JsonProperty(PropertyName = "upstream")]
+        public ServerlessUpstreamSettings Upstream { get; set; }
+
+        /// <summary>
+        /// Gets or sets network ACLs
+        /// </summary>
+        [JsonProperty(PropertyName = "networkACLs")]
+        public SignalRNetworkACLs NetworkACLs { get; set; }
 
     }
 }

@@ -1,0 +1,47 @@
+﻿{
+  "Entries": [
+    {
+      "RequestUri": "https://seanmcccanary3.file.core.windows.net/test-share-6b8814b8-7632-6ec4-b57f-96bf37570775?restype=share&comp=properties",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-fb689435ad41ec4cbac2df5a55ca4aba-18cc1d0b0f00fe4a-00",
+        "User-Agent": [
+          "azsdk-net-Storage.Files.Shares/12.5.0-alpha.20201013.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
+        ],
+        "x-ms-access-tier": "Hot",
+        "x-ms-client-request-id": "6df24fbf-6f8f-8d02-4cbb-ef07e73cc83b",
+        "x-ms-date": "Tue, 13 Oct 2020 19:28:34 GMT",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-share-quota": "5",
+         "x-ms-version": "2020-08-04",
+        "Accept": "application/xml"
+      },
+      "RequestBody": null,
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "Content-Length": "217",
+        "Content-Type": "application/xml",
+        "Date": "Tue, 13 Oct 2020 19:28:34 GMT",
+        "Server": [
+          "Windows-Azure-File/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "6df24fbf-6f8f-8d02-4cbb-ef07e73cc83b",
+        "x-ms-error-code": "ShareNotFound",
+        "x-ms-request-id": "becaa6e8-e01a-004e-1397-a1f44a000000",
+         "x-ms-version": "2020-08-04"
+      },
+      "ResponseBody": [
+        "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ShareNotFound</Code><Message>The specified share does not exist.\n",
+        "RequestId:becaa6e8-e01a-004e-1397-a1f44a000000\n",
+        "Time:2020-10-13T19:28:34.8735646Z</Message></Error>"
+      ]
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1526324020",
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
+  }
+}

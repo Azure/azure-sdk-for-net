@@ -6,15 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
     /// <summary> PasswordCredential list operation result. </summary>
-    public partial class PasswordCredentialListResult
+    internal partial class PasswordCredentialListResult
     {
         /// <summary> Initializes a new instance of PasswordCredentialListResult. </summary>
         internal PasswordCredentialListResult()
         {
+            Value = new ChangeTrackingList<PasswordCredential>();
         }
 
         /// <summary> Initializes a new instance of PasswordCredentialListResult. </summary>

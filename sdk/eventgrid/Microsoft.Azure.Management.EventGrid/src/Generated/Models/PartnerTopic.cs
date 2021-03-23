@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="location">Location of the resource.</param>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="tags">Tags of the resource.</param>
         /// <param name="source">Source associated with this partner topic.
         /// This represents a unique partner resource.</param>
@@ -58,7 +58,11 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// custom description for the customer partner topic.
         /// This will be helpful to remove any ambiguity of the origin of
         /// creation of the partner topic for the customer.</param>
-        public PartnerTopic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string source = default(string), System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), string provisioningState = default(string), string activationState = default(string), string partnerTopicFriendlyDescription = default(string))
+        /// <param name="identity">Identity information for the
+        /// resource.</param>
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public PartnerTopic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string source = default(string), System.DateTime? expirationTimeIfNotActivatedUtc = default(System.DateTime?), string provisioningState = default(string), string activationState = default(string), string partnerTopicFriendlyDescription = default(string), IdentityInfo identity = default(IdentityInfo), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             Source = source;
@@ -66,6 +70,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             ProvisioningState = provisioningState;
             ActivationState = activationState;
             PartnerTopicFriendlyDescription = partnerTopicFriendlyDescription;
+            Identity = identity;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -113,6 +119,18 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerTopicFriendlyDescription")]
         public string PartnerTopicFriendlyDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets identity information for the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityInfo Identity { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

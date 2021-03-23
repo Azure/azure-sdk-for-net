@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Diagnostics;
+using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
 
@@ -23,7 +24,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 CallBase = true
             };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync(message: null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendMessageAsync(null));
         }
 
         [Test]
@@ -33,7 +34,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 CallBase = true
             };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync(messages: null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendMessagesAsync(messages: null));
         }
 
         [Test]
@@ -43,24 +44,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 CallBase = true
             };
-            await mock.Object.SendAsync(new List<ServiceBusMessage>());
+            await mock.Object.SendMessagesAsync(new List<ServiceBusMessage>());
         }
 
         [Test]
-        public async Task Send_DelegatesToSendList()
+        public async Task SendSingleDelegatesToSendList()
         {
             var mock = new Mock<ServiceBusSender>()
             {
                 CallBase = true
             };
             mock
-               .Setup(m => m.SendAsync(
+               .Setup(m => m.SendMessagesAsync(
                    It.Is<IEnumerable<ServiceBusMessage>>(value => value.Count() == 1),
                    It.IsAny<CancellationToken>()))
                .Returns(Task.CompletedTask)
                .Verifiable("The single send should delegate to the list send.");
 
-            await mock.Object.SendAsync(new ServiceBusMessage());
+            await mock.Object.SendMessageAsync(new ServiceBusMessage());
         }
 
         [Test]
@@ -70,7 +71,41 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
             {
                 CallBase = true
             };
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendAsync((ServiceBusMessageBatch)null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.SendMessagesAsync((ServiceBusMessageBatch)null));
+        }
+
+        [Test]
+        public void ScheduleNullMessageShouldThrow()
+        {
+            var mock = new Mock<ServiceBusSender>()
+            {
+                CallBase = true
+            };
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.ScheduleMessageAsync(null, default));
+        }
+
+        [Test]
+        public void ScheduleNullMessageListShouldThrow()
+        {
+            var mock = new Mock<ServiceBusSender>()
+            {
+                CallBase = true
+            };
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await mock.Object.ScheduleMessagesAsync(null, default));
+        }
+
+        [Test]
+        public async Task ScheduleEmptyListShouldNotThrow()
+        {
+            var mock = new Mock<ServiceBusSender>()
+            {
+                CallBase = true
+            };
+
+            IReadOnlyList<long> sequenceNums = await mock.Object.ScheduleMessagesAsync(
+                new List<ServiceBusMessage>(),
+                default);
+            Assert.IsEmpty(sequenceNums);
         }
 
         [Test]
@@ -87,57 +122,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
         }
 
         [Test]
-        public void CreateSenderUsingSendVia()
-        {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
-            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
-            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
-            var client = new ServiceBusClient(connString);
-            var sender = client.CreateSender(queueName,
-                new ServiceBusSenderOptions
-                {
-                    ViaQueueOrTopicName = "sendViaName"
-                });
-        }
-
-        [Test]
-        public void CreateSenderUsingSendViaThrowsWhenEntityPath()
-        {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
-            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;EntityPath=something;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
-            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
-            var client = new ServiceBusClient(connString);
-            Assert.That(() => client.CreateSender(queueName,
-                new ServiceBusSenderOptions
-                {
-                    ViaQueueOrTopicName = "sendViaName"
-                }),
-                Throws.InstanceOf<ArgumentException>());
-            Assert.That(() => client.CreateSender(queueName,
-               new ServiceBusSenderOptions
-               {
-                   ViaQueueOrTopicName = queueName
-               }),
-               Throws.InstanceOf<ArgumentException>());
-        }
-
-        [Test]
-        public void CreateSenderUsingSendViaDoesNotThrowWhenSameEntityPath()
-        {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
-            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;EntityPath=something;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
-            var client = new ServiceBusClient(connString);
-            client.CreateSender("something",
-                new ServiceBusSenderOptions
-                {
-                    ViaQueueOrTopicName = "something"
-                });
-        }
-
-        [Test]
         public void CreateSenderUsingNullOptionsDoesNotThrow()
         {
             var account = Encoding.Default.GetString(GetRandomBuffer(12));
@@ -149,23 +133,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 null);
         }
 
-        [Test]
-        public void CreateSenderUsingNullSendViaDoesNotThrow()
-        {
-            var account = Encoding.Default.GetString(GetRandomBuffer(12));
-            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
-            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(GetRandomBuffer(64))}";
-            var queueName = Encoding.Default.GetString(GetRandomBuffer(12));
-            var client = new ServiceBusClient(connString);
-            var sender = client.CreateSender(queueName,
-                new ServiceBusSenderOptions
-                {
-                    ViaQueueOrTopicName = null
-                });
-        }
-
         /// <summary>
-        ///   Verifies functionality of the <see cref="ServiceBusSender.SendAsync"/>
+        ///   Verifies functionality of the <see cref="ServiceBusSender.SendMessagesAsync"/>
         ///   method.
         /// </summary>
         ///
@@ -177,7 +146,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
 
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockTransportBatch = new Mock<TransportMessageBatch>();
-            var batch = new ServiceBusMessageBatch(mockTransportBatch.Object);
+            var mockScope = new EntityScopeFactory("mock", "mock");
+            var batch = new ServiceBusMessageBatch(mockTransportBatch.Object, mockScope);
             var mockTransportSender = new Mock<TransportSender>();
             var mockConnection = new Mock<ServiceBusConnection>();
 
@@ -186,31 +156,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 .Returns(new ServiceBusRetryOptions());
 
             mockConnection
-                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>(), It.IsAny<string>()))
+                .Setup(connection => connection.CreateTransportSender(It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>(), It.IsAny<string>()))
                 .Returns(mockTransportSender.Object);
 
             mockConnection
                 .Setup(connection => connection.ThrowIfClosed());
 
             mockTransportBatch
-                .Setup(transport => transport.TryAdd(It.IsAny<ServiceBusMessage>()))
+                .Setup(transport => transport.TryAddMessage(It.IsAny<ServiceBusMessage>()))
                 .Returns(true);
+
+            mockTransportBatch
+                .Setup(transport => transport.Count)
+                .Returns(1);
 
             mockTransportSender
                 .Setup(transport => transport.SendBatchAsync(It.IsAny<ServiceBusMessageBatch>(), It.IsAny<CancellationToken>()))
                 .Returns(async () => await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token)));
 
-            Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked before sending.");
 
-            var sender = new ServiceBusSender("dummy", null, mockConnection.Object);
-            var sendTask = sender.SendAsync(batch);
+            var sender = new ServiceBusSender("dummy", null, mockConnection.Object, new ServiceBusPlugin[] { });
+            var sendTask = sender.SendMessagesAsync(batch);
 
-            Assert.That(() => batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
+            Assert.That(() => batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Throws.InstanceOf<InvalidOperationException>(), "The batch should be locked while sending.");
             completionSource.TrySetResult(true);
 
             await sendTask;
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            Assert.That(batch.TryAdd(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
+            Assert.That(batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>())), Is.True, "The batch should not be locked after sending.");
 
             cancellationSource.Cancel();
         }

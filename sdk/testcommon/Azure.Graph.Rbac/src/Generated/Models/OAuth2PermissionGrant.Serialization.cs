@@ -15,47 +15,47 @@ namespace Azure.Graph.Rbac.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (OdataType != null)
+            if (Optional.IsDefined(OdataType))
             {
                 writer.WritePropertyName("odata.type");
                 writer.WriteStringValue(OdataType);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId");
                 writer.WriteStringValue(ClientId);
             }
-            if (ObjectId != null)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId");
                 writer.WriteStringValue(ObjectId);
             }
-            if (ConsentType != null)
+            if (Optional.IsDefined(ConsentType))
             {
                 writer.WritePropertyName("consentType");
                 writer.WriteStringValue(ConsentType.Value.ToString());
             }
-            if (PrincipalId != null)
+            if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId");
                 writer.WriteStringValue(PrincipalId);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId");
                 writer.WriteStringValue(ResourceId);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope");
                 writer.WriteStringValue(Scope);
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime");
                 writer.WriteStringValue(StartTime);
             }
-            if (ExpiryTime != null)
+            if (Optional.IsDefined(ExpiryTime))
             {
                 writer.WritePropertyName("expiryTime");
                 writer.WriteStringValue(ExpiryTime);
@@ -65,41 +65,29 @@ namespace Azure.Graph.Rbac.Models
 
         internal static OAuth2PermissionGrant DeserializeOAuth2PermissionGrant(JsonElement element)
         {
-            string odataType = default;
-            string clientId = default;
-            string objectId = default;
-            ConsentType? consentType = default;
-            string principalId = default;
-            string resourceId = default;
-            string scope = default;
-            string startTime = default;
-            string expiryTime = default;
+            Optional<string> odataType = default;
+            Optional<string> clientId = default;
+            Optional<string> objectId = default;
+            Optional<ConsentType> consentType = default;
+            Optional<string> principalId = default;
+            Optional<string> resourceId = default;
+            Optional<string> scope = default;
+            Optional<string> startTime = default;
+            Optional<string> expiryTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("odata.type"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     odataType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("clientId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     clientId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("objectId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     objectId = property.Value.GetString();
                     continue;
                 }
@@ -107,6 +95,7 @@ namespace Azure.Graph.Rbac.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     consentType = new ConsentType(property.Value.GetString());
@@ -114,51 +103,31 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("principalId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     principalId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resourceId"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     resourceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("scope"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     scope = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("startTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     startTime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("expiryTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     expiryTime = property.Value.GetString();
                     continue;
                 }
             }
-            return new OAuth2PermissionGrant(odataType, clientId, objectId, consentType, principalId, resourceId, scope, startTime, expiryTime);
+            return new OAuth2PermissionGrant(odataType.Value, clientId.Value, objectId.Value, Optional.ToNullable(consentType), principalId.Value, resourceId.Value, scope.Value, startTime.Value, expiryTime.Value);
         }
     }
 }

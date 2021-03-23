@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Marketplace.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -40,12 +42,31 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// <param name="privateStoreId">Private Store id</param>
         /// <param name="eTag">Identifier for purposes of race
         /// condition</param>
-        public PrivateStore(string id = default(string), string name = default(string), string type = default(string), string availability = default(string), string privateStoreId = default(string), string eTag = default(string))
+        /// <param name="privateStoreName">Private Store Name</param>
+        /// <param name="tenantTag">Tenant Tag</param>
+        /// <param name="tenantIds">Tenant ids</param>
+        /// <param name="customerTag">Customer tag</param>
+        /// <param name="hasCommercialAssociation">Indicating whether private
+        /// store has association with Commercial's Billing Account (through
+        /// billing account's customer tag retrieved from GSM for a
+        /// subscription</param>
+        /// <param name="hasMultiTenantAssociation">Indicating whether private
+        /// store has association with multiple tenants (through tenant's tag
+        /// retrieved from AAD</param>
+        /// <param name="isGov">Is government</param>
+        public PrivateStore(string id = default(string), string name = default(string), string type = default(string), string availability = default(string), string privateStoreId = default(string), string eTag = default(string), string privateStoreName = default(string), string tenantTag = default(string), IList<string> tenantIds = default(IList<string>), string customerTag = default(string), bool? hasCommercialAssociation = default(bool?), bool? hasMultiTenantAssociation = default(bool?), bool? isGov = default(bool?))
             : base(id, name, type)
         {
             Availability = availability;
             PrivateStoreId = privateStoreId;
             ETag = eTag;
+            PrivateStoreName = privateStoreName;
+            TenantTag = tenantTag;
+            TenantIds = tenantIds;
+            CustomerTag = customerTag;
+            HasCommercialAssociation = hasCommercialAssociation;
+            HasMultiTenantAssociation = hasMultiTenantAssociation;
+            IsGov = isGov;
             CustomInit();
         }
 
@@ -72,6 +93,51 @@ namespace Microsoft.Azure.Management.Marketplace.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.eTag")]
         public string ETag { get; set; }
+
+        /// <summary>
+        /// Gets or sets private Store Name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateStoreName")]
+        public string PrivateStoreName { get; set; }
+
+        /// <summary>
+        /// Gets or sets tenant Tag
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tenantTag")]
+        public string TenantTag { get; set; }
+
+        /// <summary>
+        /// Gets or sets tenant ids
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tenantIds")]
+        public IList<string> TenantIds { get; set; }
+
+        /// <summary>
+        /// Gets or sets customer tag
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.customerTag")]
+        public string CustomerTag { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicating whether private store has association with
+        /// Commercial's Billing Account (through billing account's customer
+        /// tag retrieved from GSM for a subscription
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hasCommercialAssociation")]
+        public bool? HasCommercialAssociation { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicating whether private store has association with
+        /// multiple tenants (through tenant's tag retrieved from AAD
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hasMultiTenantAssociation")]
+        public bool? HasMultiTenantAssociation { get; set; }
+
+        /// <summary>
+        /// Gets or sets is government
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isGov")]
+        public bool? IsGov { get; set; }
 
     }
 }

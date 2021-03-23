@@ -38,12 +38,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="sourceAccount">Required. Source account name.</param>
         /// <param name="destinationAccount">Required. Destination account
         /// name.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="policyId">A unique id for object replication
         /// policy.</param>
         /// <param name="enabledTime">Indicates when the policy is enabled on

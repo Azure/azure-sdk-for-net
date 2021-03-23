@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of SignInName. </summary>
         internal SignInName()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of SignInName. </summary>
@@ -27,7 +28,7 @@ namespace Azure.Graph.Rbac.Models
         {
             Type = type;
             Value = value;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> A string value that can be used to classify user sign-in types in your directory, such as &apos;emailAddress&apos; or &apos;userName&apos;. </summary>
@@ -47,7 +48,7 @@ namespace Azure.Graph.Rbac.Models
         public IEnumerable<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
         int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public object this[string key]

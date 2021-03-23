@@ -1,0 +1,687 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://azs-net-heathsrch.search.windows.net/skillsets?api-version=2020-06-30",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "Content-Length": "3029",
+        "Content-Type": "application/json",
+        "traceparent": "00-de8751ff69893949b3ba65ba6dc701d4-b3ef055fbce55544-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.2.0-alpha.20200916.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "7c15986df0790821cfd9e7040b8a411b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "fpmjeogx",
+        "skills": [
+          {
+            "@odata.type": "#Microsoft.Skills.Util.ConditionalSkill",
+            "inputs": [
+              {
+                "name": "condition",
+                "source": "/document/content"
+              },
+              {
+                "name": "whenTrue",
+                "source": "/document/content"
+              },
+              {
+                "name": "whenFalse",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "lgnlkuyy"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content"
+              },
+              {
+                "name": "text",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "persons",
+                "targetName": "upyugkjy"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Vision.ImageAnalysisSkill",
+            "inputs": [
+              {
+                "name": "image",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "categories",
+                "targetName": "cojtwncd"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content"
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "keyPhrases",
+                "targetName": "xyafuysk"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "languageCode",
+                "targetName": "lripadri"
+              },
+              {
+                "name": "languageName",
+                "targetName": "oxeepvou"
+              },
+              {
+                "name": "score",
+                "targetName": "gnhofmax"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.MergeSkill",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content"
+              },
+              {
+                "name": "itemsToInsert",
+                "source": "/document/content"
+              },
+              {
+                "name": "offsets",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "mergedText",
+                "targetName": "djmltsdu"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Vision.OcrSkill",
+            "inputs": [
+              {
+                "name": "image",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "text",
+                "targetName": "wojnbsyy"
+              },
+              {
+                "name": "layoutText",
+                "targetName": "vaeyixnb"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content"
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "score",
+                "targetName": "jexhrdex"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "rkmppgnu"
+              }
+            ]
+          },
+          {
+            "textSplitMode": "pages",
+            "@odata.type": "#Microsoft.Skills.Text.SplitSkill",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content"
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "textItems",
+                "targetName": "tjgbmatn"
+              }
+            ]
+          },
+          {
+            "defaultToLanguageCode": "en",
+            "@odata.type": "#Microsoft.Skills.Text.TranslationSkill",
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content"
+              },
+              {
+                "name": "toLanguageCode",
+                "source": "/document/content"
+              },
+              {
+                "name": "fromLanguageCode",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "translatedText",
+                "targetName": "nisfhboe"
+              },
+              {
+                "name": "translatedToLanguageCode",
+                "targetName": "vlbotvcs"
+              },
+              {
+                "name": "translatedFromLanguageCode",
+                "targetName": "jkvqfjip"
+              }
+            ]
+          },
+          {
+            "uri": "https://microsoft.com",
+            "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
+            "inputs": [
+              {
+                "name": "input",
+                "source": "/document/content"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "ljeyqloi"
+              }
+            ]
+          }
+        ],
+        "cognitiveServices": {
+          "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices"
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "7c15986d-f079-0821-cfd9-e7040b8a411b",
+        "Content-Length": "5097",
+        "Content-Type": "application/json; odata.metadata=minimal",
+        "Date": "Thu, 17 Sep 2020 17:17:36 GMT",
+        "elapsed-time": "338",
+        "ETag": "W/\u00220x8D85B2D9320858C\u0022",
+        "Expires": "-1",
+        "Location": "https://azs-net-heathsrch.search.windows.net/skillsets(\u0027fpmjeogx\u0027)?api-version=2020-06-30",
+        "OData-Version": "4.0",
+        "Pragma": "no-cache",
+        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
+        "request-id": "7c15986d-f079-0821-cfd9-e7040b8a411b",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "7c15986d-f079-0821-cfd9-e7040b8a411b"
+      },
+      "ResponseBody": {
+        "@odata.context": "https://azs-net-heathsrch.search.windows.net/$metadata#skillsets/$entity",
+        "@odata.etag": "\u00220x8D85B2D9320858C\u0022",
+        "name": "fpmjeogx",
+        "description": null,
+        "skills": [
+          {
+            "@odata.type": "#Microsoft.Skills.Util.ConditionalSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "inputs": [
+              {
+                "name": "condition",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "whenTrue",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "whenFalse",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "lgnlkuyy"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.EntityRecognitionSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "categories": [],
+            "defaultLanguageCode": null,
+            "minimumPrecision": null,
+            "includeTypelessEntities": null,
+            "inputs": [
+              {
+                "name": "languageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "persons",
+                "targetName": "upyugkjy"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Vision.ImageAnalysisSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "defaultLanguageCode": null,
+            "visualFeatures": [],
+            "details": [],
+            "inputs": [
+              {
+                "name": "image",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "categories",
+                "targetName": "cojtwncd"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.KeyPhraseExtractionSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "defaultLanguageCode": null,
+            "maxKeyPhraseCount": null,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "keyPhrases",
+                "targetName": "xyafuysk"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "languageCode",
+                "targetName": "lripadri"
+              },
+              {
+                "name": "languageName",
+                "targetName": "oxeepvou"
+              },
+              {
+                "name": "score",
+                "targetName": "gnhofmax"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.MergeSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "insertPreTag": null,
+            "insertPostTag": null,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "itemsToInsert",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "offsets",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "mergedText",
+                "targetName": "djmltsdu"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Vision.OcrSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "textExtractionAlgorithm": null,
+            "lineEnding": null,
+            "defaultLanguageCode": null,
+            "detectOrientation": null,
+            "inputs": [
+              {
+                "name": "image",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "text",
+                "targetName": "wojnbsyy"
+              },
+              {
+                "name": "layoutText",
+                "targetName": "vaeyixnb"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.SentimentSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "defaultLanguageCode": null,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "score",
+                "targetName": "jexhrdex"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Util.ShaperSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "rkmppgnu"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.SplitSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "defaultLanguageCode": null,
+            "textSplitMode": "pages",
+            "maximumPageLength": null,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "languageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "textItems",
+                "targetName": "tjgbmatn"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Text.TranslationSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "defaultFromLanguageCode": null,
+            "defaultToLanguageCode": "en",
+            "suggestedFrom": null,
+            "inputs": [
+              {
+                "name": "text",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "toLanguageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              },
+              {
+                "name": "fromLanguageCode",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "translatedText",
+                "targetName": "nisfhboe"
+              },
+              {
+                "name": "translatedToLanguageCode",
+                "targetName": "vlbotvcs"
+              },
+              {
+                "name": "translatedFromLanguageCode",
+                "targetName": "jkvqfjip"
+              }
+            ]
+          },
+          {
+            "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
+            "name": null,
+            "description": null,
+            "context": null,
+            "uri": "https://microsoft.com",
+            "httpMethod": null,
+            "timeout": null,
+            "batchSize": null,
+            "degreeOfParallelism": null,
+            "inputs": [
+              {
+                "name": "input",
+                "source": "/document/content",
+                "sourceContext": null,
+                "inputs": []
+              }
+            ],
+            "outputs": [
+              {
+                "name": "output",
+                "targetName": "ljeyqloi"
+              }
+            ],
+            "httpHeaders": null
+          }
+        ],
+        "cognitiveServices": {
+          "@odata.type": "#Microsoft.Azure.Search.DefaultCognitiveServices",
+          "description": null
+        },
+        "knowledgeStore": null,
+        "encryptionKey": null
+      }
+    },
+    {
+      "RequestUri": "https://azs-net-heathsrch.search.windows.net/skillsets(\u0027fpmjeogx\u0027)?api-version=2020-06-30",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json; odata.metadata=minimal",
+        "api-key": "Sanitized",
+        "traceparent": "00-ad62df3d68ae6b41a3b9df549439780a-4ad8d3b90e34f441-00",
+        "User-Agent": [
+          "azsdk-net-Search.Documents/11.2.0-alpha.20200916.1",
+          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19041 )"
+        ],
+        "x-ms-client-request-id": "fa668dadfb5ce9a8b96c015d47059289",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "client-request-id": "fa668dad-fb5c-e9a8-b96c-015d47059289",
+        "Date": "Thu, 17 Sep 2020 17:17:36 GMT",
+        "elapsed-time": "97",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "request-id": "fa668dad-fb5c-e9a8-b96c-015d47059289",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "x-ms-client-request-id": "fa668dad-fb5c-e9a8-b96c-015d47059289"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1560392185",
+    "SearchIndexName": null,
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "azs-net-heathsrch"
+  }
+}

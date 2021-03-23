@@ -7,6 +7,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
@@ -16,7 +17,7 @@ namespace Azure.Graph.Rbac.Models
         /// <summary> Initializes a new instance of CheckGroupMembershipResult. </summary>
         internal CheckGroupMembershipResult()
         {
-            AdditionalProperties = new Dictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of CheckGroupMembershipResult. </summary>
@@ -25,7 +26,7 @@ namespace Azure.Graph.Rbac.Models
         internal CheckGroupMembershipResult(bool? value, IReadOnlyDictionary<string, object> additionalProperties)
         {
             Value = value;
-            AdditionalProperties = additionalProperties ?? new Dictionary<string, object>();
+            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> True if the specified user, group, contact, or service principal has either direct or transitive membership in the specified group; otherwise, false. </summary>
@@ -43,7 +44,7 @@ namespace Azure.Graph.Rbac.Models
         public IEnumerable<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
         public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc />
+        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
         int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
         /// <inheritdoc />
         public object this[string key]

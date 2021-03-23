@@ -55,7 +55,6 @@ namespace Azure.Core.Tests
             HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
             message.SetProperty("someName", "value");
 
-
             Assert.False(message.TryGetProperty("SomeName", out _));
         }
 

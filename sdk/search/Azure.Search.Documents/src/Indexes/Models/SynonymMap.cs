@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name">The name of the synonym map.</param>
         /// <param name="synonyms">
         /// The formatted synonyms string to define.
-        /// Because only the Solr synonym map format is currently supported, these are values delimited by "\n".
+        /// Because only the "solr" synonym map format is currently supported, these are values delimited by "\n".
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="name"/> or <paramref name="synonyms"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="synonyms"/> is null.</exception>
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name">The name of the synonym map.</param>
         /// <param name="reader">
         /// A <see cref="TextReader"/> from which formatted synonyms are read.
-        /// Because only the Solr synonym map format is currently supported, these are values delimited by "\n".
+        /// Because only the "solr" synonym map format is currently supported, these are values delimited by "\n".
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> or <paramref name="reader"/> is null.</exception>
@@ -65,5 +65,8 @@ namespace Azure.Search.Documents.Indexes.Models
             get => _etag is null ? (ETag?)null : new ETag(_etag);
             set => _etag = value?.ToString();
         }
+
+        /// <summary> The format of the synonym map. Only the "solr" format is currently supported. </summary>
+        internal string Format { get; set; }
     }
 }

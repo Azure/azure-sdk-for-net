@@ -16,7 +16,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
     {
         private const int PagedSecretCount = 50;
 
-        public SecretClientLiveTests(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion) : base(isAsync, serviceVersion)
+        public SecretClientLiveTests(bool isAsync, SecretClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -29,7 +30,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             {
                 Client = GetClient();
 
-                ChallengeBasedAuthenticationPolicy.AuthenticationChallenge.ClearCache();
+                ChallengeBasedAuthenticationPolicy.ClearCache();
             }
         }
 
@@ -52,7 +53,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         public async Task SetSecretWithExtendedProps()
         {
             string secretName = Recording.GenerateId();
-            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1565114301));
+
+            // TODO: Update this value whenever you re-record tests. Both the sync and async JSON recordings need to use the same value.
+            IResolveConstraint createdUpdatedConstraint = Is.EqualTo(DateTimeOffset.FromUnixTimeSeconds(1613782963));
 
             KeyVaultSecret setResult = null;
 
@@ -426,7 +429,6 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             }
         }
 
-
         [Test]
         public async Task GetDeletedSecrets()
         {
@@ -442,13 +444,16 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 RegisterForCleanup(secret.Name);
             }
 
+            List<Task> deletingSecrets = new List<Task>();
             foreach (KeyVaultSecret deletedSecret in deletedSecrets)
             {
-                await WaitForDeletedSecret(deletedSecret.Name);
+                // WaitForDeletedSecret disables recording, so we can wait concurrently.
+                deletingSecrets.Add(WaitForDeletedSecret(deletedSecret.Name));
             }
 
-            List<DeletedSecret> allSecrets = await Client.GetDeletedSecretsAsync().ToEnumerableAsync();
+            await Task.WhenAll(deletingSecrets);
 
+            List<DeletedSecret> allSecrets = await Client.GetDeletedSecretsAsync().ToEnumerableAsync();
             foreach (KeyVaultSecret deletedSecret in deletedSecrets)
             {
                 KeyVaultSecret returnedSecret = allSecrets.Single(s => s.Name == deletedSecret.Name);

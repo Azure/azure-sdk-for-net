@@ -1,27 +1,30 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8%3A4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/invoices?api-version=2019-10-01-preview&periodStartDate=2019-08-01&periodEndDate=2019-11-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvNzIzYzhjZTAtMzNiYS01YmE3LWVmMjMtZTFiNzJmMTVmMWQ4JTNBNGNlNWI1MzAtYzgyYi00NGU4LTk3ZWMtNDlmM2NjZTlmMTRkXzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0g2UkktVFhXQy1CRzctUEdCL2ludm9pY2VzP2FwaS12ZXJzaW9uPTIwMTktMTAtMDEtcHJldmlldyZwZXJpb2RTdGFydERhdGU9MjAxOS0wOC0wMSZwZXJpb2RFbmREYXRlPTIwMTktMTEtMDE=",
+      "RequestUri": "/providers/Microsoft.Billing/billingAccounts/c96f6d74-3523-5a58-106d-1bdafab4211f:2f5f0dad-af26-4a54-8145-1a1cf8b93eea_2019-05-31/billingProfiles/FQWV-S4GU-BG7-TGB/invoices?api-version=2020-05-01&periodStartDate=2019-12-01&periodEndDate=2020-11-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmlsbGluZy9iaWxsaW5nQWNjb3VudHMvYzk2ZjZkNzQtMzUyMy01YTU4LTEwNmQtMWJkYWZhYjQyMTFmJTNBMmY1ZjBkYWQtYWYyNi00YTU0LTgxNDUtMWExY2Y4YjkzZWVhXzIwMTktMDUtMzEvYmlsbGluZ1Byb2ZpbGVzL0ZRV1YtUzRHVS1CRzctVEdCL2ludm9pY2VzP2FwaS12ZXJzaW9uPTIwMjAtMDUtMDEmcGVyaW9kU3RhcnREYXRlPTIwMTktMTItMDEmcGVyaW9kRW5kRGF0ZT0yMDIwLTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d1d54799-d512-4c68-8834-07de9af8ee4f"
+          "a2841b2d-7cf0-42a1-b040-54270a2f52b9"
         ],
-        "Accept-Language": [
+        "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.28008.01",
+          "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.18363.",
-          "Microsoft.Azure.Management.Billing.BillingManagementClient/3.1.1.0"
+          "Microsoft.Azure.Management.Billing.BillingManagementClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
+        ],
+        "Date": [
+          "Sun, 31 May 2020 03:00:11 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -29,38 +32,35 @@
         "Vary": [
           "Accept-Encoding"
         ],
-        "x-ms-ratelimit-remaining-tenant-reads": [
-          "11998"
-        ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-service-version": [
-          "9.11.1047.343"
+          "10.5.1246.542"
         ],
         "api-supported-versions": [
-          "2018-11-01-preview, 2019-10-01-preview"
+          "2018-11-01-preview, 2019-10-01-preview, 2020-05-01"
         ],
         "X-Frame-Options": [
           "DENY"
         ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14997"
+        ],
         "x-ms-request-id": [
-          "d9a2e6d5-3cc1-4f1d-a940-7e20ddd780c1"
+          "886f39e7-c35a-4e47-9cc0-a137663af8c8"
         ],
         "x-ms-correlation-request-id": [
-          "d9a2e6d5-3cc1-4f1d-a940-7e20ddd780c1"
+          "886f39e7-c35a-4e47-9cc0-a137663af8c8"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20191118T234118Z:d9a2e6d5-3cc1-4f1d-a940-7e20ddd780c1"
+          "NORTHEUROPE:20200531T030011Z:886f39e7-c35a-4e47-9cc0-a137663af8c8"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Date": [
-          "Mon, 18 Nov 2019 23:41:18 GMT"
-        ],
         "Content-Length": [
-          "997"
+          "1598"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -69,12 +69,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB/invoices/G000492901\",\r\n      \"name\": \"G000492901\",\r\n      \"properties\": {\r\n        \"amountDue\": {\r\n          \"currency\": \"USD\",\r\n          \"value\": 79.0\r\n        },\r\n        \"billedAmount\": {\r\n          \"currency\": \"USD\",\r\n          \"value\": 79.0\r\n        },\r\n        \"billingProfileId\": \"/providers/Microsoft.Billing/billingAccounts/723c8ce0-33ba-5ba7-ef23-e1b72f15f1d8:4ce5b530-c82b-44e8-97ec-49f3cce9f14d_2019-05-31/billingProfiles/H6RI-TXWC-BG7-PGB\",\r\n        \"billingProfileDisplayName\": \"Canary Test EA Transition 2\",\r\n        \"documentUrls\": [\r\n          {\r\n            \"kind\": \"Invoice\",\r\n            \"url\": \"https://moderndrs.cp.microsoft.com/documents/retrieve/id=5220764605\",\r\n            \"source\": \"DRS\"\r\n          }\r\n        ],\r\n        \"dueDate\": \"2019-11-15T18:19:57.1307606Z\",\r\n        \"invoiceDate\": \"2019-10-16T18:19:57.1307606Z\",\r\n        \"invoicePeriodEndDate\": \"2019-10-16T18:08:47.4039115Z\",\r\n        \"invoicePeriodStartDate\": \"2019-10-16T18:08:47.4039115Z\",\r\n        \"payments\": [],\r\n        \"status\": \"OverDue\"\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/billingProfiles/invoices\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/providers/Microsoft.Billing/billingAccounts/c96f6d74-3523-5a58-106d-1bdafab4211f:2f5f0dad-af26-4a54-8145-1a1cf8b93eea_2019-05-31/invoices/T000154489\",\r\n      \"name\": \"T000154489\",\r\n      \"properties\": {\r\n        \"amountDue\": {\r\n          \"currency\": \"USD\",\r\n          \"value\": 0.0\r\n        },\r\n        \"azurePrepaymentApplied\": {\r\n          \"currency\": \"USD\",\r\n          \"value\": 0.0\r\n        },\r\n        \"billedAmount\": {\r\n          \"currency\": \"USD\",\r\n          \"value\": 100.0\r\n        },\r\n        \"billingProfileId\": \"/providers/Microsoft.Billing/billingAccounts/c96f6d74-3523-5a58-106d-1bdafab4211f:2f5f0dad-af26-4a54-8145-1a1cf8b93eea_2019-05-31/billingProfiles/FQWV-S4GU-BG7-TGB\",\r\n        \"billingProfileDisplayName\": \"Daisy Grioiph\",\r\n        \"creditAmount\": {\r\n          \"currency\": \"USD\",\r\n          \"value\": 0.0\r\n        },\r\n        \"documents\": [\r\n          {\r\n            \"kind\": \"Invoice\",\r\n            \"url\": \"https://api-dogfood.resources.windows-int.net/providers/Microsoft.Billing/billingAccounts/c96f6d74-3523-5a58-106d-1bdafab4211f%3A2f5f0dad-af26-4a54-8145-1a1cf8b93eea_2019-05-31/invoices/T000154489/download?downloadToken=Drs_9904044&api-version=2020-05-01\",\r\n            \"source\": \"DRS\"\r\n          }\r\n        ],\r\n        \"dueDate\": \"2020-05-09T00:05:11.449073Z\",\r\n        \"freeAzureCreditApplied\": {\r\n          \"currency\": \"USD\",\r\n          \"value\": 0.0\r\n        },\r\n        \"invoiceDate\": \"2020-04-09T00:05:11.449073Z\",\r\n        \"invoicePeriodEndDate\": \"2020-03-31T23:59:59.9999999\",\r\n        \"invoicePeriodStartDate\": \"2020-03-13T18:16:30.5739865Z\",\r\n        \"isMonthlyInvoice\": true,\r\n        \"payments\": [\r\n          {\r\n            \"amount\": {\r\n              \"currency\": \"USD\",\r\n              \"value\": 100.0\r\n            },\r\n            \"date\": \"2020-04-18T17:05:18.9962691-07:00\",\r\n            \"paymentMethodFamily\": \"CreditCard\",\r\n            \"paymentMethodType\": \"mc\",\r\n            \"paymentType\": \"Charged\"\r\n          }\r\n        ],\r\n        \"status\": \"Paid\",\r\n        \"subTotal\": {\r\n          \"currency\": \"USD\",\r\n          \"value\": 100.0\r\n        },\r\n        \"taxAmount\": {\r\n          \"currency\": \"USD\",\r\n          \"value\": 0.0\r\n        },\r\n        \"totalAmount\": {\r\n          \"currency\": \"USD\",\r\n          \"value\": 100.0\r\n        }\r\n      },\r\n      \"type\": \"Microsoft.Billing/billingAccounts/invoices\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "df6e24cd-21d5-4f70-ac15-32bb1f8b4536"
+    "SubscriptionId": "7b9751e1-7bb6-4583-a3b1-a7626901811a"
   }
 }

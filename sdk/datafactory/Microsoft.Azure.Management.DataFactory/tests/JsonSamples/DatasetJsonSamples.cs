@@ -46,6 +46,27 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureDatabricksDeltaLakeTable = @"
+{
+    name: ""AzureDatabricksDeltaLakeDataset"",
+    properties:
+    {
+        type: ""AzureDatabricksDeltaLakeDataset"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+             ""table"": ""test"",
+             ""database"": ""default""
+        }
+    }
+}
+";
+
+        [JsonSample]
         public const string AzureTable = @"
 {
     name: ""TableWithLatency"",
@@ -339,6 +360,29 @@ namespace DataFactory.Tests.JsonSamples
             collectionName: ""fake table""
         }
     }
+}
+";
+
+        [JsonSample]
+        public const string MongoDbAtlasCollection = @"
+{ 
+    name: ""MongoDbAtlasDbTable"", 
+    properties: { 
+        type: ""MongoDbAtlasCollection"", 
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties: { 
+           collection: ""fake table""
+        },
+        parameters: {
+           MyCollection: {
+             type: ""String""
+          }
+        }
+     }
 }
 ";
 
@@ -1028,6 +1072,43 @@ namespace DataFactory.Tests.JsonSamples
 	}
   }
 }";
+        [JsonSample]
+        public const string ExcelDataset = @"
+{
+  ""name"": ""ExcelDataset"",
+  ""properties"": {
+    ""type"": ""Excel"",
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""exceltest"",
+        ""fileName"": ""releases-1.xlsx""
+      },
+      ""compression"": {
+        ""type"": ""GZip"",
+        ""level"": ""Fastest""
+      },
+      ""sheetName"": ""test01"",
+      ""firstRowAsHeader"": true,
+      ""range"": ""A4:H9"",
+      ""nullValue"": ""N/A""
+    },
+    ""linkedServiceName"": {
+      ""referenceName"": ""MyLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""schema"": [
+      {
+        ""name"": ""title"",
+        ""type"": ""string""
+      },
+      {
+        ""name"": ""movieId"",
+        ""type"": ""string""
+      }
+    ]
+  }
+}";
 
         [JsonSample]
         public const string ParquetDataset = @"
@@ -1124,6 +1205,34 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string XmlDataset = @"
+{
+  name: ""MyXml"",
+  properties: {
+    type: ""Xml"",
+    linkedServiceName: 
+    {  
+        referenceName : ""ls"",
+        type : ""LinkedServiceReference""
+    },
+    typeProperties: {
+        location: {
+            type: ""AzureBlobStorageLocation"",
+            folderPath: ""testFolder"",
+            fileName: ""test.json"",
+            container: ""MyContainer""
+        },
+        encodingName: ""UTF-8"",
+        nullValue: ""null"",
+        compression: {
+            type: ""GZip"",
+            level: ""Optimal""
+        }
+    }
+  }
+}";
+
+        [JsonSample]
         public const string Json = @"
 {
   name: ""MyJson"",
@@ -1195,6 +1304,31 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string BinaryWithTarGZipDataset = @"
+{
+  ""name"": ""BinaryDataset"",
+  ""properties"": {
+    ""type"": ""Binary"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""testTgz01""
+      },
+      ""compression"": {
+        ""type"": ""TarGZip"",
+        ""level"": ""Optimal""
+      }
+    }
+  }
+}";
+
+        [JsonSample]
         public const string OrcDataset = @"
 {
   ""name"": ""OrcDataset"",
@@ -1212,6 +1346,40 @@ namespace DataFactory.Tests.JsonSamples
         ""fileName"": ""data.orc""
       },
       ""orcCompressionCodec"": ""snappy""
+    },
+    ""schema"": [
+      {
+        ""name"": ""col1"",
+        ""type"": ""INT_32""
+      },
+      {
+        ""name"": ""col2"",
+        ""type"": ""Decimal"",
+        ""precision"": ""38"",
+        ""scale"": ""2""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
+        public const string OrcDatasetWithlzoCompressionCodec = @"
+{
+  ""name"": ""OrcDataset"",
+  ""properties"": {
+    ""type"": ""Orc"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""data.orc""
+      },
+      ""orcCompressionCodec"": ""lzo""
     },
     ""schema"": [
       {

@@ -39,6 +39,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
+        /// <param name="extendedLocation">The extended location of the network
+        /// interface.</param>
         /// <param name="virtualMachine">The reference to a virtual
         /// machine.</param>
         /// <param name="networkSecurityGroup">The reference to the
@@ -61,6 +63,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// enabled on this network interface.</param>
         /// <param name="hostedWorkloads">A list of references to linked
         /// BareMetal resources.</param>
+        /// <param name="dscpConfiguration">A reference to the dscp
+        /// configuration to which the network interface is linked.</param>
         /// <param name="resourceGuid">The resource GUID property of the
         /// network interface resource.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -68,9 +72,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Updating', 'Deleting', 'Failed'</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<NetworkInterfaceTapConfiguration> tapConfigurations = default(IList<NetworkInterfaceTapConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableIPForwarding = default(bool?), IList<string> hostedWorkloads = default(IList<string>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExtendedLocation extendedLocation = default(ExtendedLocation), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<NetworkInterfaceTapConfiguration> tapConfigurations = default(IList<NetworkInterfaceTapConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableIPForwarding = default(bool?), IList<string> hostedWorkloads = default(IList<string>), SubResource dscpConfiguration = default(SubResource), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
+            ExtendedLocation = extendedLocation;
             VirtualMachine = virtualMachine;
             NetworkSecurityGroup = networkSecurityGroup;
             PrivateEndpoint = privateEndpoint;
@@ -82,6 +87,7 @@ namespace Microsoft.Azure.Management.Network.Models
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
             EnableIPForwarding = enableIPForwarding;
             HostedWorkloads = hostedWorkloads;
+            DscpConfiguration = dscpConfiguration;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             Etag = etag;
@@ -92,6 +98,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the extended location of the network interface.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Gets the reference to a virtual machine.
@@ -164,6 +176,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<string> HostedWorkloads { get; private set; }
 
         /// <summary>
+        /// Gets a reference to the dscp configuration to which the network
+        /// interface is linked.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dscpConfiguration")]
+        public SubResource DscpConfiguration { get; private set; }
+
+        /// <summary>
         /// Gets the resource GUID property of the network interface resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGuid")]
@@ -184,5 +203,42 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ExtendedLocation != null)
+            {
+                ExtendedLocation.Validate();
+            }
+            if (PrivateEndpoint != null)
+            {
+                PrivateEndpoint.Validate();
+            }
+            if (IpConfigurations != null)
+            {
+                foreach (var element in IpConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (TapConfigurations != null)
+            {
+                foreach (var element1 in TapConfigurations)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+        }
     }
 }

@@ -19,24 +19,26 @@ namespace Microsoft.Azure.Management.StorageSync
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("StorageSync", "CloudEndpoints", "2019-06-01"),
-                new Tuple<string, string, string>("StorageSync", "OperationStatus", "2019-06-01"),
-                new Tuple<string, string, string>("StorageSync", "Operations", "2019-06-01"),
-                new Tuple<string, string, string>("StorageSync", "RegisteredServers", "2019-06-01"),
-                new Tuple<string, string, string>("StorageSync", "ServerEndpoints", "2019-06-01"),
-                new Tuple<string, string, string>("StorageSync", "StorageSyncServices", "2019-06-01"),
-                new Tuple<string, string, string>("StorageSync", "SyncGroups", "2019-06-01"),
-                new Tuple<string, string, string>("StorageSync", "Workflows", "2019-06-01"),
+                new Tuple<string, string, string>("StorageSync", "CloudEndpoints", "2020-03-01"),
+                new Tuple<string, string, string>("StorageSync", "OperationStatus", "2020-03-01"),
+                new Tuple<string, string, string>("StorageSync", "Operations", "2020-03-01"),
+                new Tuple<string, string, string>("StorageSync", "PrivateEndpointConnections", "2020-03-01"),
+                new Tuple<string, string, string>("StorageSync", "PrivateLinkResources", "2020-03-01"),
+                new Tuple<string, string, string>("StorageSync", "RegisteredServers", "2020-03-01"),
+                new Tuple<string, string, string>("StorageSync", "ServerEndpoints", "2020-03-01"),
+                new Tuple<string, string, string>("StorageSync", "StorageSyncServices", "2020-03-01"),
+                new Tuple<string, string, string>("StorageSync", "SyncGroups", "2020-03-01"),
+                new Tuple<string, string, string>("StorageSync", "Workflows", "2020-03-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4407";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storagesync/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\github\\anpint\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storagesync/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Work\\ankushbindlish\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "c42f3f3427766255b06a01846e1ec497c4d3c94a";
+      public static readonly String GithubCommidId = "5e4f3618b867bda05421cd8250454374bde88680";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

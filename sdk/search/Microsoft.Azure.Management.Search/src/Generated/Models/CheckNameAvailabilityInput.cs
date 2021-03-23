@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the CheckNameAvailabilityInput class.
         /// </summary>
-        /// <param name="name">The Search service name to validate. Search
+        /// <param name="name">The search service name to validate. Search
         /// service names must only contain lowercase letters, digits or
         /// dashes, cannot use dash as the first two or last one characters,
         /// cannot contain consecutive dashes, and must be between 2 and 60
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Search service name to validate. Search service
+        /// Gets or sets the search service name to validate. Search service
         /// names must only contain lowercase letters, digits or dashes, cannot
         /// use dash as the first two or last one characters, cannot contain
         /// consecutive dashes, and must be between 2 and 60 characters in

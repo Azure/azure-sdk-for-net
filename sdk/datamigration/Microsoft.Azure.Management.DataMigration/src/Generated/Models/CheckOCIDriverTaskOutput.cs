@@ -47,7 +47,8 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets information about the installed driver if found and valid.
+        /// Gets or sets information about the installed driver if found and
+        /// valid.
         /// </summary>
         [JsonProperty(PropertyName = "installedDriver")]
         public OracleOCIDriverInfo InstalledDriver { get; set; }

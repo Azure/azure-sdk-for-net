@@ -11,36 +11,30 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class UserGetMemberGroupsResult
+    internal partial class UserGetMemberGroupsResult
     {
         internal static UserGetMemberGroupsResult DeserializeUserGetMemberGroupsResult(JsonElement element)
         {
-            IReadOnlyList<string> value = default;
+            Optional<IReadOnlyList<string>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(item.GetString());
                     }
                     value = array;
                     continue;
                 }
             }
-            return new UserGetMemberGroupsResult(value);
+            return new UserGetMemberGroupsResult(Optional.ToList(value));
         }
     }
 }

@@ -176,7 +176,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
   ]
 }";
 
-
                 Assert.AreEqual(expectedJson, json.ToString());
             }
         }
@@ -200,6 +199,27 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 json.WriteObject(policy);
 
                 Assert.AreEqual(@"{""attributes"":{""enabled"":false}}", json.ToString());
+            }
+        }
+
+        public static object[] KeyPolicySerializationTestCases =
+        {
+            new object[] {new CertificatePolicy() { KeyType = CertificateKeyType.Rsa }, @"{""key_props"":{""kty"":""RSA""}}" },
+            new object[] {new CertificatePolicy() { ReuseKey = false }, @"{""key_props"":{""reuse_key"":false}}" },
+            new object[] {new CertificatePolicy() { Exportable = false }, @"{""key_props"":{""exportable"":false}}" },
+            new object[] {new CertificatePolicy() { KeyCurveName = CertificateKeyCurveName.P256 }, @"{""key_props"":{""crv"":""P-256""}}" },
+            new object[] {new CertificatePolicy() { KeySize = 2048 }, @"{""key_props"":{""key_size"":2048}}" },
+        };
+
+        [Test]
+        [TestCaseSource(nameof(KeyPolicySerializationTestCases))]
+        public void KeyPolicySerialized(CertificatePolicy policy, string expectedJson)
+        {
+            using (JsonStream json = new JsonStream())
+            {
+                json.WriteObject(policy);
+
+                Assert.That(json.ToString(), Is.EqualTo(expectedJson));
             }
         }
 

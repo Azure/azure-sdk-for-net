@@ -1,0 +1,2 @@
+Start-AutoRestCodeGeneration -ResourceProvider "mysql/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\mysql\Generated"
+Start-AutoRestCodeGeneration -ResourceProvider "mysql/resource-manager" -AutoRestVersion "v2" -SdkGenerationDirectory "$PSScriptRoot\mysqlflexibleservers\Generated" -ConfigFileTag "package-2020-07-01-privatepreview" -Namespace "Microsoft.Azure.Management.MySQL.FlexibleServers"

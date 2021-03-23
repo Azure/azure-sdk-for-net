@@ -447,6 +447,18 @@ namespace Microsoft.Azure.ServiceBus
         }
 
         /// <summary>
+        /// Unregister message handler from the receiver if there is an active message handler registered. This operation waits for the completion
+        /// of inflight receive and message handling operations to finish and unregisters future receives on the message handler which previously 
+        /// registered. 
+        /// </summary>
+        /// <param name="inflightMessageHandlerTasksWaitTimeout"> is the maximum waitTimeout for inflight message handling tasks.</param>
+        public async Task UnregisterMessageHandlerAsync(TimeSpan inflightMessageHandlerTasksWaitTimeout)
+        {
+            this.ThrowIfClosed();
+            await this.InnerReceiver.UnregisterMessageHandlerAsync(inflightMessageHandlerTasksWaitTimeout).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Receive session messages continuously from the queue. Registers a message handler and begins a new thread to receive session-messages.
         /// This handler(<see cref="Func{IMessageSession, Message, CancellationToken, Task}"/>) is awaited on every time a new message is received by the queue client.
         /// </summary>
@@ -474,6 +486,18 @@ namespace Microsoft.Azure.ServiceBus
         {
             this.ThrowIfClosed();
             this.SessionPumpHost.OnSessionHandler(handler, sessionHandlerOptions);
+        }
+
+        /// <summary>
+        /// Unregister session handler from the receiver if there is an active session handler registered. This operation waits for the completion
+        /// of inflight receive and session handling operations to finish and unregisters future receives on the session handler which previously 
+        /// registered. 
+        /// </summary>
+        /// <param name="inflightSessionHandlerTasksWaitTimeout"> is the maximum waitTimeout for inflight session handling tasks.</param>
+        public async Task UnregisterSessionHandlerAsync(TimeSpan inflightSessionHandlerTasksWaitTimeout)
+        {
+            this.ThrowIfClosed();
+            await this.SessionPumpHost.UnregisterSessionHandlerAsync(inflightSessionHandlerTasksWaitTimeout).ConfigureAwait(false);
         }
 
         /// <summary>

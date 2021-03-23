@@ -38,8 +38,11 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'H264SingleBitrate720p', 'H264SingleBitrate1080p',
         /// 'AdaptiveStreaming', 'AACGoodQualityAudio',
         /// 'ContentAwareEncodingExperimental', 'ContentAwareEncoding',
-        /// 'H264MultipleBitrate1080p', 'H264MultipleBitrate720p',
-        /// 'H264MultipleBitrateSD'</param>
+        /// 'CopyAllBitrateNonInterleaved', 'H264MultipleBitrate1080p',
+        /// 'H264MultipleBitrate720p', 'H264MultipleBitrateSD',
+        /// 'H265ContentAwareEncoding', 'H265AdaptiveStreaming',
+        /// 'H265SingleBitrate720p', 'H265SingleBitrate1080p',
+        /// 'H265SingleBitrate4K'</param>
         public BuiltInStandardEncoderPreset(EncoderNamedPreset presetName)
         {
             PresetName = presetName;
@@ -57,8 +60,11 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'H264SingleBitrate720p', 'H264SingleBitrate1080p',
         /// 'AdaptiveStreaming', 'AACGoodQualityAudio',
         /// 'ContentAwareEncodingExperimental', 'ContentAwareEncoding',
-        /// 'H264MultipleBitrate1080p', 'H264MultipleBitrate720p',
-        /// 'H264MultipleBitrateSD'
+        /// 'CopyAllBitrateNonInterleaved', 'H264MultipleBitrate1080p',
+        /// 'H264MultipleBitrate720p', 'H264MultipleBitrateSD',
+        /// 'H265ContentAwareEncoding', 'H265AdaptiveStreaming',
+        /// 'H265SingleBitrate720p', 'H265SingleBitrate1080p',
+        /// 'H265SingleBitrate4K'
         /// </summary>
         [JsonProperty(PropertyName = "presetName")]
         public EncoderNamedPreset PresetName { get; set; }

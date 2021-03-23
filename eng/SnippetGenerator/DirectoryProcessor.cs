@@ -21,11 +21,11 @@ namespace SnippetGenerator
         private readonly Lazy<List<Snippet>> _snippets;
         private static readonly Regex _markdownOnlyRegex = new Regex(
             @"(?<indent>\s*)//@@\s*(?<line>.*)",
-            RegexOptions.Compiled | RegexOptions.Singleline);
+            RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
         private const string _codeOnlyPattern = "/*@@*/";
         private static readonly Regex _regionRegex = new Regex(
             @"^(?<indent>\s*)(#region|#endregion)\s*(?<line>.*)",
-            RegexOptions.Compiled | RegexOptions.Singleline);
+            RegexOptions.Compiled | RegexOptions.Singleline | RegexOptions.CultureInvariant);
 
         private UTF8Encoding _utf8EncodingWithoutBOM;
 
@@ -204,11 +204,19 @@ namespace SnippetGenerator
             var list = new List<Snippet>();
             foreach (var file in Directory.GetFiles(baseDirectory, "*.cs", SearchOption.AllDirectories))
             {
-                var syntaxTree = CSharpSyntaxTree.ParseText(
-                    File.ReadAllText(file),
-                    new CSharpParseOptions(LanguageVersion.Preview),
-                    path: file);
-                list.AddRange(GetAllSnippets(syntaxTree));
+                try
+                {
+                    var syntaxTree = CSharpSyntaxTree.ParseText(
+                        File.ReadAllText(file),
+                        new CSharpParseOptions(LanguageVersion.Preview),
+                        path: file);
+
+                    list.AddRange(GetAllSnippets(syntaxTree));
+                }
+                catch (Exception e)
+                {
+                    throw new InvalidOperationException($"Failed to discover snippets from file {file}", e);
+                }
             }
 
             return list;
@@ -222,7 +230,13 @@ namespace SnippetGenerator
 
             foreach (var region in directiveWalker.Regions)
             {
-                var syntaxTrivia = region.Item1.EndOfDirectiveToken.LeadingTrivia.First(t => t.IsKind(SyntaxKind.PreprocessingMessageTrivia));
+                var leadingTrivia = region.Item1.EndOfDirectiveToken.LeadingTrivia;
+                if (!leadingTrivia.Any())
+                {
+                    // Skip unnamed regions
+                    continue;
+                }
+                var syntaxTrivia = leadingTrivia.First(t => t.IsKind(SyntaxKind.PreprocessingMessageTrivia));
                 var fromBounds = TextSpan.FromBounds(
                     region.Item1.GetLocation().SourceSpan.End,
                     region.Item2.GetLocation().SourceSpan.Start);

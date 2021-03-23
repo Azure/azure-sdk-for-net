@@ -49,12 +49,12 @@ namespace Azure.Storage.Sas
 
             if (StartsOn != DateTimeOffset.MinValue)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(StartsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyStart, WebUtility.UrlEncode(StartsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture)));
             }
 
             if (ExpiresOn != DateTimeOffset.MinValue)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(ExpiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.KeyExpiry, WebUtility.UrlEncode(ExpiresOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture)));
             }
 
             if (!string.IsNullOrWhiteSpace(Service))

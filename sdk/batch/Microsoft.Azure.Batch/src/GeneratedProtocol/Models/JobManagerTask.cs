@@ -75,6 +75,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// settings for the Job Manager Task.</param>
         /// <param name="constraints">Constraints that apply to the Job Manager
         /// Task.</param>
+        /// <param name="requiredSlots">The number of scheduling slots that the
+        /// Task required to run.</param>
         /// <param name="killJobOnCompletion">Whether completion of the Job
         /// Manager Task signifies completion of the entire Job.</param>
         /// <param name="userIdentity">The user identity under which the Job
@@ -89,7 +91,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// operations.</param>
         /// <param name="allowLowPriorityNode">Whether the Job Manager Task may
         /// run on a low-priority Compute Node.</param>
-        public JobManagerTask(string id, string commandLine, string displayName = default(string), TaskContainerSettings containerSettings = default(TaskContainerSettings), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), bool? killJobOnCompletion = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? runExclusive = default(bool?), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings), bool? allowLowPriorityNode = default(bool?))
+        public JobManagerTask(string id, string commandLine, string displayName = default(string), TaskContainerSettings containerSettings = default(TaskContainerSettings), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), TaskConstraints constraints = default(TaskConstraints), int? requiredSlots = default(int?), bool? killJobOnCompletion = default(bool?), UserIdentity userIdentity = default(UserIdentity), bool? runExclusive = default(bool?), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings), bool? allowLowPriorityNode = default(bool?))
         {
             Id = id;
             DisplayName = displayName;
@@ -99,6 +101,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             OutputFiles = outputFiles;
             EnvironmentSettings = environmentSettings;
             Constraints = constraints;
+            RequiredSlots = requiredSlots;
             KillJobOnCompletion = killJobOnCompletion;
             UserIdentity = userIdentity;
             RunExclusive = runExclusive;
@@ -211,6 +214,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of scheduling slots that the Task required
+        /// to run.
+        /// </summary>
+        /// <remarks>
+        /// The default is 1. A Task can only be scheduled to run on a compute
+        /// node if the node has enough free scheduling slots available. For
+        /// multi-instance Tasks, this must be 1.
+        /// </remarks>
+        [JsonProperty(PropertyName = "requiredSlots")]
+        public int? RequiredSlots { get; set; }
 
         /// <summary>
         /// Gets or sets whether completion of the Job Manager Task signifies

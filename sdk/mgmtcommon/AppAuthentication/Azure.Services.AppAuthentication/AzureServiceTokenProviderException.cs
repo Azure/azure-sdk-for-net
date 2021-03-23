@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 namespace Microsoft.Azure.Services.AppAuthentication
 {
     /// <summary>
-    /// Instance of this exception is thrown if access token cannot be acquired. 
+    /// Instance of this exception is thrown if access token cannot be acquired.
     /// </summary>
 #if FullNetFx || NETSTANDARD2_0
     [Serializable]
@@ -17,6 +17,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
     public class AzureServiceTokenProviderException : Exception
     {
+        internal const string MetadataEndpointNotListening = "Unable to connect to the Instance Metadata Service (IMDS). Skipping request to the Managed Service Identity (MSI) token endpoint.";
+
         internal const string MsiEndpointNotListening = "Unable to connect to the Managed Service Identity (MSI) endpoint. Please check that you are running on an Azure resource that has MSI setup.";
 
         internal const string UnableToParseMsiTokenResponse = "A successful response was received from Managed Service Identity, but it could not be parsed.";
@@ -42,7 +44,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         internal const string NonRetryableError = "Received a non-retryable error.";
 
         /// <summary>
-        /// Creates an instance of AzureServiceTokenProviderException. 
+        /// Creates an instance of AzureServiceTokenProviderException.
         /// </summary>
         /// <param name="connectionString">Connection string used.</param>
         /// <param name="resource">Resource for which token was expected.</param>

@@ -14,7 +14,7 @@ namespace CosmosDB.Tests.ScenarioTests
 {
     public class MongoResourcesOperationsTests
     {
-        const string location = "EAST US";
+        const string location = "EAST US 2";
         // using an existing DB account, since Account provisioning takes 10-15 minutes
         const string resourceGroupName = "CosmosDBResourceGroup3668";
         const string databaseAccountName = "db001";
@@ -55,19 +55,22 @@ namespace CosmosDB.Tests.ScenarioTests
                     {
                         Location = location,
                         Kind = DatabaseAccountKind.MongoDB,
-                        Locations = new List<Location>
+                        Properties = new DefaultRequestDatabaseAccountCreateUpdateProperties
                         {
-                            {new Location(locationName: location) }
+                            Locations = new List<Location>
+                            {
+                                {new Location(locationName: location) }
+                            }
                         }
                     };
 
-                   databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                    databaseAccount = cosmosDBManagementClient.DatabaseAccounts.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseAccountCreateUpdateParameters).GetAwaiter().GetResult().Body;
                     Assert.Equal(databaseAccount.Name, databaseAccountName);
                 }
 
                 MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
                 {
-                    Resource = new MongoDBDatabaseResource {Id = databaseName},
+                    Resource = new MongoDBDatabaseResource { Id = databaseName },
                     Options = new CreateUpdateOptions()
                 };
 
@@ -103,11 +106,15 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.Equal(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
                 Assert.Equal(mongoDatabaseThroughputType, throughputSettingsGetResults.Type);
 
+                Dictionary<string, string> dict = new Dictionary<string, string>();
+                dict.Add("partitionKey", PartitionKind.Hash.ToString());
+
                 MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
                 {
                     Resource = new MongoDBCollectionResource
                     {
                         Id = collectionName,
+                        ShardKey = dict
                     },
                     Options = new CreateUpdateOptions()
                 };
@@ -119,7 +126,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = cosmosDBManagementClient.MongoDBResources.ListMongoDBCollectionsWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
                 Assert.NotNull(mongoDBCollections);
 
-                foreach(MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
+                foreach (MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
                 {
                     cosmosDBManagementClient.MongoDBResources.DeleteMongoDBCollectionWithHttpMessagesAsync(resourceGroupName, databaseAccountName, databaseName, mongoDBCollection.Name);
                 }

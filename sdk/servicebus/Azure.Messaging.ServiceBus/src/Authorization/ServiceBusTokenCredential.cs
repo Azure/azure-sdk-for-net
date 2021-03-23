@@ -4,7 +4,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Messaging.ServiceBus;
 
 namespace Azure.Messaging.ServiceBus.Authorization
 {
@@ -16,9 +15,6 @@ namespace Azure.Messaging.ServiceBus.Authorization
     ///
     internal class ServiceBusTokenCredential : TokenCredential
     {
-        /// <summary>The default scope used for token authentication with EventHubs.</summary>
-        private const string DefaultScope = "https://servicebus.azure.net/.default";
-
         /// <summary>
         ///   The Service Bus resource to which the token is intended to serve as authorization.
         /// </summary>
@@ -58,8 +54,7 @@ namespace Azure.Messaging.ServiceBus.Authorization
             Resource = serviceBusResource;
 
             IsSharedAccessSignatureCredential =
-                (tokenCredential is ServiceBusSharedKeyCredential)
-                || (tokenCredential is SharedAccessSignatureCredential)
+                (tokenCredential is SharedAccessSignatureCredential)
                 || ((tokenCredential as ServiceBusTokenCredential)?.IsSharedAccessSignatureCredential == true);
         }
 
@@ -103,6 +98,6 @@ namespace Azure.Messaging.ServiceBus.Authorization
         /// <returns>The token representing the shared access signature for this credential.</returns>
         ///
         public ValueTask<AccessToken> GetTokenUsingDefaultScopeAsync(CancellationToken cancellationToken) =>
-            GetTokenAsync(new TokenRequestContext(new string[] { DefaultScope }), cancellationToken);
+            GetTokenAsync(new TokenRequestContext(new string[] { Constants.DefaultScope }), cancellationToken);
     }
 }

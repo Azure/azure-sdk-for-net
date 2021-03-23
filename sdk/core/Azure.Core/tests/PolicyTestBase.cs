@@ -11,7 +11,7 @@ namespace Azure.Core.Tests
 {
     public abstract class PolicyTestBase
     {
-        protected static async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
+        protected static async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null, string query = null)
         {
             Assert.IsInstanceOf<HttpPipelineSynchronousPolicy>(policy, "Use SyncAsyncPolicyTestBase base type for non-sync policies");
 
@@ -19,6 +19,7 @@ namespace Azure.Core.Tests
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("http://example.com"));
+                request.Uri.Query = query;
                 var pipeline = new HttpPipeline(transport, new[] { policy }, responseClassifier);
                 return await pipeline.SendRequestAsync(request, CancellationToken.None);
             }

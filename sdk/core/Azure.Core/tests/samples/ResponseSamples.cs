@@ -179,7 +179,6 @@ namespace Azure.Core.Samples
         [Ignore("Only verifying that the sample builds")]
         public void RequestFailedException()
         {
-
             // create a client
             var client = new SecretClient(new Uri("http://example.com"), new DefaultAzureCredential());
 

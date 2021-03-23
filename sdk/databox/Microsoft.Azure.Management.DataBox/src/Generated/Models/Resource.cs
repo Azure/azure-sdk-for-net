@@ -42,11 +42,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="tags">The list of key value pairs that describe the
         /// resource. These tags can be used in viewing and grouping this
         /// resource (across resource groups).</param>
-        public Resource(string location, Sku sku, IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="identity">Msi identity of the resource</param>
+        public Resource(string location, Sku sku, IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceIdentity identity = default(ResourceIdentity))
         {
             Location = location;
             Tags = tags;
             Sku = sku;
+            Identity = identity;
             CustomInit();
         }
 
@@ -78,6 +80,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets msi identity of the resource
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ResourceIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

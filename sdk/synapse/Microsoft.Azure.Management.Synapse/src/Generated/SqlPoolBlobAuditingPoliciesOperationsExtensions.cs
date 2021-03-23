@@ -131,5 +131,85 @@ namespace Microsoft.Azure.Management.Synapse
                 }
             }
 
+            /// <summary>
+            /// Lists auditing settings of a Sql pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            public static IPage<SqlPoolBlobAuditingPolicy> ListBySqlPool(this ISqlPoolBlobAuditingPoliciesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            {
+                return operations.ListBySqlPoolAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists auditing settings of a Sql pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SqlPoolBlobAuditingPolicy>> ListBySqlPoolAsync(this ISqlPoolBlobAuditingPoliciesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySqlPoolWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists auditing settings of a Sql pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SqlPoolBlobAuditingPolicy> ListBySqlPoolNext(this ISqlPoolBlobAuditingPoliciesOperations operations, string nextPageLink)
+            {
+                return operations.ListBySqlPoolNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists auditing settings of a Sql pool.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SqlPoolBlobAuditingPolicy>> ListBySqlPoolNextAsync(this ISqlPoolBlobAuditingPoliciesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySqlPoolNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

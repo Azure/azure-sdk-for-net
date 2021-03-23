@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="location">Location of the resource.</param>
         /// <param name="id">Fully qualified identifier of the
         /// resource.</param>
-        /// <param name="name">Name of the resource</param>
-        /// <param name="type">Type of the resource</param>
+        /// <param name="name">Name of the resource.</param>
+        /// <param name="type">Type of the resource.</param>
         /// <param name="tags">Tags of the resource.</param>
         /// <param name="provisioningState">Provisioning state of the partner
         /// registration. Possible values include: 'Creating', 'Updating',
@@ -84,7 +84,9 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// partner namespaces is always permitted under the same Azure
         /// subscription as the one used
         /// for creating the partner registration.</param>
-        public PartnerRegistration(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string partnerName = default(string), string partnerResourceTypeName = default(string), string partnerResourceTypeDisplayName = default(string), string partnerResourceTypeDescription = default(string), string longDescription = default(string), string partnerCustomerServiceNumber = default(string), string partnerCustomerServiceExtension = default(string), string customerServiceUri = default(string), string setupUri = default(string), string logoUri = default(string), string visibilityState = default(string), IList<string> authorizedAzureSubscriptionIds = default(IList<string>))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public PartnerRegistration(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string partnerName = default(string), string partnerResourceTypeName = default(string), string partnerResourceTypeDisplayName = default(string), string partnerResourceTypeDescription = default(string), string longDescription = default(string), string partnerCustomerServiceNumber = default(string), string partnerCustomerServiceExtension = default(string), string customerServiceUri = default(string), string setupUri = default(string), string logoUri = default(string), string visibilityState = default(string), IList<string> authorizedAzureSubscriptionIds = default(IList<string>), SystemData systemData = default(SystemData))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -100,6 +102,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             LogoUri = logoUri;
             VisibilityState = visibilityState;
             AuthorizedAzureSubscriptionIds = authorizedAzureSubscriptionIds;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -210,6 +213,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.authorizedAzureSubscriptionIds")]
         public IList<string> AuthorizedAzureSubscriptionIds { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

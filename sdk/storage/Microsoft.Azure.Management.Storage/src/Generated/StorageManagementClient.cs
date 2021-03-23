@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
 
         /// <summary>
+        /// Gets the IDeletedAccountsOperations.
+        /// </summary>
+        public virtual IDeletedAccountsOperations DeletedAccounts { get; private set; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         public virtual IUsagesOperations Usages { get; private set; }
@@ -98,6 +103,11 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IManagementPoliciesOperations.
         /// </summary>
         public virtual IManagementPoliciesOperations ManagementPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IBlobInventoryPoliciesOperations.
+        /// </summary>
+        public virtual IBlobInventoryPoliciesOperations BlobInventoryPolicies { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -138,6 +148,26 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IFileSharesOperations.
         /// </summary>
         public virtual IFileSharesOperations FileShares { get; private set; }
+
+        /// <summary>
+        /// Gets the IQueueServicesOperations.
+        /// </summary>
+        public virtual IQueueServicesOperations QueueServices { get; private set; }
+
+        /// <summary>
+        /// Gets the IQueueOperations.
+        /// </summary>
+        public virtual IQueueOperations Queue { get; private set; }
+
+        /// <summary>
+        /// Gets the ITableServicesOperations.
+        /// </summary>
+        public virtual ITableServicesOperations TableServices { get; private set; }
+
+        /// <summary>
+        /// Gets the ITableOperations.
+        /// </summary>
+        public virtual ITableOperations Table { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
@@ -383,8 +413,10 @@ namespace Microsoft.Azure.Management.Storage
             Operations = new Operations(this);
             Skus = new SkusOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
+            DeletedAccounts = new DeletedAccountsOperations(this);
             Usages = new UsagesOperations(this);
             ManagementPolicies = new ManagementPoliciesOperations(this);
+            BlobInventoryPolicies = new BlobInventoryPoliciesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             ObjectReplicationPolicies = new ObjectReplicationPoliciesOperations(this);
@@ -393,8 +425,12 @@ namespace Microsoft.Azure.Management.Storage
             BlobContainers = new BlobContainersOperations(this);
             FileServices = new FileServicesOperations(this);
             FileShares = new FileSharesOperations(this);
+            QueueServices = new QueueServicesOperations(this);
+            Queue = new QueueOperations(this);
+            TableServices = new TableServicesOperations(this);
+            Table = new TableOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-06-01";
+            ApiVersion = "2021-01-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Activity description.</param>
         /// <param name="dependsOn">Activity depends on condition.</param>
         /// <param name="userProperties">Activity user properties.</param>
-        public WaitActivity(string name, int waitTimeInSeconds, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>))
+        public WaitActivity(string name, object waitTimeInSeconds, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>))
             : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             WaitTimeInSeconds = waitTimeInSeconds;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets duration in seconds.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.waitTimeInSeconds")]
-        public int WaitTimeInSeconds { get; set; }
+        public object WaitTimeInSeconds { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -69,6 +69,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
+            if (WaitTimeInSeconds == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "WaitTimeInSeconds");
+            }
         }
     }
 }

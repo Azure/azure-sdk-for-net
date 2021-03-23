@@ -1,0 +1,5 @@
+*.config.json
+!*common.config.json
+!*common.test.assets.config.json
+*.etl
+params.*.json

@@ -49,7 +49,7 @@ namespace Compute.Tests
                     {
                         Extensions = new List<VirtualMachineScaleSetExtension>()
                         {
-                            GetTestVMSSVMExtension(),
+                            GetTestVMSSVMExtension(autoUpdateMinorVersion:false),
                         }
                     };
 
@@ -277,7 +277,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westcentralus");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -381,7 +381,7 @@ namespace Compute.Tests
                     // Windows VM image
                     ImageReference imageRef = GetPlatformVMImage(true);
                     imageRef.Version = "latest";
-                    var extension = GetTestVMSSVMExtension();
+                    var extension = GetTestVMSSVMExtension(autoUpdateMinorVersion:false);
                     VirtualMachineScaleSetExtensionProfile extensionProfile = new VirtualMachineScaleSetExtensionProfile()
                     {
                         Extensions = new List<VirtualMachineScaleSetExtension>()

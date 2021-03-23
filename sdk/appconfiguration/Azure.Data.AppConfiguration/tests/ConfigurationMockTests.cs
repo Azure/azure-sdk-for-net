@@ -814,6 +814,46 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.AreEqual(1, correlationContexts.Count());
         }
 
+        [Test]
+        public async Task ExternalSyncTokenIsSentWithRequest()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            service.AddSyncToken("syncToken1=val1;sn=1");
+            await service.GetConfigurationSettingAsync(s_testSetting.Key, s_testSetting.Label);
+
+            var request = mockTransport.Requests[0];
+
+            AssertRequestCommon(request);
+            Assert.True(request.Headers.TryGetValue("Sync-Token", out var syncToken));
+            Assert.AreEqual("syncToken1=val1", syncToken);
+        }
+
+        [Test]
+        public async Task ExternalSyncTokensFollowRulesWhenAdded()
+        {
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            service.AddSyncToken("syncToken1=val1;sn=1");
+            service.AddSyncToken("syncToken1=val2;sn=2,syncToken2=val3;sn=2");
+            service.AddSyncToken("syncToken2=val1;sn=1");
+            await service.GetConfigurationSettingAsync(s_testSetting.Key, s_testSetting.Label);
+
+            var request = mockTransport.Requests[0];
+
+            AssertRequestCommon(request);
+            Assert.True(request.Headers.TryGetValues("Sync-Token", out var syncTokens));
+            CollectionAssert.Contains(syncTokens, "syncToken2=val3");
+            CollectionAssert.Contains(syncTokens, "syncToken1=val2");
+        }
 
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
@@ -834,7 +874,8 @@ namespace Azure.Data.AppConfiguration.Tests
         private void AssertRequestCommon(MockRequest request)
         {
             Assert.True(request.Headers.TryGetValue("User-Agent", out var value));
-            StringAssert.Contains("azsdk-net-Data.AppConfiguration/1.0.0", value);
+            Version version = typeof(ConfigurationClient).Assembly.GetName().Version;
+            StringAssert.Contains($"azsdk-net-Data.AppConfiguration/{version.Major}.{version.Minor}.{version.Build}", value);
         }
 
         private static ConfigurationSetting CreateSetting(int i)

@@ -38,13 +38,24 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="identity">The identity of the workspace</param>
         /// <param name="sqlAdministratorLoginPassword">SQL administrator login
         /// password</param>
+        /// <param name="managedVirtualNetworkSettings">Managed Virtual Network
+        /// Settings</param>
+        /// <param name="workspaceRepositoryConfiguration">Git integration
+        /// settings</param>
+        /// <param name="purviewConfiguration">Purview Configuration</param>
         /// <param name="provisioningState">Resource provisioning state</param>
-        public WorkspacePatchInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedIdentity identity = default(ManagedIdentity), string sqlAdministratorLoginPassword = default(string), string provisioningState = default(string))
+        /// <param name="encryption">The encryption details of the
+        /// workspace</param>
+        public WorkspacePatchInfo(IDictionary<string, string> tags = default(IDictionary<string, string>), ManagedIdentity identity = default(ManagedIdentity), string sqlAdministratorLoginPassword = default(string), ManagedVirtualNetworkSettings managedVirtualNetworkSettings = default(ManagedVirtualNetworkSettings), WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default(WorkspaceRepositoryConfiguration), PurviewConfiguration purviewConfiguration = default(PurviewConfiguration), string provisioningState = default(string), EncryptionDetails encryption = default(EncryptionDetails))
         {
             Tags = tags;
             Identity = identity;
             SqlAdministratorLoginPassword = sqlAdministratorLoginPassword;
+            ManagedVirtualNetworkSettings = managedVirtualNetworkSettings;
+            WorkspaceRepositoryConfiguration = workspaceRepositoryConfiguration;
+            PurviewConfiguration = purviewConfiguration;
             ProvisioningState = provisioningState;
+            Encryption = encryption;
             CustomInit();
         }
 
@@ -72,10 +83,34 @@ namespace Microsoft.Azure.Management.Synapse.Models
         public string SqlAdministratorLoginPassword { get; set; }
 
         /// <summary>
+        /// Gets or sets managed Virtual Network Settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.managedVirtualNetworkSettings")]
+        public ManagedVirtualNetworkSettings ManagedVirtualNetworkSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets git integration settings
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.workspaceRepositoryConfiguration")]
+        public WorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets purview Configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.purviewConfiguration")]
+        public PurviewConfiguration PurviewConfiguration { get; set; }
+
+        /// <summary>
         /// Gets resource provisioning state
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the encryption details of the workspace
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public EncryptionDetails Encryption { get; set; }
 
     }
 }

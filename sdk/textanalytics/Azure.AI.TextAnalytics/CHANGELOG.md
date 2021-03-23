@@ -1,7 +1,108 @@
 # Release History
 
-## 1.0.0-preview.5 (Unreleased)
+## 5.1.0-beta.6 (Unreleased)
+
+
+## 5.1.0-beta.5 (2021-03-09)
+### New features
+- Added ability to filter the categories returned in a Personally Identifiable Information recognition with the optional parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions`.
+- Added the ability to recognize linked entities under `StartAnalyzeBatchActions`.
+- Added `RecognizeLinkedEntitiesOptions` to `TextAnalyticsActions`.
+- Added `RecognizeLinkedEntitiesActionsResults` to `AnalyzeBatchActionsResult`.
+- `AnalyzeHealthcareEntitiesResult`, now exposes the property `EntityRelations`of type `HealthcareEntityRelation`.
+- Introduced `HealthcareEntityRelation` class which will determine all the different relations between the entities as `Roles`.
+- Added `HealthcareEntityRelationRole`, which exposes `Name` and `Entity` of type `string` and `HealthcareEntity` respectively.
+- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `EntityAssociation`, `EntityCertainity` and `EntityConditionality`.
+- Added new types under `HealthcareRelationType` class.
+
 ### Breaking changes
+- Renamed `AspectSentiment` to `TargetSentiment`.
+- Renamed `MinedOpinion` to `SentenceOpinion`.
+- Renamed `OpinionSentiment` to `AssessmentSentiment`.
+- For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
+- Removed `RelatedEntities`.
+- `RecognizePiiEntitiesOptions.Domain` is now a nullable type.
+- In `StartAnalyzeBatchActions` when all actions return status `failed` the SDK will no longer throw an exception. The request will succeed and the errors will be located at the specific action level. 
+
+### Fixes
+- `RecognizePiiEntities` and `TextAnalyticsActions.RecognizePiiEntitiesOptions` were always passing `PiiEntityDomainType.PHI`. Now, it is only passed when requested by the user [19086](https://github.com/Azure/azure-sdk-for-net/issues/19086).
+
+## 5.1.0-beta.4 (2021-02-10)
+### New features
+- Added property `Length` to `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.
+- `StringIndexType` has been added to all endpoints that expose the new properties `Offset` and `Length` to determine the encoding which service should use. It is added into the `TextAnalyticsRequestOptions` class and default for this SDK is `UTF-16` code unit.
+- `AnalyzeHealthcareEntitiesOperation` now exposes the properties `CreatedOn`, `ExpiresOn`, `LastModified`, and `Status`.
+- `AnalyzeBatchActionsOperation ` now exposes the properties `CreatedOn`, `ExpiresOn`, `LastModified`, `Status`, `ActionsFailed`, `ActionsInProgress`,  `ActionsSucceeded`,  `DisplayName`, and `TotalActions`.
+
+### Breaking changes
+- Renamed `JobStatus` to `TextAnalyticsOperationStatus`.
+
+#### Analyze Healthcare Entities
+- Pagination support was added for all `StartAnalyzeHealthcareEntities` methods.
+- Moved `Cancel` and `CancelAsync` for Healthcare from `TextAnalyticsClient` to `AnalyzeHealthcareEntitiesOperation`.
+- The healthcare entities returned by `StartAnalyzeHealthcareEntities` are now organized as a directed graph where the edges represent a certain type of healthcare relationship between the source and target entities. Edges are stored in the `RelatedEntities` property.
+- Renamed `StartHealthcareBatch` and `StartHealthcareBatchAsync` to `StartAnalyzeHealthcareEntities` and `StartAnalyzeHealthcareEntitiesAsync` respectively.
+- Renamed `RecognizeHealthcareEntitiesResultCollection` to `AnalyzeHealthcareEntitiesResultCollection`.
+- Renamed `DocumentHealthcareResult` to `AnalyzeHealthcareEntitiesResult`.
+- Renamed `HealthcareOperation` to `AnalyzeHealthcareEntitiesOperation`.
+- Renamed `HealthcareOptions` to `AnalyzeHealthcareEntitiesOptions`, and removed types `Skip` and `Top` from it. Pagination is now done automatically by the SDK.
+- Renamed `HealthcareEntityLink` to `EntityDataSource` with `DataSource` to `EntityDataSource` and `Id` to `Name`.
+- Renamed `HealthcareRelation` to `HealthcareRelationType`.
+- Removed method `GetHealthcareEntities` as pagination is now done with the main `StartAnalyzeHealthcareEntities` methods.
+- Removed `HealthcareTaskResult`.
+- Removed `StartHealthcare` and `StartHealthcareAsync` methods.
+- Removed `IsNegated` property from `HealthcareEntity`.
+
+#### Analyze batch actions
+- The word `action` is now used consistently in our names and documentation instead of `task`.
+- Pagination support was added for all `StartAnalyzeBatchActions` methods.
+- Renamed methods `StartAnalyzeOperationBatch` and `StartAnalyzeOperationBatchAsync` to `StartAnalyzeBatchActions` and `StartAnalyzeBatchActionsAsync` respectively.
+- Type `TextAnalyticsActions` added to `StartAnalyzeBatchActions` methods to specify the actions to execute in the batch of documents instead of in `AnalyzeOperationOptions`.
+- The way to configure the options for each action is now exposed in the respective `ExtractKeyPhrasesOptions`, `RecognizeEntitiesOptions`, or `RecognizePiiEntitiesOptions` object.
+- Results for the `StartAnalyzeBatchActions` method are now returned in a `AnalyzeHealthcareEntitiesResultCollection` object that contains information per type of action.
+- Renamed `AnalyzeOperation` to `AnalyzeBatchActionsOperation`.
+- Reuse `PiiEntityDomainType` instead of `PiiTaskParametersDomain`.
+- Removed `AnalyzeTasks`, `EntitiesTask`, `EntitiesTaskParameters`, `EntityRecognitionTasksItem`, `JobManifestTasks`, `KeyPhraseExtractionTasksItem`, `KeyPhrasesTask`, `KeyPhrasesTaskParameters`, `PiiTask`, `PiiTaskParameters`.
+
+## 5.1.0-beta.3 (2020-11-19)
+### New Features
+- Added `HealthcareOperation` long running operation for new asynchronous `Text Analytics for health` hosted API with support for batch processing. Note this is a currently in a gated preview where AAD is not supported. More information [here](https://docs.microsoft.com/azure/cognitive-services/text-analytics/how-tos/text-analytics-for-health?tabs=ner#request-access-to-the-public-preview).
+- Added `AnalyzeOperation` long running operation for new asynchronous `Analyze API` to support batch processing of Named entity recognition, Personally Identifiable Information and Key phrase extraction.
+- Both new features listed above are available in `West US2`, `East US2`, `Central US`, `North Europe` and `West Europe` regions and in Standard tier.
+
+### Breaking changes
+- Modified the way to turn on Opinion Mining feature in `AnalyzeSentiment` to a bool property called `IncludeOpinionMining`.
+
+## 5.1.0-beta.2 (2020-10-06)
+### Breaking changes
+- Removed property `Length` from `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.
+
+## 5.1.0-beta.1 (2020-09-17)
+
+### New Features
+- It defaults to the latest supported API version, which currently is `3.1-preview.2`.
+- `ErrorCode` value returned from the service is now surfaced in `RequestFailedException`.
+- Added the `RecognizePiiEntities` endpoint which returns entities containing Personally Identifiable Information. This feature is available in the Text Analytics service v3.1-preview.1 and above.
+- Support added for Opinion Mining. This feature is available in the Text Analytics service v3.1-preview.1 and above.
+- Added `Offset` and `Length` properties for `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`. The default encoding is UTF-16 code units. For additional information see https://aka.ms/text-analytics-offsets
+- `TextAnalyticsError` and `TextAnalyticsWarning` now are marked as immutable.
+- Added property `BingEntitySearchApiId` to the `LinkedEntity` class. This property is only available for v3.1-preview.2 and up, and it is to be used in conjunction with the Bing Entity Search API to fetch additional relevant information about the returned entity.
+
+## 5.0.0 (2020-07-27)
+- Re-release of version `1.0.1` with updated version `5.0.0`.
+
+## 1.0.1 (2020-06-23)
+
+### Fixes
+- The document confidence scores for analyze sentiment now contains the values the Text Analytics service returns ([12889](https://github.com/Azure/azure-sdk-for-net/issues/12889)).
+- `TextAnalyticsErrorCode` casing is now pascal case instead of camel case ([12888](https://github.com/Azure/azure-sdk-for-net/issues/12888)).
+
+## 1.0.0 (2020-06-09)
+- First stable release of Azure.AI.TextAnalytics package.
+
+## 1.0.0-preview.5 (2020-05-27)
+### Breaking changes
+- Now targets the service's v3.0 API, instead of the v3.0-preview.1 API
 - Removed `GraphemeLength` and `GraphemeOffset` from `CategorizedEntity`, `SentenceSentiment`, and `LinkedEntityMatch`.
 - `GraphemeCount` in `TextDocumentStatistics` has been renamed to `CharacterCount`.
 - `DetectedLanguage` property `SentimentScores` has been renamed to `ConfidenceScores`.

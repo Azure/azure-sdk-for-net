@@ -255,6 +255,20 @@
             "Type": "NodeAgentInformation",
             "Name": "NodeAgentInfo"
           }
+        },
+        {
+          "Key": {
+            "Type": "int?",
+            "Name": "RunningTaskSlotsCount",
+            "SummaryComment": "The total number of scheduling slots used by currently running Job Tasks on the Compute Node. This includes Job Manager Tasks and normal Tasks, but not Job Preparation, Job Release or Start Tasks.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "int?",
+            "Name": "RunningTaskSlotsCount"
+          }
         }
       ]
     }

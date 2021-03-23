@@ -35,12 +35,15 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="properties">Operation properties.</param>
         /// <param name="origin">Origin of the operation. Can be :
         /// user|system|user,system</param>
-        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), object properties = default(object), string origin = default(string))
+        /// <param name="isDataAction">Indicates whether the operation is a
+        /// data action</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay), object properties = default(object), string origin = default(string), bool? isDataAction = default(bool?))
         {
             Name = name;
             Display = display;
             Properties = properties;
             Origin = origin;
+            IsDataAction = isDataAction;
             CustomInit();
         }
 
@@ -73,6 +76,12 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "origin")]
         public string Origin { get; private set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the operation is a data action
+        /// </summary>
+        [JsonProperty(PropertyName = "isDataAction")]
+        public bool? IsDataAction { get; set; }
 
     }
 }

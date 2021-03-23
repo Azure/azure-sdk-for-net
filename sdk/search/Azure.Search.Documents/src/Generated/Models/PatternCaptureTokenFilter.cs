@@ -17,6 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of PatternCaptureTokenFilter. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="patterns"> A list of patterns to match against each token. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="patterns"/> is null. </exception>
         public PatternCaptureTokenFilter(string name, IEnumerable<string> patterns) : base(name)
         {
             if (name == null)
@@ -28,7 +29,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 throw new ArgumentNullException(nameof(patterns));
             }
 
-            Patterns = patterns.ToArray();
+            Patterns = patterns.ToList();
             ODataType = "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }
 
@@ -43,9 +44,6 @@ namespace Azure.Search.Documents.Indexes.Models
             PreserveOriginal = preserveOriginal;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.PatternCaptureTokenFilter";
         }
-
-        /// <summary> A list of patterns to match against each token. </summary>
-        public IList<string> Patterns { get; set; }
         /// <summary> A value indicating whether to return the original token even if one of the patterns matches. Default is true. </summary>
         public bool? PreserveOriginal { get; set; }
     }

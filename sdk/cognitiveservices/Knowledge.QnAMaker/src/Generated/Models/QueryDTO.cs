@@ -39,15 +39,20 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// question.</param>
         /// <param name="userId">Unique identifier for the user.</param>
         /// <param name="isTest">Query against the test index.</param>
-        /// <param name="scoreThreshold">Threshold for answers returned based
-        /// on score.</param>
+        /// <param name="scoreThreshold">Minimum threshold score for
+        /// answers.</param>
         /// <param name="context">Context object with previous QnA's
         /// information.</param>
         /// <param name="rankerType">Optional field. Set to 'QuestionOnly' for
         /// using a question only Ranker.</param>
-        /// <param name="strictFilters">Find only answers that contain these
-        /// metadata.</param>
-        public QueryDTO(string qnaId = default(string), string question = default(string), int? top = default(int?), string userId = default(string), bool? isTest = default(bool?), double? scoreThreshold = default(double?), QueryDTOContext context = default(QueryDTOContext), string rankerType = default(string), IList<MetadataDTO> strictFilters = default(IList<MetadataDTO>))
+        /// <param name="strictFilters">Find QnAs that are associated with the
+        /// given list of metadata.</param>
+        /// <param name="strictFiltersCompoundOperationType">Optional field.
+        /// Set to 'OR' for using OR operation for strict filters. Possible
+        /// values include: 'AND', 'OR'</param>
+        /// <param name="answerSpanRequest">To configure Answer span prediction
+        /// feature.</param>
+        public QueryDTO(string qnaId = default(string), string question = default(string), int? top = default(int?), string userId = default(string), bool? isTest = default(bool?), double? scoreThreshold = default(double?), QueryDTOContext context = default(QueryDTOContext), string rankerType = default(string), IList<MetadataDTO> strictFilters = default(IList<MetadataDTO>), string strictFiltersCompoundOperationType = default(string), QueryDTOAnswerSpanRequest answerSpanRequest = default(QueryDTOAnswerSpanRequest))
         {
             QnaId = qnaId;
             Question = question;
@@ -58,6 +63,8 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
             Context = context;
             RankerType = rankerType;
             StrictFilters = strictFilters;
+            StrictFiltersCompoundOperationType = strictFiltersCompoundOperationType;
+            AnswerSpanRequest = answerSpanRequest;
             CustomInit();
         }
 
@@ -98,7 +105,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         public bool? IsTest { get; set; }
 
         /// <summary>
-        /// Gets or sets threshold for answers returned based on score.
+        /// Gets or sets minimum threshold score for answers.
         /// </summary>
         [JsonProperty(PropertyName = "scoreThreshold")]
         public double? ScoreThreshold { get; set; }
@@ -117,10 +124,24 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         public string RankerType { get; set; }
 
         /// <summary>
-        /// Gets or sets find only answers that contain these metadata.
+        /// Gets or sets find QnAs that are associated with the given list of
+        /// metadata.
         /// </summary>
         [JsonProperty(PropertyName = "strictFilters")]
         public IList<MetadataDTO> StrictFilters { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional field. Set to 'OR' for using OR operation for
+        /// strict filters. Possible values include: 'AND', 'OR'
+        /// </summary>
+        [JsonProperty(PropertyName = "strictFiltersCompoundOperationType")]
+        public string StrictFiltersCompoundOperationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets to configure Answer span prediction feature.
+        /// </summary>
+        [JsonProperty(PropertyName = "answerSpanRequest")]
+        public QueryDTOAnswerSpanRequest AnswerSpanRequest { get; set; }
 
     }
 }

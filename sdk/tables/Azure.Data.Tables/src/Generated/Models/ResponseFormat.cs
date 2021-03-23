@@ -11,11 +11,12 @@ using System.ComponentModel;
 namespace Azure.Data.Tables.Models
 {
     /// <summary> The ResponseFormat. </summary>
-    public readonly partial struct ResponseFormat : IEquatable<ResponseFormat>
+    internal readonly partial struct ResponseFormat : IEquatable<ResponseFormat>
     {
         private readonly string _value;
 
         /// <summary> Determines if two <see cref="ResponseFormat"/> values are the same. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResponseFormat(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));

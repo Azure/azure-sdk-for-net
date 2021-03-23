@@ -23,10 +23,11 @@ namespace Compute.Tests
                 Publisher = "Microsoft.Compute",
                 VirtualMachineExtensionType = "VMAccessAgent",
                 TypeHandlerVersion = "2.0",
-                AutoUpgradeMinorVersion = true,
+                AutoUpgradeMinorVersion = false,
                 ForceUpdateTag = "RerunExtension",
                 Settings = "{}",
-                ProtectedSettings = "{}"
+                ProtectedSettings = "{}",
+                EnableAutomaticUpgrade = false,
             };
             typeof(Resource).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
             typeof(Resource).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
@@ -107,7 +108,7 @@ namespace Compute.Tests
 
                     // Validate the extension instance view in the VM instance-view
                     var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, vm.Name, InstanceViewTypes.InstanceView);
-                    ValidateVMExtensionInstanceView(getVMWithInstanceViewResponse.InstanceView.Extensions.FirstOrDefault());
+                    ValidateVMExtensionInstanceView(getVMWithInstanceViewResponse.InstanceView.Extensions.FirstOrDefault(c => c.Name == vmExtension.Name));
 
                     // Validate the extension delete API
                     m_CrpClient.VirtualMachineExtensions.Delete(rgName, vm.Name, vmExtension.Name);
@@ -131,6 +132,7 @@ namespace Compute.Tests
             Assert.True(vmExtExpected.Settings.ToString() == vmExtReturned.Settings.ToString());
             Assert.True(vmExtExpected.ForceUpdateTag == vmExtReturned.ForceUpdateTag);
             Assert.True(vmExtExpected.Tags.SequenceEqual(vmExtReturned.Tags));
+            Assert.True(vmExtExpected.EnableAutomaticUpgrade == vmExtReturned.EnableAutomaticUpgrade);
         }
 
         private void ValidateVMExtensionInstanceView(VirtualMachineExtensionInstanceView vmExtInstanceView)

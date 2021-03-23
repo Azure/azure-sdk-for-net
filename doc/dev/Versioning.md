@@ -9,16 +9,16 @@ Package version will look like:
 MAJOR.MINOR.PATCH-PRERELEASE
 ```
 
-In the project file use the `Version` property to define the `MAJOR.MINOR.PATCH-preview.X` part of the version.
+In the project file use the `Version` property to define the `MAJOR.MINOR.PATCH-beta.X` part of the version.
 
 ```
-<Version>1.0.0-preview.1</Version>
+<Version>1.0.0-beta.1</Version>
 ```
 
-By default builds will replace any prerelease identifier with a `dev.yyyyMMdd.r` to ensure we have unique package versions. The date will come from either
+By default builds will replace any prerelease identifier with a `alpha.yyyyMMdd.r` to ensure we have unique package versions for dev builds. The date will come from either
 today's date or a property named `OfficialBuildId` which we will pass as part of our build pipelines.
 
-If we need to produce a package that is not a dev version and has the version in the project (i.e. stable or preview) then the `SkipDevBuildNumber` should
+If we need to produce a package that is not a dev package with an alpha version and has the version in the project (i.e. stable or beta) then the `SkipDevBuildNumber` should
 be passed as `true` to the packaging command.
 
 ## Incrementing the version
@@ -26,8 +26,8 @@ be passed as `true` to the packaging command.
 See [Incrementing after release](https://github.com/Azure/azure-sdk/blob/master/docs/policies/releases.md#incrementing-after-release) for general guidance but at a
 high level we will do the following versioning changes:
 
-- After a preview release we bump the number after the preview. `1.0.0-preview.1` -> `1.0.0-preview.2`
-- After a GA release we bump the minor version and switch to preview 1. `1.0.0` -> `1.1.0-preview.1`
+- After a beta release we bump the number after the beta. `1.0.0-beta.1` -> `1.0.0-beta.2`
+- After a GA release we bump the minor version and switch to beta 1. `1.0.0` -> `1.1.0-beta.1`
 - Prior to a hot-fix release we bump the patch version. `1.0.0` -> `1.0.1`
 
 Versions are automatically bumped up in package project `.csproj` files as well as package changelog `CHANGELOG.md` as part of the release process. To increment a version locally make use of the `eng\scripts\Update-PkgVersion.ps1` script.
@@ -61,4 +61,3 @@ The versioning scheme imposes the following limits on these version parts:
 | Parameter                  | Description                                                  |
 | -------------------------- | ------------------------------------------------------------ |
 | OfficialBuildId            | ID of current build. The accepted format is `yyyyMMdd.r`. Should be passed to build in YAML official build defintion. |
-

@@ -14,11 +14,19 @@ namespace Azure.Storage.Test
     /// <summary>
     /// Base class for Common tests
     /// </summary>
-    public class CommonTestBase : StorageTestBase
+    [ClientTestFixture(
+    BlobClientOptions.ServiceVersion.V2020_06_12,
+    BlobClientOptions.ServiceVersion.V2020_08_04,
+    RecordingServiceVersion = BlobClientOptions.ServiceVersion.V2020_08_04,
+    LiveServiceVersions = new object[] { BlobClientOptions.ServiceVersion.V2020_06_12 })]
+    public abstract class CommonTestBase : StorageTestBase
     {
-        public CommonTestBase(bool async, RecordedTestMode? mode = null)
+        protected readonly BlobClientOptions.ServiceVersion _serviceVersion;
+
+        public CommonTestBase(bool async, BlobClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode /* RecordedTestMode.Record to re-record */)
         {
+            _serviceVersion = serviceVersion;
         }
 
         public string GetNewContainerName() => $"test-container-{Recording.Random.NewGuid()}";
@@ -28,15 +36,15 @@ namespace Azure.Storage.Test
         /// </summary>
         protected BlobClientOptions GetBlobOptions()
         {
-            var options = new BlobClientOptions
+            var options = new BlobClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Azure.Storage.Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 }
             };
             if (Mode != RecordedTestMode.Live)
@@ -44,7 +52,7 @@ namespace Azure.Storage.Test
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public BlobServiceClient GetSecondaryStorageReadEnabledServiceClient(TenantConfiguration config, int numberOfReadFailuresToSimulate, bool simulate404 = false)
