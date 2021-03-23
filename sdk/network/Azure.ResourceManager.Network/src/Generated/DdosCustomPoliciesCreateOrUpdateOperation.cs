@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class DdosCustomPoliciesCreateOrUpdateOperation : Operation<DdosCustomPolicy>, IOperationSource<DdosCustomPolicy>
     {
         private readonly ArmOperationHelpers<DdosCustomPolicy> _operation;
+
+        /// <summary> Initializes a new instance of DdosCustomPoliciesCreateOrUpdateOperation for mocking. </summary>
+        protected DdosCustomPoliciesCreateOrUpdateOperation()
+        {
+        }
+
         internal DdosCustomPoliciesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<DdosCustomPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "DdosCustomPoliciesCreateOrUpdateOperation");

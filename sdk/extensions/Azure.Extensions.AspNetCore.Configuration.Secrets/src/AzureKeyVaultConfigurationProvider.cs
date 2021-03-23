@@ -127,13 +127,31 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
 
         private void SetData(Dictionary<string, LoadedSecret> loadedSecrets, bool fireToken)
         {
-            var data = new Dictionary<string, string>(loadedSecrets.Count, StringComparer.OrdinalIgnoreCase);
+            var data = new Dictionary<string, LoadedSecret>(loadedSecrets.Count, StringComparer.OrdinalIgnoreCase);
+
+            // The loadesSecrets dictionary contains LoadedSecrets objects that has
+            // the configuration value and the configuration key (created by the
+            // KeyVaultSecretManager object). It is possible that multiple
+            // LoadedSecrets objects uses the same configuration key. This loop
+            // takes the latest updated value for each key.
             foreach (var secretItem in loadedSecrets)
             {
-                data.Add(secretItem.Value.Key, secretItem.Value.Value);
+                string key = secretItem.Value.Key;
+
+                if (data.TryGetValue(key, out LoadedSecret currentSecret))
+                {
+                    if (secretItem.Value.Updated > currentSecret.Updated)
+                    {
+                        data[key] = secretItem.Value;
+                    }
+                }
+                else
+                {
+                    data.Add(key, secretItem.Value);
+                }
             }
 
-            Data = data;
+            Data = data.ToDictionary(d => d.Key, v => v.Value.Value);
             if (fireToken)
             {
                 OnReload();

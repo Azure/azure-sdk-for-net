@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ServerAzureADOnlyAuthenticationsCreateOrUpdateOperation : Operation<ServerAzureADOnlyAuthentication>, IOperationSource<ServerAzureADOnlyAuthentication>
     {
         private readonly ArmOperationHelpers<ServerAzureADOnlyAuthentication> _operation;
+
+        /// <summary> Initializes a new instance of ServerAzureADOnlyAuthenticationsCreateOrUpdateOperation for mocking. </summary>
+        protected ServerAzureADOnlyAuthenticationsCreateOrUpdateOperation()
+        {
+        }
+
         internal ServerAzureADOnlyAuthenticationsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ServerAzureADOnlyAuthentication>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerAzureADOnlyAuthenticationsCreateOrUpdateOperation");

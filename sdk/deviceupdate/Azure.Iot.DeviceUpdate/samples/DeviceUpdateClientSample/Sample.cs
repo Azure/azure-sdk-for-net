@@ -9,6 +9,7 @@ using Azure.Identity;
 using Azure.IoT.DeviceUpdate;
 using Azure.IoT.DeviceUpdate.Models;
 using Newtonsoft.Json;
+using Operation = Azure.IoT.DeviceUpdate.Models.Operation;
 
 namespace ConsoleTest
 {

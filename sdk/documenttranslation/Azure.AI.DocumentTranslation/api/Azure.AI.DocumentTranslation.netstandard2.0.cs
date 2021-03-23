@@ -25,8 +25,6 @@ namespace Azure.AI.DocumentTranslation
         protected DocumentTranslationClient() { }
         public DocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public DocumentTranslationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.DocumentTranslation.DocumentTranslationClientOptions options) { }
-        public DocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public DocumentTranslationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.DocumentTranslation.DocumentTranslationClientOptions options) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.DocumentTranslation.FileFormat>> GetDocumentFormats(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -107,6 +105,7 @@ namespace Azure.AI.DocumentTranslation
         public override string Id { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public Azure.AI.DocumentTranslation.TranslationStatus Status { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override Azure.AsyncPageable<Azure.AI.DocumentTranslation.DocumentStatusDetail> Value { get { throw null; } }
         public virtual void Cancel(System.Threading.CancellationToken cancellationToken) { }
         public virtual System.Threading.Tasks.Task CancelAsync(System.Threading.CancellationToken cancellationToken) { throw null; }

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ServerBlobAuditingPoliciesCreateOrUpdateOperation : Operation<ServerBlobAuditingPolicy>, IOperationSource<ServerBlobAuditingPolicy>
     {
         private readonly ArmOperationHelpers<ServerBlobAuditingPolicy> _operation;
+
+        /// <summary> Initializes a new instance of ServerBlobAuditingPoliciesCreateOrUpdateOperation for mocking. </summary>
+        protected ServerBlobAuditingPoliciesCreateOrUpdateOperation()
+        {
+        }
+
         internal ServerBlobAuditingPoliciesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ServerBlobAuditingPolicy>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerBlobAuditingPoliciesCreateOrUpdateOperation");
