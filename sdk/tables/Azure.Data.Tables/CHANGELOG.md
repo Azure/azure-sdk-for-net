@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Removed `Timestamp` property from the sent entity JSON since it has no effect
+- Removed the `Timestamp` property from the serialized entity when sending it to the service as it is ignored by the service
 
 ## 12.0.0-beta.6 (2021-03-09)
 
