@@ -451,7 +451,7 @@ namespace Azure.Storage.Files.DataLake
             FileSystemRestClient blobFileSystemRestClient = new FileSystemRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,
                 pipeline: _clientConfiguration.Pipeline,
-                url: uriBuilder.ToDfsUri().ToString(),
+                url: uriBuilder.ToBlobUri().ToString(),
                 fileSystem: fileSystemName,
                 version: _clientConfiguration.Version.ToVersionString());
 
@@ -2733,7 +2733,7 @@ namespace Azure.Storage.Files.DataLake
                             prefix: path,
                             marker: continuation,
                             maxResults: maxResults,
-                            include: include,
+                            include: null,
                             timeout: null,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2745,7 +2745,7 @@ namespace Azure.Storage.Files.DataLake
                             prefix: path,
                             marker: continuation,
                             maxResults: maxResults,
-                            include: include,
+                            include: null,
                             timeout: null,
                             cancellationToken: cancellationToken);
                     }
