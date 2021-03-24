@@ -26,6 +26,12 @@ namespace Azure.Data.Tables
 
             foreach (var prop in properties)
             {
+                // Remove the ETag and Timestamp properties, as they do not need to be serialized
+                if (prop.Name == TableConstants.PropertyNames.ETag || prop.Name == TableConstants.PropertyNames.Timestamp)
+                {
+                    continue;
+                }
+
                 annotatedDictionary[prop.Name] = prop.GetValue(entity);
 
                 switch (annotatedDictionary[prop.Name])
@@ -56,9 +62,6 @@ namespace Azure.Data.Tables
                         break;
                 }
             }
-
-            // Remove the ETag property, as it does not need to be serialized
-            annotatedDictionary.Remove(TableConstants.PropertyNames.ETag);
 
             return annotatedDictionary;
         }

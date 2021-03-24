@@ -35,7 +35,7 @@ namespace Azure.Data.Tables
 
         internal static class PropertyNames
         {
-            public const string TimeStamp = "Timestamp";
+            public const string Timestamp = "Timestamp";
             public const string PartitionKey = "PartitionKey";
             public const string RowKey = "RowKey";
             public const string EtagOdata = "odata.etag";
