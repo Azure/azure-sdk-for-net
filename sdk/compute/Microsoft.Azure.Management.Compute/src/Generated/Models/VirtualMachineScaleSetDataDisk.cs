@@ -60,7 +60,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// second for the managed disk. Should be used only when
         /// StorageAccountType is UltraSSD_LRS. If not specified, a default
         /// value would be assigned based on diskSizeGB.</param>
-        public VirtualMachineScaleSetDataDisk(int lun, string createOption, string name = default(string), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?))
+        /// <param name="deleteOption">[In Preview] Specifies the behavior of
+        /// the managed data disk when the virtual machines in the scale set
+        /// are deleted.&lt;br&gt;&lt;br&gt;Possible values are
+        /// &lt;br&gt;&lt;br&gt;**Delete** If this value is used, the data disk
+        /// is deleted when VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If
+        /// this value is used, the data disk is retained after VM is deleted.
+        /// &lt;br&gt;&lt;br&gt;The default value is **delete**.
+        /// &lt;br&gt;&lt;br&gt;NOTE: This is not applicable for VMSS uniform.
+        /// The disks of virtual machines in VMSS uniform are deleted when VMs
+        /// are deleted. Possible values include: 'Delete', 'Detach'</param>
+        public VirtualMachineScaleSetDataDisk(int lun, string createOption, string name = default(string), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), string deleteOption = default(string))
         {
             Name = name;
             Lun = lun;
@@ -71,6 +81,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             ManagedDisk = managedDisk;
             DiskIOPSReadWrite = diskIOPSReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
+            DeleteOption = deleteOption;
             CustomInit();
         }
 
@@ -151,6 +162,23 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "diskMBpsReadWrite")]
         public long? DiskMBpsReadWrite { get; set; }
+
+        /// <summary>
+        /// Gets or sets [In Preview] Specifies the behavior of the managed
+        /// data disk when the virtual machines in the scale set are
+        /// deleted.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Possible values are
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;**Delete** If this value is
+        /// used, the data disk is deleted when VM is
+        /// deleted.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Detach** If this
+        /// value is used, the data disk is retained after VM is deleted.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;The default value is
+        /// **delete**. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;NOTE: This is not
+        /// applicable for VMSS uniform. The disks of virtual machines in VMSS
+        /// uniform are deleted when VMs are deleted. Possible values include:
+        /// 'Delete', 'Detach'
+        /// </summary>
+        [JsonProperty(PropertyName = "deleteOption")]
+        public string DeleteOption { get; set; }
 
         /// <summary>
         /// Validate the object.

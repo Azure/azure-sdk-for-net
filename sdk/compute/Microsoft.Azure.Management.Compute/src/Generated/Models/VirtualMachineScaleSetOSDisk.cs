@@ -68,7 +68,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="vhdContainers">Specifies the container urls that are
         /// used to store operating system disks for the scale set.</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
-        public VirtualMachineScaleSetOSDisk(string createOption, string name = default(string), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), DiffDiskSettings diffDiskSettings = default(DiffDiskSettings), int? diskSizeGB = default(int?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters))
+        /// <param name="deleteOption">[In Preview] Specifies the behavior of
+        /// the managed OS Disk when the virtual machines in the scale set are
+        /// deleted. &lt;br&gt;&lt;br&gt;Possible values are
+        /// &lt;br&gt;&lt;br&gt;**Delete** If this value is used, the OS disk
+        /// is deleted when VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If
+        /// this value is used, the OS disk is retained after VM is deleted.
+        /// &lt;br&gt;&lt;br&gt;The default value is **Delete**. For an
+        /// ephemeral OS Disk, the default value is **Delete** and this can not
+        /// be updated by the user.&lt;br&gt;&lt;br&gt;NOTE: This is not
+        /// applicable for VMSS uniform. The disks of virtual machines in VMSS
+        /// uniform are deleted when VMs are deleted. Possible values include:
+        /// 'Delete', 'Detach'</param>
+        public VirtualMachineScaleSetOSDisk(string createOption, string name = default(string), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), DiffDiskSettings diffDiskSettings = default(DiffDiskSettings), int? diskSizeGB = default(int?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>), VirtualMachineScaleSetManagedDiskParameters managedDisk = default(VirtualMachineScaleSetManagedDiskParameters), string deleteOption = default(string))
         {
             Name = name;
             Caching = caching;
@@ -80,6 +92,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Image = image;
             VhdContainers = vhdContainers;
             ManagedDisk = managedDisk;
+            DeleteOption = deleteOption;
             CustomInit();
         }
 
@@ -174,6 +187,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "managedDisk")]
         public VirtualMachineScaleSetManagedDiskParameters ManagedDisk { get; set; }
+
+        /// <summary>
+        /// Gets or sets [In Preview] Specifies the behavior of the managed OS
+        /// Disk when the virtual machines in the scale set are deleted.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Possible values are
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;**Delete** If this value is
+        /// used, the OS disk is deleted when VM is
+        /// deleted.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Detach** If this
+        /// value is used, the OS disk is retained after VM is deleted.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;The default value is
+        /// **Delete**. For an ephemeral OS Disk, the default value is
+        /// **Delete** and this can not be updated by the
+        /// user.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;NOTE: This is not
+        /// applicable for VMSS uniform. The disks of virtual machines in VMSS
+        /// uniform are deleted when VMs are deleted. Possible values include:
+        /// 'Delete', 'Detach'
+        /// </summary>
+        [JsonProperty(PropertyName = "deleteOption")]
+        public string DeleteOption { get; set; }
 
         /// <summary>
         /// Validate the object.
