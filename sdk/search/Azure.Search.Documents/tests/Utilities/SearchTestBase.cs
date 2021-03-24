@@ -8,9 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -161,12 +159,10 @@ namespace Azure.Search.Documents.Tests
                     AssertApproximate(eValue, aValue, path != null ? path + "." + key : key);
                 }
             }
-#if EXPERIMENTAL_SPATIAL
             else if (expected is GeoPoint ePt && actual is GeoPoint aPt)
             {
-                AssertEqual(ePt.Position, aPt.Position, path != null ? $"{path}.{nameof(GeoPoint.Position)}" : nameof(GeoPoint.Position));
+                AssertEqual(ePt.Coordinates, aPt.Coordinates, path != null ? $"{path}.{nameof(GeoPoint.Coordinates)}" : nameof(GeoPoint.Coordinates));
             }
-#endif
             else if (expected is GeographyPoint eGpt && actual is GeographyPoint aGpt)
             {
                 AssertEqual(eGpt, aGpt, path);

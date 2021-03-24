@@ -4,9 +4,7 @@
 using System;
 using System.Linq;
 using System.Text.Json.Serialization;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Models;
 using Azure.Search.Documents.Indexes.Models;
@@ -322,14 +320,12 @@ namespace Azure.Search.Documents.Tests
         [JsonPropertyName("rating")]
         public int? Rating { get; set; }
 
-#if EXPERIMENTAL_SPATIAL
         [JsonPropertyName("location")]
-        public GeoPoint Location { get; set; }
-#else
+        public GeoPoint GeoLocation { get; set; }
+
         [JsonPropertyName("location")]
         [JsonConverter(typeof(MicrosoftSpatialGeoJsonConverter))]
         public GeographyPoint Location { get; set; }
-#endif
 
         [JsonPropertyName("address")]
         public HotelAddress Address { get; set; }
@@ -350,11 +346,8 @@ namespace Azure.Search.Documents.Tests
             SmokingAllowed == other.SmokingAllowed &&
             LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
             Rating == other.Rating &&
-#if EXPERIMENTAL_SPATIAL
-            (Location?.Position ?? default).Equals(other.Location?.Position ?? default) &&
-#else
+            (GeoLocation?.Coordinates ?? default).Equals(other.GeoLocation?.Coordinates ?? default) &&
             Location.EqualsNullSafe(other.Location) &&
-#endif
             Address.EqualsNullSafe(other.Address) &&
             Rooms.SequenceEqualsNullSafe(other.Rooms);
 
@@ -368,11 +361,8 @@ namespace Azure.Search.Documents.Tests
                 $"Description (French): {DescriptionFr}; Category: {Category}; " +
                 $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}; Parking: {ParkingIncluded}; " +
                 $"Smoking: {SmokingAllowed}; LastRenovationDate: {LastRenovationDate}; Rating: {Rating}; " +
-#if EXPERIMENTAL_SPATIAL
-                $"Location: [{Location?.Position.Longitude ?? 0}, {Location?.Position.Latitude ?? 0}]; " +
-#else
+                $"GeoLocation: [{GeoLocation?.Coordinates.Longitude ?? 0}, {GeoLocation?.Coordinates.Latitude ?? 0}]; " +
                 $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]; " +
-#endif
                 $"Address: {{ {Address} }}; Rooms: [{string.Join("; ", Rooms?.Select(FormatRoom) ?? new string[0])}]";
         }
 
@@ -389,11 +379,8 @@ namespace Azure.Search.Documents.Tests
                 ["smokingAllowed"] = SmokingAllowed,
                 ["lastRenovationDate"] = LastRenovationDate,
                 ["rating"] = Rating,
-#if EXPERIMENTAL_SPATIAL
-                ["location"] = Location,
-#else
+                ["geoLocation"] = GeoLocation,
                 ["location"] = Location.AsDocument(),
-#endif
                 ["address"] = Address?.AsDocument(),
                 // With no elements to infer the type during deserialization, we must assume object[].
                 ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new object[0]
@@ -414,12 +401,9 @@ namespace Azure.Search.Documents.Tests
         public bool? SmokingAllowed { get; set; }
         public DateTimeOffset? LastRenovationDate { get; set; }
         public int? Rating { get; set; }
-#if EXPERIMENTAL_SPATIAL
-        public GeoPoint Location { get; set; }
-#else
+        public GeoPoint GeoLocation { get; set; }
         [JsonConverter(typeof(MicrosoftSpatialGeoJsonConverter))]
         public GeographyPoint Location { get; set; } = null;
-#endif
         public HotelAddress Address { get; set; }
         public HotelRoom[] Rooms { get; set; } = new HotelRoom[] { };
 
@@ -435,13 +419,11 @@ namespace Azure.Search.Documents.Tests
             SmokingAllowed == other.SmokingAllowed &&
             LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
             Rating == other.Rating &&
-#if EXPERIMENTAL_SPATIAL
-            (Location?.Position ?? default).Equals(other.Location?.Position ?? default) &&
-#else
+            (GeoLocation?.Coordinates ?? default).Equals(other.GeoLocation?.Coordinates ?? default) &&
             Location.EqualsNullSafe(other.Location) &&
-#endif
             Address.EqualsNullSafe(other.Address) &&
             Rooms.SequenceEqualsNullSafe(other.Rooms);
+
         public override int GetHashCode() => HotelId?.GetHashCode() ?? 0;
     }
 
