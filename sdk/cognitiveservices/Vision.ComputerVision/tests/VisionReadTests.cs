@@ -38,7 +38,7 @@ namespace ComputerVisionSDK.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "BatchReadFileTest");
+                HttpMockServer.Initialize(this.GetType(), "ReadTest");
 
                 string imageUrl = GetTestImageUrl("signage.jpg");
 
@@ -79,7 +79,7 @@ namespace ComputerVisionSDK.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "BatchReadFileInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "ReadFileInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("whiteboard.jpg"), FileMode.Open))
@@ -114,11 +114,11 @@ namespace ComputerVisionSDK.Tests
         }
 
         [Fact]
-        public void BatchReadPdfFileInStreamTest()
+        public void ReadPdfFileInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                HttpMockServer.Initialize(this.GetType(), "BatchReadPdfFileInStreamTest");
+                HttpMockServer.Initialize(this.GetType(), "ReadPdfFileInStreamTest");
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("menu.pdf"), FileMode.Open))
