@@ -275,17 +275,17 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
-        /// <param name="threeLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="phoneNumberType"> The type of phone numbers to search for. </param>
         /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="options"> The phone number search options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threeLetterIsoCountryName"/> is null. </exception>
-        public virtual async Task<SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string threeLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
+        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
+        public virtual async Task<SearchAvailablePhoneNumbersOperation> StartSearchAvailablePhoneNumbersAsync(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
             PhoneNumberCapabilities capabilities, PhoneNumberSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threeLetterIsoCountryName, nameof(threeLetterIsoCountryName));
+            Argument.AssertNotNull(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
             Argument.AssertNotNull(capabilities, nameof(capabilities));
 
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartSearchAvailablePhoneNumbers)}");
@@ -293,8 +293,8 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
-                var originalResponse = await RestClient.SearchAvailablePhoneNumbersAsync(threeLetterIsoCountryName, searchRequest, cancellationToken).ConfigureAwait(false);
-                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(threeLetterIsoCountryName, searchRequest).Request, originalResponse);
+                var originalResponse = await RestClient.SearchAvailablePhoneNumbersAsync(twoLetterIsoCountryName, searchRequest, cancellationToken).ConfigureAwait(false);
+                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(twoLetterIsoCountryName, searchRequest).Request, originalResponse);
             }
             catch (Exception e)
             {
@@ -304,17 +304,17 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
-        /// <param name="threeLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="phoneNumberType"> The type of phone numbers to search for. </param>
         /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="options"> The phone number search options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threeLetterIsoCountryName"/> is null. </exception>
-        public virtual SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string threeLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
+        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
+        public virtual SearchAvailablePhoneNumbersOperation StartSearchAvailablePhoneNumbers(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, PhoneNumberAssignmentType phoneNumberAssignmentType,
             PhoneNumberCapabilities capabilities, PhoneNumberSearchOptions options = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(threeLetterIsoCountryName, nameof(threeLetterIsoCountryName));
+            Argument.AssertNotNull(twoLetterIsoCountryName, nameof(twoLetterIsoCountryName));
             Argument.AssertNotNull(capabilities, nameof(capabilities));
 
             using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(StartSearchAvailablePhoneNumbers)}");
@@ -322,8 +322,8 @@ namespace Azure.Communication.PhoneNumbers
             try
             {
                 var searchRequest = new PhoneNumberSearchRequest(phoneNumberType, phoneNumberAssignmentType, capabilities) { AreaCode = options?.AreaCode, Quantity = options?.Quantity };
-                var originalResponse = RestClient.SearchAvailablePhoneNumbers(threeLetterIsoCountryName, searchRequest, cancellationToken);
-                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(threeLetterIsoCountryName, searchRequest).Request, originalResponse);
+                var originalResponse = RestClient.SearchAvailablePhoneNumbers(twoLetterIsoCountryName, searchRequest, cancellationToken);
+                return new SearchAvailablePhoneNumbersOperation(_clientDiagnostics, _pipeline, RestClient.CreateSearchAvailablePhoneNumbersRequest(twoLetterIsoCountryName, searchRequest).Request, originalResponse);
             }
             catch (Exception e)
             {
