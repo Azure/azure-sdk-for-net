@@ -344,7 +344,15 @@ namespace Azure.Messaging.ServiceBus
 
         protected async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
         {
-            await Processor.OnProcessErrorAsync(eventArgs).ConfigureAwait(false);
+            try
+            {
+                await Processor.OnProcessErrorAsync(eventArgs).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+            {
+                // don't bubble up exceptions raised from customer exception handler
+                ServiceBusEventSource.Log.ProcessorErrorHandlerThrewException(exception.ToString());
+            }
         }
 
         protected static TimeSpan CalculateRenewDelay(DateTimeOffset lockedUntil)

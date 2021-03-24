@@ -446,15 +446,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="args">The event args containing information related to the error.</param>
         protected internal async virtual Task OnProcessErrorAsync(ProcessErrorEventArgs args)
         {
-            try
-            {
-                await _processErrorAsync(args).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                // don't bubble up exceptions raised from customer exception handler
-                ServiceBusEventSource.Log.ProcessorErrorHandlerThrewException(exception.ToString());
-            }
+            await _processErrorAsync(args).ConfigureAwait(false);
         }
 
         internal async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
