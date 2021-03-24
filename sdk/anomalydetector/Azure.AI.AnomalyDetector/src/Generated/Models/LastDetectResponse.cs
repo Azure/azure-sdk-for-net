@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.AnomalyDetector.Models
+namespace Azure.AI.AnomalyDetector
 {
     /// <summary> The LastDetectResponse. </summary>
     public partial class LastDetectResponse

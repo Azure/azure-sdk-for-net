@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.AnomalyDetector.Models
+namespace Azure.AI.AnomalyDetector
 {
     /// <summary> Error information returned by the API. </summary>
     internal partial class AnomalyDetectorError

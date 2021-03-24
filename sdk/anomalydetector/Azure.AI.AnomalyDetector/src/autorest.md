@@ -3,10 +3,12 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
-require:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/f3ed9637897d9f095a8ec28ed82f59ec85fff954/specification/cognitiveservices/data-plane/AnomalyDetector/readme.md
+input-file:
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/2d632618a46e6173fd51dc12dfbf3a260651d9b3/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.1-preview/AnomalyDetector.json?token=AKY7HQBGMYCUTCJE5VIGUWTAMTDEM
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/2d632618a46e6173fd51dc12dfbf3a260651d9b3/specification/cognitiveservices/data-plane/AnomalyDetector/preview/v1.1-preview/MultivariateAnomalyDetector.json?token=AKY7HQANFB5GTYIURVQCYFLAMTDGW
 namespace: Azure.AI.AnomalyDetector
 public-clients: true
+model-namespace: false
 credential-types: TokenCredential;AzureKeyCredential
 credential-header-name: Ocp-Apim-Subscription-Key
 credential-scopes: https://cognitiveservices.azure.com/.default

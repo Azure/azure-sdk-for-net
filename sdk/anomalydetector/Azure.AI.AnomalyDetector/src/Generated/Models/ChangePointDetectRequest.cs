@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.AI.AnomalyDetector.Models
+namespace Azure.AI.AnomalyDetector
 {
     /// <summary> The ChangePointDetectRequest. </summary>
     public partial class ChangePointDetectRequest

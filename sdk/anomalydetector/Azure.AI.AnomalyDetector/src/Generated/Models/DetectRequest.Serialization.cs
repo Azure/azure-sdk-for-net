@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.AnomalyDetector.Models
+namespace Azure.AI.AnomalyDetector
 {
     public partial class DetectRequest : IUtf8JsonSerializable
     {
@@ -22,8 +22,11 @@ namespace Azure.AI.AnomalyDetector.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("granularity");
-            writer.WriteStringValue(Granularity.ToSerialString());
+            if (Optional.IsDefined(Granularity))
+            {
+                writer.WritePropertyName("granularity");
+                writer.WriteStringValue(Granularity.Value.ToSerialString());
+            }
             if (Optional.IsDefined(CustomInterval))
             {
                 writer.WritePropertyName("customInterval");

@@ -8,15 +8,18 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.AnomalyDetector.Models
+namespace Azure.AI.AnomalyDetector
 {
     public partial class TimeSeriesPoint : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("timestamp");
-            writer.WriteStringValue(Timestamp, "O");
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp");
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
             writer.WritePropertyName("value");
             writer.WriteNumberValue(Value);
             writer.WriteEndObject();
