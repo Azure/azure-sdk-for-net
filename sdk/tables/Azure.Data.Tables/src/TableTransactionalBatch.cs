@@ -212,7 +212,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                if (!_requestMessages.Any())
+                if (!_requestMessages.TryPeek(out var _))
                 {
                     throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchIsEmpty);
                 }
