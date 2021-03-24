@@ -9,7 +9,6 @@ parameters:
   TargetDocRepoName: ''
   TargetDocRepoOwner: ''
   PRBranchName: 'master-rdme'
-  SourceBranchName: 'master'
   PRLabels: 'auto-merge'
   ArtifactName: ''
   Language: ''
@@ -34,12 +33,12 @@ steps:
   
 - pwsh: |
     git clone https://github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
-
+ 
     try {
       Push-Location ${{ parameters.WorkingDirectory }}/repo
-
-      Write-Host "git checkout ${{ parameters.SourceBranchName }}"
-      git checkout ${{ parameters.SourceBranchName }}
+      $setDefaultBranch = (git remote show origin | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
+      Write-Host "Setting DefaultBranch=$setDefaultBranch"
+      echo "##vso[task.setvariable variable=DefaultBranch]$setDefaultBranch"
     } finally {
       Pop-Location
     }
@@ -82,27 +81,20 @@ steps:
   env:
     GH_TOKEN: $(azuresdk-github-pat)
 
-- template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+- template: /eng/common/pipelines/templates/steps/git-push-changes.yml
   parameters:
+    PRBranchName: $(DefaultBranch)
+    CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
     RepoName: ${{ parameters.TargetDocRepoName }}
     RepoOwner: ${{ parameters.TargetDocRepoOwner }}
-    PRBranchName: ${{ parameters.PRBranchName }}
-    CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
-    PRTitle: "Docs.MS Release Updates for ${{ parameters.ArtifactName }}"
-    BaseBranchName: ${{ parameters.SourceBranchName }}
     WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-    GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
-    GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
-    PRLabels: ${{ parameters.PRLabels }}
-    CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
       Push-Location ${{ parameters.WorkingDirectory }}/repo
-
-      git reset --hard HEAD
       git remote rm azure-sdk-fork
+      git reset --hard HEAD
       git checkout ${{ parameters.OnboardingBranch}}
     displayName: Reset Docs Repo, Checkout Onboarding Branch
     ignoreLASTEXITCODE: false
@@ -123,17 +115,11 @@ steps:
       pwsh: true
     env:
       GH_TOKEN: $(azuresdk-github-pat)
-
-  - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+  - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
     parameters:
+      PRBranchName: $(DefaultBranch)
+      CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
       RepoName: ${{ parameters.TargetDocRepoName }}
       RepoOwner: ${{ parameters.TargetDocRepoOwner }}
-      PRBranchName: ${{ parameters.PRBranchName }}-ci
-      CommitMsg: "CI Update for release of ${{ parameters.ArtifactName }}"
-      PRTitle: "Docs.MS CI Updates for ${{ parameters.ArtifactName }}"
-      BaseBranchName: ${{ parameters.OnboardingBranch }}
       WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-      GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
-      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }}
-      CloseAfterOpenForTesting: ${{ parameters.CloseAfterOpenForTesting }}

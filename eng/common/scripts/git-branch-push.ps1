@@ -27,7 +27,8 @@ param(
     [Parameter(Mandatory = $false)]
     [string] $PushArgs = "",
 
-    [string] $RemoteName = "azure-sdk-fork",
+    # [Parameter(Mandatory = $false)]
+    # [string] $RemoteName = "azure-sdk-fork",
 
     [Parameter(Mandatory = $false)]
     [boolean] $SkipCommit = $false,
@@ -40,7 +41,7 @@ param(
 # Without explicitly setting the ErrorActionPreference to continue the script
 # would fail the first time git wrote command output.
 $ErrorActionPreference = "Continue"
-
+$RemoteName = "azure-sdk-fork"
 if (!(git remote | ? {$_ -eq $RemoteName}))
 {
     Write-Host "git remote add $RemoteName $GitUrl"
@@ -52,16 +53,14 @@ if (!(git remote | ? {$_ -eq $RemoteName}))
     }
 }
 
-Write-Host "git fetch $RemoteName"
-git fetch $RemoteName
-if ($LASTEXITCODE -ne 0)
-{
-    Write-Error "Unable to fetch remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
-    exit $LASTEXITCODE
+# Check if the PRBranch is current branch.
+$currentBranch = git branch --show-current
+Write-Host "The current branch is $currentBranch."
+if ($currentBranch -ne $PRBranchName) {
+    Write-Host "git checkout -b $PRBranchName"
+    git checkout -b $PRBranchName
 }
 
-Write-Host "git checkout -b $PRBranchName"
-git checkout -b $PRBranchName
 if ($LASTEXITCODE -ne 0)
 {
     Write-Error "Unable to create branch LASTEXITCODE=$($LASTEXITCODE), see command output above."
@@ -105,6 +104,7 @@ do
     {
         $needsRetry = $true
         Write-Host "Git push failed with LASTEXITCODE=$($LASTEXITCODE) Need to fetch and rebase: attempt number=$($tryNumber)"
+ 
         Write-Host "git fetch $RemoteName"
         git fetch $RemoteName
         if ($LASTEXITCODE -ne 0)
@@ -123,7 +123,6 @@ do
                 Write-Error "Unable to create diff file LASTEXITCODE=$($LASTEXITCODE), see command output above."
                 continue
             }
-
             Write-Host "git reset --hard $RemoteName/${PRBranchName}"
             git reset --hard $RemoteName/${PRBranchName}
             if ($LASTEXITCODE -ne 0)
@@ -168,8 +167,12 @@ do
     }
 } while($needsRetry -and $tryNumber -le $numberOfRetries)
 
-if ($LASTEXITCODE -ne 0)
+if ($LASTEXITCODE -ne 0 -or $tryNumber -gt $numberOfRetries)
 {
     Write-Error "Unable to push commit after $($tryNumber) retries LASTEXITCODE=$($LASTEXITCODE), see command output above."
+    if (0 -eq $LASTEXITCODE) 
+    {
+        exit 1
+    }
     exit $LASTEXITCODE
 }
