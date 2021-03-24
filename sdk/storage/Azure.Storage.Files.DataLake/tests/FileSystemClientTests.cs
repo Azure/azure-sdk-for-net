@@ -2057,28 +2057,44 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        //[PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
         public async Task GetDeletedPathsAsync()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
-            string fileName = GetNewFileName();
-            DataLakeFileClient fileClient = InstrumentClient(test.FileSystem.GetFileClient(fileName));
-            await fileClient.CreateAsync();
-            await fileClient.DeleteAsync();
+
+            // Create 2 files and 2 directories.  Delete one of each.
+            DataLakeFileClient deletedFile = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            DataLakeFileClient nonDeletedFile = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            DataLakeDirectoryClient deletedDirectory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+            DataLakeDirectoryClient nonDeletedDirectory = InstrumentClient(test.FileSystem.GetDirectoryClient(GetNewDirectoryName()));
+
+            await deletedFile.CreateAsync();
+            await deletedFile.DeleteAsync();
+
+            await nonDeletedFile.CreateAsync();
+
+            await deletedDirectory.CreateAsync();
+            await deletedDirectory.DeleteAsync();
+
+            await nonDeletedDirectory.CreateAsync();
 
             // Act
-            AsyncPageable<PathHierarchyDeletedItem> response = test.FileSystem.GetDeletedPathsAsync();
-            IList<PathHierarchyDeletedItem> paths = await response.ToListAsync();
+            AsyncPageable<PathDeletedItem> response = test.FileSystem.GetDeletedPathsAsync();
+            IList<PathDeletedItem> paths = await response.ToListAsync();
 
             // Assert
-            Assert.AreEqual(1, paths.Count);
-            Assert.IsTrue(paths[0].IsPath);
-            Assert.IsNull(paths[0].Prefix);
-            Assert.AreEqual(fileName, paths[0].Path.Name);
-            Assert.IsNotNull(paths[0].Path.DeletedOn);
-            Assert.IsNotNull(paths[0].Path.DeletionId);
-            Assert.IsNotNull(paths[0].Path.RemainingRetentionDays);
+            Assert.AreEqual(2, paths.Count);
+
+            Assert.AreEqual(deletedDirectory.Name, paths[0].Name);
+            Assert.IsNotNull(paths[0].DeletedOn);
+            Assert.IsNotNull(paths[0].DeletionId);
+            Assert.IsNotNull(paths[0].RemainingRetentionDays);
+
+            Assert.AreEqual(deletedFile.Name, paths[1].Name);
+            Assert.IsNotNull(paths[1].DeletedOn);
+            Assert.IsNotNull(paths[1].DeletionId);
+            Assert.IsNotNull(paths[1].RemainingRetentionDays);
         }
 
         [Test]
@@ -2101,13 +2117,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             await fileClient2.DeleteAsync();
 
             // Act
-            AsyncPageable<PathHierarchyDeletedItem> response = test.FileSystem.GetDeletedPathsAsync(
+            AsyncPageable<PathDeletedItem> response = test.FileSystem.GetDeletedPathsAsync(
                 path: directoryName);
-            IList<PathHierarchyDeletedItem> paths = await response.ToListAsync();
+            IList<PathDeletedItem> paths = await response.ToListAsync();
 
             // Assert
             Assert.AreEqual(1, paths.Count);
-            Assert.AreEqual($"{directoryName}/{fileName}", paths[0].Path.Name);
+            Assert.AreEqual($"{directoryName}/{fileName}", paths[0].Name);
         }
 
         [Test]
@@ -2137,9 +2153,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directoryClient.CreateAsync();
             await directoryClient.DeleteAsync();
 
-            AsyncPageable<PathHierarchyDeletedItem> response = test.FileSystem.GetDeletedPathsAsync();
-            IList<PathHierarchyDeletedItem> paths = await response.ToListAsync();
-            string deletionId = paths[0].Path.DeletionId;
+            AsyncPageable<PathDeletedItem> response = test.FileSystem.GetDeletedPathsAsync();
+            IList<PathDeletedItem> paths = await response.ToListAsync();
+            string deletionId = paths[0].DeletionId;
 
             // Act
             DataLakePathClient restoredPathClient = await test.FileSystem.UndeletePathAsync(
@@ -2182,9 +2198,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             await directoryClient.CreateAsync();
             await directoryClient.DeleteAsync();
 
-            AsyncPageable<PathHierarchyDeletedItem> response = test.FileSystem.GetDeletedPathsAsync();
-            IList<PathHierarchyDeletedItem> paths = await response.ToListAsync();
-            string deletionId = paths[0].Path.DeletionId;
+            AsyncPageable<PathDeletedItem> response = test.FileSystem.GetDeletedPathsAsync();
+            IList<PathDeletedItem> paths = await response.ToListAsync();
+            string deletionId = paths[0].DeletionId;
 
             // Act
             DataLakePathClient restoredPathClient = await test.FileSystem.UndeletePathAsync(

@@ -2660,7 +2660,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Pageable<PathHierarchyDeletedItem> GetDeletedPaths(
+        public virtual Pageable<PathDeletedItem> GetDeletedPaths(
             string path = default,
             CancellationToken cancellationToken = default)
             => new GetDeletedPathAsyncCollection(
@@ -2687,7 +2687,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual AsyncPageable<PathHierarchyDeletedItem> GetDeletedPathsAsync(
+        public virtual AsyncPageable<PathDeletedItem> GetDeletedPathsAsync(
             string path = default,
             CancellationToken cancellationToken = default)
             => new GetDeletedPathAsyncCollection(

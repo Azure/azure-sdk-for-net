@@ -6,7 +6,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Either a <see cref="Prefix"/> or <see cref="Path"/>.
     /// </summary>
-    public class PathHierarchyDeletedItem
+    internal class PathHierarchyDeletedItem
     {
         /// <summary>
         /// Gets a prefix, relative to the delimiter used to get the paths.

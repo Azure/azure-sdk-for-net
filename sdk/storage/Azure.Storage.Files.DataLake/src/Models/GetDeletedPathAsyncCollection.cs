@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
-    internal class GetDeletedPathAsyncCollection : StorageCollectionEnumerator<PathHierarchyDeletedItem>
+    internal class GetDeletedPathAsyncCollection : StorageCollectionEnumerator<PathDeletedItem>
     {
         private readonly DataLakeFileSystemClient _client;
         private readonly string _path;
@@ -23,7 +23,7 @@ namespace Azure.Storage.Files.DataLake.Models
             _operationName = operationName;
         }
 
-        public override async ValueTask<Page<PathHierarchyDeletedItem>> GetNextPageAsync(
+        public override async ValueTask<Page<PathDeletedItem>> GetNextPageAsync(
             string continuationToken,
             int? pageSizeHint,
             bool async,
@@ -38,8 +38,8 @@ namespace Azure.Storage.Files.DataLake.Models
                 cancellationToken)
                 .ConfigureAwait(false);
 
-            return Page<PathHierarchyDeletedItem>.FromValues(
-                response.Value.DeletedPaths.ToArray(),
+            return Page<PathDeletedItem>.FromValues(
+                response.Value.DeletedPaths.Select(r => r.Path).ToArray(),
                 response.Value.Continuation,
                 response.GetRawResponse());
         }

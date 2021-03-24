@@ -194,8 +194,8 @@ namespace Azure.Storage.Files.DataLake
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.DataLakeSasBuilder builder) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy> GetAccessPolicy(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy>> GetAccessPolicyAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathHierarchyDeletedItem> GetDeletedPaths(string path = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathHierarchyDeletedItem> GetDeletedPathsAsync(string path = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathDeletedItem> GetDeletedPaths(string path = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathDeletedItem> GetDeletedPathsAsync(string path = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeDirectoryClient GetDirectoryClient(string directoryName) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeFileClient GetFileClient(string fileName) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPaths(string path = null, bool recursive = false, bool userPrincipalName = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -764,14 +764,6 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         GetAccessControl = 0,
         GetStatus = 1,
-    }
-    public partial class PathHierarchyDeletedItem
-    {
-        internal PathHierarchyDeletedItem() { }
-        public bool IsPath { get { throw null; } }
-        public bool IsPrefix { get { throw null; } }
-        public Azure.Storage.Files.DataLake.Models.PathDeletedItem Path { get { throw null; } }
-        public string Prefix { get { throw null; } }
     }
     public partial class PathHttpHeaders
     {
