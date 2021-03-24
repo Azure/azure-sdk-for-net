@@ -65,7 +65,7 @@ namespace Azure.Communication.Sms.Tests.samples
         {
             SmsClient smsClient = CreateSmsClient();
             #region Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
-            AsyncPageable<SmsSendResult> results = smsClient.SendAsync(
+            var response = await smsClient.SendAsync(
                 //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
                 //@@ to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
                 /*@@*/ from: TestEnvironment.FromPhoneNumber,
@@ -75,7 +75,7 @@ namespace Azure.Communication.Sms.Tests.samples
                 {
                     Tag = "marketing", // custom tags
                 });
-            await foreach (SmsSendResult result in results)
+            foreach (SmsSendResult result in response.Value)
             {
                 Console.WriteLine($"Sms id: {result.MessageId}");
                 Console.WriteLine($"Send Result Successful: {result.Successful}");
@@ -90,7 +90,7 @@ namespace Azure.Communication.Sms.Tests.samples
             #region Snippet:Azure_Communication_Sms_Tests_Troubleshooting
             try
             {
-                AsyncPageable<SmsSendResult> results = smsClient.SendAsync(
+                var response = await smsClient.SendAsync(
                     //@@ from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
                     //@@ to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
                     /*@@*/ from: TestEnvironment.FromPhoneNumber,
@@ -100,7 +100,7 @@ namespace Azure.Communication.Sms.Tests.samples
                     {
                         Tag = "marketing", // custom tags
                     });
-                await foreach (SmsSendResult result in results)
+                foreach (SmsSendResult result in response.Value)
                 {
                     if (result.Successful)
                     {
