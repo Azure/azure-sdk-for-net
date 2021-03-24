@@ -1518,7 +1518,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// An error object will be set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypes"/> is <c>null</c>.
@@ -1624,7 +1624,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is <c>null</c>.
@@ -1727,7 +1727,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is <c>null</c>.
