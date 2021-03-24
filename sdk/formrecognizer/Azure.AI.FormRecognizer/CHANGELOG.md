@@ -6,7 +6,7 @@
 - Expanded the set of document languages that can be provided to the `StartRecognizeContent` API.
 
 ### Breaking changes
-- It defaults to the latest supported service version, which currently is `2.1-preview.3`.
+- The client defaults to the latest supported service version, which currently is `2.1-preview.3`.
 
 ## 3.1.0-beta.3 (2021-03-09)
 
