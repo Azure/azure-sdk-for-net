@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation
 {
-    public partial class TranslationStatusDetail
+    public partial class TranslationStatusResult
     {
-        internal static TranslationStatusDetail DeserializeTranslationStatusDetail(JsonElement element)
+        internal static TranslationStatusResult DeserializeTranslationStatusResult(JsonElement element)
         {
             string id = default;
             DateTimeOffset createdDateTimeUtc = default;
@@ -60,7 +60,7 @@ namespace Azure.AI.DocumentTranslation
                     continue;
                 }
             }
-            return new TranslationStatusDetail(id, createdDateTimeUtc, lastActionDateTimeUtc, status, error.Value, summary);
+            return new TranslationStatusResult(id, createdDateTimeUtc, lastActionDateTimeUtc, status, error.Value, summary);
         }
     }
 }

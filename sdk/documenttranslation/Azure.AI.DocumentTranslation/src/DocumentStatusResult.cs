@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.AI.DocumentTranslation
 {
     [CodeGenModel("DocumentStatusDetail")]
-    public partial class DocumentStatusDetail
+    public partial class DocumentStatusResult
     {
         /// <summary> Document Id. </summary>
         [CodeGenMember("Id")]
@@ -31,6 +31,10 @@ namespace Azure.AI.DocumentTranslation
         /// <summary> Date time in which the Document's status has been updated. </summary>
         [CodeGenMember("LastActionDateTimeUtc")]
         public DateTimeOffset LastModified { get; }
+
+        /// <summary> Character charged by the API. </summary>
+        [CodeGenMember("CharacterCharged")]
+        public long CharactersCharged { get; }
 
         /// <summary> Returns true if the translation on the document is completed, independent if it succeeded or failed. </summary>
         public bool HasCompleted => Status == TranslationStatus.Succeeded

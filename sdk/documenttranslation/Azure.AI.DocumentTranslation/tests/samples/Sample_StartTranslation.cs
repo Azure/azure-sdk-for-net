@@ -29,7 +29,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
             //@@ Uri sourceUri = <source SAS URI>;
             //@@ Uri targetUri = <target SAS URI>;
 
-            var input = new TranslationConfiguration(sourceUri, targetUri, "es");
+            var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
             DocumentTranslationOperation operation = client.StartTranslation(input);
 
@@ -50,7 +50,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
                 Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
             }
 
-            foreach (DocumentStatusDetail document in operation.GetValues())
+            foreach (DocumentStatusResult document in operation.GetValues())
             {
                 Console.WriteLine($"Document with Id: {document.DocumentId}");
                 Console.WriteLine($"  Status:{document.Status}");

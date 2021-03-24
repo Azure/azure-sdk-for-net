@@ -10,9 +10,9 @@ using System;
 namespace Azure.AI.DocumentTranslation
 {
     /// <summary> The DocumentStatusDetail. </summary>
-    public partial class DocumentStatusDetail
+    public partial class DocumentStatusResult
     {
-        /// <summary> Initializes a new instance of DocumentStatusDetail. </summary>
+        /// <summary> Initializes a new instance of DocumentStatusResult. </summary>
         /// <param name="locationUri"> Location of the document or folder. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
@@ -21,7 +21,7 @@ namespace Azure.AI.DocumentTranslation
         /// <param name="translationProgressPercentage"> Progress of the translation if available. </param>
         /// <param name="documentId"> Document Id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationUri"/>, <paramref name="translateTo"/>, or <paramref name="documentId"/> is null. </exception>
-        internal DocumentStatusDetail(Uri locationUri, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, string translateTo, float translationProgressPercentage, string documentId)
+        internal DocumentStatusResult(Uri locationUri, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, string translateTo, float translationProgressPercentage, string documentId)
         {
             if (locationUri == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.AI.DocumentTranslation
             DocumentId = documentId;
         }
 
-        /// <summary> Initializes a new instance of DocumentStatusDetail. </summary>
+        /// <summary> Initializes a new instance of DocumentStatusResult. </summary>
         /// <param name="locationUri"> Location of the document or folder. </param>
         /// <param name="createdOn"> Operation created date time. </param>
         /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
@@ -54,8 +54,8 @@ namespace Azure.AI.DocumentTranslation
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
         /// <param name="translationProgressPercentage"> Progress of the translation if available. </param>
         /// <param name="documentId"> Document Id. </param>
-        /// <param name="characterCharged"> Character charged by the API. </param>
-        internal DocumentStatusDetail(Uri locationUri, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, string translateTo, DocumentTranslationError error, float translationProgressPercentage, string documentId, long? characterCharged)
+        /// <param name="charactersCharged"> Character charged by the API. </param>
+        internal DocumentStatusResult(Uri locationUri, DateTimeOffset createdOn, DateTimeOffset lastModified, TranslationStatus status, string translateTo, DocumentTranslationError error, float translationProgressPercentage, string documentId, long charactersCharged)
         {
             LocationUri = locationUri;
             CreatedOn = createdOn;
@@ -65,13 +65,11 @@ namespace Azure.AI.DocumentTranslation
             Error = error;
             TranslationProgressPercentage = translationProgressPercentage;
             DocumentId = documentId;
-            CharacterCharged = characterCharged;
+            CharactersCharged = charactersCharged;
         }
         /// <summary> List of possible statuses for job or document. </summary>
         public TranslationStatus Status { get; }
         /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
         public DocumentTranslationError Error { get; }
-        /// <summary> Character charged by the API. </summary>
-        public long? CharacterCharged { get; }
     }
 }

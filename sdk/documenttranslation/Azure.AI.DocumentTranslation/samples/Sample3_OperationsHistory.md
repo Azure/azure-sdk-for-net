@@ -15,7 +15,7 @@ var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCreden
 
 ## Getting all submitted translation operations
 
-To get the Translation History, call `GetTranslationsAsync` which returns an AsyncPageable object containing the `TranslationStatusDetail` for all submitted translation operations.
+To get the Translation History, call `GetTranslationsAsync` which returns an AsyncPageable object containing the `TranslationStatusResult` for all submitted translation operations.
 
 The sample below gets the total number of documents translated in all submitted operations as well as the details of the operation contining the largest number of documents.
 
@@ -26,7 +26,7 @@ int docsCancelled = 0;
 int docsSucceeded = 0;
 int docsFailed = 0;
 
-await foreach (TranslationStatusDetail translationStatus in client.GetTranslationsAsync())
+await foreach (TranslationStatusResult translationStatus in client.GetTranslationsAsync())
 {
     if (!translationStatus.HasCompleted)
     {

@@ -15,16 +15,16 @@ var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCreden
 
 ## Translating documents in multiple blob containers
 
-To Start a translation operation for documents in multiple blob containers, call `StartTranslationAsync` with multiple configurations. The result is a Long Running operation of type `DocumentTranslationOperation` which polls for the status of the translation operation from the API.
+To Start a translation operation for documents in multiple blob containers, call `StartTranslationAsync` with multiple inputs. The result is a Long Running operation of type `DocumentTranslationOperation` which polls for the status of the translation operation from the API.
 
-To call `StartTranslationAsync` you need to initialize a list of `TranslationConfiguration` which contains the information needed to translate the documents. Each `TranslationConfiguration` contains a source container and a list of target containers. The `AddTarget` method is used to add targets to the configuration.
+To call `StartTranslationAsync` you need to initialize a list of `DocumentTranslationInput` which contains the information needed to translate the documents. Each `DocumentTranslationInput` contains a source container and a list of target containers. The `AddTarget` method is used to add targets to the input.
 
 The `sourceUri` is a SAS URI with read access for the blob container holding the documents to be translated.
 The `targetUri` is a SAS URI with write access for the blob container to which the translated documents will be written.
 
 More on generating SAS Tokens [here](https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#create-sas-access-tokens-for-document-translation)
 
-```C# Snippet:MultipleConfigurationsAsync
+```C# Snippet:MultipleInputsAsync
 Uri source1SasUriUri = <source1 SAS URI>;
 Uri source2SasUri = <source2 SAS URI>;
 Uri frenchTargetSasUri = <french target SAS URI>;
@@ -32,16 +32,16 @@ Uri arabicTargetSasUri = <arabic target SAS URI>;
 Uri spanishTargetSasUri = <spanish target SAS URI>;
 Uri frenchGlossarySasUri = <french glossary SAS URI>;
 
-var configuration1 = new TranslationConfiguration(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
-configuration1.AddTarget(spanishTargetSasUri, "es");
+var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+input1.AddTarget(spanishTargetSasUri, "es");
 
-var configuration2 = new TranslationConfiguration(source2SasUri, arabicTargetSasUri, "ar");
-configuration2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+var input2 = new DocumentTranslationInput(source2SasUri, arabicTargetSasUri, "ar");
+input2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
 
-var inputs = new List<TranslationConfiguration>()
+var inputs = new List<DocumentTranslationInput>()
     {
-        configuration1,
-        configuration2
+        input1,
+        input2
     };
 
 DocumentTranslationOperation operation = await client.StartTranslationAsync(inputs);
@@ -63,7 +63,7 @@ while (!operation.HasCompleted)
     Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
 }
 
-await foreach (DocumentStatusDetail document in operation.GetValuesAsync())
+await foreach (DocumentStatusResult document in operation.GetValuesAsync())
 {
     Console.WriteLine($"Document with Id: {document.DocumentId}");
     Console.WriteLine($"  Status:{document.Status}");
@@ -82,7 +82,7 @@ await foreach (DocumentStatusDetail document in operation.GetValuesAsync())
 
 To see the full example source files, see:
 
-* [Synchronously MultipleConfigurations ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/tests/samples/Sample_MultipleConfigurations.cs)
-* [Asynchronously MultipleConfigurations ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/tests/samples/Sample_MultipleConfigurationsAsync.cs)
+* [Synchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/tests/samples/Sample_MultipleInputs.cs)
+* [Asynchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/tests/samples/Sample_MultipleInputsAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/README.md

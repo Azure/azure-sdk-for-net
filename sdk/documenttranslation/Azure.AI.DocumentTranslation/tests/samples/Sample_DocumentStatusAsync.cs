@@ -23,7 +23,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var input = new TranslationConfiguration(sourceUri, targetUri, "es");
+            var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             var documentscompleted = new HashSet<string>();
@@ -32,8 +32,8 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
             {
                 await operation.UpdateStatusAsync();
 
-                AsyncPageable<DocumentStatusDetail> documentsStatus = operation.GetAllDocumentsStatusAsync();
-                await foreach (DocumentStatusDetail docStatus in documentsStatus)
+                AsyncPageable<DocumentStatusResult> documentsStatus = operation.GetAllDocumentsStatusAsync();
+                await foreach (DocumentStatusResult docStatus in documentsStatus)
                 {
                     if (documentscompleted.Contains(docStatus.DocumentId))
                         continue;

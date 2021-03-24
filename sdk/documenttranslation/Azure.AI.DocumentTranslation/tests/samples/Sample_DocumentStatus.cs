@@ -23,7 +23,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            var input = new TranslationConfiguration(sourceUri, targetUri, "es");
+            var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
             DocumentTranslationOperation operation = client.StartTranslation(input);
 
             TimeSpan pollingInterval = new TimeSpan(1000);
@@ -35,8 +35,8 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
                 Thread.Sleep(pollingInterval);
                 operation.UpdateStatus();
 
-                Pageable<DocumentStatusDetail> documentsStatus = operation.GetAllDocumentsStatus();
-                foreach (DocumentStatusDetail docStatus in documentsStatus)
+                Pageable<DocumentStatusResult> documentsStatus = operation.GetAllDocumentsStatus();
+                foreach (DocumentStatusResult docStatus in documentsStatus)
                 {
                     if (documentscompleted.Contains(docStatus.DocumentId))
                         continue;

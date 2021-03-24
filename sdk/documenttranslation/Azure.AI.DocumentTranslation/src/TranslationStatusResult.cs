@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.AI.DocumentTranslation
 {
     [CodeGenModel("BatchStatusDetail")]
-    public partial class TranslationStatusDetail
+    public partial class TranslationStatusResult
     {
         /// <summary> Id of the operation. </summary>
         [CodeGenMember("Id")]
@@ -45,7 +45,7 @@ namespace Azure.AI.DocumentTranslation
         public int DocumentsCancelled => Summary.Cancelled;
 
         /// <summary> Total characters charged by the API. </summary>
-        public long TotalCharacterCharged => Summary.TotalCharacterCharged;
+        public long TotalCharactersCharged => Summary.TotalCharacterCharged;
 
         /// <summary> Returns true if the translation operation is completed. </summary>
         public bool HasCompleted => Status == TranslationStatus.Succeeded
