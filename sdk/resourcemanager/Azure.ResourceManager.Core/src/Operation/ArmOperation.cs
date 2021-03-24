@@ -5,13 +5,14 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
     /// Abstract class for long-running or synchronous applications.
     /// </summary>
-    public abstract class ArmOperation : ArmOperation<Response>, IOperationSource<Response>
+    public abstract class ArmOperation : ArmOperation<Response>
     {
     }
 
@@ -20,9 +21,12 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     /// <typeparam name="TOperations"> The <see cref="OperationsBase"/> to return representing the result of the ArmOperation. </typeparam>
 #pragma warning disable SA1402 // File may only contain a single type
-    public abstract class ArmOperation<TOperations> : Operation<TOperations>, IOperationSource<TOperations>
+    public abstract class ArmOperation<TOperations> : Operation<TOperations>
+        where TOperations : notnull, IUtf8JsonSerializable
 #pragma warning restore SA1402 // File may only contain a single type
     {
+        private readonly ArmOperationHelpers<TOperations> _operation;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmOperation{TOperations}"/> class for mocking.
         /// </summary>
@@ -31,26 +35,62 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets or sets the SyncValue
+        /// 
         /// </summary>
-        protected TOperations SyncValue { get; set; }
+        /// <param name="operation"></param>
+        protected ArmOperation(Operation<TOperations> operation)
+        {
+            WrappedOperation = operation;
+        }
 
         /// <summary>
-        /// Gets or sets whether or not this is an LRO
+        /// 
         /// </summary>
-        protected bool IsLongRunningOperation { get; set; }
+        /// <param name="response"></param>
+        protected ArmOperation(Response<TOperations> response)
+        {
+            WrappedResponse = response;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clientDiagnostics"></param>
+        /// <param name="pipeline"></param>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        protected ArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
+        {
+            _operation = new ArmOperationHelpers<TOperations>(this, )
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected Response<TOperations> WrappedResponse { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected Operation<TOperations> WrappedOperation { get; private set; }
 
         /// <inheritdoc/>
-        public TOperations CreateResult(Response response, CancellationToken cancellationToken)
+        public override TOperations Value => WrappedOperation is null ? WrappedResponse.Value : WrappedOperation.Value;
+
+        /// <inheritdoc/>
+        public override bool HasCompleted => WrappedResponse is null ? WrappedOperation.HasCompleted : true;
+
+        /// <inheritdoc/>
+        public override bool HasValue => WrappedResponse is null ? WrappedOperation.HasValue : true;
+
+        /// <inheritdoc/>
+        public override Response GetRawResponse()
         {
-            throw new NotImplementedException();
+            return WrappedResponse is null ? WrappedOperation.GetRawResponse() : WrappedResponse.GetRawResponse();
         }
 
         /// <inheritdoc/>
-        public ValueTask<TOperations> CreateResultAsync(Response response, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
+        public override string Id => WrappedOperation?.Id;
 
         /// <summary>
         /// Waits for the completion of the long running operations.

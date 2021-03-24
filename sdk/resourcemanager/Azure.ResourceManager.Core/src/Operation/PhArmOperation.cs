@@ -17,8 +17,7 @@ namespace Azure.ResourceManager.Core
         where TModel : class
     {
         private readonly Func<TModel, TOperations> _converter;
-        private readonly Response<TModel> _syncWrapped;
-        private readonly Operation<TModel> _wrapped;
+        private readonly ArmOperation<TModel> _wrapped;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhArmOperation{TOperations, TModel}"/> class for mocking.
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="converter"> The function used to convert from existing type to new type. </param>
         public PhArmOperation(Operation<TModel> wrapped, Func<TModel, TOperations> converter)
         {
-            _wrapped = wrapped;
+            _wrapped = new ValueArmOperation<TModel>(wrapped);
             _converter = converter;
         }
 
@@ -44,23 +43,22 @@ namespace Azure.ResourceManager.Core
         /// <param name="wrapped"> The results to wrap. </param>
         /// <param name="converter"> The function used to convert from existing type to new type. </param>
         public PhArmOperation(Response<TModel> wrapped, Func<TModel, TOperations> converter)
-            : base(converter(wrapped.Value))
         {
+            _wrapped = new ValueArmOperation<TModel>(wrapped);
             _converter = converter;
-            _syncWrapped = wrapped;
         }
 
         /// <inheritdoc/>
-        public override string Id => _wrapped?.Id;
+        public override string Id => _wrapped.Id;
 
         /// <inheritdoc/>
-        public override TOperations Value => CompletedSynchronously ? SyncValue : _converter(_wrapped.Value);
+        public override TOperations Value => _converter(_wrapped.Value);
 
         /// <inheritdoc/>
-        public override bool HasCompleted => CompletedSynchronously || _wrapped.HasCompleted;
+        public override bool HasCompleted => _wrapped.HasCompleted;
 
         /// <inheritdoc/>
-        public override bool HasValue => CompletedSynchronously || _wrapped.HasValue;
+        public override bool HasValue => _wrapped.HasValue;
 
         /// <inheritdoc/>
         public override Response GetRawResponse()

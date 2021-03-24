@@ -12,17 +12,14 @@ namespace Azure.ResourceManager.Core
 {
     internal class ValueArmOperation<TOperations> : ArmOperation<TOperations>
     {
-        public override string Id => throw new NotImplementedException();
-
-        public override TOperations Value => throw new NotImplementedException();
-
-        public override bool HasCompleted => throw new NotImplementedException();
-
-        public override bool HasValue => throw new NotImplementedException();
-
-        public override Response GetRawResponse()
+        internal ValueArmOperation(Operation<TOperations> operation)
+            :base(operation)
         {
-            throw new NotImplementedException();
+        }
+
+        internal ValueArmOperation(Response<TOperations> operation)
+            : base(operation)
+        {
         }
 
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
