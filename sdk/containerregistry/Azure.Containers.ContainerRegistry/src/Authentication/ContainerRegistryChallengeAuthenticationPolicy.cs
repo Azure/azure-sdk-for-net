@@ -31,12 +31,12 @@ namespace Azure.Containers.ContainerRegistry
     /// Step 5: GET /api/v1/acr/repositories
     /// Request Header: { Bearer acrTokenAccess }
     /// </summary>
-    internal class ContainerRegistryCredentialsPolicy : BearerTokenChallengeAuthenticationPolicy
+    internal class ContainerRegistryChallengeAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
     {
         private readonly RefreshTokensRestClient _exchangeRestClient;
         private readonly AccessTokensRestClient _tokenRestClient;
 
-        public ContainerRegistryCredentialsPolicy(TokenCredential credential, string aadScope, RefreshTokensRestClient exchangeRestClient, AccessTokensRestClient tokenRestClient)
+        public ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, RefreshTokensRestClient exchangeRestClient, AccessTokensRestClient tokenRestClient)
             : base(credential, aadScope)
         {
             Argument.AssertNotNull(credential, nameof(credential));
