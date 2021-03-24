@@ -43,13 +43,14 @@ az group create --name <your-resource-name> --location <location>
 # Create Translator
 az cognitiveservices account create \
     --name <your-resource-name> \
+    --custom-domain <your-resource-name> \
     --resource-group <your-resource-group-name> \
     --kind TextTranslation \
-    --sku <sku> \
+    --sku S1 \
     --location <location> \
     --yes
 ```
-For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
+For more information about creating the resource or how to get the location information see [here][cognitive_resource_cli].
 
 ### Authenticate the client
 In order to interact with the Document Translation service, you'll need to create an instance of the [DocumentTranslationClient][documenttranslation_client_class] class. You will need an **endpoint**, and an **API key** to instantiate a client object.  For more information regarding authenticating with cognitive services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
@@ -512,9 +513,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!--TODO: remove /overview -->
 [documenttranslation_docs]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview
 <!-- TODO: Add correct link when available -->
-[documenttranslation_refdocs]: https://aka.ms/azsdk-net-documenttranslation-ref-docs
+[documenttranslation_refdocs]: https://aka.ms/azsdk/net/documenttranslation/docs
 <!-- TODO: Add correct link when available -->
-[documenttranslation_nuget_package]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview
+[documenttranslation_nuget_package]: https://www.nuget.org/
 [documenttranslation_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/README.md
 <!-- TODO: Add correct link when available -->
 [documenttranslation_rest_api]: https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/TranslatorText/preview/v1.0-preview.1/TranslatorBatch.json
