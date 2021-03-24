@@ -86,6 +86,6 @@ steps:
       -PRLabels "${{ parameters.PRLabels }}"
       -UserReviewers "$(${{ parameters.GHReviewersVariable }})"
       -TeamReviewers "$(${{ parameters.GHTeamReviewersVariable }})"
-      -Assignees "${{ parameters.GHAssignessVariable }}"
+      -Assignees "$(${{ parameters.GHAssignessVariable }})"
       -CloseAfterOpenForTesting $${{ coalesce(parameters.CloseAfterOpenForTesting, 'false') }}
       -OpenAsDraft $${{ parameters.OpenAsDraft }}
