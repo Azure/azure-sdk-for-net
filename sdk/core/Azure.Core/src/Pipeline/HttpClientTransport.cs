@@ -264,6 +264,7 @@ namespace Azure.Core.Pipeline
             // So a Remove call is not required when setting a header value.
             protected internal override void SetHeader(string name, string value) =>
                 AddHeader(name, value);
+
             protected internal override void AddHeader(string name, string value)
             {
                 if (_requestMessage.Headers.TryAddWithoutValidation(name, value))
