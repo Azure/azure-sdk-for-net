@@ -42,17 +42,16 @@ param(
 # would fail the first time git wrote command output.
 $ErrorActionPreference = "Continue"
 $RemoteName = "azure-sdk-fork"
-if (!(git remote | ? {$_ -eq $RemoteName}))
-{
-    Write-Host "git remote add $RemoteName $GitUrl"
-    git remote add $RemoteName $GitUrl
-    if ($LASTEXITCODE -ne 0)
-    {
-        Write-Error "Unable to add remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
-        exit $LASTEXITCODE
-    }
-}
 
+if ((git remote) -contains $RemoteName)
+{
+  $remoteUrl = git remote get-url $RemoteName
+  if ($remoteUrl -ne $GitUrl)
+  {
+     Write-Error "Remote with name $RemoteName already exists with an incompatible url [$remoteUrl] which should be [$GitUrl]."
+     exit 1
+  }
+}
 # Check if the PRBranch is current branch.
 $currentBranch = git branch --show-current
 Write-Host "The current branch is $currentBranch."
