@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DocumentDbCollectionSourceConverter))]
     public partial class DocumentDbCollectionSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -138,6 +141,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DocumentDbCollectionSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, nestingSeparator.Value, queryTimeout.Value);
+        }
+
+        internal partial class DocumentDbCollectionSourceConverter : JsonConverter<DocumentDbCollectionSource>
+        {
+            public override void Write(Utf8JsonWriter writer, DocumentDbCollectionSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DocumentDbCollectionSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDocumentDbCollectionSource(document.RootElement);
+            }
         }
     }
 }

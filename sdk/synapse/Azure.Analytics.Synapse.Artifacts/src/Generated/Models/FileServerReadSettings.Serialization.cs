@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(FileServerReadSettingsConverter))]
     public partial class FileServerReadSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -154,6 +157,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new FileServerReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(enablePartitionDiscovery), modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
+        }
+
+        internal partial class FileServerReadSettingsConverter : JsonConverter<FileServerReadSettings>
+        {
+            public override void Write(Utf8JsonWriter writer, FileServerReadSettings model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override FileServerReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeFileServerReadSettings(document.RootElement);
+            }
         }
     }
 }

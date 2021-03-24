@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SqlPoolInfoListResultConverter))]
     public partial class SqlPoolInfoListResult
     {
         internal static SqlPoolInfoListResult DeserializeSqlPoolInfoListResult(JsonElement element)
@@ -41,6 +44,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SqlPoolInfoListResult(nextLink.Value, Optional.ToList(value));
+        }
+
+        internal partial class SqlPoolInfoListResultConverter : JsonConverter<SqlPoolInfoListResult>
+        {
+            public override void Write(Utf8JsonWriter writer, SqlPoolInfoListResult model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SqlPoolInfoListResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSqlPoolInfoListResult(document.RootElement);
+            }
         }
     }
 }

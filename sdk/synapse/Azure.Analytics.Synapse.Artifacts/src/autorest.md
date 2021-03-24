@@ -29,6 +29,7 @@ directive:
 ### Expose serialization and deserialization methods
 
 ``` yaml
+directive:
 - from: swagger-document
   where: $.definitions
   transform: >
