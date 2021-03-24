@@ -62,27 +62,28 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 }
 
                 // Create Time Series types
-                Response<TimeSeriesOperationError[]> createInstancesResult = await client
+                Response<TimeSeriesOperationError[]> createTypesResult = await client
                     .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
                     .ConfigureAwait(false);
 
                 // Assert that the result error array does not contain any object that is set
-                createInstancesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
+                createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
                 Response<TimeSeriesTypeOperationResult[]> getTypesByNamesResult;
 
-                //This retry logic was added as the TSI instance are not immediately available after creation
+                //This retry logic was added as the TSI types are not immediately available after creation
                 await TestRetryHelper.RetryAsync<Response<TimeSeriesTypeOperationResult[]>>(async () =>
                 {
-                    // Get the created instances by Ids
+                    // Get the created types by names
                     getTypesByNamesResult = await client
                         .GetTimeSeriesTypesByNamesAsync(timeSeriesTypesProperties.Keys)
                         .ConfigureAwait(false);
 
+                    getTypesByNamesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
                     getTypesByNamesResult.Value.Length.Should().Be(timeSeriesTypes.Count);
                     foreach (TimeSeriesTypeOperationResult typesResult in getTypesByNamesResult.Value)
                     {
-                        typesResult.TimeSeriesType.Should().NotBeNull();
                         typesResult.Error.Should().BeNull();
+                        typesResult.TimeSeriesType.Should().NotBeNull();
                         typesResult.TimeSeriesType.Id.Should().NotBeNullOrEmpty();
                         typesResult.TimeSeriesType.Variables.Count.Should().Be(1);
                         typesResult.TimeSeriesType.Variables.IsSameOrEqualTo(variables);
@@ -104,7 +105,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 updateTypesResult.Value.Length.Should().Be(timeSeriesTypes.Count);
 
                 // This retry logic was added as the TSI types are not immediately available after creation
-                await TestRetryHelper.RetryAsync<Response<InstancesOperationResult[]>>(async () =>
+                await TestRetryHelper.RetryAsync<Response<TimeSeriesTypeOperationResult[]>>(async () =>
                 {
                     // Get type by Id
                     Response<TimeSeriesTypeOperationResult[]> getTypeByIdResult = await client

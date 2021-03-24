@@ -7,7 +7,7 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "cb08d35083d76be32e489a671ea3fcdc",
+        "x-ms-client-request-id": "73a17ea53eebbbb136545e7e97323b5a",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -17,12 +17,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Wed, 24 Mar 2021 19:08:29 GMT",
+        "Date": "Wed, 24 Mar 2021 20:18:50 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "8ce0a619-da47-4ec0-9418-3f9937286ec7"
+        "x-ms-request-id": "3c0bc54e-aa78-4bf5-8590-3ceb6f7c78b8"
       },
       "ResponseBody": {
         "types": [
@@ -99,20 +99,20 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "254",
+        "Content-Length": "255",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "6b2a1c0928544d9abc6c426302dd8ad2",
+        "x-ms-client-request-id": "125dd6f8fc1ce5ef57d856c2164472f0",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "put": [
           {
-            "id": "333150199",
-            "name": "typegY4LAs1r",
+            "id": "1270999455",
+            "name": "type197Vczz6",
             "variables": {
-              "varNEfcCD5K": {
+              "varjczZC4Ub": {
                 "aggregation": {
                   "tsx": "count()"
                 },
@@ -121,10 +121,10 @@
             }
           },
           {
-            "id": "1880024475",
-            "name": "typeklLnzUrg",
+            "id": "1109560891",
+            "name": "typeGW1mmY9X",
             "variables": {
-              "varNEfcCD5K": {
+              "varjczZC4Ub": {
                 "aggregation": {
                   "tsx": "count()"
                 },
@@ -139,21 +139,21 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Wed, 24 Mar 2021 19:08:29 GMT",
+        "Date": "Wed, 24 Mar 2021 20:18:51 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "e2f406ad-eb3c-4b9d-b0bd-ce703ba7234c"
+        "x-ms-request-id": "27c42474-6517-4676-a871-be58b448b25f"
       },
       "ResponseBody": {
         "put": [
           {
             "timeSeriesType": {
-              "id": "333150199",
-              "name": "typegY4LAs1r",
+              "id": "1270999455",
+              "name": "type197Vczz6",
               "variables": {
-                "varNEfcCD5K": {
+                "varjczZC4Ub": {
                   "kind": "aggregate",
                   "aggregation": {
                     "tsx": "count()"
@@ -164,10 +164,10 @@
           },
           {
             "timeSeriesType": {
-              "id": "1880024475",
-              "name": "typeklLnzUrg",
+              "id": "1109560891",
+              "name": "typeGW1mmY9X",
               "variables": {
-                "varNEfcCD5K": {
+                "varjczZC4Ub": {
                   "kind": "aggregate",
                   "aggregation": {
                     "tsx": "count()"
@@ -188,15 +188,15 @@
         "Content-Length": "49",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "764254262b0b15a5aca0b4c7044b7da3",
+        "x-ms-client-request-id": "1f114e152c806061e0f268b4753ca407",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "get": {
           "names": [
-            "typegY4LAs1r",
-            "typeklLnzUrg"
+            "type197Vczz6",
+            "typeGW1mmY9X"
           ]
         }
       },
@@ -205,21 +205,21 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Wed, 24 Mar 2021 19:08:29 GMT",
+        "Date": "Wed, 24 Mar 2021 20:18:51 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "1a602729-30a5-4f85-b218-b179f64bfae7"
+        "x-ms-request-id": "9e97b547-b473-443f-8244-3d3191cc4562"
       },
       "ResponseBody": {
         "get": [
           {
             "timeSeriesType": {
-              "id": "333150199",
-              "name": "typegY4LAs1r",
+              "id": "1270999455",
+              "name": "type197Vczz6",
               "variables": {
-                "varNEfcCD5K": {
+                "varjczZC4Ub": {
                   "kind": "aggregate",
                   "aggregation": {
                     "tsx": "count()"
@@ -230,10 +230,10 @@
           },
           {
             "timeSeriesType": {
-              "id": "1880024475",
-              "name": "typeklLnzUrg",
+              "id": "1109560891",
+              "name": "typeGW1mmY9X",
               "variables": {
-                "varNEfcCD5K": {
+                "varjczZC4Ub": {
                   "kind": "aggregate",
                   "aggregation": {
                     "tsx": "count()"
@@ -251,21 +251,21 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "310",
+        "Content-Length": "311",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "20d5c25c727427ee39ba0e6a41806951",
+        "x-ms-client-request-id": "1dcf048ca55aa8078fbc1b12e7efa5f2",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "put": [
           {
-            "id": "333150199",
-            "name": "typegY4LAs1r",
+            "id": "1270999455",
+            "name": "type197Vczz6",
             "description": "Description",
             "variables": {
-              "varNEfcCD5K": {
+              "varjczZC4Ub": {
                 "aggregation": {
                   "tsx": "count()"
                 },
@@ -274,11 +274,11 @@
             }
           },
           {
-            "id": "1880024475",
-            "name": "typeklLnzUrg",
+            "id": "1109560891",
+            "name": "typeGW1mmY9X",
             "description": "Description",
             "variables": {
-              "varNEfcCD5K": {
+              "varjczZC4Ub": {
                 "aggregation": {
                   "tsx": "count()"
                 },
@@ -293,22 +293,22 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Wed, 24 Mar 2021 19:08:29 GMT",
+        "Date": "Wed, 24 Mar 2021 20:18:51 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "36c7c189-e62b-4fae-b029-9e565baf075a"
+        "x-ms-request-id": "cf774f78-a772-4078-95ce-dac2813788e7"
       },
       "ResponseBody": {
         "put": [
           {
             "timeSeriesType": {
-              "id": "333150199",
-              "name": "typegY4LAs1r",
+              "id": "1270999455",
+              "name": "type197Vczz6",
               "description": "Description",
               "variables": {
-                "varNEfcCD5K": {
+                "varjczZC4Ub": {
                   "kind": "aggregate",
                   "aggregation": {
                     "tsx": "count()"
@@ -319,11 +319,11 @@
           },
           {
             "timeSeriesType": {
-              "id": "1880024475",
-              "name": "typeklLnzUrg",
+              "id": "1109560891",
+              "name": "typeGW1mmY9X",
               "description": "Description",
               "variables": {
-                "varNEfcCD5K": {
+                "varjczZC4Ub": {
                   "kind": "aggregate",
                   "aggregation": {
                     "tsx": "count()"
@@ -341,18 +341,18 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "46",
+        "Content-Length": "47",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "c941c7bd8661ddd17714beb373d34970",
+        "x-ms-client-request-id": "49696ee11c20ccda75fd3229943a6f1b",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "get": {
           "typeIds": [
-            "333150199",
-            "1880024475"
+            "1270999455",
+            "1109560891"
           ]
         }
       },
@@ -361,22 +361,22 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Wed, 24 Mar 2021 19:08:29 GMT",
+        "Date": "Wed, 24 Mar 2021 20:18:51 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "3d3abe42-a644-4bd8-80fe-1ca5ef266eda"
+        "x-ms-request-id": "e5bbf9b4-f024-43e0-a98b-0aaeb2e86285"
       },
       "ResponseBody": {
         "get": [
           {
             "timeSeriesType": {
-              "id": "333150199",
-              "name": "typegY4LAs1r",
+              "id": "1270999455",
+              "name": "type197Vczz6",
               "description": "Description",
               "variables": {
-                "varNEfcCD5K": {
+                "varjczZC4Ub": {
                   "kind": "aggregate",
                   "aggregation": {
                     "tsx": "count()"
@@ -387,11 +387,11 @@
           },
           {
             "timeSeriesType": {
-              "id": "1880024475",
-              "name": "typeklLnzUrg",
+              "id": "1109560891",
+              "name": "typeGW1mmY9X",
               "description": "Description",
               "variables": {
-                "varNEfcCD5K": {
+                "varjczZC4Ub": {
                   "kind": "aggregate",
                   "aggregation": {
                     "tsx": "count()"
@@ -409,18 +409,18 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "49",
+        "Content-Length": "50",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "40069eee6907b35e661b3c501d3ad42c",
+        "x-ms-client-request-id": "11364f3455746f95466890c3104e78f0",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "delete": {
           "typeIds": [
-            "333150199",
-            "1880024475"
+            "1270999455",
+            "1109560891"
           ]
         }
       },
@@ -429,12 +429,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Wed, 24 Mar 2021 19:08:29 GMT",
+        "Date": "Wed, 24 Mar 2021 20:18:51 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "8f434b0b-ff15-44e7-b177-ae000df8b155"
+        "x-ms-request-id": "e72114ca-e9ab-4ede-837e-548d4f28910d"
       },
       "ResponseBody": {
         "delete": [
@@ -445,7 +445,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1339275697",
+    "RandomSeed": "1188087842",
     "TIMESERIESINSIGHTS_URL": "fakeHost.api.wus2.timeseriesinsights.azure.com"
   }
 }
