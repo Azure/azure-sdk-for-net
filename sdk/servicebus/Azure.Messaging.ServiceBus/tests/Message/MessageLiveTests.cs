@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
@@ -246,6 +247,61 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                         Assert.AreEqual(bytes, received.Body.ToMemory().Slice(100, 100).ToArray());
                     }
                 }
+            }
+        }
+
+        [Test]
+        public async Task CanSendValueSection()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+
+                var msg = new ServiceBusMessage();
+                msg.GetRawAmqpMessage().Body = new AmqpMessageBody("object");
+
+                await sender.SendMessageAsync(msg);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var received = await receiver.ReceiveMessageAsync();
+                received.GetRawAmqpMessage().Body.TryGetValue(out var receivedData);
+                Assert.AreEqual("object", receivedData);
+
+                Assert.That(
+                    () => received.Body,
+                    Throws.InstanceOf<NotSupportedException>());
+            }
+        }
+
+        [Test]
+        public async Task CanSendSequenceSection()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+
+                var msg = new ServiceBusMessage();
+                var sequence = new List<IList<object>>();
+                sequence.Add(new List<object> { "first", 1 });
+                sequence.Add(new List<object> { "second", 2 });
+                msg.GetRawAmqpMessage().Body = new AmqpMessageBody(sequence);
+
+                await sender.SendMessageAsync(msg);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var received = await receiver.ReceiveMessageAsync();
+                received.GetRawAmqpMessage().Body.TryGetSequence(out IEnumerable<IList<object>> receivedData);
+                var receivedSequence = receivedData.ToList();
+                Assert.AreEqual("first", receivedSequence[0][0]);
+                Assert.AreEqual(1, receivedSequence[0][1]);
+                Assert.AreEqual("second", receivedSequence[1][0]);
+                Assert.AreEqual(2, receivedSequence[1][1]);
+
+                Assert.That(
+                    () => received.Body,
+                    Throws.InstanceOf<NotSupportedException>());
             }
         }
 

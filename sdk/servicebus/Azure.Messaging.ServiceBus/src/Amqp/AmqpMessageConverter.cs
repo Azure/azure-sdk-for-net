@@ -219,6 +219,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 annotatedMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(amqpMessage.GetDataViaDataBody()));
             }
+            else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0 && amqpMessage.ValueBody?.Value != null)
+            {
+                annotatedMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(amqpMessage.ValueBody.Value));
+            }
+            else if ((amqpMessage.BodyType & SectionFlag.AmqpSequence) != 0)
+            {
+                annotatedMessage = new AmqpAnnotatedMessage(
+                    new AmqpMessageBody(amqpMessage.SequenceBody.Select(s => (IList<object>) s.List).ToList()));
+            }
+            // default to using an empty Data section if no data
             else
             {
                 annotatedMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(Enumerable.Empty<ReadOnlyMemory<byte>>()));
