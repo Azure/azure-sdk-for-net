@@ -44,5 +44,27 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             Assert.IsTrue(gotHelloWorld);
         }
+
+        [RecordedTest]
+        public async Task CanGetRepositoriesWithCustomPageSize()
+        {
+            // Arrange
+            var client = CreateClient();
+            int pageSize = 2;
+
+            // Act
+            AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+            var pages = repositories.AsPages(pageSizeHint: pageSize);
+
+            // Assert
+            int pageCount = 0;
+            await foreach (var page in pages)
+            {
+                Assert.IsTrue(page.Values.Count <= pageSize);
+                pageCount++;
+            }
+
+            Assert.IsTrue(pageCount > 2);
+        }
     }
 }

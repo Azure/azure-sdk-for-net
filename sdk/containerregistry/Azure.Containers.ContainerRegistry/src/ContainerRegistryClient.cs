@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Specialized;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 
 using Azure.Core;
@@ -56,35 +57,56 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<string> GetRepositoriesAsync(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken, pageSizeHint) =>
+            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
                 scope.Start();
                 try
                 {
-                    Response<Repositories> response =
-                        await _restClient.GetRepositoriesAsync(
-                            continuationToken,
-                            pageSizeHint,
-                            cancellationToken)
-                       .ConfigureAwait(false);
-
-                    string lastRepository = null;
-                    if (!string.IsNullOrEmpty(response.Value.Link))
-                    {
-                        Uri nextLink = new Uri(response.Value.Link);
-                        NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
-                        lastRepository = queryParams["last"];
-                    }
-
-                    return Page<string>.FromValues(response.Value.RepositoriesValue, lastRepository, response.GetRawResponse());
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesAsync(last: null, pageSizeHint, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
-                    scope.Failed(ex);
+                    scope.Failed(e);
                     throw;
                 }
-            });
+            }
+            async Task<Page<string>> NextPageFunc(string continuationToken, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+                scope.Start();
+                try
+                {
+                    string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesNextPageAsync(uriReference, null, pageSizeHint, cancellationToken).ConfigureAwait(false);
+
+                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        private static string ParseUriReferenceFromLinkHeader(string linkValue)
+        {
+            // link-value is defined as:
+            //   Link       = "Link" ":" #link-value
+            //   link-value = "<" URI-Reference ">" * (";" link-param )
+            // See: https://tools.ietf.org/html/rfc5988#section-5
+
+            string uriReference = null;
+            if (linkValue != null)
+            {
+                int length = linkValue.IndexOf('>');
+                uriReference = linkValue.Substring(1, length - 1);
+            }
+
+            return uriReference;
         }
 
         /// <summary> List repositories. </summary>
