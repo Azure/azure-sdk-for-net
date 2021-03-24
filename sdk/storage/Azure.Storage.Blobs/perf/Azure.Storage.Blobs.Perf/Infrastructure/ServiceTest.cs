@@ -1,8 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.Http;
-using Azure.Core.Pipeline;
+
 using Azure.Test.Perf;
 
 namespace Azure.Storage.Blobs.Perf
