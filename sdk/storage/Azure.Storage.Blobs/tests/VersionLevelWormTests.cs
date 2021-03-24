@@ -355,7 +355,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsFalse(legalHoldResponse.Value.LegalHoldEnabled);
 
             // Delete blob snapshot.
-            //await blob.WithVersion(snapshotResponse.Value.Snapshot).DeleteAsync();
+            await blob.WithVersion(metadataResponse.Value.VersionId).DeleteAsync();
         }
 
         [Test]
@@ -591,7 +591,7 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobProperties> propertiesResponse = await pageBlob.GetPropertiesAsync();
             Assert.AreEqual(expectedImmutabilityPolicyExpiry, propertiesResponse.Value.ImmutabilityPolicyExpiresOn);
-            Assert.AreEqual(immutabilityPolicy.PolicyMode, propertiesResponse.Value.ImmutabilityPolicyMode);
+            Assert.AreEqual(immutabilityPolicy.PolicyMode.ToString().ToLowerInvariant(), propertiesResponse.Value.ImmutabilityPolicyMode);
             Assert.IsTrue(propertiesResponse.Value.HasLegalHold);
         }
 
