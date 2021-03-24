@@ -80,11 +80,7 @@ namespace Azure.Core
         /// <param name="value">The header value.</param>
         protected internal virtual void SetHeader(string name, string value)
         {
-#if NETFRAMEWORK
-            // RemoveHeader is only required for the WebRequest.Headers.Add behavior implemented by HttpWebRequest
-            // The HttpClient implementation overwrites non-list header values rather than appending them as lists in all cases.
             RemoveHeader(name);
-#endif
             AddHeader(name, value);
         }
         /// <summary>
