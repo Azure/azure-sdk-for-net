@@ -15,7 +15,6 @@ namespace Azure.Storage.Blobs.Models
         {
             BlobImmutabilityPolicyMode.Unlocked => "Unlocked",
             BlobImmutabilityPolicyMode.Locked => "Locked",
-            BlobImmutabilityPolicyMode.Mutable => "Mutable",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobImmutabilityPolicyMode value.")
         };
 
@@ -23,7 +22,6 @@ namespace Azure.Storage.Blobs.Models
         {
             if (string.Equals(value, "Unlocked", StringComparison.InvariantCultureIgnoreCase)) return BlobImmutabilityPolicyMode.Unlocked;
             if (string.Equals(value, "Locked", StringComparison.InvariantCultureIgnoreCase)) return BlobImmutabilityPolicyMode.Locked;
-            if (string.Equals(value, "Mutable", StringComparison.InvariantCultureIgnoreCase)) return BlobImmutabilityPolicyMode.Mutable;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobImmutabilityPolicyMode value.");
         }
     }

@@ -47,7 +47,7 @@ namespace Azure.Storage.Blobs
     }
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
-        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_08_04) { }
+        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_06_12) { }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
@@ -440,7 +440,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.ETag ETag { get { throw null; } }
         public bool HasLegalHold { get { throw null; } }
         public System.DateTimeOffset? ImmutabilityPolicyExpiresOn { get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicyMode? ImmutabilityPolicyMode { get { throw null; } }
+        public string ImmutabilityPolicyMode { get { throw null; } }
         public bool IsSealed { get { throw null; } }
         public bool IsServerEncrypted { get { throw null; } }
         public System.DateTimeOffset LastAccessed { get { throw null; } }
@@ -656,7 +656,6 @@ namespace Azure.Storage.Blobs.Models
     {
         Unlocked = 0,
         Locked = 1,
-        Mutable = 2,
     }
     public partial class BlobInfo
     {
@@ -710,7 +709,7 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public bool HasLegalHold { get { throw null; } }
         public System.DateTimeOffset? ImmutabilityPolicyExpiresOn { get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicyMode? ImmutabilityPolicyMode { get { throw null; } }
+        public string ImmutabilityPolicyMode { get { throw null; } }
         public bool? IncrementalCopy { get { throw null; } }
         public bool? IsSealed { get { throw null; } }
         public System.DateTimeOffset? LastAccessedOn { get { throw null; } }
@@ -788,7 +787,7 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public bool HasLegalHold { get { throw null; } }
         public System.DateTimeOffset? ImmutabilityPolicyExpiresOn { get { throw null; } }
-        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicyMode? ImmutabilityPolicyMode { get { throw null; } }
+        public string ImmutabilityPolicyMode { get { throw null; } }
         public bool IsIncrementalCopy { get { throw null; } }
         public bool IsLatestVersion { get { throw null; } }
         public bool IsSealed { get { throw null; } }
@@ -1045,7 +1044,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.BlobRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobHttpHeaders HttpHeaders { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy ImmutabilityPolicy { get { throw null; } set { } }
-        public bool LegalHold { get { throw null; } set { } }
+        public bool? LegalHold { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
@@ -1358,6 +1357,8 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.Storage.Blobs.Models.DeleteSnapshotsOption snapshotsOption = Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> DeleteIfExists(Azure.Storage.Blobs.Models.DeleteSnapshotsOption snapshotsOption = Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteIfExistsAsync(Azure.Storage.Blobs.Models.DeleteSnapshotsOption snapshotsOption = Azure.Storage.Blobs.Models.DeleteSnapshotsOption.None, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteImmutabilityPolicy(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteImmutabilityPolicyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobDownloadInfo> Download() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1555,7 +1556,7 @@ namespace Azure.Storage.Blobs.Specialized
     }
     public partial class SpecializedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
     {
-        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_08_04) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
+        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2020_06_12) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedBlobExtensions
@@ -1598,6 +1599,7 @@ namespace Azure.Storage.Sas
         DeleteBlobVersion = 128,
         Move = 256,
         Execute = 512,
+        SetImmutabilityPolicy = 1024,
     }
     public partial class BlobSasBuilder
     {
@@ -1655,6 +1657,7 @@ namespace Azure.Storage.Sas
         List = 128,
         Move = 256,
         Execute = 512,
+        SetImmutabilityPolicy = 1024,
     }
     public sealed partial class BlobSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
     {
@@ -1673,6 +1676,7 @@ namespace Azure.Storage.Sas
     {
         All = -1,
         Delete = 1,
+        SetImmutabilityPolicy = 2,
     }
     [System.FlagsAttribute]
     public enum SnapshotSasPermissions
@@ -1681,6 +1685,7 @@ namespace Azure.Storage.Sas
         Read = 1,
         Write = 2,
         Delete = 4,
+        SetImmutabilityPolicy = 8,
     }
 }
 namespace Microsoft.Extensions.Azure

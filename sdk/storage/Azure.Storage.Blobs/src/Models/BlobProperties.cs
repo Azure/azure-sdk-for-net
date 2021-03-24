@@ -269,7 +269,7 @@ namespace Azure.Storage.Blobs.Models
         /// Indicates the immutability policy mode of the blob.
         /// Null if the blob doesn't have an immutability policy.
         /// </summary>
-        public BlobImmutabilityPolicyMode? ImmutabilityPolicyMode { get; internal set; }
+        public string ImmutabilityPolicyMode { get; internal set; }
 
         /// <summary>
         /// Indicates if the blob has a legal hold.
