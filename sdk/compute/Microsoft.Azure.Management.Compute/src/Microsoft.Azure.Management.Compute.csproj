@@ -20,6 +20,7 @@
         3. Added Standard SSD ZRS storage account type support for managed Disks.
         4. Added RotationToLatestKeyVersionEnabled flag in managedDisk to support rotation of keys for Disk Encryption Sets.
         5. Added supportsHibernation flag in managed Disks to support VM hibneration functionality.
+        6. Changed PrivateEndpoint property to read-only.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
