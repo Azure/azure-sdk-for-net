@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0 (2021-03-29)
 ### Breaking
 - Changed the return type of the batch `Send` and `SendAsync` in `SmsClient` to `Pageable<SmsSendResult>` and `AsyncPageable<SmsSendResult>`, respectively.
 
