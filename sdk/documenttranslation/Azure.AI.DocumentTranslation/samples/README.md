@@ -23,6 +23,6 @@ Azure Cognitive Services Document Translation is a cloud service that translates
 - [Operations History](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample3_OperationsHistory.md)
 
 ## Advanced samples
-- [Multiple Configurations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample4_MultipleConfigurations.md)
+- [Multiple Inputs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample4_MultipleInputs.md)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

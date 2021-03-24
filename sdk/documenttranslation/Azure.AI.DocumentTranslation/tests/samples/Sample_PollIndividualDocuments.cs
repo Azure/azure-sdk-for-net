@@ -28,17 +28,17 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
             //@@ Uri sourceUri = <source SAS URI>;
             //@@ Uri targetUri = <target SAS URI>;
 
-            var input = new TranslationConfiguration(sourceUri, targetUri, "es");
+            var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
             DocumentTranslationOperation operation = client.StartTranslation(input);
 
             TimeSpan pollingInterval = new TimeSpan(1000);
 
-            Pageable<DocumentStatusDetail> documents = operation.GetAllDocumentsStatus();
-            foreach (DocumentStatusDetail document in documents)
+            Pageable<DocumentStatusResult> documents = operation.GetAllDocumentStatuses();
+            foreach (DocumentStatusResult document in documents)
             {
-                Console.WriteLine($"Polling Status for document{document.LocationUri}");
+                Console.WriteLine($"Polling Status for document{document.TranslatedDocumentUri}");
 
-                Response<DocumentStatusDetail> status = operation.GetDocumentStatus(document.DocumentId);
+                Response<DocumentStatusResult> status = operation.GetDocumentStatus(document.DocumentId);
 
                 while (!status.Value.HasCompleted)
                 {
@@ -48,7 +48,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
 
                 if (status.Value.Status == TranslationStatus.Succeeded)
                 {
-                    Console.WriteLine($"  Location: {document.LocationUri}");
+                    Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
                     Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
                 }
                 else

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation
 {
-    public partial class TranslationConfiguration : IUtf8JsonSerializable
+    public partial class DocumentTranslationInput : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

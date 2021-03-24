@@ -89,7 +89,7 @@ A `DocumentTranslationClient` is the primary interface for developers using the 
  - Identifying supported glossary and document formats.
 
 ### Translation Input
-To start a translation operation you need to create one instance or a list of `DocumentTranslationConfiguration`. 
+To start a translation operation you need to create one instance or a list of `DocumentTranslationInput`. 
 
 A single source URL to documents can be translated to many different languages:
 
@@ -99,7 +99,7 @@ Uri frenchTargetSasUri = <french target SAS URI>;
 Uri arabicTargetSasUri = <arabic target SAS URI>;
 Uri spanishTargetSasUri = <spanish target SAS URI>;
 
-var input = new TranslationConfiguration(sourceSasUri, frenchTargetSasUri, "fr");
+var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
 input.AddTarget(arabicTargetSasUri, "ar");
 input.AddTarget(spanishTargetSasUri, "es");
 ```
@@ -110,10 +110,10 @@ Or multiple different sources can be provided each with their own targets.
 Uri source1SasUri = <source1 SAS URI>;
 Uri source2SasUri = <source2 SAS URI>;
 
-var inputs = new List<TranslationConfiguration>
+var inputs = new List<DocumentTranslationInput>
 {
-    new TranslationConfiguration(source1SasUri, spanishTargetSasUri, "es"),
-    new TranslationConfiguration(
+    new DocumentTranslationInput(source1SasUri, spanishTargetSasUri, "es"),
+    new DocumentTranslationInput(
         source: new TranslationSource(source2SasUri),
         targets: new List<TranslationTarget>
         {
@@ -152,12 +152,12 @@ Note: our `DocumentTranslationClient` provides both synchronous and asynchronous
 ### Async Examples
 * [Start Translation Asynchronously](#start-translation-asynchronously)
 * [Operations History Asynchronously](#get-operations-history-asynchronously)
-* [Multiple Configurations Asynchronously](#start-translation-with-multiple-configurations-asynchronously)
+* [Multiple Inputs Asynchronously](#start-translation-with-multiple-inputs-asynchronously)
 
 ### Sync Examples
 * [Start Translation](#start-translation)
 * [Operations History](#get-operations-history)
-* [Multiple Configurations](#start-translation-with-multiple-configurations)
+* [Multiple Inputs](#start-translation-with-multiple-inputs)
 
 ### Start Translation
 Start a translation operation to translate documents in the source container and write the translated files to the target container. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
@@ -166,7 +166,7 @@ Start a translation operation to translate documents in the source container and
 Uri sourceUri = <source SAS URI>;
 Uri targetUri = <target SAS URI>;
 
-var input = new TranslationConfiguration(sourceUri, targetUri, "es");
+var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = client.StartTranslation(input);
 
@@ -187,13 +187,13 @@ while (!operation.HasCompleted)
     Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
 }
 
-foreach (DocumentStatusDetail document in operation.GetValues())
+foreach (DocumentStatusResult document in operation.GetValues())
 {
     Console.WriteLine($"Document with Id: {document.DocumentId}");
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  Location: {document.LocationUri}");
+        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
     }
     else
@@ -216,7 +216,7 @@ int docsFailed = 0;
 
 TimeSpan pollingInterval = new TimeSpan(1000);
 
-foreach (TranslationStatusDetail translationStatus in client.GetTranslations())
+foreach (TranslationStatusResult translationStatus in client.GetTranslations())
 {
     if (!translationStatus.HasCompleted)
     {
@@ -243,10 +243,10 @@ Console.WriteLine($"Failed Document: {docsFailed}");
 Console.WriteLine($"Cancelled Documents: {docsCancelled}");
 ```
 
-### Start Translation with Multiple Configurations
+### Start Translation with Multiple Inputs
 Start a translation operation to translate documents in multiple source containers to multiple target containers in different languages. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
-```C# Snippet:MultipleConfigurations
+```C# Snippet:MultipleInputs
 Uri source1SasUriUri = <source1 SAS URI>;
 Uri source2SasUri = <source2 SAS URI>;
 Uri frenchTargetSasUri = <french target SAS URI>;
@@ -254,16 +254,16 @@ Uri arabicTargetSasUri = <arabic target SAS URI>;
 Uri spanishTargetSasUri = <spanish target SAS URI>;
 Uri frenchGlossarySasUri = <french glossary SAS URI>;
 
-var configuration1 = new TranslationConfiguration(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
-configuration1.AddTarget(spanishTargetSasUri, "es");
+var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+input1.AddTarget(spanishTargetSasUri, "es");
 
-var configuration2 = new TranslationConfiguration(source2SasUri, arabicTargetSasUri, "ar");
-configuration2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+var input2 = new DocumentTranslationInput(source2SasUri, arabicTargetSasUri, "ar");
+input2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
 
-var inputs = new List<TranslationConfiguration>()
+var inputs = new List<DocumentTranslationInput>()
     {
-        configuration1,
-        configuration2
+        input1,
+        input2
     };
 
 DocumentTranslationOperation operation = client.StartTranslation(inputs);
@@ -285,13 +285,13 @@ while (!operation.HasCompleted)
     Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
 }
 
-foreach (DocumentStatusDetail document in operation.GetValues())
+foreach (DocumentStatusResult document in operation.GetValues())
 {
     Console.WriteLine($"Document with Id: {document.DocumentId}");
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  Location: {document.LocationUri}");
+        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
     }
     else
@@ -309,11 +309,11 @@ Start a translation operation to translate documents in the source container and
 Uri sourceUri = <source SAS URI>;
 Uri targetUri = <target SAS URI>;
 
-var input = new TranslationConfiguration(sourceUri, targetUri, "es");
+var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-Response<AsyncPageable<DocumentStatusDetail>> operationResult = await operation.WaitForCompletionAsync();
+Response<AsyncPageable<DocumentStatusResult>> operationResult = await operation.WaitForCompletionAsync();
 
 Console.WriteLine($"  Status: {operation.Status}");
 Console.WriteLine($"  Created on: {operation.CreatedOn}");
@@ -324,13 +324,13 @@ Console.WriteLine($"    Failed: {operation.DocumentsFailed}");
 Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
 Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
 
-await foreach (DocumentStatusDetail document in operationResult.Value)
+await foreach (DocumentStatusResult document in operationResult.Value)
 {
     Console.WriteLine($"Document with Id: {document.DocumentId}");
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  Location: {document.LocationUri}");
+        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
     }
     else
@@ -351,7 +351,7 @@ int docsCancelled = 0;
 int docsSucceeded = 0;
 int docsFailed = 0;
 
-await foreach (TranslationStatusDetail translationStatus in client.GetTranslationsAsync())
+await foreach (TranslationStatusResult translationStatus in client.GetTranslationsAsync())
 {
     if (!translationStatus.HasCompleted)
     {
@@ -373,10 +373,10 @@ Console.WriteLine($"Failed Document: {docsFailed}");
 Console.WriteLine($"Cancelled Documents: {docsCancelled}");
 ```
 
-### Start Translation with Multiple Configurations Asynchronously
+### Start Translation with Multiple Inputs Asynchronously
 Start a translation operation to translate documents in multiple source containers to multiple target containers in different languages. `DocumentTranslationOperation` allows you to poll the status of the translation operation and get the status of the individual documents.
 
-```C# Snippet:MultipleConfigurationsAsync
+```C# Snippet:MultipleInputsAsync
 Uri source1SasUriUri = <source1 SAS URI>;
 Uri source2SasUri = <source2 SAS URI>;
 Uri frenchTargetSasUri = <french target SAS URI>;
@@ -384,16 +384,16 @@ Uri arabicTargetSasUri = <arabic target SAS URI>;
 Uri spanishTargetSasUri = <spanish target SAS URI>;
 Uri frenchGlossarySasUri = <french glossary SAS URI>;
 
-var configuration1 = new TranslationConfiguration(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
-configuration1.AddTarget(spanishTargetSasUri, "es");
+var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+input1.AddTarget(spanishTargetSasUri, "es");
 
-var configuration2 = new TranslationConfiguration(source2SasUri, arabicTargetSasUri, "ar");
-configuration2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+var input2 = new DocumentTranslationInput(source2SasUri, arabicTargetSasUri, "ar");
+input2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
 
-var inputs = new List<TranslationConfiguration>()
+var inputs = new List<DocumentTranslationInput>()
     {
-        configuration1,
-        configuration2
+        input1,
+        input2
     };
 
 DocumentTranslationOperation operation = await client.StartTranslationAsync(inputs);
@@ -415,13 +415,13 @@ while (!operation.HasCompleted)
     Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
 }
 
-await foreach (DocumentStatusDetail document in operation.GetValuesAsync())
+await foreach (DocumentStatusResult document in operation.GetValuesAsync())
 {
     Console.WriteLine($"Document with Id: {document.DocumentId}");
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  Location: {document.LocationUri}");
+        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
     }
     else
@@ -440,11 +440,11 @@ When you interact with the Cognitive Services Document Translation client librar
 For example, if you submit a request with an empty targets list, a `400` error is returned, indicating "Bad Request".
 
 ```C# Snippet:BadRequest
-var invalidConfiguration = new TranslationConfiguration(new TranslationSource(sourceSasUri, new List<TranslationTarget>());
+var invalidInput = new DocumentTranslationInput(new TranslationSource(sourceSasUri, new List<TranslationTarget>());
 
 try
 {
-    DocumentTranslationOperation operation = client.StartTranslation(invalidConfiguration);
+    DocumentTranslationOperation operation = client.StartTranslation(invalidInput);
 }
 catch (RequestFailedException e)
 {
@@ -494,7 +494,7 @@ Samples showing how to use the Cognitive Services Document Translation library a
 - [Operations History][operations_history_sample]
 
 ### Advanced samples
-- [Multiple Configurations][multiple_configurations_sample]
+- [Multiple Inputs][multiple_Inputs_sample]
 
 ## Contributing
 See the [CONTRIBUTING.md][contributing] for details on building, testing, and contributing to this library.
@@ -535,7 +535,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [start_translation_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample1_StartTranslation.md
 [documents_status_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample2_PollIndividualDocuments.md
 [operations_history_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample3_OperationsHistory.md
-[multiple_configurations_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample4_MultipleConfigurations.md
+[multiple_inputs_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample4_MultipleInputs.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/

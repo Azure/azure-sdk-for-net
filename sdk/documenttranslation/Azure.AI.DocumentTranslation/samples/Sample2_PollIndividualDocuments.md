@@ -21,18 +21,18 @@ To poll the status of documents in an operation you use the `DocumentTranslation
 Uri sourceUri = <source SAS URI>;
 Uri targetUri = <target SAS URI>;
 
-var input = new TranslationConfiguration(sourceUri, targetUri, "es");
+var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
 TimeSpan pollingInterval = new TimeSpan(1000);
 
-AsyncPageable<DocumentStatusDetail> documents = operation.GetAllDocumentsStatusAsync();
-await foreach (DocumentStatusDetail document in documents)
+AsyncPageable<DocumentStatusResult> documents = operation.GetAllDocumentStatusesAsync();
+await foreach (DocumentStatusResult document in documents)
 {
-    Console.WriteLine($"Polling Status for document{document.LocationUri}");
+    Console.WriteLine($"Polling Status for document{document.TranslatedDocumentUri}");
 
-    Response<DocumentStatusDetail> status = await operation.GetDocumentStatusAsync(document.DocumentId);
+    Response<DocumentStatusResult> status = await operation.GetDocumentStatusAsync(document.DocumentId);
 
     while (!status.Value.HasCompleted)
     {
@@ -42,7 +42,7 @@ await foreach (DocumentStatusDetail document in documents)
 
     if (status.Value.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  Location: {document.LocationUri}");
+        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
     }
     else

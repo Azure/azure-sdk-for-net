@@ -38,15 +38,15 @@ namespace Azure.AI.DocumentTranslation.Samples
             var credentials = new AzureKeyCredential(apiKey);
             var client = new DocumentTranslationClient(new Uri(endpoint), credentials);
 
-            var invalidConfiguration = new TranslationConfiguration(new TranslationSource(new Uri(endpoint)), new List<TranslationTarget>());
+            var invalidInput = new DocumentTranslationInput(new TranslationSource(new Uri(endpoint)), new List<TranslationTarget>());
 
             #region Snippet:BadRequest
 
-            //@@ var invalidConfiguration = new TranslationConfiguration(new TranslationSource(sourceSasUri, new List<TranslationTarget>());
+            //@@ var invalidInput = new DocumentTranslationInput(new TranslationSource(sourceSasUri, new List<TranslationTarget>());
 
             try
             {
-                DocumentTranslationOperation operation = client.StartTranslation(invalidConfiguration);
+                DocumentTranslationOperation operation = client.StartTranslation(invalidInput);
             }
             catch (RequestFailedException e)
             {
@@ -70,7 +70,7 @@ namespace Azure.AI.DocumentTranslation.Samples
             //@@ Uri arabicTargetSasUri = <arabic target SAS URI>;
             //@@ Uri spanishTargetSasUri = <spanish target SAS URI>;
 
-            var input = new TranslationConfiguration(sourceSasUri, frenchTargetSasUri, "fr");
+            var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
             input.AddTarget(arabicTargetSasUri, "ar");
             input.AddTarget(spanishTargetSasUri, "es");
             #endregion
@@ -82,10 +82,10 @@ namespace Azure.AI.DocumentTranslation.Samples
             //@@ Uri source1SasUri = <source1 SAS URI>;
             //@@ Uri source2SasUri = <source2 SAS URI>;
 
-            var inputs = new List<TranslationConfiguration>
+            var inputs = new List<DocumentTranslationInput>
             {
-                new TranslationConfiguration(source1SasUri, spanishTargetSasUri, "es"),
-                new TranslationConfiguration(
+                new DocumentTranslationInput(source1SasUri, spanishTargetSasUri, "es"),
+                new DocumentTranslationInput(
                     source: new TranslationSource(source2SasUri),
                     targets: new List<TranslationTarget>
                     {

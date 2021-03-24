@@ -17,7 +17,7 @@ var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCreden
 
 To Start a translation operation for a single document or documents in a single blob container, call `StartTranslationAsync`. The result is a Long Running operation of type `DocumentTranslationOperation` which polls for the status of the translation operation from the API.
 
-To call `StartTranslationAsync` you need to initialize an object of type `TranslationConfiguration` which contains the information needed to translate the documents.
+To call `StartTranslationAsync` you need to initialize an object of type `DocumentTranslationInput` which contains the information needed to translate the documents.
 The `sourceUri` is a SAS URI with read access for the document to be translated or read and list access for the blob container holding the documents to be translated.
 The `targetUri` is a SAS URI with write access for the blob container to which the translated documents will be written.
 
@@ -27,11 +27,11 @@ More on generating SAS Tokens [here](https://docs.microsoft.com/azure/cognitive-
 Uri sourceUri = <source SAS URI>;
 Uri targetUri = <target SAS URI>;
 
-var input = new TranslationConfiguration(sourceUri, targetUri, "es");
+var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
 
 DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-Response<AsyncPageable<DocumentStatusDetail>> operationResult = await operation.WaitForCompletionAsync();
+Response<AsyncPageable<DocumentStatusResult>> operationResult = await operation.WaitForCompletionAsync();
 
 Console.WriteLine($"  Status: {operation.Status}");
 Console.WriteLine($"  Created on: {operation.CreatedOn}");
@@ -42,13 +42,13 @@ Console.WriteLine($"    Failed: {operation.DocumentsFailed}");
 Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
 Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
 
-await foreach (DocumentStatusDetail document in operationResult.Value)
+await foreach (DocumentStatusResult document in operationResult.Value)
 {
     Console.WriteLine($"Document with Id: {document.DocumentId}");
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  Location: {document.LocationUri}");
+        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
     }
     else

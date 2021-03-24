@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -14,7 +14,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
     {
         [Test]
         [Ignore("Samples not working yet")]
-        public void MultipleConfigurations()
+        public async Task MultipleInputsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
             Uri spanishTargetSasUri = new Uri("<spanish target SAS URI>");
             Uri frenchGlossarySasUri = new Uri("<french glossary SAS URI>");
 
-            #region Snippet:MultipleConfigurations
+            #region Snippet:MultipleInputsAsync
 
             //@@ Uri source1SasUriUri = <source1 SAS URI>;
             //@@ Uri source2SasUri = <source2 SAS URI>;
@@ -37,26 +37,26 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
             //@@ Uri spanishTargetSasUri = <spanish target SAS URI>;
             //@@ Uri frenchGlossarySasUri = <french glossary SAS URI>;
 
-            var configuration1 = new TranslationConfiguration(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
-            configuration1.AddTarget(spanishTargetSasUri, "es");
+            var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+            input1.AddTarget(spanishTargetSasUri, "es");
 
-            var configuration2 = new TranslationConfiguration(source2SasUri, arabicTargetSasUri, "ar");
-            configuration2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+            var input2 = new DocumentTranslationInput(source2SasUri, arabicTargetSasUri, "ar");
+            input2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
 
-            var inputs = new List<TranslationConfiguration>()
+            var inputs = new List<DocumentTranslationInput>()
                 {
-                    configuration1,
-                    configuration2
+                    input1,
+                    input2
                 };
 
-            DocumentTranslationOperation operation = client.StartTranslation(inputs);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(inputs);
 
             TimeSpan pollingInterval = new TimeSpan(1000);
 
             while (!operation.HasCompleted)
             {
-                Thread.Sleep(pollingInterval);
-                operation.UpdateStatus();
+                await Task.Delay(pollingInterval);
+                await operation.UpdateStatusAsync();
 
                 Console.WriteLine($"  Status: {operation.Status}");
                 Console.WriteLine($"  Created on: {operation.CreatedOn}");
@@ -68,13 +68,13 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
                 Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
             }
 
-            foreach (DocumentStatusDetail document in operation.GetValues())
+            await foreach (DocumentStatusResult document in operation.GetValuesAsync())
             {
                 Console.WriteLine($"Document with Id: {document.DocumentId}");
                 Console.WriteLine($"  Status:{document.Status}");
                 if (document.Status == TranslationStatus.Succeeded)
                 {
-                    Console.WriteLine($"  Location: {document.LocationUri}");
+                    Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
                     Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
                 }
                 else
