@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation
@@ -27,7 +28,7 @@ namespace Azure.AI.DocumentTranslation
             {
                 target.Glossaries.Add(glossary);
             }
-            Targets.Add(target);
+            Targets = new List<TranslationTarget> { target };
         }
 
         /// <summary>
