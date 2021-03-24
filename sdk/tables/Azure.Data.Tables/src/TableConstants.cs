@@ -61,6 +61,7 @@ namespace Azure.Data.Tables
             internal const string MissingPartitionKey = "The entity must contain a PartitionKey value";
             internal const string MissingRowKey = "The entity must contain a RowKey value";
             internal const string BatchCanOnlyBeSubmittedOnce = "A batch can only be submitted once.";
+            internal const string BatchIsEmpty = "The batch contains no entity operations.";
         }
 
         internal static class ExceptionData

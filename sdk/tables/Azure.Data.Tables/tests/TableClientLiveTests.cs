@@ -929,7 +929,8 @@ namespace Azure.Data.Tables.Tests
             List<EnumEntity> entityResults;
             var entitiesToCreate = new[]
             {
-                new EnumEntity{ PartitionKey = PartitionKeyValue, RowKey = "01", MyFoo = Foo.Two}
+                new EnumEntity{ PartitionKey = PartitionKeyValue, RowKey = "01", MyFoo = Foo.Two, MyNullableFoo = NullableFoo.Two},
+                new EnumEntity{ PartitionKey = PartitionKeyValue, RowKey = "02", MyFoo = Foo.Two, MyNullableFoo = null},
             };
 
             // Create the new entities.
@@ -948,6 +949,7 @@ namespace Azure.Data.Tables.Tests
                 Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
                 Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
                 Assert.That(entityResults[i].MyFoo, Is.EqualTo(entitiesToCreate[i].MyFoo), "The entities should be equivalent");
+                Assert.That(entityResults[i].MyNullableFoo, Is.EqualTo(entitiesToCreate[i].MyNullableFoo), "The entities should be equivalent");
             }
         }
 
@@ -1073,7 +1075,8 @@ namespace Azure.Data.Tables.Tests
             Assert.ThrowsAsync<InvalidOperationException>(() => batch.SubmitBatchAsync());
 
             // Validate that adding more operations to the batch throws.
-            Assert.Throws<InvalidOperationException>(() => batch.AddEntity(new TableEntity()));
+            var exception = Assert.Throws<InvalidOperationException>(() => batch.AddEntity(new TableEntity()));
+            Assert.That(exception.Message, Is.EqualTo(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce));
 
             foreach (var entity in entitiesToCreate)
             {
@@ -1104,6 +1107,10 @@ namespace Azure.Data.Tables.Tests
             var batch = InstrumentClient(client.CreateTransactionalBatch(entitiesToCreate[0].PartitionKey));
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
+
+            // Sending an empty batch throws.
+            var exception = Assert.ThrowsAsync<InvalidOperationException>(() => batch.SubmitBatchAsync());
+            Assert.That(exception.Message, Is.EqualTo(TableConstants.ExceptionMessages.BatchIsEmpty));
 
             // Add the last entity to the table prior to adding it as part of the batch to cause a batch failure.
             await client.AddEntityAsync(entitiesToCreate.Last());
