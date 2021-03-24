@@ -68,7 +68,7 @@ namespace Azure.Storage.Blobs
             }
             else
             {
-                throw new ArgumentException($"Invalid options type.  Valid options are {nameof(BlobQueryCsvTextOptions)}, {nameof(BlobQueryJsonTextOptions)}, and {nameof(BlobQueryArrowOptions)}");
+                throw new ArgumentException($"Invalid options type.  Valid options are {nameof(BlobQueryCsvTextOptions)}, {nameof(BlobQueryJsonTextOptions)}, {nameof(BlobQueryArrowOptions)}, and {nameof(BlobQueryParquetTextOptions)}");
             }
 
             return serialization;

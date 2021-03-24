@@ -524,6 +524,27 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("0,mdifjt55.ea3,mdifjt55.ea3\n", s);
         }
 
+        [Test]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_08_04)]
+        public async Task QueryAsync_ParquetOutputError()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blockBlobClient = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            string query = @"select * from blobstorage where id < 1;";
+            BlobQueryOptions options = new BlobQueryOptions
+            {
+                OutputTextConfiguration = new BlobQueryParquetTextOptions()
+            };
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                blockBlobClient.QueryAsync(
+                    query, options),
+                e => Assert.AreEqual($"{nameof(BlobQueryParquetTextOptions)} can only be used for input serialization.", e.Message));
+        }
+
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task QueryAsync_ArrowConfigurationInput()
