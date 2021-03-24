@@ -116,44 +116,46 @@ namespace Microsoft.Extensions.Azure
         }
 
         /// <summary>
-        ///
+        /// Adds a client factory for <typeparamref name="TClient"/> using <typeparamref name="TOptions"/> as options type.
         /// </summary>
-        /// <typeparam name="TClient"></typeparam>
-        /// <typeparam name="TOptions"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="TClient">The type of the client.</typeparam>
+        /// <typeparam name="TOptions">The type of the client options.</typeparam>
+        /// <returns>The <see cref="IAzureClientBuilder{TClient, TOptions}"/> to allow client configuration.</returns>
         public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(Func<TOptions, TClient> factory) where TOptions : class
         {
             return RegisterClientFactory<TClient, TOptions>((_, options, _) => factory(options), false);
         }
 
         /// <summary>
-        ///
+        /// Adds a client factory for <typeparamref name="TClient"/> using <typeparamref name="TOptions"/> as options type and a <see cref="TokenCredential"/> for authentication.
         /// </summary>
-        /// <typeparam name="TClient"></typeparam>
-        /// <typeparam name="TOptions"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="TClient">The type of the client.</typeparam>
+        /// <typeparam name="TOptions">The type of the client options.</typeparam>
+        /// <returns>The <see cref="IAzureClientBuilder{TClient, TOptions}"/> to allow client configuration.</returns>
         public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(Func<TokenCredential, TOptions, TClient> factory) where TOptions : class
         {
             return RegisterClientFactory<TClient, TOptions>((_, options, credential) => factory(credential, options), true);
         }
 
         /// <summary>
-        ///
+        /// Adds a client factory for <typeparamref name="TClient"/> using <typeparamref name="TOptions"/> as options type.
+        /// Allows resolving services from <see cref="IServiceProvider"/> during the client construction.
         /// </summary>
-        /// <typeparam name="TClient"></typeparam>
-        /// <typeparam name="TOptions"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="TClient">The type of the client.</typeparam>
+        /// <typeparam name="TOptions">The type of the client options.</typeparam>
+        /// <returns>The <see cref="IAzureClientBuilder{TClient, TOptions}"/> to allow client configuration.</returns>
         public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(Func<IServiceProvider, TOptions, TClient> factory) where TOptions : class
         {
             return RegisterClientFactory<TClient, TOptions>((provider, options, _) => factory(provider, options), true);
         }
 
         /// <summary>
-        ///
+        /// Adds a client factory for <typeparamref name="TClient"/> using <typeparamref name="TOptions"/> as options type and a <see cref="TokenCredential"/> for authentication.
+        /// Allows resolving services from <see cref="IServiceProvider"/> during the client construction.
         /// </summary>
-        /// <typeparam name="TClient"></typeparam>
-        /// <typeparam name="TOptions"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="TClient">The type of the client.</typeparam>
+        /// <typeparam name="TOptions">The type of the client options.</typeparam>
+        /// <returns>The <see cref="IAzureClientBuilder{TClient, TOptions}"/> to allow client configuration.</returns>
         public IAzureClientBuilder<TClient, TOptions> AddClient<TClient, TOptions>(Func<IServiceProvider, TokenCredential, TOptions, TClient> factory) where TOptions : class
         {
             return RegisterClientFactory<TClient, TOptions>((provider, options, credential) => factory(provider, credential, options), true);
