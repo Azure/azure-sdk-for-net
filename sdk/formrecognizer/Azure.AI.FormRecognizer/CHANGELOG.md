@@ -2,6 +2,8 @@
 
 ## 3.1.0-beta.4 (Unreleased)
 
+### Breaking changes
+- It defaults to the latest supported service version, which currently is `2.1-preview.3`.
 
 ## 3.1.0-beta.3 (2021-03-09)
 
