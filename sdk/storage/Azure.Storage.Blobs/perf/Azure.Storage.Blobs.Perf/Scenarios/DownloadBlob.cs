@@ -34,52 +34,6 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
             await _blobClient.UploadAsync(stream, overwrite: true);
         }
 
-        public override async Task SetupAsync()
-        {
-            await base.SetupAsync();
-
-            if (!string.IsNullOrEmpty(Options.Host))
-            {
-                var recordingFile = Guid.NewGuid().ToString();
-
-                var message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/record/start");
-                message.Headers.Add("x-recording-file", recordingFile);
-
-                var response = await HttpClient.SendAsync(message);
-                var recordingId = response.Headers.GetValues("x-recording-id").Single();
-
-                Transport.RecordingId = recordingId;
-                Transport.Mode = "record";
-
-                await RunAsync(CancellationToken.None);
-
-                message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/record/stop");
-                message.Headers.Add("x-recording-id", recordingId);
-                message.Headers.Add("x-recording-save", bool.TrueString);
-
-                message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/playback/start");
-                message.Headers.Add("x-recording-file", recordingFile);
-
-                response = await HttpClient.SendAsync(message);
-                recordingId = response.Headers.GetValues("x-recording-id").Single();
-
-                Transport.Mode = "playback";
-                Transport.RecordingId = recordingId;
-            }
-        }
-
-        public override async Task CleanupAsync()
-        {
-            if (!string.IsNullOrEmpty(Options.Host))
-            {
-                var message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/playback/stop");
-                message.Headers.Add("x-recording-id", Transport.RecordingId);
-                await HttpClient.SendAsync(message);
-            }
-
-            await base.CleanupAsync();
-        }
-
         public override void Run(CancellationToken cancellationToken)
         {
             _blobClient.DownloadTo(Stream.Null, transferOptions: Options.StorageTransferOptions, cancellationToken: cancellationToken);

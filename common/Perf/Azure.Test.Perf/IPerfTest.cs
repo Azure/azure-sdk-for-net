@@ -11,8 +11,10 @@ namespace Azure.Test.Perf
     {
         Task GlobalSetupAsync();
         Task SetupAsync();
+        Task RecordAndStartPlayback();
         void Run(CancellationToken cancellationToken);
         Task RunAsync(CancellationToken cancellationToken);
+        Task StopPlayback();
         Task CleanupAsync();
         Task GlobalCleanupAsync();
     }

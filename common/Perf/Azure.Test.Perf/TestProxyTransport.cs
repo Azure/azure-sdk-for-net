@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Storage.Blobs.Perf
+namespace Azure.Test.Perf
 {
     public class TestProxyTransport : HttpPipelineTransport
     {
@@ -46,6 +46,7 @@ namespace Azure.Storage.Blobs.Perf
             {
                 message.Request.Headers.Add("x-recording-id", RecordingId);
                 message.Request.Headers.Add("x-recording-mode", Mode);
+                message.Request.Headers.Add("x-recording-remove", bool.FalseString);
 
                 var baseUri = new RequestUriBuilder()
                 {
