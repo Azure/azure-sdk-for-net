@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -3713,6 +3714,35 @@ namespace Azure.Storage.Files.DataLake.Tests
                 query,
                 options: options),
                 e => Assert.AreEqual($"{nameof(DataLakeQueryArrowOptions)} can only be used for output serialization.", e.Message));
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
+        public async Task QueryAsync_ParquetConfigurationInput()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+            using FileStream stream = File.OpenRead(
+                $"{System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{System.IO.Path.DirectorySeparatorChar}Resources{System.IO.Path.DirectorySeparatorChar}parquet.parquet");
+            await file.UploadAsync(stream);
+
+            // Act
+            string query = @"select * from blobstorage where id < 1;";
+            DataLakeQueryOptions options = new DataLakeQueryOptions
+            {
+                InputTextConfiguration = new DataLakeQueryParquetTextOptions()
+            };
+            Response<FileDownloadInfo> response = await file.QueryAsync(
+                query,
+                options: options);
+
+            // Assert
+            using StreamReader streamReader = new StreamReader(response.Value.Content);
+            string s = await streamReader.ReadToEndAsync();
+
+            // Assert
+            Assert.AreEqual("0,mdifjt55.ea3,mdifjt55.ea3\n", s);
         }
 
         private Stream CreateDataStream(long size)

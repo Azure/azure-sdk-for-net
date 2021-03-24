@@ -65,8 +65,6 @@ namespace Azure.Storage.Blobs
                 }
 
                 serialization.Format.Type = QueryFormatType.Parquet;
-                // TODO
-                //serialization.Format.ParquetTextConfiguration =
             }
             else
             {

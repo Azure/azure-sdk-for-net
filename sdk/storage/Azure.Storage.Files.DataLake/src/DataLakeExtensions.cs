@@ -383,6 +383,15 @@ namespace Azure.Storage.Files.DataLake
 
                 return dataLakeQueryArrowOptions.ToBlobQueryArrowOptions();
             }
+            if (textConfiguration is DataLakeQueryParquetTextOptions dataLakeQueryParquetOptions)
+            {
+                if (!isInput)
+                {
+                    throw new ArgumentException($"{nameof(DataLakeQueryParquetTextOptions)} can only be used for input serialization.");
+                }
+
+                return dataLakeQueryParquetOptions.ToBlobQueryParquetTextOptions();
+            }
 
             throw new ArgumentException("Invalid text configuration type");
         }
@@ -413,6 +422,16 @@ namespace Azure.Storage.Files.DataLake
             {
                 Schema = options.Schema.ToBlobQueryArrowFields()
             };
+        }
+
+        internal static BlobQueryParquetTextOptions ToBlobQueryParquetTextOptions (this DataLakeQueryParquetTextOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobQueryParquetTextOptions();
         }
 
         internal static IList<BlobQueryArrowField> ToBlobQueryArrowFields(this IList<DataLakeQueryArrowField> arrowFields)
