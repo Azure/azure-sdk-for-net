@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     [LiveOnly]
-    public class TimeSeriesInsightsQueryTests : E2eTestBase
+    public class TimeSeriesInsightsQueryEventsTests : E2eTestBase
     {
         private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(30);
 
@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         private const string Humidity = "Humidity";
         private const string Temperature = "Temperature";
 
-        public TimeSeriesInsightsQueryTests(bool isAsync)
+        public TimeSeriesInsightsQueryEventsTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -114,7 +114,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 };
 
                 Func<Task> sendEventAct = async () => await deviceClient.SendEventAsync(message).ConfigureAwait(false);
-                sendEventAct.Should().NotThrow();
+                await sendEventAct.Should().NotThrowAsync();
 
                 // Send it again
                 sendEventAct.Should().NotThrow();
@@ -215,7 +215,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     ContentEncoding = "utf-8",
                 };
 
-                await client.SendEventAsync(message).ConfigureAwait(false);
+                Func<Task> sendEventAct = async () => await client.SendEventAsync(message).ConfigureAwait(false);
+                await sendEventAct.Should().NotThrowAsync();
             }
         }
 
