@@ -13,8 +13,12 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ContainerRepositoryClient
     {
         private readonly HttpPipeline _pipeline;
+        private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRepositoryRestClient _restClient;
+
+        private readonly AuthenticationRestClient _acrAuthClient;
+        private readonly string AcrAadScope = "https://management.core.windows.net/.default";
 
         private readonly string _repository;
 
@@ -23,37 +27,29 @@ namespace Azure.Containers.ContainerRegistry
         public virtual Uri Endpoint { get; }
 
         /// <summary>
-        /// <param name="endpoint"></param>
-        /// <param name="repository"> Name of the image (including the namespace). </param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
         /// </summary>
-        public ContainerRepositoryClient(Uri endpoint, string repository, string username, string password) : this(endpoint, repository, username, password, new ContainerRegistryClientOptions())
+        public ContainerRepositoryClient(Uri endpoint, string repository, TokenCredential credential) : this(endpoint, repository, credential, new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary>
-        /// <param name="endpoint"></param>
-        /// <param name="repository"> Name of the image (including the namespace). </param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="options"></param>
         /// </summary>
-        public ContainerRepositoryClient(Uri endpoint, string repository, string username, string password, ContainerRegistryClientOptions options)
+        public ContainerRepositoryClient(Uri endpoint, string repository, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(repository, nameof(repository));
-            Argument.AssertNotNull(username, nameof(username));
-            Argument.AssertNotNull(password, nameof(password));
+            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
-
-            _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy(username, password));
-
-            _clientDiagnostics = new ClientDiagnostics(options);
 
             Endpoint = endpoint;
             _repository = repository;
 
+            _clientDiagnostics = new ClientDiagnostics(options);
+
+            _acrAuthPipeline = HttpPipelineBuilder.Build(options);
+            _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
+
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, AcrAadScope, _acrAuthClient));
             _restClient = new ContainerRegistryRepositoryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
         }
 

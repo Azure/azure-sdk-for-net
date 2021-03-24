@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -15,13 +16,38 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class RegistryArtifactProperties
     {
         /// <summary> Initializes a new instance of RegistryArtifactProperties. </summary>
-        internal RegistryArtifactProperties()
+        /// <param name="repository"> Image name. </param>
+        /// <param name="digest"> Manifest. </param>
+        /// <param name="tags"> List of tags. </param>
+        /// <param name="manifestProperties"> Changeable attributes. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="repository"/>, <paramref name="digest"/>, <paramref name="tags"/>, or <paramref name="manifestProperties"/> is null. </exception>
+        internal RegistryArtifactProperties(string repository, string digest, IEnumerable<string> tags, ContentProperties manifestProperties)
         {
-            Tags = new ChangeTrackingList<string>();
+            if (repository == null)
+            {
+                throw new ArgumentNullException(nameof(repository));
+            }
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
+            if (manifestProperties == null)
+            {
+                throw new ArgumentNullException(nameof(manifestProperties));
+            }
+
+            Repository = repository;
+            Digest = digest;
+            RegistryArtifacts = new ChangeTrackingList<ManifestAttributesManifestReferences>();
+            Tags = tags.ToList();
+            ManifestProperties = manifestProperties;
         }
 
         /// <summary> Initializes a new instance of RegistryArtifactProperties. </summary>
-        /// <param name="registry"> Registry name. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="digest"> Manifest. </param>
         /// <param name="size"> Image size. </param>
@@ -29,13 +55,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="lastUpdatedOn"> Last update time. </param>
         /// <param name="cpuArchitecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
-        /// <param name="manifestMediaType"> Media type. </param>
-        /// <param name="configMediaType"> Config blob media type. </param>
+        /// <param name="registryArtifacts"> List of manifest attributes details. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="manifestProperties"> Changeable attributes. </param>
-        internal RegistryArtifactProperties(string registry, string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, string manifestMediaType, string configMediaType, IReadOnlyList<string> tags, ContentProperties manifestProperties)
+        internal RegistryArtifactProperties(string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> registryArtifacts, IReadOnlyList<string> tags, ContentProperties manifestProperties)
         {
-            Registry = registry;
             Repository = repository;
             Digest = digest;
             Size = size;
@@ -43,14 +67,11 @@ namespace Azure.Containers.ContainerRegistry
             LastUpdatedOn = lastUpdatedOn;
             CpuArchitecture = cpuArchitecture;
             OperatingSystem = operatingSystem;
-            ManifestMediaType = manifestMediaType;
-            ConfigMediaType = configMediaType;
+            RegistryArtifacts = registryArtifacts;
             Tags = tags;
             ManifestProperties = manifestProperties;
         }
 
-        /// <summary> Registry name. </summary>
-        public string Registry { get; }
         /// <summary> Image name. </summary>
         public string Repository { get; }
         /// <summary> Manifest. </summary>
@@ -65,10 +86,8 @@ namespace Azure.Containers.ContainerRegistry
         public string CpuArchitecture { get; }
         /// <summary> Operating system. </summary>
         public string OperatingSystem { get; }
-        /// <summary> Media type. </summary>
-        public string ManifestMediaType { get; }
-        /// <summary> Config blob media type. </summary>
-        public string ConfigMediaType { get; }
+        /// <summary> List of manifest attributes details. </summary>
+        public IReadOnlyList<ManifestAttributesManifestReferences> RegistryArtifacts { get; }
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
         /// <summary> Changeable attributes. </summary>
