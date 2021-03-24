@@ -1,0 +1,16 @@
+steps:
+  - task: PowerShell@2
+    displayName: Retain pipeline run
+    condition: ${{ parameters.Condition }}
+    inputs:
+      pwsh: true
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Add-RetentionLease.ps1
+      arguments: >
+        -Organization azure-sdk
+        -Project $(System.TeamProject)
+        -DefinitionId $(System.DefinitionId)
+        -RunId $(Build.BuildId)
+        -OwnerId Pipeline
+        -DaysValid 365
+        -Base64EncodedAuthToken $(System.AccessToken)
+        -Debug
