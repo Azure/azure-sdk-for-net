@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core
             Name = id.ToString();
             ResourceType = ResourceIdentifier.SubscriptionType;
             Parent = ResourceIdentifier.RootResourceIdentifier;
-            IsChild = true;
+            IsChild = false;
             SubscriptionId = Name;
         }
 
@@ -105,5 +105,12 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="other"> The string representation of a resource identifier. </param>
         public static implicit operator SubscriptionResourceIdentifier(string other) => (other is null ? null : new SubscriptionResourceIdentifier(other));
+
+        internal override string ToResourceString()
+        {
+            if (Parent is RootResourceIdentifier)
+                return $"/subscriptions/{SubscriptionId}";
+            return base.ToResourceString();
+        }
     }
 }

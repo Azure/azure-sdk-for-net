@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Core
                     throw new InvalidOperationException("Subscription is not available.");
                 }
 
-                return new ResourcesManagementClient(BaseUri, subscription, Credential);
+                return new ResourcesManagementClient(BaseUri, subscription, Credential, ClientOptions.Convert<ResourcesManagementClientOptions>());
             }
         }
 

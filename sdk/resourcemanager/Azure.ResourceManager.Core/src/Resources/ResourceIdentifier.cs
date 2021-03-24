@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         internal ResourceIdentifier()
         {
+            _stringValue = null;
         }
 
         /// <summary>
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.Core
         {
             ResourceType = resourceType;
             Name = name;
+            _stringValue = null;
         }
 
         /// <summary>
