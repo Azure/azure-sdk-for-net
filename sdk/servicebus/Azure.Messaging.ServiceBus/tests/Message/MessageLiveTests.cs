@@ -250,8 +250,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             }
         }
 
+        private static readonly object[] s_amqpValues =
+        {
+            "string",
+            5,
+            long.MaxValue,
+            (byte) 1,
+            3.1415926,
+            new decimal(3.1415926),
+            DateTimeOffset.Parse("3/24/21").UtcDateTime,
+            'c',
+            new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554"),
+            new List<string>{"first", "second"},
+            new int[] {1, 2, 3}
+        };
+
         [Test]
-        public async Task CanSendValueSection()
+        [TestCaseSource(nameof(s_amqpValues))]
+        public async Task CanSendValueSection(object value)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
@@ -259,14 +275,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var sender = client.CreateSender(scope.QueueName);
 
                 var msg = new ServiceBusMessage();
-                msg.GetRawAmqpMessage().Body = new AmqpMessageBody("object");
+                msg.GetRawAmqpMessage().Body = new AmqpMessageBody(value);
 
                 await sender.SendMessageAsync(msg);
 
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
                 received.GetRawAmqpMessage().Body.TryGetValue(out var receivedData);
-                Assert.AreEqual("object", receivedData);
+                Assert.AreEqual(value, receivedData);
 
                 Assert.That(
                     () => received.Body,
