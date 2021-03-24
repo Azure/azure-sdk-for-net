@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a virtual machine network interface configurations.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineNetworkInterfaceConfiguration : SubResource
+    public partial class VirtualMachineNetworkInterfaceConfiguration
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -40,7 +40,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// name.</param>
         /// <param name="ipConfigurations">Specifies the IP configurations of
         /// the network interface.</param>
-        /// <param name="id">Resource Id</param>
         /// <param name="primary">Specifies the primary network interface in
         /// case the virtual machine has more than 1 network interface.</param>
         /// <param name="deleteOption">Specify what happens to the network
@@ -56,8 +55,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// group.</param>
         /// <param name="dnsSettings">The dns settings to be applied on the
         /// network interfaces.</param>
-        public VirtualMachineNetworkInterfaceConfiguration(string name, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, string id = default(string), bool? primary = default(bool?), string deleteOption = default(string), bool? enableAcceleratedNetworking = default(bool?), bool? enableFpga = default(bool?), bool? enableIPForwarding = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default(VirtualMachineNetworkInterfaceDnsSettingsConfiguration), SubResource dscpConfiguration = default(SubResource))
-            : base(id)
+        public VirtualMachineNetworkInterfaceConfiguration(string name, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, bool? primary = default(bool?), string deleteOption = default(string), bool? enableAcceleratedNetworking = default(bool?), bool? enableFpga = default(bool?), bool? enableIPForwarding = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default(VirtualMachineNetworkInterfaceDnsSettingsConfiguration), SubResource dscpConfiguration = default(SubResource))
         {
             Name = name;
             Primary = primary;
