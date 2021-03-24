@@ -1,7 +1,8 @@
 # Release History
 
 ## 12.7.0-beta.3 (Unreleased)
-
+- Added support for service version 2020-08-04.
+- Added support for Share and Share Snapshot Lease.
 
 ## 12.7.0-beta.2 (2021-03-09)
 - This release contains bug fixes to improve quality.
