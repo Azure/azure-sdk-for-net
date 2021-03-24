@@ -30,7 +30,7 @@ namespace Azure.Data.Tables
             foreach (var item in tableEntityProperties)
             {
                 // Remove the ETag property, as it does not need to be serialized
-                if (item.Key == TableConstants.PropertyNames.ETag)
+                if (item.Key == TableConstants.PropertyNames.ETag || item.Key == TableConstants.PropertyNames.Timestamp)
                 {
                     continue;
                 }
@@ -63,10 +63,6 @@ namespace Azure.Data.Tables
                         throw new NotSupportedException("Enum values are only supported for custom model types implementing ITableEntity.");
                 }
             }
-
-            // Remove the Timestamp property, as it is controlled by the service not the client.
-            annotatedDictionary.Remove(TableConstants.PropertyNames.Timestamp);
-            annotatedDictionary.Remove(TableConstants.PropertyNames.Timestamp.ToOdataTypeString());
 
             return annotatedDictionary;
         }
