@@ -85,8 +85,8 @@ namespace Azure.Search.Documents
                     char x => Quote(x.ToString(formatProvider)),
                     StringBuilder x => Quote(x.ToString()),
 
-                    // Azure Core GeoJson types
-                    object x when SpatialProxyFactory.TryCreate(x, out GeoObjectProxy proxy) => proxy.ToString(),
+                    // Microsoft.Spatial types
+                    object x when SpatialProxyFactory.TryCreate(x, out GeographyProxy proxy) => proxy.ToString(),
 
                     // Everything else
                     object x => throw new ArgumentException(

@@ -4,29 +4,26 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Azure.Core.GeoJson;
 
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Creates <see cref="GeoObjectProxy"/> instances from unknown objects.
+    /// Creates <see cref="GeographyProxy"/> instances from unknown objects.
     /// </summary>
     internal static class SpatialProxyFactory
     {
-        private const string Name = "Azure.Core";
-        private const string GeoPointTypeName = "Azure.Core.GeoJson.GeoPoint";
-        private const string GeoLineStringTypeName = "Azure.Core.GeoJson.GeoLineString";
-        private const string GeoPolygonTypeName = "Azure.Core.GeoJson.GeoPolygon";
+        private const string Name = "Microsoft.Spatial";
+        private const string GeographyPointTypeName = "Microsoft.Spatial.GeographyPoint";
 
         // TODO: When GeoJson is built into Azure.Core, change these proxies to adapter for GeoJson types.
         // https://github.com/Azure/azure-sdk-for-net/issues/13319
 
-        private static readonly IReadOnlyDictionary<string, Func<object, GeoObjectProxy>> s_types =
-            new Dictionary<string, Func<object, GeoObjectProxy>>(StringComparer.Ordinal)
+        private static readonly IReadOnlyDictionary<string, Func<object, GeographyProxy>> s_types =
+            new Dictionary<string, Func<object, GeographyProxy>>(StringComparer.Ordinal)
             {
-                [GeoPointTypeName] = value => new GeoPointProxy(value),
-                [GeoLineStringTypeName] = value => new GeoLineStringProxy(value),
-                [GeoPolygonTypeName] = value => new GeoPolygonProxy(value),
+                [GeographyPointTypeName] = value => new GeographyPointProxy(value),
+                ["Microsoft.Spatial.GeographyLineString"] = value => new GeographyLineStringProxy(value),
+                ["Microsoft.Spatial.GeographyPolygon"] = value => new GeographyPolygonProxy(value),
             };
 
         /// <summary>
@@ -45,18 +42,18 @@ namespace Azure.Search.Documents
         }
 
         /// <summary>
-        /// Attempts to creates a <see cref="GeoObjectProxy"/> from the given <paramref name="value"/> if supported.
+        /// Attempts to creates a <see cref="GeographyProxy"/> from the given <paramref name="value"/> if supported.
         /// <seealso cref="CanCreate(Type)"/>
         /// </summary>
         /// <param name="value">The value to proxy.</param>
         /// <param name="proxy">The proxied value if supported.</param>
         /// <returns>True if the <paramref name="value"/> could be proxied; otherwise, false.</returns>
-        public static bool TryCreate(object value, out GeoObjectProxy proxy)
+        public static bool TryCreate(object value, out GeographyProxy proxy)
         {
             if (value is { })
             {
                 Type type = value.GetType();
-                if (TryGetFactory(type, out Func<object, GeoObjectProxy> factory))
+                if (TryGetFactory(type, out Func<object, GeographyProxy> factory))
                 {
                     proxy = factory(value);
                     return true;
@@ -73,17 +70,15 @@ namespace Azure.Search.Documents
         /// <param name="type">The type to check.</param>
         /// <returns>A value indicating whether the given <paramref name="type"/> represents a supported spatial point.</returns>
         public static bool IsSupportedPoint(Type type) =>
-            type != null && IsSupportedAssembly(type) && GeoPointTypeName.Equals(type.FullName, StringComparison.Ordinal);
+            type != null && IsSupportedAssembly(type) && GeographyPointTypeName.Equals(type.FullName, StringComparison.Ordinal);
 
         private static bool IsSupportedAssembly(Type type)
         {
             AssemblyName assemblyName = type.Assembly.GetName();
-
-            // We use StartsWith() to allow both `Azure.Core` and `Azure.Core.Experimental`.
-            return assemblyName.Name.StartsWith(Name, StringComparison.OrdinalIgnoreCase);
+            return string.Equals(assemblyName.Name, Name, StringComparison.OrdinalIgnoreCase);
         }
 
-        private static bool TryGetFactory(Type type, out Func<object, GeoObjectProxy> factory)
+        private static bool TryGetFactory(Type type, out Func<object, GeographyProxy> factory)
         {
             if (IsSupportedAssembly(type))
             {
