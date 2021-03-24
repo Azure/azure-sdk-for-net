@@ -33,7 +33,7 @@ namespace ComputerVisionSDK.Tests
             return null;
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void ReadTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -74,7 +74,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void ReadFileInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -113,7 +113,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void BatchReadPdfFileInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
