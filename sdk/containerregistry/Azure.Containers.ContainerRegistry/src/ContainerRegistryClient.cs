@@ -80,7 +80,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
                     ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesNextPageAsync(uriReference, null, pageSizeHint, cancellationToken).ConfigureAwait(false);
-
                     return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -94,19 +93,16 @@ namespace Azure.Containers.ContainerRegistry
 
         private static string ParseUriReferenceFromLinkHeader(string linkValue)
         {
-            // link-value is defined as:
+            // Per the Docker v2 HTTP API spec, the Link header is an RFC5988
+            // compliant rel='next' with URL to next result set, if available.
+            // See: https://docs.docker.com/registry/spec/api/
+            //
+            // The URI reference can be obtained from link-value as follows:
             //   Link       = "Link" ":" #link-value
             //   link-value = "<" URI-Reference ">" * (";" link-param )
             // See: https://tools.ietf.org/html/rfc5988#section-5
 
-            string uriReference = null;
-            if (linkValue != null)
-            {
-                int length = linkValue.IndexOf('>');
-                uriReference = linkValue.Substring(1, length - 1);
-            }
-
-            return uriReference;
+            return linkValue?.Substring(1, linkValue.IndexOf('>') - 1);
         }
 
         /// <summary> List repositories. </summary>

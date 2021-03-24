@@ -27,12 +27,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [RecordedTest]
         public async Task CanGetRepositories()
         {
+            // Arrange
             var client = CreateClient();
 
+            // Act
             AsyncPageable<string> repositories = client.GetRepositoriesAsync();
 
             bool gotHelloWorld = false;
-
             await foreach (string repository in repositories)
             {
                 if (repository.Contains("library/hello-world"))
@@ -42,6 +43,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
             }
 
+            // Assert
             Assert.IsTrue(gotHelloWorld);
         }
 
