@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(DataFlowDebugPackageDebugSettingsConverter))]
     public partial class DataFlowDebugPackageDebugSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -45,19 +42,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(DatasetParameters);
             }
             writer.WriteEndObject();
-        }
-
-        internal partial class DataFlowDebugPackageDebugSettingsConverter : JsonConverter<DataFlowDebugPackageDebugSettings>
-        {
-            public override void Write(Utf8JsonWriter writer, DataFlowDebugPackageDebugSettings model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override DataFlowDebugPackageDebugSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDataFlowDebugPackageDebugSettings(document.RootElement);
-            }
         }
     }
 }

@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(SalesforceServiceCloudLinkedServiceConverter))]
     public partial class SalesforceServiceCloudLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -236,19 +233,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SalesforceServiceCloudLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, environmentUrl.Value, username.Value, password.Value, securityToken.Value, extendedProperties.Value, encryptedCredential.Value);
-        }
-
-        internal partial class SalesforceServiceCloudLinkedServiceConverter : JsonConverter<SalesforceServiceCloudLinkedService>
-        {
-            public override void Write(Utf8JsonWriter writer, SalesforceServiceCloudLinkedService model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override SalesforceServiceCloudLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeSalesforceServiceCloudLinkedService(document.RootElement);
-            }
         }
     }
 }

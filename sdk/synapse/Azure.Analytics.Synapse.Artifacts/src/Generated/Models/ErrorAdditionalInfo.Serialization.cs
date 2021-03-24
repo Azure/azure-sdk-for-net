@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(ErrorAdditionalInfoConverter))]
     internal partial class ErrorAdditionalInfo
     {
         internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
@@ -38,19 +35,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new ErrorAdditionalInfo(type.Value, info.Value);
-        }
-
-        internal partial class ErrorAdditionalInfoConverter : JsonConverter<ErrorAdditionalInfo>
-        {
-            public override void Write(Utf8JsonWriter writer, ErrorAdditionalInfo model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override ErrorAdditionalInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeErrorAdditionalInfo(document.RootElement);
-            }
         }
     }
 }

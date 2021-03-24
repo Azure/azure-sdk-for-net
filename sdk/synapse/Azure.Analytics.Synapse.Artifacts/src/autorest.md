@@ -24,7 +24,6 @@ directive:
   from: swagger-document
   where: $.parameters.Endpoint
   transform: $.format = "url"
-directive:
 ```
 
 ### Expose serialization and deserialization methods

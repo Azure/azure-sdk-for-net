@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(AzureFileStorageLocationConverter))]
     public partial class AzureFileStorageLocation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -77,19 +74,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureFileStorageLocation(type, folderPath.Value, fileName.Value, additionalProperties);
-        }
-
-        internal partial class AzureFileStorageLocationConverter : JsonConverter<AzureFileStorageLocation>
-        {
-            public override void Write(Utf8JsonWriter writer, AzureFileStorageLocation model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override AzureFileStorageLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAzureFileStorageLocation(document.RootElement);
-            }
         }
     }
 }

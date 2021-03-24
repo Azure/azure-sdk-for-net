@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(DocumentDbCollectionSinkConverter))]
     public partial class DocumentDbCollectionSink : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -157,19 +154,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DocumentDbCollectionSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, nestingSeparator.Value, writeBehavior.Value);
-        }
-
-        internal partial class DocumentDbCollectionSinkConverter : JsonConverter<DocumentDbCollectionSink>
-        {
-            public override void Write(Utf8JsonWriter writer, DocumentDbCollectionSink model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override DocumentDbCollectionSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeDocumentDbCollectionSink(document.RootElement);
-            }
         }
     }
 }

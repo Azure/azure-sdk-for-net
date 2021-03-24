@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(LibraryListResponseConverter))]
     internal partial class LibraryListResponse
     {
         internal static LibraryListResponse DeserializeLibraryListResponse(JsonElement element)
@@ -39,19 +36,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new LibraryListResponse(value, nextLink.Value);
-        }
-
-        internal partial class LibraryListResponseConverter : JsonConverter<LibraryListResponse>
-        {
-            public override void Write(Utf8JsonWriter writer, LibraryListResponse model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override LibraryListResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeLibraryListResponse(document.RootElement);
-            }
         }
     }
 }

@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(HdfsReadSettingsConverter))]
     public partial class HdfsReadSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -173,19 +170,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new HdfsReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(enablePartitionDiscovery), modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, distcpSettings.Value);
-        }
-
-        internal partial class HdfsReadSettingsConverter : JsonConverter<HdfsReadSettings>
-        {
-            public override void Write(Utf8JsonWriter writer, HdfsReadSettings model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override HdfsReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeHdfsReadSettings(document.RootElement);
-            }
         }
     }
 }

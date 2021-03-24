@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(ResourceConverter))]
     public partial class Resource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -45,19 +42,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new Resource(id.Value, name.Value, type.Value);
-        }
-
-        internal partial class ResourceConverter : JsonConverter<Resource>
-        {
-            public override void Write(Utf8JsonWriter writer, Resource model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override Resource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeResource(document.RootElement);
-            }
         }
     }
 }

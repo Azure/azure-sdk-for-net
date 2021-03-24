@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(RunFilterParametersConverter))]
     public partial class RunFilterParameters : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -48,19 +45,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
-        }
-
-        internal partial class RunFilterParametersConverter : JsonConverter<RunFilterParameters>
-        {
-            public override void Write(Utf8JsonWriter writer, RunFilterParameters model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override RunFilterParameters Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeRunFilterParameters(document.RootElement);
-            }
         }
     }
 }

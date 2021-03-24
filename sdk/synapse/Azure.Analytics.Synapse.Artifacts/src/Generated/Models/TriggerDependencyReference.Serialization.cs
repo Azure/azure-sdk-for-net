@@ -5,14 +5,11 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(TriggerDependencyReferenceConverter))]
     public partial class TriggerDependencyReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -50,19 +47,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new TriggerDependencyReference(type, referenceTrigger);
-        }
-
-        internal partial class TriggerDependencyReferenceConverter : JsonConverter<TriggerDependencyReference>
-        {
-            public override void Write(Utf8JsonWriter writer, TriggerDependencyReference model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override TriggerDependencyReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeTriggerDependencyReference(document.RootElement);
-            }
         }
     }
 }

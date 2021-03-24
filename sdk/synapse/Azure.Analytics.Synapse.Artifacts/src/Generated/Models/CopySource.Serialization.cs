@@ -5,15 +5,12 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    [JsonConverter(typeof(CopySourceConverter))]
     public partial class CopySource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -186,19 +183,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CopySource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties);
-        }
-
-        internal partial class CopySourceConverter : JsonConverter<CopySource>
-        {
-            public override void Write(Utf8JsonWriter writer, CopySource model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model);
-            }
-            public override CopySource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeCopySource(document.RootElement);
-            }
         }
     }
 }
