@@ -4,13 +4,21 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.DocumentTranslation.Tests
 {
     public class TranslationOperationLiveTests : DocumentTranslationLiveTestBase
     {
-        public TranslationOperationLiveTests(bool isAsync) : base(isAsync) { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TranslationOperationLiveTests"/> class.
+        /// </summary>
+        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
+        public TranslationOperationLiveTests(bool isAsync)
+            : base(isAsync)
+        {
+        }
 
         private List<string> Documents = new List<string>
         {
@@ -18,8 +26,8 @@ namespace Azure.AI.DocumentTranslation.Tests
             "This is the second english test document"
         };
 
-        [Test]
-        public async Task TranslationOperationTest()
+        [RecordedTest]
+        public async Task TranslationOperationTestAsync()
         {
             Uri source = await CreateSourceContainerAsync(Documents);
             Uri target = await CreateTargetContainerAsync();
