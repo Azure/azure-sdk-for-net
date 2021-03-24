@@ -58,7 +58,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             await containerClient.CreateIfNotExistsAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
             var expiresOn = DateTimeOffset.Now.AddHours(1);
-            return containerClient.GenerateSasUri(BlobContainerSasPermissions.Write, expiresOn);
+            return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn);
         }
     }
 }
