@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.AnomalyDetector
+namespace Azure.AI.AnomalyDetector.Models
 {
     public partial class AnomalyValue
     {

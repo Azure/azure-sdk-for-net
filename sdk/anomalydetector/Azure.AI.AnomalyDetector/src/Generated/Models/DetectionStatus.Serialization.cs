@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.AnomalyDetector
+namespace Azure.AI.AnomalyDetector.Models
 {
     internal static partial class DetectionStatusExtensions
     {

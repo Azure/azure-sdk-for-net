@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.AnomalyDetector
+namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> Response of get model. </summary>
     public partial class Model

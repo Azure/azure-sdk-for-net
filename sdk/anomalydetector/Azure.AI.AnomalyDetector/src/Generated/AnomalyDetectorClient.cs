@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.AI.AnomalyDetector.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

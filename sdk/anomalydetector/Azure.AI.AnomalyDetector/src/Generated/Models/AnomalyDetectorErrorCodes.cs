@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.AnomalyDetector
+namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> The error code. </summary>
     internal readonly partial struct AnomalyDetectorErrorCodes : IEquatable<AnomalyDetectorErrorCodes>

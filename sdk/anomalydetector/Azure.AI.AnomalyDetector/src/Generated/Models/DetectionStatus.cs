@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.AnomalyDetector
+namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> Multivariate anomaly detection status. </summary>
     public enum DetectionStatus

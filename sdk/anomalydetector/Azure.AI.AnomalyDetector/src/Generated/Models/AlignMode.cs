@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.AnomalyDetector
+namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> An optional field, indicates how we align different variables into the same time-range which is required by the model.{Inner, Outer}. </summary>
     public enum AlignMode

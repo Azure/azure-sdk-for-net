@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.AnomalyDetector
+namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> Request to submit a detection. </summary>
     public partial class DetectionRequest

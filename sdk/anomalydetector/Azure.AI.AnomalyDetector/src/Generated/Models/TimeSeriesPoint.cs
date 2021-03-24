@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.AnomalyDetector
+namespace Azure.AI.AnomalyDetector.Models
 {
     /// <summary> The TimeSeriesPoint. </summary>
     public partial class TimeSeriesPoint
