@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -33,9 +32,9 @@ namespace Azure.Containers.ContainerRegistry
     /// </summary>
     internal class ContainerRegistryChallengeAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
     {
-        private readonly AuthenticationRestClient _authenticationClient;
+        private readonly IContainerRegistryAuthenticationClient _authenticationClient;
 
-        public ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, AuthenticationRestClient authenticationClient)
+        public ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, IContainerRegistryAuthenticationClient authenticationClient)
             : base(credential, aadScope)
         {
             Argument.AssertNotNull(credential, nameof(credential));
@@ -59,7 +58,7 @@ namespace Azure.Containers.ContainerRegistry
                 string acrRefreshToken = await ExchangeAadAccessTokenForAcrRefreshTokenAsync(message, service, true).ConfigureAwait(false);
 
                 // Step 4: Send in acrRefreshToken and get back acrAccessToken
-                acrAccessToken = await ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, true).ConfigureAwait(false);
+                acrAccessToken = await ExchangeAcrRefreshTokenForAcrAccessTokenAsync(message, acrRefreshToken, service, scope, true).ConfigureAwait(false);
             }
             else
             {
@@ -67,7 +66,7 @@ namespace Azure.Containers.ContainerRegistry
                 string acrRefreshToken = ExchangeAadAccessTokenForAcrRefreshTokenAsync(message, service, false).EnsureCompleted();
 
                 // Step 4: Send in acrRefreshToken and get back acrAccessToken
-                acrAccessToken = ExchangeAcrRefreshTokenForAcrAccessTokenAsync(acrRefreshToken, service, scope, false).EnsureCompleted();
+                acrAccessToken = ExchangeAcrRefreshTokenForAcrAccessTokenAsync(message, acrRefreshToken, service, scope, false).EnsureCompleted();
             }
 
             // Step 5 - Authorize Request.  Note, we don't use SetAuthorizationHeader here, because it
@@ -84,26 +83,26 @@ namespace Azure.Containers.ContainerRegistry
             Response<AcrRefreshToken> acrRefreshToken = null;
             if (async)
             {
-                acrRefreshToken = await _authenticationClient.ExchangeAadAccessTokenForAcrRefreshTokenAsync(service, aadAccessToken).ConfigureAwait(false);
+                acrRefreshToken = await _authenticationClient.ExchangeAadAccessTokenForAcrRefreshTokenAsync(service, aadAccessToken, message.CancellationToken).ConfigureAwait(false);
             }
             else
             {
-                acrRefreshToken = _authenticationClient.ExchangeAadAccessTokenForAcrRefreshToken(service, aadAccessToken);
+                acrRefreshToken = _authenticationClient.ExchangeAadAccessTokenForAcrRefreshToken(service, aadAccessToken, message.CancellationToken);
             }
 
             return acrRefreshToken.Value.RefreshToken;
         }
 
-        private async Task<string> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(string acrRefreshToken, string service, string scope, bool async)
+        private async Task<string> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(HttpMessage message, string acrRefreshToken, string service, string scope, bool async)
         {
             Response<AcrAccessToken> acrAccessToken = null;
             if (async)
             {
-                acrAccessToken = await _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, acrRefreshToken).ConfigureAwait(false);
+                acrAccessToken = await _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, acrRefreshToken, message.CancellationToken).ConfigureAwait(false);
             }
             else
             {
-                acrAccessToken = _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, acrRefreshToken);
+                acrAccessToken = _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, acrRefreshToken, message.CancellationToken);
             }
 
             return acrAccessToken.Value.AccessToken;
