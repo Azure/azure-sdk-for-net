@@ -18,20 +18,20 @@ namespace Azure.AI.DocumentTranslation
         {
             FileExtensions = new ChangeTrackingList<string>();
             ContentTypes = new ChangeTrackingList<string>();
-            Versions = new ChangeTrackingList<string>();
+            FormatVersions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of FileFormat. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
-        /// <param name="versions"> Supported Version. </param>
-        internal FileFormat(string format, IReadOnlyList<string> fileExtensions, IReadOnlyList<string> contentTypes, IReadOnlyList<string> versions)
+        /// <param name="formatVersions"> Supported Version. </param>
+        internal FileFormat(string format, IReadOnlyList<string> fileExtensions, IReadOnlyList<string> contentTypes, IReadOnlyList<string> formatVersions)
         {
             Format = format;
             FileExtensions = fileExtensions;
             ContentTypes = contentTypes;
-            Versions = versions;
+            FormatVersions = formatVersions;
         }
 
         /// <summary> Name of the format. </summary>
@@ -40,7 +40,5 @@ namespace Azure.AI.DocumentTranslation
         public IReadOnlyList<string> FileExtensions { get; }
         /// <summary> Supported Content-Types for this format. </summary>
         public IReadOnlyList<string> ContentTypes { get; }
-        /// <summary> Supported Version. </summary>
-        public IReadOnlyList<string> Versions { get; }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
                 Thread.Sleep(pollingInterval);
                 operation.UpdateStatus();
 
-                Pageable<DocumentStatusResult> documentsStatus = operation.GetAllDocumentsStatus();
+                Pageable<DocumentStatusResult> documentsStatus = operation.GetAllDocumentStatuses();
                 foreach (DocumentStatusResult docStatus in documentsStatus)
                 {
                     if (documentscompleted.Contains(docStatus.DocumentId))
@@ -43,7 +43,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
                     if (docStatus.Status == TranslationStatus.Succeeded || docStatus.Status == TranslationStatus.Failed)
                     {
                         documentscompleted.Add(docStatus.DocumentId);
-                        Console.WriteLine($"Document {docStatus.LocationUri} completed with status ${docStatus.Status}");
+                        Console.WriteLine($"Document {docStatus.TranslatedDocumentUri} completed with status ${docStatus.Status}");
                     }
                 }
             }

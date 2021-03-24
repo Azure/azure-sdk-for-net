@@ -49,7 +49,7 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
                 Console.WriteLine($"  Status:{document.Status}");
                 if (document.Status == TranslationStatus.Succeeded)
                 {
-                    Console.WriteLine($"  Location: {document.LocationUri}");
+                    Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
                     Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
                 }
                 else

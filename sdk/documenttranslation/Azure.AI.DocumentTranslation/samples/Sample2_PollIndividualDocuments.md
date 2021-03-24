@@ -27,10 +27,10 @@ DocumentTranslationOperation operation = await client.StartTranslationAsync(inpu
 
 TimeSpan pollingInterval = new TimeSpan(1000);
 
-AsyncPageable<DocumentStatusResult> documents = operation.GetAllDocumentsStatusAsync();
+AsyncPageable<DocumentStatusResult> documents = operation.GetAllDocumentStatusesAsync();
 await foreach (DocumentStatusResult document in documents)
 {
-    Console.WriteLine($"Polling Status for document{document.LocationUri}");
+    Console.WriteLine($"Polling Status for document{document.TranslatedDocumentUri}");
 
     Response<DocumentStatusResult> status = await operation.GetDocumentStatusAsync(document.DocumentId);
 
@@ -42,7 +42,7 @@ await foreach (DocumentStatusResult document in documents)
 
     if (status.Value.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  Location: {document.LocationUri}");
+        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
     }
     else

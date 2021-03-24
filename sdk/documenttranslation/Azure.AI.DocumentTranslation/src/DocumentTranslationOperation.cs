@@ -343,11 +343,11 @@ namespace Azure.AI.DocumentTranslation
         /// Get the status of a all documents in the operation.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual Pageable<DocumentStatusResult> GetAllDocumentsStatus(CancellationToken cancellationToken = default)
+        public virtual Pageable<DocumentStatusResult> GetAllDocumentStatuses(CancellationToken cancellationToken = default)
         {
             Page<DocumentStatusResult> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetAllDocumentsStatus)}");
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetAllDocumentStatuses)}");
                 scope.Start();
 
                 try
@@ -364,7 +364,7 @@ namespace Azure.AI.DocumentTranslation
 
             Page<DocumentStatusResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetAllDocumentsStatus)}");
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetAllDocumentStatuses)}");
                 scope.Start();
 
                 try
@@ -386,11 +386,11 @@ namespace Azure.AI.DocumentTranslation
         /// Get the status of a all documents in the operation.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
-        public virtual AsyncPageable<DocumentStatusResult> GetAllDocumentsStatusAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DocumentStatusResult> GetAllDocumentStatusesAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DocumentStatusResult>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetAllDocumentsStatusAsync)}");
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetAllDocumentStatusesAsync)}");
                 scope.Start();
 
                 try
@@ -407,7 +407,7 @@ namespace Azure.AI.DocumentTranslation
 
             async Task<Page<DocumentStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetAllDocumentsStatusAsync)}");
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(DocumentTranslationOperation)}.{nameof(GetAllDocumentStatusesAsync)}");
                 scope.Start();
 
                 try
@@ -477,7 +477,7 @@ namespace Azure.AI.DocumentTranslation
         {
             ValidateOperationStatus();
 
-            return GetAllDocumentsStatusAsync();
+            return GetAllDocumentStatusesAsync();
         }
 
         /// <summary>
@@ -490,7 +490,7 @@ namespace Azure.AI.DocumentTranslation
         {
             ValidateOperationStatus();
 
-            return GetAllDocumentsStatus();
+            return GetAllDocumentStatuses();
         }
 
         private void ValidateOperationStatus()

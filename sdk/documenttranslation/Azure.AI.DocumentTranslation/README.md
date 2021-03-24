@@ -193,7 +193,7 @@ foreach (DocumentStatusResult document in operation.GetValues())
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  Location: {document.LocationUri}");
+        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
     }
     else
@@ -291,7 +291,7 @@ foreach (DocumentStatusResult document in operation.GetValues())
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  Location: {document.LocationUri}");
+        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
     }
     else
@@ -330,7 +330,7 @@ await foreach (DocumentStatusResult document in operationResult.Value)
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  Location: {document.LocationUri}");
+        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
     }
     else
@@ -421,7 +421,7 @@ await foreach (DocumentStatusResult document in operation.GetValuesAsync())
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  Location: {document.LocationUri}");
+        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
     }
     else
