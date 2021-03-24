@@ -84,7 +84,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new KeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
             {
                 provider.Load();
 
@@ -121,7 +121,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new EndsWithOneKeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new EndsWithOneKeyVaultSecretManager() }))
             {
                 provider.Load();
 
@@ -149,7 +149,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
             {
                 provider.Load();
 
@@ -176,7 +176,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act & Assert
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
             {
                 provider.Load();
 
@@ -429,7 +429,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
             {
                 provider.Load();
 
@@ -454,7 +454,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManagerMultiDash()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManagerMultiDash() }))
             {
                 provider.Load();
 
@@ -483,7 +483,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManagerMultiDash()))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManagerMultiDash() }))
             {
                 provider.Load();
 
@@ -517,7 +517,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager());
+            var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() });
             provider.Load();
             await tcs.Task;
 
@@ -553,7 +553,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            var provider = new AzureKeyVaultConfigurationProvider(client.Object, new KeyVaultSecretManager());
+            var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() });
             provider.Load();
 
             // Assert
@@ -574,13 +574,13 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         [Test]
         public void ConstructorThrowsForZeroRefreshPeriodValue()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new KeyVaultSecretManager(), TimeSpan.Zero));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(),  new AzureKeyVaultConfigurationOptions() { ReloadInterval = TimeSpan.Zero }));
         }
 
         [Test]
         public void ConstructorThrowsForNegativeRefreshPeriodValue()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new KeyVaultSecretManager(), TimeSpan.FromMilliseconds(-1)));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(),  new AzureKeyVaultConfigurationOptions() { ReloadInterval = TimeSpan.FromMilliseconds(-1) }));
         }
 
         private class EndsWithOneKeyVaultSecretManager : KeyVaultSecretManager
@@ -596,11 +596,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             private TaskCompletionSource<object> _releaseTaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
             private TaskCompletionSource<object> _signalTaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            public ReloadControlKeyVaultProvider(SecretClient client, KeyVaultSecretManager manager, TimeSpan? reloadPollDelay = null) : base(client, manager, reloadPollDelay)
+            public ReloadControlKeyVaultProvider(SecretClient client, KeyVaultSecretManager manager, TimeSpan? reloadPollDelay = null)
+                : base(client, new AzureKeyVaultConfigurationOptions() { Manager =  manager, ReloadInterval = reloadPollDelay})
             {
             }
 
-            protected override async Task WaitForReload()
+            internal override async Task WaitForReload()
             {
                 _signalTaskCompletionSource.SetResult(null);
                 await _releaseTaskCompletionSource.Task.TimeoutAfter(TimeSpan.FromSeconds(10));

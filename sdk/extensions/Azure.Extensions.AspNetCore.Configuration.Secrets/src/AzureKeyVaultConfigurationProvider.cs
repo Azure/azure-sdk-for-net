@@ -15,12 +15,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
     /// <summary>
     /// An AzureKeyVault based <see cref="ConfigurationProvider"/>.
     /// </summary>
-    internal class AzureKeyVaultConfigurationProvider : ConfigurationProvider, IDisposable
+    public class AzureKeyVaultConfigurationProvider : ConfigurationProvider, IDisposable
     {
         private readonly TimeSpan? _reloadInterval;
         private readonly SecretClient _client;
         private readonly KeyVaultSecretManager _manager;
-        private Dictionary<string, LoadedSecret> _loadedSecrets;
+        private Dictionary<string, KeyVaultSecret> _loadedSecrets;
         private Task _pollingTask;
         private readonly CancellationTokenSource _cancellationToken;
 
@@ -28,23 +28,23 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         /// Creates a new instance of <see cref="AzureKeyVaultConfigurationProvider"/>.
         /// </summary>
         /// <param name="client">The <see cref="SecretClient"/> to use for retrieving values.</param>
-        /// <param name="manager">The <see cref="KeyVaultSecretManager"/> to use in managing values.</param>
-        /// <param name="reloadInterval">The timespan to wait in between each attempt at polling the Azure Key Vault for changes. Default is null which indicates no reloading.</param>
-        public AzureKeyVaultConfigurationProvider(SecretClient client, KeyVaultSecretManager manager, TimeSpan? reloadInterval = null)
+        /// <param name="options">The <see cref="AzureKeyVaultConfigurationOptions"/> to configure provider behaviors.</param>
+        public AzureKeyVaultConfigurationProvider(SecretClient client, AzureKeyVaultConfigurationOptions options = null)
         {
             Argument.AssertNotNull(client, nameof(client));
-            Argument.AssertNotNull(manager, nameof(manager));
+
+            options ??= new AzureKeyVaultConfigurationOptions();
 
             _client = client;
-            _manager = manager;
-            if (reloadInterval != null && reloadInterval.Value <= TimeSpan.Zero)
+            if (options.ReloadInterval != null && options.ReloadInterval.Value <= TimeSpan.Zero)
             {
-                throw new ArgumentOutOfRangeException(nameof(reloadInterval), reloadInterval, nameof(reloadInterval) + " must be positive.");
+                throw new ArgumentOutOfRangeException(nameof(options.ReloadInterval), options.ReloadInterval, nameof(options.ReloadInterval) + " must be positive.");
             }
 
             _pollingTask = null;
             _cancellationToken = new CancellationTokenSource();
-            _reloadInterval = reloadInterval;
+            _reloadInterval = options.ReloadInterval;
+            _manager = options.Manager;
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             }
         }
 
-        protected virtual Task WaitForReload()
+        internal virtual Task WaitForReload()
         {
             // WaitForReload is only called when the _reloadInterval has a value.
             return Task.Delay(_reloadInterval.Value, _cancellationToken.Token);
@@ -79,7 +79,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             var secretPages = _client.GetPropertiesOfSecretsAsync();
 
             using var secretLoader = new ParallelSecretLoader(_client);
-            var newLoadedSecrets = new Dictionary<string, LoadedSecret>();
+            var newLoadedSecrets = new Dictionary<string, KeyVaultSecret>();
             var oldLoadedSecrets = Interlocked.Exchange(ref _loadedSecrets, null);
 
             await foreach (var secret in secretPages.ConfigureAwait(false))
@@ -92,7 +92,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
                 var secretId = secret.Name;
                 if (oldLoadedSecrets != null &&
                     oldLoadedSecrets.TryGetValue(secretId, out var existingSecret) &&
-                    existingSecret.IsUpToDate(secret.UpdatedOn))
+                    IsUpToDate(existingSecret, secret))
                 {
                     oldLoadedSecrets.Remove(secretId);
                     newLoadedSecrets.Add(secretId, existingSecret);
@@ -106,7 +106,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             var loadedSecret = await secretLoader.WaitForAll().ConfigureAwait(false);
             foreach (var secretBundle in loadedSecret)
             {
-                newLoadedSecrets.Add(secretBundle.Value.Name, new LoadedSecret(_manager.GetKey(secretBundle), secretBundle.Value.Value, secretBundle.Value.Properties.UpdatedOn));
+                newLoadedSecrets.Add(secretBundle.Value.Name, secretBundle);
             }
 
             _loadedSecrets = newLoadedSecrets;
@@ -115,7 +115,11 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             // secret that was loaded previously is not available anymore
             if (loadedSecret.Any() || oldLoadedSecrets?.Any() == true)
             {
-                SetData(_loadedSecrets, fireToken: oldLoadedSecrets != null);
+                SetData(_loadedSecrets.Values);
+                if (oldLoadedSecrets != null)
+                {
+                    OnReload();
+                }
             }
 
             // schedule a polling task only if none exists and a valid delay is specified
@@ -125,68 +129,53 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             }
         }
 
-        private void SetData(Dictionary<string, LoadedSecret> loadedSecrets, bool fireToken)
+        /// <summary>
+        /// This method is called when
+        /// </summary>
+        /// <param name="secrets"></param>
+        protected virtual void SetData(IEnumerable<KeyVaultSecret> secrets)
         {
-            var data = new Dictionary<string, LoadedSecret>(loadedSecrets.Count, StringComparer.OrdinalIgnoreCase);
+            var data = new Dictionary<string, KeyVaultSecret>(StringComparer.OrdinalIgnoreCase);
 
-            // The loadesSecrets dictionary contains LoadedSecrets objects that has
-            // the configuration value and the configuration key (created by the
-            // KeyVaultSecretManager object). It is possible that multiple
-            // LoadedSecrets objects uses the same configuration key. This loop
-            // takes the latest updated value for each key.
-            foreach (var secretItem in loadedSecrets)
+            foreach (var secret in secrets)
             {
-                string key = secretItem.Value.Key;
+                string key = _manager.GetKey(secret);
 
-                if (data.TryGetValue(key, out LoadedSecret currentSecret))
+                // It is possible that multiple
+                // LoadedSecrets objects uses the same configuration key. This loop
+                // takes the latest updated value for each key.
+                if (data.TryGetValue(key, out KeyVaultSecret currentSecret))
                 {
-                    if (secretItem.Value.Updated > currentSecret.Updated)
+                    if (secret.Properties.UpdatedOn > currentSecret.Properties.UpdatedOn)
                     {
-                        data[key] = secretItem.Value;
+                        data[key] = secret;
                     }
                 }
                 else
                 {
-                    data.Add(key, secretItem.Value);
+                    data.Add(key, secret);
                 }
             }
 
             Data = data.ToDictionary(d => d.Key, v => v.Value.Value);
-            if (fireToken)
-            {
-                OnReload();
-            }
         }
 
         /// <inheritdoc/>
-        public void Dispose()
+        void IDisposable.Dispose()
         {
+            GC.SuppressFinalize(this);
             _cancellationToken.Cancel();
             _cancellationToken.Dispose();
         }
 
-        private readonly struct LoadedSecret
+        private static bool IsUpToDate(KeyVaultSecret current, SecretProperties updated)
         {
-            public LoadedSecret(string key, string value, DateTimeOffset? updated)
+            if (updated.UpdatedOn.HasValue != current.Properties.UpdatedOn.HasValue)
             {
-                Key = key;
-                Value = value;
-                Updated = updated;
+                return false;
             }
 
-            public string Key { get; }
-            public string Value { get; }
-            public DateTimeOffset? Updated { get; }
-
-            public bool IsUpToDate(DateTimeOffset? updated)
-            {
-                if (updated.HasValue != Updated.HasValue)
-                {
-                    return false;
-                }
-
-                return updated.GetValueOrDefault() == Updated.GetValueOrDefault();
-            }
+            return updated.UpdatedOn.GetValueOrDefault() == current.Properties.UpdatedOn.GetValueOrDefault();
         }
     }
 }

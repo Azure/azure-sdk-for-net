@@ -6,6 +6,13 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         public Azure.Extensions.AspNetCore.Configuration.Secrets.KeyVaultSecretManager Manager { get { throw null; } set { } }
         public System.TimeSpan? ReloadInterval { get { throw null; } set { } }
     }
+    public partial class AzureKeyVaultConfigurationProvider : Microsoft.Extensions.Configuration.ConfigurationProvider, System.IDisposable
+    {
+        public AzureKeyVaultConfigurationProvider(Azure.Security.KeyVault.Secrets.SecretClient client, Azure.Extensions.AspNetCore.Configuration.Secrets.AzureKeyVaultConfigurationOptions options = null) { }
+        public override void Load() { }
+        protected virtual void SetData(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Secrets.KeyVaultSecret> secrets) { }
+        void System.IDisposable.Dispose() { }
+    }
     public partial class KeyVaultSecretManager
     {
         public KeyVaultSecretManager() { }
