@@ -239,7 +239,6 @@ namespace Azure.Data.Tables
             {typeof(int), (property, propertyValue, result) =>  property.SetValue(result, (int)propertyValue)},
             {typeof(int?), (property, propertyValue, result) =>  property.SetValue(result, (int?)propertyValue)},
             {typeof(Enum), (property, propertyValue, result) =>  property.SetValue(result, Enum.Parse(property.PropertyType, propertyValue as string ))},
-            {typeof(Nullable), (property, propertyValue, result) =>  property.SetValue(result, Enum.Parse(property.PropertyType, propertyValue as string ))},
         };
 
         private static Action<PropertyInfo, object, object> SetNullableEnumValue = (property, propertyValue, result) => property.SetValue(result, Enum.Parse(property.PropertyType.GenericTypeArguments[0], propertyValue as string));
