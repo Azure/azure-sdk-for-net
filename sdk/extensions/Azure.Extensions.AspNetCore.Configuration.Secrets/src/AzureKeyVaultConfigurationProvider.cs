@@ -29,6 +29,8 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         /// </summary>
         /// <param name="client">The <see cref="SecretClient"/> to use for retrieving values.</param>
         /// <param name="options">The <see cref="AzureKeyVaultConfigurationOptions"/> to configure provider behaviors.</param>
+        /// <exception cref="ArgumentNullException">When either <paramref name="client"/> or <see cref="AzureKeyVaultConfigurationOptions.Manager"/> is <code>null</code>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">When either <see cref="AzureKeyVaultConfigurationOptions.ReloadInterval"/> is not positive or <code>null</code>.</exception>
         public AzureKeyVaultConfigurationProvider(SecretClient client, AzureKeyVaultConfigurationOptions options = null)
         {
             options ??= new AzureKeyVaultConfigurationOptions();
@@ -129,12 +131,26 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             }
         }
 
-        /// <inheritdoc/>
-        void IDisposable.Dispose()
+        /// <summary>
+        /// Frees resources held by the <see cref="AzureKeyVaultConfigurationProvider"/> object.
+        /// </summary>
+        public void Dispose()
         {
+            Dispose(true);
             GC.SuppressFinalize(this);
-            _cancellationToken.Cancel();
-            _cancellationToken.Dispose();
+        }
+
+        /// <summary>
+        /// Frees resources held by the <see cref="AzureKeyVaultConfigurationProvider"/> object.
+        /// </summary>
+        /// <param name="disposing">true if called from <see cref="Dispose()"/>, otherwise false.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _cancellationToken.Cancel();
+                _cancellationToken.Dispose();
+            }
         }
 
         private static bool IsUpToDate(KeyVaultSecret current, SecretProperties updated)

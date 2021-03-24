@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Extensions.Configuration;
 
@@ -33,8 +34,11 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         /// <param name="secrets">A set of secrets retrieved during <see cref="AzureKeyVaultConfigurationProvider.Load"/> call.</param>
         /// <returns>The dictionary of configuration key-value pairs that would be assigned to the <see cref="ConfigurationProvider.Data"/>
         /// and exposed from the <see cref="IConfiguration"/>.</returns>
+        /// <exception cref="ArgumentNullException">When <paramref name="secrets"/> is <code>null</code>.</exception>
         public virtual Dictionary<string, string> GetData(IEnumerable<KeyVaultSecret> secrets)
         {
+            Argument.AssertNotNull(secrets, nameof(secrets));
+
             var data = new Dictionary<string, KeyVaultSecret>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var secret in secrets)

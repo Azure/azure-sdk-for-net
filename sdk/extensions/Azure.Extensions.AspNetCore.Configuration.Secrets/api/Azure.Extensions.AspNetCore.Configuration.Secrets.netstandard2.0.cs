@@ -9,8 +9,9 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
     public partial class AzureKeyVaultConfigurationProvider : Microsoft.Extensions.Configuration.ConfigurationProvider, System.IDisposable
     {
         public AzureKeyVaultConfigurationProvider(Azure.Security.KeyVault.Secrets.SecretClient client, Azure.Extensions.AspNetCore.Configuration.Secrets.AzureKeyVaultConfigurationOptions options = null) { }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
         public override void Load() { }
-        void System.IDisposable.Dispose() { }
     }
     public partial class KeyVaultSecretManager
     {
