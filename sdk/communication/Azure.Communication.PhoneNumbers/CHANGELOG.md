@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.6 (Unreleased)
 
+### Added
+- Added protected constructor to PurchasePhoneNumbersOperation and ReleasePhoneNumberOperation for mocking.
+
 ### Breaking Changes
 - AcquiredPhoneNumber class is renamed to PurchasedPhoneNumber.
 - PhoneNumbersClient methods renamed:
@@ -10,8 +13,8 @@
   - GetPhoneNumbers -> GetPurchasedPhoneNumbers.
   - GetPhoneNumbersAsync -> GetPurchasedPhoneNumbersAsync.
 - PhoneNumbersModelFactory static method AcquiredPhoneNumber is renamed to PurchasedPhoneNumber.
-- PurchasePhoneNumbersOperation extends Operation instead of Operation<Response>.
-- ReleasePhoneNumberOperation extends Operation instead of Operation<Response>.
+- PurchasePhoneNumbersOperation and ReleasePhoneNumberOperation extend Operation instead of Operation<Response>.
+- Removed PhoneNumberOperationStatus and PhoneNumberOperationType.
 
 ## 1.0.0-beta.5 (2021-03-09)
 

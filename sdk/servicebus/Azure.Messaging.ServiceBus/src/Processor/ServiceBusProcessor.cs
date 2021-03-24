@@ -39,6 +39,8 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly SemaphoreSlim _messageHandlerSemaphore;
 
+        private readonly int _maxConcurrentCalls;
+
         /// <summary>
         /// The primitive for ensuring that the service is not overloaded with
         /// accept session requests.
@@ -167,7 +169,8 @@ namespace Azure.Messaging.ServiceBus
         private readonly string[] _sessionIds;
         private readonly EntityScopeFactory _scopeFactory;
         private readonly IList<ServiceBusPlugin> _plugins;
-        private readonly IList<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
+        // deliberate usage of List instead of IList for faster enumeration and less allocations
+        private readonly List<ReceiverManager> _receiverManagers = new List<ReceiverManager>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceBusProcessor"/> class.
@@ -213,16 +216,16 @@ namespace Azure.Messaging.ServiceBus
             MaxConcurrentCallsPerSession = maxConcurrentCallsPerSession;
             _sessionIds = sessionIds ?? Array.Empty<string>();
 
-            int maxCalls = isSessionEntity ?
+            _maxConcurrentCalls = isSessionEntity ?
                 (_sessionIds.Length > 0 ?
                     Math.Min(_sessionIds.Length, MaxConcurrentSessions) :
                     MaxConcurrentSessions) * MaxConcurrentCallsPerSession :
                 MaxConcurrentCalls;
 
             _messageHandlerSemaphore = new SemaphoreSlim(
-                maxCalls,
-                maxCalls);
-            var maxAcceptSessions = Math.Min(maxCalls, 2 * Environment.ProcessorCount);
+                _maxConcurrentCalls,
+                _maxConcurrentCalls);
+            var maxAcceptSessions = Math.Min(_maxConcurrentCalls, 2 * Environment.ProcessorCount);
             MaxConcurrentAcceptSessionsSemaphore = new SemaphoreSlim(
                 maxAcceptSessions,
                 maxAcceptSessions);
@@ -652,20 +655,25 @@ namespace Azure.Messaging.ServiceBus
         private async Task RunReceiveTaskAsync(
             CancellationToken cancellationToken)
         {
-            List<Task> tasks = new List<Task>();
+            List<Task> tasks = new List<Task>(_maxConcurrentCalls + _receiverManagers.Count);
             try
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     foreach (ReceiverManager receiverManager in _receiverManagers)
                     {
-                        await _messageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                        // Do a quick synchronous check before we resort to async/await with the state-machine overhead.
+                        if (!_messageHandlerSemaphore.Wait(0))
+                        {
+                            await _messageHandlerSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+                        }
                         // hold onto all the tasks that we are starting so that when cancellation is requested,
                         // we can await them to make sure we surface any unexpected exceptions, i.e. exceptions
                         // other than TaskCanceledExceptions
                         tasks.Add(ReceiveAndProcessMessagesAsync(receiverManager, cancellationToken));
                     }
-                    if (tasks.Count > MaxConcurrentCalls)
+
+                    if (tasks.Count > _maxConcurrentCalls)
                     {
                         tasks.RemoveAll(t => t.IsCompleted);
                     }

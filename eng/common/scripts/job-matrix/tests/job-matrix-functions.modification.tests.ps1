@@ -86,6 +86,49 @@ Describe "Platform Matrix nonSparse" -Tag "nonsparse" {
 }
 
 Describe "Platform Matrix Import" -Tag "import" {
+    It "Should generate a sparse matrix where the entire base matrix is imported" {
+        $matrixJson = @'
+{
+    "matrix": {
+        "$IMPORT": "./test-import-matrix.json"
+    },
+    "include": [
+        {
+            "fooinclude": "fooinclude"
+        }
+    ]
+}
+'@
+
+        $expectedMatrix = @'
+[
+  {
+    "parameters": { "Foo": "foo1", "Bar": "bar1" },
+    "name": "foo1_bar1"
+  },
+  {
+    "parameters": { "Foo": "foo2", "Bar": "bar2" },
+    "name": "foo2_bar2"
+  },
+  {
+    "parameters": { "Baz": "importedBaz" },
+    "name": "importedBazName"
+  },
+  {
+    "parameters": { "fooinclude": "fooinclude" },
+    "name": "fooinclude"
+  },
+]
+'@
+
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $matrix = GenerateMatrix $importConfig "sparse"
+        $expected = $expectedMatrix | ConvertFrom-Json -AsHashtable
+
+        $matrix.Length | Should -Be 4
+        CompareMatrices $matrix $expected
+    }
+
     It "Should generate a matrix with nonSparseParameters and an imported sparse matrix" {
         $matrixJson = @'
 {
