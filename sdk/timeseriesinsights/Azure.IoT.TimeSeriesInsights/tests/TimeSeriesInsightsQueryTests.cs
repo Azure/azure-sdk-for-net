@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
     [LiveOnly]
     public class TimeSeriesInsightsQueryTests : E2eTestBase
     {
-        private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(10);
+        private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(30);
 
         private const int MaxNumberOfRetries = 10;
         private const string Humidity = "Humidity";
@@ -113,10 +113,11 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     ContentEncoding = "utf-8",
                 };
 
-                await deviceClient.SendEventAsync(message).ConfigureAwait(false);
+                Func<Task> sendEventAct = async () => await deviceClient.SendEventAsync(message).ConfigureAwait(false);
+                sendEventAct.Should().NotThrow();
 
                 // Send it again
-                await deviceClient.SendEventAsync(message).ConfigureAwait(false);
+                sendEventAct.Should().NotThrow();
 
                 // Query for the two events with a filter
 
