@@ -27,8 +27,8 @@ param(
     [Parameter(Mandatory = $false)]
     [string] $PushArgs = "",
 
-    # [Parameter(Mandatory = $false)]
-    # [string] $RemoteName = "azure-sdk-fork",
+    [Parameter(Mandatory = $false)]
+    [string] $RemoteName = "azure-sdk-fork",
 
     [Parameter(Mandatory = $false)]
     [boolean] $SkipCommit = $false,
@@ -41,15 +41,24 @@ param(
 # Without explicitly setting the ErrorActionPreference to continue the script
 # would fail the first time git wrote command output.
 $ErrorActionPreference = "Continue"
-$RemoteName = "azure-sdk-fork"
 
 if ((git remote) -contains $RemoteName)
 {
+  Write-Host "git remote get-url $RemoteName"
   $remoteUrl = git remote get-url $RemoteName
   if ($remoteUrl -ne $GitUrl)
   {
-     Write-Error "Remote with name $RemoteName already exists with an incompatible url [$remoteUrl] which should be [$GitUrl]."
-     exit 1
+    Write-Error "Remote with name $RemoteName already exists with an incompatible url [$remoteUrl] which should be [$GitUrl]."
+    exit 1
+  }
+}
+else {
+  Write-Host "git remote add $RemoteName $GitUrl"
+  git remote add $RemoteName $GitUrl
+  if ($LASTEXITCODE -ne 0)
+  {
+    Write-Error "Unable to add remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
+    exit $LASTEXITCODE
   }
 }
 # Check if the PRBranch is current branch.

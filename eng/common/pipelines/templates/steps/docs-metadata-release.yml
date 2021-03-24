@@ -93,8 +93,8 @@ steps:
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
       Push-Location ${{ parameters.WorkingDirectory }}/repo
-      git remote rm azure-sdk-fork
       git reset --hard HEAD
+      git remote rm azure-sdk-fork
       git checkout ${{ parameters.OnboardingBranch}}
     displayName: Reset Docs Repo, Checkout Onboarding Branch
     ignoreLASTEXITCODE: false
