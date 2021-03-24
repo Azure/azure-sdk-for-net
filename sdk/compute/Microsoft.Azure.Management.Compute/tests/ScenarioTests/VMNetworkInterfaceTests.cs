@@ -338,8 +338,14 @@ namespace Compute.Tests
         [Fact]
         public void TestVirtualMachineNicConfiguration()
         {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
+                // Hard code the location to "eastus2euap".
+                // This is because NRP is still deploying to other regions and is not available worldwide.
+                // Before changing the default location, we have to save it to be reset it at the end of the test.
+                // Since ComputeManagementTestUtilities.DefaultLocation is a static variable and can affect other tests if it is not reset.
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -389,6 +395,7 @@ namespace Compute.Tests
                 }
                 finally
                 {
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
                     // Cleanup the created resources
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
