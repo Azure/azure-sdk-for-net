@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets or sets the resource identifier.
         /// </summary>
-        public abstract ResourceIdentifier Id { get; protected set; }
+        public virtual ResourceIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets the name.
