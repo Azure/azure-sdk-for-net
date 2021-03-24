@@ -10,12 +10,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
     {
         public AzureKeyVaultConfigurationProvider(Azure.Security.KeyVault.Secrets.SecretClient client, Azure.Extensions.AspNetCore.Configuration.Secrets.AzureKeyVaultConfigurationOptions options = null) { }
         public override void Load() { }
-        protected virtual void SetData(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Secrets.KeyVaultSecret> secrets) { }
         void System.IDisposable.Dispose() { }
     }
     public partial class KeyVaultSecretManager
     {
         public KeyVaultSecretManager() { }
+        public virtual System.Collections.Generic.Dictionary<string, string> GetData(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Secrets.KeyVaultSecret> secrets) { throw null; }
         public virtual string GetKey(Azure.Security.KeyVault.Secrets.KeyVaultSecret secret) { throw null; }
         public virtual bool Load(Azure.Security.KeyVault.Secrets.SecretProperties secret) { throw null; }
     }

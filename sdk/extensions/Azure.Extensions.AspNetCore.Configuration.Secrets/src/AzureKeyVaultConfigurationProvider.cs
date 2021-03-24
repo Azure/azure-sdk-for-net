@@ -31,9 +31,9 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         /// <param name="options">The <see cref="AzureKeyVaultConfigurationOptions"/> to configure provider behaviors.</param>
         public AzureKeyVaultConfigurationProvider(SecretClient client, AzureKeyVaultConfigurationOptions options = null)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
             options ??= new AzureKeyVaultConfigurationOptions();
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(options.Manager, $"{nameof(options)}.{nameof(options.Manager)}");
 
             _client = client;
             if (options.ReloadInterval != null && options.ReloadInterval.Value <= TimeSpan.Zero)
@@ -115,7 +115,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             // secret that was loaded previously is not available anymore
             if (loadedSecret.Any() || oldLoadedSecrets?.Any() == true)
             {
-                SetData(_loadedSecrets.Values);
+                Data = _manager.GetData(newLoadedSecrets.Values);
                 if (oldLoadedSecrets != null)
                 {
                     OnReload();
@@ -127,37 +127,6 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             {
                 _pollingTask = PollForSecretChangesAsync();
             }
-        }
-
-        /// <summary>
-        /// This method is called when
-        /// </summary>
-        /// <param name="secrets"></param>
-        protected virtual void SetData(IEnumerable<KeyVaultSecret> secrets)
-        {
-            var data = new Dictionary<string, KeyVaultSecret>(StringComparer.OrdinalIgnoreCase);
-
-            foreach (var secret in secrets)
-            {
-                string key = _manager.GetKey(secret);
-
-                // It is possible that multiple
-                // LoadedSecrets objects uses the same configuration key. This loop
-                // takes the latest updated value for each key.
-                if (data.TryGetValue(key, out KeyVaultSecret currentSecret))
-                {
-                    if (secret.Properties.UpdatedOn > currentSecret.Properties.UpdatedOn)
-                    {
-                        data[key] = secret;
-                    }
-                }
-                else
-                {
-                    data.Add(key, secret);
-                }
-            }
-
-            Data = data.ToDictionary(d => d.Key, v => v.Value.Value);
         }
 
         /// <inheritdoc/>

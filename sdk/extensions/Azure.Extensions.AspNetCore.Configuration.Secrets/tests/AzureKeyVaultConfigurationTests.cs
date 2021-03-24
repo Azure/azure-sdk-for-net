@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -493,6 +494,30 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         }
 
         [Test]
+        public void CanCustomizeSecretTransformation()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client,
+                new[]
+                {
+                    CreateSecret("Secret1", "{\"innerKey1\": \"innerValue1\", \"innerKey2\": \"innerValue2\"}", updated: new DateTimeOffset(new DateTime(2038, 1, 19), TimeSpan.Zero)),
+                    CreateSecret("Secret2", "{\"innerKey3\": \"innerValue3\"}", updated: new DateTimeOffset(new DateTime(2038, 1, 18), TimeSpan.Zero))
+                }
+            );
+
+            // Act
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new JsonKeyVaultSecretManager() }))
+            {
+                provider.Load();
+
+                // Assert
+                Assert.AreEqual("innerValue1", provider.Get("innerKey1"));
+                Assert.AreEqual("innerValue2", provider.Get("innerKey2"));
+                Assert.AreEqual("innerValue3", provider.Get("innerKey3"));
+            }
+        }
+
+        [Test]
         public async Task LoadsSecretsInParallel()
         {
             var tcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -568,7 +593,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         [Test]
         public void ConstructorThrowsForNullManager()
         {
-            Assert.Throws<ArgumentNullException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), null));
+            Assert.Throws<ArgumentNullException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new AzureKeyVaultConfigurationOptions() { Manager = null }));
         }
 
         [Test]
@@ -634,6 +659,25 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                             .Replace("----", ConfigurationPath.KeyDelimiter)
                             .Replace("---", ConfigurationPath.KeyDelimiter)
                             .Replace("--", ConfigurationPath.KeyDelimiter);
+            }
+        }
+
+        private class JsonKeyVaultSecretManager: KeyVaultSecretManager
+        {
+            public override Dictionary<string, string> GetData(IEnumerable<KeyVaultSecret> secrets)
+            {
+                var data = new Dictionary<string, string>();
+                foreach (var secret in secrets)
+                {
+                    using var doc = JsonDocument.Parse(secret.Value);
+
+                    foreach (var property in doc.RootElement.EnumerateObject())
+                    {
+                        data[property.Name] = property.Value.GetString();
+                    }
+                }
+
+                return data;
             }
         }
     }
