@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Proto.Billing</RootNamespace>
     <LangVersion>latest</LangVersion>
-    <IsOldTrack2>false</IsOldTrack2>
+    <ExcludeMgmtCoreShared>false</ExcludeMgmtCoreShared>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Azure.ResourceManager.Billing\**" />

@@ -4,10 +4,8 @@
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Adapters;
 using Azure.ResourceManager.Network;
 using System;
-using System.Threading.Tasks;
 
 namespace Proto.Network
 {

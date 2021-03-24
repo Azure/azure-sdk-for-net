@@ -142,10 +142,10 @@
   <!--TODO: update build targets - ADO 5668-->
   <PropertyGroup>
     <MgmtCoreShared>$(MSBuildThisFileDirectory)/../common/ManagementCoreShared</MgmtCoreShared>
-    <IsOldTrack2 Condition="'$(IsOldTrack2)' == ''">false</IsOldTrack2>
+    <ExcludeMgmtCoreShared Condition="'$(ExcludeMgmtCoreShared)' == ''">false</ExcludeMgmtCoreShared>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsOldTrack2)' == 'false'">
+  <ItemGroup Condition="'$(IsMgmtClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(ExcludeMgmtCoreShared)' == 'false'">
     <Compile Include="$(MgmtCoreShared)/**/*.cs"
                  Link="Shared/Management/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>

@@ -8,6 +8,6 @@
     </Description>
     <PackageTags>azure;management;appconfiguration</PackageTags>
     <NoWarn>$(NoWarn);AZC0001;AZC0008;</NoWarn>
-    <IsOldTrack2>true</IsOldTrack2>
+    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
   </PropertyGroup>
 </Project>
