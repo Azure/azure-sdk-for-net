@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
     <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.ServiceBus.csproj" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\**\*.cs" LinkBase="Shared" />

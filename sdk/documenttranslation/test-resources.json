@@ -41,7 +41,7 @@
             }
         },
         "endpointPrefix": {
-            "defaultValue": "documenttranslation",
+            "defaultValue": "doctranslation",
             "type": "string"
         },
         "endpointSuffix": {
@@ -52,7 +52,22 @@
     "variables": {
         "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
-        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]"
+        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]",
+        "storageAccountName": "[concat(parameters('baseName'), 'prim')]",
+        "encryption": {
+            "services": {
+                "blob": {
+                    "enabled": true
+                }
+            },
+            "keySource": "Microsoft.Storage"
+        },
+        "networkAcls": {
+            "bypass": "AzureServices",
+            "virtualNetworkRules": [],
+            "ipRules": [],
+            "defaultAction": "Allow"
+        }
     },
     "resources": [
         {
@@ -76,7 +91,24 @@
                 "roleDefinitionId": "[variables('roleDefinitionId')]",
                 "principalId": "[parameters('testApplicationOid')]"
             }
-        }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-04-01",
+            "name": "[variables('storageAccountName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "networkAcls": "[variables('networkAcls')]",
+                "supportsHttpsTrafficOnly": true,
+                "encryption": "[variables('encryption')]",
+                "accessTier": "Cool"
+            }
+        },
     ],
     "outputs": {
         "DOCUMENT_TRANSLATION_API_KEY": {
@@ -86,6 +118,14 @@
         "DOCUMENT_TRANSLATION_ENDPOINT": {
             "type": "string",
             "value": "[variables('endpointValue')]"
+        },
+        "DOCUMENT_TRANSLATION_STORAGE_NAME": {
+            "type": "string",
+            "value": "[variables('storageAccountName')]"
+        },
+        "DOCUMENT_TRANSLATION_CONNECTION_STRING": {
+            "type": "string",
+            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-04-01').keys[0].value,';EndpointSuffix=core.windows.net')]" 
         }
     }
 }

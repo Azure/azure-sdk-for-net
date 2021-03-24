@@ -111,11 +111,8 @@ namespace Azure.Communication.Sms
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
             Argument.AssertNotNullOrEmpty(to, nameof(to));
-            AsyncPageable<SmsSendResult> allSmsSendResults = SendAsync(from, new[] { to }, message, options, cancellationToken);
-            await foreach (Page<SmsSendResult> page in allSmsSendResults.AsPages().ConfigureAwait(false))
-                return Response.FromValue(page.Values[0], page.GetRawResponse());
-
-            throw new InvalidOperationException("Sequence contains no matching element");
+            Response<IReadOnlyList<SmsSendResult>> response = await SendAsync(from, new[] { to }, message, options, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(response.Value[0], response.GetRawResponse());
         }
 
         /// <summary>
@@ -134,9 +131,8 @@ namespace Azure.Communication.Sms
         {
             Argument.AssertNotNullOrEmpty(from, nameof(from));
             Argument.AssertNotNullOrEmpty(to, nameof(to));
-            Pageable<SmsSendResult> allSmsSendResults = Send(from, new[] { to }, message, options, cancellationToken);
-            Page<SmsSendResult> firstPage = allSmsSendResults.AsPages().First();
-            return Response.FromValue(firstPage.Values[0], firstPage.GetRawResponse());
+            Response<IReadOnlyList<SmsSendResult>> response = Send(from, new[] { to }, message, options, cancellationToken);
+            return Response.FromValue(response.Value[0], response.GetRawResponse());
         }
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
@@ -149,31 +145,30 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual AsyncPageable<SmsSendResult> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
-            => PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken) =>
+        public virtual async Task<Response<IReadOnlyList<SmsSendResult>>> SendAsync(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
-                scope.Start();
-                try
-                {
-                    Argument.AssertNotNullOrEmpty(from, nameof(from));
-                    Argument.AssertNotNullOrEmpty(to, nameof(to));
-                    IEnumerable<SmsRecipient> recipients = to.Select(x =>
-                        new SmsRecipient(AssertNotNullOrEmpty(x, nameof(to)))
-                        {
-                            RepeatabilityRequestId = Guid.NewGuid().ToString(),
-                            RepeatabilityFirstSent = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
-                        });
+                Argument.AssertNotNullOrEmpty(from, nameof(from));
+                Argument.AssertNotNullOrEmpty(to, nameof(to));
+                IEnumerable<SmsRecipient> recipients = to.Select(x =>
+                    new SmsRecipient(AssertNotNullOrEmpty(x, nameof(to)))
+                    {
+                        RepeatabilityRequestId = Guid.NewGuid().ToString(),
+                        RepeatabilityFirstSent = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                    });
 
-                    Response<SmsSendResponse> response = await RestClient.SendAsync(from, recipients, message, options, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                Response<SmsSendResponse> response = await RestClient.SendAsync(from, recipients, message, options, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         /// <summary> Sends an SMS message from a phone number that belongs to the authenticated account. </summary>
         /// <param name="from"> The sender&apos;s phone number in E.164 format that is owned by the authenticated account. </param>
@@ -185,32 +180,31 @@ namespace Azure.Communication.Sms
         /// <exception cref="ArgumentNullException"><paramref name="from"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="to"/> is null.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is null.</exception>
-        public virtual Pageable<SmsSendResult> Send(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
-            => PageResponseEnumerator.CreateEnumerable(continuationToken =>
+        public virtual Response<IReadOnlyList<SmsSendResult>> Send(string from, IEnumerable<string> to, string message, SmsSendOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
+            scope.Start();
+            try
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SmsClient)}.{nameof(Send)}");
-                scope.Start();
-                try
-                {
-                    Argument.AssertNotNullOrEmpty(from, nameof(from));
-                    Argument.AssertNotNullOrEmpty(to, nameof(to));
+                Argument.AssertNotNullOrEmpty(from, nameof(from));
+                Argument.AssertNotNullOrEmpty(to, nameof(to));
 
-                    IEnumerable<SmsRecipient> recipients = to.Select(x =>
-                        new SmsRecipient(AssertNotNullOrEmpty(x, nameof(to)))
-                        {
-                            RepeatabilityRequestId = Guid.NewGuid().ToString(),
-                            RepeatabilityFirstSent = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
-                        });
+                IEnumerable<SmsRecipient> recipients = to.Select(x =>
+                    new SmsRecipient(AssertNotNullOrEmpty(x, nameof(to)))
+                    {
+                        RepeatabilityRequestId = Guid.NewGuid().ToString(),
+                        RepeatabilityFirstSent = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                    });
 
-                    Response<SmsSendResponse> response = RestClient.Send(from, recipients, message, options, cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
+                Response<SmsSendResponse> response = RestClient.Send(from, recipients, message, options, cancellationToken);
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
 
         private static T AssertNotNull<T>(T argument, string argumentName)
             where T : class
