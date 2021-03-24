@@ -23,3 +23,11 @@ directive:
   transform: >
     $["x-accessibility"] = "internal"
 ```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ManifestAttributes_manifest_references
+  transform: >
+    $["x-accessibility"] = "internal"
+```

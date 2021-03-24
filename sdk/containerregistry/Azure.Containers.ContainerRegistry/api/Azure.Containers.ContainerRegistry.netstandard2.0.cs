@@ -44,23 +44,21 @@ namespace Azure.Containers.ContainerRegistry
     public partial class RepositoryProperties
     {
         internal RepositoryProperties() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public string Name { get { throw null; } }
-        public string Registry { get { throw null; } }
-        public int? RegistryArtifactCount { get { throw null; } }
-        public int? TagCount { get { throw null; } }
+        public int RegistryArtifactCount { get { throw null; } }
+        public int TagCount { get { throw null; } }
         public Azure.Containers.ContainerRegistry.ContentProperties WriteableProperties { get { throw null; } }
     }
     public partial class TagProperties
     {
         internal TagProperties() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string Digest { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
-        public Azure.Containers.ContainerRegistry.ContentProperties ModifiableProperties { get { throw null; } }
+        public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public string Name { get { throw null; } }
-        public string Registry { get { throw null; } }
         public string Repository { get { throw null; } }
+        public Azure.Containers.ContainerRegistry.ContentProperties WriteableProperties { get { throw null; } }
     }
 }

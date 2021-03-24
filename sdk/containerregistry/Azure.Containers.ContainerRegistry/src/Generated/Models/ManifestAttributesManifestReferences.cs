@@ -10,7 +10,7 @@ using System;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Manifest attributes details. </summary>
-    public partial class ManifestAttributesManifestReferences
+    internal partial class ManifestAttributesManifestReferences
     {
         /// <summary> Initializes a new instance of ManifestAttributesManifestReferences. </summary>
         /// <param name="digest"> Manifest digest. </param>
