@@ -2721,11 +2721,6 @@ namespace Azure.Storage.Files.DataLake
                     scope.Start();
                     ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> response;
 
-                    List<ListBlobsIncludeItem> include = new List<ListBlobsIncludeItem>
-                    {
-                        ListBlobsIncludeItem.Deleted
-                    };
-
                     if (async)
                     {
                         response = await BlobFileSystemRestClient.ListBlobHierarchySegmentAsync(
@@ -2792,11 +2787,11 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<DataLakePathClient> RestorePath(
+        public virtual Response<DataLakePathClient> UndeletePath(
             string deletedPath,
             string deletionId,
             CancellationToken cancellationToken = default)
-            => RestorePathInternal(
+            => UndeletePathInternal(
                 deletedPath,
                 deletionId,
                 async: false,
@@ -2825,18 +2820,18 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<DataLakePathClient>> RestorePathAsync(
+        public virtual async Task<Response<DataLakePathClient>> UndeletePathAsync(
             string deletedPath,
             string deletionId,
             CancellationToken cancellationToken = default)
-            => await RestorePathInternal(
+            => await UndeletePathInternal(
                 deletedPath,
                 deletionId,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
-        internal async Task<Response<DataLakePathClient>> RestorePathInternal(
+        internal async Task<Response<DataLakePathClient>> UndeletePathInternal(
             string deletedPath,
             string deletionId,
             bool async,
@@ -2844,7 +2839,7 @@ namespace Azure.Storage.Files.DataLake
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileSystemClient)))
             {
-                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(RestorePath)}");
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(UndeletePath)}");
 
                 try
                 {
