@@ -118,6 +118,11 @@ namespace Azure.ResourceManager.Core
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(value.Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(value.Id.Id);
+            }
             if (Optional.IsDefined(value.Location))
             {
                 writer.WritePropertyName("location");
@@ -127,10 +132,13 @@ namespace Azure.ResourceManager.Core
             {
                 writer.WritePropertyName("tags");
                 writer.WriteStartObject();
-                foreach (var item in value.Tags)
+                if (value.Tags != null)
                 {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    foreach (var item in value.Tags)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteStringValue(item.Value);
+                    }
                 }
                 writer.WriteEndObject();
             }

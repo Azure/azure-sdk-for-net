@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Core
         /// Deserialize the input Json object.
         /// </summary>
         /// <param name="element"> The Json object need to be deserialized. </param>
-        internal static Plan DeserializePlan(JsonElement element)
+        internal static Plan Deserialize(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> publisher = default;
