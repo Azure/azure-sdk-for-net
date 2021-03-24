@@ -82,6 +82,22 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task ReadsRequestIdValueOfOuterScope()
+        {
+            var transport = new MockTransport(r => new MockResponse(200));
+
+            using (HttpPipeline.CreateClientRequestIdScope("custom-id"))
+            {
+                using (HttpPipeline.CreateClientRequestIdScope("nested-custom-id"))
+                {
+                }
+                await SendGetRequest(transport, ReadClientRequestIdPolicy.Shared);
+            }
+
+            Assert.AreEqual(transport.SingleRequest.ClientRequestId, "custom-id");
+        }
+
+        [Test]
         public async Task CanResetRequestIdValueOfParentScope()
         {
             var transport = new MockTransport(r => new MockResponse(200));
