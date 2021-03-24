@@ -3,6 +3,7 @@
 
 using Azure.Core.Pipeline;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -12,18 +13,19 @@ namespace Azure.Test.Perf
 {
     public abstract class PerfTest<TOptions> : IPerfTest where TOptions : PerfOptions
     {
+        private readonly HttpClient _httpClient;
+        private readonly TestProxyTransport _transport;
+        private string _recordingFile;
+        private string _recordingId;
+
         protected TOptions Options { get; private set; }
-
-        private HttpClient _httpClient;
-
-        protected TestProxyTransport Transport { get; private set; }
-        private string _playbackRecordingId;
+        protected HttpPipelineTransport Transport => _transport;
 
         public PerfTest(TOptions options)
         {
             Options = options;
 
-            if (Options.Insecure)
+            if (Options.Insecure || Options.TestProxy != null)
             {
                 _httpClient = new HttpClient(new HttpClientHandler()
                 {
@@ -37,7 +39,7 @@ namespace Azure.Test.Perf
 
             var httpClientTransport = new HttpClientTransport(_httpClient);
 
-            Transport = new TestProxyTransport(httpClientTransport, Options.Host, Options.Port);
+            _transport = new TestProxyTransport(httpClientTransport, Options.TestProxy);
         }
 
         public virtual Task GlobalSetupAsync()
@@ -52,12 +54,10 @@ namespace Azure.Test.Perf
 
         public async Task RecordAndStartPlayback()
         {
-            var recordingFile = Guid.NewGuid().ToString();
+            await StartRecording();
 
-            var recordRecordingId = await StartRecording(recordingFile);
-
-            Transport.RecordingId = recordRecordingId;
-            Transport.Mode = "record";
+            _transport.RecordingId = _recordingId;
+            _transport.Mode = "record";
 
             // Record one call to Run()
             if (Options.Sync)
@@ -69,12 +69,12 @@ namespace Azure.Test.Perf
                 await RunAsync(CancellationToken.None);
             }
 
-            await StopRecording(recordRecordingId);
+            await StopRecording();
 
-            _playbackRecordingId = await StartPlayback(recordingFile);
+            await StartPlayback();
 
-            Transport.Mode = "playback";
-            Transport.RecordingId = _playbackRecordingId;
+            _transport.Mode = "playback";
+            _transport.RecordingId = _recordingId;
         }
 
         public abstract void Run(CancellationToken cancellationToken);
@@ -83,10 +83,17 @@ namespace Azure.Test.Perf
 
         public async Task StopPlayback()
         {
-            await StopPlayback(_playbackRecordingId);
+            var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/playback/stop"));
+            message.Headers.Add("x-recording-id", _recordingId);
+
+            await _httpClient.SendAsync(message);
+
+            // TODO: Remove when test proxy supports file-less recordings
+            File.Delete(_recordingFile);
 
             // Stop redirecting requests to test proxy
-            Transport.RecordingId = null;
+            _transport.Mode = null;
+            _transport.RecordingId = null;
         }
 
         public virtual Task CleanupAsync()
@@ -133,43 +140,34 @@ namespace Azure.Test.Perf
             return value;
         }
 
-        private async Task<string> StartPlayback(string recordingFile)
+        private async Task StartRecording()
         {
-            var message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/playback/start");
-            message.Headers.Add("x-recording-file", recordingFile);
+            // TODO: Remove when test proxy supports file-less recordings
+            _recordingFile = Path.Combine(Path.GetTempPath(), "test-proxy", Guid.NewGuid().ToString());
+
+            var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/record/start"));
+            message.Headers.Add("x-recording-file", _recordingFile);
 
             var response = await _httpClient.SendAsync(message);
-            var recordingId = response.Headers.GetValues("x-recording-id").Single();
-
-            return recordingId;
+            _recordingId = response.Headers.GetValues("x-recording-id").Single();
         }
 
-        private async Task StopPlayback(string recordingId)
+        private async Task StopRecording()
         {
-            var message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/playback/stop");
-            message.Headers.Add("x-recording-id", recordingId);
-
-            await _httpClient.SendAsync(message);
-        }
-
-        private async Task<string> StartRecording(string recordingFile)
-        {
-            var message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/record/start");
-            message.Headers.Add("x-recording-file", recordingFile);
-
-            var response = await _httpClient.SendAsync(message);
-            var recordingId = response.Headers.GetValues("x-recording-id").Single();
-
-            return recordingId;
-        }
-
-        private async Task StopRecording(string recordingId)
-        {
-            var message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/record/stop");
-            message.Headers.Add("x-recording-id", recordingId);
+            var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/record/stop"));
+            message.Headers.Add("x-recording-id", _recordingId);
             message.Headers.Add("x-recording-save", bool.TrueString);
 
             await _httpClient.SendAsync(message);
+        }
+
+        private async Task StartPlayback()
+        {
+            var message = new HttpRequestMessage(HttpMethod.Post, new Uri(Options.TestProxy, "/playback/start"));
+            message.Headers.Add("x-recording-file", _recordingFile);
+
+            var response = await _httpClient.SendAsync(message);
+            _recordingId = response.Headers.GetValues("x-recording-id").Single();
         }
     }
 }

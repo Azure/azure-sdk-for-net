@@ -103,7 +103,7 @@ namespace Azure.Test.Perf
                         setupStatusCts.Cancel();
                         setupStatusThread.Join();
 
-                        if (!string.IsNullOrEmpty(options.Host))
+                        if (options.TestProxy != null)
                         {
                             using var recordStatusCts = new CancellationTokenSource();
                             var recordStatusThread = PerfStressUtilities.PrintStatus("=== Record and Start Playback ===", () => ".", newLine: false, recordStatusCts.Token);
@@ -142,7 +142,7 @@ namespace Azure.Test.Perf
                     }
                     finally
                     {
-                        if (!string.IsNullOrEmpty(options.Host))
+                        if (options.TestProxy != null)
                         {
                             using var playbackStatusCts = new CancellationTokenSource();
                             var playbackStatusThread = PerfStressUtilities.PrintStatus("=== Stop Playback ===", () => ".", newLine: false, playbackStatusCts.Token);

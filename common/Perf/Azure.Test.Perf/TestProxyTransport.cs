@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -10,17 +11,15 @@ namespace Azure.Test.Perf
     public class TestProxyTransport : HttpPipelineTransport
     {
         private readonly HttpPipelineTransport _transport;
-        private readonly string _host;
-        private readonly int? _port;
+        private readonly Uri _uri;
 
         public string RecordingId { get; set; }
         public string Mode { get; set; }
 
-        public TestProxyTransport(HttpPipelineTransport transport, string host, int? port)
+        public TestProxyTransport(HttpPipelineTransport transport, Uri uri)
         {
             _transport = transport;
-            _host = host;
-            _port = port;
+            _uri = uri;
         }
 
         public override Request CreateRequest()
@@ -42,7 +41,7 @@ namespace Azure.Test.Perf
 
         private void RedirectToTestProxy(HttpMessage message)
         {
-            if (!string.IsNullOrEmpty(_host) && !string.IsNullOrEmpty(RecordingId))
+            if (!string.IsNullOrEmpty(RecordingId) && !string.IsNullOrEmpty(Mode))
             {
                 message.Request.Headers.Add("x-recording-id", RecordingId);
                 message.Request.Headers.Add("x-recording-mode", Mode);
@@ -56,11 +55,9 @@ namespace Azure.Test.Perf
                 };
                 message.Request.Headers.Add("x-recording-upstream-base-uri", baseUri.ToString());
 
-                message.Request.Uri.Host = _host;
-                if (_port.HasValue)
-                {
-                    message.Request.Uri.Port = _port.Value;
-                }
+                message.Request.Uri.Scheme = _uri.Scheme;
+                message.Request.Uri.Host = _uri.Host;
+                message.Request.Uri.Port = _uri.Port;
             }
         }
     }
