@@ -17,8 +17,7 @@ namespace Azure.Containers.ContainerRegistry
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRepositoryRestClient _restClient;
 
-        private readonly RefreshTokensRestClient _tokenExchangeClient;
-        private readonly AccessTokensRestClient _acrTokenClient;
+        private readonly AuthenticationRestClient _acrAuthClient;
         private readonly string AcrAadScope = "https://management.core.windows.net/.default";
 
         private readonly string _repository;
@@ -48,10 +47,9 @@ namespace Azure.Containers.ContainerRegistry
             _clientDiagnostics = new ClientDiagnostics(options);
 
             _acrAuthPipeline = HttpPipelineBuilder.Build(options);
-            _tokenExchangeClient = new RefreshTokensRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
-            _acrTokenClient = new AccessTokensRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
+            _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
-            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, AcrAadScope, _tokenExchangeClient, _acrTokenClient));
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, AcrAadScope, _acrAuthClient));
             _restClient = new ContainerRegistryRepositoryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
         }
 

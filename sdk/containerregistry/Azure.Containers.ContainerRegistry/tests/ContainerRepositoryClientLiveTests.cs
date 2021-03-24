@@ -78,7 +78,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreEqual(_repositoryName, properties.Name);
-            Assert.AreEqual(new Uri(TestEnvironment.Endpoint).Host, properties.Registry);
         }
 
         [RecordedTest, NonParallelizable]
@@ -124,7 +123,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             Assert.AreEqual(tag, properties.Name);
             Assert.AreEqual(_repositoryName, properties.Repository);
-            Assert.AreEqual(new Uri(TestEnvironment.Endpoint).Host, properties.Registry);
         }
 
         [RecordedTest, NonParallelizable]
@@ -134,7 +132,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ContainerRepositoryClient client = CreateClient();
             string tag = "latest";
             TagProperties tagProperties = await client.GetTagPropertiesAsync(tag);
-            ContentProperties originalContentProperties = tagProperties.ModifiableProperties;
+            ContentProperties originalContentProperties = tagProperties.WriteableProperties;
 
             // Act
             await client.SetTagPropertiesAsync(
@@ -150,10 +148,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             TagProperties properties = await client.GetTagPropertiesAsync(tag);
 
-            Assert.IsFalse(properties.ModifiableProperties.CanList);
-            Assert.IsFalse(properties.ModifiableProperties.CanRead);
-            Assert.IsFalse(properties.ModifiableProperties.CanWrite);
-            Assert.IsFalse(properties.ModifiableProperties.CanDelete);
+            Assert.IsFalse(properties.WriteableProperties.CanList);
+            Assert.IsFalse(properties.WriteableProperties.CanRead);
+            Assert.IsFalse(properties.WriteableProperties.CanWrite);
+            Assert.IsFalse(properties.WriteableProperties.CanDelete);
 
             // Cleanup
             await client.SetTagPropertiesAsync(tag, originalContentProperties);

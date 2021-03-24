@@ -33,17 +33,15 @@ namespace Azure.Containers.ContainerRegistry
     /// </summary>
     internal class ContainerRegistryChallengeAuthenticationPolicy : BearerTokenChallengeAuthenticationPolicy
     {
-        private readonly RefreshTokensRestClient _exchangeRestClient;
-        private readonly AccessTokensRestClient _tokenRestClient;
+        private readonly AuthenticationRestClient _authenticationClient;
 
-        public ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, RefreshTokensRestClient exchangeRestClient, AccessTokensRestClient tokenRestClient)
+        public ContainerRegistryChallengeAuthenticationPolicy(TokenCredential credential, string aadScope, AuthenticationRestClient authenticationClient)
             : base(credential, aadScope)
         {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(aadScope, nameof(aadScope));
 
-            _exchangeRestClient = exchangeRestClient;
-            _tokenRestClient = tokenRestClient;
+            _authenticationClient = authenticationClient;
         }
 
         protected override async ValueTask<bool> AuthenticateRequestOnChallengeAsync(HttpMessage message, bool async)
@@ -81,43 +79,37 @@ namespace Azure.Containers.ContainerRegistry
 
         private async Task<string> ExchangeAadAccessTokenForAcrRefreshTokenAsync(HttpMessage message, string service, bool async)
         {
-            string aadAccessToken = GetAuthorizationHeader(message);
+            string aadAccessToken = GetAuthorizationToken(message);
 
-            Response<RefreshToken> acrRefreshToken = null;
+            Response<AcrRefreshToken> acrRefreshToken = null;
             if (async)
             {
-                acrRefreshToken = await _exchangeRestClient.GetFromExchangeAsync(
-                    PostContentSchemaGrantType.AccessToken,
-                    service,
-                    accessToken: aadAccessToken).ConfigureAwait(false);
+                acrRefreshToken = await _authenticationClient.ExchangeAadAccessTokenForAcrRefreshTokenAsync(service, aadAccessToken).ConfigureAwait(false);
             }
             else
             {
-                acrRefreshToken = _exchangeRestClient.GetFromExchange(
-                    PostContentSchemaGrantType.AccessToken,
-                    service,
-                    accessToken: aadAccessToken);
+                acrRefreshToken = _authenticationClient.ExchangeAadAccessTokenForAcrRefreshToken(service, aadAccessToken);
             }
 
-            return acrRefreshToken.Value.RefreshTokenValue;
+            return acrRefreshToken.Value.RefreshToken;
         }
 
         private async Task<string> ExchangeAcrRefreshTokenForAcrAccessTokenAsync(string acrRefreshToken, string service, string scope, bool async)
         {
-            Response<AccessToken> acrAccessToken = null;
+            Response<AcrAccessToken> acrAccessToken = null;
             if (async)
             {
-                acrAccessToken = await _tokenRestClient.GetAsync(service, scope, acrRefreshToken).ConfigureAwait(false);
+                acrAccessToken = await _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, acrRefreshToken).ConfigureAwait(false);
             }
             else
             {
-                acrAccessToken = _tokenRestClient.Get(service, scope, acrRefreshToken);
+                acrAccessToken = _authenticationClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, acrRefreshToken);
             }
 
-            return acrAccessToken.Value.AccessTokenValue;
+            return acrAccessToken.Value.AccessToken;
         }
 
-        private static string GetAuthorizationHeader(HttpMessage message)
+        private static string GetAuthorizationToken(HttpMessage message)
         {
             string aadAuthHeader;
             if (!message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out aadAuthHeader))

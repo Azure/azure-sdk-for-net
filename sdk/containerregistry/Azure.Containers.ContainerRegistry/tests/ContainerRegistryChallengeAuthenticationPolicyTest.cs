@@ -11,11 +11,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         public ContainerRegistryChallengeAuthenticationPolicyTest(bool isAsync) : base(isAsync) { }
 
-        [Test]
-        public async Task ChallengePolicySetsToken()
-        {
-            // TODO: understand how to handle REST calls that happen as part of the policy.
-            var policy = new ContainerRegistryChallengeAuthenticationPolicy(credential, "scope");
-        }
+        //[Test]
+        //public async Task ChallengePolicySetsToken()
+        //{
+        //    // TODO: understand how to handle REST calls that happen as part of the policy.
+        //    var policy = new ContainerRegistryChallengeAuthenticationPolicy(credential, "scope");
+        //}
     }
 }

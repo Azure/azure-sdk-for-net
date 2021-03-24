@@ -10,20 +10,20 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class RefreshToken
+    internal partial class AcrAccessToken
     {
-        internal static RefreshToken DeserializeRefreshToken(JsonElement element)
+        internal static AcrAccessToken DeserializeAcrAccessToken(JsonElement element)
         {
-            Optional<string> refreshToken = default;
+            Optional<string> accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("refresh_token"))
+                if (property.NameEquals("access_token"))
                 {
-                    refreshToken = property.Value.GetString();
+                    accessToken = property.Value.GetString();
                     continue;
                 }
             }
-            return new RefreshToken(refreshToken.Value);
+            return new AcrAccessToken(accessToken.Value);
         }
     }
 }
