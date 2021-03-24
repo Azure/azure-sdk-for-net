@@ -260,10 +260,17 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            // TryAddWithoutValidation overwrites non-list header values rather than appending them as lists in all cases.
-            // So a Remove call is not required when setting a header value.
-            protected internal override void SetHeader(string name, string value) =>
-                AddHeader(name, value);
+            protected internal override void SetHeader(string name, string value)
+            {
+                if (name.Equals(HttpHeader.Names.Authorization) && AuthenticationHeaderValue.TryParse(value, out var authHeader))
+                {
+                    _requestMessage.Headers.Authorization = authHeader;
+                }
+                else
+                {
+                    base.SetHeader(name, value);
+                }
+            }
 
             protected internal override void AddHeader(string name, string value)
             {

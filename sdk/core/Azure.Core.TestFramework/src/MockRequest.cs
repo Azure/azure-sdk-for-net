@@ -27,6 +27,19 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        protected override void SetHeader(string name, string value)
+        {
+            if (!_headers.TryGetValue(name, out List<string> values))
+            {
+                _headers[name] = _ = new List<string>() { value };
+            }
+            else
+            {
+                values.Clear();
+                values.Add(value);
+            }
+        }
+
         protected override void AddHeader(string name, string value)
         {
             if (!_headers.TryGetValue(name, out List<string> values))

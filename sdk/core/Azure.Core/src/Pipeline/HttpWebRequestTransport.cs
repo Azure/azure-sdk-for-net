@@ -27,7 +27,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Creates a new instance of <see cref="HttpWebRequestTransport"/>
         /// </summary>
-        public HttpWebRequestTransport(): this (_ => { })
+        public HttpWebRequestTransport() : this(_ => { })
         {
         }
 
@@ -58,7 +58,7 @@ namespace Azure.Core.Pipeline
 
             ServicePointHelpers.SetLimits(request.ServicePoint);
 
-            using var registration = message.CancellationToken.Register(state => ((HttpWebRequest) state).Abort(), request);
+            using var registration = message.CancellationToken.Register(state => ((HttpWebRequest)state).Abort(), request);
             try
             {
                 if (message.Request.Content != null)
@@ -90,7 +90,7 @@ namespace Azure.Core.Pipeline
                     webResponse = exception.Response;
                 }
 
-                message.Response = new HttpWebResponseImplementation(message.Request.ClientRequestId, (HttpWebResponse) webResponse);
+                message.Response = new HttpWebResponseImplementation(message.Request.ClientRequestId, (HttpWebResponse)webResponse);
             }
             // ObjectDisposedException might be thrown if the request is aborted during the content upload via SSL
             catch (ObjectDisposedException) when (message.CancellationToken.IsCancellationRequested)
@@ -239,7 +239,7 @@ namespace Azure.Core.Pipeline
             return new HttpWebRequestImplementation();
         }
 
-        private sealed class HttpWebResponseImplementation: Response
+        private sealed class HttpWebResponseImplementation : Response
         {
             private readonly HttpWebResponse _webResponse;
             private Stream? _contentStream;
@@ -253,7 +253,7 @@ namespace Azure.Core.Pipeline
                 ClientRequestId = clientRequestId;
             }
 
-            public override int Status => (int) _webResponse.StatusCode;
+            public override int Status => (int)_webResponse.StatusCode;
 
             public override string ReasonPhrase => _webResponse.StatusDescription;
 
@@ -302,7 +302,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private sealed class HttpWebRequestImplementation: Request
+        private sealed class HttpWebRequestImplementation : Request
         {
             public HttpWebRequestImplementation()
             {
@@ -311,6 +311,19 @@ namespace Azure.Core.Pipeline
 
             private string? _clientRequestId;
             private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+
+            protected internal override void SetHeader(string name, string value)
+            {
+                if (!_headers.TryGetValue(name, out List<string> values))
+                {
+                    _headers[name] = values = new List<string>() { value };
+                }
+                else
+                {
+                    values.Clear();
+                    values.Add(value);
+                }
+            }
 
             protected internal override void AddHeader(string name, string value)
             {
