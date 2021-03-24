@@ -446,7 +446,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -476,7 +476,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -520,7 +520,7 @@ namespace Azure.Storage.Files.DataLake
             return message;
         }
 
-        /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
@@ -557,7 +557,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
