@@ -260,7 +260,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            // The HttpClient implementation overwrites non-list header values rather than appending them as lists in all cases.
+            // TryAddWithoutValidation overwrites non-list header values rather than appending them as lists in all cases.
             // So a Remove call is not required when setting a header value.
             protected internal override void SetHeader(string name, string value) =>
                 AddHeader(name, value);
