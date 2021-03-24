@@ -26,7 +26,7 @@ directive:
   transform: $.format = "url"
 ```
 
-### Expose serialization and deserialization methods
+### Expose serialization and deserialization methods and internal models
 
 ``` yaml
 directive:
@@ -35,6 +35,41 @@ directive:
   transform: >
     for (var path in $)
     {
-      $[path]["x-csharp-usage"] = "converter";
+      if (path.endsWith("AvroFormat") ||
+          path.endsWith("CopyBehaviorType") ||
+          path.endsWith("CopyTranslator") ||
+          path.endsWith("DataFlowDebugPreviewDataRequest") ||
+          path.endsWith("DataFlowDebugQueryResponse") ||
+          path.endsWith("DataFlowDebugResultResponse") ||
+          path.endsWith("DataFlowDebugStatisticsRequest") ||
+          path.endsWith("DatasetDataElement") ||
+          path.endsWith("DatasetSchemaDataElement") ||
+          path.endsWith("DatasetStorageFormat") ||
+          path.endsWith("EvaluateDataFlowExpressionRequest") ||
+          path.endsWith("ExposureControlRequest") ||
+          path.endsWith("ExposureControlResponse") ||
+          path.endsWith("GetSsisObjectMetadataRequest") ||
+          path.endsWith("JsonFormat") ||
+          path.endsWith("JsonFormatFilePattern") ||
+          path.endsWith("OrcFormat") ||
+          path.endsWith("ParquetFormat") ||
+          path.endsWith("RerunTriggerListResponse") ||
+          path.endsWith("RerunTumblingWindowTriggerActionParameter") ||
+          path.endsWith("SsisObjectMetadataStatusResponse") ||
+          path.endsWith("StartDataFlowDebugSessionRequest") ||
+          path.endsWith("StartDataFlowDebugSessionResponse") ||
+          path.endsWith("TabularTranslator") ||
+          path.endsWith("TextFormat") ||
+          path.endsWith("TriggerDependencyProvisioningStatus") ||
+          path.endsWith("WorkspaceIdentity") ||
+          path.endsWith("WorkspaceUpdateParameters"))
+      {
+        $[path]["x-csharp-usage"] = "model,input,output,converter";
+        $[path]["x-csharp-formats"] = "json";
+      }
+      else
+      {
+        $[path]["x-csharp-usage"] = "converter";
+      }
     }
 ```
