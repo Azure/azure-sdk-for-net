@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer
             return version switch
             {
                 ServiceVersion.V2_0 => "v2.0",
-                ServiceVersion.V2_1_Preview_3 => "v2.1-preview.2",
+                ServiceVersion.V2_1_Preview_3 => "v2.1-preview.3",
                 _ => throw new NotSupportedException($"The service version {version} is not supported."),
             };
         }
