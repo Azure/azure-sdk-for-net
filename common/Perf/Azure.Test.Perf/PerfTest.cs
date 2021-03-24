@@ -135,24 +135,17 @@ namespace Azure.Test.Perf
 
         private async Task<string> StartPlayback(string recordingFile)
         {
-            Console.WriteLine("StartPlayback");
-
             var message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/playback/start");
             message.Headers.Add("x-recording-file", recordingFile);
 
             var response = await _httpClient.SendAsync(message);
             var recordingId = response.Headers.GetValues("x-recording-id").Single();
-            Console.WriteLine($"  x-recording-id: {recordingId}");
-            Console.WriteLine();
 
             return recordingId;
         }
 
         private async Task StopPlayback(string recordingId)
         {
-            Console.WriteLine("StopPlayback");
-            Console.WriteLine();
-
             var message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/playback/stop");
             message.Headers.Add("x-recording-id", recordingId);
 
@@ -161,25 +154,17 @@ namespace Azure.Test.Perf
 
         private async Task<string> StartRecording(string recordingFile)
         {
-            Console.WriteLine("StartRecording");
-
             var message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/record/start");
             message.Headers.Add("x-recording-file", recordingFile);
 
             var response = await _httpClient.SendAsync(message);
             var recordingId = response.Headers.GetValues("x-recording-id").Single();
 
-            Console.WriteLine($"  x-recording-id: {recordingId}");
-            Console.WriteLine();
-
             return recordingId;
         }
 
         private async Task StopRecording(string recordingId)
         {
-            Console.WriteLine("StopRecording");
-            Console.WriteLine();
-
             var message = new HttpRequestMessage(HttpMethod.Post, $"https://{Options.Host}:{Options.Port}/record/stop");
             message.Headers.Add("x-recording-id", recordingId);
             message.Headers.Add("x-recording-save", bool.TrueString);
