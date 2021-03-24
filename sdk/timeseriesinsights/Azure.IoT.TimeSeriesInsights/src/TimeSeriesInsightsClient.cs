@@ -1184,6 +1184,157 @@ namespace Azure.IoT.TimeSeriesInsights
             }
         }
 
+        private AsyncPageable<QueryResultPage> QueryEventsInternalAsync(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QueryEventsRequestOptions options,
+            CancellationToken cancellationToken)
+        {
+            var searchSpan = new DateTimeRange(startTime, endTime);
+            var queryRequest = new QueryRequest
+            {
+                GetEvents = new GetEvents(timeSeriesId, searchSpan)
+            };
+
+            BuildRequestOptions(options, queryRequest);
+
+            async Task<Page<QueryResultPage>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = await _queryRestClient
+                        .ExecuteAsync(queryRequest, options?.StoreType?.ToString(), null, null, cancellationToken)
+                        .ConfigureAwait(false);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            async Task<Page<QueryResultPage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = await _queryRestClient
+                        .ExecuteAsync(queryRequest, options?.StoreType?.ToString(), nextLink, null, cancellationToken)
+                        .ConfigureAwait(false);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        private Pageable<QueryResultPage> QueryEventsInternal(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QueryEventsRequestOptions options,
+            CancellationToken cancellationToken)
+        {
+            var searchSpan = new DateTimeRange(startTime, endTime);
+            var queryRequest = new QueryRequest
+            {
+                GetEvents = new GetEvents(timeSeriesId, searchSpan)
+            };
+
+            BuildRequestOptions(options, queryRequest);
+
+            Page<QueryResultPage> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = _queryRestClient
+                        .Execute(queryRequest, options?.StoreType?.ToString(), null, null, cancellationToken);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            Page<QueryResultPage> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = _queryRestClient
+                        .Execute(queryRequest, options?.StoreType?.ToString(), nextLink, null, cancellationToken);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        private static void BuildRequestOptions(QueryEventsRequestOptions options, QueryRequest queryRequest)
+        {
+            if (options != null)
+            {
+                if (options.Filter != null)
+                {
+                    queryRequest.GetEvents.Filter = new TimeSeriesExpression(options.Filter);
+                }
+
+                if (options.ProjectedProperties != null)
+                {
+                    foreach (EventProperty projectedProperty in options.ProjectedProperties)
+                    {
+                        queryRequest.GetEvents.ProjectedProperties.Add(projectedProperty);
+                    }
+                }
+
+                queryRequest.GetEvents.Take = options.MaximumNumberOfEvents;
+            }
+        }
+
         /// <summary>
         /// Gets Time Series Insights types in pages asynchronously.
         /// </summary>
@@ -1518,7 +1669,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// An error object will be set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypes"/> is <c>null</c>.
@@ -1624,7 +1775,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is <c>null</c>.
@@ -1727,7 +1878,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
-        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is <c>null</c>.
@@ -1814,154 +1965,6 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 scope.Failed(ex);
                 throw;
-        private AsyncPageable<QueryResultPage> QueryEventsInternalAsync(
-            TimeSeriesId timeSeriesId,
-            DateTimeOffset startTime,
-            DateTimeOffset endTime,
-            QueryEventsRequestOptions options,
-            CancellationToken cancellationToken)
-        {
-            var searchSpan = new DateTimeRange(startTime, endTime);
-            var queryRequest = new QueryRequest
-            {
-                GetEvents = new GetEvents(timeSeriesId, searchSpan)
-            };
-
-            BuildRequestOptions(options, queryRequest);
-
-            async Task<Page<QueryResultPage>> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
-                scope.Start();
-                try
-                {
-                    Response<QueryResultPage> response = await _queryRestClient
-                        .ExecuteAsync(queryRequest, options?.StoreType?.ToString(), null, null, cancellationToken)
-                        .ConfigureAwait(false);
-
-                    var frame = new QueryResultPage[]
-                    {
-                            response.Value
-                    };
-
-                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
-
-            async Task<Page<QueryResultPage>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
-                scope.Start();
-                try
-                {
-                    Response<QueryResultPage> response = await _queryRestClient
-                        .ExecuteAsync(queryRequest, options?.StoreType?.ToString(), nextLink, null, cancellationToken)
-                        .ConfigureAwait(false);
-
-                    var frame = new QueryResultPage[]
-                    {
-                            response.Value
-                    };
-
-                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        private Pageable<QueryResultPage> QueryEventsInternal(
-            TimeSeriesId timeSeriesId,
-            DateTimeOffset startTime,
-            DateTimeOffset endTime,
-            QueryEventsRequestOptions options,
-            CancellationToken cancellationToken)
-        {
-            var searchSpan = new DateTimeRange(startTime, endTime);
-            var queryRequest = new QueryRequest
-            {
-                GetEvents = new GetEvents(timeSeriesId, searchSpan)
-            };
-
-            BuildRequestOptions(options, queryRequest);
-
-            Page<QueryResultPage> FirstPageFunc(int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
-                scope.Start();
-                try
-                {
-                    Response<QueryResultPage> response = _queryRestClient
-                        .Execute(queryRequest, options?.StoreType?.ToString(), null, null, cancellationToken);
-
-                    var frame = new QueryResultPage[]
-                    {
-                            response.Value
-                    };
-
-                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
-
-            Page<QueryResultPage> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
-                scope.Start();
-                try
-                {
-                    Response<QueryResultPage> response = _queryRestClient
-                        .Execute(queryRequest, options?.StoreType?.ToString(), nextLink, null, cancellationToken);
-
-                    var frame = new QueryResultPage[]
-                    {
-                            response.Value
-                    };
-
-                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            }
-
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        private static void BuildRequestOptions(QueryEventsRequestOptions options, QueryRequest queryRequest)
-        {
-            if (options != null)
-            {
-                if (options.Filter != null)
-                {
-                    queryRequest.GetEvents.Filter = new TimeSeriesExpression(options.Filter);
-                }
-
-                if (options.ProjectedProperties != null)
-                {
-                    foreach (EventProperty projectedProperty in options.ProjectedProperties)
-                    {
-                        queryRequest.GetEvents.ProjectedProperties.Add(projectedProperty);
-                    }
-                }
-
-                queryRequest.GetEvents.Take = options.MaximumNumberOfEvents;
             }
         }
     }
