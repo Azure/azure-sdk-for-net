@@ -2,19 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Azure.Data.Tables.Sas;
 using NUnit.Framework;
 using Parms = Azure.Data.Tables.TableConstants.Sas.Parameters;
 
-namespace Azure.Tables.Tests
+namespace Azure.Data.Tables.Tests
 {
     public class TableClientTests : ClientTestBase
     {
@@ -157,13 +152,10 @@ namespace Azure.Tables.Tests
             Assert.That(dictEntity.Keys, Is.EquivalentTo(new[] { "PartitionKey", "RowKey", "MyFoo" }), "Only PK, RK, and user properties should be sent");
         }
 
-        /// <summary>
-        /// Validates the functionality of the TableClient.
-        /// </summary>
         [Test]
         public void CreatedEnumPropertiesAreSerializedProperly()
         {
-            var entity = new EnumEntity { PartitionKey = "partitionKey", RowKey = "01", Timestamp = DateTime.Now, MyFoo = Foo.Two, ETag = ETag.All };
+            var entity = new EnumEntity { PartitionKey = "partitionKey", RowKey = "01", Timestamp = DateTime.Now, MyFoo = Foo.Two, MyNullableFoo = null, ETag = ETag.All };
 
             // Create the new entities.
             var dictEntity = entity.ToOdataAnnotatedDictionary();
@@ -171,7 +163,24 @@ namespace Azure.Tables.Tests
             Assert.That(dictEntity["PartitionKey"], Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
             Assert.That(dictEntity["RowKey"], Is.EqualTo(entity.RowKey), "The entities should be equivalent");
             Assert.That(dictEntity["MyFoo"], Is.EqualTo(entity.MyFoo.ToString()), "The entities should be equivalent");
-            Assert.That(dictEntity.Keys, Is.EquivalentTo(new[] { "PartitionKey", "RowKey", "MyFoo" }), "Only PK, RK, and user properties should be sent");
+            Assert.That(dictEntity["MyNullableFoo"], Is.EqualTo(entity.MyNullableFoo), "The entities should be equivalent");
+            Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
+        }
+
+        [Test]
+        public void EnumPropertiesAreDeSerializedProperly()
+        {
+            var entity = new EnumEntity { PartitionKey = "partitionKey", RowKey = "01", Timestamp = DateTime.Now, MyFoo = Foo.Two, MyNullableFoo = null, MyNullableFoo2 = NullableFoo.Two, ETag = ETag.All };
+
+            // Create the new entities.
+            var dictEntity = entity.ToOdataAnnotatedDictionary();
+            var deserializedEntity = dictEntity.ToTableEntity<EnumEntity>();
+            Assert.That(deserializedEntity.PartitionKey, Is.EqualTo(entity.PartitionKey), "The entities should be equivalent");
+            Assert.That(deserializedEntity.RowKey, Is.EqualTo(entity.RowKey), "The entities should be equivalent");
+            Assert.That(deserializedEntity.MyFoo.ToString(), Is.EqualTo(entity.MyFoo.ToString()), "The entities should be equivalent");
+            Assert.That(deserializedEntity.MyNullableFoo.ToString(), Is.EqualTo(entity.MyNullableFoo.ToString()), "The entities should be equivalent");
+            Assert.That(deserializedEntity.MyNullableFoo2.ToString(), Is.EqualTo(entity.MyNullableFoo2.ToString()), "The entities should be equivalent");
+            Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
         }
 
         public class EnumEntity : ITableEntity
@@ -181,8 +190,15 @@ namespace Azure.Tables.Tests
             public DateTimeOffset? Timestamp { get; set; }
             public ETag ETag { get; set; }
             public Foo MyFoo { get; set; }
+            public NullableFoo? MyNullableFoo { get; set; }
+            public NullableFoo? MyNullableFoo2 { get; set; }
         }
         public enum Foo
+        {
+            One,
+            Two
+        }
+        public enum NullableFoo
         {
             One,
             Two

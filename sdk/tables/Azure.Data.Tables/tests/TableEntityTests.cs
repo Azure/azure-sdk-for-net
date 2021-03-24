@@ -5,7 +5,7 @@ using System;
 using Azure.Data.Tables;
 using NUnit.Framework;
 
-namespace Azure.Tables.Tests
+namespace Azure.Data.Tables.Tests
 {
     public class TableEntityTests
     {
