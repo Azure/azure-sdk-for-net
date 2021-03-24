@@ -31,10 +31,8 @@ namespace Azure.AI.DocumentTranslation.Tests
         {
             Uri source = await CreateSourceContainerAsync(Documents);
             Uri target = await CreateTargetContainerAsync();
-            Uri endpoint = new Uri(TestEnvironment.Endpoint);
-            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.ApiKey);
 
-            var client = new DocumentTranslationClient(endpoint, credential);
+            var client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
             var operation = await client.StartTranslationAsync(input);

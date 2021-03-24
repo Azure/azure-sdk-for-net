@@ -34,10 +34,16 @@ namespace Azure.AI.DocumentTranslation.Tests
             return InstrumentClient(new DocumentTranslationClient(endpoint, credential, InstrumentClientOptions(options)));
         }
 
+        public BlobContainerClient GetBlobContainerClient(string containerName)
+        {
+            return InstrumentClient(new BlobContainerClient(TestEnvironment.StorageConnectionString, containerName, InstrumentClientOptions(new BlobClientOptions())));
+        }
+
         public async Task<Uri> CreateSourceContainerAsync(List<string> documents)
         {
-            string containerName = "source" + Guid.NewGuid().ToString();
-            var containerClient = new BlobContainerClient(TestEnvironment.StorageConnectionString, containerName.ToLower());
+            Recording.DisableIdReuse();
+            string containerName = "source" + Recording.GenerateId();
+            var containerClient = GetBlobContainerClient(containerName);
             await containerClient.CreateIfNotExistsAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
             for (int i = 0; i < documents.Count; i++)
@@ -53,8 +59,9 @@ namespace Azure.AI.DocumentTranslation.Tests
 
         public async Task<Uri> CreateTargetContainerAsync()
         {
-            string containerName = "target" + Guid.NewGuid().ToString();
-            var containerClient = new BlobContainerClient(TestEnvironment.StorageConnectionString, containerName.ToLower());
+            Recording.DisableIdReuse();
+            string containerName = "target" + Recording.GenerateId();
+            var containerClient = GetBlobContainerClient(containerName);
             await containerClient.CreateIfNotExistsAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
             var expiresOn = DateTimeOffset.Now.AddHours(1);
