@@ -1814,6 +1814,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 scope.Failed(ex);
                 throw;
+            }
+        }
         private AsyncPageable<QueryResultPage> QueryEventsInternalAsync(
             TimeSeriesId timeSeriesId,
             DateTimeOffset startTime,
