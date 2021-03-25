@@ -123,7 +123,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 numOfInstances.Should().BeGreaterOrEqualTo(numOfInstancesToSetup);
 
                 // Get search suggestions for the first instance
-                var timeSeriesIdToSuggest = (TimeSeriesId)timeSeriesInstances.First().TimeSeriesId;
+                TimeSeriesId timeSeriesIdToSuggest = timeSeriesInstances.First().TimeSeriesId;
                 string suggestionString = string.Join(string.Empty, timeSeriesIdToSuggest.ToArray()).Substring(0, 3);
                 Response<SearchSuggestion[]> searchSuggestionResponse = await TestRetryHelper.RetryAsync(async () =>
                 {
