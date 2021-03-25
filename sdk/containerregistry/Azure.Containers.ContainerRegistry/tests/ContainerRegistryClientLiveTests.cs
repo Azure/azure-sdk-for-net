@@ -67,7 +67,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Assert
-            Assert.IsTrue(pageCount > minExpectedPages);
+            Assert.IsTrue(pageCount >= minExpectedPages);
         }
 
         [RecordedTest]
@@ -75,12 +75,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateClient();
-            int pageSize = 2;
+            int pageSize = 1;
             int minExpectedPages = 2;
 
             // Act
             AsyncPageable<string> repositories = client.GetRepositoriesAsync();
-            var pages = repositories.AsPages($"</acr/v1/_catalog?last=v2&n=2>");
+            var pages = repositories.AsPages($"</acr/v1/_catalog?last=library/alpine&n={pageSize}>");
 
             int pageCount = 0;
             Page<string> firstPage = null;
@@ -97,8 +97,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Assert
             Assert.AreNotEqual(null, firstPage);
-            Assert.AreEqual("v3", firstPage.Values[0]);
-            Assert.IsTrue(pageCount > minExpectedPages);
+            Assert.AreEqual("library/busybox", firstPage.Values[0]);
+            Assert.IsTrue(pageCount >= minExpectedPages);
         }
     }
 }
