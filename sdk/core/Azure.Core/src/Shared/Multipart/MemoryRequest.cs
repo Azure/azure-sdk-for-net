@@ -14,7 +14,7 @@ namespace Azure.Core
             ClientRequestId = Guid.NewGuid().ToString();
         }
 
-        private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+        private readonly DictionaryHeaders _headers = new();
 
         public override RequestContent Content
         {
@@ -29,83 +29,43 @@ namespace Azure.Core
         internal
 #endif
 
-       protected override void SetHeader(string name, string value)
-        {
-            if (!_headers.TryGetValue(name, out List<string> values))
-            {
-                _headers[name] = _ = new List<string>() { value };
-            }
-            else
-            {
-                values.Clear();
-                values.Add(value);
-            }
-        }
+       protected override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
 
 #if HAS_INTERNALS_VISIBLE_CORE
         internal
 #endif
 
-        protected override void AddHeader(string name, string value)
-        {
-            if (!_headers.TryGetValue(name, out List<string> values))
-            {
-                _headers[name] = values = new List<string>();
-            }
-
-            values.Add(value);
-        }
+        protected override void AddHeader(string name, string value) => _headers.AddHeader(name, value);
 
 #if HAS_INTERNALS_VISIBLE_CORE
         internal
 #endif
-        protected override bool TryGetHeader(string name, out string value)
-        {
-            if (_headers.TryGetValue(name, out List<string> values))
-            {
-                value = JoinHeaderValue(values);
-                return true;
-            }
 
-            value = null;
-            return false;
-        }
+        protected override bool TryGetHeader(string name, out string value) => _headers.TryGetHeader(name, out value);
 
 #if HAS_INTERNALS_VISIBLE_CORE
         internal
 #endif
-        protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
-        {
-            var result = _headers.TryGetValue(name, out List<string> valuesList);
-            values = valuesList;
-            return result;
-        }
+
+        protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _headers.TryGetHeaderValues(name, out values);
 
 #if HAS_INTERNALS_VISIBLE_CORE
         internal
 #endif
-        protected override bool ContainsHeader(string name)
-        {
-            return TryGetHeaderValues(name, out _);
-        }
+
+        protected override bool ContainsHeader(string name) => _headers.TryGetHeaderValues(name, out _);
 
 #if HAS_INTERNALS_VISIBLE_CORE
         internal
 #endif
-        protected override bool RemoveHeader(string name)
-        {
-            return _headers.Remove(name);
-        }
+
+        protected override bool RemoveHeader(string name) => _headers.RemoveHeader(name);
 
 #if HAS_INTERNALS_VISIBLE_CORE
         internal
 #endif
-        protected override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.Select(h => new HttpHeader(h.Key, JoinHeaderValue(h.Value)));
 
-        private static string JoinHeaderValue(IEnumerable<string> values)
-        {
-            return string.Join(",", values);
-        }
+        protected override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.EnumerateHeaders();
 
         public override string ClientRequestId { get; set; }
 
