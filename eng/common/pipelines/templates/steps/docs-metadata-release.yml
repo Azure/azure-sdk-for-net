@@ -36,15 +36,14 @@ steps:
  
     try {
       Push-Location ${{ parameters.WorkingDirectory }}/repo
-      $setDefaultBranch = (git remote show origin | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
-      Write-Host "Setting DefaultBranch=$setDefaultBranch"
-      echo "##vso[task.setvariable variable=DefaultBranch]$setDefaultBranch"
     } finally {
       Pop-Location
     }
   displayName: Clone Documentation Repository
   ignoreLASTEXITCODE: false
-
+- template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+  parameters:
+    WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo 
 - task: PowerShell@2
   displayName: 'Apply Documentation Updates From Artifact'
   inputs:
