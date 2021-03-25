@@ -27,18 +27,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             foreach (ReadOnlyMemory<byte> data in binaryData)
             {
-                ArraySegment<byte> segment;
-                if (!data.IsEmpty)
+                if (!MemoryMarshal.TryGetArray(data, out ArraySegment<byte> segment))
                 {
-                    if (!MemoryMarshal.TryGetArray(data, out segment))
-                    {
-                        segment = new ArraySegment<byte>(data.ToArray());
-                    }
+                    segment = new ArraySegment<byte>(data.ToArray());
                 }
-                else
-                {
-                    segment = new ArraySegment<byte>(Array.Empty<byte>());
-                }
+
                 yield return new Data
                 {
                     Value = segment
