@@ -64,9 +64,17 @@ else {
 # Check if the PRBranch is current branch.
 $currentBranch = git branch --show-current
 Write-Host "The current branch is $currentBranch."
+
 if ($currentBranch -ne $PRBranchName) {
-    Write-Host "git checkout -b $PRBranchName"
-    git checkout -b $PRBranchName
+  # Check if the $PRBranch is default branch, if so, we swtich to default one
+  $defaultBranch = (git remote show $RemoteName | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
+  Write-Host "The default branch is $defaultBranch."
+  if ($PRBranchName -eq $defaultBranch) {
+    Write-Host "git checkout $PRBranchName"
+    git checkout $PRBranchName
+  }
+  Write-Host "git checkout -b $PRBranchName"
+  git checkout -b $PRBranchName
 }
 
 if ($LASTEXITCODE -ne 0)
