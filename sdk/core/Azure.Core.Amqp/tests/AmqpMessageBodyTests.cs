@@ -17,6 +17,12 @@ namespace Azure.Core.Amqp.Tests
             Assert.AreEqual(AmqpMessageBodyType.Data, body.BodyType);
             Assert.IsTrue(body.TryGetData(out var data));
             Assert.NotNull(data);
+
+            Assert.IsFalse(body.TryGetValue(out var value));
+            Assert.IsNull(value);
+
+            Assert.IsFalse(body.TryGetSequence(out var sequence));
+            Assert.IsNull(sequence);
         }
 
         [Test]
@@ -26,6 +32,12 @@ namespace Azure.Core.Amqp.Tests
             Assert.AreEqual(AmqpMessageBodyType.Value, body.BodyType);
             Assert.IsTrue(body.TryGetValue(out var value));
             Assert.AreEqual("value", value);
+
+            Assert.IsFalse(body.TryGetData(out var data));
+            Assert.IsNull(data);
+
+            Assert.IsFalse(body.TryGetSequence(out var sequence));
+            Assert.IsNull(sequence);
         }
 
         [Test]
@@ -40,6 +52,12 @@ namespace Azure.Core.Amqp.Tests
             Assert.AreEqual("two", outList[0][1]);
             Assert.AreEqual(3, outList[1][0]);
             Assert.AreEqual("four", outList[1][1]);
+
+            Assert.IsFalse(body.TryGetData(out var data));
+            Assert.IsNull(data);
+
+            Assert.IsFalse(body.TryGetValue(out var value));
+            Assert.IsNull(value);
         }
 
         [Test]
