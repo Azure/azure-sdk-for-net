@@ -8,9 +8,7 @@
 param (
   [Parameter(Mandatory = $true)]
   [String]$Version,
-  [Parameter(Mandatory = $true)]
   [String]$ServiceDirectory,
-  [Parameter(Mandatory = $true)]
   [String]$PackageName,
   [Boolean]$Unreleased = $true,
   [Boolean]$ReplaceLatestEntryTitle = $false,
@@ -22,6 +20,11 @@ param (
 
 if ($ReleaseDate -and $Unreleased) {
     LogError "Do not pass 'ReleaseDate' arguement when 'Unreleased' is true"
+    exit 1
+}
+
+if (!$PackageName -and !$ChangelogPath) {
+    LogError "You must pass either the PackageName or ChangelogPath arguument."
     exit 1
 }
 
@@ -56,6 +59,12 @@ if ([string]::IsNullOrEmpty($ChangelogPath))
 {
     $pkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
     $ChangelogPath = $pkgProperties.ChangeLogPath
+}
+
+if (!(Test-Path $ChangelogPath)) 
+{
+    LogError "Changelog path [$ChangelogPath] is invalid."
+    exit 1
 }
 
 $ChangeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $ChangelogPath
