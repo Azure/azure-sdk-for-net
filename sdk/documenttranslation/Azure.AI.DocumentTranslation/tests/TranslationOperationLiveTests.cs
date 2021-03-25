@@ -44,6 +44,11 @@ namespace Azure.AI.DocumentTranslation.Tests
 
             await operation.WaitForCompletionAsync();
 
+            if (operation.DocumentsSucceeded < 1)
+            {
+                await PrintNotSucceededDocumentsAsync(operation);
+            }
+
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
             Assert.AreEqual(1, operation.DocumentsTotal);
@@ -70,6 +75,11 @@ namespace Azure.AI.DocumentTranslation.Tests
             var operation = await client.StartTranslationAsync(input);
 
             await operation.WaitForCompletionAsync();
+
+            if (operation.DocumentsSucceeded < 3)
+            {
+                await PrintNotSucceededDocumentsAsync(operation);
+            }
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
@@ -100,6 +110,11 @@ namespace Azure.AI.DocumentTranslation.Tests
             var operation = await client.StartTranslationAsync(inputs);
 
             await operation.WaitForCompletionAsync();
+
+            if (operation.DocumentsSucceeded < 2)
+            {
+                await PrintNotSucceededDocumentsAsync(operation);
+            }
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
@@ -133,6 +148,11 @@ namespace Azure.AI.DocumentTranslation.Tests
 
             await operation.WaitForCompletionAsync();
 
+            if (operation.DocumentsSucceeded < 1)
+            {
+                await PrintNotSucceededDocumentsAsync(operation);
+            }
+
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
             Assert.AreEqual(1, operation.DocumentsTotal);
@@ -164,6 +184,11 @@ namespace Azure.AI.DocumentTranslation.Tests
             var operation = await client.StartTranslationAsync(input);
 
             await operation.WaitForCompletionAsync();
+
+            if (operation.DocumentsSucceeded < 1)
+            {
+                await PrintNotSucceededDocumentsAsync(operation);
+            }
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
@@ -198,16 +223,31 @@ namespace Azure.AI.DocumentTranslation.Tests
             await operation.WaitForCompletionAsync();
             var documents = operation.GetAllDocumentStatusesAsync();
 
-            int documentsCount = 0;
+            List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
 
-            await foreach (var document in documents)
+            Assert.AreEqual(1, documentsList.Count);
+
+            foreach (var document in documentsList)
             {
                 Assert.AreEqual(TranslationStatus.Succeeded, document.Status);
                 Assert.IsTrue(document.HasCompleted);
                 Assert.AreEqual(100f, document.TranslationProgressPercentage);
                 Assert.AreEqual("fr", document.TranslateTo);
                 Assert.NotNull(document.TranslatedDocumentUri);
-                documentsCount++;
+            }
+        }
+
+        private async Task PrintNotSucceededDocumentsAsync(DocumentTranslationOperation operation)
+        {
+            await foreach (var document in operation.GetValuesAsync())
+            {
+                if (document.Status != TranslationStatus.Succeeded)
+                {
+                    Console.WriteLine($"Document: {document.DocumentId}");
+                    Console.WriteLine($"    Status: {document.Status}");
+                    Console.WriteLine($"    ErrorCode: {document.Error.ErrorCode}");
+                    Console.WriteLine($"    Message: {document.Error.Message}");
+                }
             }
         }
     }
