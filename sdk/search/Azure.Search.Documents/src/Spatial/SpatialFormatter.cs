@@ -135,7 +135,7 @@ namespace Azure.Search.Documents
             {
 #pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentException(
-                    $"A GeoLineString must have at least four Coordinates to form a searchable polygon.",
+                    $"A GeographyLineString must have at least four Points to form a searchable polygon.",
                     $"{nameof(line)}.{nameof(line.Points)}");
 #pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
@@ -143,7 +143,7 @@ namespace Azure.Search.Documents
             {
 #pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentException(
-                    $"A GeoLineString must have matching first and last Coordinates to form a searchable polygon.",
+                    $"A GeographyLineString must have matching first and last Points to form a searchable polygon.",
                     $"{nameof(line)}.{nameof(line.Points)}");
 #pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
@@ -151,7 +151,7 @@ namespace Azure.Search.Documents
             StringBuilder odata = new StringBuilder("geography'POLYGON((");
 
             bool first = true;
-            foreach (GeographyPointProxy position in line.Points)
+            foreach (GeographyPointProxy point in line.Points)
             {
                 if (!first)
                 {
@@ -162,9 +162,9 @@ namespace Azure.Search.Documents
                     first = false;
                 }
 
-                odata.Append(JsonSerialization.Double(position.Longitude, CultureInfo.InvariantCulture))
+                odata.Append(JsonSerialization.Double(point.Longitude, CultureInfo.InvariantCulture))
                     .Append(' ')
-                    .Append(JsonSerialization.Double(position.Latitude, CultureInfo.InvariantCulture));
+                    .Append(JsonSerialization.Double(point.Latitude, CultureInfo.InvariantCulture));
             }
 
             return odata

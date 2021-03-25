@@ -244,7 +244,6 @@ namespace Azure.Search.Documents.Tests
                 "A GeographyLineString must have at least four Points to form a searchable polygon.");
 
             // Requires that first and last points are the same.
-
             line = GeographyFactory
                 .LineString(0, 0)
                 .LineTo(0, 0)
@@ -256,7 +255,7 @@ namespace Azure.Search.Documents.Tests
                 "A GeographyLineString must have matching first and last Points to form a searchable polygon.");
 
             // Require that polygons define exactly 1 ring.
-            GeographyPolygon polygon = GeographyFactory
+           GeographyPolygon polygon = GeographyFactory
                 .Polygon()
                 .Ring(0, 0)
                 .LineTo(0, 1)
