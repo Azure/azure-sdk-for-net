@@ -2,10 +2,16 @@
 
 ## 3.1.0-beta.4 (Unreleased)
 
+### New Features
+- Expanded the set of document languages that can be provided to the `StartRecognizeContent` API.
+
+### Breaking changes
+- The client defaults to the latest supported service version, which currently is `2.1-preview.3`.
+- `StartRecognizeCustomForms` now throws a `RequestFailedException` when an invalid file is passed.
 
 ## 3.1.0-beta.3 (2021-03-09)
 
-## New Features
+### New Features
 - Added protected constructors for mocking to `Operation` types, such as `TrainingOperation` and `RecognizeContentOperation`.
 
 ## 3.1.0-beta.2 (2021-02-09)
