@@ -48,21 +48,32 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             AmqpMessage firstAmqpMessage = null;
             ServiceBusMessage firstMessage = null;
-
-            return BuildAmqpBatchFromMessages(
-                source.Select(sbMessage =>
+            List<AmqpMessage> amqpMessagesForBatching = new List<AmqpMessage>();
+            try
+            {
+                foreach (var sbMessage in source)
                 {
                     if (firstAmqpMessage == null)
                     {
                         firstAmqpMessage = SBMessageToAmqpMessage(sbMessage);
                         firstMessage = sbMessage;
-                        return firstAmqpMessage;
+                        amqpMessagesForBatching.Add(firstAmqpMessage);
                     }
                     else
                     {
-                        return SBMessageToAmqpMessage(sbMessage);
+                        amqpMessagesForBatching.Add(SBMessageToAmqpMessage(sbMessage));
                     }
-                }).ToList(), firstMessage, forceBatch);
+                }
+
+                return BuildAmqpBatchFromMessages(amqpMessagesForBatching, firstMessage, forceBatch);
+            }
+            finally
+            {
+                foreach (var amqpMessage in amqpMessagesForBatching)
+                {
+                    amqpMessage.Dispose();
+                }
+            }
         }
 
         /// <summary>
@@ -76,7 +87,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
         private static AmqpMessage BuildAmqpBatchFromMessages(
-            IList<AmqpMessage> batchMessages,
+            IReadOnlyList<AmqpMessage> batchMessages,
             ServiceBusMessage firstMessage,
             bool forceBatch)
         {
@@ -91,12 +102,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 batchEnvelope = AmqpMessage.Create(batchMessages.Select(message =>
                 {
                     message.Batchable = true;
-                    // once the data is packaged the temporary message is no longer required
-                    using (message)
-                    {
-                        using var messageStream = message.ToStream();
-                        return new Data { Value = ReadStreamToArraySegment(messageStream) };
-                    }
+                    using var messageStream = message.ToStream();
+                    return new Data { Value = ReadStreamToArraySegment(messageStream) };
                 }));
 
                 batchEnvelope.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
