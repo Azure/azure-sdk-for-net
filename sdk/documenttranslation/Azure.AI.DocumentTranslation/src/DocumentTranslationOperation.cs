@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -282,7 +283,8 @@ namespace Azure.AI.DocumentTranslation
                     }
                     else if (update.Value.Status == TranslationStatus.ValidationFailed)
                     {
-                        _requestFailedException = _diagnostics.CreateRequestFailedException(_response);
+                        DocumentTranslationError error = update.Value.Error;
+                        _requestFailedException = _diagnostics.CreateRequestFailedException(_response, error.Message, error.ErrorCode.ToString(), CreateAdditionalInformation(error));
                         _hasCompleted = true;
                         throw _requestFailedException;
                     }
@@ -499,6 +501,13 @@ namespace Azure.AI.DocumentTranslation
                 throw new InvalidOperationException("The operation has not completed yet.");
             if (!HasValue)
                 throw _requestFailedException;
+        }
+
+        private static IDictionary<string, string> CreateAdditionalInformation(DocumentTranslationError error)
+        {
+            if (string.IsNullOrEmpty(error.Target))
+                return null;
+            return new Dictionary<string, string> { { "Target", error.Target } };
         }
     }
 }
