@@ -7,20 +7,20 @@
 
 using System;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.DocumentTranslation.Models
 {
     /// <summary>
     /// New Inner Error format which conforms to Cognitive Services API Guidelines which is available at https://microsoft.sharepoint.com/%3Aw%3A/t/CognitiveServicesPMO/EUoytcrjuJdKpeOKIK_QRC8BPtUYQpKBi8JsWyeDMRsWlQ?e=CPq8ow.
     /// 
     /// This contains required properties ErrorCode, message and optional properties target, details(key value pair), inner error(this can be nested).
     /// </summary>
-    public partial class DocumentTranslationInnerError
+    internal partial class InnerErrorV2
     {
-        /// <summary> Initializes a new instance of DocumentTranslationInnerError. </summary>
+        /// <summary> Initializes a new instance of InnerErrorV2. </summary>
         /// <param name="code"> Gets code error string. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
-        internal DocumentTranslationInnerError(string code, string message)
+        internal InnerErrorV2(string code, string message)
         {
             if (code == null)
             {
@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentTranslation
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of DocumentTranslationInnerError. </summary>
+        /// <summary> Initializes a new instance of InnerErrorV2. </summary>
         /// <param name="code"> Gets code error string. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <param name="target">
@@ -48,7 +48,7 @@ namespace Azure.AI.DocumentTranslation
         /// 
         /// This contains required properties ErrorCode, message and optional properties target, details(key value pair), inner error(this can be nested).
         /// </param>
-        internal DocumentTranslationInnerError(string code, string message, string target, DocumentTranslationInnerError innerError)
+        internal InnerErrorV2(string code, string message, string target, InnerErrorV2 innerError)
         {
             Code = code;
             Message = message;
@@ -71,6 +71,6 @@ namespace Azure.AI.DocumentTranslation
         /// 
         /// This contains required properties ErrorCode, message and optional properties target, details(key value pair), inner error(this can be nested).
         /// </summary>
-        public DocumentTranslationInnerError InnerError { get; }
+        public InnerErrorV2 InnerError { get; }
     }
 }

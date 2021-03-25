@@ -54,7 +54,6 @@ namespace Azure.AI.DocumentTranslation
     {
         internal DocumentTranslationError() { }
         public Azure.AI.DocumentTranslation.DocumentTranslationErrorCode? ErrorCode { get { throw null; } }
-        public Azure.AI.DocumentTranslation.DocumentTranslationInnerError InnerError { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
     }
@@ -80,14 +79,6 @@ namespace Azure.AI.DocumentTranslation
         public static implicit operator Azure.AI.DocumentTranslation.DocumentTranslationErrorCode (string value) { throw null; }
         public static bool operator !=(Azure.AI.DocumentTranslation.DocumentTranslationErrorCode left, Azure.AI.DocumentTranslation.DocumentTranslationErrorCode right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DocumentTranslationInnerError
-    {
-        internal DocumentTranslationInnerError() { }
-        public string Code { get { throw null; } }
-        public Azure.AI.DocumentTranslation.DocumentTranslationInnerError InnerError { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
     }
     public partial class DocumentTranslationInput
     {
