@@ -53,12 +53,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             var client = CreateClient();
             int pageSize = 2;
+            int minExpectedPages = 2;
 
             // Act
             AsyncPageable<string> repositories = client.GetRepositoriesAsync();
             var pages = repositories.AsPages(pageSizeHint: pageSize);
 
-            // Assert
             int pageCount = 0;
             await foreach (var page in pages)
             {
@@ -66,7 +66,39 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 pageCount++;
             }
 
-            Assert.IsTrue(pageCount > 2);
+            // Assert
+            Assert.IsTrue(pageCount > minExpectedPages);
+        }
+
+        [RecordedTest]
+        public async Task CanStartPagingMidCollection()
+        {
+            // Arrange
+            var client = CreateClient();
+            int pageSize = 2;
+            int minExpectedPages = 2;
+
+            // Act
+            AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+            var pages = repositories.AsPages("v2", pageSize);
+
+            int pageCount = 0;
+            Page<string> firstPage = null;
+            await foreach (var page in pages)
+            {
+                if (pageCount == 0)
+                {
+                    firstPage = page;
+                }
+
+                Assert.IsTrue(page.Values.Count <= pageSize);
+                pageCount++;
+            }
+
+            // Assert
+            Assert.AreNotEqual(null, firstPage);
+            Assert.AreEqual("v3", firstPage.Values[0]);
+            Assert.IsTrue(pageCount > minExpectedPages);
         }
     }
 }

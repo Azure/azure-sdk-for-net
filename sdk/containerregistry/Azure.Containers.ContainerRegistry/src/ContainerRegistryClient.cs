@@ -63,7 +63,7 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesAsync(last: null, pageSizeHint, cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesAsync(last: null, n: pageSizeHint, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -72,6 +72,23 @@ namespace Azure.Containers.ContainerRegistry
                     throw;
                 }
             }
+
+            async Task<Page<string>> FirstPageSkipPastPageFunc(string continuationToken, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+                scope.Start();
+                try
+                {
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesAsync(last: continuationToken, n: pageSizeHint, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
             async Task<Page<string>> NextPageFunc(string continuationToken, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
@@ -79,7 +96,7 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
-                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesNextPageAsync(uriReference, null, pageSizeHint, cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesNextPageAsync(uriReference, last: null, n: pageSizeHint, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -88,7 +105,8 @@ namespace Azure.Containers.ContainerRegistry
                     throw;
                 }
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+			
+            return ContainerRegistryPageableHelpers.CreateAsyncEnumerable(FirstPageFunc, FirstPageSkipPastPageFunc, NextPageFunc);
         }
 
         private static string ParseUriReferenceFromLinkHeader(string linkValue)
