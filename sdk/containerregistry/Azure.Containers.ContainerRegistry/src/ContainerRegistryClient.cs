@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
-
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -73,22 +70,6 @@ namespace Azure.Containers.ContainerRegistry
                 }
             }
 
-            async Task<Page<string>> FirstPageSkipPastPageFunc(string continuationToken, int? pageSizeHint)
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
-                scope.Start();
-                try
-                {
-                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesAsync(last: continuationToken, n: pageSizeHint, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-
             async Task<Page<string>> NextPageFunc(string continuationToken, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
@@ -105,8 +86,48 @@ namespace Azure.Containers.ContainerRegistry
                     throw;
                 }
             }
-			
-            return ContainerRegistryPageableHelpers.CreateAsyncEnumerable(FirstPageFunc, FirstPageSkipPastPageFunc, NextPageFunc);
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> List repositories. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<string> GetRepositories(CancellationToken cancellationToken = default)
+        {
+            Page<string> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+                scope.Start();
+                try
+                {
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositories(last: null, n: pageSizeHint, cancellationToken);
+                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<string> NextPageFunc(string continuationToken, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+                scope.Start();
+                try
+                {
+                    string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositoriesNextPage(uriReference, last: null, n: pageSizeHint, cancellationToken);
+                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         private static string ParseUriReferenceFromLinkHeader(string linkValue)
@@ -121,40 +142,6 @@ namespace Azure.Containers.ContainerRegistry
             // See: https://tools.ietf.org/html/rfc5988#section-5
 
             return linkValue?.Substring(1, linkValue.IndexOf('>') - 1);
-        }
-
-        /// <summary> List repositories. </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<string> GetRepositories(CancellationToken cancellationToken = default)
-        {
-            return PageResponseEnumerator.CreateEnumerable((continuationToken, pageSizeHint) =>
-            {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
-                scope.Start();
-                try
-                {
-                    Response<Repositories> response =
-                        _restClient.GetRepositories(
-                            continuationToken,
-                            pageSizeHint,
-                            cancellationToken);
-
-                    string lastRepository = null;
-                    if (!string.IsNullOrEmpty(response.Value.Link))
-                    {
-                        Uri nextLink = new Uri(response.Value.Link);
-                        NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
-                        lastRepository = queryParams["last"];
-                    }
-
-                    return Page<string>.FromValues(response.Value.RepositoriesValue, lastRepository, response.GetRawResponse());
-                }
-                catch (Exception ex)
-                {
-                    scope.Failed(ex);
-                    throw;
-                }
-            });
         }
     }
 }

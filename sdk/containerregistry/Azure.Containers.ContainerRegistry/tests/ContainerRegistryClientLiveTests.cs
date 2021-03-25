@@ -80,7 +80,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             AsyncPageable<string> repositories = client.GetRepositoriesAsync();
-            var pages = repositories.AsPages("v2", pageSize);
+            var pages = repositories.AsPages($"</acr/v1/_catalog?last=v2&n=2>");
 
             int pageCount = 0;
             Page<string> firstPage = null;
