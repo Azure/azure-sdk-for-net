@@ -593,10 +593,10 @@ namespace Azure.Core.Tests
                 return new MockResponse(200);
             });
 
-            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts1.Token);
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example1.com"), cancellationToken: cts1.Token);
             requestMre.Wait();
 
-            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts2.Token);
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example2.com"), cancellationToken: cts2.Token);
             cts1.Cancel();
             cts2.Cancel();
 
