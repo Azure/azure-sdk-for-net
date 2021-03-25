@@ -7,6 +7,7 @@
 
 ### Breaking changes
 - The client defaults to the latest supported service version, which currently is `2.1-preview.3`.
+- `StartRecognizeCustomForms` now throws a `RequestFailedException` when an invalid file is passed.
 
 ## 3.1.0-beta.3 (2021-03-09)
 
