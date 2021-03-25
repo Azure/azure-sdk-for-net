@@ -16,33 +16,34 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly Uri _endpoint;
         private readonly HttpPipeline _pipeline;
+        private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRestClient _restClient;
 
+        private readonly AuthenticationRestClient _acrAuthClient;
+        private readonly string AcrAadScope = "https://management.core.windows.net/.default";
+
         /// <summary>
-        /// <paramref name="endpoint"/>
         /// </summary>
-        public ContainerRegistryClient(Uri endpoint, string username, string password) : this(endpoint, username, password,  new ContainerRegistryClientOptions())
+        public ContainerRegistryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="options"></param>
-        public ContainerRegistryClient(Uri endpoint, string username, string password, ContainerRegistryClientOptions options)
+        public ContainerRegistryClient(Uri endpoint, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy(username, password));
-
+            _endpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            _endpoint = endpoint;
+            _acrAuthPipeline = HttpPipelineBuilder.Build(options);
+            _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, AcrAadScope, _acrAuthClient));
             _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 

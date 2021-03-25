@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Azure.Core;
 using Azure.Identity;
 using Azure.Storage;
 using Azure.Storage.Blobs;
@@ -15,6 +16,7 @@ using NUnit.Framework;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace Azure.Storage.Blobs.Samples
 {
@@ -832,6 +834,57 @@ namespace Azure.Storage.Blobs.Samples
             {
                 await containerClient.DeleteIfExistsAsync();
             }
+        }
+
+        [Test]
+        public async Task RetryPolicy()
+        {
+            string connectionString = this.ConnectionString;
+
+            string data = "hello world";
+
+            //setup blob
+            string containerName = Randomize("sample-container");
+            string blobName = Randomize("sample-file");
+            var containerClient = new BlobContainerClient(ConnectionString, containerName);
+            await containerClient.GetBlobClient(blobName).UploadAsync(BinaryData.FromString(data));
+
+            #region Snippet:SampleSnippetsBlobMigration_RetryPolicy
+            BlobClientOptions blobClientOptions = new BlobClientOptions();
+            blobClientOptions.Retry.Mode = RetryMode.Exponential;
+            blobClientOptions.Retry.Delay = TimeSpan.FromSeconds(10);
+            blobClientOptions.Retry.MaxRetries = 6;
+            BlobServiceClient service = new BlobServiceClient(connectionString, blobClientOptions);
+            BlobClient blobClient = service.GetBlobContainerClient(containerName).GetBlobClient(blobName);
+            Stream targetStream = new MemoryStream();
+            await blobClient.DownloadToAsync(targetStream);
+            #endregion
+
+            Assert.Pass();
+        }
+
+        [Test]
+        public async Task MaximumExecutionTime()
+        {
+            string connectionString = this.ConnectionString;
+
+            string data = "hello world";
+
+            //setup blob
+            string containerName = Randomize("sample-container");
+            string blobName = Randomize("sample-file");
+            var containerClient = new BlobContainerClient(ConnectionString, containerName);
+            await containerClient.GetBlobClient(blobName).UploadAsync(BinaryData.FromString(data));
+
+            #region Snippet:SampleSnippetsBlobMigration_MaximumExecutionTime
+            BlobClient blobClient = containerClient.GetBlobClient(blobName);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+            Stream targetStream = new MemoryStream();
+            await blobClient.DownloadToAsync(targetStream, cancellationTokenSource.Token);
+            #endregion
+
+            Assert.Pass();
         }
     }
 }

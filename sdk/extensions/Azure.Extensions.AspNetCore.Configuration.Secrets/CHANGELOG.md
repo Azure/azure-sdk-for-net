@@ -2,6 +2,10 @@
 
 ## 1.1.0-beta.1 (Unreleased)
 
+### Added
+
+- The `AzureKeyVaultConfigurationProvider` was made public.
+- The `KeyVaultSecretManager.GetData` method was added to allow customizing the way secrets are turned into configuration values.
 
 ## 1.0.2 (2020-11-10)
 

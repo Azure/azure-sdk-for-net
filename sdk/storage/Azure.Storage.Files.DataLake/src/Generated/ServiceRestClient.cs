@@ -28,7 +28,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="url"> The URL of the service account, container, or blob that is the targe of the desired operation. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-02-10")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2020-06-12")
         {
             if (url == null)
             {

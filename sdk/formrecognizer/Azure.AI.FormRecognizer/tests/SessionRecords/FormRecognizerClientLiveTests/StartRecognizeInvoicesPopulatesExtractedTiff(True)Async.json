@@ -1,242 +1,272 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/invoice/analyze?includeTextDetails=false",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyze?includeTextDetails=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "76742",
         "Content-Type": "image/tiff",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-760111d3a550bf4fa3d17d06f641b91c-beabea70441dcd48-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201102.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "traceparent": "00-d4d718187097da4a8b9e80484365c428-814bfddbead32940-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "47778e0217a2cf78dda075e62f04c86f",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "3149a55a-eb39-4294-b5a5-46fd4928c296",
+        "apim-request-id": "d00cb75a-887a-41fd-8576-884b3828b225",
         "Content-Length": "0",
-        "Date": "Mon, 02 Nov 2020 21:38:30 GMT",
-        "Operation-Location": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/invoice/analyzeResults/3149a55a-eb39-4294-b5a5-46fd4928c296",
+        "Date": "Wed, 24 Mar 2021 21:50:37 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/d00cb75a-887a-41fd-8576-884b3828b225",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "96"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "194"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/invoice/analyzeResults/3149a55a-eb39-4294-b5a5-46fd4928c296",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/d00cb75a-887a-41fd-8576-884b3828b225",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201102.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "fb2f1da21cc13771b72eff1091ac0956",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "cf8069fe-74e0-4b64-894f-6ac48e601877",
-        "Content-Length": "106",
+        "apim-request-id": "04a3a9f3-9506-4bf9-9234-e07d553ac259",
+        "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Nov 2020 21:38:30 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:37 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "8"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
       },
       "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2020-11-02T21:38:30Z",
-        "lastUpdatedDateTime": "2020-11-02T21:38:30Z"
+        "status": "notStarted",
+        "createdDateTime": "2021-03-24T21:50:37Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:37Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/invoice/analyzeResults/3149a55a-eb39-4294-b5a5-46fd4928c296",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/d00cb75a-887a-41fd-8576-884b3828b225",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201102.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "3bb65f11ad500d81b9fa6b33c7d73d9e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "df4dbeb4-49a3-4558-9517-4debb2d9bb5a",
+        "apim-request-id": "ad8543f5-71aa-42ec-84ea-b056cafe2262",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Nov 2020 21:38:31 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:38 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-11-02T21:38:30Z",
-        "lastUpdatedDateTime": "2020-11-02T21:38:30Z"
+        "createdDateTime": "2021-03-24T21:50:37Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:38Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/invoice/analyzeResults/3149a55a-eb39-4294-b5a5-46fd4928c296",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/d00cb75a-887a-41fd-8576-884b3828b225",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201102.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "5c8fa10019d9e5f11d3f907318673e31",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "750edc5f-692d-4827-8a83-4a111844e5cf",
+        "apim-request-id": "2714207f-7b4a-46a2-be43-823c5c94ab7e",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Nov 2020 21:38:32 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:40 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "8"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-11-02T21:38:30Z",
-        "lastUpdatedDateTime": "2020-11-02T21:38:30Z"
+        "createdDateTime": "2021-03-24T21:50:37Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:38Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/invoice/analyzeResults/3149a55a-eb39-4294-b5a5-46fd4928c296",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/d00cb75a-887a-41fd-8576-884b3828b225",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201102.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "cfd51f968d4ef41e9b2241c6b13d6fdf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "11bf5ab1-24d5-4d66-add5-bc331bc28ea8",
+        "apim-request-id": "b85dba53-0d88-4f06-b063-9662ce6f6f7a",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Nov 2020 21:38:33 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:41 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-11-02T21:38:30Z",
-        "lastUpdatedDateTime": "2020-11-02T21:38:30Z"
+        "createdDateTime": "2021-03-24T21:50:37Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:38Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/invoice/analyzeResults/3149a55a-eb39-4294-b5a5-46fd4928c296",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/d00cb75a-887a-41fd-8576-884b3828b225",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201102.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "ef1061f1ac1cf77d6ed01e101c0df451",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "88fe74bf-3103-4748-9cce-d638ef6b7bf5",
+        "apim-request-id": "8cd5674f-fef9-47de-a864-b887e185589b",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Nov 2020 21:38:35 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:42 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "12"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-11-02T21:38:30Z",
-        "lastUpdatedDateTime": "2020-11-02T21:38:30Z"
+        "createdDateTime": "2021-03-24T21:50:37Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:38Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/invoice/analyzeResults/3149a55a-eb39-4294-b5a5-46fd4928c296",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/d00cb75a-887a-41fd-8576-884b3828b225",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201102.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "a89d3abb6d01734f829ac0b6d82a34df",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "3abf7fe8-d566-4ddd-8878-33803436d549",
+        "apim-request-id": "3f2b287e-8508-462f-9ea7-3e8523e7fca2",
         "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Nov 2020 21:38:36 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:43 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "9"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-11-02T21:38:30Z",
-        "lastUpdatedDateTime": "2020-11-02T21:38:30Z"
+        "createdDateTime": "2021-03-24T21:50:37Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:38Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/prebuilt/invoice/analyzeResults/3149a55a-eb39-4294-b5a5-46fd4928c296",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/d00cb75a-887a-41fd-8576-884b3828b225",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201102.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "b681b0cf4f57e914a2de617e6e0dd78e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "de3a05b1-383e-46f3-a501-68c3b1746636",
-        "Content-Length": "3042",
+        "apim-request-id": "21d89526-6f6d-4951-9e65-b4d21971a3b3",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 02 Nov 2020 21:38:37 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:44 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-24T21:50:37Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:38Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/d00cb75a-887a-41fd-8576-884b3828b225",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "770aef2ec7a084de129d6c81ebc71f43",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "fabc7cb2-3921-413a-b559-2476ef2245b2",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Mar 2021 21:50:45 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
         "x-envoy-upstream-service-time": "14"
       },
       "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-24T21:50:37Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:38Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/d00cb75a-887a-41fd-8576-884b3828b225",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "6c413e9b3d8c6cfa25b306230bd00474",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "1cb13cdd-3c7c-44ee-9964-050053549c9a",
+        "Content-Length": "3649",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Mar 2021 21:50:46 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "86"
+      },
+      "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2020-11-02T21:38:30Z",
-        "lastUpdatedDateTime": "2020-11-02T21:38:36Z",
+        "createdDateTime": "2021-03-24T21:50:37Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:46Z",
         "analyzeResult": {
           "version": "2.1.0",
           "readResults": [
@@ -436,107 +466,56 @@
                 1
               ],
               "fields": {
-                "VendorName": {
+                "CustomerAddress": {
                   "type": "string",
-                  "valueString": "Contoso",
-                  "text": "Contoso",
+                  "valueString": "1020 Enterprise Way Sunnayvale, CA 87659",
+                  "text": "1020 Enterprise Way Sunnayvale, CA 87659",
                   "boundingBox": [
-                    106,
-                    232,
-                    288,
-                    234,
-                    288,
-                    274,
-                    105,
-                    274
+                    1038,
+                    338,
+                    1331.1,
+                    338.9,
+                    1330.9,
+                    408.4,
+                    1037.8,
+                    407.5
                   ],
                   "page": 1,
-                  "confidence": 0.921
+                  "confidence": 0.955
                 },
                 "CustomerAddressRecipient": {
                   "type": "string",
                   "valueString": "Microsoft",
                   "text": "Microsoft",
                   "boundingBox": [
-                    1035,
+                    1033,
                     299,
                     1164,
                     300,
                     1165,
                     326,
-                    1036,
+                    1033,
                     327
                   ],
                   "page": 1,
-                  "confidence": 0.993
+                  "confidence": 0.981
                 },
-                "VendorAddress": {
+                "CustomerName": {
                   "type": "string",
-                  "valueString": "1 Redmond way Suite 6000 Redmond, WA 99243",
-                  "text": "1 Redmond way Suite 6000 Redmond, WA 99243",
+                  "valueString": "Microsoft",
+                  "text": "Microsoft",
                   "boundingBox": [
-                    158,
-                    337,
-                    433,
-                    337,
-                    433,
-                    441,
-                    158,
-                    441
+                    1033,
+                    299,
+                    1164,
+                    300,
+                    1165,
+                    326,
+                    1033,
+                    327
                   ],
                   "page": 1,
-                  "confidence": 0.907
-                },
-                "CustomerAddress": {
-                  "type": "string",
-                  "valueString": "1020 Enterprise Way Sunnayvale, CA 87659",
-                  "text": "1020 Enterprise Way Sunnayvale, CA 87659",
-                  "boundingBox": [
-                    1036.1,
-                    337.1,
-                    1333.2,
-                    338.1,
-                    1333,
-                    408.4,
-                    1035.9,
-                    407.5
-                  ],
-                  "page": 1,
-                  "confidence": 0.995
-                },
-                "InvoiceId": {
-                  "type": "string",
-                  "valueString": "34278587",
-                  "text": "34278587",
-                  "boundingBox": [
-                    105,
-                    680,
-                    229,
-                    680,
-                    230,
-                    705,
-                    106,
-                    705
-                  ],
-                  "page": 1,
-                  "confidence": 0.768
-                },
-                "InvoiceDate": {
-                  "type": "date",
-                  "valueDate": "2017-06-18",
-                  "text": "6/18/2017",
-                  "boundingBox": [
-                    387,
-                    680,
-                    510,
-                    680,
-                    510,
-                    705,
-                    387,
-                    705
-                  ],
-                  "page": 1,
-                  "confidence": 0.89
+                  "confidence": 0.981
                 },
                 "DueDate": {
                   "type": "date",
@@ -545,49 +524,173 @@
                   "boundingBox": [
                     668,
                     679,
-                    792,
+                    789,
                     679,
-                    792,
+                    790,
                     705,
                     667,
                     705
                   ],
                   "page": 1,
-                  "confidence": 0.988
+                  "confidence": 0.981
                 },
-                "InvoiceTotal": {
-                  "type": "number",
-                  "valueNumber": 56651.49,
-                  "text": "$56,651.49",
+                "InvoiceDate": {
+                  "type": "date",
+                  "valueDate": "2017-06-18",
+                  "text": "6/18/2017",
                   "boundingBox": [
-                    1075,
+                    387,
                     680,
-                    1224,
+                    508,
                     680,
-                    1225,
+                    507,
                     705,
-                    1075,
-                    707
+                    387,
+                    705
                   ],
                   "page": 1,
-                  "confidence": 0.847
+                  "confidence": 0.962
                 },
-                "CustomerName": {
+                "InvoiceId": {
                   "type": "string",
-                  "valueString": "Microsoft",
-                  "text": "Microsoft",
+                  "valueString": "34278587",
+                  "text": "34278587",
                   "boundingBox": [
-                    1035,
-                    299,
-                    1164,
-                    300,
-                    1165,
-                    326,
-                    1036,
-                    327
+                    107,
+                    680,
+                    227,
+                    680,
+                    227,
+                    705,
+                    107,
+                    705
                   ],
                   "page": 1,
-                  "confidence": 0.993
+                  "confidence": 0.963
+                },
+                "Items": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Amount": {
+                          "type": "number",
+                          "valueNumber": 56651.49,
+                          "text": "$56,651.49",
+                          "boundingBox": [
+                            1075,
+                            680,
+                            1213,
+                            680,
+                            1213,
+                            706,
+                            1075,
+                            707
+                          ],
+                          "page": 1,
+                          "confidence": 0.801
+                        },
+                        "Date": {
+                          "type": "date",
+                          "valueDate": "2017-06-18",
+                          "text": "6/18/2017",
+                          "boundingBox": [
+                            387,
+                            680,
+                            508,
+                            680,
+                            507,
+                            705,
+                            387,
+                            705
+                          ],
+                          "page": 1,
+                          "confidence": 0.436
+                        },
+                        "ProductCode": {
+                          "type": "string",
+                          "valueString": "34278587",
+                          "text": "34278587",
+                          "boundingBox": [
+                            107,
+                            680,
+                            227,
+                            680,
+                            227,
+                            705,
+                            107,
+                            705
+                          ],
+                          "page": 1,
+                          "confidence": 0.665
+                        },
+                        "Tax": {
+                          "type": "number",
+                          "text": "PT",
+                          "boundingBox": [
+                            1238,
+                            679,
+                            1277,
+                            679,
+                            1277,
+                            704,
+                            1238,
+                            705
+                          ],
+                          "page": 1,
+                          "confidence": 0.462
+                        }
+                      },
+                      "text": "34278587 6/18/2017 6/24/2017 $56,651.49 PT",
+                      "boundingBox": [
+                        107,
+                        679,
+                        1277,
+                        679,
+                        1277,
+                        707,
+                        107,
+                        707
+                      ],
+                      "page": 1,
+                      "confidence": 0.885
+                    }
+                  ]
+                },
+                "VendorAddress": {
+                  "type": "string",
+                  "valueString": "1 Redmond way Suite 6000 Redmond, WA 99243",
+                  "text": "1 Redmond way Suite 6000 Redmond, WA 99243",
+                  "boundingBox": [
+                    159,
+                    337,
+                    429,
+                    337,
+                    429,
+                    441,
+                    159,
+                    441
+                  ],
+                  "page": 1,
+                  "confidence": 0.953
+                },
+                "VendorName": {
+                  "type": "string",
+                  "valueString": "Contoso",
+                  "text": "Contoso",
+                  "boundingBox": [
+                    106,
+                    232,
+                    284,
+                    234,
+                    283,
+                    274,
+                    105,
+                    274
+                  ],
+                  "page": 1,
+                  "confidence": 0.981
                 }
               }
             }
@@ -598,7 +701,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
     "RandomSeed": "1410774667"
   }
 }

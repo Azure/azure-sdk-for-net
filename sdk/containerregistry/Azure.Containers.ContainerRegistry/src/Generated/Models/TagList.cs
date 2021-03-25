@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,26 +15,30 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class TagList
     {
         /// <summary> Initializes a new instance of TagList. </summary>
-        internal TagList()
+        /// <param name="repository"> Image name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="repository"/> is null. </exception>
+        internal TagList(string repository)
         {
+            if (repository == null)
+            {
+                throw new ArgumentNullException(nameof(repository));
+            }
+
+            Repository = repository;
             Tags = new ChangeTrackingList<TagAttributesBase>();
         }
 
         /// <summary> Initializes a new instance of TagList. </summary>
-        /// <param name="registry"> Registry name. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="tags"> List of tag attribute details. </param>
         /// <param name="link"> . </param>
-        internal TagList(string registry, string repository, IReadOnlyList<TagAttributesBase> tags, string link)
+        internal TagList(string repository, IReadOnlyList<TagAttributesBase> tags, string link)
         {
-            Registry = registry;
             Repository = repository;
             Tags = tags;
             Link = link;
         }
 
-        /// <summary> Registry name. </summary>
-        public string Registry { get; }
         /// <summary> Image name. </summary>
         public string Repository { get; }
         /// <summary> List of tag attribute details. </summary>
