@@ -12,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// An implementation for manipulating headers on <see cref="Request"/>.
     /// </summary>
-    public class DictionaryHeaders
+    internal class DictionaryHeaders
     {
         private readonly Dictionary<string, object> _headers = new(StringComparer.OrdinalIgnoreCase);
 
@@ -98,7 +98,7 @@ namespace Azure.Core
         /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         public bool ContainsHeader(string name)
         {
-            return TryGetHeaderValues(name, out _);
+            return _headers.ContainsKey(name);
         }
 
         /// <summary>
