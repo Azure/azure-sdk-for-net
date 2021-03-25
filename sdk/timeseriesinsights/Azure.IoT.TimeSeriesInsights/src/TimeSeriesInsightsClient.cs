@@ -1816,6 +1816,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 throw;
             }
         }
+
         private AsyncPageable<QueryResultPage> QueryEventsInternalAsync(
             TimeSeriesId timeSeriesId,
             DateTimeOffset startTime,

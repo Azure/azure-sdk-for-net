@@ -70,7 +70,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
                 Response<TimeSeriesTypeOperationResult[]> getTypesByNamesResult;
 
-                //This retry logic was added as the TSI types are not immediately available after creation
+                // This retry logic was added as the TSI types are not immediately available after creation
                 await TestRetryHelper.RetryAsync<Response<TimeSeriesTypeOperationResult[]>>(async () =>
                 {
                     // Get the created types by names
