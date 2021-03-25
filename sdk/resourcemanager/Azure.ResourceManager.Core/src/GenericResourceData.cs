@@ -123,6 +123,11 @@ namespace Azure.ResourceManager.Core
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(value.Id.Id);
             }
+            if (Optional.IsDefined(value.Sku))
+            {
+                writer.WritePropertyName("sku");
+                Sku.Serialize(writer, value.Sku);
+            }
             if (Optional.IsDefined(value.Location))
             {
                 writer.WritePropertyName("location");
