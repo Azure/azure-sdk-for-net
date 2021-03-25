@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Make a provider resource client class.
         /// </summary>
-        internal void MakeProviderClient(TokenCredential credential, Uri baseUri, string subscription)
+        internal void SetProviderClient(TokenCredential credential, Uri baseUri, string subscription)
         {
             ProviderOperations = new ResourcesManagementClient(
             baseUri,
@@ -84,7 +85,15 @@ namespace Azure.ResourceManager.Core
 
         private string LoadApiVersion(ResourceType resourceType, CancellationToken cancellationToken)
         {
-            var results = ProviderOperations.Get(resourceType.Namespace, null, cancellationToken);
+            Response<Provider> results;
+            try
+            {
+                results = ProviderOperations.Get(resourceType.Namespace, null, cancellationToken);
+            }
+            catch (RequestFailedException)
+            {
+                return null;
+            }
             foreach (var type in results.Value.ResourceTypes)
             {
                 if (type.ResourceType.Equals(resourceType.Type))
@@ -98,7 +107,15 @@ namespace Azure.ResourceManager.Core
 
         private async Task<string> LoadApiVersionAsync(ResourceType resourceType, CancellationToken cancellationToken)
         {
-            var results = await ProviderOperations.GetAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
+            Response<Provider> results;
+            try
+            {
+                results = await ProviderOperations.GetAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException)
+            {
+                return null;
+            }
             foreach (var type in results.Value.ResourceTypes)
             {
                 if (type.ResourceType.Equals(resourceType.Type))

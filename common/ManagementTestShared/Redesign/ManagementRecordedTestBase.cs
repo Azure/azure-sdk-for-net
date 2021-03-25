@@ -53,7 +53,9 @@ namespace Azure.ResourceManager.TestFramework
 
         protected AzureResourceManagerClient GetArmClient()
         {
+            TestContext.Progress.WriteLine("makeing client ");
             var options = InstrumentClientOptions(new AzureResourceManagerClientOptions());
+            TestContext.Progress.WriteLine("made options ");
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 
             return CreateClient<AzureResourceManagerClient>(
@@ -109,6 +111,7 @@ namespace Azure.ResourceManager.TestFramework
             }
 
             SessionRecording?.Dispose(true);
+            TestContext.Progress.WriteLine("setting to null ");
             GlobalClient = null;
         }
 

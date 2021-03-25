@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartDeleteById(Id, ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken), cancellationToken));
+            return new ArmVoidOperation(Operations.StartDeleteById(Id, GetApiVersion(cancellationToken), cancellationToken));
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Core
         /// </remarks>
         public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartDeleteByIdAsync(Id, await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
+            var operation = await Operations.StartDeleteByIdAsync(Id, await GetApiVersionAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
             return new ArmVoidOperation(operation);
         }
 
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Core
             // Potential optimization on tags set, remove NOOP to bypass the call.
             resource.Data.Tags[key] = value;
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
-                Operations.StartUpdateById(Id, ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
+                Operations.StartUpdateById(Id, GetApiVersion(cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
                 v => new GenericResource(this, new GenericResourceData(v)));
         }
 
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Core
         {
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags[key] = value;
-            var op = await Operations.StartUpdateByIdAsync(Id, await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
+            var op = await Operations.StartUpdateByIdAsync(Id, await GetApiVersionAsync(cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 await op.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 v => new GenericResource(this, new GenericResourceData(v)));
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Core
             GenericResource resource = GetResource();
             resource.Data.Tags[key] = value;
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
-                Operations.StartUpdateById(Id, ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
+                Operations.StartUpdateById(Id, GetApiVersion(cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
                 v => new GenericResource(this, new GenericResourceData(v)));
         }
 
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Core
         {
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags[key] = value;
-            var op = await Operations.StartUpdateByIdAsync(Id, await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
+            var op = await Operations.StartUpdateByIdAsync(Id, await GetApiVersionAsync(cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 await op.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 v => new GenericResource(this, new GenericResourceData(v)));
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Core
         public override ArmResponse<GenericResource> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
-                Operations.GetById(Id, ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken), cancellationToken),
+                Operations.GetById(Id, GetApiVersion(cancellationToken), cancellationToken),
                 v => new GenericResource(this, new GenericResourceData(v)));
         }
 
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Core
         public override async Task<ArmResponse<GenericResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
-                await Operations.GetByIdAsync(Id, await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false),
+                await Operations.GetByIdAsync(Id, await GetApiVersionAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false),
                 v => new GenericResource(this, new GenericResourceData(v)));
         }
 
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.Core
             GenericResource resource = GetResource();
             resource.Data.Tags.ReplaceWith(tags);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
-                Operations.StartUpdateById(Id, ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
+                Operations.StartUpdateById(Id, GetApiVersion(cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
                 v => new GenericResource(this, new GenericResourceData(v)));
         }
 
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.Core
         {
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags.ReplaceWith(tags);
-            var op = await Operations.StartUpdateByIdAsync(Id, await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
+            var op = await Operations.StartUpdateByIdAsync(Id, await GetApiVersionAsync(cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 await op.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 v => new GenericResource(this, new GenericResourceData(v)));
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.Core
             GenericResource resource = GetResource();
             resource.Data.Tags.ReplaceWith(tags);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
-                Operations.StartUpdateById(Id, ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
+                Operations.StartUpdateById(Id, GetApiVersion(cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
                 v => new GenericResource(this, new GenericResourceData(v)));
         }
 
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.Core
         {
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags.ReplaceWith(tags);
-            var op = await Operations.StartUpdateByIdAsync(Id, await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
+            var op = await Operations.StartUpdateByIdAsync(Id, await GetApiVersionAsync(cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 await op.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 v => new GenericResource(this, new GenericResourceData(v)));
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Core
             GenericResource resource = GetResource();
             resource.Data.Tags.Remove(key);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
-                Operations.StartUpdateById(Id, ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
+                Operations.StartUpdateById(Id, GetApiVersion(cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
                 v => new GenericResource(this, new GenericResourceData(v)));
         }
 
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.Core
         {
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags.Remove(key);
-            var op = await Operations.StartUpdateByIdAsync(Id,  await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
+            var op = await Operations.StartUpdateByIdAsync(Id,  await GetApiVersionAsync(cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 await op.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 v => new GenericResource(this, new GenericResourceData(v)));
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.Core
             GenericResource resource = GetResource();
             resource.Data.Tags.Remove(key);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
-                Operations.StartUpdateById(Id,  ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
+                Operations.StartUpdateById(Id, GetApiVersion(cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
                 v => new GenericResource(this, new GenericResourceData(v)));
         }
 
@@ -233,10 +234,29 @@ namespace Azure.ResourceManager.Core
         {
             GenericResource resource = await GetResourceAsync(cancellationToken).ConfigureAwait(false);
             resource.Data.Tags.Remove(key);
-            var op = await Operations.StartUpdateByIdAsync(Id, await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
+            var op = await Operations.StartUpdateByIdAsync(Id, await GetApiVersionAsync(cancellationToken).ConfigureAwait(false), resource.Data, cancellationToken).ConfigureAwait(false);
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
                 await op.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 v => new GenericResource(this, new GenericResourceData(v)));
+        }
+
+        private string GetApiVersion(CancellationToken cancellationToken)
+        {
+            string version = ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken);
+            if (version == null)
+            {
+                throw new ArgumentException($"An Invalid resouce id was given {Id}");
+            }
+            return version;
+        }
+        private async Task<string> GetApiVersionAsync(CancellationToken cancellationToken)
+        {
+            string version = await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false);
+            if (version == null)
+            {
+                throw new ArgumentException($"An Invalid resouce id was given {Id}");
+            }
+            return version;
         }
     }
 }
