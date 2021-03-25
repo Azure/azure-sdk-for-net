@@ -374,7 +374,7 @@ namespace Compute.Tests
 
                     //string asetId = CreateAvailabilitySet(rgName, asName);
 
-                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId: null, vmNicConfig: vmNicConfig, networkApiVersion: "2020-11-01");
+                    inputVM = CreateDefaultVMInput(rgName, storageAccountName, imageRef, asetId: null, vmNicConfig: vmNicConfig, networkApiVersion: NetworkApiVersion.TwoZeroTwoZeroHyphenMinusOneOneHyphenMinusZeroOne);
 
                     string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
 

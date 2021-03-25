@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// version used when creating networking resources in the Network
         /// Interface Configurations for Virtual Machine Scale Set with
         /// orchestration mode 'Flexible'. Possible values include:
-        /// '2021-03-01'</param>
+        /// '2020-11-01'</param>
         public VirtualMachineScaleSetUpdateNetworkProfile(ApiEntityReference healthProbe = default(ApiEntityReference), IList<VirtualMachineScaleSetUpdateNetworkConfiguration> networkInterfaceConfigurations = default(IList<VirtualMachineScaleSetUpdateNetworkConfiguration>), string networkApiVersion = default(string))
         {
             HealthProbe = healthProbe;
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies the Microsoft.Network API version used when
         /// creating networking resources in the Network Interface
         /// Configurations for Virtual Machine Scale Set with orchestration
-        /// mode 'Flexible'. Possible values include: '2021-03-01'
+        /// mode 'Flexible'. Possible values include: '2020-11-01'
         /// </summary>
         [JsonProperty(PropertyName = "networkApiVersion")]
         public string NetworkApiVersion { get; set; }

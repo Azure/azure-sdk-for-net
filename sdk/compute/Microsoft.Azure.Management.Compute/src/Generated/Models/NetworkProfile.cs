@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="networkApiVersion">specifies the Microsoft.Network API
         /// version used when creating networking resources in the Network
         /// Interface Configurations. Possible values include:
-        /// '2021-03-01'</param>
+        /// '2020-11-01'</param>
         /// <param name="networkInterfaceConfigurations">Specifies the
         /// networking configurations that will be used to create the virtual
         /// machine networking resources.</param>
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets specifies the Microsoft.Network API version used when
         /// creating networking resources in the Network Interface
-        /// Configurations. Possible values include: '2021-03-01'
+        /// Configurations. Possible values include: '2020-11-01'
         /// </summary>
         [JsonProperty(PropertyName = "networkApiVersion")]
         public string NetworkApiVersion { get; set; }

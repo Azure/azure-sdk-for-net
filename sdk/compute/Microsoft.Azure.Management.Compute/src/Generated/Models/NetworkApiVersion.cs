@@ -16,6 +16,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// </summary>
     public static class NetworkApiVersion
     {
-        public const string TwoZeroTwoOneHyphenMinusZeroThreeHyphenMinusZeroOne = "2021-03-01";
+        public const string TwoZeroTwoZeroHyphenMinusOneOneHyphenMinusZeroOne = "2020-11-01";
     }
 }
