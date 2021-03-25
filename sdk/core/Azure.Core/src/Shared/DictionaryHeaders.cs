@@ -35,13 +35,14 @@ namespace Azure.Core
             }
             else
             {
-                if (objValue is not List<string> values)
+                if (objValue is List<string> values)
                 {
-                    _headers[name] = values = new List<string> { objValue as string, value };
+                    values.Add(value);
                 }
                 else
                 {
-                    values.Add(value);
+                    // upgrade to a List
+                    _headers[name] = new List<string> { objValue as string, value };
                 }
             }
         }
