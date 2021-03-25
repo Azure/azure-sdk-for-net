@@ -21,11 +21,13 @@ function SplitParameterArray($members) {
     }
 }
 
-function Set-GitHubAPIParameters ($members,  $parameterName, $parameters) {
+function Set-GitHubAPIParameters ($members,  $parameterName, $parameters, $allowEmptyMembers = $false) {
   if ($null -ne $members) {
     [array]$memberAdditions = SplitParameterArray -members $members
 
-    if ($memberAdditions.Count -gt 0) {
+    if ($null -eq $memberAdditions -and $allowEmptyMembers){ $memberAdditions = @() }
+
+    if ($memberAdditions.Count -gt 0 -or $allowEmptyMembers) {
       $parameters[$parameterName] = $memberAdditions
     }
   }
@@ -318,10 +320,10 @@ function Update-GitHubIssue {
   if ($Milestone) { $parameters["milestone"] = $Milestone }
 
   $parameters = Set-GitHubAPIParameters -members $Labels -parameterName "labels" `
-  -parameters $parameters
+  -parameters $parameters -allowEmptyMembers $true
 
   $parameters = Set-GitHubAPIParameters -members $Assignees -parameterName "assignees" `
-  -parameters $parameters
+  -parameters $parameters -allowEmptyMembers $true
 
   return Invoke-RestMethod `
           -Method PATCH `
