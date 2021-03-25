@@ -13,14 +13,26 @@ namespace Azure.ResourceManager.Core
 {
     internal class PropertyWrapper
     {
-        internal PropertyInfo Info { get; }
+        private PropertyInfo _info;
 
-        internal object PropertyObject { get; }
+        private object _propertyObject;
 
-        internal PropertyWrapper(PropertyInfo info, object propObject)
+        internal PropertyWrapper(PropertyInfo info, object propertyObject)
         {
-            Info = info;
-            PropertyObject = propObject;
+            _info = info;
+            _propertyObject = propertyObject;
+        }
+
+        internal string GetValue()
+        {
+            return _info.GetValue(_propertyObject).ToString();
+        }
+
+        internal void SetValue(string apiVersion)
+        {
+            Type type = _info.PropertyType;
+            ConstructorInfo ctor = type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(string) }, null);
+            _info.SetValue(_propertyObject, ctor.Invoke(new object[] { apiVersion }));
         }
     }
 }

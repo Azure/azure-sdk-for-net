@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Threading;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -17,12 +18,29 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     public class ApiVersions
     {
+        private ProvidersOperations ProviderOperations;
+        private AzureResourceManagerClientOptions _clientOptions;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiVersions"/> class.
         /// </summary>
         internal ApiVersions(AzureResourceManagerClientOptions clientOptions)
         {
             BuildApiTable(clientOptions);
+            _clientOptions = clientOptions;
+            ProviderOperations = null;
+        }
+
+        /// <summary>
+        /// Make a provider resource client class.
+        /// </summary>
+        internal void MakeProviderClient(TokenCredential credential, Uri baseUri, string subscription)
+        {
+            ProviderOperations = new ResourcesManagementClient(
+            baseUri,
+            subscription,
+            credential,
+            _clientOptions.Convert<ResourcesManagementClientOptions>()).Providers;
         }
 
         private Dictionary<string, PropertyWrapper> _loadedResourceToApiVersions = new Dictionary<string, PropertyWrapper>();
@@ -54,7 +72,7 @@ namespace Azure.ResourceManager.Core
             // See TODO ADO #5692
             var results =
                         from assembly in AppDomain.CurrentDomain.GetAssemblies()
-                        where assembly.GetName().ToString().StartsWith("Azure.", StringComparison.Ordinal ) || assembly.GetName().ToString().StartsWith("Proto.", StringComparison.Ordinal)
+                        where assembly.GetName().ToString().StartsWith("Azure.", StringComparison.Ordinal) || assembly.GetName().ToString().StartsWith("Proto.", StringComparison.Ordinal)
                         from type in assembly.GetTypes()
                         where type.IsSealed && !type.IsGenericType && !type.IsNested && type.Name.Equals("AzureResourceManagerClientOptionsExtensions", StringComparison.Ordinal)
                         from method in type.GetMethods(BindingFlags.Static | BindingFlags.Public)
@@ -64,68 +82,70 @@ namespace Azure.ResourceManager.Core
             return results;
         }
 
-        private string LoadApiVersion(ProvidersOperations providers, ResourceIdentifier id, CancellationToken cancellationToken)
+        private string LoadApiVersion(ResourceType resourceType, CancellationToken cancellationToken)
         {
-            var results = providers.Get(id.Type.Namespace, null, cancellationToken);
+            var results = ProviderOperations.Get(resourceType.Namespace, null, cancellationToken);
             foreach (var type in results.Value.ResourceTypes)
             {
-                if (type.ResourceType.Equals(id.Type.Type))
+                if (type.ResourceType.Equals(resourceType.Type))
                 {
-                    _nonLoadedResourceToApiVersion.Add(id.Type.ToString(), type.ApiVersions[0]);
+                    _nonLoadedResourceToApiVersion.Add(resourceType.ToString(), type.ApiVersions[0]);
                     return type.ApiVersions[0];
                 }
             }
             return null;
         }
 
-        private async Task<string> LoadApiVersionAsync(ProvidersOperations providers, ResourceIdentifier id, CancellationToken cancellationToken)
+        private async Task<string> LoadApiVersionAsync(ResourceType resourceType, CancellationToken cancellationToken)
         {
-            var results = await providers.GetAsync(id.Type.Namespace, null, cancellationToken).ConfigureAwait(false);
+            var results = await ProviderOperations.GetAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
             foreach (var type in results.Value.ResourceTypes)
             {
-                if (type.ResourceType.Equals(id.Type.Type))
+                if (type.ResourceType.Equals(resourceType.Type))
                 {
-                    _nonLoadedResourceToApiVersion.Add(id.Type.ToString(), type.ApiVersions[0]);
+                    _nonLoadedResourceToApiVersion.Add(resourceType.ToString(), type.ApiVersions[0]);
                     return type.ApiVersions[0];
                 }
             }
             return null;
-        }
-
-        internal string TyrGetApiVersion(ProvidersOperations providers, ResourceIdentifier resourceId, CancellationToken cancellationToken)
-        {
-            string val;
-            if (TryGetApiVersion(resourceId, out val))
-            {
-                return val;
-            }
-            return LoadApiVersion(providers, resourceId, cancellationToken);
-        }
-
-        internal async Task<string> TyrGetApiVersionAsync(ProvidersOperations providers, ResourceIdentifier resourceId, CancellationToken cancellationToken)
-        {
-            string val;
-            if (TryGetApiVersion(resourceId, out val))
-            {
-                return val;
-            }
-            return await LoadApiVersionAsync(providers, resourceId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets the API version give a resource ID if it exist, else will return null.
+        /// Try to get api version for a give resource id, returns null if will use the latest API version for the given resources
         /// </summary>
-        /// <returns> API version string. </returns>
-        public bool TryGetApiVersion(string resourceId, out string val)
+        public string TryGetApiVersion(ResourceType resourceType, CancellationToken cancellationToken = default)
+        {
+            string val;
+            if (TryGetApiVersion(resourceType.ToString(), out val))
+            {
+                return val;
+            }
+            return ProviderOperations == null ? null : LoadApiVersion(resourceType.ToString(), cancellationToken);
+        }
+
+        /// <summary>
+        /// Try to get api version for a give resource id, returns null if will use the latest API version for the given resources
+        /// </summary>
+        public async Task<string> TryGetApiVersionAsync(ResourceType resourceType, CancellationToken cancellationToken = default)
+        {
+            string val;
+            if (TryGetApiVersion(resourceType.ToString(), out val))
+            {
+                return val;
+            }
+            return ProviderOperations == null ? null : await LoadApiVersionAsync(resourceType.ToString(), cancellationToken).ConfigureAwait(false);
+        }
+
+        private bool TryGetApiVersion(string resourceType, out string val)
         {
             PropertyWrapper propertyWrapper;
-            if (_loadedResourceToApiVersions.TryGetValue(resourceId, out propertyWrapper))
+            if (_loadedResourceToApiVersions.TryGetValue(resourceType, out propertyWrapper))
             {
-                val = propertyWrapper.Info.GetValue(propertyWrapper.PropertyObject).ToString();
+                val = propertyWrapper.GetValue();
                 return true;
             }
 
-            if (_nonLoadedResourceToApiVersion.TryGetValue(resourceId, out val))
+            if (_nonLoadedResourceToApiVersion.TryGetValue(resourceType, out val))
             {
                 return true;
             }
@@ -136,18 +156,16 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Set the API version given a resource ID
         /// </summary>
-        public void SetApiVersion(string resourceId, string apiVersion)
+        public void SetApiVersion(ResourceType resourceType, string apiVersion)
         {
             PropertyWrapper propertyWrapper;
-            if (_loadedResourceToApiVersions.TryGetValue(resourceId, out propertyWrapper))
+            if (_loadedResourceToApiVersions.TryGetValue(resourceType.ToString(), out propertyWrapper))
             {
-                Type type = propertyWrapper.Info.PropertyType;
-                ConstructorInfo ctor = type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(string) }, null);
-                propertyWrapper.Info.SetValue(propertyWrapper.PropertyObject, ctor.Invoke(new object[] { apiVersion }));
+                propertyWrapper.SetValue(apiVersion);
             }
             else
             {
-                _nonLoadedResourceToApiVersion[resourceId] = apiVersion;
+                _nonLoadedResourceToApiVersion[resourceType.ToString()] = apiVersion;
             }
         }
     }
