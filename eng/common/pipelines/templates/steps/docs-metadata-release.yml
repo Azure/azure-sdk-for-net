@@ -117,7 +117,7 @@ steps:
       GH_TOKEN: $(azuresdk-github-pat)
   - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
     parameters:
-      PRBranchName: $(DefaultBranch)
+      PRBranchName: ${{ parameters.OnboardingBranch}}
       CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
       RepoName: ${{ parameters.TargetDocRepoName }}
       RepoOwner: ${{ parameters.TargetDocRepoOwner }}
