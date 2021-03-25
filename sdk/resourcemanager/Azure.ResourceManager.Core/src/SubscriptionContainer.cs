@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Core
     public class SubscriptionContainer : ContainerBase<Subscription>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class for mocking.
+        /// </summary>
+        protected SubscriptionContainer()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
@@ -43,11 +50,23 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken">A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />.</param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public Pageable<Subscription> List(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual Pageable<Subscription> List(CancellationToken cancellationToken = default)
         {
-            return new PhWrappingPageable<ResourceManager.Resources.Models.Subscription, Subscription>(
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+            scope.Start();
+
+            try
+            {
+                return new PhWrappingPageable<ResourceManager.Resources.Models.Subscription, Subscription>(
                 Operations.List(cancellationToken),
                 Converter());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -56,11 +75,23 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken">A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />.</param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<Subscription> ListAsync(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<Subscription> ListAsync(CancellationToken cancellationToken = default)
         {
-            return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.Subscription, Subscription>(
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+            scope.Start();
+
+            try
+            {
+                return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.Subscription, Subscription>(
                 Operations.ListAsync(cancellationToken),
                 Converter());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

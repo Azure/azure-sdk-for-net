@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.TestFramework
             return null;
         }
 
-        protected AzureResourceManagerClient GetArmClient()
+        protected AzureResourceManagerClient GetArmClient(AzureResourceManagerClientOptions options = default)
         {
-            var options = InstrumentClientOptions(new AzureResourceManagerClientOptions());
-            options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
+            var instOptions = InstrumentClientOptions(options ?? new AzureResourceManagerClientOptions());
+            instOptions.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 
             return CreateClient<AzureResourceManagerClient>(
                 TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                options);
+                instOptions);
         }
 
         [SetUp]

@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.Management
             var sub = client.DefaultSubscription;
             var result = sub.Method();
 
-            Assert.AreEqual("TestResourceOperationsProxy", sub.GetType().Name);
+            Assert.AreEqual("TestResourceProxy", sub.GetType().Name);
             Assert.AreEqual("success", result);
         }
 

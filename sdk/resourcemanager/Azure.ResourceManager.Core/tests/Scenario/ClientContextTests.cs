@@ -4,27 +4,30 @@ using Azure.Identity;
 using NUnit.Framework;
 using Azure.Core.Pipeline;
 using System.Threading;
+using Azure.Core.TestFramework;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Core.Tests
 {
     public class ClientContextTests : ResourceManagerTestBase
     {
         public ClientContextTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
         [TestCase]
-        public void TestClientContextPolicy()
+        [RecordedTest]
+        public async Task TestClientContextPolicy()
         {
             AzureResourceManagerClientOptions options1 = new AzureResourceManagerClientOptions();
             var dummyPolicy1 = new dummyPolicy();
             var dummyPolicy2 = new dummyPolicy2();
             options1.AddPolicy(dummyPolicy1, HttpPipelinePosition.PerCall);
-            var client1 = new AzureResourceManagerClient(new DefaultAzureCredential(), options1);
+            var client1 = GetArmClient(options1);
             
             Console.WriteLine("-----Client 1-----");
-            foreach (var sub in client1.GetSubscriptionContainer().List())
+            await foreach (var sub in client1.GetSubscriptionContainer().ListAsync())
             {
                 Console.WriteLine($"Found {sub.Data.DisplayName}");
             }
