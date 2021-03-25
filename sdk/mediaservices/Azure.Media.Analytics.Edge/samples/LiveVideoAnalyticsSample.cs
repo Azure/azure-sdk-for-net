@@ -37,46 +37,46 @@ namespace Azure.Media.Analytics.Edge.Samples
             try
             {
                 // create a graph topology and graph instance
-                var graphTopology = BuildGraphTopology();
-                var graphInstance = BuildGraphInstance(graphTopology.Name);
+                var graphTopology = BuildPipelineTopology();
+                var graphInstance = BuildLivePipeline(graphTopology.Name);
 
                 //set graph topology without using helper function
                 #region Snippet:Azure_MediaServices_Samples_InvokeDirectMethod
-                var setGraphRequest = new MediaGraphTopologySetRequest(graphTopology);
+                var setPipelineTopRequest = new PipelineTopologySetRequest(graphTopology);
 
-                var directMethod = new CloudToDeviceMethod(setGraphRequest.MethodName);
-                directMethod.SetPayloadJson(setGraphRequest.GetPayloadAsJson());
+                var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
+                directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
 
-                var setGraphResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+                var setPipelineTopResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
                 #endregion Snippet:Azure_MediaServices_Samples_InvokeDirectMethod
 
                 // get a graph topology using helper function
-                var getGraphResponse = await InvokeDirectMethodHelper(new MediaGraphTopologyGetRequest(graphTopology.Name));
-                var getGraphResult = MediaGraphTopology.Deserialize(getGraphResponse.GetPayloadAsJson());
+                var getPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyGetRequest(graphTopology.Name));
+                var getPipelineTopResponse = PipelineTopology.Deserialize(getPipelineTopRequest.GetPayloadAsJson());
 
                 // list all graph topologies
-                var listGraphResponse = await InvokeDirectMethodHelper(new MediaGraphTopologyListRequest());
-                var listGraphResult = MediaGraphTopologyCollection.Deserialize(listGraphResponse.GetPayloadAsJson());
+                var listPipelineTopRequest = await InvokeDirectMethodHelper(new PipelineTopologyListRequest());
+                var listPipelineTopResponse = PipelineTopologyCollection.Deserialize(listPipelineTopRequest.GetPayloadAsJson());
 
                 //set graph instance
-                var setGraphInstanceResult = await InvokeDirectMethodHelper(new MediaGraphInstanceSetRequest(graphInstance));
+                var setLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineSetRequest(graphInstance));
 
                 //activate graph instance
-                var activateGraphResponse = await InvokeDirectMethodHelper(new MediaGraphInstanceActivateRequest(graphInstance.Name));
+                var activateLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineActivateRequest(graphInstance.Name));
 
                 //get instance
-                var getGraphInstanceResponse = await InvokeDirectMethodHelper(new MediaGraphInstanceGetRequest(graphInstance.Name));
-                var getGraphInstanceResult = MediaGraphInstance.Deserialize(getGraphInstanceResponse.GetPayloadAsJson());
+                var getLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineGetRequest(graphInstance.Name));
+                var getLivePipelineResponse = LivePipeline.Deserialize(getLivePipelineRequest.GetPayloadAsJson());
 
                 // list all graph instance
-                var listGraphInstanceResponse = await InvokeDirectMethodHelper(new MediaGraphInstanceListRequest());
-                var listGraphInstanceResult = MediaGraphInstanceCollection.Deserialize(listGraphInstanceResponse.GetPayloadAsJson());
+                var listLivePipelineRequest = await InvokeDirectMethodHelper(new LivePipelineListRequest());
+                var listLivePipelineResponse = LivePipelineCollection.Deserialize(listLivePipelineRequest.GetPayloadAsJson());
 
                 //get deactive graph
-                var deactiveGraphInstance = await InvokeDirectMethodHelper(new MediaGraphInstanceDeActivateRequest(graphInstance.Name));
+                var deactiveLivePipeline = await InvokeDirectMethodHelper(new LivePipelineDeactivateRequest(graphInstance.Name));
 
                 //delete graph
-                var deleteGraphTopology = await InvokeDirectMethodHelper(new MediaGraphTopologyDeleteRequest(graphTopology.Name));
+                var deletePipelineTopology = await InvokeDirectMethodHelper(new PipelineTopologyDeleteRequest(graphTopology.Name));
             }
             catch (Exception ex)
             {
@@ -92,56 +92,56 @@ namespace Azure.Media.Analytics.Edge.Samples
             return await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
         }
 
-        #region Snippet:Azure_MediaServices_Samples_BuildInstance
-        private MediaGraphInstance BuildGraphInstance(string graphTopologyName)
+        #region Snippet:Azure_MediaServices_Samples_BuildLivePipeline
+        private LivePipeline BuildLivePipeline(string graphTopologyName)
         {
-            var graphInstanceProperties = new MediaGraphInstanceProperties
+            var livePipelineProps = new LivePipelineProperties
             {
                 Description = "Sample graph description",
                 TopologyName = graphTopologyName,
             };
 
-            graphInstanceProperties.Parameters.Add(new MediaGraphParameterDefinition("rtspUrl", "rtsp://sample.com"));
+            livePipelineProps.Parameters.Add(new ParameterDefinition("rtspUrl", "rtsp://sample.com"));
 
-            return new MediaGraphInstance("graphInstance")
+            return new LivePipeline("graphInstance")
             {
-                Properties = graphInstanceProperties
+                Properties = livePipelineProps
             };
         }
-        #endregion Snippet:Azure_MediaServices_Samples_BuildInstance
+        #endregion Snippet:Azure_MediaServices_Samples_BuildLivePipeline
 
-        #region Snippet:Azure_MediaServices_Samples_BuildTopology
-        private MediaGraphTopology BuildGraphTopology()
+        #region Snippet:Azure_MediaServices_Samples_BuildPipelineTopology
+        private PipelineTopology BuildPipelineTopology()
         {
-            var graphProperties = new MediaGraphTopologyProperties
+            var pipelineTopologyProps = new PipelineTopologyProperties
             {
                 Description = "Continuous video recording to an Azure Media Services Asset",
             };
-            SetParameters(graphProperties);
-            SetSources(graphProperties);
-            SetSinks(graphProperties);
-            return new MediaGraphTopology("ContinuousRecording")
+            SetParameters(pipelineTopologyProps);
+            SetSources(pipelineTopologyProps);
+            SetSinks(pipelineTopologyProps);
+            return new PipelineTopology("ContinuousRecording")
             {
-                Properties = graphProperties
+                Properties = pipelineTopologyProps
             };
         }
-        #endregion Snippet:Azure_MediaServices_Samples_BuildTopology
+        #endregion Snippet:Azure_MediaServices_Samples_BuildPipelineTopology
 
         #region Snippet:Azure_MediaServices_Samples_SetParameters
         // Add parameters to Topology
-        private void SetParameters(MediaGraphTopologyProperties graphProperties)
+        private void SetParameters(PipelineTopologyProperties pipelineTopologyProperties)
         {
-            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUserName", MediaGraphParameterType.String)
+            pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUserName", ParameterType.String)
             {
                 Description = "rtsp source user name.",
                 Default = "dummyUserName"
             });
-            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspPassword", MediaGraphParameterType.SecretString)
+            pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspPassword", ParameterType.SecretString)
             {
                 Description = "rtsp source password.",
                 Default = "dummyPassword"
             });
-            graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUrl", MediaGraphParameterType.String)
+            pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUrl", ParameterType.String)
             {
                 Description = "rtsp Url"
             });
@@ -150,25 +150,25 @@ namespace Azure.Media.Analytics.Edge.Samples
 
         #region Snippet:Azure_MediaServices_Samples_SetSourcesSinks
         // Add sources to Topology
-        private void SetSources(MediaGraphTopologyProperties graphProperties)
+        private void SetSources(PipelineTopologyProperties pipelineTopologyProps)
         {
-            graphProperties.Sources.Add(new MediaGraphRtspSource("rtspSource", new MediaGraphUnsecuredEndpoint("${rtspUrl}")
+            pipelineTopologyProps.Sources.Add(new RtspSource("rtspSource", new UnsecuredEndpoint("${rtspUrl}")
                 {
-                    Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
+                    Credentials = new UsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
                 })
             );
         }
 
         // Add sinks to Topology
-        private void SetSinks(MediaGraphTopologyProperties graphProperties)
+        private void SetSinks(PipelineTopologyProperties pipelineTopologyProps)
         {
-            var graphNodeInput = new List<MediaGraphNodeInput>
+            var nodeInput = new List<NodeInput>
             {
-                new MediaGraphNodeInput("rtspSource")
+                new NodeInput("rtspSource")
             };
             var cachePath = "/var/lib/azuremediaservices/tmp/";
             var cacheMaxSize = "2048";
-            graphProperties.Sinks.Add(new MediaGraphAssetSink("assetSink", graphNodeInput, "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}", cachePath, cacheMaxSize)
+            pipelineTopologyProps.Sinks.Add(new AssetSink("assetSink", nodeInput, "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}", cachePath, cacheMaxSize)
             {
                 SegmentLength = System.Xml.XmlConvert.ToString(TimeSpan.FromSeconds(30)),
             });

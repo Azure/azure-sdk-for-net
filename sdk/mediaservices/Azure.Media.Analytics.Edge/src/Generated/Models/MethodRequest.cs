@@ -13,7 +13,7 @@ namespace Azure.Media.Analytics.Edge.Models
         /// <summary> Initializes a new instance of MethodRequest. </summary>
         public MethodRequest()
         {
-            ApiVersion = "2.0";
+            ApiVersion = "1.0";
         }
 
         /// <summary> Initializes a new instance of MethodRequest. </summary>

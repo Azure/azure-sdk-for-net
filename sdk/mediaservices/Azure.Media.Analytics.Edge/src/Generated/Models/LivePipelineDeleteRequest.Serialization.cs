@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Media.Analytics.Edge.Models
 {
-    public partial class ItemNonSetRequestBase : IUtf8JsonSerializable
+    public partial class LivePipelineDeleteRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,20 +25,8 @@ namespace Azure.Media.Analytics.Edge.Models
             writer.WriteEndObject();
         }
 
-        internal static ItemNonSetRequestBase DeserializeItemNonSetRequestBase(JsonElement element)
+        internal static LivePipelineDeleteRequest DeserializeLivePipelineDeleteRequest(JsonElement element)
         {
-            if (element.TryGetProperty("methodName", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "livePipelineActivate": return LivePipelineActivateRequest.DeserializeLivePipelineActivateRequest(element);
-                    case "livePipelineDeactivate": return LivePipelineDeactivateRequest.DeserializeLivePipelineDeactivateRequest(element);
-                    case "livePipelineDelete": return LivePipelineDeleteRequest.DeserializeLivePipelineDeleteRequest(element);
-                    case "livePipelineGet": return LivePipelineGetRequest.DeserializeLivePipelineGetRequest(element);
-                    case "pipelineTopologyDelete": return PipelineTopologyDeleteRequest.DeserializePipelineTopologyDeleteRequest(element);
-                    case "pipelineTopologyGet": return PipelineTopologyGetRequest.DeserializePipelineTopologyGetRequest(element);
-                }
-            }
             string name = default;
             string methodName = default;
             Optional<string> apiVersion = default;
@@ -60,7 +48,7 @@ namespace Azure.Media.Analytics.Edge.Models
                     continue;
                 }
             }
-            return new ItemNonSetRequestBase(methodName, apiVersion.Value, name);
+            return new LivePipelineDeleteRequest(methodName, apiVersion.Value, name);
         }
     }
 }

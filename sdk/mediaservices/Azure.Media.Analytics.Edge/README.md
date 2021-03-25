@@ -76,19 +76,19 @@ We guarantee that all client instance methods are thread-safe and independent of
 To create a graph topology you need to define parameters, sources, and sinks.
 ```C# Snippet:Azure_MediaServices_Samples_SetParameters
 // Add parameters to Topology
-private void SetParameters(MediaGraphTopologyProperties graphProperties)
+private void SetParameters(PipelineTopologyProperties pipelineTopologyProperties)
 {
-    graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUserName", MediaGraphParameterType.String)
+    pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUserName", ParameterType.String)
     {
         Description = "rtsp source user name.",
         Default = "dummyUserName"
     });
-    graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspPassword", MediaGraphParameterType.SecretString)
+    pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspPassword", ParameterType.SecretString)
     {
         Description = "rtsp source password.",
         Default = "dummyPassword"
     });
-    graphProperties.Parameters.Add(new MediaGraphParameterDeclaration("rtspUrl", MediaGraphParameterType.String)
+    pipelineTopologyProperties.Parameters.Add(new ParameterDeclaration("rtspUrl", ParameterType.String)
     {
         Description = "rtsp Url"
     });
@@ -97,64 +97,64 @@ private void SetParameters(MediaGraphTopologyProperties graphProperties)
 
 ```C# Snippet:Azure_MediaServices_Samples_SetSourcesSinks
 // Add sources to Topology
-private void SetSources(MediaGraphTopologyProperties graphProperties)
+private void SetSources(PipelineTopologyProperties pipelineTopologyProps)
 {
-    graphProperties.Sources.Add(new MediaGraphRtspSource("rtspSource", new MediaGraphUnsecuredEndpoint("${rtspUrl}")
+    pipelineTopologyProps.Sources.Add(new RtspSource("rtspSource", new UnsecuredEndpoint("${rtspUrl}")
         {
-            Credentials = new MediaGraphUsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
+            Credentials = new UsernamePasswordCredentials("${rtspUserName}", "${rtspPassword}")
         })
     );
 }
 
 // Add sinks to Topology
-private void SetSinks(MediaGraphTopologyProperties graphProperties)
+private void SetSinks(PipelineTopologyProperties pipelineTopologyProps)
 {
-    var graphNodeInput = new List<MediaGraphNodeInput>
+    var nodeInput = new List<NodeInput>
     {
-        new MediaGraphNodeInput("rtspSource")
+        new NodeInput("rtspSource")
     };
     var cachePath = "/var/lib/azuremediaservices/tmp/";
     var cacheMaxSize = "2048";
-    graphProperties.Sinks.Add(new MediaGraphAssetSink("assetSink", graphNodeInput, "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}", cachePath, cacheMaxSize)
+    pipelineTopologyProps.Sinks.Add(new AssetSink("assetSink", nodeInput, "sampleAsset-${System.GraphTopologyName}-${System.GraphInstanceName}", cachePath, cacheMaxSize)
     {
         SegmentLength = System.Xml.XmlConvert.ToString(TimeSpan.FromSeconds(30)),
     });
 }
 ```
 
-```C# Snippet:Azure_MediaServices_Samples_BuildTopology
-private MediaGraphTopology BuildGraphTopology()
+```C# Snippet:Azure_MediaServices_Samples_BuildPipelineTopology
+private PipelineTopology BuildPipelineTopology()
 {
-    var graphProperties = new MediaGraphTopologyProperties
+    var pipelineTopologyProps = new PipelineTopologyProperties
     {
         Description = "Continuous video recording to an Azure Media Services Asset",
     };
-    SetParameters(graphProperties);
-    SetSources(graphProperties);
-    SetSinks(graphProperties);
-    return new MediaGraphTopology("ContinuousRecording")
+    SetParameters(pipelineTopologyProps);
+    SetSources(pipelineTopologyProps);
+    SetSinks(pipelineTopologyProps);
+    return new PipelineTopology("ContinuousRecording")
     {
-        Properties = graphProperties
+        Properties = pipelineTopologyProps
     };
 }
 ```
 
 ### Creating a graph instance 
 To create a graph instance, you need to have an existing graph topology.
-```C# Snippet:Azure_MediaServices_Samples_BuildInstance
-private MediaGraphInstance BuildGraphInstance(string graphTopologyName)
+```C# Snippet:Azure_MediaServices_Samples_BuildLivePipeline
+private LivePipeline BuildLivePipeline(string graphTopologyName)
 {
-    var graphInstanceProperties = new MediaGraphInstanceProperties
+    var livePipelineProps = new LivePipelineProperties
     {
         Description = "Sample graph description",
         TopologyName = graphTopologyName,
     };
 
-    graphInstanceProperties.Parameters.Add(new MediaGraphParameterDefinition("rtspUrl", "rtsp://sample.com"));
+    livePipelineProps.Parameters.Add(new ParameterDefinition("rtspUrl", "rtsp://sample.com"));
 
-    return new MediaGraphInstance("graphInstance")
+    return new LivePipeline("graphInstance")
     {
-        Properties = graphInstanceProperties
+        Properties = livePipelineProps
     };
 }
 ```
@@ -162,12 +162,12 @@ private MediaGraphInstance BuildGraphInstance(string graphTopologyName)
 ### Invoking a graph method request
 To invoke a graph method on your device you need to first define the request using the lva sdk. Then send that method request using the iot sdk's `CloudToDeviceMethod`
 ```C# Snippet:Azure_MediaServices_Samples_InvokeDirectMethod
-var setGraphRequest = new MediaGraphTopologySetRequest(graphTopology);
+var setPipelineTopRequest = new PipelineTopologySetRequest(graphTopology);
 
-var directMethod = new CloudToDeviceMethod(setGraphRequest.MethodName);
-directMethod.SetPayloadJson(setGraphRequest.GetPayloadAsJson());
+var directMethod = new CloudToDeviceMethod(setPipelineTopRequest.MethodName);
+directMethod.SetPayloadJson(setPipelineTopRequest.GetPayloadAsJson());
 
-var setGraphResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
+var setPipelineTopResponse = await _serviceClient.InvokeDeviceMethodAsync(_deviceId, _moduleId, directMethod);
 ```
 
 To try different media graph topologies with the SDK, please see the official [Samples][samples].
