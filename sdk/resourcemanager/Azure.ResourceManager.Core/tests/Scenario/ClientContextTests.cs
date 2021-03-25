@@ -9,17 +9,9 @@ namespace Azure.ResourceManager.Core.Tests
 {
     public class ClientContextTests : ResourceManagerTestBase
     {
-        private AzureResourceManagerClient _client;
-
         public ClientContextTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            _client = GetArmClient();
         }
 
         [TestCase]
