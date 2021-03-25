@@ -15,7 +15,6 @@ using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
-using SBMessage = Azure.Messaging.ServiceBus.ServiceBusMessage;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -29,14 +28,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
 
-        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IEnumerable<SBMessage> source, bool forceBatch = false)
+        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IEnumerable<ServiceBusMessage> source, bool forceBatch = false)
         {
             Argument.AssertNotNull(source, nameof(source));
             return BuildAmqpBatchFromMessage(source, forceBatch);
         }
 
         /// <summary>
-        ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="SBMessage" />
+        ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="ServiceBusMessage" />
         ///   optionally propagating the custom properties.
         /// </summary>
         ///
@@ -45,10 +44,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromMessage(IEnumerable<SBMessage> source, bool forceBatch)
+        private static AmqpMessage BuildAmqpBatchFromMessage(IEnumerable<ServiceBusMessage> source, bool forceBatch)
         {
             AmqpMessage firstAmqpMessage = null;
-            SBMessage firstMessage = null;
+            ServiceBusMessage firstMessage = null;
 
             return BuildAmqpBatchFromMessages(
                 source.Select(sbMessage =>
@@ -78,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private static AmqpMessage BuildAmqpBatchFromMessages(
             IList<AmqpMessage> batchMessages,
-            SBMessage firstMessage,
+            ServiceBusMessage firstMessage,
             bool forceBatch)
         {
             AmqpMessage batchEnvelope;
@@ -92,8 +91,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 batchEnvelope = AmqpMessage.Create(batchMessages.Select(message =>
                 {
                     message.Batchable = true;
-                    using var messageStream = message.ToStream();
-                    return new Data { Value = ReadStreamToArraySegment(messageStream) };
+                    // once the data is packaged the temporary message is no longer required
+                    using (message)
+                    {
+                        using var messageStream = message.ToStream();
+                        return new Data { Value = ReadStreamToArraySegment(messageStream) };
+                    }
                 }));
 
                 batchEnvelope.MessageFormat = AmqpConstants.AmqpBatchedMessageFormat;
@@ -145,7 +148,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return new ArraySegment<byte>(memStream.ToArray());
         }
 
-        public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
+        public static AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage sbMessage)
         {
             var amqpMessage = sbMessage.ToAmqpMessage();
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
