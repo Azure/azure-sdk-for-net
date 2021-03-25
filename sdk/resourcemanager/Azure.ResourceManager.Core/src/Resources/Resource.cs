@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets or sets the resource identifier.
         /// </summary>
-        public abstract TIdentifier Id { get; protected set; }
+        public virtual TIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets the name.
