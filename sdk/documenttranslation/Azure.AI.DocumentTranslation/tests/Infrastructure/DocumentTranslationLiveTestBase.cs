@@ -39,7 +39,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             return InstrumentClient(new BlobContainerClient(TestEnvironment.StorageConnectionString, containerName, InstrumentClientOptions(new BlobClientOptions())));
         }
 
-        public async Task<Uri> CreateSourceContainerAsync(List<string> documents)
+        public async Task<Uri> CreateSourceContainerAsync(List<TestDocument> documents)
         {
             Recording.DisableIdReuse();
             string containerName = "source" + Recording.GenerateId();
@@ -48,9 +48,9 @@ namespace Azure.AI.DocumentTranslation.Tests
 
             for (int i = 0; i < documents.Count; i++)
             {
-                byte[] byteArray = Encoding.ASCII.GetBytes(documents[i]);
+                byte[] byteArray = Encoding.ASCII.GetBytes(documents[i].Content);
                 MemoryStream stream = new MemoryStream(byteArray);
-                await containerClient.UploadBlobAsync($"document{i}.txt", stream);
+                await containerClient.UploadBlobAsync(documents[i].Name, stream);
             }
 
             var expiresOn = DateTimeOffset.Now.AddHours(1);

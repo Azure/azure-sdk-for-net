@@ -12,7 +12,7 @@ namespace Azure.AI.DocumentTranslation
     public partial class DocumentTranslationInput
     {
         /// <summary>
-        /// Initializes a new instance of DocumentTranslationInput.
+        /// Initializes a new instance of <see cref="DocumentTranslationInput"/>.
         /// </summary>
         /// <param name="sourceUri">The SAS URI for the source container containing documents to be translated.</param>
         /// <param name="targetUri">The SAS URI for the target container to which the translated documents will be written.</param>
