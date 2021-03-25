@@ -88,6 +88,7 @@ steps:
     RepoOwner: ${{ parameters.TargetDocRepoOwner }}
     WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+    PROwner: ${{ parameters.TargetDocRepoOwner }}
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
@@ -122,4 +123,4 @@ steps:
       RepoOwner: ${{ parameters.TargetDocRepoOwner }}
       WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-      PROwner: ${{ parameters.TargetDocRepoName }}
+      PROwner: ${{ parameters.TargetDocRepoOwner }}
