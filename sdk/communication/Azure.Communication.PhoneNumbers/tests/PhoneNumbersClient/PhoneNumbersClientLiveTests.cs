@@ -120,7 +120,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("twoLetterISOCountryName", ex.ParamName);
+                Assert.AreEqual("twoLetterIsoCountryName", ex.ParamName);
                 return;
             }
 
