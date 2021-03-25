@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> Operation metadata. </summary>
     public partial class Operation

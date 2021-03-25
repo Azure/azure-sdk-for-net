@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Azure.Iot.DeviceUpdate.Models;
+using Azure.IoT.DeviceUpdate.Models;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Newtonsoft.Json;

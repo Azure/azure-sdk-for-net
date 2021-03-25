@@ -10,6 +10,9 @@ parameters:
 - name: MatrixFilters
   type: object
   default: []
+- name: MatrixReplace
+  type: object
+  default: {}
 - name: JobTemplatePath
   type: string
 # Set this to false to do a full checkout for private repositories with the azure pipelines service connection
@@ -57,6 +60,7 @@ jobs:
               -Selection ${{ config.Selection }}
               -DisplayNameFilter "$(displayNameFilter)"
               -Filters "${{ join('","', parameters.MatrixFilters) }}","container=^$","SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}"
+              -Replace "${{ join('","', parameters.MatrixReplace) }}"
               -NonSparseParameters "${{ join('","', config.NonSparseParameters) }}"
           displayName: Generate VM Job Matrix ${{ config.Name }}
           name: generate_vm_job_matrix_${{ config.Name }}

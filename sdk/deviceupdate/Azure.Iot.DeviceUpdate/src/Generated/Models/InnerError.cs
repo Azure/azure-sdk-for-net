@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> An object containing more specific information than the current object about the error. </summary>
     public partial class InnerError

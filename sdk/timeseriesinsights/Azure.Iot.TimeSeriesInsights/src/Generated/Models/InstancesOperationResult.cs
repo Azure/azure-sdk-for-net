@@ -18,7 +18,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary> Initializes a new instance of InstancesOperationResult. </summary>
         /// <param name="instance"> Time series instance object - set when the operation is successful (except put operation). </param>
         /// <param name="error"> Error object - set when the operation is unsuccessful. </param>
-        internal InstancesOperationResult(TimeSeriesInstance instance, InstancesOperationError error)
+        internal InstancesOperationResult(TimeSeriesInstance instance, TimeSeriesOperationError error)
         {
             Instance = instance;
             Error = error;
@@ -27,6 +27,6 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <summary> Time series instance object - set when the operation is successful (except put operation). </summary>
         public TimeSeriesInstance Instance { get; }
         /// <summary> Error object - set when the operation is unsuccessful. </summary>
-        public InstancesOperationError Error { get; }
+        public TimeSeriesOperationError Error { get; }
     }
 }

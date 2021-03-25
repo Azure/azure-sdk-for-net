@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class ApplicationSecurityGroupsCreateOrUpdateOperation : Operation<ApplicationSecurityGroup>, IOperationSource<ApplicationSecurityGroup>
     {
         private readonly ArmOperationHelpers<ApplicationSecurityGroup> _operation;
+
+        /// <summary> Initializes a new instance of ApplicationSecurityGroupsCreateOrUpdateOperation for mocking. </summary>
+        protected ApplicationSecurityGroupsCreateOrUpdateOperation()
+        {
+        }
+
         internal ApplicationSecurityGroupsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ApplicationSecurityGroup>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ApplicationSecurityGroupsCreateOrUpdateOperation");

@@ -139,6 +139,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         internal Action<ExceptionReceivedEventArgs> ExceptionHandler { get; set; }
 
+        /// <summary>
+        /// Returns a string representation of this <see cref="EventHubOptions"/> instance.
+        /// </summary>
+        /// <returns>A string representation of this <see cref="EventHubOptions"/> instance.</returns>
         string IOptionsFormatter.Format()
         {
             JObject options = new JObject

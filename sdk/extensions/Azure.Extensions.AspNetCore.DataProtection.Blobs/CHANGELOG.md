@@ -2,6 +2,11 @@
 
 ## 1.3.0-beta.1 (Unreleased)
 
+### Changes
+
+#### Key Bug Fixes
+
+- Fixed a bug where referencing an existing empty blob resulted in a failure.
 
 ## 1.2.0 (2020-12-16)
 

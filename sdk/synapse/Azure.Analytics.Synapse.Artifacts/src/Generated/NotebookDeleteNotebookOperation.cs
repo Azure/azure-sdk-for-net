@@ -18,6 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class NotebookDeleteNotebookOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of NotebookDeleteNotebookOperation for mocking. </summary>
+        protected NotebookDeleteNotebookOperation()
+        {
+        }
+
         internal NotebookDeleteNotebookOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NotebookDeleteNotebookOperation");

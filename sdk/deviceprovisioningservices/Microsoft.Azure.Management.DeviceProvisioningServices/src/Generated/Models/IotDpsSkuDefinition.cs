@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Available Sku's of tier and units.
+    /// Available SKUs of tier and units.
     /// </summary>
     public partial class IotDpsSkuDefinition
     {

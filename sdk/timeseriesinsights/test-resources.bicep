@@ -40,7 +40,15 @@ param environmentTimeSeriesIdProperties array {
     maxLength: 3
     default: [
         {
-            'name': 'iothub-connection-device-id'
+            'name': 'building'
+            'type': 'string'
+        }
+        {
+            'name': 'floor'
+            'type': 'string'
+        }
+        {
+            'name': 'room'
             'type': 'string'
         }
     ]
@@ -59,7 +67,7 @@ param resourceGroup string {
         description: 'If you have an existing IotHub provide the name here. Defaults to the same resource group as the TSI environnment.'
     }
     default: az.resourceGroup().name
-} 
+}
 
 param eventSourceTimestampPropertyName string {
     metadata: {
@@ -73,7 +81,7 @@ param eventSourceKeyName string {
     metadata: {
         description: 'The name of the shared access key that the Time Series Insights service will use to connect to the event hub.'
     }
-    default : 'service'
+    default: 'service'
 }
 
 var rbacOwnerRoleDefinitionId = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635'
@@ -93,8 +101,8 @@ resource iotHub 'Microsoft.Devices/IotHubs@2020-03-01' = {
     location: region
     properties: {}
     sku: {
-      name: 'S1'
-      capacity: 1
+        name: 'S1'
+        capacity: 1
     }
 }
 
@@ -104,8 +112,56 @@ resource consumerGroup 'Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGrou
         iotHub
     ]
     properties: {
-      mode: 'Complete'
+        mode: 'Complete'
     }
+}
+
+var userIdentityName = 'userIdentity'
+resource userIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
+    name: '${userIdentityName}'
+    location: az.resourceGroup().location
+}
+
+var roleAssignmentName = guid(az.resourceGroup().name)
+var ownerRoleDefinitionId = '8e3af657-a8ff-443c-a75c-2fe8c4bcb635'
+resource userIdentityRoleAssignment 'Microsoft.Authorization/roleAssignments@2018-09-01-preview' = {
+    name: '${roleAssignmentName}'
+    properties: {
+        roleDefinitionId: '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/${ownerRoleDefinitionId}'
+        principalId: '${reference(userIdentity.id, '2018-11-30').principalId}'
+        principalType: 'ServicePrincipal'
+    }
+}
+
+var deviceName = 'device1'
+
+resource deviceCreationScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
+    name: 'createIotHubDevice'
+    kind: 'AzureCLI'
+    location: az.resourceGroup().location
+    identity: {
+        type: 'UserAssigned'
+        userAssignedIdentities: {
+            '${userIdentity.id}': {}
+        }
+    }
+    properties: {
+        azCliVersion: '2.9.1'
+        retentionInterval: 'P1D'
+        arguments: '${iotHubName} ${deviceName}'
+        scriptContent: '''
+      az extension add --name azure-iot -y
+  
+      az iot hub device-identity create --hub-name $1 --device-id $2
+      connectionstring=$(az iot hub device-identity connection-string show --hub-name $1 --device-id $2 -o tsv)
+      
+      result="{\"device-connection-string\":"\""$connectionstring"\""}"
+      echo $result | jq -c > $AZ_SCRIPTS_OUTPUT_PATH    
+      '''
+    }
+    dependsOn: [
+        userIdentityRoleAssignment
+    ]
 }
 
 resource environment 'Microsoft.TimeSeriesInsights/environments@2018-08-15-preview' = {
@@ -116,11 +172,11 @@ resource environment 'Microsoft.TimeSeriesInsights/environments@2018-08-15-previ
         storageConfiguration: {
             accountName: storageAccountName
             managementKey: listKeys(resourceId('Microsoft.Storage/storageAccounts', storageAccountName), '2019-06-01').keys[0].value
-          }
-          timeSeriesIdProperties: environmentTimeSeriesIdProperties
-          warmStoreConfiguration: {
+        }
+        timeSeriesIdProperties: environmentTimeSeriesIdProperties
+        warmStoreConfiguration: {
             dataRetention: 'P7D'
-          }  
+        }
     }
     sku: {
         name: 'L1'
@@ -129,7 +185,7 @@ resource environment 'Microsoft.TimeSeriesInsights/environments@2018-08-15-previ
 }
 
 resource eventSource 'Microsoft.TimeSeriesInsights/environments/eventsources@2018-08-15-preview' = {
-    name: concat(environmentName,'/', eventSourceName)
+    name: concat(environmentName, '/', eventSourceName)
     location: region
     kind: 'Microsoft.IoTHub'
     dependsOn: [
@@ -171,3 +227,4 @@ resource storageaccount 'Microsoft.Storage/storageAccounts@2018-11-01' = {
 }
 
 output TIMESERIESINSIGHTS_URL string = '${environment.properties.dataAccessFqdn}'
+output IOTHUB_CONNECTION_STRING string = deviceCreationScript.properties.outputs['device-connection-string']

@@ -11,12 +11,12 @@ namespace Azure.Core.Tests
     {
         private readonly Func<DiagnosticListener, bool> _selector;
 
-        private List<IDisposable> _subscriptions = new ();
+        private List<IDisposable> _subscriptions = new();
 
-        public List<DiagnosticListener> Sources { get; } = new ();
-        public Queue<(string Key, object Value, DiagnosticListener Listener)> Events { get; } = new ();
+        public List<DiagnosticListener> Sources { get; } = new();
+        public Queue<(string Key, object Value, DiagnosticListener Listener)> Events { get; } = new();
 
-        public Queue<(string, object, object)> IsEnabledCalls { get; } = new ();
+        public Queue<(string Name, object Arg1, object Arg2)> IsEnabledCalls { get; } = new();
 
         public TestDiagnosticListener(string name) : this(source => source.Name == name)
         {
@@ -90,7 +90,7 @@ namespace Azure.Core.Tests
             private DiagnosticListener _listener;
 
             public InternalListener(
-                Queue<(string, object, DiagnosticListener)> queue,
+                Queue<(string Key, object Value, DiagnosticListener Listener)> queue,
                 DiagnosticListener listener)
             {
                 _queue = queue;

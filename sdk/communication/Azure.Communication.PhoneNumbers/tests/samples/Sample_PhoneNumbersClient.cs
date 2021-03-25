@@ -105,7 +105,7 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             if (!IncludePhoneNumberLiveTests)
                 Assert.Ignore("Include phone number live tests flag is off.");
 
-            var connectionString = TestEnvironment.ConnectionString;
+            var connectionString = TestEnvironment.LiveTestConnectionString;
 
             #region Snippet:CreatePhoneNumbersClient
             // Get a connection string to our Azure Communication resource.

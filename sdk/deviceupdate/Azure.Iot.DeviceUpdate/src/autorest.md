@@ -1,4 +1,4 @@
-# Azure.Iot.DeviceUpdate
+# Azure.IoT.DeviceUpdate
 
 Run `generate.ps1` or `dotnet msbuild /t:GenerateCode` to generate code.
 

@@ -28,6 +28,7 @@ namespace Azure.Iot.TimeSeriesInsights
         private readonly ModelSettingsRestClient _modelSettingsRestClient;
         private readonly TimeSeriesInstancesRestClient _timeSeriesInstancesRestClient;
         private readonly TimeSeriesTypesRestClient _timeSeriesTypesRestClient;
+        private readonly QueryRestClient _queryRestClient;
 
         /// <summary>
         /// Creates a new instance of the <see cref="TimeSeriesInsightsClient"/> class.
@@ -88,6 +89,7 @@ namespace Azure.Iot.TimeSeriesInsights
             _modelSettingsRestClient = new ModelSettingsRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _timeSeriesInstancesRestClient = new TimeSeriesInstancesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _timeSeriesTypesRestClient = new TimeSeriesTypesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
+            _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
         }
 
         /// <summary>
@@ -653,7 +655,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the <paramref name="timeSeriesInstances"/> array in the request.
-        /// A <seealso cref="InstancesOperationError"/> object will be set when operation is unsuccessful.
+        /// A <seealso cref="TimeSeriesOperationError"/> object will be set when operation is unsuccessful.
         /// </returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.Iot.TimeSeriesInsights/samples">our repo samples</see>.
@@ -664,7 +666,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesInstances"/> is empty.
         /// </exception>
-        public virtual async Task<Response<InstancesOperationError[]>> CreateOrReplaceTimeSeriesInstancesAsync(
+        public virtual async Task<Response<TimeSeriesOperationError[]>> CreateOrReplaceTimeSeriesInstancesAsync(
             IEnumerable<TimeSeriesInstance> timeSeriesInstances,
             CancellationToken cancellationToken = default)
         {
@@ -689,7 +691,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
                 // Extract the errors array from the response. If there was an error with creating or replacing one of the instances,
                 // it will be placed at the same index location that corresponds to its place in the input array.
-                IEnumerable<InstancesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
+                IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
 
                 return Response.FromValue(errorResults.ToArray(), executeBatchResponse.GetRawResponse());
             }
@@ -708,7 +710,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the <paramref name="timeSeriesInstances"/> array in the request.
-        /// A <seealso cref="InstancesOperationError"/> object will be set when operation is unsuccessful.
+        /// A <seealso cref="TimeSeriesOperationError"/> object will be set when operation is unsuccessful.
         /// </returns>
         /// <seealso cref="CreateOrReplaceTimeSeriesInstancesAsync(IEnumerable{TimeSeriesInstance}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
@@ -719,7 +721,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesInstances"/> is empty.
         /// </exception>
-        public virtual Response<InstancesOperationError[]> CreateOrReplaceTimeSeriesInstances(
+        public virtual Response<TimeSeriesOperationError[]> CreateOrReplaceTimeSeriesInstances(
             IEnumerable<TimeSeriesInstance> timeSeriesInstances,
             CancellationToken cancellationToken = default)
         {
@@ -742,7 +744,7 @@ namespace Azure.Iot.TimeSeriesInsights
 
                 // Extract the errors array from the response. If there was an error with creating or replacing one of the instances,
                 // it will be placed at the same index location that corresponds to its place in the input array.
-                IEnumerable<InstancesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
+                IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
 
                 return Response.FromValue(errorResults.ToArray(), executeBatchResponse.GetRawResponse());
             }
@@ -869,7 +871,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
         /// </exception>
-        public virtual async Task<Response<InstancesOperationError[]>> DeleteInstancesAsync(
+        public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteInstancesAsync(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
         {
@@ -921,7 +923,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesNames"/> is empty.
         /// </exception>
-        public virtual Response<InstancesOperationError[]> DeleteInstances(
+        public virtual Response<TimeSeriesOperationError[]> DeleteInstances(
             IEnumerable<string> timeSeriesNames,
             CancellationToken cancellationToken = default)
         {
@@ -972,7 +974,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
         /// </exception>
-        public virtual async Task<Response<InstancesOperationError[]>> DeleteInstancesAsync(
+        public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteInstancesAsync(
             IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
@@ -1024,7 +1026,7 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesIds"/> is empty.
         /// </exception>
-        public virtual Response<InstancesOperationError[]> DeleteInstances(
+        public virtual Response<TimeSeriesOperationError[]> DeleteInstances(
             IEnumerable<TimeSeriesId> timeSeriesIds,
             CancellationToken cancellationToken = default)
         {
@@ -1058,10 +1060,135 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets time series insight types in pages asynchronously.
+        /// Retrieve raw events for a given Time Series Id asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve raw events for.</param>
+        /// <param name="startTime">Start timestamp of the time range. Events that have this timestamp are included.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded.</param>
+        /// <param name="options">Optional parameters to use when querying for events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
+        public virtual AsyncPageable<QueryResultPage> QueryEventsAsync(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QueryEventsRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+            scope.Start();
+
+            try
+            {
+                return QueryEventsInternalAsync(timeSeriesId, startTime, endTime, options, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve raw events for a given Time Series Id synchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve raw events for.</param>
+        /// <param name="startTime">Start timestamp of the time range. Events that have this timestamp are included.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded.</param>
+        /// <param name="options">Optional parameters to use when querying for events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
+        public virtual Pageable<QueryResultPage> QueryEvents(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QueryEventsRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+            scope.Start();
+
+            try
+            {
+                return QueryEventsInternal(timeSeriesId, startTime, endTime, options, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve raw events for a given Time Series Id over a specified time interval asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve raw events for.</param>
+        /// <param name="timeSpan">The time interval over which to query data.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded. If null is provided, <c>DateTimeOffset.UtcNow</c> is used.</param>
+        /// <param name="options">Optional parameters to use when querying for events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames. Each frame is an array of
+        /// timestamps along with their associated properties.</returns>
+        public virtual AsyncPageable<QueryResultPage> QueryEventsAsync(
+            TimeSeriesId timeSeriesId,
+            TimeSpan timeSpan,
+            DateTimeOffset? endTime = null,
+            QueryEventsRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+            scope.Start();
+
+            try
+            {
+                DateTimeOffset rangeEndTime = endTime ?? DateTimeOffset.UtcNow;
+                DateTimeOffset rangeStartTime = rangeEndTime - timeSpan;
+                return QueryEventsInternalAsync(timeSeriesId, rangeStartTime, rangeEndTime, options, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve raw events for a given Time Series Id over a certain time interval synchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve raw events for.</param>
+        /// <param name="timeSpan">The time interval over which to query data.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded. If null is provided, <c>DateTimeOffset.UtcNow</c> is used.</param>
+        /// <param name="options">Optional parameters to use when querying for events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
+        public virtual Pageable<QueryResultPage> QueryEvents(
+            TimeSeriesId timeSeriesId,
+            TimeSpan timeSpan,
+            DateTimeOffset? endTime = null,
+            QueryEventsRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+            scope.Start();
+
+            try
+            {
+                DateTimeOffset rangeEndTime = endTime ?? DateTimeOffset.UtcNow;
+                DateTimeOffset rangeStartTime = rangeEndTime - timeSpan;
+                return QueryEventsInternal(timeSeriesId, rangeStartTime, rangeEndTime, options, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series Insights types in pages asynchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesType}"/> of Time Series instances types with the http response.</returns>
+        /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesType}"/> of Time Series types with the http response.</returns>
         public virtual AsyncPageable<TimeSeriesType> GetTimeSeriesTypesAsync(
             CancellationToken cancellationToken = default)
         {
@@ -1118,10 +1245,10 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets time series insight types in pages synchronously.
+        /// Gets Time Series Insights types in pages synchronously.
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="Pageable{TimeSeriesType}"/> of Time Series instances types with the http response.</returns>
+        /// <returns>The pageable list <see cref="Pageable{TimeSeriesType}"/> of Time Series types with the http response.</returns>
         /// <seealso cref="GetTimeSeriesTypesAsync(CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
@@ -1176,9 +1303,9 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series types by Time Series Types Names asynchronously.
+        /// Gets Time Series Insights types by type names asynchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeNames">List of names of the Time Series Types to return.</param>
+        /// <param name="timeSeriesTypeNames">List of names of the Time Series types to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of type or error objects corresponding by position to the array in the request.
@@ -1193,11 +1320,11 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is empty.
         /// </exception>
-        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesbyNamesAsync(
+        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesByNamesAsync(
             IEnumerable<string> timeSeriesTypeNames,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypes)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypesByNames)}");
             scope.Start();
 
             try
@@ -1228,15 +1355,15 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series types by Time Series Types Names synchronously.
+        /// Gets Time Series Insights types by type names synchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeNames">List of names of the Time Series Types to return.</param>
+        /// <param name="timeSeriesTypeNames">List of names of the Time Series types to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of type or error objects corresponding by position to the array in the request.
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
-        /// <seealso cref="GetTimeSeriesTypesbyNamesAsync(IEnumerable{string}, CancellationToken)">
+        /// <seealso cref="GetTimeSeriesTypesByNamesAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
@@ -1245,11 +1372,11 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypeNames"/> is empty.
         /// </exception>
-        public virtual Response<TimeSeriesTypeOperationResult[]> GetTimeSeriesTypesbyNames(
+        public virtual Response<TimeSeriesTypeOperationResult[]> GetTimeSeriesTypesByNames(
             IEnumerable<string> timeSeriesTypeNames,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypes)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypesByNames)}");
             scope.Start();
 
             try
@@ -1279,9 +1406,9 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series types by Time Series Type Ids asynchronously.
+        /// Gets Time Series Insights types by type Ids asynchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeIds">List of Time Series Type Ids of the Time Series Types to return.</param>
+        /// <param name="timeSeriesTypeIds">List of Time Series type Ids of the Time Series types to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of type or error objects corresponding by position to the array in the request.
@@ -1296,11 +1423,11 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
         /// </exception>
-        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesbyIdAsync(
+        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> GetTimeSeriesTypesByIdAsync(
             IEnumerable<string> timeSeriesTypeIds,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypes)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypesById)}");
             scope.Start();
 
             try
@@ -1331,15 +1458,15 @@ namespace Azure.Iot.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Gets Time Series types by Time Series Type Ids synchronously.
+        /// Gets Time Series Insights types by type Ids synchronously.
         /// </summary>
-        /// <param name="timeSeriesTypeIds">List of Time Series Type Ids of the Time Series Types to return..</param>
+        /// <param name="timeSeriesTypeIds">List of Time Series type Ids of the Time Series types to return.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of type or error objects corresponding by position to the array in the request.
         /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
-        /// <seealso cref="GetTimeSeriesTypesbyIdAsync(IEnumerable{string}, CancellationToken)">
+        /// <seealso cref="GetTimeSeriesTypesByIdAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
         /// <exception cref="ArgumentNullException">
@@ -1348,11 +1475,11 @@ namespace Azure.Iot.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypeIds"/> is empty.
         /// </exception>
-        public virtual Response<TimeSeriesTypeOperationResult[]> GetTimeSeriesTypesbyId(
+        public virtual Response<TimeSeriesTypeOperationResult[]> GetTimeSeriesTypesById(
             IEnumerable<string> timeSeriesTypeIds,
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypes)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetTimeSeriesTypesById)}");
             scope.Start();
 
             try
@@ -1378,6 +1505,157 @@ namespace Azure.Iot.TimeSeriesInsights
             {
                 scope.Failed(ex);
                 throw;
+            }
+        }
+
+        private AsyncPageable<QueryResultPage> QueryEventsInternalAsync(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QueryEventsRequestOptions options,
+            CancellationToken cancellationToken)
+        {
+            var searchSpan = new DateTimeRange(startTime, endTime);
+            var queryRequest = new QueryRequest
+            {
+                GetEvents = new GetEvents(timeSeriesId, searchSpan)
+            };
+
+            BuildRequestOptions(options, queryRequest);
+
+            async Task<Page<QueryResultPage>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = await _queryRestClient
+                        .ExecuteAsync(queryRequest, options?.StoreType?.ToString(), null, null, cancellationToken)
+                        .ConfigureAwait(false);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            async Task<Page<QueryResultPage>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = await _queryRestClient
+                        .ExecuteAsync(queryRequest, options?.StoreType?.ToString(), nextLink, null, cancellationToken)
+                        .ConfigureAwait(false);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        private Pageable<QueryResultPage> QueryEventsInternal(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QueryEventsRequestOptions options,
+            CancellationToken cancellationToken)
+        {
+            var searchSpan = new DateTimeRange(startTime, endTime);
+            var queryRequest = new QueryRequest
+            {
+                GetEvents = new GetEvents(timeSeriesId, searchSpan)
+            };
+
+            BuildRequestOptions(options, queryRequest);
+
+            Page<QueryResultPage> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = _queryRestClient
+                        .Execute(queryRequest, options?.StoreType?.ToString(), null, null, cancellationToken);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            Page<QueryResultPage> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                scope.Start();
+                try
+                {
+                    Response<QueryResultPage> response = _queryRestClient
+                        .Execute(queryRequest, options?.StoreType?.ToString(), nextLink, null, cancellationToken);
+
+                    var frame = new QueryResultPage[]
+                    {
+                            response.Value
+                    };
+
+                    return Page.FromValues(frame, response.Value.ContinuationToken, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        private static void BuildRequestOptions(QueryEventsRequestOptions options, QueryRequest queryRequest)
+        {
+            if (options != null)
+            {
+                if (options.Filter != null)
+                {
+                    queryRequest.GetEvents.Filter = new TimeSeriesExpression(options.Filter);
+                }
+
+                if (options.ProjectedProperties != null)
+                {
+                    foreach (EventProperty projectedProperty in options.ProjectedProperties)
+                    {
+                        queryRequest.GetEvents.ProjectedProperties.Add(projectedProperty);
+                    }
+                }
+
+                queryRequest.GetEvents.Take = options.MaximumNumberOfEvents;
             }
         }
     }

@@ -6,7 +6,7 @@
     <PackageTags>Azure Container Registry;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

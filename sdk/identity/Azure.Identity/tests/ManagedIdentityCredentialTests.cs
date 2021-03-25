@@ -24,7 +24,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyImdsRequestWithClientIdMockAsync()
         {
-            using (new TestEnvVar(new () { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null } }))
+            using (new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null } }))
             {
                 var response = CreateMockResponse(200, ExpectedToken);
                 var mockTransport = new MockTransport(response);
@@ -57,7 +57,7 @@ namespace Azure.Identity.Tests
         [TestCase(502)]
         public void VerifyImdsRequestHandlesFailedRequestWithCredentialUnavailableExceptionMockAsync(int responseCode)
         {
-            using (new TestEnvVar(new () { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null } }))
+            using (new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null } }))
             {
                 var response = CreateMockResponse(responseCode, ExpectedToken);
                 var mockTransport = new MockTransport(response);
@@ -80,7 +80,7 @@ namespace Azure.Identity.Tests
         [TestCase("mock-client-id")]
         public async Task VerifyAppService2017RequestWithClientIdMockAsync(string clientId)
         {
-            using (new TestEnvVar(new () { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" } }))
+            using (new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" } }))
             {
                 var response = CreateMockResponse(200, ExpectedToken);
                 var mockTransport = new MockTransport(response);
@@ -114,7 +114,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyAppService2019RequestMockAsync()
         {
-            using (new TestEnvVar(new () { { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" } }))
+            using (new TestEnvVar(new() { { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" } }))
             {
                 var response = CreateMockResponse(200, ExpectedToken);
                 var mockTransport = new MockTransport(response);
@@ -144,7 +144,7 @@ namespace Azure.Identity.Tests
         // The test should be removed if and when support for this api version is added back
         public async Task VerifyAppService2017RequestWith2019EnvVarsMockAsync()
         {
-            using (new TestEnvVar(new () { { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" } }))
+            using (new TestEnvVar(new() { { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" }, { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", "mock-msi-secret" } }))
             {
                 var response = CreateMockResponse(200, ExpectedToken);
                 var mockTransport = new MockTransport(response);
@@ -174,7 +174,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyAppService2019RequestWithClientIdMockAsync()
         {
-            using (new TestEnvVar(new () { { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" } }))
+            using (new TestEnvVar(new() { { "IDENTITY_ENDPOINT", "https://identity.endpoint/" }, { "IDENTITY_HEADER", "mock-identity-header" } }))
             {
                 var response = CreateMockResponse(200, ExpectedToken);
                 var mockTransport = new MockTransport(response);
@@ -201,7 +201,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task VerifyCloudShellMsiRequestMockAsync()
         {
-            using (new TestEnvVar(new () { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", null } }))
+            using (new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", null } }))
             {
                 var response = CreateMockResponse(200, ExpectedToken);
                 var mockTransport = new MockTransport(response);
@@ -234,7 +234,7 @@ namespace Azure.Identity.Tests
         [TestCase("mock-client-id")]
         public async Task VerifyCloudShellMsiRequestWithClientIdMockAsync(string clientId)
         {
-            using (new TestEnvVar(new () { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", null } }))
+            using (new TestEnvVar(new() { { "MSI_ENDPOINT", "https://mock.msi.endpoint/" }, { "MSI_SECRET", null } }))
             {
                 var response = CreateMockResponse(200, ExpectedToken);
                 var mockTransport = new MockTransport(response);

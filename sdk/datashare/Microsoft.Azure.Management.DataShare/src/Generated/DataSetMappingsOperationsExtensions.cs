@@ -223,9 +223,15 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='skipToken'>
             /// Continuation token
             /// </param>
-            public static IPage<DataSetMapping> ListByShareSubscription(this IDataSetMappingsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string))
+            /// <param name='filter'>
+            /// Filters the results using OData syntax.
+            /// </param>
+            /// <param name='orderby'>
+            /// Sorts the results using OData syntax.
+            /// </param>
+            public static IPage<DataSetMapping> ListByShareSubscription(this IDataSetMappingsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string), string filter = default(string), string orderby = default(string))
             {
-                return operations.ListByShareSubscriptionAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken).GetAwaiter().GetResult();
+                return operations.ListByShareSubscriptionAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken, filter, orderby).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -249,12 +255,18 @@ namespace Microsoft.Azure.Management.DataShare
             /// <param name='skipToken'>
             /// Continuation token
             /// </param>
+            /// <param name='filter'>
+            /// Filters the results using OData syntax.
+            /// </param>
+            /// <param name='orderby'>
+            /// Sorts the results using OData syntax.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DataSetMapping>> ListByShareSubscriptionAsync(this IDataSetMappingsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DataSetMapping>> ListByShareSubscriptionAsync(this IDataSetMappingsOperations operations, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = default(string), string filter = default(string), string orderby = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByShareSubscriptionWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByShareSubscriptionWithHttpMessagesAsync(resourceGroupName, accountName, shareSubscriptionName, skipToken, filter, orderby, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

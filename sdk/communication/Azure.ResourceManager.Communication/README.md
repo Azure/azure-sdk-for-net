@@ -22,7 +22,7 @@ Use the management library for Azure Communication Services to:
 Install the Azure Management SDK for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.ResourceManager.Communication --version 1.0.0-beta.3
+dotnet add package Azure.ResourceManager.Communication --version 1.0.0
 ``` 
 
 ### Include the client library
@@ -148,7 +148,7 @@ Your instance of the Communication Services Management client library client (``
 
 #### Create a Communication Services resource
 
-When creating a Communication Services resource, you'll specify the resource group name and resource name. Note that the `Location` property will always be `global`, and during public preview the `DataLocation` value must be `UnitedStates`.
+When creating a Communication Services resource, you'll specify the resource group name and resource name. Note that the `Location` property will always be `global` and the `DataLocation` value must be `UnitedStates`.
 
 ```csharp
 var resourceGroupName = "myResourceGroupName";

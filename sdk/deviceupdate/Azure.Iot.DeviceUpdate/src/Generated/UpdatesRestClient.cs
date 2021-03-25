@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Iot.DeviceUpdate.Models;
+using Azure.IoT.DeviceUpdate.Models;
 
-namespace Azure.Iot.DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     internal partial class UpdatesRestClient
     {
@@ -822,7 +822,7 @@ namespace Azure.Iot.DeviceUpdate
         /// <param name="accessCondition"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<Operation, UpdatesGetOperationHeaders>> GetOperationAsync(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<Models.Operation, UpdatesGetOperationHeaders>> GetOperationAsync(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -836,13 +836,13 @@ namespace Azure.Iot.DeviceUpdate
             {
                 case 200:
                     {
-                        Operation value = default;
+                        Models.Operation value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Operation.DeserializeOperation(document.RootElement);
+                        value = Models.Operation.DeserializeOperation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 304:
-                    return ResponseWithHeaders.FromValue<Operation, UpdatesGetOperationHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<Models.Operation, UpdatesGetOperationHeaders>(null, headers, message.Response);
                 default:
                     throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
             }
@@ -853,7 +853,7 @@ namespace Azure.Iot.DeviceUpdate
         /// <param name="accessCondition"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public ResponseWithHeaders<Operation, UpdatesGetOperationHeaders> GetOperation(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<Models.Operation, UpdatesGetOperationHeaders> GetOperation(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
@@ -867,13 +867,13 @@ namespace Azure.Iot.DeviceUpdate
             {
                 case 200:
                     {
-                        Operation value = default;
+                        Models.Operation value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Operation.DeserializeOperation(document.RootElement);
+                        value = Models.Operation.DeserializeOperation(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 case 304:
-                    return ResponseWithHeaders.FromValue<Operation, UpdatesGetOperationHeaders>(null, headers, message.Response);
+                    return ResponseWithHeaders.FromValue<Models.Operation, UpdatesGetOperationHeaders>(null, headers, message.Response);
                 default:
                     throw _clientDiagnostics.CreateRequestFailedException(message.Response);
             }

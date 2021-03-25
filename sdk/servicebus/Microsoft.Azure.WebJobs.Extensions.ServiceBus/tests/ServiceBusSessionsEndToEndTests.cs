@@ -348,7 +348,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
          * Helper functions
          */
 
-        private (JobHost, IHost) BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true)
+        private (JobHost JobHost, IHost Host) BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true)
         {
             return BuildHost<T>(builder =>
                 builder.ConfigureWebJobs(b =>
@@ -416,9 +416,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
-
-                // ensure message are completed
-                await Task.Delay(2000);
             }
         }
 

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Communication.PhoneNumbers.Models
 {
@@ -11,7 +10,7 @@ namespace Azure.Communication.PhoneNumbers.Models
     /// </summary>
     public static class PhoneNumbersModelFactory
     {
-        /// <summary> Initializes a new instance of PurchasedPhoneNumber. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumber"/>. </summary>
         /// <param name="id"> The id of the phone number, e.g. 14255550123. </param>
         /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +14255550123. </param>
         /// <param name="countryCode"> The ISO 3166-2 code of the phone number&apos;s country, e.g. US. </param>
@@ -25,11 +24,19 @@ namespace Azure.Communication.PhoneNumbers.Models
 #pragma warning restore CA1054 // URI-like parameters should not be strings
             => new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost);
 
-        /// <summary> Initializes a new instance of PhoneNumberCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberCost"/>. </summary>
         /// <param name="amount"> The cost amount. </param>
         /// <param name="currencyCode"> The ISO 4217 currency code for the cost amount. </param>
         /// <param name="billingFrequency"> The frequency with which the cost gets billed. </param>
         public static PhoneNumberCost PhoneNumberCost(double amount, string currencyCode, string billingFrequency)
             => new PhoneNumberCost(amount, currencyCode, billingFrequency);
+
+        /// <summary> Initializes a new instance of <see cref="ReleasePhoneNumberResult"/>. </summary>
+        public static ReleasePhoneNumberResult ReleasePhoneNumberResult()
+            => new ReleasePhoneNumberResult();
+
+        /// <summary> Initializes a new instance of <see cref="PurchasePhoneNumbersResult"/>. </summary>
+        public static PurchasePhoneNumbersResult PurchasePhoneNumbersResult()
+            => new PurchasePhoneNumbersResult();
     }
 }
