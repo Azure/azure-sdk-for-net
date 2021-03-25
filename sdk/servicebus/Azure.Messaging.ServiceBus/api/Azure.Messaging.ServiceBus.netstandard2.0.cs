@@ -59,6 +59,8 @@ namespace Azure.Messaging.ServiceBus
     {
         protected ServiceBusClient() { }
         public ServiceBusClient(string connectionString) { }
+        public ServiceBusClient(string fullyQualifiedNamespace, Azure.AzureNamedKeyCredential credential, Azure.Messaging.ServiceBus.ServiceBusClientOptions options = null) { }
+        public ServiceBusClient(string fullyQualifiedNamespace, Azure.AzureSasCredential credential, Azure.Messaging.ServiceBus.ServiceBusClientOptions options = null) { }
         public ServiceBusClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential) { }
         public ServiceBusClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
         public ServiceBusClient(string connectionString, Azure.Messaging.ServiceBus.ServiceBusClientOptions options) { }
@@ -717,6 +719,8 @@ namespace Azure.Messaging.ServiceBus.Administration
     {
         protected ServiceBusAdministrationClient() { }
         public ServiceBusAdministrationClient(string connectionString) { }
+        public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.AzureNamedKeyCredential credential, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions options = null) { }
+        public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.AzureSasCredential credential, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions options = null) { }
         public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential) { }
         public ServiceBusAdministrationClient(string fullyQualifiedNamespace, Azure.Core.TokenCredential credential, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions options) { }
         public ServiceBusAdministrationClient(string connectionString, Azure.Messaging.ServiceBus.Administration.ServiceBusAdministrationClientOptions options) { }

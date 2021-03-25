@@ -160,7 +160,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceEndpoint = serviceEndpoint;
             Transport = transport;
             Proxy = proxy;
-            TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential, serviceEndpoint.ToString()), OperationCancellationSource.Token);
+            TokenProvider = new CbsTokenProvider(new ServiceBusTokenCredential(credential), OperationCancellationSource.Token);
             Id = $"{ ServiceEndpoint }-{ Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture).Substring(0, 8) }";
             _useSingleSession = useSingleSession;
 #pragma warning disable CA2214 // Do not call overridable methods in constructors. This internal method is virtual for testing purposes.
