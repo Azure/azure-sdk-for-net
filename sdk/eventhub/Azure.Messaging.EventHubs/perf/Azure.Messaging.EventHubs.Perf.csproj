@@ -20,11 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\src\Azure.Messaging.EventHubs.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Messaging.EventHubs.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
   <!-- Import Event Hubs shared source -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Perf.projitems" Label="Perf" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Messaging.EventHubs.Shared\src\Azure.Messaging.EventHubs.Shared.Perf.projitems" Label="Perf" />
 </Project>
