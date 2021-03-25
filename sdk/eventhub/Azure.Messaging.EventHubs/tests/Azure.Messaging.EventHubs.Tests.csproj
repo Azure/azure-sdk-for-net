@@ -6,6 +6,11 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <ExcludeRecordingFramework>true</ExcludeRecordingFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Authorization\**" />
+    <EmbeddedResource Remove="Authorization\**" />
+    <None Remove="Authorization\**" />
+  </ItemGroup>
 
    <ItemGroup>
     <Folder Include="Properties\" />

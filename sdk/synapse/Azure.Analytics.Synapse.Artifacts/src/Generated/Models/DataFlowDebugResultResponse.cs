@@ -10,10 +10,5 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Response body structure of data flow result for data preview, statistics or expression preview. </summary>
     public partial class DataFlowDebugResultResponse
     {
-
-        /// <summary> The run status of data preview, statistics or expression preview. </summary>
-        public string Status { get; }
-        /// <summary> The result data of data preview, statistics or expression preview. </summary>
-        public string Data { get; }
     }
 }

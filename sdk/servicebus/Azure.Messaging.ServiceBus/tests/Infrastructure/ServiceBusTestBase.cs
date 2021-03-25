@@ -104,8 +104,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                     It.IsAny<uint>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
-                    It.IsAny<bool>(),
-                    It.IsAny<string>()))
+                    It.IsAny<bool>()))
                 .Returns(mockTransportReceiver.Object);
             return mockConnection.Object;
         }

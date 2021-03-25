@@ -1,38 +1,76 @@
 # CloudNative CloudEvent support for Azure.Messaging.EventGrid library for .NET
 
-TODO
+This library can be used to enable publishing CloudNative CloudEvents using the Azure Event Grid library.
 
 ## Getting started
 
-TODO
-
 ### Install the package
 
-TODO
+Install the client library from [NuGet](https://www.nuget.org/):
+
+```PowerShell
+dotnet add package Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents --prerelease
+```
 
 ### Prerequisites
 
-TODO
+You must have an [Azure subscription](https://azure.microsoft.com/free/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/). There is a [similar tutorial](https://docs.microsoft.com/azure/event-grid/custom-event-quickstart) using [Azure CLI](https://docs.microsoft.com/cli/azure).
 
 ### Authenticate the client
 
-TODO
+In order for the client library to interact with a topic or domain, you will need the `endpoint` of the Event Grid topic and a `credential`, which can be created using the topic's access key.
+
+You can find the endpoint for your Event Grid topic either in the [Azure Portal](https://portal.azure.com/) or by using the [Azure CLI](https://docs.microsoft.com/cli/azure) snippet below.
+
+```bash
+az eventgrid topic show --name <your-resource-name> --resource-group <your-resource-group-name> --query "endpoint"
+```
+
+The access key can also be found through the [portal](https://docs.microsoft.com/azure/event-grid/get-access-keys), or by using the Azure CLI snippet below:
+```bash
+az eventgrid topic key list --name <your-resource-name> --resource-group <your-resource-group-name> --query "key1"
+```
+
+#### Creating and Authenticating `EventGridPublisherClient`
+
+Once you have your access key and topic endpoint, you can create the publisher client as follows:
+```C#
+EventGridPublisherClient client = new EventGridPublisherClient(
+    new Uri("<endpoint>"),
+    new AzureKeyCredential("<access-key>"));
+```
 
 ## Key concepts
 
-TODO
+For information about general Event Grid concepts: [Concepts in Azure Event Grid](https://docs.microsoft.com/azure/event-grid/concepts).
+
+For detailed information about the Event Grid client library concepts: [Event Grid Client Library](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid#key-concepts)
 
 ## Examples
 
-TODO
+```C# Snippet:CloudNativePublish
+EventGridPublisherClient client = new EventGridPublisherClient(
+        new Uri(TestEnvironment.CloudEventTopicHost),
+        new AzureKeyCredential(TestEnvironment.CloudEventTopicKey));
+
+var cloudEvent =
+    new CloudEvent(
+        type: "record",
+        source: new Uri("http://www.contoso.com"))
+        {
+            Data = "data"
+        };
+
+await client.SendCloudEventAsync(cloudEvent);
+```
 
 ## Troubleshooting
 
-TODO
+For troubleshooting information, see the [Event Grid Client Library documentation](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid#troubleshooting).
 
 ## Next steps
 
-TODO
+View more [samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/tests/Samples) here for common usages of the library.
 
 ## Contributing
 

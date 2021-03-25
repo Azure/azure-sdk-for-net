@@ -18,7 +18,6 @@ namespace Azure.Data.AppConfiguration.Tests
 
         public ConfigurationLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher = new ConfigurationRecordMatcher();
         }
 
         private string GenerateKeyId(string prefix = null)

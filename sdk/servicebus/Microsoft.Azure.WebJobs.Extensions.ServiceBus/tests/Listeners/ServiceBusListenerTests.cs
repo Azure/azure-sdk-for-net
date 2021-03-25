@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
@@ -75,12 +74,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 lockedUntil: DateTimeOffset.Now);
             var receiver = new Mock<ServiceBusReceiver>().Object;
             var args = new ProcessMessageEventArgs(message, receiver, CancellationToken.None);
-            _mockMessageProcessor.Setup(p => p.BeginProcessingMessageAsync(receiver, message, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            _mockMessageProcessor.Setup(p => p.BeginProcessingMessageAsync(It.IsAny<ServiceBusMessageActions>(), message, It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
             FunctionResult result = new FunctionResult(true);
             _mockExecutor.Setup(p => p.TryExecuteAsync(It.Is<TriggeredFunctionData>(q => ((ServiceBusTriggerInput)q.TriggerValue).Messages[0] == message), It.IsAny<CancellationToken>())).ReturnsAsync(result);
 
-            _mockMessageProcessor.Setup(p => p.CompleteProcessingMessageAsync(receiver, message, result, It.IsAny<CancellationToken>())).Returns(Task.FromResult(0));
+            _mockMessageProcessor.Setup(p => p.CompleteProcessingMessageAsync(It.IsAny<ServiceBusMessageActions>(), message, result, It.IsAny<CancellationToken>())).Returns(Task.FromResult(0));
 
             await _listener.ProcessMessageAsync(args);
 
@@ -95,7 +94,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: Guid.NewGuid().ToString());
             var receiver = new Mock<ServiceBusReceiver>().Object;
 
-            _mockMessageProcessor.Setup(p => p.BeginProcessingMessageAsync(receiver, message, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+            _mockMessageProcessor.Setup(p => p.BeginProcessingMessageAsync(
+                It.IsAny<ServiceBusMessageActions>(),
+                message,
+                It.IsAny<CancellationToken>())).ReturnsAsync(false);
             var args = new ProcessMessageEventArgs(message, receiver, CancellationToken.None);
 
             await _listener.ProcessMessageAsync(args);

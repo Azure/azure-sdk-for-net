@@ -19,7 +19,8 @@ namespace Azure.Core.Pipeline
     internal class BearerTokenChallengeAuthenticationPolicy : HttpPipelinePolicy
     {
         private readonly AccessTokenCache _accessTokenCache;
-        protected string[] Scopes { get; set; }
+        protected string[] Scopes { get; private set; }
+        private readonly ValueTask<bool> _falseValueTask = new ValueTask<bool>(Task.FromResult(false));
 
         /// <summary>
         /// Creates a new instance of <see cref="BearerTokenChallengeAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -58,16 +59,28 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
+        /// Executes before <see cref="ProcessAsync(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> or <see cref="Process(HttpMessage, ReadOnlyMemory{HttpPipelinePolicy})"/> is called.
+        /// Implementers of this method are expected to call <see cref="SetAuthorizationHeader(HttpMessage, TokenRequestContext, bool)"/> if authorization is required for requests not related to handling a challenge response.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> this policy would be applied to.</param>
+        /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
+        /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
+        protected virtual Task AuthenticateRequestAsync(HttpMessage message, bool async)
+        {
+            var context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
+            return SetAuthorizationHeader(message, context, async);
+        }
+
+        /// <summary>
         /// Executed in the event a 401 response with a WWW-Authenticate authentication challenge header is received after the initial request.
         /// </summary>
-        /// <remarks>Service client libraries may derive from this and extend to handle service specific authentication challenges.</remarks>
+        /// <remarks>Service client libraries may override this to handle service specific authentication challenges.</remarks>
         /// <param name="message">The <see cref="HttpMessage"/> to be authenticated.</param>
-        /// <param name="context">If the return value is <c>true</c>, a <see cref="TokenRequestContext"/>.</param>
-        /// <returns>A boolean indicated whether the request contained a valid challenge and a <see cref="TokenRequestContext"/> was successfully initialized with it.</returns>
-        protected virtual bool TryGetTokenRequestContextFromChallenge(HttpMessage message, out TokenRequestContext context)
+        /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
+        /// <returns>A boolean indicating whether the request was successfully authenticated and should be sent to the transport.</returns>
+        protected virtual ValueTask<bool> AuthenticateRequestOnChallengeAsync(HttpMessage message, bool async)
         {
-            context = default;
-            return false;
+            return _falseValueTask;
         }
 
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
@@ -77,47 +90,25 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            TokenRequestContext context;
-
-            // If the message already has a challenge response due to a sub-class pre-processing the request, get the context from the challenge.
-            if (message.HasResponse && message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(HttpHeader.Names.WWWAuthenticate))
-            {
-                if (!TryGetTokenRequestContextFromChallenge(message, out context))
-                {
-                    // We were unsuccessful in handling the challenge, so bail out now.
-                    return;
-                }
-                Scopes = context.Scopes;
-            }
-            else
-            {
-                context = new TokenRequestContext(Scopes, message.Request.ClientRequestId);
-            }
-
-            await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
-
             if (async)
             {
+                await AuthenticateRequestAsync(message, true).ConfigureAwait(false);
                 await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
             {
+                AuthenticateRequestAsync(message, false).EnsureCompleted();
                 ProcessNext(message, pipeline);
             }
 
             // Check if we have received a challenge or we have not yet issued the first request.
-            if (message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(HttpHeader.Names.WWWAuthenticate))
+            if (message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(HttpHeader.Names.WwwAuthenticate))
             {
                 // Attempt to get the TokenRequestContext based on the challenge.
                 // If we fail to get the context, the challenge was not present or invalid.
                 // If we succeed in getting the context, authenticate the request and pass it up the policy chain.
-                if (TryGetTokenRequestContextFromChallenge(message, out context))
+                if (await AuthenticateRequestOnChallengeAsync(message, async).ConfigureAwait(false))
                 {
-                    // Ensure the scopes are consistent with what was set by <see cref="TryGetTokenRequestContextFromChallenge" />.
-                    Scopes = context.Scopes;
-
-                    await AuthenticateRequestAsync(message, context, async).ConfigureAwait(false);
-
                     if (async)
                     {
                         await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
@@ -130,7 +121,13 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        private async Task AuthenticateRequestAsync(HttpMessage message, TokenRequestContext context, bool async)
+        /// <summary>
+        /// Sets the Authorization header on the <see cref="Request"/>.
+        /// </summary>
+        /// <param name="message">The <see cref="HttpMessage"/> with the <see cref="Request"/> to be authorized.</param>
+        /// <param name="context">The <see cref="TokenRequestContext"/> used to authorize the <see cref="Request"/>.</param>
+        /// <param name="async">Indicates whether the method was called from an asynchronous context.</param>
+        protected async Task SetAuthorizationHeader(HttpMessage message, TokenRequestContext context, bool async)
         {
             string headerValue;
             if (async)
@@ -168,13 +165,65 @@ namespace Azure.Core.Pipeline
                 bool getTokenFromCredential;
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
                 TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs;
-                (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context);
-                HeaderValueInfo info;
+                int maxCancellationRetries = 3;
 
-                if (getTokenFromCredential)
+                while (true)
                 {
-                    if (backgroundUpdateTcs != null)
+                    (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources(context);
+                    HeaderValueInfo info;
+                    if (getTokenFromCredential)
                     {
+                        if (backgroundUpdateTcs != null)
+                        {
+                            if (async)
+                            {
+                                info = await headerValueTcs.Task.ConfigureAwait(false);
+                            }
+                            else
+                            {
+#pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                                info = headerValueTcs.Task.EnsureCompleted();
+#pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
+                            }
+                            _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, context, async));
+                            return info.HeaderValue;
+                        }
+
+                        try
+                        {
+                            info = await GetHeaderValueFromCredentialAsync(context, async, message.CancellationToken).ConfigureAwait(false);
+                            headerValueTcs.SetResult(info);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            headerValueTcs.SetCanceled();
+                            throw;
+                        }
+                        catch (Exception exception)
+                        {
+                            headerValueTcs.SetException(exception);
+                            throw;
+                        }
+                    }
+
+                    var headerValueTask = headerValueTcs.Task;
+                    try
+                    {
+                        if (!headerValueTask.IsCompleted)
+                        {
+                            if (async)
+                            {
+                                await headerValueTask.AwaitWithCancellation(message.CancellationToken);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    headerValueTask.Wait(message.CancellationToken);
+                                }
+                                catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
+                            }
+                        }
                         if (async)
                         {
                             info = await headerValueTcs.Task.ConfigureAwait(false);
@@ -185,58 +234,27 @@ namespace Azure.Core.Pipeline
                             info = headerValueTcs.Task.EnsureCompleted();
 #pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
                         }
-                        _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, context, async));
+
                         return info.HeaderValue;
                     }
+                    catch (TaskCanceledException) when (!message.CancellationToken.IsCancellationRequested)
+                    {
+                        maxCancellationRetries--;
 
-                    try
-                    {
-                        info = await GetHeaderValueFromCredentialAsync(context, async, message.CancellationToken).ConfigureAwait(false);
-                        headerValueTcs.SetResult(info);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        headerValueTcs.SetCanceled();
-                        throw;
-                    }
-                    catch (Exception exception)
-                    {
-                        headerValueTcs.SetException(exception);
-                        throw;
-                    }
-                }
-
-                var headerValueTask = headerValueTcs.Task;
-                if (!headerValueTask.IsCompleted)
-                {
-                    if (async)
-                    {
-                        await headerValueTask.AwaitWithCancellation(message.CancellationToken);
-                    }
-                    else
-                    {
-                        try
+                        // If the current message has no CancellationToken and we have tried this 3 times, throw.
+                        if (!message.CancellationToken.CanBeCanceled && maxCancellationRetries <= 0)
                         {
-                            headerValueTask.Wait(message.CancellationToken);
+                            throw;
                         }
-                        catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
+
+                        // We were waiting on a previous headerValueTcs operation which was canceled.
+                        //Retry the call to GetTaskCompletionSources.
+                        continue;
                     }
                 }
-                if (async)
-                {
-                    info = await headerValueTcs.Task.ConfigureAwait(false);
-                }
-                else
-                {
-#pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
-                    info = headerValueTcs.Task.EnsureCompleted();
-#pragma warning restore AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
-                }
-
-                return info.HeaderValue;
             }
 
-            private (TaskCompletionSource<HeaderValueInfo>, TaskCompletionSource<HeaderValueInfo>?, bool) GetTaskCompletionSources(TokenRequestContext context)
+            private (TaskCompletionSource<HeaderValueInfo> InfoTcs, TaskCompletionSource<HeaderValueInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential) GetTaskCompletionSources(TokenRequestContext context)
             {
                 lock (_syncObj)
                 {
@@ -286,7 +304,7 @@ namespace Azure.Core.Pipeline
             // must be called under lock (_syncObj)
             private bool RequestRequiresNewToken(TokenRequestContext context) =>
                 _currentContext == null ||
-                (context.Scopes != null && !context.Scopes.SequenceEqual(_currentContext.Value.Scopes)) ||
+                (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(_currentContext.Value.Scopes.AsSpan())) ||
                 (context.Claims != null && !string.Equals(context.Claims, _currentContext.Value.Claims));
 
             private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, HeaderValueInfo info, TokenRequestContext context, bool async)

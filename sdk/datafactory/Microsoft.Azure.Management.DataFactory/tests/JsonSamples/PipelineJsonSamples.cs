@@ -2366,10 +2366,13 @@ namespace DataFactory.Tests.JsonSamples
                 ""type"": ""AzureMLExecutePipeline"",
                 ""typeProperties"": {
                     ""mlPipelineId"": ""93b9ccc4-0000-0000-8968-43a0a0fe0c44"",
+                    ""mlPipelineEndpointId"": ""mymlPipelineEndpointId"",
+                    ""version"": ""myversion"",
                     ""experimentName"": ""myExperimentName"",
                     ""mlPipelineParameters"": {
                         ""param_name"": ""param_value""
-                    }
+                    },
+                    ""dataPathAssignments"": ""mydataPathAssignments""
                 },
                 ""linkedServiceName"": {
                     ""referenceName"": ""MyAzureMLServiceLinkedService"",

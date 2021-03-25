@@ -13,6 +13,28 @@ namespace Azure.Storage.Blobs.Models
     public class BlobDownloadDetails
     {
         /// <summary>
+        /// The blob's type.
+        /// </summary>
+        public BlobType BlobType { get; internal set; }
+
+        /// <summary>
+        /// The number of bytes present in the response body.
+        /// </summary>
+        public long ContentLength { get; internal set; }
+
+        /// <summary>
+        /// The media type of the body of the response. For Download Blob this is 'application/octet-stream'
+        /// </summary>
+        public string ContentType { get; internal set; }
+
+        /// <summary>
+        /// If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity.
+        /// </summary>
+#pragma warning disable CA1819 // Properties should not return arrays
+        public byte[] ContentHash { get; internal set; }
+#pragma warning restore CA1819 // Properties should not return arrays
+
+        /// <summary>
         /// Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>
         public DateTimeOffset LastModified { get; internal set; }

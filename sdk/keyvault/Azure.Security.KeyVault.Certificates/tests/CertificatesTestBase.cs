@@ -202,16 +202,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
         }
 
-        protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
+        protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation, TimeSpan? pollingInterval = null)
         {
             using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+            pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : pollingInterval ?? TimeSpan.FromSeconds(1);
 
             try
             {
                 if (IsAsync)
                 {
-                    await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
+                    await operation.WaitForCompletionAsync(pollingInterval.Value, cts.Token);
                 }
                 else
                 {
@@ -219,7 +219,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     {
                         operation.UpdateStatus(cts.Token);
 
-                        await Task.Delay(pollingInterval, cts.Token);
+                        await Task.Delay(pollingInterval.Value, cts.Token);
                     }
                 }
             }

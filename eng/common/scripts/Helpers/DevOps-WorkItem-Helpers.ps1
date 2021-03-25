@@ -127,7 +127,6 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
   $fields += "ID"
   $fields += "State"
   $fields += "System.AssignedTo"
-  $fields += "Microsoft.VSTS.Common.StateChangeDate"
   $fields += "Parent"
   $fields += "Language"
   $fields += "Package"
@@ -164,13 +163,17 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
 
   $workItems = Invoke-AzBoardsCmd "query" $parameters $outputCommand
 
+  if ($workItems -and $workItems.Count -eq 1000) {
+    Write-Warning "Retrieved the max of 1000 items so item list might not be complete."
+  }
+
   foreach ($wi in $workItems)
   {
     $localKey = BuildHashKeyNoNull $wi.fields["Custom.Language"] $wi.fields["Custom.Package"] $wi.fields["Custom.PackageVersionMajorMinor"]
     if (!$localKey) {
       $packageWorkItemWithoutKeyFields[$wi.id] = $wi
       Write-Host "Skipping package [$($wi.id)]$($wi.fields['System.Title']) which is missing required fields language, package, or version."
-      continue 
+      continue
     }
     if ($packageWorkItems.ContainsKey($localKey) -and $packageWorkItems[$localKey].id -ne $wi.id) {
       Write-Warning "Already found package [$($packageWorkItems[$localKey].id)] with key [$localKey], using that one instead of [$($wi.id)]."
@@ -178,7 +181,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
     else {
       Write-Verbose "Caching package [$($wi.id)] for [$localKey]"
       $packageWorkItems[$localKey] = $wi
-    } 
+    }
   }
 
   if ($key -and $packageWorkItems.ContainsKey($key)) {
@@ -217,7 +220,7 @@ function UpdateWorkItemParent($childWorkItem, $parentWorkItem, $outputCommand = 
 
 function CreateWorkItemParent($id, $parentId, $oldParentId, $outputCommand = $true)
 {
-  # Have to remove old parent first if you want to add a new parent. 
+  # Have to remove old parent first if you want to add a new parent.
   if ($oldParentId)
   {
      $parameters = $ReleaseDevOpsCommonParameters
@@ -265,19 +268,6 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
   return $workItem
 }
 
-function ResetWorkItemState($workItem, $resetState = $null, $outputCommand = $true)
-{
-  if (!$resetState -or $resetState -eq "New") {
-    $resetState = "Next Release Unknown"
-  }
-  if ($workItem.fields["System.State"] -ne $resetState)
-  {
-    Write-Verbose "Resetting state for [$($workItem.id)] from '$($workItem.fields['System.State'])' to '$resetState'"
-    return UpdateWorkItem $workItem.id -state $resetState -outputCommand $outputCommand
-  }
-  return $workItem
-}
-
 function UpdateWorkItem($id, $fields, $title, $state, $assignedTo, $outputCommand = $true)
 {
   $parameters = $ReleaseDevOpsCommonParameters
@@ -301,8 +291,32 @@ function UpdateWorkItem($id, $fields, $title, $state, $assignedTo, $outputComman
 
 function UpdatePackageWorkItemReleaseState($id, $state, $releaseType, $outputCommand = $true)
 {
-  $fields = "`"Custom.ReleaseType=${releaseType}`"" 
+  $fields = "`"Custom.ReleaseType=${releaseType}`""
   return UpdateWorkItem -id $id -state $state -fields $fields -outputCommand $outputCommand
+}
+
+function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $outputCommand = $false)
+{
+  $workItem = FindPackageWorkItem -lang $lang -packageName $pkg.Package -version $verMajorMinor -includeClosed $true -outputCommand $outputCommand
+
+  if (!$workItem) {
+    $latestVersionItem = FindLatestPackageWorkItem -lang $lang -packageName $pkg.Package -outputCommand $outputCommand
+    $assignedTo = "me"
+    if ($latestVersionItem) {
+      Write-Verbose "Copying data from latest matching [$($latestVersionItem.id)] with version $($latestVersionItem.fields["Custom.PackageVersionMajorMinor"])"
+      if ($latestVersionItem.fields["System.AssignedTo"]) {
+        $assignedTo = $latestVersionItem.fields["System.AssignedTo"]["uniqueName"]
+      }
+      $pkg.DisplayName = $latestVersionItem.fields["Custom.PackageDisplayName"]
+      $pkg.ServiceName = $latestVersionItem.fields["Custom.ServiceName"]
+      if (!$pkg.RepoPath -and $pkg.RepoPath -ne "NA" -and $pkg.fields["Custom.PackageRepoPath"]) {
+        $pkg.RepoPath = $pkg.fields["Custom.PackageRepoPath"]
+      }
+    }
+    $workItem = CreateOrUpdatePackageWorkItem $lang $pkg $verMajorMinor -existingItem $null -assignedTo $assignedTo -outputCommand $outputCommand
+  }
+
+  return $workItem
 }
 
 function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingItem, $assignedTo = $null, $outputCommand = $true)
@@ -347,14 +361,18 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
       Write-Host "At least field $changedField ($($existingItem.fields[$changedField])) changed so updating."
     }
 
-    $beforeState = $existingItem.fields["System.State"]
-
     if ($changedField) {
+      $beforeState = $existingItem.fields["System.State"]
+
       # Need to set to New to be able to update
       $existingItem = UpdateWorkItem -id $existingItem.id -fields $fields -title $title -state "New" -assignedTo $assignedTo -outputCommand $outputCommand
       Write-Host "[$($existingItem.id)]$lang - $pkgName($verMajorMinor) - Updated"
+
+      if ($beforeState -ne $existingItem.fields['System.State']) {
+        Write-Verbose "Resetting state for [$($existingItem.id)] from '$($existingItem.fields['System.State'])' to '$beforeState'"
+        $existingItem = UpdateWorkItem $existingItem.id -state $beforeState -outputCommand $outputCommand
+      }
     }
-    $existingItem = ResetWorkItemState $existingItem $beforeState -outputCommand $outputCommand
 
     $newparentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $false
     UpdateWorkItemParent $existingItem $newParentItem -outputCommand $outputCommand
@@ -363,7 +381,6 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
 
   $parentItem = FindOrCreatePackageGroupParent $serviceName $pkgDisplayName -outputCommand $false
   $workItem = CreateWorkItem $title "Package" "Release" "Release" $fields $assignedTo $parentItem.id -outputCommand $outputCommand
-  $workItem = ResetWorkItemState $workItem -outputCommand $outputCommand
   Write-Host "[$($workItem.id)]$lang - $pkgName($verMajorMinor) - Created"
   return $workItem
 }
@@ -386,10 +403,10 @@ function FindOrCreatePackageGroupParent($serviceName, $packageDisplayName, $outp
   $localKey = BuildHashKey $serviceName $packageDisplayName
   Write-Host "[$($workItem.id)]$localKey - Created Parent"
   $parentWorkItems[$localKey] = $workItem
-  return $workItem 
+  return $workItem
 }
 
-function FindOrCreateServiceParent($serviceName, $outputCommand = $true) 
+function FindOrCreateServiceParent($serviceName, $outputCommand = $true)
 {
   $serviceParent = FindParentWorkItem $serviceName -outputCommand $outputCommand
   if ($serviceParent) {
@@ -720,7 +737,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
     {
       $versionSet[$version] = $plannedVersionSet[$version]
     }
-    else 
+    else
     {
       # Looks like we shipped this version so remove it from the planned set
       $plannedVersionSet.Remove($version)
@@ -752,25 +769,6 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
   "value": "$shippedPackages"
 }
 "@
-
-    # If we shipped a version after we set "In Release" state then reset the state to "Next Release Unknown"
-    if ($pkgWorkItem.fields["System.State"] -eq "In Release")
-    {
-      $lastShippedDate = [DateTime]$newShippedVersions[0].Date
-      $markedInReleaseDate = ([DateTime]$pkgWorkItem.fields["Microsoft.VSTS.Common.StateChangeDate"])
-
-      # We just shipped so lets set the state to "Next Release Unknown"
-      if ($markedInReleaseDate -le $lastShippedDate)
-      {
-        $fieldUpdates += @'
-{
-  "op": "replace",
-  "path": "/fields/State",
-  "value": "Next Release Unknown"
-}
-'@
-      }
-    }
   }
 
   # Full merged version set
@@ -784,7 +782,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
 
   # If no version files to update do nothing
   if ($fieldUpdates.Count -eq 0) {
-    return
+    return $pkgWorkItem
   }
 
   $versionsForDebug = ($versionList | Foreach-Object { $_.Version }) -join ","
@@ -804,7 +802,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
     $encodedToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes([string]::Format("{0}:{1}", "", $devops_pat)))
     $headers = @{ Authorization = "Basic $encodedToken" }
   }
-  else 
+  else
   {
     # Get a temp access token from the logged in az cli user for azure devops resource
     $jwt_accessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
@@ -812,5 +810,6 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
   }
   $response = Invoke-RestMethod -Method PATCH `
     -Uri "https://dev.azure.com/azure-sdk/_apis/wit/workitems/${id}?api-version=6.0" `
-    -Headers $headers -Body $body -ContentType "application/json-patch+json"
+    -Headers $headers -Body $body -ContentType "application/json-patch+json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
+  return $response
 }

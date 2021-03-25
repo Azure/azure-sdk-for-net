@@ -15,7 +15,7 @@
         "x-ms-client-request-id": "f0f26929-f1ef-4574-3f86-f0582c47c4db",
         "x-ms-date": "Wed, 17 Feb 2021 02:43:12 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -30,7 +30,7 @@
         ],
         "x-ms-client-request-id": "f0f26929-f1ef-4574-3f86-f0582c47c4db",
         "x-ms-request-id": "64cb551f-a01e-002d-4ed6-0469b1000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -45,7 +45,7 @@
         ],
         "x-ms-client-request-id": "13457451-b67e-af83-3af8-edc1afbdf299",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -59,7 +59,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "13457451-b67e-af83-3af8-edc1afbdf299",
         "x-ms-request-id": "a7634c9a-601e-000d-48d6-041216000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanmcccanary3.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-dd8ce038-b039-f4db-4c9b-d36f7d71a672\u0022\u003E\u003CBlobs /\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     },
@@ -77,7 +77,7 @@
         "x-ms-client-request-id": "b8076492-b101-805c-786f-e1dbde49e80c",
         "x-ms-date": "Wed, 17 Feb 2021 02:43:13 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -90,7 +90,7 @@
         ],
         "x-ms-client-request-id": "b8076492-b101-805c-786f-e1dbde49e80c",
         "x-ms-request-id": "64cb5543-a01e-002d-6ad6-0469b1000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     }

@@ -193,15 +193,15 @@ function Set-ChangeLogContent {
 
   try
   {
-    $VersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($ChangeLogEntries.Keys)
+    $ChangeLogEntries = $ChangeLogEntries.Values | Sort-Object -Descending -Property ReleaseStatus, `
+      @{e = {[AzureEngSemanticVersion]::new($_.ReleaseVersion)}}
   }
   catch {
     LogError "Problem sorting version in ChangeLogEntries"
     return
   }
 
-  foreach ($version in $VersionsSorted) {
-    $changeLogEntry = $ChangeLogEntries[$version]
+  foreach ($changeLogEntry in $ChangeLogEntries) {
     $changeLogContent += $changeLogEntry.ReleaseTitle
     if ($changeLogEntry.ReleaseContent.Count -eq 0) {
       $changeLogContent += @("","")

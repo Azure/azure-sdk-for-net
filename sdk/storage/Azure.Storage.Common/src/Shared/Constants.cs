@@ -186,6 +186,8 @@ namespace Azure.Storage
             public const int HttpsPort = 443;
             public const string UriSubDomain = "blob";
             public const int QuickQueryDownloadSize = 4 * Constants.MB;
+            public const string MetadataHeaderPrefix = "x-ms-meta-";
+            public const string ObjectReplicationRulesHeaderPrefix = "x-ms-or-";
 
             internal static class Append
             {
@@ -337,6 +339,8 @@ namespace Azure.Storage
             public const string IsDirectoryKey = "hdi_isFolder";
 
             public const string FileSystemName = "FileSystem";
+
+            public const string DeletionId = "deletionid";
         }
 
         /// <summary>

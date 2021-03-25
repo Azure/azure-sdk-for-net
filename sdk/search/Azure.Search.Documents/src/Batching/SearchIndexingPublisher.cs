@@ -235,7 +235,7 @@ namespace Azure.Search.Documents.Batching
         /// <param name="actions">The batch of actions.</param>
         /// <param name="results">The results.</param>
         /// <returns>Actions paired with their result.</returns>
-        private static IEnumerable<(PublisherAction<IndexDocumentsAction<T>>, IndexingResult)> AssociateResults(
+        private static IEnumerable<(PublisherAction<IndexDocumentsAction<T>> Action, IndexingResult Result)> AssociateResults(
             IList<PublisherAction<IndexDocumentsAction<T>>> actions,
             IReadOnlyList<IndexingResult> results)
         {

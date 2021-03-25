@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LocalNetworkGatewayListResult
+    internal partial class LocalNetworkGatewayListResult
     {
         internal static LocalNetworkGatewayListResult DeserializeLocalNetworkGatewayListResult(JsonElement element)
         {

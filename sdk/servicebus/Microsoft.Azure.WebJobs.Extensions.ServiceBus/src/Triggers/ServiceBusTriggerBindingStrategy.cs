@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Triggers;
@@ -53,8 +52,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             }
 
             var bindingData = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-            SafeAddValue(() => bindingData.Add("MessageReceiver", value.Receiver));
-            SafeAddValue(() => bindingData.Add("MessageSession", value.SessionReceiver));
+            // TODO - investigate why the parameter names need to be hard-coded here but they are not
+            // for binding to sender
+            SafeAddValue(() => bindingData.Add("MessageReceiver", value.MessageActions));
+            SafeAddValue(() => bindingData.Add("MessageSession", value.MessageActions));
+            SafeAddValue(() => bindingData.Add("MessageActions", value.MessageActions));
+            SafeAddValue(() => bindingData.Add("SessionActions", value.MessageActions));
 
             if (value.IsSingleDispatch)
             {
@@ -84,9 +87,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             AddBindingContractMember(contract, "Label", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "CorrelationId", typeof(string), isSingleDispatch);
             AddBindingContractMember(contract, "ApplicationProperties", typeof(IDictionary<string, object>), isSingleDispatch);
-            contract.Add("MessageReceiver", typeof(ServiceBusReceiver));
-            contract.Add("MessageSession", typeof(ServiceBusSessionReceiver));
-
+            contract.Add("MessageReceiver", typeof(ServiceBusMessageActions));
+            contract.Add("MessageSession", typeof(ServiceBusSessionMessageActions));
+            contract.Add("MessageActions", typeof(ServiceBusMessageActions));
+            contract.Add("SessionActions", typeof(ServiceBusSessionMessageActions));
             return contract;
         }
 

@@ -30,7 +30,7 @@ namespace Azure.Data.Tables
         internal Guid _changesetGuid;
         internal ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)> _requestLookup = new ConcurrentDictionary<string, (HttpMessage Message, RequestType RequestType)>();
         internal ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)> _requestMessages = new ConcurrentQueue<(ITableEntity Entity, HttpMessage HttpMessage)>();
-        private List<(ITableEntity entity, HttpMessage HttpMessage)> _submittedMessageList;
+        private List<(ITableEntity Entity, HttpMessage HttpMessage)> _submittedMessageList;
         private bool _submitted;
         private readonly string _partitionKey;
 
@@ -208,21 +208,25 @@ namespace Azure.Data.Tables
 
         internal async Task<Response<TableBatchResponse>> SubmitBatchAsyncInternal(bool async, CancellationToken cancellationToken = default)
         {
-            if (_submitted)
-            {
-                throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce);
-            }
-            else
-            {
-                _submitted = true;
-            }
-
-            _submittedMessageList = BuildOrderedBatchRequests();
-
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableTransactionalBatch)}.{nameof(SubmitBatch)}");
             scope.Start();
             try
             {
+                if (!_requestMessages.TryPeek(out var _))
+                {
+                    throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchIsEmpty);
+                }
+                if (_submitted)
+                {
+                    throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce);
+                }
+                else
+                {
+                    _submitted = true;
+                }
+
+                _submittedMessageList = BuildOrderedBatchRequests();
+
                 var request = _tableOperations.CreateBatchRequest(_batch, null, null);
                 Response<List<Response>> response = null;
                 if (async)
@@ -264,7 +268,7 @@ namespace Azure.Data.Tables
                 {
                     if (exception.Data[TableConstants.ExceptionData.FailedEntityIndex] is int index)
                     {
-                        failedEntity = _submittedMessageList[index].entity;
+                        failedEntity = _submittedMessageList[index].Entity;
                     }
                 }
                 catch
@@ -298,7 +302,7 @@ namespace Azure.Data.Tables
         /// Builds an ordered list of <see cref="HttpMessage"/>s containing the batch sub-requests.
         /// </summary>
         /// <returns></returns>
-        private List<(ITableEntity entity, HttpMessage HttpMessage)> BuildOrderedBatchRequests()
+        private List<(ITableEntity Entity, HttpMessage HttpMessage)> BuildOrderedBatchRequests()
         {
             var orderedList = _requestMessages.ToList();
             foreach (var item in orderedList)

@@ -16,11 +16,13 @@ namespace Azure.AI.TextAnalytics
 
         internal AnalyzeHealthcareEntitiesResult(string id, TextDocumentStatistics statistics,
             IList<HealthcareEntity> healthcareEntities,
+            IList<HealthcareEntityRelation> entityRelations,
             IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _entities = new ReadOnlyCollection<HealthcareEntity>(healthcareEntities);
             Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
+            EntityRelations = new ReadOnlyCollection<HealthcareEntityRelation>(entityRelations);
         }
 
         internal AnalyzeHealthcareEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
@@ -44,5 +46,10 @@ namespace Azure.AI.TextAnalytics
                 return _entities;
             }
         }
+
+        /// <summary>
+        /// Gets the relations between the entities. <see cref="HealthcareEntityRelation"/>
+        /// </summary>
+        public IReadOnlyCollection<HealthcareEntityRelation> EntityRelations { get; }
     }
 }

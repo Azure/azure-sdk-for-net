@@ -24,6 +24,7 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
   - [Listing Blobs in a Container](#listing-blobs-in-a-container)
   - [Generate a SAS](#generate-a-sas)
   - [Content Hashes](#content-hashes)
+  - [Resiliency](#resiliency)
 - [Additional information](#additional-information)
 
 ## Migration benefits
@@ -260,6 +261,8 @@ BlobContainerClient containerClient = await blobServiceClient.CreateBlobContaine
 
 ### Uploading Blobs to a Container
 
+#### Uploading from a file
+
 v11
 ```csharp
 CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
@@ -272,9 +275,39 @@ BlobClient blobClient = containerClient.GetBlobClient(blobName);
 await blobClient.UploadAsync(localFilePath, overwrite: true);
 ```
 
-This example uploads from given file paths, but note that v12 also conatins an overloads for uploading from a readable `Stream` instance.
+#### Uploading from a stream
+
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+using Stream stream = File.OpenRead(localFilePath);
+await cloudBlockBlob.UploadFromStreamAsync(stream);
+```
+
+v12
+```C# Snippet:SampleSnippetsBlobMigration_UploadBlobFromStream
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+using Stream stream = File.OpenRead(localFilePath);
+await blobClient.UploadAsync(stream, overwrite: true);
+```
+
+#### Uploading text
+
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+await blob.UploadTextAsync("content");
+```
+
+v12
+```C# Snippet:SampleSnippetsBlobMigration_UploadBlobText
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+await blobClient.UploadAsync(BinaryData.FromString("hello world"), overwrite: true);
+```
 
 ### Downloading Blobs from a Container
+
+#### Downloading to a file
 
 v11
 ```csharp
@@ -283,24 +316,44 @@ await cloudBlockBlob.DownloadToFileAsync(downloadFilePath, FileMode.Create);
 ```
 
 v12
-
 ```C# Snippet:SampleSnippetsBlobMigration_DownloadBlob
 BlobClient blobClient = containerClient.GetBlobClient(blobName);
 await blobClient.DownloadToAsync(downloadFilePath);
 ```
 
-This example uploads from given file paths, but note that v12 also conatins an overloads for downloading to a writable `Stream` instance.
+#### Downloading to a stream
 
-v12 also contains overloads for reading the download stream directly, with smart retries abstracted into the stream implementation. Remember to dispose of your stream when finished, either through `Stream.Close()` or (as in this example) through a disposable pattern. Note that this is the only mechanism in v12 to download a specific range of a blob instead of the whole blob.
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+using Stream target = File.OpenWrite(downloadFilePath);
+await blob.DownloadToStreamAsync(target);
+```
 
-```C# Snippet:SampleSnippetsBlobMigration_DownloadBlobDirectStream
+v12
+```C# Snippet:SampleSnippetsBlobMigration_DownloadBlobToStream
 BlobClient blobClient = containerClient.GetBlobClient(blobName);
-BlobDownloadInfo downloadResponse = await blobClient.DownloadAsync();
-using (Stream downloadStream = downloadResponse.Content)
+using (Stream target = File.OpenWrite(downloadFilePath))
 {
-    await MyConsumeStreamFunc(downloadStream);
+    await blobClient.DownloadToAsync(target);
 }
 ```
+
+#### Downloading text
+
+v11
+```csharp
+CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+string content = await blob.DownloadTextAsync();
+```
+
+v12
+```C# Snippet:SampleSnippetsBlobMigration_DownloadBlobText
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+BlobDownloadResult downloadResult = await blobClient.DownloadContentAsync();
+string downloadedData = downloadResult.Content.ToString();
+```
+
 
 ### Listing Blobs in a Container
 
@@ -446,7 +499,7 @@ BlobSasBuilder sasBuilder = new BlobSasBuilder()
     // with no url in a client to read from, container and blob name must be provided if applicable
     BlobContainerName = containerName,
     BlobName = blobName,
-    ExpiresOn = DateTimeOffset.Now.AddHours(1)
+    ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
 };
 // permissions applied separately, using the appropriate enum to the scope of your SAS
 sasBuilder.SetPermissions(BlobSasPermissions.Read);
@@ -467,6 +520,8 @@ If using a stored access policy, construct your `BlobSasBuilder` from the exampl
 // Create BlobSasBuilder and specify parameters
 BlobSasBuilder sasBuilder = new BlobSasBuilder()
 {
+    BlobContainerName = containerName,
+    BlobName = blobName,
     Identifier = "mysignedidentifier"
 };
 ```
@@ -507,10 +562,10 @@ await blobClient.UploadAsync(
     });
 
 // download whole blob and validate against stored blob content hash
-Response<BlobDownloadInfo> response = await blobClient.DownloadAsync();
+Response<BlobDownloadStreamingResult> response = await blobClient.DownloadStreamingAsync();
 
 Stream downloadStream = response.Value.Content;
-byte[] blobContentMD5 = response.Value.Details.BlobContentHash ?? response.Value.ContentHash;
+byte[] blobContentMD5 = response.Value.Details.BlobContentHash ?? response.Value.Details.ContentHash;
 // validate stream against hash in your workflow
 ```
 
@@ -549,14 +604,66 @@ await blockBlobClient.StageBlockAsync(
 await blockBlobClient.CommitBlockListAsync(blockList);
 
 // download any range of blob with transactional MD5 requested (maximum 4 MB for downloads)
-Response<BlobDownloadInfo> response = await blockBlobClient.DownloadAsync(
+Response<BlobDownloadStreamingResult> response = await blockBlobClient.DownloadStreamingAsync(
     range: new HttpRange(length: 4 * Constants.MB), // a range must be provided; here we use transactional download max size
     rangeGetContentHash: true);
 
 Stream downloadStream = response.Value.Content;
-byte[] transactionalMD5 = response.Value.ContentHash;
+byte[] transactionalMD5 = response.Value.Details.ContentHash;
 // validate stream against hash in your workflow
 ```
+
+### Resiliency
+
+#### Retry policy
+
+V11
+
+```csharp
+Stream targetStream = new MemoryStream();
+BlobRequestOptions options = new BlobRequestOptions()
+{
+    RetryPolicy = new ExponentialRetry(deltaBackoff: TimeSpan.FromSeconds(10), maxAttempts: 6)
+};
+await blockBlobClient.DownloadToStreamAsync(targetStream,accessCondition: null, options: options, operationContext: null);
+```
+
+V12
+
+```C# Snippet:SampleSnippetsBlobMigration_RetryPolicy
+BlobClientOptions blobClientOptions = new BlobClientOptions();
+blobClientOptions.Retry.Mode = RetryMode.Exponential;
+blobClientOptions.Retry.Delay = TimeSpan.FromSeconds(10);
+blobClientOptions.Retry.MaxRetries = 6;
+BlobServiceClient service = new BlobServiceClient(connectionString, blobClientOptions);
+BlobClient blobClient = service.GetBlobContainerClient(containerName).GetBlobClient(blobName);
+Stream targetStream = new MemoryStream();
+await blobClient.DownloadToAsync(targetStream);
+```
+
+#### Maximum execution time
+
+V11
+
+```csharp
+Stream targetStream = new MemoryStream();
+BlobRequestOptions options = new BlobRequestOptions()
+{
+    MaximumExecutionTime = TimeSpan.FromSeconds(30)
+};
+await blockBlobClient.DownloadToStreamAsync(targetStream,accessCondition: null, options: options, operationContext: null);
+```
+
+V12
+
+```C# Snippet:SampleSnippetsBlobMigration_MaximumExecutionTime
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+Stream targetStream = new MemoryStream();
+await blobClient.DownloadToAsync(targetStream, cancellationTokenSource.Token);
+```
+
 
 ## Additional information
 

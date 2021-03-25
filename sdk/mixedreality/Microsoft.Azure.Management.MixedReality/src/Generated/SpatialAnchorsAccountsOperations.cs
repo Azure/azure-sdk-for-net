@@ -1599,7 +1599,7 @@ namespace Microsoft.Azure.Management.MixedReality
         /// Name of an Mixed Reality Account.
         /// </param>
         /// <param name='serial'>
-        /// serial of key to be regenerated
+        /// Serial of key to be regenerated
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

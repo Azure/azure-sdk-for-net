@@ -15,10 +15,10 @@
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Management.ServiceBus" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Messaging.ServiceBus\src\Azure.Messaging.ServiceBus.csproj" />
     <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.ServiceBus.csproj" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\**\*.cs" LinkBase="Shared" />

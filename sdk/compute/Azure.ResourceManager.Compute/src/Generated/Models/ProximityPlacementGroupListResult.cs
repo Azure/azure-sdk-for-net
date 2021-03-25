@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Proximity Placement Group operation response. </summary>
-    public partial class ProximityPlacementGroupListResult
+    internal partial class ProximityPlacementGroupListResult
     {
         /// <summary> Initializes a new instance of ProximityPlacementGroupListResult. </summary>
         /// <param name="value"> The list of proximity placement groups. </param>

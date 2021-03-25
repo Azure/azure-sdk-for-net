@@ -4,6 +4,12 @@
 
 ## 5.1.0-beta.1 (Unreleased)
 
+## 5.1.2 (2021-02-24)
+- Update dependency of Microsoft.Azure.Amqp to version 2.4.11 to take in the fix: In auto-flow mode, do not issue more credits when the receiver link is closing. 
+  This solves the bug when prefetch mode is enabled, unexpected number of messages will not be released properly so their delivery count will increase.
+- Remove unnecessary Manage claim from sender and receiver. This will fix the scenario where customized TokenProvider is not giving Manage claims [PR 18740](https://github.com/Azure/azure-sdk-for-net/pull/18740)
+- Fix Unregister and Re-Register a Message/Session Handler results in System.ObjectDisposedException [PR 18899](https://github.com/Azure/azure-sdk-for-net/pull/18899)
+
 ## 5.1.1 (2021-01-12)
 - Update dependency of Microsoft.Azure.Amqp to version 2.4.9
 

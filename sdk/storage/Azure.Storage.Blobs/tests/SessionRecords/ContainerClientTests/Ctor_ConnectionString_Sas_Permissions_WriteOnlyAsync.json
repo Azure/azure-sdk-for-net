@@ -12,7 +12,7 @@
         ],
         "x-ms-client-request-id": "f78c7661-1d73-c92a-5e85-e8146fc186e9",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 201,
@@ -27,7 +27,7 @@
         ],
         "x-ms-client-request-id": "f78c7661-1d73-c92a-5e85-e8146fc186e9",
         "x-ms-request-id": "82f2d3fe-a01e-0012-3e5f-05a112000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -43,7 +43,7 @@
         ],
         "x-ms-client-request-id": "46275b69-b2be-5dff-c0e2-2058e4c4c84d",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 403,
@@ -57,7 +57,7 @@
         "x-ms-client-request-id": "46275b69-b2be-5dff-c0e2-2058e4c4c84d",
         "x-ms-error-code": "AuthorizationPermissionMismatch",
         "x-ms-request-id": "82f2d413-a01e-0012-505f-05a112000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -73,7 +73,7 @@
         ],
         "x-ms-client-request-id": "a4606f2c-14e1-8dbf-5c61-b240f601897f",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -86,7 +86,7 @@
         ],
         "x-ms-client-request-id": "a4606f2c-14e1-8dbf-5c61-b240f601897f",
         "x-ms-request-id": "82f2d427-a01e-0012-615f-05a112000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     }

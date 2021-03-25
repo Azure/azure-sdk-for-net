@@ -16,9 +16,9 @@ namespace Azure.Identity.Tests
 {
     internal static class CredentialTestHelpers
     {
-        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForAzureCli() => CreateTokenForAzureCli(TimeSpan.FromSeconds(30));
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureCli() => CreateTokenForAzureCli(TimeSpan.FromSeconds(30));
 
-        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForAzureCli(TimeSpan expiresOffset)
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureCli(TimeSpan expiresOffset)
         {
             const string expiresOnStringFormat = "yyyy-MM-dd HH:mm:ss.ffffff";
 
@@ -29,7 +29,7 @@ namespace Azure.Identity.Tests
             return (token, expiresOn, json);
         }
 
-        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForAzureCliExpiresIn(int seconds = 30)
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureCliExpiresIn(int seconds = 30)
         {
             var expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
             var token = Guid.NewGuid().ToString();
@@ -37,9 +37,20 @@ namespace Azure.Identity.Tests
             return (token, expiresOn, json);
         }
 
-        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForVisualStudio() => CreateTokenForVisualStudio(TimeSpan.FromSeconds(30));
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzurePowerShell(TimeSpan expiresOffset)
+        {
+            const string expiresOnStringFormat = "yyyy-MM-ddTHH:mm:sszzz";
 
-        public static (string token, DateTimeOffset expiresOn, string json) CreateTokenForVisualStudio(TimeSpan expiresOffset)
+            var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString(expiresOnStringFormat);
+            var expiresOn = DateTimeOffset.ParseExact(expiresOnString, expiresOnStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+            var token = Guid.NewGuid().ToString();
+            var json = $"{{ \"Token\": \"{token}\", \"ExpiresOn\": \"{expiresOnString}\" }}";
+            return (token, expiresOn, json);
+        }
+
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForVisualStudio() => CreateTokenForVisualStudio(TimeSpan.FromSeconds(30));
+
+        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForVisualStudio(TimeSpan expiresOffset)
         {
             var expiresOnString = DateTimeOffset.UtcNow.Add(expiresOffset).ToString("s");
             var expiresOn = DateTimeOffset.Parse(expiresOnString);

@@ -16,5 +16,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
             Type = "DatasetStorageFormat";
         }
+
+        /// <summary> Serializer. Type: string (or Expression with resultType string). </summary>
+        public object Serializer { get; set; }
+        /// <summary> Deserializer. Type: string (or Expression with resultType string). </summary>
+        public object Deserializer { get; set; }
     }
 }

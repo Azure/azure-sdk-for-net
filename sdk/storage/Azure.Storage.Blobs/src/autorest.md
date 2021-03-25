@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/011761be1285d14feb41796b5d97df1126495c5c/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/8c1f9b739165035d9ced32761cebb19125bce233/specification/storage/data-plane/Microsoft.BlobStorage/preview/2020-06-12/blob.json
 ```
 
 ### Move path parameters to constructor.
@@ -17,7 +17,7 @@ directive:
     delete $.Blob["x-ms-parameter-location"];
 ```
 
-### Don't encode BlobName or 
+### Don't encode BlobName or Container Name
 ``` yaml
 directive:
 - from: swagger-document
@@ -276,4 +276,13 @@ directive:
       "x-az-response-name": "ConditionNotMetError",
       "headers": { "x-ms-error-code": { "x-ms-client-name": "ErrorCode", "type": "string" } }
     };
+```
+
+### Don't buffer downloads and query
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='Blob_Query' || @.operationId=='Blob_Download')]
+  transform: $["x-csharp-buffer-response"] = false;
 ```

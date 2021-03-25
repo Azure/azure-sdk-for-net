@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "linkConnectionName");
             }
-            string apiVersion = "2020-08-01";
+            string apiVersion = "2020-11-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

@@ -141,6 +141,7 @@ jobs:
           # GdnBreakOutputBaselineFile: dotnet
           # GdnBreakOutputBaseline: baseline
         condition: succeededOrFailed()
+        continueOnError: true
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
         displayName: 'Publish Security Analysis Logs'
         condition: succeededOrFailed()

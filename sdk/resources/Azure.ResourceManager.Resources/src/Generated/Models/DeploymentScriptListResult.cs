@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> List of deployment scripts. </summary>
-    public partial class DeploymentScriptListResult
+    internal partial class DeploymentScriptListResult
     {
         /// <summary> Initializes a new instance of DeploymentScriptListResult. </summary>
         internal DeploymentScriptListResult()

@@ -210,8 +210,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=",
                 eventHubName,
                 new EventProcessorOptions(),
-                3,
-                false, null);
+                3,null);
 
             var consumerClientMock = new Mock<IEventHubConsumerClient>();
             consumerClientMock.SetupGet(c => c.ConsumerGroup).Returns(consumerGroup);

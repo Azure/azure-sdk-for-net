@@ -1,7 +1,26 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
+## 5.4.0-beta.2 (Unreleased)
 
+## 5.4.0-beta.1 (2021-03-17)
+
+### Changes
+
+- Updating package bindings for `Azure.Messaging.EventHubs` to synchronize on v5.4.0-beta.1.
+
+## 5.3.1 (2021-03-09)
+
+### Changes
+
+#### Key Bug Fixes
+
+- Fixed an issue where long-lived credentials (more than 49 days) were overflowing refresh timer limits and being rejected.
+
+- Added detection and recovery for a race condition that occurred when the Event Hubs service closed a connection or link after the client had validated its state and was performing an operation; this will now be properly retried with a fresh connection/link.
+
+- Extended retry scenarios to include generic I/O exceptions, as they are typically transient network failures.
+
+- Extended retry scenarios to include authorization failures, as the Event Hubs services do not differentiate between authentication and authorization, callers cannot reason about whether an `Unauthorized` return from an operation indicates that the call will never succeed or may trigger a credential renewal that may allow success.
 
 ## 5.3.0 (2021-02-09)
 

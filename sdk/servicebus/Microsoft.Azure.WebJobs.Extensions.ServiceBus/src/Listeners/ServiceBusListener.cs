@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -194,20 +193,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         {
             using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
             {
-                //TODO consider using internals visible or exposing the Receiver property instead of reflection
-                ServiceBusReceiver receiver = (ServiceBusReceiver) typeof(ProcessMessageEventArgs).GetField("_receiver", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(args);
-
-                if (!await _messageProcessor.BeginProcessingMessageAsync(receiver, args.Message, linkedCts.Token).ConfigureAwait(false))
+                var actions = new ServiceBusMessageActions(args);
+                if (!await _messageProcessor.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token).ConfigureAwait(false))
                 {
                     return;
                 }
 
                 ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message);
-                input.Receiver = receiver;
+                input.MessageActions = actions;
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
-                await _messageProcessor.CompleteProcessingMessageAsync(receiver, args.Message, result, linkedCts.Token).ConfigureAwait(false);
+                await _messageProcessor.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
             }
         }
 
@@ -215,19 +212,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         {
             using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
             {
-                ServiceBusSessionReceiver receiver = (ServiceBusSessionReceiver)typeof(ProcessSessionMessageEventArgs).GetField("_sessionReceiver", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(args);
-
-                if (!await _sessionMessageProcessor.BeginProcessingMessageAsync(receiver, args.Message, linkedCts.Token).ConfigureAwait(false))
+                var actions = new ServiceBusSessionMessageActions(args);
+                if (!await _sessionMessageProcessor.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token).ConfigureAwait(false))
                 {
                     return;
                 }
 
                 ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message);
-                input.SessionReceiver = receiver;
+                input.MessageActions = actions;
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
-                await _sessionMessageProcessor.CompleteProcessingMessageAsync(receiver, args.Message, result, linkedCts.Token).ConfigureAwait(false);
+                await _sessionMessageProcessor.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
             }
         }
 
@@ -273,9 +269,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             }
                         }
 
-                        IReadOnlyList<ServiceBusReceivedMessage> messages = await receiver.ReceiveMessagesAsync(
-                            _serviceBusOptions.MaxMessages,
-                            _serviceBusOptions.MaxWaitTime).ConfigureAwait(false);
+                        IReadOnlyList<ServiceBusReceivedMessage> messages =
+                            await receiver.ReceiveMessagesAsync(_serviceBusOptions.MaxMessages).ConfigureAwait(false);
 
                         if (messages != null)
                         {
@@ -283,11 +278,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(messagesArray);
                             if (_isSessionsEnabled)
                             {
-                                input.SessionReceiver = (ServiceBusSessionReceiver) receiver;
+                                input.MessageActions = new ServiceBusSessionMessageActions((ServiceBusSessionReceiver) receiver);
                             }
                             else
                             {
-                                input.Receiver = receiver;
+                                input.MessageActions = new ServiceBusMessageActions(receiver);
                             }
                             FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
 

@@ -225,25 +225,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                 string eventHubName,
                                 TokenCredential credential,
                                 EventProcessorOptions options = default,
-                                PartitionLoadBalancer loadBalancer = default)
+                                PartitionLoadBalancer loadBalancer = default) : this(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, options, loadBalancer)
         {
-            Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options = options?.Clone() ?? new EventProcessorOptions();
-
-            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
-            FullyQualifiedNamespace = fullyQualifiedNamespace;
-            EventHubName = eventHubName;
-            ConsumerGroup = consumerGroup;
-            Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
-            RetryPolicy = options.RetryOptions.ToRetryPolicy();
-            Options = options;
-            EventBatchMaximumCount = eventBatchMaximumCount;
-            LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
         }
 
         /// <summary>
@@ -325,33 +308,36 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
-        /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="options">The set of options to use for the processor.</param>
         ///
-        internal EventProcessor(int eventBatchMaximumCount,
-                               string consumerGroup,
-                               string fullyQualifiedNamespace,
-                               string eventHubName,
-                               EventHubsSharedAccessKeyCredential credential,
-                               EventProcessorOptions options = default)
+        protected EventProcessor(int eventBatchMaximumCount,
+                                 string consumerGroup,
+                                 string fullyQualifiedNamespace,
+                                 string eventHubName,
+                                 AzureNamedKeyCredential credential,
+                                 EventProcessorOptions options = default) : this(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, options, default)
         {
-            Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
-            options = options?.Clone() ?? new EventProcessorOptions();
-
-            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
-            FullyQualifiedNamespace = fullyQualifiedNamespace;
-            EventHubName = eventHubName;
-            ConsumerGroup = consumerGroup;
-            Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
-            RetryPolicy = options.RetryOptions.ToRetryPolicy();
-            Options = options;
-            EventBatchMaximumCount = eventBatchMaximumCount;
-            LoadBalancer = new PartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
+        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
+        /// <param name="credential">The shared signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="options">The set of options to use for the processor.</param>
+        ///
+        protected EventProcessor(int eventBatchMaximumCount,
+                                 string consumerGroup,
+                                 string fullyQualifiedNamespace,
+                                 string eventHubName,
+                                 AzureSasCredential credential,
+                                 EventProcessorOptions options = default) : this(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, options, default)
+        {
         }
 
         /// <summary>
@@ -370,7 +356,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                  string fullyQualifiedNamespace,
                                  string eventHubName,
                                  TokenCredential credential,
-                                 EventProcessorOptions options = default) : this(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options, default)
+                                 EventProcessorOptions options = default) : this(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, options, default)
         {
         }
 
@@ -380,6 +366,46 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         protected EventProcessor()
         {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
+        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
+        /// <param name="credential">The credential to use for authorization.  This may be of any type supported by the protected constructors.</param>
+        /// <param name="options">The set of options to use for the processor.</param>
+        /// <param name="loadBalancer">The load balancer to use for coordinating processing with other event processor instances.  If <c>null</c>, the standard load balancer will be created.</param>
+        ///
+        private EventProcessor(int eventBatchMaximumCount,
+                               string consumerGroup,
+                               string fullyQualifiedNamespace,
+                               string eventHubName,
+                               object credential,
+                               EventProcessorOptions options = default,
+                               PartitionLoadBalancer loadBalancer = default)
+        {
+            Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options = options?.Clone() ?? new EventProcessorOptions();
+
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EventHubName = eventHubName;
+            ConsumerGroup = consumerGroup;
+            Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
+            RetryPolicy = options.RetryOptions.ToRetryPolicy();
+            Options = options;
+            EventBatchMaximumCount = eventBatchMaximumCount;
+
+            ConnectionFactory = () => EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
+            LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, Options.PartitionOwnershipExpirationInterval, Options.LoadBalancingUpdateInterval);
         }
 
         /// <summary>

@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/pii?showStats=false\u0026domain=phi\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/pii?showStats=false\u0026domain=phi\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Content-Length": "107",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c71874822a46a140b0654e8bf1f026cc-94424997c4ae8240-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210216.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-204014bbcda93a4188d23fc03b15786e-5f364caf3d668949-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "5757e3544f245670b8a4c82d4b10bc4c",
         "x-ms-return-client-request-id": "true"
       },
@@ -24,14 +24,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "346f91f8-25ff-48b9-9273-f9819509acb7",
+        "apim-request-id": "1e79297d-5f2f-4de4-a526-3979bb98dd6d",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Wed, 17 Feb 2021 17:48:39 GMT",
+        "Date": "Wed, 24 Feb 2021 16:57:44 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "32"
+        "x-envoy-upstream-service-time": "54"
       },
       "ResponseBody": {
         "documents": [
@@ -65,6 +65,6 @@
   "Variables": {
     "RandomSeed": "114454170",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
+    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
   }
 }

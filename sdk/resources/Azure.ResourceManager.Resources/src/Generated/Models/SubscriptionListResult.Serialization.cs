@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class SubscriptionListResult
+    internal partial class SubscriptionListResult
     {
         internal static SubscriptionListResult DeserializeSubscriptionListResult(JsonElement element)
         {

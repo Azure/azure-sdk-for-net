@@ -368,55 +368,38 @@ ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync()
 Console.WriteLine(receivedMessage.SessionId);
 ```
 
-### Cross-Entity transactions (Unreleased)
+### Cross-Entity transactions
 
 Previously, in `Microsoft.Azure.ServiceBus`, when performing a transaction that spanned multiple queues, topics, or subscriptions you would need to use the "Send-Via" option
 in the `MessageSender`. 
 
-Now in `Azure.Messaging.ServiceBus`, there is a `TransactionGroup` property on the sender, receiver, and processor options bags. This property is used to group senders, receivers, and processors that will be involved in entities that span transactions. When using this property, the first operation that occurs among this group implicitly becomes the send-via entity. Because of this, subsequent operations must either be by senders, or if they are by receivers, the receiver must be receiving from the send-via entity. For this reason, it probably makes more sense to have your first operation be a receive rather than a send when using transaction groups.
+Now in `Azure.Messaging.ServiceBus`, there is an `EnableCrossEntityTransactions` property on the `ServiceBusClientOptions`. When setting this property to `true`, the first operation that occurs using any senders or receivers created from the client implicitly becomes the send-via entity. Because of this, subsequent operations must either be by senders, or if they are by receivers, the receiver must be receiving from the send-via entity. For this reason, it probably makes more sense to have your first operation be a receive rather than a send when setting this property.
 
-The below code snippet shows you how to use transaction groups.
+The below code snippet shows you how to perform cross-entity transactions.
 
 ```C# Snippet:ServiceBusTransactionGroup
-// The first sender won't be part of our transaction group.
-ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
+var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
+await using var client = new ServiceBusClient(connectionString, options);
 
-string transactionGroup = "myTxn";
-
-ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName, new ServiceBusReceiverOptions
-{
-    TransactionGroup = transactionGroup
-});
-ServiceBusSender senderB = client.CreateSender(queueB.QueueName, new ServiceBusSenderOptions
-{
-    TransactionGroup = transactionGroup
-});
-ServiceBusSender senderC = client.CreateSender(topicC.TopicName, new ServiceBusSenderOptions
-{
-    TransactionGroup = transactionGroup
-});
-
-var message = new ServiceBusMessage();
-
-await senderA.SendMessageAsync(message);
+ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
+ServiceBusSender senderB = client.CreateSender("queueB");
+ServiceBusSender senderC = client.CreateSender("topicC");
 
 ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
 
 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
 {
     await receiverA.CompleteMessageAsync(receivedMessage);
-    await senderB.SendMessageAsync(message);
-    await senderC.SendMessageAsync(message);
+    await senderB.SendMessageAsync(new ServiceBusMessage());
+    await senderC.SendMessageAsync(new ServiceBusMessage());
     ts.Complete();
 }
 ```
 
 ## Known Gaps from Previous Library
 There are a few features that are yet to be implemented in `Azure.Messaging.ServiceBus`, but were present in the previous library `Microsoft.Azure.ServiceBus`. The plan is to add these features in upcoming releases (unless otherwise noted), but they will not be available in the version 7.0.0:
-- **Cross entity transactions** - In the previous library, Microsoft.Azure.ServiceBus, transactions could work across multiple entities by leveraging the [`viaEntityPath`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/Core/MessageSender.cs#L118) parameter of the `MessageSender` constructor. The service is planning to make backward compatible updates that would make it possible to do cross-entity transactions without specificing a "via" entity. The new library plans to take advantage of this new feature and therefore, the cross entity transactions feature will be available in the upcoming release instead of the current version 7.0.0. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/17355.
 - **Plugins** - In the previous library, Microsoft.Azure.ServiceBus, users could [register plugins](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/QueueClient.cs#L527) that would alter an outgoing message before serialization, or alter an incoming message after being deserialized. These extension points allowed users of the Service Bus library to use common OSS extensions to enhance their applications without having to implement their own logic, and without having to wait for the SDK to explicitly support the needed feature. For instance, one use of the plugin functionality is to implement the [claim-check pattern](https://www.nuget.org/packages/ServiceBus.AttachmentPlugin/) to send and receive messages that exceed the Service Bus message size limits. This feature is not yet supported in the new library but will be added in an upcoming release. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/12943.
 - **AMQP Body Sections** - In the previous library, Microsoft.Azure.ServiceBus, it was possible to read the message body even if it was not stored in the [AMQP data section](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data) by using the [`GetBody<T>`](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/src/Extensions/MessageInterOpExtensions.cs#L76) extension method. In the new library, we currently do not expose a way to get the message body if it is not populated in the AMQP data section. We will add support for both setting and retrieving the message body in any of the AMQP body sections in an upcoming release. This includes the [data](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-data), [sequence](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-amqp-sequence), [value](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-amqp-value) body sections. Support for this feature can be tracked via https://github.com/Azure/azure-sdk-for-net/issues/17356.
-- **Max receive wait time for Processor** - In the previous library, Microsoft.Azure.ServiceBus, it was possible to configure the maximum amount of time each receive call would wait when receiving a message using the message pump (this is known as the Processor in the new library). This was not included in the GA release of the new library as we were not certain that this configuration option would be needed for users of the processor. Feedback for this feature request can be submitted and tracked via https://github.com/Azure/azure-sdk-for-net/issues/16773.
 
 ## Additional samples
 

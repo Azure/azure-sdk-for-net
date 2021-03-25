@@ -826,25 +826,26 @@ namespace Azure.Storage.Blobs
         }
         #endregion
 
-        #region ToBlobDownloadInfo
-        internal static BlobDownloadInfo ToBlobDownloadInfo(this ResponseWithHeaders<Stream, BlobDownloadHeaders> response)
+        #region ToBlobDownloadStreamingResult
+        internal static BlobDownloadStreamingResult ToBlobDownloadStreamingResult(this ResponseWithHeaders<Stream, BlobDownloadHeaders> response)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new BlobDownloadInfo
+            response.GetRawResponse().Headers.ExtractMultiHeaderDownloadProperties(out var metadata, out var objectReplicationRules);
+            return new BlobDownloadStreamingResult
             {
-                BlobType = response.Headers.BlobType.GetValueOrDefault(),
-                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
                 Content = response.Value,
-                ContentType = response.Headers.ContentType,
-                ContentHash = response.Headers.ContentMD5,
                 Details = new BlobDownloadDetails
                 {
+                    BlobType = response.Headers.BlobType.GetValueOrDefault(),
+                    ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
+                    ContentType = response.Headers.ContentType,
+                    ContentHash = response.Headers.ContentMD5,
                     LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                    Metadata = response.Headers.Metadata.ToMetadata(),
+                    Metadata = metadata,
                     ContentRange = response.Headers.ContentRange,
                     ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                     ContentEncoding = response.Headers.ContentEncoding,
@@ -870,15 +871,17 @@ namespace Azure.Storage.Blobs
                     VersionId = response.Headers.VersionId,
                     IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
                     ObjectReplicationSourceProperties
-                        = response.Headers.ObjectReplicationRules?.Count > 0
-                        ? ParseObjectReplicationIds(response.Headers.ObjectReplicationRules)
+                        = objectReplicationRules?.Count > 0
+                        ? ParseObjectReplicationIds(objectReplicationRules)
                         : null,
                     ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
                     LastAccessed = response.Headers.LastAccessed.GetValueOrDefault()
                 }
             };
         }
+        #endregion
 
+        #region ToBlobDownloadInfo
         internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobQueryHeaders> response, Stream stream)
         {
             if (response == null)
@@ -886,15 +889,23 @@ namespace Azure.Storage.Blobs
                 return null;
             }
 
+            var blobType = response.Headers.BlobType.GetValueOrDefault();
+            var contentLength = response.Headers.ContentLength.GetValueOrDefault();
+            var contentType = response.Headers.ContentType;
+            var contentHash = response.Headers.ContentMD5;
             return new BlobDownloadInfo
             {
-                BlobType = response.Headers.BlobType.GetValueOrDefault(),
-                ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
+                BlobType = blobType,
+                ContentLength = contentLength,
                 Content = stream,
-                ContentType = response.Headers.ContentType,
-                ContentHash = response.Headers.ContentMD5,
+                ContentType = contentType,
+                ContentHash = contentHash,
                 Details = new BlobDownloadDetails
                 {
+                    BlobType = blobType,
+                    ContentLength = contentLength,
+                    ContentType = contentType,
+                    ContentHash = contentHash,
                     LastModified = response.Headers.LastModified.GetValueOrDefault(),
                     Metadata = response.Headers.Metadata.ToMetadata(),
                     ContentRange = response.Headers.ContentRange,
@@ -920,6 +931,24 @@ namespace Azure.Storage.Blobs
                     BlobContentHash = response.Headers.BlobContentMD5
                 }
             };
+        }
+
+        private static void ExtractMultiHeaderDownloadProperties(this ResponseHeaders headers, out IDictionary<string, string> metadata, out IDictionary<string, string> objectReplicationRules)
+        {
+            metadata = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            objectReplicationRules = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (HttpHeader item in headers)
+            {
+                if (item.Name.StartsWith(Constants.Blob.MetadataHeaderPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    metadata.Add(item.Name.Substring(Constants.Blob.MetadataHeaderPrefix.Length), item.Value);
+                }
+                else if (item.Name.StartsWith(Constants.Blob.ObjectReplicationRulesHeaderPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    objectReplicationRules.Add(item.Name.Substring(Constants.Blob.ObjectReplicationRulesHeaderPrefix.Length), item.Value);
+                }
+            }
         }
         #endregion
 

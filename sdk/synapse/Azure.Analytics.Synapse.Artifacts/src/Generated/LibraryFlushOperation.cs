@@ -15,9 +15,15 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Flush Library. </summary>
-    internal partial class LibraryFlushOperation : Operation<Response>, IOperationSource<Response>
+    public partial class LibraryFlushOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of LibraryFlushOperation for mocking. </summary>
+        protected LibraryFlushOperation()
+        {
+        }
+
         internal LibraryFlushOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LibraryFlushOperation");

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class VpnServerConfigurationsAssociatedWithVirtualWanListOperation : Operation<VpnServerConfigurationsResponse>, IOperationSource<VpnServerConfigurationsResponse>
     {
         private readonly ArmOperationHelpers<VpnServerConfigurationsResponse> _operation;
+
+        /// <summary> Initializes a new instance of VpnServerConfigurationsAssociatedWithVirtualWanListOperation for mocking. </summary>
+        protected VpnServerConfigurationsAssociatedWithVirtualWanListOperation()
+        {
+        }
+
         internal VpnServerConfigurationsAssociatedWithVirtualWanListOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<VpnServerConfigurationsResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VpnServerConfigurationsAssociatedWithVirtualWanListOperation");

@@ -10,10 +10,5 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Columns that define the structure of the dataset. </summary>
     public partial class DatasetDataElement
     {
-
-        /// <summary> Name of the column. Type: string (or Expression with resultType string). </summary>
-        public object Name { get; }
-        /// <summary> Type of the column. Type: string (or Expression with resultType string). </summary>
-        public object Type { get; }
     }
 }

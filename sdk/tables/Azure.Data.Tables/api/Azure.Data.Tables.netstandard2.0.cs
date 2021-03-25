@@ -12,7 +12,7 @@ namespace Azure.Data.Tables
         protected TableClient() { }
         public TableClient(string connectionString, string tableName) { }
         public TableClient(string connectionString, string tableName, Azure.Data.Tables.TableClientOptions options = null) { }
-        public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, string tableName, Azure.AzureSasCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential) { }
         public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddEntityAsync<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
@@ -92,8 +92,8 @@ namespace Azure.Data.Tables
         protected TableServiceClient() { }
         public TableServiceClient(string connectionString) { }
         public TableServiceClient(string connectionString, Azure.Data.Tables.TableClientOptions options = null) { }
-        public TableServiceClient(System.Uri endpoint) { }
-        public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableServiceClient(System.Uri endpoint, Azure.AzureSasCredential credential) { }
+        public TableServiceClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential) { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableItem> CreateTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

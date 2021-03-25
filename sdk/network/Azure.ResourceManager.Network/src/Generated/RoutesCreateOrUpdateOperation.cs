@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class RoutesCreateOrUpdateOperation : Operation<Route>, IOperationSource<Route>
     {
         private readonly ArmOperationHelpers<Route> _operation;
+
+        /// <summary> Initializes a new instance of RoutesCreateOrUpdateOperation for mocking. </summary>
+        protected RoutesCreateOrUpdateOperation()
+        {
+        }
+
         internal RoutesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Route>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RoutesCreateOrUpdateOperation");

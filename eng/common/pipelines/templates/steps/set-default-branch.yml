@@ -1,0 +1,11 @@
+parameters:
+  WorkingDirectory: '$(System.DefaultWorkingDirectory)'
+  RemoteRepo: 'origin'
+steps:
+- pwsh: |
+    $setDefaultBranch = (git remote show ${{ parameters.RemoteRepo }} | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
+    Write-Host "Setting DefaultBranch=$setDefaultBranch"
+    echo "##vso[task.setvariable variable=DefaultBranch]$setDefaultBranch"
+  displayName: "Setup Default Branch"
+  workingDirectory: ${{ parameters.workingDirectory }}
+  condition: eq(variables['DefaultBranch'], '')

@@ -10,5 +10,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public ExposureControlRequest()
         {
         }
+        /// <summary> The feature name. </summary>
+        public string FeatureName { get; set; }
+        /// <summary> The feature type. </summary>
+        public string FeatureType { get; set; }
     }
 }

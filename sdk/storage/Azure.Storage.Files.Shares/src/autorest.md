@@ -122,3 +122,12 @@ directive:
      }
    });
 ```
+
+### Don't buffer downloads
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $..[?(@.operationId=='File_Download')]
+  transform: $["x-csharp-buffer-response"] = false;
+```

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkVirtualApplianceListResult
+    internal partial class NetworkVirtualApplianceListResult
     {
         internal static NetworkVirtualApplianceListResult DeserializeNetworkVirtualApplianceListResult(JsonElement element)
         {

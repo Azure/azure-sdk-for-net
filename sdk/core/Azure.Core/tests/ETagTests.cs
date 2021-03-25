@@ -120,8 +120,18 @@ namespace Azure.Core.Tests
         [TestCase("h")]
         public void InvalidFormatThrows(string format)
         {
-            ETag tag  = new ETag("foo");
+            ETag tag = new ETag("foo");
             Assert.Throws<ArgumentException>(() => tag.ToString(format));
+        }
+
+        [Theory]
+        [TestCase(null)]
+        [TestCase(default)]
+        public void NullValueHasNoStringValue(string value)
+        {
+            ETag tag = new ETag(value);
+
+            Assert.That(tag.ToString(), Is.Empty);
         }
     }
 }

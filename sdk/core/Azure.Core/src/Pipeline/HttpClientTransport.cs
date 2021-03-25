@@ -127,17 +127,20 @@ namespace Azure.Core.Pipeline
 
         private static HttpClient CreateDefaultClient()
         {
-            var httpClientHandler = new HttpClientHandler();
+#if NETFRAMEWORK || NETSTANDARD
+            HttpClientHandler httpMessageHandler = new HttpClientHandler();
+#else
+
+            SocketsHttpHandler httpMessageHandler = new SocketsHttpHandler();
+#endif
             if (HttpEnvironmentProxy.TryCreate(out IWebProxy webProxy))
             {
-                httpClientHandler.Proxy = webProxy;
+                httpMessageHandler.Proxy = webProxy;
             }
 
-#if NETFRAMEWORK
-            ServicePointHelpers.SetLimits(httpClientHandler);
-#endif
+            ServicePointHelpers.SetLimits(httpMessageHandler);
 
-            return new HttpClient(httpClientHandler)
+            return new HttpClient(httpMessageHandler)
             {
                 // Timeouts are handled by the pipeline
                 Timeout = Timeout.InfiniteTimeSpan
@@ -254,6 +257,19 @@ namespace Azure.Core.Pipeline
                 {
                     Argument.AssertNotNull(value, nameof(value));
                     _clientRequestId = value;
+                }
+            }
+
+            protected internal override void SetHeader(string name, string value)
+            {
+                // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
+                if (name.Equals(HttpHeader.Names.Authorization) && AuthenticationHeaderValue.TryParse(value, out var authHeader))
+                {
+                    _requestMessage.Headers.Authorization = authHeader;
+                }
+                else
+                {
+                    base.SetHeader(name, value);
                 }
             }
 

@@ -924,7 +924,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             var configToCreate = new AnomalyAlertConfiguration()
             {
                 Name = configName,
-                MetricAlertConfigurations = { new (DetectionConfigurationId, scope) }
+                MetricAlertConfigurations = { new(DetectionConfigurationId, scope) }
             };
 
             string configId = null;

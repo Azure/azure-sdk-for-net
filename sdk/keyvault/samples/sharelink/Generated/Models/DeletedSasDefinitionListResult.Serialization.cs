@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    public partial class DeletedSasDefinitionListResult
+    internal partial class DeletedSasDefinitionListResult
     {
         internal static DeletedSasDefinitionListResult DeserializeDeletedSasDefinitionListResult(JsonElement element)
         {
