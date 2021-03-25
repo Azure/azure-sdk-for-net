@@ -36,6 +36,10 @@ stages:
                   artifact: ${{parameters.ArtifactName}}-signed
                   displayName: 'Store signed packages in ${{parameters.ArtifactName}}-signed artifact'
 
+                - pwsh: |
+                    Get-ChildItem -Path $(Pipeline.Workspace)/${{parameters.ArtifactName}} -Recurse
+                  displayName: 'View published items'
+
   - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
     - ${{ each artifact in parameters.Artifacts }}:
       - stage: Release_${{artifact.safeName}}
