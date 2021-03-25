@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.Amqp;
 using Azure.Core.Serialization;
 using Azure.Messaging.ServiceBus.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Message
@@ -262,7 +263,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             'c',
             new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554"),
             new List<string>{"first", "second"},
-            new int[] {1, 2, 3}
+            new int[] {1, 2, 3},
+            new AmqpSymbol("symbol"),
         };
 
         [Test]
