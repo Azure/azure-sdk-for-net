@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         /// </summary>
         ///
         [Test]
-        public async Task ClientCanConnectUsingSharedKeyCredentialWithSignature()
+        public async Task ClientCanConnectUsingSasCredential()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
             {
@@ -57,7 +57,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                 var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
                 var connectionString = TestEnvironment.BuildConnectionStringWithSharedAccessSignature(scope.QueueName, audience);
                 var parsed = ServiceBusConnectionStringProperties.Parse(connectionString);
-                var credential = new ServiceBusSharedAccessKeyCredential(parsed.SharedAccessSignature);
+                var credential = new AzureSasCredential(parsed.SharedAccessSignature);
 
                 await using (var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential, options))
                 {
@@ -84,13 +84,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         /// </summary>
         ///
         [Test]
-        public async Task ClientCanConnectUsingSharedKeyCredentialWithSharedKey()
+        public async Task ClientCanConnectUsingSharedKeyCredential()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: false))
             {
                 var options = new ServiceBusClientOptions();
                 var audience = ServiceBusConnection.BuildConnectionResource(options.TransportType, TestEnvironment.FullyQualifiedNamespace, scope.QueueName);
-                var credential = new ServiceBusSharedAccessKeyCredential(TestEnvironment.SharedAccessKeyName, TestEnvironment.SharedAccessKey);
+                var credential = new AzureNamedKeyCredential(TestEnvironment.SharedAccessKeyName, TestEnvironment.SharedAccessKey);
 
                 await using (var client = new ServiceBusClient(TestEnvironment.FullyQualifiedNamespace, credential, options))
                 {

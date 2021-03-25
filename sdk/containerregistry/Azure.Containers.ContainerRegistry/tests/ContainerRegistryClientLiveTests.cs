@@ -12,14 +12,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync)
         {
+            Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
 
         private ContainerRegistryClient CreateClient()
         {
             return InstrumentClient(new ContainerRegistryClient(
                 new Uri(TestEnvironment.Endpoint),
-                TestEnvironment.UserName,
-                TestEnvironment.Password,
+                TestEnvironment.Credential,
                 InstrumentClientOptions(new ContainerRegistryClientOptions())
             ));
         }

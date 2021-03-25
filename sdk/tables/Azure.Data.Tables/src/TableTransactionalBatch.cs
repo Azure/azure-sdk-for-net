@@ -208,21 +208,25 @@ namespace Azure.Data.Tables
 
         internal async Task<Response<TableBatchResponse>> SubmitBatchAsyncInternal(bool async, CancellationToken cancellationToken = default)
         {
-            if (_submitted)
-            {
-                throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce);
-            }
-            else
-            {
-                _submitted = true;
-            }
-
-            _submittedMessageList = BuildOrderedBatchRequests();
-
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableTransactionalBatch)}.{nameof(SubmitBatch)}");
             scope.Start();
             try
             {
+                if (!_requestMessages.TryPeek(out var _))
+                {
+                    throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchIsEmpty);
+                }
+                if (_submitted)
+                {
+                    throw new InvalidOperationException(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce);
+                }
+                else
+                {
+                    _submitted = true;
+                }
+
+                _submittedMessageList = BuildOrderedBatchRequests();
+
                 var request = _tableOperations.CreateBatchRequest(_batch, null, null);
                 Response<List<Response>> response = null;
                 if (async)
