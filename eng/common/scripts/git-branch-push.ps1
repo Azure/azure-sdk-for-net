@@ -52,7 +52,8 @@ if ((git remote) -contains $RemoteName)
     exit 1
   }
 }
-else {
+else 
+{
   Write-Host "git remote add $RemoteName $GitUrl"
   git remote add $RemoteName $GitUrl
   if ($LASTEXITCODE -ne 0)
@@ -65,16 +66,21 @@ else {
 $currentBranch = git branch --show-current
 Write-Host "The current branch is $currentBranch."
 
-if ($currentBranch -ne $PRBranchName) {
+if ($currentBranch -ne $PRBranchName) 
+{
   # Check if the $PRBranch is default branch, if so, we swtich to default one
   $defaultBranch = (git remote show $RemoteName | Out-String) -replace "(?ms).*HEAD branch: (\w+).*", '$1'
   Write-Host "The default branch is $defaultBranch."
-  if ($PRBranchName -eq $defaultBranch) {
+  if ($PRBranchName -eq $defaultBranch) 
+  {
     Write-Host "git checkout $PRBranchName"
     git checkout $PRBranchName
   }
-  Write-Host "git checkout -b $PRBranchName"
-  git checkout -b $PRBranchName
+  else 
+  {
+    Write-Host "git checkout -b $PRBranchName"
+    git checkout -b $PRBranchName
+  }
 }
 
 if ($LASTEXITCODE -ne 0)
