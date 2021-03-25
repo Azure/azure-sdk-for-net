@@ -623,7 +623,7 @@ V11
 Stream targetStream = new MemoryStream();
 BlobRequestOptions options = new BlobRequestOptions()
 {
-    RetryPolicy = new ExponentialRetry(TimeSpan.FromSeconds(10), 6)
+    RetryPolicy = new ExponentialRetry(deltaBackoff: TimeSpan.FromSeconds(10), maxAttempts: 6)
 };
 await blockBlobClient.DownloadToStreamAsync(targetStream,accessCondition: null, options: options, operationContext: null);
 ```
