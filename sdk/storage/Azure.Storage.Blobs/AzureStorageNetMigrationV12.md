@@ -641,7 +641,7 @@ Stream targetStream = new MemoryStream();
 await blobClient.DownloadToAsync(targetStream);
 ```
 
-#### Maximum Execution Time
+#### Maximum execution time
 
 V11
 
