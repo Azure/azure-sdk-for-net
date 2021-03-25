@@ -78,6 +78,7 @@
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.10" />
     <PackageReference Update="Azure.Messaging.EventHubs" Version="5.3.1" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.0.0" />
+    <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.2.0-beta.1" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.0.2" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.0.2" />
@@ -101,6 +102,7 @@
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.'))">
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0-beta.1" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.25" />
+    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.19" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>

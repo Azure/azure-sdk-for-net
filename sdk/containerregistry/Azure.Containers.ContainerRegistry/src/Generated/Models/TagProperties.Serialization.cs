@@ -15,20 +15,14 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static TagProperties DeserializeTagProperties(JsonElement element)
         {
-            Optional<string> registry = default;
-            Optional<string> imageName = default;
+            string imageName = default;
             Optional<string> name = default;
             Optional<string> digest = default;
-            Optional<DateTimeOffset> createdTime = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
+            DateTimeOffset createdTime = default;
+            DateTimeOffset lastUpdateTime = default;
             Optional<ContentProperties> changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("registry"))
-                {
-                    registry = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("imageName"))
                 {
                     imageName = property.Value.GetString();
@@ -55,21 +49,11 @@ namespace Azure.Containers.ContainerRegistry
                         }
                         if (property0.NameEquals("createdTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("lastUpdateTime"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
                             lastUpdateTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
@@ -87,7 +71,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new TagProperties(registry.Value, imageName.Value, name.Value, digest.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), changeableAttributes.Value);
+            return new TagProperties(imageName, name.Value, digest.Value, createdTime, lastUpdateTime, changeableAttributes.Value);
         }
     }
 }

@@ -1,15 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.WebSockets;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Azure.Communication.PhoneNumbers.Models;
-using Azure.Communication.PhoneNumbers.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 

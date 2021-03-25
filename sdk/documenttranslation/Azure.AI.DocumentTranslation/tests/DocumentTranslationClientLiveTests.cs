@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -27,12 +27,12 @@ namespace Azure.AI.DocumentTranslation.Tests
         }
 
         [RecordedTest]
-        public async System.Threading.Tasks.Task GetDocumentFormatsTestAsync()
+        public async Task GetDocumentFormatsTestAsync()
         {
             var client = GetClient();
 
-            var pepe = await client.GetDocumentFormatsAsync();
-            Assert.GreaterOrEqual(pepe.Value.Count, 0);
+            var documentFormats = await client.GetDocumentFormatsAsync();
+            Assert.GreaterOrEqual(documentFormats.Value.Count, 0);
         }
     }
 }

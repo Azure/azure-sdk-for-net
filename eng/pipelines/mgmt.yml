@@ -68,6 +68,7 @@ pr:
     - sdk/eng/mgmt
     - sdk/eventgrid/Microsoft.Azure.Management.EventGrid
     - sdk/eventhub/Microsoft.Azure.Management.EventHub
+    - sdk/extendedlocation/Microsoft.Azure.Management.ExtendedLocation
     - sdk/frontdoor/Microsoft.Azure.Management.FrontDoor
     - sdk/guestconfiguration/Microsoft.Azure.Management.GuestConfiguration
     - sdk/hdinsight/Microsoft.Azure.Management.HDInsight

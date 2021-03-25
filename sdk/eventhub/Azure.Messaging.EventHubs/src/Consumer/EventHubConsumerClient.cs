@@ -222,26 +222,33 @@ namespace Azure.Messaging.EventHubs.Consumer
         /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
-        /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
         ///
-        internal EventHubConsumerClient(string consumerGroup,
-                                        string fullyQualifiedNamespace,
-                                        string eventHubName,
-                                        EventHubsSharedAccessKeyCredential credential,
-                                        EventHubConsumerClientOptions clientOptions = default)
+        public EventHubConsumerClient(string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      AzureNamedKeyCredential credential,
+                                      EventHubConsumerClientOptions clientOptions = default) : this(consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
-            clientOptions = clientOptions?.Clone() ?? new EventHubConsumerClientOptions();
-
-            OwnsConnection = true;
-            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
-            ConsumerGroup = consumerGroup;
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubConsumerClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
+        /// <param name="credential">The shared access signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
+        ///
+        public EventHubConsumerClient(string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      AzureSasCredential credential,
+                                      EventHubConsumerClientOptions clientOptions = default) : this(consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
+        {
         }
 
         /// <summary>
@@ -258,19 +265,8 @@ namespace Azure.Messaging.EventHubs.Consumer
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
                                       TokenCredential credential,
-                                      EventHubConsumerClientOptions clientOptions = default)
+                                      EventHubConsumerClientOptions clientOptions = default) : this(consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            clientOptions = clientOptions?.Clone() ?? new EventHubConsumerClientOptions();
-
-            OwnsConnection = true;
-            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
-            ConsumerGroup = consumerGroup;
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
         }
 
         /// <summary>
@@ -303,6 +299,35 @@ namespace Azure.Messaging.EventHubs.Consumer
         protected EventHubConsumerClient()
         {
             OwnsConnection = false;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubConsumerClient"/> class.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The name of the consumer group this consumer is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the consumer with.</param>
+        /// <param name="credential">The credential to use for authorization.  This may be of any type supported by the public constructors.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the consumer.</param>
+        ///
+        private EventHubConsumerClient(string consumerGroup,
+                                       string fullyQualifiedNamespace,
+                                       string eventHubName,
+                                       object credential,
+                                       EventHubConsumerClientOptions clientOptions = default)
+        {
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            clientOptions = clientOptions?.Clone() ?? new EventHubConsumerClientOptions();
+
+            OwnsConnection = true;
+            Connection = EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
+            ConsumerGroup = consumerGroup;
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
         }
 
         /// <summary>
