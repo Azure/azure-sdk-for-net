@@ -3718,6 +3718,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [Test]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
         public async Task QueryAsync_ParquetConfigurationInput()
         {
             // Arrange
@@ -3743,6 +3744,28 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual("0,mdifjt55.ea3,mdifjt55.ea3\n", s);
+        }
+
+        [Test]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_08_04)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        public async Task QueryAsync_ParquetConfigurationOutputError()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = test.FileSystem.GetFileClient(GetNewFileName());
+
+            // Act
+            string query = @"select * from blobstorage where id < 1;";
+            DataLakeQueryOptions options = new DataLakeQueryOptions
+            {
+                OutputTextConfiguration = new DataLakeQueryParquetTextOptions()
+            };
+
+            await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
+                file.QueryAsync(
+                    query, options),
+                e => Assert.AreEqual($"{nameof(DataLakeQueryParquetTextOptions)} can only be used for input serialization.", e.Message));
         }
 
         private Stream CreateDataStream(long size)

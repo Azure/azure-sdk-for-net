@@ -497,6 +497,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_08_04)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
         public async Task QueryAsync_ParquetConfiguration()
         {
             // Arrange
@@ -526,6 +527,7 @@ namespace Azure.Storage.Blobs.Test
 
         [Test]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_08_04)]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
         public async Task QueryAsync_ParquetOutputError()
         {
             // Arrange
