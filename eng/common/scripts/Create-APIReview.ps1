@@ -109,7 +109,8 @@ if ($packages)
         if ( ($SourceBranch -eq $DefaultBranch) -or (-not $version.IsPrerelease))
         {
             Write-Host "Submitting API Review for package $($pkg)"
-            $response = Submit-APIReview -packagename $pkg -filePath $pkgPath -uri $APIViewUri -apiKey $APIKey -apiLabel $APILabel
+            $respCode = Submit-APIReview -packagename $pkg -filePath $pkgPath -uri $APIViewUri -apiKey $APIKey -apiLabel $APILabel
+            Write-Host "HTTP Response code: $($respCode)"
             # HTTP status 200 means API is in approved status
             if ($respCode -eq '200')
             {
