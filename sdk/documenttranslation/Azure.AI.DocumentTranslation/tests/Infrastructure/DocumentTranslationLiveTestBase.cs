@@ -44,7 +44,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             Recording.DisableIdReuse();
             string containerName = "source" + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
-            await containerClient.CreateIfNotExistsAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
+            await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
             for (int i = 0; i < documents.Count; i++)
             {
@@ -62,7 +62,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             Recording.DisableIdReuse();
             string containerName = "target" + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
-            await containerClient.CreateIfNotExistsAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
+            await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
             var expiresOn = DateTimeOffset.Now.AddHours(1);
             return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn);
