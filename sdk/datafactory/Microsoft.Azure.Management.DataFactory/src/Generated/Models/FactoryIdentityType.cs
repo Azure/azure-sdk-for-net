@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for SftpAuthenticationType.
+    /// Defines values for FactoryIdentityType.
     /// </summary>
-    public static class SftpAuthenticationType
+    public static class FactoryIdentityType
     {
-        public const string Basic = "Basic";
-        public const string SshPublicKey = "SshPublicKey";
-        public const string MultiFactor = "MultiFactor";
+        public const string SystemAssigned = "SystemAssigned";
+        public const string UserAssigned = "UserAssigned";
+        public const string SystemAssignedUserAssigned = "SystemAssigned,UserAssigned";
     }
 }

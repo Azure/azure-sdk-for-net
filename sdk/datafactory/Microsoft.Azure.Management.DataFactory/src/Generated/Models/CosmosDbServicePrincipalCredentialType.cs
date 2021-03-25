@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 {
 
     /// <summary>
-    /// Defines values for SftpAuthenticationType.
+    /// Defines values for CosmosDbServicePrincipalCredentialType.
     /// </summary>
-    public static class SftpAuthenticationType
+    public static class CosmosDbServicePrincipalCredentialType
     {
-        public const string Basic = "Basic";
-        public const string SshPublicKey = "SshPublicKey";
-        public const string MultiFactor = "MultiFactor";
+        public const string ServicePrincipalKey = "ServicePrincipalKey";
+        public const string ServicePrincipalCert = "ServicePrincipalCert";
     }
 }

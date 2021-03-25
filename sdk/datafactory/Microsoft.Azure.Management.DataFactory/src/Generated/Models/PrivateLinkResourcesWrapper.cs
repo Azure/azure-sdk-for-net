@@ -10,34 +10,33 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Parameters for updating a factory resource.
+    /// Wrapper for a collection of private link resources
     /// </summary>
-    public partial class FactoryUpdateParameters
+    public partial class PrivateLinkResourcesWrapper
     {
         /// <summary>
-        /// Initializes a new instance of the FactoryUpdateParameters class.
+        /// Initializes a new instance of the PrivateLinkResourcesWrapper
+        /// class.
         /// </summary>
-        public FactoryUpdateParameters()
+        public PrivateLinkResourcesWrapper()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the FactoryUpdateParameters class.
+        /// Initializes a new instance of the PrivateLinkResourcesWrapper
+        /// class.
         /// </summary>
-        /// <param name="tags">The resource tags.</param>
-        /// <param name="identity">Managed service identity of the
-        /// factory.</param>
-        public FactoryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), FactoryIdentity identity = default(FactoryIdentity))
+        public PrivateLinkResourcesWrapper(IList<PrivateLinkResource> value)
         {
-            Tags = tags;
-            Identity = identity;
+            Value = value;
             CustomInit();
         }
 
@@ -47,28 +46,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource tags.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets managed service identity of the factory.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public FactoryIdentity Identity { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<PrivateLinkResource> Value { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Identity != null)
+            if (Value == null)
             {
-                Identity.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
         }
     }
