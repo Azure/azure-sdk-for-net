@@ -151,7 +151,7 @@ namespace Azure.Search.Documents
             StringBuilder odata = new StringBuilder("geography'POLYGON((");
 
             bool first = true;
-            foreach (GeographyPointProxy point in line.Points)
+            foreach (GeographyPointProxy position in line.Points)
             {
                 if (!first)
                 {
@@ -162,9 +162,9 @@ namespace Azure.Search.Documents
                     first = false;
                 }
 
-                odata.Append(JsonSerialization.Double(point.Longitude, CultureInfo.InvariantCulture))
+                odata.Append(JsonSerialization.Double(position.Longitude, CultureInfo.InvariantCulture))
                     .Append(' ')
-                    .Append(JsonSerialization.Double(point.Latitude, CultureInfo.InvariantCulture));
+                    .Append(JsonSerialization.Double(position.Latitude, CultureInfo.InvariantCulture));
             }
 
             return odata
