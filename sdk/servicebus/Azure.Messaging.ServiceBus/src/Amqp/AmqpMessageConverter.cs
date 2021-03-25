@@ -139,10 +139,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 return new ArraySegment<byte>();
             }
 
-            using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-            stream.CopyTo(memStream, StreamBufferSizeInBytes);
-
-            return new ArraySegment<byte>(memStream.ToArray());
+            switch (stream)
+            {
+                case BufferListStream bufferListStream:
+                    return bufferListStream.ReadBytes((int)stream.Length);
+                default:
+                {
+                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
+                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
+                    return new ArraySegment<byte>(memStream.ToArray());
+                }
+            }
         }
 
         public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
