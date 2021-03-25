@@ -8,12 +8,13 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.Management
 {
+    [Parallelizable]
     internal class ManagementRecordedTestBaseTests : ManagementRecordedTestBase<TestEnvironmentTests.MockTestEnvironment>
     {
         public ManagementRecordedTestBaseTests(bool isAsync)
             : base(isAsync)
         {
-            TestDiagnostics = false;
+            TestDiagnostics = true;
         }
 
         [Test]

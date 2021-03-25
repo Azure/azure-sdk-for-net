@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core.Tests
     public class ResourceGroupContainerTests : ResourceManagerTestBase
     {
         public ResourceGroupContainerTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
