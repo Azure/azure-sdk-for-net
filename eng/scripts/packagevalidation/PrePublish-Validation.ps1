@@ -6,17 +6,18 @@ Param (
   [string] $WorkingDirectory
 )
 
-. "${PSScriptRoot}\..\common\scripts\logging.ps1"
-. "${PSScriptRoot}\..\common\scripts\SemVer.ps1"
+. (Join-Path ${PSScriptRoot} .. common scripts logging.ps1)
+. (Join-Path ${PSScriptRoot} .. common scripts SemVer.ps1)
 
-$WinVersion = (Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\bin\10.0*" | Sort-Object -Descending)[0]
-$SignTool = "C:\Program Files (x86)\Windows Kits\10\bin\$($WinVersion.Name)\x64\signtool.exe"
+$WinKitsDir = (Join-Path C: "Program Files (x86)" "Windows Kits"  10 bin)
+$WinVersion = (Get-ChildItem -Path (Join-Path $WinKitsDir 10.0*) | Sort-Object -Descending)[0]
+$SignTool = Join-Path $WinKitsDir $WinVersion.Name x64 signtool.exe
 
 New-Item -Path $WorkingDirectory -Name "Validation" -ItemType "directory"
-$ValidationDirectory = "$WorkingDirectory\Validation"
+$ValidationDirectory = (Join-Path $WorkingDirectory Validation)
 
 Copy-Item -Path $PackagePath -Destination "$ValidationDirectory\package.zip"
-Expand-Archive -LiteralPath "$ValidationDirectory\package.zip" "$ValidationDirectory\extracted"
+Expand-Archive -LiteralPath "$PackagePath" $ValidationDirectory\extracted"
 
 $PackageName = Split-Path -Path $PackagePath -Leaf
 $PackageDlls = Get-ChildItem -Path "$ValidationDirectory\extracted\**\*.dll" -Recurse
