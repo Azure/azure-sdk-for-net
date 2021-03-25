@@ -123,3 +123,4 @@ steps:
       RepoOwner: ${{ parameters.TargetDocRepoOwner }}
       WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
+      PROwner: ${{ parameters.TargetDocRepoName }}
