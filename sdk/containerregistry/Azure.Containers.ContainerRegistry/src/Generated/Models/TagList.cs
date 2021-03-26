@@ -25,14 +25,14 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             Repository = repository;
-            Tags = new ChangeTrackingList<TagAttributesBase>();
+            Tags = new ChangeTrackingList<TagProperties>();
         }
 
         /// <summary> Initializes a new instance of TagList. </summary>
         /// <param name="repository"> Image name. </param>
         /// <param name="tags"> List of tag attribute details. </param>
         /// <param name="link"> . </param>
-        internal TagList(string repository, IReadOnlyList<TagAttributesBase> tags, string link)
+        internal TagList(string repository, IReadOnlyList<TagProperties> tags, string link)
         {
             Repository = repository;
             Tags = tags;
@@ -41,8 +41,6 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary> Image name. </summary>
         public string Repository { get; }
-        /// <summary> List of tag attribute details. </summary>
-        public IReadOnlyList<TagAttributesBase> Tags { get; }
         public string Link { get; }
     }
 }
