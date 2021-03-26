@@ -77,6 +77,7 @@ if ($LASTEXITCODE -ne 0)
     Write-Error "Unable to create branch LASTEXITCODE=$($LASTEXITCODE), see command output above."
     exit $LASTEXITCODE
 }
+
 if (!$SkipCommit) {
     if ($AmendCommit) {
         $amendOption = "--amend"
@@ -133,6 +134,7 @@ do
                 Write-Error "Unable to create diff file LASTEXITCODE=$($LASTEXITCODE), see command output above."
                 continue
             }
+            
             Write-Host "git reset --hard $RemoteName/${PRBranchName}"
             git reset --hard $RemoteName/${PRBranchName}
             if ($LASTEXITCODE -ne 0)
