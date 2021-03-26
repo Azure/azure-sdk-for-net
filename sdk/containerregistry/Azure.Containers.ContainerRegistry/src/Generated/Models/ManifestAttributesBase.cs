@@ -18,9 +18,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
         /// <param name="digest"> Manifest. </param>
         /// <param name="tags"> List of tags. </param>
-        /// <param name="manifestProperties"> Changeable attributes. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="digest"/>, <paramref name="tags"/>, or <paramref name="manifestProperties"/> is null. </exception>
-        internal ManifestAttributesBase(string digest, IEnumerable<string> tags, ContentProperties manifestProperties)
+        /// <param name="writeableProperties"> Changeable attributes. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/>, <paramref name="tags"/>, or <paramref name="writeableProperties"/> is null. </exception>
+        internal ManifestAttributesBase(string digest, IEnumerable<string> tags, ContentProperties writeableProperties)
         {
             if (digest == null)
             {
@@ -30,15 +30,15 @@ namespace Azure.Containers.ContainerRegistry
             {
                 throw new ArgumentNullException(nameof(tags));
             }
-            if (manifestProperties == null)
+            if (writeableProperties == null)
             {
-                throw new ArgumentNullException(nameof(manifestProperties));
+                throw new ArgumentNullException(nameof(writeableProperties));
             }
 
             Digest = digest;
             RegistryArtifacts = new ChangeTrackingList<ManifestAttributesManifestReferences>();
             Tags = tags.ToList();
-            ManifestProperties = manifestProperties;
+            WriteableProperties = writeableProperties;
         }
 
         /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
@@ -50,8 +50,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="operatingSystem"> Operating system. </param>
         /// <param name="registryArtifacts"> List of manifest attributes details. </param>
         /// <param name="tags"> List of tags. </param>
-        /// <param name="manifestProperties"> Changeable attributes. </param>
-        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> registryArtifacts, IReadOnlyList<string> tags, ContentProperties manifestProperties)
+        /// <param name="writeableProperties"> Changeable attributes. </param>
+        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> registryArtifacts, IReadOnlyList<string> tags, ContentProperties writeableProperties)
         {
             Digest = digest;
             Size = size;
@@ -61,7 +61,7 @@ namespace Azure.Containers.ContainerRegistry
             OperatingSystem = operatingSystem;
             RegistryArtifacts = registryArtifacts;
             Tags = tags;
-            ManifestProperties = manifestProperties;
+            WriteableProperties = writeableProperties;
         }
 
         /// <summary> Manifest. </summary>
@@ -81,6 +81,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
         /// <summary> Changeable attributes. </summary>
-        public ContentProperties ManifestProperties { get; }
+        public ContentProperties WriteableProperties { get; }
     }
 }

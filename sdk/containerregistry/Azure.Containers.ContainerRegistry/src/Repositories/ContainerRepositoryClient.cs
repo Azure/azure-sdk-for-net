@@ -58,6 +58,7 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
+        #region Repository methods
         /// <summary> Get repository properties. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RepositoryProperties>> GetPropertiesAsync(CancellationToken cancellationToken = default)
@@ -127,7 +128,142 @@ namespace Azure.Containers.ContainerRegistry
                 throw;
             }
         }
+        #endregion
 
+        #region Manifest methods
+        ///// <summary> Get the collection of tags for a repository. </summary>
+        ///// <param name="options"> Options to override default collection getting behavior. </param>
+        ///// <param name="cancellationToken"> The cancellation token to use. </param>
+        //public virtual AsyncPageable<RegistryArtifactProperties> GetRegistryArtifactsAsync(GetRegistryArtifactOptions options = null, CancellationToken cancellationToken = default)
+        //{
+        //    async Task<Page<RegistryArtifactProperties>> FirstPageFunc(int? pageSizeHint)
+        //    {
+        //        using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetRegistryArtifacts)}");
+        //        scope.Start();
+        //        try
+        //        {
+        //            var response = await _restClient.GetManifestsAsync(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken: cancellationToken).ConfigureAwait(false);
+        //            return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            scope.Failed(e);
+        //            throw;
+        //        }
+        //    }
+
+        //    async Task<Page<RegistryArtifactProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
+        //    {
+        //        using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetRegistryArtifacts)}");
+        //        scope.Start();
+        //        try
+        //        {
+        //            string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
+        //            var response = await _restClient.GetManifestsNextPageAsync(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken).ConfigureAwait(false);
+        //            return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            scope.Failed(e);
+        //            throw;
+        //        }
+        //    }
+
+        //    return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        //}
+
+        ///// <summary> Get the collection of tags for a repository. </summary>
+        ///// <param name="options"> Options to override default collection getting behavior. </param>
+        ///// <param name="cancellationToken"> The cancellation token to use. </param>
+        //public virtual Pageable<RegistryArtifactProperties> GetRegistryArtifacts(GetRegistryArtifactOptions options = null, CancellationToken cancellationToken = default)
+        //{
+        //    Page<RegistryArtifactProperties> FirstPageFunc(int? pageSizeHint)
+        //    {
+        //        using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetRegistryArtifacts)}");
+        //        scope.Start();
+        //        try
+        //        {
+        //            var response = _restClient.GetTags(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken: cancellationToken);
+        //            return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            scope.Failed(e);
+        //            throw;
+        //        }
+        //    }
+
+        //    Page<RegistryArtifactProperties> NextPageFunc(string nextLink, int? pageSizeHint)
+        //    {
+        //        using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTags)}");
+        //        scope.Start();
+        //        try
+        //        {
+        //            string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
+        //            var response = _restClient.GetTagsNextPage(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken);
+        //            return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            scope.Failed(e);
+        //            throw;
+        //        }
+        //    }
+
+        //    return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        //}
+
+        /// <summary> Get registry artifact properties by tag or digest. </summary>
+        /// <param name="tagOrDigest"> Either a tag or the digest identifying this registry artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<RegistryArtifactProperties>> GetRegistryArtifactPropertiesAsync(string tagOrDigest, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetRegistryArtifactProperties)}");
+            scope.Start();
+
+            try
+            {
+                string digest = IsDigest(tagOrDigest) ? tagOrDigest : 
+                    (await _restClient.GetTagPropertiesAsync(_repository, tagOrDigest, cancellationToken).ConfigureAwait(false)).Value.Digest;
+
+                return await _restClient.GetRegistryArtifactPropertiesAsync(_repository, digest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get registry artifact properties by tag or digest. </summary>
+        /// <param name="tagOrDigest"> Either a tag or the digest identifying this registry artifact. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<RegistryArtifactProperties> GetRegistryArtifactProperties(string tagOrDigest, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetRegistryArtifactProperties)}");
+            scope.Start();
+
+            try
+            {
+                string digest = IsDigest(tagOrDigest) ? tagOrDigest : _restClient.GetTagProperties(_repository, tagOrDigest, cancellationToken).Value.Digest;
+
+                return _restClient.GetRegistryArtifactProperties(_repository, digest, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        private static bool IsDigest(string tagOrDigest)
+        {
+            return tagOrDigest.Contains(":");
+        }
+
+        #endregion
+
+        #region Tag methods
         /// <summary> Get tag properties by tag. </summary>
         /// <param name="tag"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -237,5 +373,6 @@ namespace Azure.Containers.ContainerRegistry
                 throw;
             }
         }
+        #endregion
     }
 }

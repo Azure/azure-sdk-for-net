@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    internal partial class RegistryArtifactProperties
+    public partial class RegistryArtifactProperties
     {
         internal static RegistryArtifactProperties DeserializeRegistryArtifactProperties(JsonElement element)
         {

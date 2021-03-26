@@ -130,7 +130,7 @@ namespace Azure.Containers.ContainerRegistry
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        private static string ParseUriReferenceFromLinkHeader(string linkValue)
+        internal static string ParseUriReferenceFromLinkHeader(string linkValue)
         {
             // Per the Docker v2 HTTP API spec, the Link header is an RFC5988
             // compliant rel='next' with URL to next result set, if available.
