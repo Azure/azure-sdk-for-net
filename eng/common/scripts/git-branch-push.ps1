@@ -69,6 +69,7 @@ if ($LASTEXITCODE -eq 0) {
   git checkout $PRBranchName 
 } 
 else {
+  Write-Host "git checkout -b $PRBranchName."
   git checkout -b $PRBranchName
 }
 if ($LASTEXITCODE -ne 0)
