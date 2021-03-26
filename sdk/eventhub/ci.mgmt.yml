@@ -9,7 +9,8 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/eventhub/*
+    - sdk/eventhub/ci.mgmt.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Azure.ResourceManager.EventHubs
 
 pr:
@@ -22,7 +23,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/eventhub/*
+    - sdk/eventhub/ci.mgmt.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Azure.ResourceManager.EventHubs
 
 extends:

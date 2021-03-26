@@ -37,4 +37,8 @@
     <ProjectReference Remove="@(ProjectsToRemove)" />
   </ItemGroup>
 
+  <Target Name="EventHubsOutput" BeforeTargets="Build" Condition="'$(SDKType)' != ''">
+    <Message Text="Final Build References:" Importance="high"/>
+    <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
+  </Target>
 </Project>

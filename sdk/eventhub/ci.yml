@@ -9,7 +9,8 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/eventhub/*
+    - sdk/eventhub/ci.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Azure.Messaging.EventHubs
     - sdk/eventhub/Azure.Messaging.EventHubs.Processor
     - sdk/eventhub/Azure.Messaging.EventHubs.Shared
@@ -25,7 +26,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/eventhub/*
+    - sdk/eventhub/ci.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Azure.Messaging.EventHubs
     - sdk/eventhub/Azure.Messaging.EventHubs.Processor
     - sdk/eventhub/Azure.Messaging.EventHubs.Shared
