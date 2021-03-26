@@ -22,6 +22,100 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         }
 
         [Test]
+        public async Task TimeSeriesInsightsNumericTypes_ExpectsError()
+        {
+            // Arrange
+            TimeSeriesInsightsClient client = GetClient();
+            var timeSeriesTypes = new List<TimeSeriesType>();
+            var tsiTypeNamePrefix = "type";
+            var timeSeriesTypesName = Recording.GenerateAlphaNumericId(tsiTypeNamePrefix);
+            var timeSeriesTypeId = Recording.GenerateId();
+
+            // Build Numeric type
+            // Below is an invalid expression
+            var numExpression = new TimeSeriesExpression("$event");
+            var aggregation = new TimeSeriesExpression("avg($value)");
+            var numericVariable = new NumericVariable(numExpression, aggregation);
+            var variables = new Dictionary<string, TimeSeriesVariable>();
+            var variableNamePrefix = "numericVariableName";
+            variables.Add(Recording.GenerateAlphaNumericId(variableNamePrefix), numericVariable);
+
+            var type = new TimeSeriesType(timeSeriesTypesName, variables);
+            type.Id = timeSeriesTypeId;
+            timeSeriesTypes.Add(type);
+
+            // create numeric type and expect failure due to invalid input expression
+            Response<TimeSeriesOperationError[]> createTypesResult = await client
+                .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
+                .ConfigureAwait(false);
+
+            // Assert that the result error array does not contain an error
+            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult != null);
+
+            // Get the type by name and expect error
+            var getTypesByNamesResult = await client
+                .GetTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
+                .ConfigureAwait(false);
+            getTypesByNamesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error != null);
+
+            // Delete the type by name and expect error
+            Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
+                       .DeleteTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
+                       .ConfigureAwait(false);
+
+            // Assert that the response array does not have any error object set
+            // Response is null even when type does not exist, conversation is started with Tsi team to confirm this behavior.
+            deleteTypesResponse.Value.Should().OnlyContain((errorResult) => errorResult == null);
+        }
+
+        [Test]
+        public async Task TimeSeriesInsightsCategoricalTypes_ExpectsError()
+        {
+            // Arrange
+            TimeSeriesInsightsClient client = GetClient();
+            var timeSeriesTypes = new List<TimeSeriesType>();
+            var tsiTypeNamePrefix = "type";
+            var timeSeriesTypesName = Recording.GenerateAlphaNumericId(tsiTypeNamePrefix);
+            var timeSeriesTypeId = Recording.GenerateId();
+
+            // Build Numeric type
+            // Below is an invalid expression
+            var categoricalValue = new TimeSeriesExpression("$event");
+            var category = new TimeSeriesDefaultCategory("label");
+            var categoricalVariable = new CategoricalVariable(categoricalValue, category);
+            var variables = new Dictionary<string, TimeSeriesVariable>();
+            var variableNamePrefix = "categoricalVariableName";
+            variables.Add(Recording.GenerateAlphaNumericId(variableNamePrefix), categoricalVariable);
+
+            var type = new TimeSeriesType(timeSeriesTypesName, variables);
+            type.Id = timeSeriesTypeId;
+            timeSeriesTypes.Add(type);
+
+            // create numeric type and expect failure due to invalid input expression
+            Response<TimeSeriesOperationError[]> createTypesResult = await client
+                .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
+                .ConfigureAwait(false);
+
+            // Assert that the result error array does not contain an error
+            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult != null);
+
+            // Get the type by name and expect error
+            var getTypesByNamesResult = await client
+                .GetTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
+                .ConfigureAwait(false);
+            getTypesByNamesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error != null);
+
+            // Delete the type by name and expect error
+            Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
+                       .DeleteTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
+                       .ConfigureAwait(false);
+
+            // Assert that the response array does not have any error object set
+            // Response is null even when type does not exist, conversation is started with Tsi team to confirm this behavior.
+            deleteTypesResponse.Value.Should().OnlyContain((errorResult) => errorResult == null);
+        }
+
+        [Test]
         public async Task TimeSeriesInsightsTypes_Lifecycle()
         {
             // Arrange
