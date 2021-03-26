@@ -2,7 +2,7 @@
 . "${PSScriptRoot}\logging.ps1"
 . "${PSScriptRoot}\SemVer.ps1"
 
-$RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+.*(?<version>\b\d+\.\d+\.\d+([^0-9\s][^\s:]+)?)(\s+(?<releaseStatus>\(.*\)))?)"
+$RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\##\s+(?<version>\b\d+\.\d+\.\d+([^0-9\s][^\s:]+)?)(\s+(?<releaseStatus>\(.*\)))?)"
 $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
 
