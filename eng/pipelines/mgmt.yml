@@ -65,6 +65,7 @@ pr:
     - sdk/digitaltwins/Microsoft.Azure.Management.DigitalTwins
     - sdk/dns/Microsoft.Azure.Management.Dns
     - sdk/edgegateway/Microsoft.Azure.Management.EdgeGateway
+    - sdk/elastic/Microsoft.Azure.Management.Elastic
     - sdk/eng/mgmt
     - sdk/eventgrid/Microsoft.Azure.Management.EventGrid
     - sdk/eventhub/Microsoft.Azure.Management.EventHub
