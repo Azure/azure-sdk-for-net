@@ -27,6 +27,7 @@ namespace Proto.Client
             {
                 genericOp.Get();
             }
+            Console.WriteLine(subscription.ClientOptions.ApiVersions.TryGetApiVersion(VirtualNetwork.ResourceType));
         }
     }
 }
