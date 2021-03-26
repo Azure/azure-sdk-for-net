@@ -1,0 +1,5 @@
+﻿<RunSettings>
+    <NUnit>
+        <ConsoleOut>0</ConsoleOut>
+    </NUnit>
+</RunSettings>
