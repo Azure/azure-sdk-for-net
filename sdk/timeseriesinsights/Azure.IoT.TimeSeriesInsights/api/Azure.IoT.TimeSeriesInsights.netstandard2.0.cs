@@ -234,7 +234,7 @@ namespace Azure.IoT.TimeSeriesInsights
     public partial class QueryEventsRequestOptions : Azure.IoT.TimeSeriesInsights.QueryRequestOptions
     {
         public QueryEventsRequestOptions() { }
-        public Azure.IoT.TimeSeriesInsights.EventProperty[] ProjectedProperties { get { throw null; } set { } }
+        public System.Collections.Generic.List<Azure.IoT.TimeSeriesInsights.EventProperty> ProjectedProperties { get { throw null; } }
     }
     public partial class QueryRequest
     {
@@ -261,7 +261,7 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         public QuerySeriesRequestOptions() { }
         public System.Collections.Generic.IDictionary<string, Azure.IoT.TimeSeriesInsights.TimeSeriesVariable> InlineVariables { get { throw null; } set { } }
-        public string[] ProjectedVariables { get { throw null; } set { } }
+        public System.Collections.Generic.List<string> ProjectedVariables { get { throw null; } }
     }
     public partial class SearchHierarchyNodesResponse
     {
