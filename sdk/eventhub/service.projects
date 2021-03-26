@@ -13,7 +13,12 @@
 -->
 
 <Project>
-  <ItemGroup Condition="'$(SDKType)' == '' or '$(SDKType)' == 'client'">
+  <!-- Include all if no type is specified -->
+  <ItemGroup Condition="'$(SDKType)' == ''">
+    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)**\*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
     <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Azure.Messaging.*\**\*.csproj" />
     <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.EventHubs\**\*.csproj" />
   </ItemGroup>
@@ -32,8 +37,4 @@
     <ProjectReference Remove="@(ProjectsToRemove)" />
   </ItemGroup>
 
-  <Target Name="EventHubsOutput" BeforeTargets="Build">
-    <Message Text="Final Build References:" Importance="high"/>
-    <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
-  </Target>
 </Project>
