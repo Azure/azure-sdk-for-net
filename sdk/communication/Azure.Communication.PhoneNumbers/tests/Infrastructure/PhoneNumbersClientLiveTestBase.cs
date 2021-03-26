@@ -42,7 +42,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var client = new PhoneNumbersClient(
                     TestEnvironment.LiveTestEndpoint,
-                     new AzureKeyCredential(TestEnvironment.LiveTestAccessKeyAccessKey),
+                     new AzureKeyCredential(TestEnvironment.LiveTestAccessKey),
                     InstrumentClientOptions(new PhoneNumbersClientOptions()));
 
             return isInstrumented ? InstrumentClient(client) : client;

@@ -22,7 +22,7 @@ namespace Azure.Communication.Tests
 
         public Uri LiveTestEndpoint => new Uri(Core.ConnectionString.Parse(LiveTestConnectionString).GetRequired("endpoint"));
 
-        public string LiveTestAccessKeyAccessKey => Core.ConnectionString.Parse(LiveTestConnectionString).GetRequired("accesskey");
+        public string LiveTestAccessKey => Core.ConnectionString.Parse(LiveTestConnectionString).GetRequired("accesskey");
 
         public string CommunicationTestPhoneNumber => GetVariable(AzurePhoneNumber);
     }
