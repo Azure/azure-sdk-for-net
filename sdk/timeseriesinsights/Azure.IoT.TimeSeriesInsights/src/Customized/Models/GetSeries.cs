@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,11 +8,11 @@ using Azure.Core;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// Get Events query. Allows to retrieve raw events for a given Time Series Id and search span.
+    /// Get Series query. Allows to retrieve time series of calculated variable values from events for a given Time Series ID and search span.
     /// </summary>
-    [CodeGenModel("GetEvents")]
-    [CodeGenSuppress("GetEvents", typeof(IEnumerable<object>), typeof(DateTimeRange))]
-    public partial class GetEvents
+    [CodeGenModel("GetSeries")]
+    [CodeGenSuppress("GetSeries", typeof(IEnumerable<object>), typeof(DateTimeRange))]
+    public partial class GetSeries
     {
         // Autorest does not support changing type for properties. In order to turn TimeSeriesId
         // from a list of objects to a strongly typed object, TimeSeriesId has been renamed to
@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public TimeSeriesId TimeSeriesId { get; }
 
         /// <summary>
-        /// Initializes a new instance of GetEvents.
+        /// Initializes a new instance of GetSeries.
         /// </summary>
         /// <param name="timeSeriesId">
         /// Time Series Id that uniquely identifies the instance. It matches Time Series Id properties in
@@ -45,11 +45,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException">
         /// <paramref name="timeSeriesId"/> or <paramref name="searchSpan"/> is null.
         /// </exception>
-        public GetEvents(TimeSeriesId timeSeriesId, DateTimeRange searchSpan)
+        public GetSeries(TimeSeriesId timeSeriesId, DateTimeRange searchSpan)
         {
             TimeSeriesId = timeSeriesId ?? throw new ArgumentNullException(nameof(timeSeriesId));
             SearchSpan = searchSpan ?? throw new ArgumentNullException(nameof(searchSpan));
-            ProjectedProperties = new ChangeTrackingList<EventProperty>();
+            ProjectedVariables = new ChangeTrackingList<string>();
+            InlineVariables = new ChangeTrackingDictionary<string, TimeSeriesVariable>();
         }
     }
 }

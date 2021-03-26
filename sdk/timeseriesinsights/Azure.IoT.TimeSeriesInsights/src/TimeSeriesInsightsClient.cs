@@ -1080,7 +1080,15 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                return QueryEventsInternalAsync(timeSeriesId, startTime, endTime, options, cancellationToken);
+                var searchSpan = new DateTimeRange(startTime, endTime);
+                var queryRequest = new QueryRequest
+                {
+                    GetEvents = new GetEvents(timeSeriesId, searchSpan)
+                };
+
+                BuildEventsRequestOptions(options, queryRequest);
+
+                return QueryInternalAsync(queryRequest, options?.StoreType?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1110,7 +1118,15 @@ namespace Azure.IoT.TimeSeriesInsights
 
             try
             {
-                return QueryEventsInternal(timeSeriesId, startTime, endTime, options, cancellationToken);
+                var searchSpan = new DateTimeRange(startTime, endTime);
+                var queryRequest = new QueryRequest
+                {
+                    GetEvents = new GetEvents(timeSeriesId, searchSpan)
+                };
+
+                BuildEventsRequestOptions(options, queryRequest);
+
+                return QueryInternal(queryRequest, options?.StoreType?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1143,7 +1159,15 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 DateTimeOffset rangeEndTime = endTime ?? DateTimeOffset.UtcNow;
                 DateTimeOffset rangeStartTime = rangeEndTime - timeSpan;
-                return QueryEventsInternalAsync(timeSeriesId, rangeStartTime, rangeEndTime, options, cancellationToken);
+                var searchSpan = new DateTimeRange(rangeStartTime, rangeEndTime);
+                var queryRequest = new QueryRequest
+                {
+                    GetEvents = new GetEvents(timeSeriesId, searchSpan)
+                };
+
+                BuildEventsRequestOptions(options, queryRequest);
+
+                return QueryInternalAsync(queryRequest, options?.StoreType?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1175,7 +1199,171 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 DateTimeOffset rangeEndTime = endTime ?? DateTimeOffset.UtcNow;
                 DateTimeOffset rangeStartTime = rangeEndTime - timeSpan;
-                return QueryEventsInternal(timeSeriesId, rangeStartTime, rangeEndTime, options, cancellationToken);
+                var searchSpan = new DateTimeRange(rangeStartTime, rangeEndTime);
+                var queryRequest = new QueryRequest
+                {
+                    GetEvents = new GetEvents(timeSeriesId, searchSpan)
+                };
+
+                BuildEventsRequestOptions(options, queryRequest);
+
+                return QueryInternal(queryRequest, options?.StoreType?.ToString(), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve series events for a given Time Series Id asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve series events for.</param>
+        /// <param name="startTime">Start timestamp of the time range. Events that have this timestamp are included.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded.</param>
+        /// <param name="options">Optional parameters to use when querying for series events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
+        public virtual AsyncPageable<QueryResultPage> QuerySeriesAsync(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QuerySeriesRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QuerySeries)}");
+            scope.Start();
+
+            try
+            {
+                var searchSpan = new DateTimeRange(startTime, endTime);
+                var queryRequest = new QueryRequest
+                {
+                    GetSeries = new GetSeries(timeSeriesId, searchSpan)
+                };
+
+                BuildSeriesRequestOptions(options, queryRequest);
+
+                return QueryInternalAsync(queryRequest, options?.StoreType?.ToString(), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve series events for a given Time Series Id synchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve series events for.</param>
+        /// <param name="startTime">Start timestamp of the time range. Events that have this timestamp are included.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded.</param>
+        /// <param name="options">Optional parameters to use when querying for series events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
+        public virtual Pageable<QueryResultPage> QuerySeries(
+            TimeSeriesId timeSeriesId,
+            DateTimeOffset startTime,
+            DateTimeOffset endTime,
+            QuerySeriesRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QuerySeries)}");
+            scope.Start();
+
+            try
+            {
+                var searchSpan = new DateTimeRange(startTime, endTime);
+                var queryRequest = new QueryRequest
+                {
+                    GetSeries = new GetSeries(timeSeriesId, searchSpan)
+                };
+
+                BuildSeriesRequestOptions(options, queryRequest);
+
+                return QueryInternal(queryRequest, options?.StoreType?.ToString(), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve series events for a given Time Series Id over a specified time interval asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve series events for.</param>
+        /// <param name="timeSpan">The time interval over which to query data.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded. If null is provided, <c>DateTimeOffset.UtcNow</c> is used.</param>
+        /// <param name="options">Optional parameters to use when querying for series events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
+        public virtual AsyncPageable<QueryResultPage> QuerySeriesAsync(
+            TimeSeriesId timeSeriesId,
+            TimeSpan timeSpan,
+            DateTimeOffset? endTime = null,
+            QuerySeriesRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QuerySeries)}");
+            scope.Start();
+
+            try
+            {
+                DateTimeOffset rangeEndTime = endTime ?? DateTimeOffset.UtcNow;
+                DateTimeOffset rangeStartTime = rangeEndTime - timeSpan;
+                var searchSpan = new DateTimeRange(rangeStartTime, rangeEndTime);
+                var queryRequest = new QueryRequest
+                {
+                    GetSeries = new GetSeries(timeSeriesId, searchSpan)
+                };
+
+                BuildSeriesRequestOptions(options, queryRequest);
+
+                return QueryInternalAsync(queryRequest, options?.StoreType?.ToString(), cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve series events for a given Time Series Id over a certain time interval synchronously.
+        /// </summary>
+        /// <param name="timeSeriesId">The Time Series Id to retrieve series events for.</param>
+        /// <param name="timeSpan">The time interval over which to query data.</param>
+        /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded. If null is provided, <c>DateTimeOffset.UtcNow</c> is used.</param>
+        /// <param name="options">Optional parameters to use when querying for series events.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
+        public virtual Pageable<QueryResultPage> QuerySeries(
+            TimeSeriesId timeSeriesId,
+            TimeSpan timeSpan,
+            DateTimeOffset? endTime = null,
+            QuerySeriesRequestOptions options = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QuerySeries)}");
+            scope.Start();
+
+            try
+            {
+                DateTimeOffset rangeEndTime = endTime ?? DateTimeOffset.UtcNow;
+                DateTimeOffset rangeStartTime = rangeEndTime - timeSpan;
+                var searchSpan = new DateTimeRange(rangeStartTime, rangeEndTime);
+                var queryRequest = new QueryRequest
+                {
+                    GetSeries = new GetSeries(timeSeriesId, searchSpan)
+                };
+
+                BuildSeriesRequestOptions(options, queryRequest);
+
+                return QueryInternal(queryRequest, options?.StoreType?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -1508,21 +1696,11 @@ namespace Azure.IoT.TimeSeriesInsights
             }
         }
 
-        private AsyncPageable<QueryResultPage> QueryEventsInternalAsync(
-            TimeSeriesId timeSeriesId,
-            DateTimeOffset startTime,
-            DateTimeOffset endTime,
-            QueryEventsRequestOptions options,
+        private AsyncPageable<QueryResultPage> QueryInternalAsync(
+            QueryRequest queryRequest,
+            string storeType,
             CancellationToken cancellationToken)
         {
-            var searchSpan = new DateTimeRange(startTime, endTime);
-            var queryRequest = new QueryRequest
-            {
-                GetEvents = new GetEvents(timeSeriesId, searchSpan)
-            };
-
-            BuildRequestOptions(options, queryRequest);
-
             async Task<Page<QueryResultPage>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
@@ -1530,7 +1708,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 try
                 {
                     Response<QueryResultPage> response = await _queryRestClient
-                        .ExecuteAsync(queryRequest, options?.StoreType?.ToString(), null, null, cancellationToken)
+                        .ExecuteAsync(queryRequest, storeType, null, null, cancellationToken)
                         .ConfigureAwait(false);
 
                     var frame = new QueryResultPage[]
@@ -1554,7 +1732,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 try
                 {
                     Response<QueryResultPage> response = await _queryRestClient
-                        .ExecuteAsync(queryRequest, options?.StoreType?.ToString(), nextLink, null, cancellationToken)
+                        .ExecuteAsync(queryRequest, storeType, nextLink, null, cancellationToken)
                         .ConfigureAwait(false);
 
                     var frame = new QueryResultPage[]
@@ -1574,29 +1752,19 @@ namespace Azure.IoT.TimeSeriesInsights
             return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        private Pageable<QueryResultPage> QueryEventsInternal(
-            TimeSeriesId timeSeriesId,
-            DateTimeOffset startTime,
-            DateTimeOffset endTime,
-            QueryEventsRequestOptions options,
+        private Pageable<QueryResultPage> QueryInternal(
+            QueryRequest queryRequest,
+            string storeType,
             CancellationToken cancellationToken)
         {
-            var searchSpan = new DateTimeRange(startTime, endTime);
-            var queryRequest = new QueryRequest
-            {
-                GetEvents = new GetEvents(timeSeriesId, searchSpan)
-            };
-
-            BuildRequestOptions(options, queryRequest);
-
             Page<QueryResultPage> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryInternal)}");
                 scope.Start();
                 try
                 {
                     Response<QueryResultPage> response = _queryRestClient
-                        .Execute(queryRequest, options?.StoreType?.ToString(), null, null, cancellationToken);
+                        .Execute(queryRequest, storeType, null, null, cancellationToken);
 
                     var frame = new QueryResultPage[]
                     {
@@ -1614,12 +1782,12 @@ namespace Azure.IoT.TimeSeriesInsights
 
             Page<QueryResultPage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryEvents)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(QueryInternal)}");
                 scope.Start();
                 try
                 {
                     Response<QueryResultPage> response = _queryRestClient
-                        .Execute(queryRequest, options?.StoreType?.ToString(), nextLink, null, cancellationToken);
+                        .Execute(queryRequest, storeType, nextLink, null, cancellationToken);
 
                     var frame = new QueryResultPage[]
                     {
@@ -1638,7 +1806,7 @@ namespace Azure.IoT.TimeSeriesInsights
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        private static void BuildRequestOptions(QueryEventsRequestOptions options, QueryRequest queryRequest)
+        private static void BuildEventsRequestOptions(QueryEventsRequestOptions options, QueryRequest queryRequest)
         {
             if (options != null)
             {
@@ -1656,6 +1824,35 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
 
                 queryRequest.GetEvents.Take = options.MaximumNumberOfEvents;
+            }
+        }
+
+        private static void BuildSeriesRequestOptions(QuerySeriesRequestOptions options, QueryRequest queryRequest)
+        {
+            if (options != null)
+            {
+                if (options.Filter != null)
+                {
+                    queryRequest.GetSeries.Filter = new TimeSeriesExpression(options.Filter);
+                }
+
+                if (options.ProjectedVariables != null)
+                {
+                    foreach (string projectedVariable in options.ProjectedVariables)
+                    {
+                        queryRequest.GetSeries.ProjectedVariables.Add(projectedVariable);
+                    }
+                }
+
+                if (options.InlineVariables != null)
+                {
+                    foreach (string inlineVariableKey in options.InlineVariables.Keys)
+                    {
+                        queryRequest.GetSeries.InlineVariables[inlineVariableKey] = options.InlineVariables[inlineVariableKey];
+                    }
+                }
+
+                queryRequest.GetSeries.Take = options.MaximumNumberOfEvents;
             }
         }
     }
