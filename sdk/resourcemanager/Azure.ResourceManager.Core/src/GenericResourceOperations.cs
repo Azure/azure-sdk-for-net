@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> The status of the delete operation. </returns>
         public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDeleteById(Id, ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken), cancellationToken).WaitForCompletion(cancellationToken));
+            return new ArmResponse(Operations.StartDeleteById(Id, GetApiVersion(cancellationToken), cancellationToken).WaitForCompletion(cancellationToken));
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A <see cref="Task"/> that on completion returns the status of the delete operation. </returns>
         public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartDeleteByIdAsync(Id,  await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
+            var operation = await Operations.StartDeleteByIdAsync(Id, await GetApiVersionAsync(cancellationToken), cancellationToken).ConfigureAwait(false);
             var result = await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             return new ArmResponse(result);
         }
