@@ -22,7 +22,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public async Task TimeSeriesInsightsNumericTypes_ExpectsError()
+        public async Task TimeSeriesInsightsTypeWithNumericVariable_ExpectsError()
         {
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
@@ -31,7 +31,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var timeSeriesTypesName = Recording.GenerateAlphaNumericId(tsiTypeNamePrefix);
             var timeSeriesTypeId = Recording.GenerateId();
 
-            // Build Numeric type
+            // Build Numeric variable
             // Below is an invalid expression
             var numExpression = new TimeSeriesExpression("$event");
             var aggregation = new TimeSeriesExpression("avg($value)");
@@ -45,11 +45,11 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             timeSeriesTypes.Add(type);
 
             // Act and Assert
-            await TypeUnhappyPathTests(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
+            await TestTypeUnhappyPath(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
         }
 
         [Test]
-        public async Task TimeSeriesInsightsCategoricalTypes_ExpectsError()
+        public async Task TimeSeriesInsightsTypeWithCategoricalVariable_ExpectsError()
         {
             // Arrange
             TimeSeriesInsightsClient client = GetClient();
@@ -58,7 +58,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var timeSeriesTypesName = Recording.GenerateAlphaNumericId(tsiTypeNamePrefix);
             var timeSeriesTypeId = Recording.GenerateId();
 
-            // Build Numeric type
+            // Build Numeric variable
             // Below is an invalid expression
             var categoricalValue = new TimeSeriesExpression("$event");
             var category = new TimeSeriesDefaultCategory("label");
@@ -72,7 +72,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             timeSeriesTypes.Add(type);
 
             // Act and Assert
-            await TypeUnhappyPathTests(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
+            await TestTypeUnhappyPath(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 { Recording.GenerateAlphaNumericId(tsiTypeNamePrefix), Recording.GenerateId()}
             };
 
-            // Build aggregate type
+            // Build aggregate variable
             var countExpression = new TimeSeriesExpression("count()");
             var aggValue = new AggregateVariable(countExpression);
             var variables = new Dictionary<string, TimeSeriesVariable>();
@@ -198,7 +198,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             }
         }
 
-        private static async Task TypeUnhappyPathTests(TimeSeriesInsightsClient client, List<TimeSeriesType> timeSeriesTypes, string timeSeriesTypesName)
+        private static async Task TestTypeUnhappyPath(TimeSeriesInsightsClient client, List<TimeSeriesType> timeSeriesTypes, string timeSeriesTypesName)
         {
             // create numeric type and expect failure due to invalid input expression
             Response<TimeSeriesOperationError[]> createTypesResult = await client
