@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Core
             string version = ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken);
             if (version == null)
             {
-                throw new ArgumentException($"An Invalid resouce id was given {Id}");
+                throw new ArgumentException($"An invalid resouce id was given {Id}");
             }
             return version;
         }
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Core
             string version = await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false);
             if (version == null)
             {
-                throw new ArgumentException($"An Invalid resouce id was given {Id}");
+                throw new ArgumentException($"An invalid resouce id was given {Id}");
             }
             return version;
         }
