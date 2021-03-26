@@ -71,7 +71,11 @@ if ($LASTEXITCODE -eq 0) {
 else {
   git checkout -b $PRBranchName
 }
-
+if ($LASTEXITCODE -ne 0)
+{
+    Write-Error "Unable to create branch LASTEXITCODE=$($LASTEXITCODE), see command output above."
+    exit $LASTEXITCODE
+}
 if (!$SkipCommit) {
     if ($AmendCommit) {
         $amendOption = "--amend"
