@@ -14,7 +14,6 @@
 -->
 
 <Project>
-
   <ItemGroup Condition="'$(SDKType)' == 'client'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Containers.*\**\*.csproj" />
   </ItemGroup>
@@ -26,5 +25,4 @@
   <ItemGroup Condition="'$(SDKType)' == 'mgmt'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Management.ContainerRegistry*\**\*.csproj" />
   </ItemGroup>
-
 </Project>
