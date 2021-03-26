@@ -120,26 +120,23 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // Query for the two events with a filter
 
                 // Only project Temperature and one of the Id properties
-                var projectedProperties = new List<EventProperty>
+                var queryRequestOptions = new QueryEventsRequestOptions
                 {
+                    Filter = "$event.Temperature.Double = 1.2",
+                    StoreType = StoreType.WarmStore,
+                };
+                queryRequestOptions.ProjectedProperties.Add(
                     new EventProperty
                     {
                         Name = QueryTestsHelper.Temperature,
                         Type = "Double",
-                    },
+                    });
+                queryRequestOptions.ProjectedProperties.Add(
                     new EventProperty
                     {
                         Name = modelSettings.TimeSeriesIdProperties.First().Name,
                         Type = modelSettings.TimeSeriesIdProperties.First().Type.ToString(),
-                    }
-                };
-
-                var queryRequestOptions = new QueryEventsRequestOptions
-                {
-                    Filter = "$event.Temperature.Double = 1.2",
-                    ProjectedProperties = projectedProperties.ToArray(),
-                    StoreType = StoreType.WarmStore,
-                };
+                    });
 
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
