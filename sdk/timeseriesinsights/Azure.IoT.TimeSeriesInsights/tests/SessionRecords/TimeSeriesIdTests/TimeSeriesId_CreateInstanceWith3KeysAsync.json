@@ -30,12 +30,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 18:59:58 GMT",
+        "Date": "Fri, 26 Mar 2021 19:11:00 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "424990f8-f14b-412e-97b7-6ac9e07c7ab3"
+        "x-ms-request-id": "cfb05fcd-5627-4557-b145-5f4ad243520c"
       },
       "ResponseBody": {
         "put": [
@@ -72,62 +72,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 18:59:58 GMT",
+        "Date": "Fri, 26 Mar 2021 19:11:00 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "61e2ac11-ffd6-4973-a6d1-bf2d2c0fdb4e"
-      },
-      "ResponseBody": {
-        "get": [
-          {
-            "error": {
-              "code": "ResourceNotFound",
-              "message": "Time series instance with time series ID \u0027[\u0022bEUMP\u0022,null,\u0022fAZXF\u0022]\u0027 is not found.",
-              "innerError": {
-                "code": "InstanceNotFound"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/instances/$batch?api-version=2020-07-31",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "50",
-        "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "5b79c683fb7f15a0032e90823c83e201",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "get": {
-          "timeSeriesIds": [
-            [
-              "bEUMP",
-              null,
-              "fAZXF"
-            ]
-          ]
-        }
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
-        "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 19:00:08 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "e8519c26-f3d6-42f6-b537-b2d3bb66d618"
+        "x-ms-request-id": "806ebb5d-6159-4124-b3d8-06cbba0363d7"
       },
       "ResponseBody": {
         "get": [
@@ -153,7 +103,7 @@
         "Content-Length": "53",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "3d51db0bf1048426f2a5d60650038254",
+        "x-ms-client-request-id": "5b79c683fb7f15a0032e90823c83e201",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -173,12 +123,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 19:00:08 GMT",
+        "Date": "Fri, 26 Mar 2021 19:11:00 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "c9569163-5d0b-429e-b3ac-dd16e62e7466"
+        "x-ms-request-id": "1e2cb3a9-d5c6-406b-8b1b-aea34a4208d6"
       },
       "ResponseBody": {
         "delete": [

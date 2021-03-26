@@ -44,28 +44,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             type.Id = timeSeriesTypeId;
             timeSeriesTypes.Add(type);
 
-            // create numeric type and expect failure due to invalid input expression
-            Response<TimeSeriesOperationError[]> createTypesResult = await client
-                .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
-                .ConfigureAwait(false);
-
-            // Assert that the result error array does not contain an error
-            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult != null);
-
-            // Get the type by name and expect error
-            var getTypesByNamesResult = await client
-                .GetTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
-                .ConfigureAwait(false);
-            getTypesByNamesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error != null);
-
-            // Delete the type by name and expect error
-            Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
-                       .DeleteTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
-                       .ConfigureAwait(false);
-
-            // Assert that the response array does not have any error object set
-            // Response is null even when type does not exist, conversation is started with Tsi team to confirm this behavior.
-            deleteTypesResponse.Value.Should().OnlyContain((errorResult) => errorResult == null);
+            // Act and Assert
+            await TypeUnhappyPathTests(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
         }
 
         [Test]
@@ -91,28 +71,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             type.Id = timeSeriesTypeId;
             timeSeriesTypes.Add(type);
 
-            // create numeric type and expect failure due to invalid input expression
-            Response<TimeSeriesOperationError[]> createTypesResult = await client
-                .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
-                .ConfigureAwait(false);
-
-            // Assert that the result error array does not contain an error
-            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult != null);
-
-            // Get the type by name and expect error
-            var getTypesByNamesResult = await client
-                .GetTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
-                .ConfigureAwait(false);
-            getTypesByNamesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error != null);
-
-            // Delete the type by name and expect error
-            Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
-                       .DeleteTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
-                       .ConfigureAwait(false);
-
-            // Assert that the response array does not have any error object set
-            // Response is null even when type does not exist, conversation is started with Tsi team to confirm this behavior.
-            deleteTypesResponse.Value.Should().OnlyContain((errorResult) => errorResult == null);
+            // Act and Assert
+            await TypeUnhappyPathTests(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
         }
 
         [Test]
@@ -236,6 +196,31 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     throw;
                 }
             }
+        }
+
+        private static async Task TypeUnhappyPathTests(TimeSeriesInsightsClient client, List<TimeSeriesType> timeSeriesTypes, string timeSeriesTypesName)
+        {
+            // create numeric type and expect failure due to invalid input expression
+            Response<TimeSeriesOperationError[]> createTypesResult = await client
+                .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
+                .ConfigureAwait(false);
+
+            // Assert that the result error array does not contain an error
+            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult != null);
+
+            // Get the type by name and expect error
+            var getTypesByNamesResult = await client
+                .GetTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
+                .ConfigureAwait(false);
+            getTypesByNamesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error != null);
+
+            // Delete the type by name and expect error
+            Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
+                       .DeleteTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
+                       .ConfigureAwait(false);
+
+            // Response is null even when type does not exist.
+            deleteTypesResponse.Value.Should().OnlyContain((errorResult) => errorResult == null);
         }
     }
 }
