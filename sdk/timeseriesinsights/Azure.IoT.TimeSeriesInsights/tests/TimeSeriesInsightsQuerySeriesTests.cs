@@ -127,7 +127,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     new TimeSeriesExpression("$event.Humidity"),
                     new TimeSeriesExpression("avg($value)"));
                 inlineVariables[Humidity] = humidityNumericVariable;
-                querySeriesRequestOptions.ProjectedVariables = new string[] { Temperature, Humidity };
+                querySeriesRequestOptions.ProjectedVariables.Add(Temperature);
+                querySeriesRequestOptions.ProjectedVariables.Add(Humidity);
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
                     AsyncPageable<QueryResultPage> querySeriesEventsPages = tsiClient.QuerySeriesAsync(tsiId, startTime, endTime, querySeriesRequestOptions);

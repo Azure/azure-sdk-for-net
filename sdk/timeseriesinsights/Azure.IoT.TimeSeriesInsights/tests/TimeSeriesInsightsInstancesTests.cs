@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     public class TimeSeriesInsightsInstancesTests : E2eTestBase
     {
-        private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(10);
+        private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(20);
 
         // This is the GUID that TSI uses to represent the default type for a Time Series Instance.
         // TODO: replace hardcoding the Type GUID when the Types resource has been implemented.
@@ -124,7 +124,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                 // Get search suggestions for the first instance
                 var timeSeriesIdToSuggest = (TimeSeriesId)timeSeriesInstances.First().TimeSeriesId;
-                string suggestionString = string.Join(string.Empty, timeSeriesIdToSuggest.ToArray()).Substring(0, 3);
+                string suggestionString = timeSeriesIdToSuggest.ToArray().First();
                 Response<SearchSuggestion[]> searchSuggestionResponse = await TestRetryHelper.RetryAsync(async () =>
                 {
                     Response<SearchSuggestion[]> searchSuggestions = await client
