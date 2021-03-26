@@ -10,14 +10,13 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Structure representing a resource type.
     /// </summary>
-    public sealed partial class ResourceType
+    public sealed partial class ResourceType : IUtf8JsonSerializable
     {
         /// <summary>
         /// Serialize the input ResourceType object.
         /// </summary>
         /// <param name="writer"> Input Json writer. </param>
-        /// <param name="value"> Input ResourceType object. </param>
-        internal static void Serialize(Utf8JsonWriter writer, ResourceType value)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             if (writer is null)
             {
@@ -25,17 +24,17 @@ namespace Azure.ResourceManager.Core
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(value.Namespace))
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace");
-                writer.WriteStringValue(value.Namespace);
+                writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(value.Parent))
+            if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent");
-                if (!value.Parent.Equals(new ResourceType()))
+                if (!Parent.Equals(new ResourceType()))
                 {
-                    Serialize(writer, value.Parent);
+                    writer.WriteObjectValue(Parent);
                 }
                 else
                 {
@@ -43,10 +42,10 @@ namespace Azure.ResourceManager.Core
                     writer.WriteEndObject();
                 }
             }
-            if (Optional.IsDefined(value.Type))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(value.Type);
+                writer.WriteStringValue(Type);
             }
             writer.WriteEndObject();
         }

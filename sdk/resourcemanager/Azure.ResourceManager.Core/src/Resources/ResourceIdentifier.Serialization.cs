@@ -10,14 +10,13 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Canonical Representation of a Resource Identity.
     /// </summary>
-    public sealed partial class ResourceIdentifier
+    public sealed partial class ResourceIdentifier : IUtf8JsonSerializable
     {
         /// <summary>
         /// Serialize the input ResourceIdentifier object.
         /// </summary>
         /// <param name="writer"> Input Json writer. </param>
-        /// <param name="value"> Input ResourceIdentifier object. </param>
-        internal static void Serialize(Utf8JsonWriter writer, ResourceIdentifier value)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             if (writer is null)
             {
@@ -25,43 +24,35 @@ namespace Azure.ResourceManager.Core
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(value.Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
-                writer.WriteStringValue(value.Id);
+                writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(value.Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(value.Name);
+                writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(value.Parent))
+            if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent");
-                if (value.Parent != null)
-                {
-                    Serialize(writer, value.Parent);
-                }
-                else
-                {
-                    writer.WriteStartObject();
-                    writer.WriteEndObject();
-                }
+                writer.WriteObjectValue(Parent);
             }
-            if (Optional.IsDefined(value.ResourceGroup))
+            if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup");
-                writer.WriteStringValue(value.ResourceGroup);
+                writer.WriteStringValue(ResourceGroup);
             }
-            if (Optional.IsDefined(value.Subscription))
+            if (Optional.IsDefined(Subscription))
             {
                 writer.WritePropertyName("subscription");
-                writer.WriteStringValue(value.Subscription);
+                writer.WriteStringValue(Subscription);
             }
-            if (Optional.IsDefined(value.Type))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                ResourceType.Serialize(writer, value.Type);
+                writer.WriteObjectValue(Type);
             }
             writer.WriteEndObject();
         }

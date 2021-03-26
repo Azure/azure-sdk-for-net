@@ -10,14 +10,13 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the base resource used by all azure resources.
     /// </summary>
-    public abstract partial class Resource
+    public abstract partial class Resource : IUtf8JsonSerializable
     {
         /// <summary>
         /// Serialize the input Resource object.
         /// </summary>
         /// <param name="writer"> Input Json writer. </param>
-        /// <param name="value"> Input Resource object. </param>
-        internal static void Serialize(Utf8JsonWriter writer, Resource value)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             if (writer is null)
             {
@@ -25,28 +24,20 @@ namespace Azure.ResourceManager.Core
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(value.Id))
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
-                if (value.Id != null)
-                {
-                    ResourceIdentifier.Serialize(writer, value.Id);
-                }
-                else
-                {
-                    writer.WriteStartObject();
-                    writer.WriteEndObject();
-                }
+                writer.WriteObjectValue(Id);
             }
-            if (Optional.IsDefined(value.Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(value.Name);
+                writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(value.Type))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                ResourceType.Serialize(writer, value.Type);
+                writer.WriteObjectValue(Type);
             }
             writer.WriteEndObject();
         }
