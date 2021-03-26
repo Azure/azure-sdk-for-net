@@ -12,20 +12,20 @@ namespace Azure.Core.Tests
 {
     public class RequestScopedHttpMessagePropertiesTests : PolicyTestBase
     {
-        private Mock<HttpPipelineSynchronousPolicy> policyMock;
-        private List<HttpMessage> messages;
+        private Mock<HttpPipelineSynchronousPolicy> _policyMock;
+        private List<HttpMessage> _messages;
 
         [SetUp]
         public void Setup()
         {
-            policyMock = new Mock<HttpPipelineSynchronousPolicy>();
-            policyMock.CallBase = true;
-            policyMock.Setup(p => p.OnSendingRequest(It.IsAny<HttpMessage>()))
+            _policyMock = new Mock<HttpPipelineSynchronousPolicy>();
+            _policyMock.CallBase = true;
+            _policyMock.Setup(p => p.OnSendingRequest(It.IsAny<HttpMessage>()))
                 .Callback<HttpMessage>(message =>
                 {
-                    messages.Add(message);
+                    _messages.Add(message);
                 }).Verifiable();
-            messages = new List<HttpMessage>();
+            _messages = new List<HttpMessage>();
         }
 
         [Test]
@@ -33,13 +33,13 @@ namespace Azure.Core.Tests
         {
             var transport = new MockTransport(r => new MockResponse(200));
 
-            using (HttpPipeline.CreateHttpMessagePropertyScope("foo", "bar"))
+            using (HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object>() { { "foo", "bar" } }))
             {
-                await SendGetRequest(transport, policyMock.Object);
+                await SendGetRequest(transport, _policyMock.Object);
             }
 
-            Assert.AreEqual(1, messages.Count);
-            messages[0].TryGetProperty("foo", out var fooProperty);
+            Assert.AreEqual(1, _messages.Count);
+            _messages[0].TryGetProperty("foo", out var fooProperty);
             Assert.AreEqual("bar", fooProperty);
         }
 
@@ -48,16 +48,16 @@ namespace Azure.Core.Tests
         {
             var transport = new MockTransport(r => new MockResponse(200));
 
-            using (HttpPipeline.CreateHttpMessagePropertyScope("foo", "bar"))
+            using (HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object>() { { "foo", "bar" } }))
             {
-                await SendGetRequest(transport, policyMock.Object);
+                await SendGetRequest(transport, _policyMock.Object);
             }
 
-            await SendGetRequest(transport, policyMock.Object);
+            await SendGetRequest(transport, _policyMock.Object);
 
-            Assert.AreEqual(2, messages.Count);
-            Assert.IsTrue(messages[0].TryGetProperty("foo", out var _));
-            Assert.IsFalse(messages[1].TryGetProperty("foo", out var _));
+            Assert.AreEqual(2, _messages.Count);
+            Assert.IsTrue(_messages[0].TryGetProperty("foo", out var _));
+            Assert.IsFalse(_messages[1].TryGetProperty("foo", out var _));
         }
 
         [Test]
@@ -65,15 +65,15 @@ namespace Azure.Core.Tests
         {
             var transport = new MockTransport(r => new MockResponse(200));
 
-            using (HttpPipeline.CreateHttpMessagePropertyScope("foo1", "bar1"))
-            using (HttpPipeline.CreateHttpMessagePropertyScope("foo2", "bar2"))
+            using (HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object>() { { "foo1", "bar1" } }))
+            using (HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object>() { { "foo2", "bar2" } }))
             {
-                await SendGetRequest(transport, policyMock.Object);
+                await SendGetRequest(transport, _policyMock.Object);
             }
 
-            Assert.AreEqual(1, messages.Count);
-            messages[0].TryGetProperty("foo1", out var foo1Property);
-            messages[0].TryGetProperty("foo2", out var foo2Property);
+            Assert.AreEqual(1, _messages.Count);
+            _messages[0].TryGetProperty("foo1", out var foo1Property);
+            _messages[0].TryGetProperty("foo2", out var foo2Property);
             Assert.AreEqual("bar1", foo1Property);
             Assert.AreEqual("bar2", foo2Property);
         }
@@ -83,14 +83,14 @@ namespace Azure.Core.Tests
         {
             var transport = new MockTransport(r => new MockResponse(200));
 
-            using (HttpPipeline.CreateHttpMessagePropertyScope("foo", "bar1"))
-            using (HttpPipeline.CreateHttpMessagePropertyScope("foo", "bar2"))
+            using (HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object>() { { "foo", "bar1" } }))
+            using (HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object>() { { "foo", "bar2" } }))
             {
-                await SendGetRequest(transport, policyMock.Object);
+                await SendGetRequest(transport, _policyMock.Object);
             }
 
-            Assert.AreEqual(1, messages.Count);
-            messages[0].TryGetProperty("foo", out var fooProperty);
+            Assert.AreEqual(1, _messages.Count);
+            _messages[0].TryGetProperty("foo", out var fooProperty);
             Assert.AreEqual("bar2", fooProperty);
         }
     }

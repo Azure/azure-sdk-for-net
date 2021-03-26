@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class HttpPipeline
     {
+        private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
+
         private readonly HttpPipelineTransport _transport;
 
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
@@ -66,7 +69,7 @@ namespace Azure.Core.Pipeline
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
-            RequestScopedHttpMessageProperties.AddHttpMessageProperties(message);
+            AddHttpMessageProperties(message);
             return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
         }
 
@@ -78,7 +81,7 @@ namespace Azure.Core.Pipeline
         public void Send(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
-            RequestScopedHttpMessageProperties.AddHttpMessageProperties(message);
+            AddHttpMessageProperties(message);
             _pipeline.Span[0].Process(message, _pipeline.Slice(1));
         }
         /// <summary>
@@ -132,12 +135,60 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// TODO.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="messageProperties"></param>
         /// <returns></returns>
-        public static IDisposable CreateHttpMessagePropertyScope(string name, object value)
+        public static IDisposable CreateHttpMessagePropertiesScope(Dictionary<string, object> messageProperties)
         {
-            return RequestScopedHttpMessageProperties.StartScope(name, value);
+            Argument.AssertNotNull(messageProperties, nameof(messageProperties));
+            CurrentHttpMessagePropertiesScope.Value = new HttpMessagePropertiesScope(messageProperties, CurrentHttpMessagePropertiesScope.Value);
+
+            return CurrentHttpMessagePropertiesScope.Value;
+        }
+
+        private static void AddHttpMessageProperties(HttpMessage message)
+        {
+            if (CurrentHttpMessagePropertiesScope.Value != null)
+            {
+                foreach (KeyValuePair<string, object> kvp in CurrentHttpMessagePropertiesScope.Value.Properties)
+                {
+                    message.SetProperty(kvp.Key, kvp.Value);
+                }
+            }
+        }
+
+        private class HttpMessagePropertiesScope : IDisposable
+        {
+            private readonly HttpMessagePropertiesScope? _parent;
+            private bool _disposed;
+
+            internal HttpMessagePropertiesScope(Dictionary<string, object> messageProperties, HttpMessagePropertiesScope? parent)
+            {
+                if (parent != null)
+                {
+                    Properties = new Dictionary<string, object>(parent.Properties);
+                    foreach (var kvp in messageProperties)
+                    {
+                        Properties[kvp.Key] = kvp.Value;
+                    }
+                }
+                else
+                {
+                    Properties = new Dictionary<string, object>(messageProperties);
+                }
+                _parent = parent;
+            }
+
+            public Dictionary<string, object> Properties { get; }
+
+            public void Dispose()
+            {
+                if (_disposed)
+                {
+                    return;
+                }
+                CurrentHttpMessagePropertiesScope.Value = _parent;
+                _disposed = true;
+            }
         }
     }
 }
