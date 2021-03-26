@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Core
             {
                 results = ProviderOperations.Get(resourceType.Namespace, null, cancellationToken);
             }
-            catch (RequestFailedException)
+            catch (RequestFailedException ex) when (ex.Status == 404)
             {
                 return null;
             }
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Core
             {
                 results = await ProviderOperations.GetAsync(resourceType.Namespace, null, cancellationToken).ConfigureAwait(false);
             }
-            catch (RequestFailedException)
+            catch (RequestFailedException ex) when (ex.Status == 404)
             {
                 return null;
             }

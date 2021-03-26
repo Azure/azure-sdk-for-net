@@ -53,14 +53,22 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public void GetGenericsBadNameSpace()
+        public async Task GetGenericsBadNameSpace()
         {
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}/providers/Microsoft.NotAValidNameSpace123/availabilitySets/testavset";
             AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
             _ = GetArmClient(options); // setup providers client
             var subOp = Client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, asetid);
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await genericResourceOperations.GetAsync());
+            try
+            {
+                await genericResourceOperations.GetAsync();
+                Assert.Fail("No InvalidOperationException thrown");
+            }
+            catch (InvalidOperationException ex)
+            {
+                Assert.IsTrue(ex.Message.Equals($"An invalid resouce id was given {asetid}"));
+            }
         }
 
         [TestCase]
@@ -82,6 +90,19 @@ namespace Azure.ResourceManager.Core.Tests
             {
                 Assert.IsTrue(ex.Message.Contains("InvalidApiVersionParameter"));
             }
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetGenericsGoodApiVersion()
+        {
+            ResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
+            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            var client = GetArmClient(options);
+            var subOp = client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
+            var genericResourceOperations = new GenericResourceOperations(subOp, rgid);
+            var rg = await genericResourceOperations.GetAsync();
+            Assert.IsNotNull(rg);
         }
     }
 }
