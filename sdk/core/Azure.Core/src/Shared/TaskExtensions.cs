@@ -238,7 +238,10 @@ namespace Azure.Core.Pipeline
             public T GetResult()
             {
                 Debug.Assert(IsCompleted);
-                _cancellationToken.ThrowIfCancellationRequested();
+                if (!_taskAwaiter.IsCompleted)
+                {
+                    _cancellationToken.ThrowIfCancellationRequested();
+                }
                 return _taskAwaiter.GetResult();
             }
 
