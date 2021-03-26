@@ -14,7 +14,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Selected variables that needs to be projected in the query result. When it is null or not set, all the
         /// variables and Time Series types in the model are returned.
         /// </summary>
-        public string[] ProjectedVariables { get; set; }
+        public List<string> ProjectedVariables { get; }
 
         /// <summary>
         /// Optional inline variables apart from the ones already defined in the Time Series type in the model.
