@@ -73,15 +73,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value
         /// cannot be larger than 1023 GB</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
-        /// <param name="deleteOption">[In Preview] Specifies whether OS Disk
-        /// should be deleted or detached upon VM deletion.
-        /// &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt;
-        /// **Delete** If this value is used, the OS disk is deleted when VM is
-        /// deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the
-        /// os disk is retained even after VM is deleted. &lt;br&gt;&lt;br&gt;
-        /// The default value is set to **detach**. For an ephemeral OS Disk,
-        /// the default value is **Delete** and this can not be updated by the
-        /// user. Possible values include: 'Delete', 'Detach'</param>
+        /// <param name="deleteOption">Specifies whether OS Disk should be
+        /// deleted or detached upon VM deletion. &lt;br&gt;&lt;br&gt; Possible
+        /// values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the
+        /// OS disk is deleted when VM is deleted.&lt;br&gt;&lt;br&gt;
+        /// **Detach** If this value is used, the os disk is retained after VM
+        /// is deleted. &lt;br&gt;&lt;br&gt; The default value is set to
+        /// **detach**. For an ephemeral OS Disk, the default value is set to
+        /// **Delete**. User cannot change the delete option for ephemeral OS
+        /// Disk. Possible values include: 'Delete', 'Detach'</param>
         public OSDisk(string createOption, OperatingSystemTypes? osType = default(OperatingSystemTypes?), DiskEncryptionSettings encryptionSettings = default(DiskEncryptionSettings), string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), DiffDiskSettings diffDiskSettings = default(DiffDiskSettings), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), string deleteOption = default(string))
         {
             OsType = osType;
@@ -202,17 +202,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         public ManagedDiskParameters ManagedDisk { get; set; }
 
         /// <summary>
-        /// Gets or sets [In Preview] Specifies whether OS Disk should be
-        /// deleted or detached upon VM deletion.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Delete** If this value is
-        /// used, the OS disk is deleted when VM is
+        /// Gets or sets specifies whether OS Disk should be deleted or
+        /// detached upon VM deletion. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// Possible values: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Delete** If
+        /// this value is used, the OS disk is deleted when VM is
         /// deleted.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Detach** If this
-        /// value is used, the os disk is retained even after VM is deleted.
+        /// value is used, the os disk is retained after VM is deleted.
         /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; The default value is set to
-        /// **detach**. For an ephemeral OS Disk, the default value is
-        /// **Delete** and this can not be updated by the user. Possible values
-        /// include: 'Delete', 'Detach'
+        /// **detach**. For an ephemeral OS Disk, the default value is set to
+        /// **Delete**. User cannot change the delete option for ephemeral OS
+        /// Disk. Possible values include: 'Delete', 'Detach'
         /// </summary>
         [JsonProperty(PropertyName = "deleteOption")]
         public string DeleteOption { get; set; }

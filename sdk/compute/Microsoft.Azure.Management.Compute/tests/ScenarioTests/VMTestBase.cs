@@ -280,6 +280,7 @@ namespace Compute.Tests
                         Option = DiffDiskOptions.Local,
                         Placement = DiffDiskPlacement.ResourceDisk
                     };
+                    osDisk.DeleteOption = DiskDeleteOptionTypes.Delete;
                 }
 
                 if (dedicatedHostGroupReferenceId != null)
@@ -908,6 +909,7 @@ namespace Compute.Tests
                         {
                             Uri = osVhduri
                         },
+                        DeleteOption = DiskDeleteOptionTypes.Detach,
                         ManagedDisk = !hasManagedDisks ? null : new ManagedDiskParameters
                         {
                             StorageAccountType = osDiskStorageAccountType,
@@ -927,6 +929,7 @@ namespace Compute.Tests
                             CreateOption = DiskCreateOptionTypes.Empty,
                             Lun = 0,
                             DiskSizeGB = 30,
+                            DeleteOption = DiskDeleteOptionTypes.Detach,
                             ManagedDisk = new ManagedDiskParameters()
                             {
                                 StorageAccountType = dataDiskStorageAccountType,
