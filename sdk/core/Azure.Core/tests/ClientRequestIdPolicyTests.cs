@@ -93,6 +93,7 @@ namespace Azure.Core.Tests
             }
 
             Assert.IsNotEmpty(transport.SingleRequest.ClientRequestId);
+            Assert.AreNotEqual("custom-id", transport.SingleRequest.ClientRequestId);
         }
     }
 }

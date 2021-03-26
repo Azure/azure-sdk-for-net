@@ -129,7 +129,9 @@ namespace Azure.Core.Pipeline
         /// </example>
         public static IDisposable CreateClientRequestIdScope(string? clientRequestId)
         {
-            return ReadClientRequestIdPolicy.StartScope(clientRequestId);
+#pragma warning disable CS8604 // Possible null reference argument.
+            return CreateHttpMessagePropertiesScope(new Dictionary<string, object>() { { ReadClientRequestIdPolicy.MessagePropertyKey, clientRequestId } });
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         /// <summary>
