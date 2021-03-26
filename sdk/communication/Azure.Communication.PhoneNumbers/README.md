@@ -1,9 +1,5 @@
 # Azure Communication Phone Numbers client library for .NET
 
-> Server Version:
-
-> Phone number client: 2020-07-20-preview1
-
 Azure Communication Phone Numbers is managing phone numbers for Azure Communication Services.
 
 [Source code][source] <!--| [Package (NuGet)][package]--> | [Product documentation][product_docs] | [Samples][source_samples]
