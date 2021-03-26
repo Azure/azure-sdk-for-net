@@ -29,15 +29,18 @@ namespace Azure.ResourceManager.Core.Tests
             Console.WriteLine("-----Client 1-----");
             await foreach (var sub in client1.GetSubscriptionContainer().ListAsync())
             {
-                Console.WriteLine($"Found {sub.Data.DisplayName}");
+                Console.WriteLine($"Check 1: Found {sub.Data.DisplayName}");
             }
-            Assert.AreEqual(dummyPolicy1.numMsgGot, 2);
+            Assert.AreEqual(2, dummyPolicy1.numMsgGot);
 
-            //client1.DefaultSubscription.ClientOptions = //set accessor is inaccessible
-            client1.DefaultSubscription.ClientOptions.AddPolicy(dummyPolicy2, HttpPipelinePosition.PerCall);
+            options1.AddPolicy(dummyPolicy2, HttpPipelinePosition.PerCall);
+            await foreach (var sub in client1.GetSubscriptionContainer().ListAsync())
+            {
+                Console.WriteLine($"Check 2: Found {sub.Data.DisplayName}");
+            }
 
-            Assert.AreEqual(dummyPolicy1.numMsgGot, 2);
-            Console.WriteLine("\nPASSED\n");
+            Assert.AreEqual(3, dummyPolicy1.numMsgGot);
+            //Assert.AreEqual(0, dummyPolicy2.numMsgGot); uncomment for ADO #5572
         }
 
         private class dummyPolicy : HttpPipelineSynchronousPolicy

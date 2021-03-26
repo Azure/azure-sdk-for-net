@@ -3,6 +3,8 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Core;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
@@ -48,7 +50,7 @@ namespace Azure.Core.Tests.Management
             var operation = (await sub.GetArmOperationAsync()).Value;
             var result = operation.Method();
 
-            Assert.AreEqual("TestResourceOperationsProxy", operation.GetType().Name);
+            Assert.AreEqual("TestResourceProxy", operation.GetType().Name);
             Assert.AreEqual("success", result);
         }
 
@@ -60,7 +62,7 @@ namespace Azure.Core.Tests.Management
             var response = (await sub.GetArmOperationAsync()).Value;
             var result = response.Method();
 
-            Assert.AreEqual("TestResourceOperationsProxy", response.GetType().Name);
+            Assert.AreEqual("TestResourceProxy", response.GetType().Name);
             Assert.AreEqual("success", result);
         }
 
@@ -72,7 +74,7 @@ namespace Azure.Core.Tests.Management
             var operation = (await sub.GetPhArmOperationAsync()).Value;
             var result = operation.Method();
 
-            Assert.AreEqual("TestResourceOperationsProxy", operation.GetType().Name);
+            Assert.AreEqual("TestResourceProxy", operation.GetType().Name);
             Assert.AreEqual("success", result);
         }
 
@@ -84,7 +86,7 @@ namespace Azure.Core.Tests.Management
             var response = (await sub.GetPhArmOperationAsync()).Value;
             var result = response.Method();
 
-            Assert.AreEqual("TestResourceOperationsProxy", response.GetType().Name);
+            Assert.AreEqual("TestResourceProxy", response.GetType().Name);
             Assert.AreEqual("success", result);
         }
 
@@ -120,6 +122,17 @@ namespace Azure.Core.Tests.Management
                 Assert.AreEqual("TestResourceProxy", item.GetType().Name);
                 Assert.AreEqual("success", item.Method());
             }
+        }
+
+        [Test]
+        public async Task ValidateWaitForCompletion()
+        {
+            ManagementTestClient client = InstrumentClient(new ManagementTestClient());
+            TestResourceOperations rgOp = client.GetTestResourceOperations();
+            var testResourceOp = await rgOp.GetArmOperationAsync().ConfigureAwait(false);
+            var testResource = (await testResourceOp.WaitForCompletionAsync().ConfigureAwait(false)).Value;
+            Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
+            Assert.AreEqual("success", testResource.Method());
         }
     }
 }

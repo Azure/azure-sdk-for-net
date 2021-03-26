@@ -48,6 +48,7 @@ namespace Azure.Core.TestFramework
                 invocation.ReturnValue = _testBase.InstrumentClient(type, result, new IInterceptor[] { new ManagementInterceptor(_testBase) });
             }
             else if (type.BaseType.Name.StartsWith("AsyncPageable"))
+            //else if (type.BaseType.Name.StartsWith("AsyncPageable") || type.BaseType.Name.StartsWith("Value"))
             {
                 invocation.ReturnValue = s_proxyGenerator.CreateClassProxyWithTarget(type, result, new IInterceptor[] { new ManagementInterceptor(_testBase) });
             }

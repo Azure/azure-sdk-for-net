@@ -14,17 +14,17 @@ namespace Azure.Core.Tests
 
         public virtual TestResourceOperations GetAnotherOperations()
         {
-            return new TestResourceOperations();
+            return new TestResource();
         }
 
-        public virtual ArmOperationTest<TestResourceOperations> GetArmOperation(CancellationToken cancellationToken = default)
+        public virtual ArmOperationTest<TestResource> GetArmOperation(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmOperation");
             scope.Start();
 
             try
             {
-                return new ArmOperationTest<TestResourceOperations>(new TestResourceOperations());
+                return new ArmOperationTest<TestResource>(new TestResource());
             }
             catch (Exception e)
             {
@@ -33,14 +33,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<ArmOperationTest<TestResourceOperations>> GetArmOperationAsync(CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperationTest<TestResource>> GetArmOperationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmOperation");
             scope.Start();
 
             try
             {
-                return Task.FromResult(new ArmOperationTest<TestResourceOperations>(new TestResourceOperations()));
+                return Task.FromResult(new ArmOperationTest<TestResource>(new TestResource()));
             }
             catch (Exception e)
             {
@@ -49,14 +49,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual ArmResponseTest<TestResourceOperations> GetArmResponse(CancellationToken cancellationToken = default)
+        public virtual ArmResponseTest<TestResource> GetArmResponse(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmResponse");
             scope.Start();
 
             try
             {
-                return new ArmResponseTest<TestResourceOperations>(new TestResourceOperations());
+                return new ArmResponseTest<TestResource>(new TestResource());
             }
             catch (Exception e)
             {
@@ -65,14 +65,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<ArmResponseTest<TestResourceOperations>> GetArmResponseAsync(CancellationToken cancellationToken = default)
+        public virtual Task<ArmResponseTest<TestResource>> GetArmResponseAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetArmResponse");
             scope.Start();
 
             try
             {
-                return Task.FromResult(new ArmResponseTest<TestResourceOperations>(new TestResourceOperations()));
+                return Task.FromResult(new ArmResponseTest<TestResource>(new TestResource()));
             }
             catch (Exception e)
             {
@@ -81,14 +81,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual ArmOperationTest<TestResourceOperations> GetPhArmOperation(CancellationToken cancellationToken = default)
+        public virtual ArmOperationTest<TestResource> GetPhArmOperation(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetPhArmOperation");
             scope.Start();
 
             try
             {
-                return new PhArmOperationTest<TestResourceOperations>(new TestResourceOperations());
+                return new PhArmOperationTest<TestResource>(new TestResource());
             }
             catch (Exception e)
             {
@@ -97,14 +97,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<ArmOperationTest<TestResourceOperations>> GetPhArmOperationAsync(CancellationToken cancellationToken = default)
+        public virtual Task<ArmOperationTest<TestResource>> GetPhArmOperationAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetPhArmOperation");
             scope.Start();
 
             try
             {
-                return Task.FromResult<ArmOperationTest<TestResourceOperations>>(new PhArmOperationTest<TestResourceOperations>(new TestResourceOperations()));
+                return Task.FromResult<ArmOperationTest<TestResource>>(new PhArmOperationTest<TestResource>(new TestResource()));
             }
             catch (Exception e)
             {
@@ -113,14 +113,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual ArmResponseTest<TestResourceOperations> GetPhArmResponse(CancellationToken cancellationToken = default)
+        public virtual ArmResponseTest<TestResource> GetPhArmResponse(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetPhArmResponse");
             scope.Start();
 
             try
             {
-                return new PhArmResponseTest<TestResourceOperations>(new TestResourceOperations());
+                return new PhArmResponseTest<TestResource>(new TestResource());
             }
             catch (Exception e)
             {
@@ -129,14 +129,14 @@ namespace Azure.Core.Tests
             }
         }
 
-        public virtual Task<ArmResponseTest<TestResourceOperations>> GetPhArmResponseAsync(CancellationToken cancellationToken = default)
+        public virtual Task<ArmResponseTest<TestResource>> GetPhArmResponseAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _diagnostic.CreateScope("TestResourceOperations.GetPhArmResponse");
             scope.Start();
 
             try
             {
-                return Task.FromResult<ArmResponseTest<TestResourceOperations>>(new PhArmResponseTest<TestResourceOperations>(new TestResourceOperations()));
+                return Task.FromResult<ArmResponseTest<TestResource>>(new PhArmResponseTest<TestResource>(new TestResource()));
             }
             catch (Exception e)
             {

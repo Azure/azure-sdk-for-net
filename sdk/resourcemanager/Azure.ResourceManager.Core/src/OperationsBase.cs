@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Azure Resource Manager client options.
         /// </summary>
-        protected internal AzureResourceManagerClientOptions ClientOptions { get; private set; }
+        protected internal virtual AzureResourceManagerClientOptions ClientOptions { get; private set; }
 
         /// <summary>
         /// Gets the Azure credential.
         /// </summary>
-        protected internal TokenCredential Credential { get; private set; }
+        protected internal virtual TokenCredential Credential { get; private set; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        protected internal Uri BaseUri { get; private set; }
+        protected internal virtual Uri BaseUri { get; private set; }
 
         /// <summary>
         /// Gets the valid Azure resource type for the current operations.
