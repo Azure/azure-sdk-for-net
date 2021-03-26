@@ -22,6 +22,60 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         }
 
         [Test]
+        public async Task TimeSeriesInsightsTypeWithNumericVariable_ExpectsError()
+        {
+            // Arrange
+            TimeSeriesInsightsClient client = GetClient();
+            var timeSeriesTypes = new List<TimeSeriesType>();
+            var tsiTypeNamePrefix = "type";
+            var timeSeriesTypesName = Recording.GenerateAlphaNumericId(tsiTypeNamePrefix);
+            string timeSeriesTypeId = Recording.GenerateId();
+
+            // Build Numeric variable
+            // Below is an invalid expression
+            var numExpression = new TimeSeriesExpression("$event");
+            var aggregation = new TimeSeriesExpression("avg($value)");
+            var numericVariable = new NumericVariable(numExpression, aggregation);
+            var variables = new Dictionary<string, TimeSeriesVariable>();
+            var variableNamePrefix = "numericVariableName";
+            variables.Add(Recording.GenerateAlphaNumericId(variableNamePrefix), numericVariable);
+
+            var type = new TimeSeriesType(timeSeriesTypesName, variables);
+            type.Id = timeSeriesTypeId;
+            timeSeriesTypes.Add(type);
+
+            // Act and Assert
+            await TestTimeSeriesTypeWhereErrorIsExpected(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
+        }
+
+        [Test]
+        public async Task TimeSeriesInsightsTypeWithCategoricalVariable_ExpectsError()
+        {
+            // Arrange
+            TimeSeriesInsightsClient client = GetClient();
+            var timeSeriesTypes = new List<TimeSeriesType>();
+            var tsiTypeNamePrefix = "type";
+            var timeSeriesTypesName = Recording.GenerateAlphaNumericId(tsiTypeNamePrefix);
+            string timeSeriesTypeId = Recording.GenerateId();
+
+            // Build Numeric variable
+            // Below is an invalid expression
+            var categoricalValue = new TimeSeriesExpression("$event");
+            var category = new TimeSeriesDefaultCategory("label");
+            var categoricalVariable = new CategoricalVariable(categoricalValue, category);
+            var variables = new Dictionary<string, TimeSeriesVariable>();
+            var variableNamePrefix = "categoricalVariableName";
+            variables.Add(Recording.GenerateAlphaNumericId(variableNamePrefix), categoricalVariable);
+
+            var type = new TimeSeriesType(timeSeriesTypesName, variables);
+            type.Id = timeSeriesTypeId;
+            timeSeriesTypes.Add(type);
+
+            // Act and Assert
+            await TestTimeSeriesTypeWhereErrorIsExpected(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
+        }
+
+        [Test]
         public async Task TimeSeriesInsightsTypes_Lifecycle()
         {
             // Arrange
@@ -35,7 +89,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 { Recording.GenerateAlphaNumericId(tsiTypeNamePrefix), Recording.GenerateId()}
             };
 
-            // Build aggregate type
+            // Build aggregate variable
             var countExpression = new TimeSeriesExpression("count()");
             var aggValue = new AggregateVariable(countExpression);
             var variables = new Dictionary<string, TimeSeriesVariable>();
@@ -142,6 +196,31 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     throw;
                 }
             }
+        }
+
+        private static async Task TestTimeSeriesTypeWhereErrorIsExpected(TimeSeriesInsightsClient client, List<TimeSeriesType> timeSeriesTypes, string timeSeriesTypesName)
+        {
+            // create numeric type and expect failure due to invalid input expression
+            Response<TimeSeriesOperationError[]> createTypesResult = await client
+                .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
+                .ConfigureAwait(false);
+
+            // Assert that the result error array does not contain an error
+            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult != null);
+
+            // Get the type by name and expect error
+            var getTypesByNamesResult = await client
+                .GetTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
+                .ConfigureAwait(false);
+            getTypesByNamesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error != null);
+
+            // Delete the type by name and expect error
+            Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
+                       .DeleteTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
+                       .ConfigureAwait(false);
+
+            // Response is null even when type does not exist.
+            deleteTypesResponse.Value.Should().OnlyContain((errorResult) => errorResult == null);
         }
     }
 }

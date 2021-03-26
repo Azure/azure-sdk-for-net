@@ -1,27 +1,34 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/instances/$batch?api-version=2020-07-31",
+      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/types/$batch?api-version=2020-07-31",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "97",
+        "Content-Length": "175",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "64ce60acd0c87d1bbd6c09402ade870e",
+        "x-ms-client-request-id": "3f8bde4105fb40aa4f57a10baac59e98",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "put": [
           {
-            "timeSeriesId": [
-              "bEUMP",
-              null,
-              "fAZXF"
-            ],
-            "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393"
+            "id": "1316208383",
+            "name": "typervwgShZA",
+            "variables": {
+              "numericVariableNamedql3ahEO": {
+                "value": {
+                  "tsx": "$event"
+                },
+                "aggregation": {
+                  "tsx": "avg($value)"
+                },
+                "kind": "numeric"
+              }
+            }
           }
         ]
       },
@@ -30,91 +37,58 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 20:08:28 GMT",
+        "Date": "Fri, 26 Mar 2021 19:11:01 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "5e7c6fbf-c0f4-4efe-beab-514f5593e9a8"
+        "x-ms-request-id": "578e41f6-e802-4251-901f-d81dcbc4d82c"
       },
       "ResponseBody": {
         "put": [
-          {}
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/instances/$batch?api-version=2020-07-31",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "50",
-        "Content-Type": "application/json",
-        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "9c72e04328e8286e8dc18018fa681afc",
-        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": {
-        "get": {
-          "timeSeriesIds": [
-            [
-              "bEUMP",
-              null,
-              "fAZXF"
-            ]
-          ]
-        }
-      },
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
-        "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 20:08:28 GMT",
-        "Server": "Microsoft-HTTPAPI/2.0",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "f6d567e4-0bc5-4776-b982-4aeb312ed052"
-      },
-      "ResponseBody": {
-        "get": [
           {
-            "instance": {
-              "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
-              "timeSeriesId": [
-                "bEUMP",
-                null,
-                "fAZXF"
-              ]
+            "error": {
+              "code": "InvalidInput",
+              "message": "Unable to parse \u0027value\u0027 time series expression (TSX) in variable \u0027numericVariableNamedql3ahEO\u0027.",
+              "target": "variables.numericVariableNamedql3ahEO.value",
+              "innerError": {
+                "parseErrorDetails": [
+                  {
+                    "pos": [
+                      6,
+                      6
+                    ],
+                    "line": 1,
+                    "col": 6,
+                    "msg": "no viable alternative at input \u0027$event\u0027",
+                    "code": "SyntaxError",
+                    "target": "\u003CEOF\u003E"
+                  }
+                ],
+                "code": "TsxParseError"
+              }
             }
           }
         ]
       }
     },
     {
-      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/instances/$batch?api-version=2020-07-31",
+      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/types/$batch?api-version=2020-07-31",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "53",
+        "Content-Length": "34",
         "Content-Type": "application/json",
         "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "5b79c683fb7f15a0032e90823c83e201",
+        "x-ms-client-request-id": "900ae9c946ac43820cd3d19880dd4196",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
-        "delete": {
-          "timeSeriesIds": [
-            [
-              "bEUMP",
-              null,
-              "fAZXF"
-            ]
+        "get": {
+          "names": [
+            "typervwgShZA"
           ]
         }
       },
@@ -123,12 +97,58 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 20:08:29 GMT",
+        "Date": "Fri, 26 Mar 2021 19:11:01 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "ac59255b-5ee6-45a8-a369-5bac8a17bab7"
+        "x-ms-request-id": "edea016f-69bc-4bc1-bae3-ca0a83cb6381"
+      },
+      "ResponseBody": {
+        "get": [
+          {
+            "error": {
+              "code": "ResourceNotFound",
+              "message": "Time series type with name \u0027typervwgShZA\u0027 is not found.",
+              "innerError": {
+                "code": "TypeNotFound"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/types/$batch?api-version=2020-07-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "37",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "632e7fd6cd5419515abde4917a86544a",
+        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "delete": {
+          "names": [
+            "typervwgShZA"
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
+        "Content-Type": "application/json",
+        "Date": "Fri, 26 Mar 2021 19:11:01 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-request-id": "5aff59bf-eccb-46f9-9f47-8f6621eecbd6"
       },
       "ResponseBody": {
         "delete": [
@@ -138,7 +158,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "587153701",
+    "RandomSeed": "895610037",
     "TIMESERIESINSIGHTS_URL": "fakeHost.api.wus2.timeseriesinsights.azure.com"
   }
 }
