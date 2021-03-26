@@ -12,7 +12,7 @@
           "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "4283a3cfa6bd2d3796a17f9e0ab39144",
+        "x-ms-client-request-id": "e7be07e9bab5998834cea36ea9688afb",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -20,9 +20,9 @@
         "put": [
           {
             "timeSeriesId": [
-              "32pKJ",
+              "SHkvk",
               null,
-              "Dfiou"
+              "JgVvZ"
             ],
             "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393"
           }
@@ -33,12 +33,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 21:35:06 GMT",
+        "Date": "Fri, 26 Mar 2021 21:42:41 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "a6a5d055-e8c9-4068-a135-f69c62357834"
+        "x-ms-request-id": "cb622f82-8354-4776-8955-a9b5f8559104"
       },
       "ResponseBody": {
         "put": [
@@ -58,7 +58,7 @@
           "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "4a6c9a2f14d016f8ef4db3fc20888b19",
+        "x-ms-client-request-id": "8577b3303b3885e39bc32e96a2ec203d",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -66,9 +66,9 @@
         "get": {
           "timeSeriesIds": [
             [
-              "32pKJ",
+              "SHkvk",
               null,
-              "Dfiou"
+              "JgVvZ"
             ]
           ]
         }
@@ -78,12 +78,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 21:35:06 GMT",
+        "Date": "Fri, 26 Mar 2021 21:42:41 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "57e8f4d0-f0ef-4a4f-bcec-6dbf859d3359"
+        "x-ms-request-id": "bd030e3a-8a82-4f2d-af6f-9226fde04281"
       },
       "ResponseBody": {
         "get": [
@@ -91,9 +91,9 @@
             "instance": {
               "typeId": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
               "timeSeriesId": [
-                "32pKJ",
+                "SHkvk",
                 null,
-                "Dfiou"
+                "JgVvZ"
               ]
             }
           }
@@ -112,7 +112,7 @@
           "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "a3aaf1f91f4f563329e931143a4c1cd5",
+        "x-ms-client-request-id": "ae7f96e3643b87a2416dc1b45e302950",
         "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
         "x-ms-return-client-request-id": "true"
       },
@@ -120,9 +120,9 @@
         "delete": {
           "timeSeriesIds": [
             [
-              "32pKJ",
+              "SHkvk",
               null,
-              "Dfiou"
+              "JgVvZ"
             ]
           ]
         }
@@ -132,12 +132,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 21:35:06 GMT",
+        "Date": "Fri, 26 Mar 2021 21:42:41 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "0ee753a7-5eb3-4d96-8ed3-ff46617cf636"
+        "x-ms-request-id": "cb90cb56-46f8-4cc5-89da-e8582d6bbb4d"
       },
       "ResponseBody": {
         "delete": [
@@ -147,7 +147,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1947146305",
+    "RandomSeed": "867352288",
     "TIMESERIESINSIGHTS_URL": "fakeHost.api.wus2.timeseriesinsights.azure.com"
   }
 }

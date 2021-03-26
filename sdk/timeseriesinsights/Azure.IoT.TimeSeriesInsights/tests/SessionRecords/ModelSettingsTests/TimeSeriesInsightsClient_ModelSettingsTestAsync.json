@@ -10,7 +10,7 @@
           "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "c81660fdb9b626eb89744bc487e162d7",
+        "x-ms-client-request-id": "f507ca420182d39eb9113271f2ef1354",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,12 +19,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 21:35:06 GMT",
+        "Date": "Fri, 26 Mar 2021 21:42:41 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "0c2d9358-bb60-487a-8b85-c8bf08335713"
+        "x-ms-request-id": "ac9a562b-c415-4e4f-bfb5-f964087ef2e1"
       },
       "ResponseBody": {
         "modelSettings": {
@@ -59,7 +59,7 @@
           "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210326.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "4283a3cfa6bd2d3796a17f9e0ab39144",
+        "x-ms-client-request-id": "e7be07e9bab5998834cea36ea9688afb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -70,12 +70,12 @@
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
         "Content-Type": "application/json",
-        "Date": "Fri, 26 Mar 2021 21:35:06 GMT",
+        "Date": "Fri, 26 Mar 2021 21:42:41 GMT",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-request-id": "d49c965a-cffc-4879-ab12-3c9b297de0c0"
+        "x-ms-request-id": "42cdb484-53cf-4014-9f27-1241f56eb4c6"
       },
       "ResponseBody": {
         "modelSettings": {
@@ -100,7 +100,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1947146305",
+    "RandomSeed": "867352288",
     "TIMESERIESINSIGHTS_URL": "fakeHost.api.wus2.timeseriesinsights.azure.com"
   }
 }
