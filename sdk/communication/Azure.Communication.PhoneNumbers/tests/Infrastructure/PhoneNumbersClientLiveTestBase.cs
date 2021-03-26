@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Communication.Pipeline;
+using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 
@@ -41,7 +42,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
         {
             var client = new PhoneNumbersClient(
                     TestEnvironment.LiveTestEndpoint,
-                     new AzureKeyCredential(TestEnvironment.AccessKey),
+                     new AzureKeyCredential(TestEnvironment.LiveTestAccessKeyAccessKey),
                     InstrumentClientOptions(new PhoneNumbersClientOptions()));
 
             return isInstrumented ? InstrumentClient(client) : client;
