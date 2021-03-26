@@ -37,7 +37,7 @@ namespace Azure.Quantum.Jobs
                 options = new QuantumJobClientOptions();
             }
 
-            var authPolicy = new BearerTokenAuthenticationPolicy(credential, "https://quantum.microsoft.com");
+            var authPolicy = new BearerTokenAuthenticationPolicy(credential, "https://quantum.microsoft.com/.default");
             var diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, authPolicy);
             var endpoint = new Uri($"https://{location}.quantum.azure.com");
