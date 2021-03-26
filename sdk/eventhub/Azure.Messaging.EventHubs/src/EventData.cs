@@ -383,6 +383,16 @@ namespace Azure.Messaging.EventHubs
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
         ///
+        /// <remarks>
+        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
+        ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
+        ///
+        ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
+        ///   it not be used in production scenarios, as it allows setting of data that is broker-owned and is only
+        ///   meaningful on events that have been read from the Event Hubs service.</para>
+        /// </remarks>
+        ///
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected EventData(BinaryData eventBody,
                             IDictionary<string, object> properties = null,
                             IReadOnlyDictionary<string, object> systemProperties = null,
@@ -404,6 +414,15 @@ namespace Azure.Messaging.EventHubs
         /// <param name="offset">The offset of the event when it was received from the associated Event Hub partition.</param>
         /// <param name="enqueuedTime">The date and time, in UTC, of when the event was enqueued in the Event Hub partition.</param>
         /// <param name="partitionKey">The partition hashing key associated with the event when it was published.</param>
+        ///
+        /// <remarks>
+        ///   <para>This constructor has been superseded by the <see cref="EventHubsModelFactory.EventData" /> factory method.
+        ///   It is strongly recommended that the model factory be preferred over use of this constructor.</para>
+        ///
+        ///   <para>This overload was previously intended for mocking in support of testing efforts.  It is recommended that
+        ///   it not be used in production scenarios, as it allows setting of data that is broker-owned and is only
+        ///   meaningful on events that have been read from the Event Hubs service.</para>
+        /// </remarks>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected EventData(ReadOnlyMemory<byte> eventBody,
