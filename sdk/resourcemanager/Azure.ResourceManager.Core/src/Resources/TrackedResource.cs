@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Core
     /// Generic representation of a tracked resource.  All tracked resources should extend this class
     /// </summary>
     [ReferenceType]
-    public abstract class TrackedResource : Resource
+    public abstract partial class TrackedResource : Resource
     {
         /// <summary>
         /// Gets the tags.
