@@ -9,7 +9,7 @@ param (
     [string] $ProjectDirectory,
 
     [Parameter()]
-    [string] $SDKType = "client"
+    [string] $SDKType = "all"
 )
 
 $ErrorActionPreference = 'Stop'
