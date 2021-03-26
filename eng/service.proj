@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <PropertyGroup>
+    <SDKType Condition="'$(SDKType)' == ''">all</SDKType>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == '' and '$(Scope)' != ''">$(Scope)</ServiceDirectory>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == ''">*</ServiceDirectory>
     <IncludeTests Condition="'$(IncludeTests)' == ''">true</IncludeTests>

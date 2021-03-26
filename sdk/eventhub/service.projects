@@ -14,7 +14,7 @@
 
 <Project>
   <!-- Include all if no type is specified -->
-  <ItemGroup Condition="'$(SDKType)' == ''">
+  <ItemGroup Condition="'$(SDKType)' == 'all'">
     <ProjectsToInclude Include="$(MSBuildThisFileDirectory)**\*.csproj" />
   </ItemGroup>
 
