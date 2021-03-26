@@ -186,7 +186,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             Assert.AreNotEqual(null, firstPage);
             Assert.AreEqual("v2", firstPage.Values[0].Name);
-            Assert.IsTrue(pageCount >= minExpectedPages);
+            Assert.GreaterOrEqual(pageCount, minExpectedPages);
         }
 
         [RecordedTest]
@@ -217,18 +217,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Act
             AsyncPageable<TagProperties> tags = client.GetTagsAsync(new GetTagOptions(TagOrderBy.LastUpdatedOnDescending));
 
-            bool newestTagFirst = false;
+            // Assert
             await foreach (TagProperties tag in tags)
             {
-                if (tag.Name.Contains("newest"))
-                {
-                    newestTagFirst = true;
-                }
+                Assert.That(tag.Name.Contains("newest"));
                 break;
             }
-
-            // Assert
-            Assert.IsTrue(newestTagFirst);
         }
 
         [RecordedTest, NonParallelizable]

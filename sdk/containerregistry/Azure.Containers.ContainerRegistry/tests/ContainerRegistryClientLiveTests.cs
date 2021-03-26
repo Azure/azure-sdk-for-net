@@ -67,7 +67,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Assert
-            Assert.IsTrue(pageCount >= minExpectedPages);
+            Assert.GreaterOrEqual(pageCount, minExpectedPages);
         }
 
         [RecordedTest]

@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>
         /// Construct an instance of GetTagOptions.
         /// </summary>
-        /// <param name="orderBy"></param>
+        /// <param name="orderBy"> Requested ordering for tags in the returned collection. </param>
         public GetTagOptions(TagOrderBy orderBy)
         {
             this.OrderBy = orderBy;
