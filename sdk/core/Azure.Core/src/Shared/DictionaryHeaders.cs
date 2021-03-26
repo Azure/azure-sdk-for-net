@@ -88,7 +88,9 @@ namespace Azure.Core
                 }
                 else
                 {
+                    // Since we are already allocating a list, cache it
                     values = new List<string> { objValue as string };
+                    _headers[name] = values;
                 }
 
                 return true;
