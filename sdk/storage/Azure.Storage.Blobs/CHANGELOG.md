@@ -1,7 +1,8 @@
 # Release History
 
 ## 12.9.0-beta.3 (Unreleased)
-
+- Added support for service version 2020-08-04.
+- Added support for Blob Query Parquet input format.
 
 ## 12.9.0-beta.2 (2021-03-09)
 - Fixed a bug where BlockBlobClient.GetBlockList threw when dealing with extremely large blocks.

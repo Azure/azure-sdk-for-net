@@ -588,6 +588,10 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public event System.Action<Azure.Storage.Files.DataLake.Models.DataLakeQueryError> ErrorHandler { add { } remove { } }
     }
+    public partial class DataLakeQueryParquetTextOptions : Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions
+    {
+        public DataLakeQueryParquetTextOptions() { }
+    }
     public abstract partial class DataLakeQueryTextOptions
     {
         protected DataLakeQueryTextOptions() { }

@@ -1759,25 +1759,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public Azure.Analytics.Synapse.Artifacts.Models.StagingSettings StagingSettings { get { throw null; } set { } }
         public object Translator { get { throw null; } set { } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CopyBehaviorType : System.IEquatable<Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CopyBehaviorType(string value) { throw null; }
-        public static Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType FlattenHierarchy { get { throw null; } }
-        public static Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType MergeFiles { get { throw null; } }
-        public static Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType PreserveHierarchy { get { throw null; } }
-        public bool Equals(Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType left, Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType right) { throw null; }
-        public static implicit operator Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType (string value) { throw null; }
-        public static bool operator !=(Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType left, Azure.Analytics.Synapse.Artifacts.Models.CopyBehaviorType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class CopySink : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public CopySink() { }
@@ -1826,15 +1807,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
-    public partial class CopyTranslator : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
+    public partial class CopyTranslator : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public CopyTranslator() { }
-        public object this[string key] { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
-        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
+        public object this[string key] { get { throw null; } set { } }
+        public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
+        int System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.IsReadOnly { get { throw null; } }
+        public System.Collections.Generic.ICollection<object> Values { get { throw null; } }
+        public void Add(string key, object value) { }
         public bool ContainsKey(string key) { throw null; }
         public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
+        public bool Remove(string key) { throw null; }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Add(System.Collections.Generic.KeyValuePair<string, object> value) { }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Clear() { }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Contains(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.CopyTo(System.Collections.Generic.KeyValuePair<string, object>[] destination, int offset) { }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Remove(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
@@ -2103,11 +2092,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class DataFlowDebugStatisticsRequest
     {
         public DataFlowDebugStatisticsRequest() { }
-        public System.Collections.Generic.IReadOnlyList<string> Columns { get { throw null; } }
-        public string DataFlowName { get { throw null; } }
-        public string RunId { get { throw null; } set { } }
-        public string SessionId { get { throw null; } }
-        public string StreamName { get { throw null; } }
+        public System.Collections.Generic.IList<string> Columns { get { throw null; } }
+        public string DataFlowName { get { throw null; } set { } }
+        public string SessionId { get { throw null; } set { } }
+        public string StreamName { get { throw null; } set { } }
     }
     public partial class DataFlowFolder
     {
@@ -2360,31 +2348,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DatasetResource(Azure.Analytics.Synapse.Artifacts.Models.Dataset properties) { }
         public Azure.Analytics.Synapse.Artifacts.Models.Dataset Properties { get { throw null; } set { } }
     }
-    public partial class DatasetSchemaDataElement : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
+    public partial class DatasetSchemaDataElement : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public DatasetSchemaDataElement() { }
-        public object this[string key] { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
+        public object this[string key] { get { throw null; } set { } }
+        public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
         public object Name { get { throw null; } set { } }
-        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
+        int System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.IsReadOnly { get { throw null; } }
         public object Type { get { throw null; } set { } }
-        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
+        public System.Collections.Generic.ICollection<object> Values { get { throw null; } }
+        public void Add(string key, object value) { }
         public bool ContainsKey(string key) { throw null; }
         public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
+        public bool Remove(string key) { throw null; }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Add(System.Collections.Generic.KeyValuePair<string, object> value) { }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Clear() { }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Contains(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.CopyTo(System.Collections.Generic.KeyValuePair<string, object>[] destination, int offset) { }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Remove(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
-    public partial class DatasetStorageFormat : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IReadOnlyDictionary<string, object>, System.Collections.IEnumerable
+    public partial class DatasetStorageFormat : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.Generic.IDictionary<string, object>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, object>>, System.Collections.IEnumerable
     {
         public DatasetStorageFormat() { }
         public object Deserializer { get { throw null; } set { } }
-        public object this[string key] { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<string> Keys { get { throw null; } }
+        public object this[string key] { get { throw null; } set { } }
+        public System.Collections.Generic.ICollection<string> Keys { get { throw null; } }
         public object Serializer { get { throw null; } set { } }
-        int System.Collections.Generic.IReadOnlyCollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<object> Values { get { throw null; } }
+        int System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Count { get { throw null; } }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.IsReadOnly { get { throw null; } }
+        public System.Collections.Generic.ICollection<object> Values { get { throw null; } }
+        public void Add(string key, object value) { }
         public bool ContainsKey(string key) { throw null; }
         public System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, object>> GetEnumerator() { throw null; }
+        public bool Remove(string key) { throw null; }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Add(System.Collections.Generic.KeyValuePair<string, object> value) { }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Clear() { }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Contains(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
+        void System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.CopyTo(System.Collections.Generic.KeyValuePair<string, object>[] destination, int offset) { }
+        bool System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<System.String,System.Object>>.Remove(System.Collections.Generic.KeyValuePair<string, object> value) { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
         public bool TryGetValue(string key, out object value) { throw null; }
     }
@@ -2876,8 +2880,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class ExposureControlResponse
     {
         public ExposureControlResponse() { }
-        public string FeatureName { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
+        public string FeatureName { get { throw null; } }
+        public string Value { get { throw null; } }
     }
     public partial class Expression
     {
@@ -5416,8 +5420,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class RerunTriggerListResponse
     {
         public RerunTriggerListResponse(System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Artifacts.Models.RerunTriggerResource> value) { }
-        public string NextLink { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.RerunTriggerResource> Value { get { throw null; } set { } }
+        public string NextLink { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.RerunTriggerResource> Value { get { throw null; } }
     }
     public partial class RerunTriggerResource : Azure.Analytics.Synapse.Artifacts.Models.SubResource
     {
@@ -5431,13 +5435,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ParentTrigger { get { throw null; } set { } }
         public System.DateTimeOffset RequestedEndTime { get { throw null; } set { } }
         public System.DateTimeOffset RequestedStartTime { get { throw null; } set { } }
-    }
-    public partial class RerunTumblingWindowTriggerActionParameters
-    {
-        public RerunTumblingWindowTriggerActionParameters(System.DateTimeOffset startTime, System.DateTimeOffset endTime, int maxConcurrency) { }
-        public System.DateTimeOffset EndTime { get { throw null; } set { } }
-        public int MaxConcurrency { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } set { } }
     }
     public partial class Resource
     {
@@ -6920,10 +6917,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public StartDataFlowDebugSessionRequest() { }
         public Azure.Analytics.Synapse.Artifacts.Models.DataFlowResource DataFlow { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.DatasetResource> Datasets { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.DatasetResource> Datasets { get { throw null; } }
         public object DebugSettings { get { throw null; } set { } }
         public bool? IncrementalDebug { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceResource> LinkedServices { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Analytics.Synapse.Artifacts.Models.LinkedServiceResource> LinkedServices { get { throw null; } }
         public string SessionId { get { throw null; } set { } }
         public object Staging { get { throw null; } set { } }
     }
@@ -7172,15 +7169,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class TextFormat : Azure.Analytics.Synapse.Artifacts.Models.DatasetStorageFormat
     {
         public TextFormat() { }
-        public object ColumnDelimiter { get { throw null; } }
-        public object EncodingName { get { throw null; } }
-        public object EscapeChar { get { throw null; } }
-        public object FirstRowAsHeader { get { throw null; } }
-        public object NullValue { get { throw null; } }
-        public object QuoteChar { get { throw null; } }
-        public object RowDelimiter { get { throw null; } }
-        public object SkipLineCount { get { throw null; } }
-        public object TreatEmptyAsNull { get { throw null; } }
+        public object ColumnDelimiter { get { throw null; } set { } }
+        public object EncodingName { get { throw null; } set { } }
+        public object EscapeChar { get { throw null; } set { } }
+        public object FirstRowAsHeader { get { throw null; } set { } }
+        public object NullValue { get { throw null; } set { } }
+        public object QuoteChar { get { throw null; } set { } }
+        public object RowDelimiter { get { throw null; } set { } }
+        public object SkipLineCount { get { throw null; } set { } }
+        public object TreatEmptyAsNull { get { throw null; } set { } }
     }
     public partial class TrackedResource : Azure.Analytics.Synapse.Artifacts.Models.Resource
     {
@@ -7594,9 +7591,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class WorkspaceIdentity
     {
         public WorkspaceIdentity() { }
-        public string PrincipalId { get { throw null; } set { } }
-        public string TenantId { get { throw null; } set { } }
-        public string Type { get { throw null; } }
+        public string PrincipalId { get { throw null; } }
+        public string TenantId { get { throw null; } }
+        public string Type { get { throw null; } set { } }
     }
     public partial class WorkspaceKeyDetails
     {
@@ -7621,7 +7618,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         public WorkspaceUpdateParameters() { }
         public Azure.Analytics.Synapse.Artifacts.Models.WorkspaceIdentity Identity { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class XeroLinkedService : Azure.Analytics.Synapse.Artifacts.Models.LinkedService
     {

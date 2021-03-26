@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(CommonDataServiceForAppsSourceConverter))]
     public partial class CommonDataServiceForAppsSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -106,6 +109,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CommonDataServiceForAppsSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value);
+        }
+
+        internal partial class CommonDataServiceForAppsSourceConverter : JsonConverter<CommonDataServiceForAppsSource>
+        {
+            public override void Write(Utf8JsonWriter writer, CommonDataServiceForAppsSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CommonDataServiceForAppsSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCommonDataServiceForAppsSource(document.RootElement);
+            }
         }
     }
 }
