@@ -25,7 +25,7 @@ namespace Azure.AI.DocumentTranslation.Tests
 
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
-        public string StorageConnectionString => GetRecordedVariable(StorageConnectionStringEnvironmentVariableName, options => options.IsSecret());
+        public string StorageConnectionString => GetRecordedVariable(StorageConnectionStringEnvironmentVariableName, options => options.HasSecretConnectionStringParameter("AccountKey", SanitizedValue.Base64));
         public string StorageAccountName => GetRecordedVariable(StorageAccountNameEnvironmentVariableName);
     }
 }

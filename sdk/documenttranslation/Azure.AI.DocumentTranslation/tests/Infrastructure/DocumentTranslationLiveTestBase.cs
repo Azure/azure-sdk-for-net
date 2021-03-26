@@ -2,7 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Sas;
 
 namespace Azure.AI.DocumentTranslation.Tests
 {
@@ -25,6 +32,40 @@ namespace Azure.AI.DocumentTranslation.Tests
 
             credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
             return InstrumentClient(new DocumentTranslationClient(endpoint, credential, InstrumentClientOptions(options)));
+        }
+
+        public BlobContainerClient GetBlobContainerClient(string containerName)
+        {
+            return InstrumentClient(new BlobContainerClient(TestEnvironment.StorageConnectionString, containerName, InstrumentClientOptions(new BlobClientOptions())));
+        }
+
+        public async Task<Uri> CreateSourceContainerAsync(List<TestDocument> documents)
+        {
+            Recording.DisableIdReuse();
+            string containerName = "source" + Recording.GenerateId();
+            var containerClient = GetBlobContainerClient(containerName);
+            await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
+
+            for (int i = 0; i < documents.Count; i++)
+            {
+                byte[] byteArray = Encoding.ASCII.GetBytes(documents[i].Content);
+                MemoryStream stream = new MemoryStream(byteArray);
+                await containerClient.UploadBlobAsync(documents[i].Name, stream);
+            }
+
+            var expiresOn = DateTimeOffset.Now.AddHours(1);
+            return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Read, expiresOn);
+        }
+
+        public async Task<Uri> CreateTargetContainerAsync()
+        {
+            Recording.DisableIdReuse();
+            string containerName = "target" + Recording.GenerateId();
+            var containerClient = GetBlobContainerClient(containerName);
+            await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
+
+            var expiresOn = DateTimeOffset.Now.AddHours(1);
+            return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn);
         }
     }
 }
