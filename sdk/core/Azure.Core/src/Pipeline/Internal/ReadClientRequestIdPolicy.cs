@@ -38,6 +38,7 @@ namespace Azure.Core.Pipeline
         private class ClientRequestIdScope: IDisposable
         {
             private readonly ClientRequestIdScope? _parent;
+            private bool _disposed;
 
             internal ClientRequestIdScope(string? clientRequestId, ClientRequestIdScope? parent)
             {
@@ -49,7 +50,12 @@ namespace Azure.Core.Pipeline
 
             public void Dispose()
             {
+                if (_disposed)
+                {
+                    return;
+                }
                 CurrentRequestIdScope.Value = _parent;
+                _disposed = true;
             }
         }
     }

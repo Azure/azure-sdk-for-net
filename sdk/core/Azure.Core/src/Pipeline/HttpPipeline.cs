@@ -66,6 +66,7 @@ namespace Azure.Core.Pipeline
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
+            RequestScopedHttpMessageProperties.AddHttpMessageProperties(message);
             return _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1));
         }
 
@@ -77,6 +78,7 @@ namespace Azure.Core.Pipeline
         public void Send(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
+            RequestScopedHttpMessageProperties.AddHttpMessageProperties(message);
             _pipeline.Span[0].Process(message, _pipeline.Slice(1));
         }
         /// <summary>
@@ -125,6 +127,17 @@ namespace Azure.Core.Pipeline
         public static IDisposable CreateClientRequestIdScope(string? clientRequestId)
         {
             return ReadClientRequestIdPolicy.StartScope(clientRequestId);
+        }
+
+        /// <summary>
+        /// TODO.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static IDisposable CreateHttpMessagePropertyScope(string name, object value)
+        {
+            return RequestScopedHttpMessageProperties.StartScope(name, value);
         }
     }
 }
