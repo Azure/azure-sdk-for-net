@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
@@ -202,6 +202,33 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             Assert.AreEqual(tag, properties.Name);
             Assert.AreEqual(_repositoryName, properties.Repository);
+        }
+
+        [RecordedTest]
+        public async Task CanGetTagsOrdered()
+        {
+            // Arrange
+            var client = CreateClient();
+            if (this.Mode != RecordedTestMode.Playback)
+            {
+                await ImportImage("newest");
+            }
+
+            // Act
+            AsyncPageable<TagProperties> tags = client.GetTagsAsync(new GetTagOptions(TagOrderBy.LastUpdatedOnDescending));
+
+            bool newestTagFirst = false;
+            await foreach (TagProperties tag in tags)
+            {
+                if (tag.Name.Contains("newest"))
+                {
+                    newestTagFirst = true;
+                }
+                break;
+            }
+
+            // Assert
+            Assert.IsTrue(newestTagFirst);
         }
 
         [RecordedTest, NonParallelizable]

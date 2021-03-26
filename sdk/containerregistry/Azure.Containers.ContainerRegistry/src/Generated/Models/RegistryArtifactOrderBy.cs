@@ -22,8 +22,8 @@ namespace Azure.Containers.ContainerRegistry
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string LastUpdatedOnDescendingValue = "time_desc";
-        private const string LastUpdatedOnAscendingValue = "time_asc";
+        private const string LastUpdatedOnDescendingValue = "timedesc";
+        private const string LastUpdatedOnAscendingValue = "timeasc";
 
         /// <summary> Order registry artifacts by LastUpdatedOn field, from most recently updated to least recently updated. </summary>
         public static RegistryArtifactOrderBy LastUpdatedOnDescending { get; } = new RegistryArtifactOrderBy(LastUpdatedOnDescendingValue);
