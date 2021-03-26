@@ -91,10 +91,10 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
             // Build aggregate variable
             var countExpression = new TimeSeriesExpression("count()");
-            var aggValue = new AggregateVariable(countExpression);
+            var aggregateVariable = new AggregateVariable(countExpression);
             var variables = new Dictionary<string, TimeSeriesVariable>();
-            var variableNamePrefix = "var";
-            variables.Add(Recording.GenerateAlphaNumericId(variableNamePrefix), aggValue);
+            var variableNamePrefix = "aggregateVariable";
+            variables.Add(Recording.GenerateAlphaNumericId(variableNamePrefix), aggregateVariable);
 
             foreach (var property in timeSeriesTypesProperties)
             {

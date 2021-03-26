@@ -130,6 +130,12 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             throw new Exception($"Unique Id could not be found");
         }
 
+        protected async Task<string> getDefaultTypeIdAsync(TimeSeriesInsightsClient client)
+        {
+            Response<TimeSeriesModelSettings> currentSettings = await client.GetModelSettingsAsync().ConfigureAwait(false);
+            return currentSettings.Value.DefaultTypeId;
+        }
+
         private async Task<string> GetUniqueDeviceIdAsync(Func<string, Task<Device>> getDevice)
         {
             string id = Recording.GenerateAlphaNumericId("TSI_E2E_");
