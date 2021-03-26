@@ -133,10 +133,10 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// TODO.
+        /// Creates a scope in which all <see cref="HttpMessage"/>s would have provided properties.
         /// </summary>
-        /// <param name="messageProperties"></param>
-        /// <returns></returns>
+        /// <param name="messageProperties">Properties to be added to <see cref="HttpMessage"/>s</param>
+        /// <returns>The <see cref="IDisposable"/> instance that needs to be disposed when properties shouldn't be used anymore.</returns>
         public static IDisposable CreateHttpMessagePropertiesScope(Dictionary<string, object> messageProperties)
         {
             Argument.AssertNotNull(messageProperties, nameof(messageProperties));
