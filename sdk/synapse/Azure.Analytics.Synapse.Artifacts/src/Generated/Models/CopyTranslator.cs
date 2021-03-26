@@ -12,12 +12,27 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A copy activity translator. </summary>
-    public partial class CopyTranslator : IReadOnlyDictionary<string, object>
+    public partial class CopyTranslator : IDictionary<string, object>
     {
+        /// <summary> Initializes a new instance of CopyTranslator. </summary>
+        public CopyTranslator()
+        {
+            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            Type = "CopyTranslator";
+        }
+
+        /// <summary> Initializes a new instance of CopyTranslator. </summary>
+        /// <param name="type"> Copy translator type. </param>
+        /// <param name="additionalProperties"> . </param>
+        internal CopyTranslator(string type, IDictionary<string, object> additionalProperties)
+        {
+            Type = type ?? "CopyTranslator";
+            AdditionalProperties = additionalProperties;
+        }
 
         /// <summary> Copy translator type. </summary>
         internal string Type { get; set; }
-        internal IReadOnlyDictionary<string, object> AdditionalProperties { get; }
+        internal IDictionary<string, object> AdditionalProperties { get; }
         /// <inheritdoc />
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => AdditionalProperties.GetEnumerator();
         /// <inheritdoc />
@@ -27,15 +42,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <inheritdoc />
         public bool ContainsKey(string key) => AdditionalProperties.ContainsKey(key);
         /// <inheritdoc />
-        public IEnumerable<string> Keys => AdditionalProperties.Keys;
+        public ICollection<string> Keys => AdditionalProperties.Keys;
         /// <inheritdoc />
-        public IEnumerable<object> Values => AdditionalProperties.Values;
-        /// <inheritdoc cref="IReadOnlyCollection{T}.Count"/>
-        int IReadOnlyCollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
+        public ICollection<object> Values => AdditionalProperties.Values;
+        /// <inheritdoc cref="ICollection{T}.Count"/>
+        int ICollection<KeyValuePair<string, object>>.Count => AdditionalProperties.Count;
+        /// <inheritdoc />
+        public void Add(string key, object value) => AdditionalProperties.Add(key, value);
+        /// <inheritdoc />
+        public bool Remove(string key) => AdditionalProperties.Remove(key);
+        /// <inheritdoc cref="ICollection{T}.IsReadOnly"/>
+        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => AdditionalProperties.IsReadOnly;
+        /// <inheritdoc cref="ICollection{T}.Add"/>
+        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> value) => AdditionalProperties.Add(value);
+        /// <inheritdoc cref="ICollection{T}.Remove"/>
+        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> value) => AdditionalProperties.Remove(value);
+        /// <inheritdoc cref="ICollection{T}.Contains"/>
+        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> value) => AdditionalProperties.Contains(value);
+        /// <inheritdoc cref="ICollection{T}.CopyTo"/>
+        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] destination, int offset) => AdditionalProperties.CopyTo(destination, offset);
+        /// <inheritdoc cref="ICollection{T}.Clear"/>
+        void ICollection<KeyValuePair<string, object>>.Clear() => AdditionalProperties.Clear();
         /// <inheritdoc />
         public object this[string key]
         {
             get => AdditionalProperties[key];
+            set => AdditionalProperties[key] = value;
         }
     }
 }
