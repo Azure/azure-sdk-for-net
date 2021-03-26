@@ -16,12 +16,13 @@ $SignTool = Join-Path $WinKitsDir $WinVersion.Name x64 signtool.exe
 New-Item -Path $WorkingDirectory -Name "Validation" -ItemType "directory"
 $ValidationDirectory = (Join-Path $WorkingDirectory Validation)
 
-Copy-Item -Path $PackagePath -Destination "$ValidationDirectory\package.zip"
-Expand-Archive -LiteralPath "$PackagePath" $ValidationDirectory\extracted"
+$packageZip = (Join-Path $ValidationDirectory package.zip)
+Copy-Item -Path $PackagePath -Destination $packageZip
+Expand-Archive -LiteralPath $packageZip (Join-Path $ValidationDirectory extracted)
 
 $PackageName = Split-Path -Path $PackagePath -Leaf
-$PackageDlls = Get-ChildItem -Path "$ValidationDirectory\extracted\**\*.dll" -Recurse
-$NuspecFile = Get-ChildItem -Path "$ValidationDirectory\extracted\**\*.nuspec" -Recurse
+$PackageDlls = Get-ChildItem -Path (Join-Path $ValidationDirectory extracted ** *.dll) -Recurse
+$NuspecFile = Get-ChildItem -Path (Join-Path $ValidationDirectory extracted ** *.nuspec) -Recurse
 
 $NuspecContent = new-object xml
 $NuspecContent.Load($NuspecFile[0].FullName)
@@ -41,7 +42,7 @@ foreach ($file in $PackageDlls) {
     }
 }
 
-LogDebug "Validating that Package Name matches Guidelines..."
+LogDebug "Validating that PackageName and Version matches Guidelines..."
 try {
     $Version = ([AzureEngSemanticVersion]::ParseVersionString($PackageVersion)).ToString()
 }
