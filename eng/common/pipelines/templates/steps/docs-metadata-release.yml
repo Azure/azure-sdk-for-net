@@ -77,12 +77,12 @@ steps:
 - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
   parameters:
     BaseRepoBranch: $(DefaultBranch)
+    BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}: ${{ parameters.TargetDocRepoOwner }}
     CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
-    RepoName: ${{ parameters.TargetDocRepoName }}
-    RepoOwner: ${{ parameters.TargetDocRepoOwner }}
+    TargetRepoName: ${{ parameters.TargetDocRepoName }}
+    TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
     WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-    PROwner: ${{ parameters.TargetDocRepoOwner }}
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
@@ -112,9 +112,9 @@ steps:
   - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
     parameters:
       BaseRepoBranch: ${{ parameters.OnboardingBranch}}
+      BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}
       CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
-      RepoName: ${{ parameters.TargetDocRepoName }}
-      RepoOwner: ${{ parameters.TargetDocRepoOwner }}
+      TargetRepoName: ${{ parameters.TargetDocRepoName }}
+      TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
       WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-      PROwner: ${{ parameters.TargetDocRepoOwner }}
