@@ -129,6 +129,39 @@ Describe "Platform Matrix Import" -Tag "import" {
         CompareMatrices $matrix $expected
     }
 
+    It "Should import a matrix and combine with length=1 vectors" {
+        $matrixJson = @'
+{
+    "matrix": {
+        "$IMPORT": "./test-import-matrix.json",
+        "TestField1": "test1",
+        "TestField2": "test2"
+    },
+    "exclude": [ { "Baz": "importedBaz" } ]
+}
+'@
+
+        $expectedMatrix = @'
+[
+  {
+    "parameters": { "TestField1": "test1", "TestField2": "test2", "Foo": "foo1", "Bar": "bar1" },
+    "name": "test1_test2_foo1_bar1"
+  },
+  {
+    "parameters": { "TestField1": "test1", "TestField2": "test2", "Foo": "foo2", "Bar": "bar2" },
+    "name": "test1_test2_foo2_bar2"
+  }
+]
+'@
+
+        $importConfig = GetMatrixConfigFromJson $matrixJson
+        $matrix = GenerateMatrix $importConfig "sparse"
+        $expected = $expectedMatrix | ConvertFrom-Json -AsHashtable
+
+        $matrix.Length | Should -Be 2
+        CompareMatrices $matrix $expected
+    }
+
     It "Should generate a matrix with nonSparseParameters and an imported sparse matrix" {
         $matrixJson = @'
 {

@@ -437,7 +437,7 @@ function GenerateSparseMatrix(
     $matrix = GenerateFullMatrix $parameters $displayNamesLookup
 
     $sparseMatrix = @()
-    $indexes = GetSparseMatrixIndexes $dimensions
+    [array]$indexes = GetSparseMatrixIndexes $dimensions
     foreach ($idx in $indexes) {
         $sparseMatrix += GetNdMatrixElement $idx $matrix $dimensions
     }
@@ -469,7 +469,7 @@ function GetSparseMatrixIndexes([Array]$dimensions)
         $indexes += ,$idx
     }
 
-    return $indexes
+    return ,$indexes
 }
 
 function GenerateFullMatrix(
