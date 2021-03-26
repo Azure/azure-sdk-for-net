@@ -14,26 +14,17 @@
 -->
 
 <Project>
-  <ItemGroup Condition="'$(SDKType)' == 'all'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)**\*.csproj" />
-  </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'client'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Azure.Containers.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Containers.*\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'data'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Microsoft.Azure.ContainerRegistry*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.ContainerRegistry*\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'mgmt'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Management.ContainerRegistry*\**\*.csproj" />
-  </ItemGroup>
-
-  <!-- Remove all projects under this directory but the included projects based on sdk type -->
-  <ItemGroup>
-    <ProjectsToRemove Include="$(MSBuildThisFileDirectory)**\*.csproj" Exclude="@(ProjectsToInclude)" />
-    <ProjectReference Remove="@(ProjectsToRemove)" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Management.ContainerRegistry*\**\*.csproj" />
   </ItemGroup>
 
 </Project>

@@ -33,6 +33,12 @@
 
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
 
+  <!-- Remove all projects except the ones included by the SDKType filter -->
+  <ItemGroup Condition="'$(SDKType)' != 'all'">
+    <ProjectsToRemove Include="$(MSBuildThisFileDirectory)**\*.csproj" Exclude="@(ProjectsToIncludeBySDKType)" />
+    <ProjectReference Remove="@(ProjectsToRemove)" />
+  </ItemGroup>
+
   <Target Name="CheckProjects" AfterTargets="Build">
     <!-- If scope is set this likely came from a call to build.proj and in cases where there is only mgmt projects we don't want to error so skip this extra check -->
     <Error Condition="'$(Scope)' == '' and '@(ProjectReference)' == ''"

@@ -15,23 +15,17 @@
 
 <Project>
   <ItemGroup Condition="'$(SDKType)' == 'all'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'client'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Azure.Messaging.*\**\*.csproj" />
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.ServiceBus\**\*.csproj" />
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Messaging.*\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.ServiceBus\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'data'">
-    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Microsoft.Azure.ServiceBus*\**\*.csproj" />
-  </ItemGroup>
-
-  <!-- Remove all projects under this directory but the included projects based on sdk type -->
-  <ItemGroup>
-    <ProjectsToRemove Include="$(MSBuildThisFileDirectory)**\*.csproj" Exclude="@(ProjectsToInclude)" />
-    <ProjectReference Remove="@(ProjectsToRemove)" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.ServiceBus*\**\*.csproj" />
   </ItemGroup>
 
 </Project>
