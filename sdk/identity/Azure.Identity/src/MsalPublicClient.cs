@@ -74,11 +74,25 @@ namespace Azure.Identity
         public virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
-            return await client.AcquireTokenInteractive(scopes)
+            if (async)
+            {
+                return await client.AcquireTokenInteractive(scopes)
+                    .WithPrompt(prompt)
+                    .WithClaims(claims)
+                    .ExecuteAsync(cancellationToken)
+                    .ConfigureAwait(false);
+            }
+
+            // In the synchronous case we need to use Task.Run to execute on the call to MSAL on the threadpool.
+            // On certain platforms MSAL will use the embedded browser instead of launching the browser as a separate
+            // process. Executing with Task.Run prevents possibly deadlocking the UI thread in these cases.
+            return Task.Run(async () => await client.AcquireTokenInteractive(scopes)
                 .WithPrompt(prompt)
                 .WithClaims(claims)
-                .ExecuteAsync(async, cancellationToken)
-                .ConfigureAwait(false);
+                .ExecuteAsync(cancellationToken)
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+                .ConfigureAwait(false)).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string claims, string username, SecureString password, bool async, CancellationToken cancellationToken)
