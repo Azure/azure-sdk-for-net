@@ -155,9 +155,9 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    string uriReference = ParseUriReferenceFromLinkHeader(nextLink);
+                    string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
                     var response = await _restClient.GetTagsNextPageAsync(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Tags, response.Value.Link, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -196,9 +196,9 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    string uriReference = ParseUriReferenceFromLinkHeader(nextLink);
+                    string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
                     var response = _restClient.GetTagsNextPage(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken);
-                    return Page.FromValues(response.Value.Tags, response.Value.Link, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -208,20 +208,6 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        private static string ParseUriReferenceFromLinkHeader(string linkValue)
-        {
-            // Per the Docker v2 HTTP API spec, the Link header is an RFC5988
-            // compliant rel='next' with URL to next result set, if available.
-            // See: https://docs.docker.com/registry/spec/api/
-            //
-            // The URI reference can be obtained from link-value as follows:
-            //   Link       = "Link" ":" #link-value
-            //   link-value = "<" URI-Reference ">" * (";" link-param )
-            // See: https://tools.ietf.org/html/rfc5988#section-5
-
-            return linkValue?.Substring(1, linkValue.IndexOf('>') - 1);
         }
 
         /// <summary> Get tag properties by tag. </summary>

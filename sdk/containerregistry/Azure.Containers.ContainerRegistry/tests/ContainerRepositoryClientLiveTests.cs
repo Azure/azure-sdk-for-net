@@ -158,36 +158,36 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsTrue(pageCount >= minExpectedPages);
         }
 
-        //[RecordedTest]
-        //public async Task CanStartPagingMidTagCollection()
-        //{
-        //    // Arrange
-        //    var client = CreateClient();
-        //    int pageSize = 1;
-        //    int minExpectedPages = 2;
+        [RecordedTest]
+        public async Task CanGetTagsStartingMidCollection()
+        {
+            // Arrange
+            var client = CreateClient();
+            int pageSize = 1;
+            int minExpectedPages = 2;
 
-        //    // Act
-        //    AsyncPageable<string> tags = client.GetTagsAsync();
-        //    var pages = tags.AsPages($"</acr/v1/{_repositoryName}/_tags?last=v1&n={pageSize}>");
+            // Act
+            AsyncPageable<TagProperties> tags = client.GetTagsAsync();
+            var pages = tags.AsPages($"</acr/v1/{_repositoryName}/_tags?last=v1&n={pageSize}>");
 
-        //    int pageCount = 0;
-        //    Page<string> firstPage = null;
-        //    await foreach (var page in pages)
-        //    {
-        //        if (pageCount == 0)
-        //        {
-        //            firstPage = page;
-        //        }
+            int pageCount = 0;
+            Page<TagProperties> firstPage = null;
+            await foreach (var page in pages)
+            {
+                if (pageCount == 0)
+                {
+                    firstPage = page;
+                }
 
-        //        Assert.IsTrue(page.Values.Count <= pageSize);
-        //        pageCount++;
-        //    }
+                Assert.IsTrue(page.Values.Count <= pageSize);
+                pageCount++;
+            }
 
-        //    // Assert
-        //    Assert.AreNotEqual(null, firstPage);
-        //    Assert.AreEqual("v2", firstPage.Values[0]);
-        //    Assert.IsTrue(pageCount >= minExpectedPages);
-        //}
+            // Assert
+            Assert.AreNotEqual(null, firstPage);
+            Assert.AreEqual("v2", firstPage.Values[0].Name);
+            Assert.IsTrue(pageCount >= minExpectedPages);
+        }
 
         [RecordedTest]
         public async Task CanGetTagProperties()
