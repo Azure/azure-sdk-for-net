@@ -94,7 +94,8 @@ function GenerateMatrix(
     [Array]$replace = @(),
     [Array]$nonSparseParameters = @()
 ) {
-    $matrixParameters, $importedMatrix, $combinedDisplayNameLookup = ProcessImport $config.matrixParameters $selectFromMatrixType $config.displayNamesLookup
+    $matrixParameters, $importedMatrix, $combinedDisplayNameLookup = `
+            ProcessImport $config.matrixParameters $selectFromMatrixType $nonSparseParameters $config.displayNamesLookup
     if ($selectFromMatrixType -eq "sparse") {
         $matrix = GenerateSparseMatrix $matrixParameters $config.displayNamesLookup $nonSparseParameters
     } elseif ($selectFromMatrixType -eq "all") {
@@ -340,7 +341,7 @@ function ProcessReplace
     return $replaceMatrix
 }
 
-function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Hashtable]$displayNamesLookup)
+function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Array]$nonSparseParameters, [Hashtable]$displayNamesLookup)
 {
     $importPath = ""
     $matrix = $matrix | ForEach-Object {
@@ -355,7 +356,10 @@ function ProcessImport([MatrixParameter[]]$matrix, [String]$selection, [Hashtabl
     }
 
     $importedMatrixConfig = GetMatrixConfigFromJson (Get-Content $importPath)
-    $importedMatrix = GenerateMatrix $importedMatrixConfig $selection
+    $importedMatrix = GenerateMatrix `
+                        -config $importedMatrixConfig `
+                        -selectFromMatrixType $selection `
+                        -nonSparseParameters $nonSparseParameters
 
     $combinedDisplayNameLookup = $importedMatrixConfig.displayNamesLookup
     foreach ($lookup in $displayNamesLookup.GetEnumerator()) {
