@@ -33,13 +33,14 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             int numOfIdProperties = 3;
             int numOfInstancesToSetup = 2;
             var timeSeriesInstances = new List<TimeSeriesInstance>();
+            string defaultTypeId = await getDefaultTypeIdAsync(client).ConfigureAwait(false);
 
             for (int i = 0; i < numOfInstancesToSetup; i++)
             {
                 TimeSeriesId id = await GetUniqueTimeSeriesInstanceIdAsync(client, numOfIdProperties)
                     .ConfigureAwait(false);
 
-                timeSeriesInstances.Add(new TimeSeriesInstance(id, DefaultType));
+                timeSeriesInstances.Add(new TimeSeriesInstance(id, defaultTypeId));
             }
 
             IEnumerable<TimeSeriesId> timeSeriesInstancesIds = timeSeriesInstances.Select((instance) => instance.TimeSeriesId);
@@ -69,7 +70,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         instanceResult.Instance.Should().NotBeNull();
                         instanceResult.Error.Should().BeNull();
                         instanceResult.Instance.TimeSeriesId.ToArray().Length.Should().Be(numOfIdProperties);
-                        instanceResult.Instance.TypeId.Should().Be(DefaultType);
+                        instanceResult.Instance.TypeId.Should().Be(defaultTypeId);
                         instanceResult.Instance.HierarchyIds.Count.Should().Be(0);
                         instanceResult.Instance.InstanceFields.Count.Should().Be(0);
                     }
