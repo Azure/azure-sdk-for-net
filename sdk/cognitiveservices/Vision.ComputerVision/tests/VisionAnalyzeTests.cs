@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
@@ -159,6 +160,33 @@ namespace ComputerVisionSDK.Tests
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
                     Assert.ThrowsAsync<ValidationException>(() => client.AnalyzeImageAsync(null));
+                }
+            }
+        }
+
+        [Fact]
+        public void AnalyzeImageInvalidUrlTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                HttpMockServer.Initialize(this.GetType(), "AnalyzeImageInvalidUrlTest");
+
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                {
+                    try
+                    {
+                        ImageAnalysis result = client.AnalyzeImageAsync(
+                            "https://invalidurl",
+                            new List<VisualFeatureTypes?>()
+                            {
+                            VisualFeatureTypes.Categories
+                            })
+                            .Result;
+                    }
+                    catch (Exception ex) when (ex.InnerException is ComputerVisionErrorResponseException cverex)
+                    {
+                        Assert.Equal("InvalidImageUrl", cverex.Body.Error.Innererror.Code);
+                    }
                 }
             }
         }
