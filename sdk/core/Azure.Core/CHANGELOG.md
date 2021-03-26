@@ -1,5 +1,7 @@
 # Release History
 
+## 1.11.0-beta.1 (Unreleased)
+
 ## 1.11.0 (2021-03-22)
 
 ### Added
