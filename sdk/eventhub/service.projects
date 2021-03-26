@@ -7,13 +7,12 @@
   the set of projects to to match what type of SDK we are interested in building.
 
   SDKType values
-   - empty or "client" will build the new track 2 client/data libraries
+   - "all" or "client" will build the new track 2 client/data libraries
    - "mgmtclient" will build the track 2 mgmt libraries
    - "data" will build the track 1 data plane libraries
 -->
 
 <Project>
-  <!-- Include all if no type is specified -->
   <ItemGroup Condition="'$(SDKType)' == 'all'">
     <ProjectsToInclude Include="$(MSBuildThisFileDirectory)**\*.csproj" />
   </ItemGroup>
@@ -36,9 +35,4 @@
     <ProjectsToRemove Include="$(MSBuildThisFileDirectory)**\*.csproj" Exclude="@(ProjectsToInclude)" />
     <ProjectReference Remove="@(ProjectsToRemove)" />
   </ItemGroup>
-
-  <Target Name="EventHubsOutput" BeforeTargets="Build" Condition="'$(SDKType)' != 'all'">
-    <Message Text="Final Build References:" Importance="high"/>
-    <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
-  </Target>
 </Project>

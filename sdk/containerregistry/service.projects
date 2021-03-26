@@ -7,12 +7,16 @@
   the set of projects to match what type of SDK we are interested in building.
 
   SDKType values
-   - empty or "client" will build the new track 2 client/data libraries
+   - "all" or "client" will build the new track 2 client/data libraries
    - "data" will build the track 1 data plane libraries
    - "mgmt" will build the track 1 mgmt libraries
 -->
 
 <Project>
+  <ItemGroup Condition="'$(SDKType)' == 'all'">
+    <ProjectsToInclude Include="$(MSBuildThisFileDirectory)**\*.csproj" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(SDKType)' == '' or '$(SDKType)' == 'client'">
     <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Azure.Containers.*\**\*.csproj" />
   </ItemGroup>
@@ -31,8 +35,4 @@
     <ProjectReference Remove="@(ProjectsToRemove)" />
   </ItemGroup>
 
-  <Target Name="ContainerRegistryOutput" BeforeTargets="Build">
-    <Message Text="Final Build References:" Importance="high"/>
-    <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
-  </Target>
 </Project>
