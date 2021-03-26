@@ -29,7 +29,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var timeSeriesTypes = new List<TimeSeriesType>();
             var tsiTypeNamePrefix = "type";
             var timeSeriesTypesName = Recording.GenerateAlphaNumericId(tsiTypeNamePrefix);
-            var timeSeriesTypeId = Recording.GenerateId();
+            string timeSeriesTypeId = Recording.GenerateId();
 
             // Build Numeric variable
             // Below is an invalid expression
@@ -45,7 +45,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             timeSeriesTypes.Add(type);
 
             // Act and Assert
-            await TestTypeUnhappyPath(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
+            await TestTimeSeriesTypeWhereErrorIsExpected(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var timeSeriesTypes = new List<TimeSeriesType>();
             var tsiTypeNamePrefix = "type";
             var timeSeriesTypesName = Recording.GenerateAlphaNumericId(tsiTypeNamePrefix);
-            var timeSeriesTypeId = Recording.GenerateId();
+            string timeSeriesTypeId = Recording.GenerateId();
 
             // Build Numeric variable
             // Below is an invalid expression
@@ -72,7 +72,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             timeSeriesTypes.Add(type);
 
             // Act and Assert
-            await TestTypeUnhappyPath(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
+            await TestTimeSeriesTypeWhereErrorIsExpected(client, timeSeriesTypes, timeSeriesTypesName).ConfigureAwait(false);
         }
 
         [Test]
@@ -198,7 +198,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             }
         }
 
-        private static async Task TestTypeUnhappyPath(TimeSeriesInsightsClient client, List<TimeSeriesType> timeSeriesTypes, string timeSeriesTypesName)
+        private static async Task TestTimeSeriesTypeWhereErrorIsExpected(TimeSeriesInsightsClient client, List<TimeSeriesType> timeSeriesTypes, string timeSeriesTypesName)
         {
             // create numeric type and expect failure due to invalid input expression
             Response<TimeSeriesOperationError[]> createTypesResult = await client
