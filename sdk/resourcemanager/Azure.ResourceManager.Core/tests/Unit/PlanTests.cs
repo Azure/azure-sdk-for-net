@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 using System.Text.Json;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
@@ -236,11 +237,14 @@ namespace Azure.ResourceManager.Core.Tests
         [Test]
         public void SerializationTest()
         {
-            string expected = "{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}";
+            string expected = "{\"properties\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}}";
             Plan plan = new("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
             var stream = new MemoryStream();
             Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
-            Plan.Serialize(writer, plan);
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteObjectValue(plan);
+            writer.WriteEndObject();
             writer.Flush();
             string json = Encoding.UTF8.GetString(stream.ToArray());
             Assert.IsTrue(expected.Equals(json));
@@ -252,10 +256,13 @@ namespace Azure.ResourceManager.Core.Tests
             Plan plan = new(null, null, null, null, null);
             var stream = new MemoryStream();
             Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
-            Plan.Serialize(writer, plan);
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteObjectValue(plan);
+            writer.WriteEndObject();
             writer.Flush();
             string json = Encoding.UTF8.GetString(stream.ToArray());
-            Assert.IsTrue(json.Equals("{}"));
+            Assert.IsTrue(json.Equals("{\"properties\":{}}"));
         }
 
         [Test]
@@ -263,7 +270,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             string json = "{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}";
             JsonElement element = JsonDocument.Parse(json).RootElement;
-            Plan plan = Plan.Deserialize(element);
+            Plan plan = Plan.DeserializePlan(element);
             Assert.IsTrue(plan.Name.Equals("NameForPlan"));
             Assert.IsTrue(plan.PromotionCode.Equals("PromotionCodeForPlan"));
         }
@@ -273,7 +280,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             string json = "{\"name\":\"NameForPlan\",\"notPublisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"version\":\"VersionForPlan\"}";
             JsonElement element = JsonDocument.Parse(json).RootElement;
-            Plan plan = Plan.Deserialize(element);
+            Plan plan = Plan.DeserializePlan(element);
             Assert.IsTrue(plan.Publisher == null);
             Assert.IsTrue(plan.PromotionCode == null);
         }

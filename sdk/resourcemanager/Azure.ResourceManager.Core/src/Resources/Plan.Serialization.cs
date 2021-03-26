@@ -10,14 +10,13 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Representation of a publisher plan for marketplace RPs.
     /// </summary>
-    public sealed partial class Plan
+    public sealed partial class Plan : IUtf8JsonSerializable
     {
         /// <summary>
-        /// Serialize the input Sku object.
+        /// Serialize the input Plan object.
         /// </summary>
         /// <param name="writer"> Input Json writer. </param>
-        /// <param name="value"> Input Plan object. </param>
-        internal static void Serialize(Utf8JsonWriter writer, Plan value)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             if (writer is null)
             {
@@ -25,30 +24,30 @@ namespace Azure.ResourceManager.Core
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(value.Name))
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name");
-                writer.WriteStringValue(value.Name);
+                writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(value.Publisher))
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher");
-                writer.WriteStringValue(value.Publisher);
+                writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(value.Product))
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product");
-                writer.WriteStringValue(value.Product);
+                writer.WriteStringValue(Product);
             }
-            if (Optional.IsDefined(value.PromotionCode))
+            if (Optional.IsDefined(PromotionCode))
             {
                 writer.WritePropertyName("promotionCode");
-                writer.WriteStringValue(value.PromotionCode);
+                writer.WriteStringValue(PromotionCode);
             }
-            if (Optional.IsDefined(value.Version))
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version");
-                writer.WriteStringValue(value.Version);
+                writer.WriteStringValue(Version);
             }
             writer.WriteEndObject();
         }
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Core
         /// Deserialize the input Json object.
         /// </summary>
         /// <param name="element"> The Json object need to be deserialized. </param>
-        internal static Plan Deserialize(JsonElement element)
+        internal static Plan DeserializePlan(JsonElement element)
         {
             Optional<string> name = default;
             Optional<string> publisher = default;
