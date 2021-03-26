@@ -102,7 +102,8 @@ namespace Azure.ResourceManager.Core.Tests
             var subOp = client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, rgid);
             var rg = await genericResourceOperations.GetAsync();
-            Assert.IsNotNull(rg);
+            Assert.IsNotNull(rg.Value);
+            Assert.IsTrue(rg.Value.Data.Name.Equals(_rgName));
         }
     }
 }
