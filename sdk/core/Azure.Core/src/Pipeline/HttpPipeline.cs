@@ -129,9 +129,7 @@ namespace Azure.Core.Pipeline
         /// </example>
         public static IDisposable CreateClientRequestIdScope(string? clientRequestId)
         {
-#pragma warning disable CS8604 // Possible null reference argument.
-            return CreateHttpMessagePropertiesScope(new Dictionary<string, object>() { { ReadClientRequestIdPolicy.MessagePropertyKey, clientRequestId } });
-#pragma warning restore CS8604 // Possible null reference argument.
+            return CreateHttpMessagePropertiesScope(new Dictionary<string, object?>() { { ReadClientRequestIdPolicy.MessagePropertyKey, clientRequestId } });
         }
 
         /// <summary>
@@ -139,11 +137,10 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="messageProperties">Properties to be added to <see cref="HttpMessage"/>s</param>
         /// <returns>The <see cref="IDisposable"/> instance that needs to be disposed when properties shouldn't be used anymore.</returns>
-        public static IDisposable CreateHttpMessagePropertiesScope(Dictionary<string, object> messageProperties)
+        public static IDisposable CreateHttpMessagePropertiesScope(IDictionary<string, object?> messageProperties)
         {
             Argument.AssertNotNull(messageProperties, nameof(messageProperties));
             CurrentHttpMessagePropertiesScope.Value = new HttpMessagePropertiesScope(messageProperties, CurrentHttpMessagePropertiesScope.Value);
-
             return CurrentHttpMessagePropertiesScope.Value;
         }
 
@@ -151,9 +148,12 @@ namespace Azure.Core.Pipeline
         {
             if (CurrentHttpMessagePropertiesScope.Value != null)
             {
-                foreach (KeyValuePair<string, object> kvp in CurrentHttpMessagePropertiesScope.Value.Properties)
+                foreach (KeyValuePair<string, object?> kvp in CurrentHttpMessagePropertiesScope.Value.Properties)
                 {
-                    message.SetProperty(kvp.Key, kvp.Value);
+                    if (kvp.Value != null)
+                    {
+                        message.SetProperty(kvp.Key, kvp.Value);
+                    }
                 }
             }
         }
@@ -163,11 +163,11 @@ namespace Azure.Core.Pipeline
             private readonly HttpMessagePropertiesScope? _parent;
             private bool _disposed;
 
-            internal HttpMessagePropertiesScope(Dictionary<string, object> messageProperties, HttpMessagePropertiesScope? parent)
+            internal HttpMessagePropertiesScope(IDictionary<string, object?> messageProperties, HttpMessagePropertiesScope? parent)
             {
                 if (parent != null)
                 {
-                    Properties = new Dictionary<string, object>(parent.Properties);
+                    Properties = new Dictionary<string, object?>(parent.Properties);
                     foreach (var kvp in messageProperties)
                     {
                         Properties[kvp.Key] = kvp.Value;
@@ -175,12 +175,12 @@ namespace Azure.Core.Pipeline
                 }
                 else
                 {
-                    Properties = new Dictionary<string, object>(messageProperties);
+                    Properties = new Dictionary<string, object?>(messageProperties);
                 }
                 _parent = parent;
             }
 
-            public Dictionary<string, object> Properties { get; }
+            public Dictionary<string, object?> Properties { get; }
 
             public void Dispose()
             {

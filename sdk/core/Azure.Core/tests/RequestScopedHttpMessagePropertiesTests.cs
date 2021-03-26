@@ -93,5 +93,20 @@ namespace Azure.Core.Tests
             _messages[0].TryGetProperty("foo", out var fooProperty);
             Assert.AreEqual("bar2", fooProperty);
         }
+
+        [Test]
+        public async Task CanUnsetParentValue()
+        {
+            var transport = new MockTransport(r => new MockResponse(200));
+
+            using (HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object>() { { "foo", "bar" } }))
+            using (HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object>() { { "foo", null } }))
+            {
+                await SendGetRequest(transport, _policyMock.Object);
+            }
+
+            Assert.AreEqual(1, _messages.Count);
+            Assert.IsFalse(_messages[0].TryGetProperty("foo", out var _));
+        }
     }
 }
