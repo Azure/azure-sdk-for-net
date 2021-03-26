@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
+    [Parallelizable]
     public class GenericResourceTests : ResourceManagerTestBase
     {
         private string _rgName;
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.Core.Tests
             try
             {
                 await genericResourceOperations.GetAsync();
+                Assert.Fail("No RequestFailedException thrown");
             }
             catch (RequestFailedException ex)
             {
@@ -69,20 +71,28 @@ namespace Azure.ResourceManager.Core.Tests
             _ = GetArmClient(options); // setup providers client
             var subOp = Client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, asetid);
-            Assert.ThrowsAsync<ArgumentException>(async () => await genericResourceOperations.GetAsync());
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await genericResourceOperations.GetAsync());
         }
 
         [TestCase]
         [RecordedTest]
-        public void GetGenericsBadApiVersion()
+        public async Task GetGenericsBadApiVersion()
         {
             ResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
             AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
             options.ApiVersions.SetApiVersion(rgid.Type, "1500-10-10");
-            var client = GetArmClient(options); // setup providers client
+            var client = GetArmClient(options);
             var subOp = client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, rgid);
-            Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
+            try
+            {
+                await genericResourceOperations.GetAsync();
+                Assert.Fail("No RequestFailedException thrown");
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.IsTrue(ex.Message.Contains("InvalidApiVersionParameter"));
+            }
         }
     }
 }

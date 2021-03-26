@@ -19,15 +19,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Mar 2021 23:56:12 GMT",
+        "Date": "Fri, 26 Mar 2021 19:28:06 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "7eb5f5f0-679a-4efa-a7a3-244556496b0b",
-        "x-ms-ratelimit-remaining-subscription-reads": "11992",
-        "x-ms-request-id": "7eb5f5f0-679a-4efa-a7a3-244556496b0b",
-        "x-ms-routing-request-id": "WESTUS2:20210325T235613Z:7eb5f5f0-679a-4efa-a7a3-244556496b0b"
+        "x-ms-correlation-request-id": "e1b48088-5b4c-499a-904e-3eb32a5ea6b1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "e1b48088-5b4c-499a-904e-3eb32a5ea6b1",
+        "x-ms-routing-request-id": "WESTUS2:20210326T192807Z:e1b48088-5b4c-499a-904e-3eb32a5ea6b1"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -63,15 +63,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Mar 2021 23:56:12 GMT",
+        "Date": "Fri, 26 Mar 2021 19:28:06 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "91dbfcd6-2626-4bca-b902-48e5c4880288",
-        "x-ms-ratelimit-remaining-subscription-reads": "11991",
-        "x-ms-request-id": "91dbfcd6-2626-4bca-b902-48e5c4880288",
-        "x-ms-routing-request-id": "WESTUS2:20210325T235613Z:91dbfcd6-2626-4bca-b902-48e5c4880288"
+        "x-ms-correlation-request-id": "1ff50bd0-6938-4819-91eb-ec36681c07ff",
+        "x-ms-ratelimit-remaining-subscription-reads": "11992",
+        "x-ms-request-id": "1ff50bd0-6938-4819-91eb-ec36681c07ff",
+        "x-ms-routing-request-id": "WESTUS2:20210326T192807Z:1ff50bd0-6938-4819-91eb-ec36681c07ff"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -105,22 +105,22 @@
       "StatusCode": 400,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "608",
+        "Content-Length": "619",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 25 Mar 2021 23:56:12 GMT",
+        "Date": "Fri, 26 Mar 2021 19:28:06 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "12518cd3-6ead-49e1-8a01-8b030e786f8b",
+        "x-ms-correlation-request-id": "025d347e-bfff-4f53-8d8b-be06f61dc741",
         "x-ms-failure-cause": "gateway",
-        "x-ms-request-id": "12518cd3-6ead-49e1-8a01-8b030e786f8b",
-        "x-ms-routing-request-id": "WESTUS2:20210325T235613Z:12518cd3-6ead-49e1-8a01-8b030e786f8b"
+        "x-ms-request-id": "025d347e-bfff-4f53-8d8b-be06f61dc741",
+        "x-ms-routing-request-id": "WESTUS2:20210326T192807Z:025d347e-bfff-4f53-8d8b-be06f61dc741"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidApiVersionParameter",
-          "message": "The api-version \u00271500-10-10\u0027 is invalid. The supported versions are \u00272021-01-01,2020-10-01,2020-09-01,2020-08-01,2020-07-01,2020-06-01,2020-05-01,2020-01-01,2019-11-01,2019-10-01,2019-09-01,2019-08-01,2019-07-01,2019-06-01,2019-05-10,2019-05-01,2019-03-01,2018-11-01,2018-09-01,2018-08-01,2018-07-01,2018-06-01,2018-05-01,2018-02-01,2018-01-01,2017-12-01,2017-08-01,2017-06-01,2017-05-10,2017-05-01,2017-03-01,2016-09-01,2016-07-01,2016-06-01,2016-02-01,2015-11-01,2015-01-01,2014-04-01-preview,2014-04-01,2014-01-01,2013-03-01,2014-02-26,2014-04\u0027."
+          "message": "The api-version \u00271500-10-10\u0027 is invalid. The supported versions are \u00272021-04-01,2021-01-01,2020-10-01,2020-09-01,2020-08-01,2020-07-01,2020-06-01,2020-05-01,2020-01-01,2019-11-01,2019-10-01,2019-09-01,2019-08-01,2019-07-01,2019-06-01,2019-05-10,2019-05-01,2019-03-01,2018-11-01,2018-09-01,2018-08-01,2018-07-01,2018-06-01,2018-05-01,2018-02-01,2018-01-01,2017-12-01,2017-08-01,2017-06-01,2017-05-10,2017-05-01,2017-03-01,2016-09-01,2016-07-01,2016-06-01,2016-02-01,2015-11-01,2015-01-01,2014-04-01-preview,2014-04-01,2014-01-01,2013-03-01,2014-02-26,2014-04\u0027."
         }
       }
     }
