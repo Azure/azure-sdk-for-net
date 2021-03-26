@@ -32,7 +32,7 @@ steps:
 
 - pwsh: |
     # Remove the repo owner from the front of the repo name if it exists there
-    $repoName = "${{ parameters.RepoTargetRepoNameName }}" -replace "^${{ parameters.TargetRepoOwner }}/", ""
+    $repoName = "${{ parameters.TargetRepoName }}" -replace "^${{ parameters.TargetRepoOwner }}/", ""
     echo "##vso[task.setvariable variable=RepoNameWithoutOwner]$repoName"
     echo "RepoName = $repoName"
   displayName: Remove Repo Owner from Repo Name
