@@ -35,7 +35,7 @@
 
   <!-- Remove all projects except the ones included by the SDKType filter -->
   <ItemGroup Condition="'$(SDKType)' != 'all'">
-    <ProjectsToRemove Include="$(MSBuildThisFileDirectory)**\*.csproj" Exclude="@(ProjectsToIncludeBySDKType)" />
+    <ProjectsToRemove Include="@(ProjectReference)" Exclude="@(ProjectsToIncludeBySDKType)" />
     <ProjectReference Remove="@(ProjectsToRemove)" />
   </ItemGroup>
 
