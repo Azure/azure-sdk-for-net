@@ -10,7 +10,7 @@
           "azsdk-net-ResourceManager.Resources/1.0.0-preview.2",
           "(.NET 5.0.4; Linux 5.4.72-microsoft-standard-WSL2 #1 SMP Wed Oct 28 23:40:43 UTC 2020)"
         ],
-        "x-ms-client-request-id": "50a90d968cb9e368db7cf22861504936",
+        "x-ms-client-request-id": "dcf3bc7c7c526c42606b4f8bbe125c8b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -19,15 +19,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Mar 2021 19:28:04 GMT",
+        "Date": "Fri, 26 Mar 2021 19:32:24 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "053be04f-9358-4e08-84cc-78eede1f621d",
+        "x-ms-correlation-request-id": "53862079-b00a-4d7c-a4fa-77b3876889a1",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "053be04f-9358-4e08-84cc-78eede1f621d",
-        "x-ms-routing-request-id": "WESTUS2:20210326T192804Z:053be04f-9358-4e08-84cc-78eede1f621d"
+        "x-ms-request-id": "53862079-b00a-4d7c-a4fa-77b3876889a1",
+        "x-ms-routing-request-id": "WESTUS2:20210326T193224Z:53862079-b00a-4d7c-a4fa-77b3876889a1"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -45,19 +45,19 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRg-3475?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRg-898?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "41",
         "Content-Type": "application/json",
-        "traceparent": "00-83e6626df68f7948bf6dce4465f27a09-2798e7801cea8a45-00",
+        "traceparent": "00-710e26f8c73d0f4398c91b8f1e198813-f88cc107eb4ece49-00",
         "User-Agent": [
           "azsdk-net-ResourceManager.Resources/1.0.0-preview.2",
           "(.NET 5.0.4; Linux 5.4.72-microsoft-standard-WSL2 #1 SMP Wed Oct 28 23:40:43 UTC 2020)"
         ],
-        "x-ms-client-request-id": "81d13b665391f7d6046b48abbc08fd7b",
+        "x-ms-client-request-id": "79a83b24b946fa1eda91a6de3f21361c",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -67,21 +67,21 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "237",
+        "Content-Length": "235",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Mar 2021 19:28:05 GMT",
+        "Date": "Fri, 26 Mar 2021 19:32:27 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ca3d3df4-1bb8-4807-87c7-fcc8782cf086",
+        "x-ms-correlation-request-id": "52bea207-65be-4167-84fe-30cdc03b9f63",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "ca3d3df4-1bb8-4807-87c7-fcc8782cf086",
-        "x-ms-routing-request-id": "WESTUS2:20210326T192806Z:ca3d3df4-1bb8-4807-87c7-fcc8782cf086"
+        "x-ms-request-id": "52bea207-65be-4167-84fe-30cdc03b9f63",
+        "x-ms-routing-request-id": "WESTUS2:20210326T193227Z:52bea207-65be-4167-84fe-30cdc03b9f63"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-3475",
-        "name": "testRg-3475",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRg-898",
+        "name": "testRg-898",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "southcentralus",
         "tags": {},
@@ -92,7 +92,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1805059368",
+    "RandomSeed": "1692308145",
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }
 }

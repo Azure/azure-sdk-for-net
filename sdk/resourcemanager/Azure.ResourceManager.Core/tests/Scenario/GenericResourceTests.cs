@@ -32,18 +32,6 @@ namespace Azure.ResourceManager.Core.Tests
 
         [TestCase]
         [RecordedTest]
-        public void GetGenerics()
-        {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
-            _ = GetArmClient(options); // setup providers client
-            var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}/providers/Microsoft.Compute/availabilitySets/testavset";
-            var subOp = Client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
-            var genericResourceOperations = new GenericResourceOperations(subOp, asetid);
-            Assert.ThrowsAsync<RequestFailedException>(async () => await genericResourceOperations.GetAsync());
-        }
-
-        [TestCase]
-        [RecordedTest]
         public async Task GetGenericsConfirmException()
         {
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}/providers/Microsoft.Compute/availabilitySets/testavset";
@@ -59,6 +47,7 @@ namespace Azure.ResourceManager.Core.Tests
             catch (RequestFailedException ex)
             {
                 Assert.AreEqual(ex.Status, 404);
+                Assert.True(ex.Message.Contains("ResourceNotFound"));
             }
         }
 
