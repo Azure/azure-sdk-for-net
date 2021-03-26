@@ -32,7 +32,7 @@ namespace Proto.Network
         /// <param name="resourceGroup"> The client parameters to use in these operations. </param>
         /// <param name="publicIpName"> The public ip address name. </param>
         internal PublicIpAddressOperations(ResourceGroupOperations resourceGroup, string publicIpName)
-            : base(resourceGroup, resourceGroup.Id.AppendProviderResource("Microsoft.Network", "publicIpAddresses", publicIpName))
+            : base(resourceGroup, resourceGroup.Id.AppendProviderResource(ResourceType.Namespace, ResourceType.Type, publicIpName))
         {
         }
 

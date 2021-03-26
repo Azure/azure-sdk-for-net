@@ -29,7 +29,7 @@ namespace Proto.Compute
         /// <param name="resourceGroup"> The client parameters to use in these operations. </param>
         /// <param name="availabilitySetName"> The name of the availability set to use. </param>
         internal AvailabilitySetOperations(ResourceGroupOperations resourceGroup, string availabilitySetName)
-            : base(resourceGroup, resourceGroup.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", availabilitySetName))
+            : base(resourceGroup, resourceGroup.Id.AppendProviderResource(ResourceType.Namespace, ResourceType.Type, availabilitySetName))
         {
         }
 

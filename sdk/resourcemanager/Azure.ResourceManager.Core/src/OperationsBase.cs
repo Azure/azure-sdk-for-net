@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Core
                 string subscription;
                 if (!Id.TryGetSubscriptionId(out subscription))
                 {
-                    throw new InvalidOperationException("Subscription is not available.");
+                    subscription = Guid.Empty.ToString();
                 }
 
                 return new ResourcesManagementClient(BaseUri, subscription, Credential, ClientOptions.Convert<ResourcesManagementClientOptions>());

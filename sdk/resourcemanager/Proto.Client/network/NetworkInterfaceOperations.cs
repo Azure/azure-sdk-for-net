@@ -20,7 +20,7 @@ namespace Proto.Network
         }
 
         internal NetworkInterfaceOperations(ResourceGroupOperations resourceGroup, string nicName)
-            : base(resourceGroup, resourceGroup.Id.AppendProviderResource( "Microsoft.Network", "networkInterfaces", nicName))
+            : base(resourceGroup, resourceGroup.Id.AppendProviderResource( ResourceType.Namespace, ResourceType.Type, nicName))
         {
         }
 

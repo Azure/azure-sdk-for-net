@@ -33,7 +33,7 @@ namespace Proto.Network
         /// <param name="resourceGroup"> The client parameters to use in these operations. </param>
         /// <param name="nsgName"> The network security group name. </param>
         internal NetworkSecurityGroupOperations(ResourceGroupOperations resourceGroup, string nsgName)
-            : base(resourceGroup, resourceGroup.Id.AppendProviderResource("Microsoft.Network", "networkSecurityGroups", nsgName))
+            : base(resourceGroup, resourceGroup.Id.AppendProviderResource(ResourceType.Namespace, ResourceType.Type, nsgName))
         {
         }
 

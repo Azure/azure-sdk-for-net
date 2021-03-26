@@ -8,14 +8,15 @@ using System.Linq;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// Structure representing a resource type
+    /// Structure representing a resource type.
     /// </summary>
     public sealed class ResourceType : IEquatable<ResourceType>, IComparable<ResourceType>
     {
         /// <summary>
-        /// 
+        /// The resource type for the root of the resource hierarchy.
         /// </summary>
         public static ResourceType RootResourceType => new ResourceType(string.Empty, string.Empty);
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceType"/> class.
         /// </summary>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// 
+        /// Create a resource type given the namespace and typename components.
         /// </summary>
         /// <param name="providerNamespace"></param>
         /// <param name="name"></param>
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Core
         internal IList<string> Types { get; } = new List<string>();
 
         /// <summary>
-        /// 
+        /// Determines if this resource type is the parent of the given resource.
         /// </summary>
         /// <param name="child"></param>
         /// <returns></returns>

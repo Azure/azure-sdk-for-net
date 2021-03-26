@@ -29,7 +29,7 @@ namespace Proto.Network
         /// <param name="resourceGroup"> The client parameters to use in these operations. </param>
         /// <param name="vnetName"> The name of the virtual network to use. </param>
         internal VirtualNetworkOperations(ResourceGroupOperations resourceGroup, string vnetName)
-            : base(resourceGroup, resourceGroup.Id.AppendProviderResource("Microsoft.Network", "virtualNetworks", vnetName))
+            : base(resourceGroup, resourceGroup.Id.AppendProviderResource(ResourceType.Namespace, ResourceType.Type, vnetName))
         {
         }
         

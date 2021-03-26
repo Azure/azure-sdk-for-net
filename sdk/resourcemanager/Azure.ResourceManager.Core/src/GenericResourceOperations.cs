@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,7 +36,11 @@ namespace Azure.ResourceManager.Core
             get
             {
                 string subscription;
-                Id.TryGetSubscriptionId(out subscription);
+                if (!Id.TryGetSubscriptionId(out subscription))
+                {
+                    subscription = Guid.Empty.ToString();
+                }
+
                 return new ResourcesManagementClient(
                     BaseUri,
                     subscription,

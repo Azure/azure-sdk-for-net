@@ -29,7 +29,7 @@ namespace Proto.Compute
         /// <param name="resourceGroup"> The client parameters to use in these operations. </param>
         /// <param name="vmName"> The identifier of the resource that is the target of operations. </param>
         internal VirtualMachineOperations(ResourceGroupOperations resourceGroup, string vmName)
-            : base(resourceGroup, resourceGroup.Id.AppendProviderResource("Microsoft.Compute", "virtualMachines", vmName))
+            : base(resourceGroup, resourceGroup.Id.AppendProviderResource(ResourceType.Namespace, ResourceType.Type, vmName))
         {
         }
 
