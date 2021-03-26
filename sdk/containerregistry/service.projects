@@ -7,7 +7,8 @@
   the set of projects to match what type of SDK we are interested in building.
 
   SDKType values
-   - "all" or "client" will build the new track 2 client/data libraries
+   - "all" will build all projects
+   - "client" will build the new track 2 client/data libraries
    - "data" will build the track 1 data plane libraries
    - "mgmt" will build the track 1 mgmt libraries
 -->
@@ -17,7 +18,7 @@
     <ProjectsToInclude Include="$(MSBuildThisFileDirectory)**\*.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(SDKType)' == '' or '$(SDKType)' == 'client'">
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
     <ProjectsToInclude Include="$(MSBuildThisFileDirectory)Azure.Containers.*\**\*.csproj" />
   </ItemGroup>
 
