@@ -100,6 +100,7 @@ namespace Azure.Storage
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
         {
+            HttpPipelinePolicy[] perCallPolicies = new HttpPipelinePolicy[] { StorageServerTimeoutPolicy.Shared };
             List<HttpPipelinePolicy> perRetryClientPolicies = new List<HttpPipelinePolicy>();
             StorageResponseClassifier classifier = new StorageResponseClassifier();
             if (geoRedundantSecondaryStorageUri != null)
