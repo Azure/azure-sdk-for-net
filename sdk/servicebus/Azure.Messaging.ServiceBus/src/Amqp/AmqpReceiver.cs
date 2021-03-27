@@ -59,6 +59,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         private readonly bool _isSessionReceiver;
 
+        private readonly bool _manageReceivedMessageBodies;
+
         /// <summary>
         /// The AMQP connection scope responsible for managing transport constructs for this instance.
         /// </summary>
@@ -103,7 +105,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="identifier"></param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
-        ///
+        /// <param name="manageReceivedMessageBodies"></param>
         /// <remarks>
         /// As an internal type, this class performs only basic sanity checks against its arguments.  It
         /// is assumed that callers are trusted and have performed deep validation.
@@ -120,7 +122,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusRetryPolicy retryPolicy,
             string identifier,
             string sessionId,
-            bool isSessionReceiver)
+            bool isSessionReceiver,
+            bool manageReceivedMessageBodies)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
@@ -130,6 +133,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
             _isSessionReceiver = isSessionReceiver;
+            _manageReceivedMessageBodies = manageReceivedMessageBodies;
             _receiveMode = receiveMode;
             _identifier = identifier;
             _requestResponseLockedMessages = new ConcurrentExpiringSet<Guid>();
@@ -312,7 +316,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         {
                             link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                         }
-                        receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
+                        receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message, _manageReceivedMessageBodies));
                         message.Dispose();
                     }
                 }
@@ -336,7 +340,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Completes a <see cref="ServiceBusReceivedMessage"/>. This will delete the message from the service.
         /// </summary>
         ///
-        /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
+        /// <param name="message">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <remarks>
@@ -346,17 +350,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task CompleteAsync(
-            string lockToken,
+            ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
                 static async (value, timeout, _) =>
                 {
-                    var (receiver, lockToken) = value;
+                    var (receiver, message) = value;
                     await receiver.CompleteInternalAsync(
-                        lockToken,
+                        message,
                         timeout).ConfigureAwait(false);
                 },
-                (this, lockToken),
+                (this, message),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -364,24 +368,34 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Completes a series of <see cref="ServiceBusMessage"/> using a list of lock tokens. This will delete the message from the service.
         /// </summary>
         ///
-        /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
+        /// <param name="message">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
         /// <param name="timeout"></param>
         private async Task CompleteInternalAsync(
-            string lockToken,
+            ServiceBusReceivedMessage message,
             TimeSpan timeout)
         {
-            Guid lockTokenGuid = new Guid(lockToken);
+            Guid lockTokenGuid = new Guid(message.LockToken);
             var lockTokenGuids = new[] { lockTokenGuid };
-            if (_requestResponseLockedMessages.Contains(lockTokenGuid))
+            try
             {
-                await DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
-                    timeout,
-                    DispositionStatus.Completed,
-                    SessionId).ConfigureAwait(false);
-                return;
+                if (_requestResponseLockedMessages.Contains(lockTokenGuid))
+                {
+                    await DisposeMessageRequestResponseAsync(
+                        lockTokenGuids,
+                        timeout,
+                        DispositionStatus.Completed,
+                        SessionId).ConfigureAwait(false);
+                    return;
+                }
+                await DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
             }
-            await DisposeMessagesAsync(lockTokenGuids, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
+            finally
+            {
+                if (_manageReceivedMessageBodies)
+                {
+                    message.Dispose();
+                }
+            }
         }
 
         /// <summary>
@@ -535,7 +549,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Abandons a <see cref="ServiceBusReceivedMessage"/>. This will make the message available again for processing.
         /// </summary>
         ///
-        /// <param name="lockToken">The lock token of the <see cref="ServiceBusReceivedMessage"/> to abandon.</param>
+        /// <param name="message">The lock token of the <see cref="ServiceBusReceivedMessage"/> to abandon.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
@@ -547,19 +561,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task AbandonAsync(
-            string lockToken,
+            ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = null,
             CancellationToken cancellationToken = default) =>
             await _retryPolicy.RunOperation(
                 static async (value, timeout, _) =>
                 {
-                    var (receiver, lockToken, properties) = value;
+                    var (receiver, message, properties) = value;
                     await receiver.AbandonInternalAsync(
-                        lockToken,
+                        message,
                         timeout,
                         properties).ConfigureAwait(false);
                 },
-                (this, lockToken, propertiesToModify),
+                (this, message, propertiesToModify),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -567,33 +581,43 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Abandons a <see cref="ServiceBusMessage"/> using a lock token. This will make the message available again for processing.
         /// </summary>
         ///
-        /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
+        /// <param name="message">The lock token of the corresponding message to abandon.</param>
         /// <param name="timeout"></param>
         /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
         private Task AbandonInternalAsync(
-            string lockToken,
+            ServiceBusReceivedMessage message,
             TimeSpan timeout,
             IDictionary<string, object> propertiesToModify = null)
         {
-            Guid lockTokenGuid = new Guid(lockToken);
+            Guid lockTokenGuid = new Guid(message.LockToken);
             var lockTokenGuids = new[] { lockTokenGuid };
-            if (_requestResponseLockedMessages.Contains(lockTokenGuid))
+            try
             {
-                return DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
-                    timeout,
-                    DispositionStatus.Abandoned,
-                    SessionId,
-                    propertiesToModify);
+                if (_requestResponseLockedMessages.Contains(lockTokenGuid))
+                {
+                    return DisposeMessageRequestResponseAsync(
+                        lockTokenGuids,
+                        timeout,
+                        DispositionStatus.Abandoned,
+                        SessionId,
+                        propertiesToModify);
+                }
+                return DisposeMessagesAsync(lockTokenGuids, GetAbandonOutcome(propertiesToModify), timeout);
             }
-            return DisposeMessagesAsync(lockTokenGuids, GetAbandonOutcome(propertiesToModify), timeout);
+            finally
+            {
+                if (_manageReceivedMessageBodies)
+                {
+                    message.Dispose();
+                }
+            }
         }
 
         /// <summary>
         /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
-        /// <param name="lockToken">The lock token of the <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
+        /// <param name="message">The lock token of the <see cref="ServiceBusReceivedMessage"/> to dead-letter.</param>
         /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
@@ -609,7 +633,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public override async Task DeadLetterAsync(
-            string lockToken,
+            ServiceBusReceivedMessage message,
             string deadLetterReason,
             string deadLetterErrorDescription = default,
             IDictionary<string, object> propertiesToModify = default,
@@ -617,15 +641,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
             await _retryPolicy.RunOperation(
                 static async (value, timeout, _) =>
                 {
-                    var (receiver, lockToken, propertiesToModify, deadLetterReason, deadLetterErrorDescription) = value;
+                    var (receiver, message, propertiesToModify, deadLetterReason, deadLetterErrorDescription) = value;
                     await receiver.DeadLetterInternalAsync(
-                        lockToken,
+                        message,
                         timeout,
                         propertiesToModify,
                         deadLetterReason,
                         deadLetterErrorDescription).ConfigureAwait(false);
                 },
-                (this, lockToken, propertiesToModify, deadLetterReason, deadLetterErrorDescription),
+                (this, message, propertiesToModify, deadLetterReason, deadLetterErrorDescription),
                 _connectionScope,
                 cancellationToken).ConfigureAwait(false);
 
@@ -633,13 +657,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// Moves a message to the dead-letter subqueue.
         /// </summary>
         ///
-        /// <param name="lockToken">The lock token of the corresponding message to dead-letter.</param>
+        /// <param name="message">The lock token of the corresponding message to dead-letter.</param>
         /// <param name="timeout"></param>
         /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
         /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
         internal virtual Task DeadLetterInternalAsync(
-            string lockToken,
+            ServiceBusReceivedMessage message,
             TimeSpan timeout,
             IDictionary<string, object> propertiesToModify,
             string deadLetterReason,
@@ -648,24 +672,34 @@ namespace Azure.Messaging.ServiceBus.Amqp
             Argument.AssertNotTooLong(deadLetterReason, Constants.MaxDeadLetterReasonLength, nameof(deadLetterReason));
             Argument.AssertNotTooLong(deadLetterErrorDescription, Constants.MaxDeadLetterReasonLength, nameof(deadLetterErrorDescription));
 
-            Guid lockTokenGuid = new Guid(lockToken);
+            Guid lockTokenGuid = new Guid(message.LockToken);
             var lockTokenGuids = new[] { lockTokenGuid };
-            if (_requestResponseLockedMessages.Contains(lockTokenGuid))
+            try
             {
-                return DisposeMessageRequestResponseAsync(
-                    lockTokenGuids,
-                    timeout,
-                    DispositionStatus.Suspended,
-                    SessionId,
-                    propertiesToModify,
-                    deadLetterReason,
-                    deadLetterErrorDescription);
-            }
+                if (_requestResponseLockedMessages.Contains(lockTokenGuid))
+                {
+                    return DisposeMessageRequestResponseAsync(
+                        lockTokenGuids,
+                        timeout,
+                        DispositionStatus.Suspended,
+                        SessionId,
+                        propertiesToModify,
+                        deadLetterReason,
+                        deadLetterErrorDescription);
+                }
 
-            return DisposeMessagesAsync(
-                lockTokenGuids,
-                GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription),
-                timeout);
+                return DisposeMessagesAsync(
+                    lockTokenGuids,
+                    GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription),
+                    timeout);
+            }
+            finally
+            {
+                if (_manageReceivedMessageBodies)
+                {
+                    message.Dispose();
+                }
+            }
         }
 
         private static Rejected GetRejectedOutcome(
@@ -1219,7 +1253,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         var payload = (ArraySegment<byte>)entry[ManagementConstants.Properties.Message];
                         var amqpMessage = AmqpMessage.CreateAmqpStreamMessage(new BufferListStream(new[] { payload }), true);
-                        var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
+                        var message = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage, _manageReceivedMessageBodies);
                         if (entry.TryGetValue<Guid>(ManagementConstants.Properties.LockToken, out var lockToken))
                         {
                             message.LockTokenGuid = lockToken;

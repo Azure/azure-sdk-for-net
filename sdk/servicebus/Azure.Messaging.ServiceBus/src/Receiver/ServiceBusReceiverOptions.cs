@@ -47,10 +47,9 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Gets or sets the whether the <see cref="ServiceBusReceivedMessage" /> body is managed for high performance scenarios.
-        /// When this option is enabled either <see cref="ServiceBusReceiver.CompleteMessageAsync" /> or <see cref="ServiceBusReceiver.AbandonMessageAsync" />
-        /// must be called explicitly. By default bodies are not managed.
+        /// When this option is enabled either complete or abandon must be called explicitly. By default bodies are not managed.
         /// </summary>
-        public bool ManageReceivedMessageBodies { get; set; } = false;
+        public bool ManageReceivedMessageBodies { get; set; }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.

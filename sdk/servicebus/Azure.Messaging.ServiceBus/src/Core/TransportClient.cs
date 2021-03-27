@@ -54,7 +54,8 @@ namespace Azure.Messaging.ServiceBus.Core
             uint prefetchCount,
             string identifier,
             string sessionId,
-            bool isSessionReceiver);
+            bool isSessionReceiver,
+            bool manageReceivedMessageBodies);
 
         /// <summary>
         ///   Closes the connection to the transport client instance.

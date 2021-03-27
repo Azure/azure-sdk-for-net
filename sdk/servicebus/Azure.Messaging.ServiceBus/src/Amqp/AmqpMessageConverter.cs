@@ -217,14 +217,58 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return amqpMessage;
         }
 
-        public static ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool isPeeked = false)
+        private sealed class SneakyWayToPiggyBack : IEnumerable<ReadOnlyMemory<byte>>, IDisposable
+        {
+            private readonly AmqpMessage receivedAmqpMessage;
+
+            public SneakyWayToPiggyBack(AmqpMessage original)
+            {
+                receivedAmqpMessage = original;
+            }
+
+            public IEnumerator<ReadOnlyMemory<byte>> GetEnumerator()
+            {
+                foreach (Data data in receivedAmqpMessage.DataBody)
+                {
+                    switch (data.Value)
+                    {
+                        case ReadOnlyMemory<byte> rom:
+                            yield return rom;
+                            break;
+                        default:
+                            yield break;
+                    }
+                }
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+
+            public void Dispose()
+            {
+                receivedAmqpMessage?.Dispose();
+            }
+        }
+
+        public static void Dispose(this ServiceBusReceivedMessage receivedMessage)
+        {
+            if (receivedMessage.AmqpMessage.Body.TryGetData(out var bodyData))
+            {
+                (bodyData as SneakyWayToPiggyBack)?.Dispose();
+            }
+        }
+
+        public static ServiceBusReceivedMessage AmqpMessageToSBMessage(AmqpMessage amqpMessage, bool manageReceivedMessageBodies = false, bool isPeeked = false)
         {
             Argument.AssertNotNull(amqpMessage, nameof(amqpMessage));
             AmqpAnnotatedMessage annotatedMessage;
 
             if ((amqpMessage.BodyType & SectionFlag.Data) != 0 && amqpMessage.DataBody != null)
             {
-                annotatedMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(amqpMessage.GetDataViaDataBody()));
+                annotatedMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(manageReceivedMessageBodies ?
+                    new SneakyWayToPiggyBack(amqpMessage) : amqpMessage.GetDataViaDataBody()));
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0 && amqpMessage.ValueBody?.Value != null)
             {
@@ -365,7 +409,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 sbMessage.LockTokenGuid = new Guid(guidBuffer);
             }
 
-            amqpMessage.Dispose();
+            if (!manageReceivedMessageBodies)
+            {
+                amqpMessage.Dispose();
+            }
 
             return sbMessage;
         }

@@ -642,7 +642,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
 
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.CompleteAsync(
-                    It.IsAny<string>(),
+                    It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
             var receiver = new ServiceBusReceiver(
@@ -791,7 +791,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportReceiver);
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.DeadLetterAsync(
-                    It.IsAny<string>(),
+                    It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<IDictionary<string, object>>(),
@@ -868,7 +868,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockConnection = GetMockConnection(mockTransportReceiver);
             mockTransportReceiver.Setup(
                 transportReceiver => transportReceiver.AbandonAsync(
-                    It.IsAny<string>(),
+                    It.IsAny<ServiceBusReceivedMessage>(),
                     It.IsAny<IDictionary<string, object>>(),
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
@@ -1278,6 +1278,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     It.IsAny<uint>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
+                    It.IsAny<bool>(),
                     It.IsAny<bool>()))
                 .Returns(mockTransportReceiver.Object);
             return mockConnection;

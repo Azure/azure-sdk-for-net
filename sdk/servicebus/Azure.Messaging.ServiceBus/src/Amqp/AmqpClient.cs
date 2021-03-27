@@ -140,7 +140,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="identifier"></param>
         /// <param name="sessionId"></param>
         /// <param name="isSessionReceiver"></param>
-        ///
+        /// <param name="manageReceivedMessageBodies"></param>
         /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
         ///
         public override TransportReceiver CreateReceiver(
@@ -150,7 +150,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             uint prefetchCount,
             string identifier,
             string sessionId,
-            bool isSessionReceiver)
+            bool isSessionReceiver,
+            bool manageReceivedMessageBodies)
         {
             Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
@@ -163,7 +164,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 retryPolicy,
                 identifier,
                 sessionId,
-                isSessionReceiver
+                isSessionReceiver,
+                manageReceivedMessageBodies
             );
         }
 

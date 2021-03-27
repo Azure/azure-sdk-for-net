@@ -239,7 +239,8 @@ namespace Azure.Messaging.ServiceBus
             uint prefetchCount,
             string identifier,
             string sessionId,
-            bool isSessionReceiver) =>
+            bool isSessionReceiver,
+            bool manageReceivedMessageBodies) =>
                 _innerClient.CreateReceiver(
                     entityPath,
                     retryPolicy,
@@ -247,7 +248,8 @@ namespace Azure.Messaging.ServiceBus
                     prefetchCount,
                     identifier,
                     sessionId,
-                    isSessionReceiver);
+                    isSessionReceiver,
+                    manageReceivedMessageBodies);
 
         /// <summary>
         ///   Builds a Service Bus client specific to the protocol and transport specified by the

@@ -401,7 +401,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await receiver.CompleteMessageAsync(receivedMessage.LockToken);
+                    await receiver.CompleteMessageAsync(receivedMessage);
                     await sender.SendMessageAsync(message2);
                 }
 
@@ -410,7 +410,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 // Following should succeed without exceptions
-                await receiver.CompleteMessageAsync(receivedMessage.LockToken);
+                await receiver.CompleteMessageAsync(receivedMessage);
 
                 // Assert that send failed
                 receivedMessage = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5));

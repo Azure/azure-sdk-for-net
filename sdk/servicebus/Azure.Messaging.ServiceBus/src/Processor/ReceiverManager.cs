@@ -175,7 +175,7 @@ namespace Azure.Messaging.ServiceBus
                     // as we want in flight auto-completion to be able
                     // to finish
                     await Receiver.CompleteMessageAsync(
-                        message.LockToken,
+                        message,
                         CancellationToken.None)
                         .ConfigureAwait(false);
                 }
@@ -212,7 +212,7 @@ namespace Azure.Messaging.ServiceBus
                         // as we want in flight abandon to be able
                         // to finish even if user stopped processing
                         await Receiver.AbandonMessageAsync(
-                            message.LockToken,
+                            message,
                             cancellationToken: CancellationToken.None)
                             .ConfigureAwait(false);
                     }
