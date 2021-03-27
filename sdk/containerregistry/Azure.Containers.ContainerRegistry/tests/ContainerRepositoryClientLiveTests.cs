@@ -117,7 +117,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         #region Registry Artifact Tests
         [RecordedTest]
-        public async Task CanGetRegistryArtifactProperties()
+        public async Task CanGetRegistryArtifactPropertiesForManifestList()
         {
             // Arrange
             ContainerRepositoryClient client = CreateClient();
@@ -156,6 +156,30 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     artifact.CpuArchitecture == amd64WindowsImage.CpuArchitecture &&
                     artifact.OperatingSystem == amd64WindowsImage.OperatingSystem;
                 }));
+        }
+
+        [RecordedTest]
+        public async Task CanGetRegistryArtifactPropertiesForManifest()
+        {
+            // Arrange
+            ContainerRepositoryClient client = CreateClient();
+            string tag = "v1";
+
+            // Act
+            RegistryArtifactProperties listProperties = await client.GetRegistryArtifactPropertiesAsync(tag);
+            var arm64LinuxImage = listProperties.RegistryArtifacts.Where(
+               artifact =>
+               {
+                   return artifact.CpuArchitecture == "arm64" &&
+                          artifact.OperatingSystem == "linux";
+               }).First();
+            RegistryArtifactProperties properties = await client.GetRegistryArtifactPropertiesAsync(arm64LinuxImage.Digest);
+
+            // Assert
+            Assert.AreEqual(_repositoryName, properties.Repository);
+            Assert.IsNotNull(properties.Digest);
+            Assert.AreEqual("arm64", properties.CpuArchitecture);
+            Assert.AreEqual("linux", properties.OperatingSystem);
         }
         #endregion
 
