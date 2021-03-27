@@ -20,8 +20,6 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(30);
 
         private const int MaxNumberOfRetries = 10;
-        private const string Humidity = "Humidity";
-        private const string Temperature = "Temperature";
 
         public TimeSeriesInsightsQuerySeriesTests(bool isAsync)
             : base(isAsync)
@@ -61,15 +59,15 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 DateTimeOffset startTime = now.AddMinutes(-10);
 
                 var temperatureNumericVariable = new NumericVariable(
-                    new TimeSeriesExpression($"$event.{Temperature}"),
+                    new TimeSeriesExpression($"$event.{QueryTestsHelper.Temperature}"),
                     new TimeSeriesExpression("avg($value)"));
                 var temperatureNumericVariableTimesTwo = new NumericVariable(
-                    new TimeSeriesExpression($"$event.{Temperature} * 2"),
+                    new TimeSeriesExpression($"$event.{QueryTestsHelper.Temperature} * 2"),
                     new TimeSeriesExpression("avg($value)"));
-                var temperatureTimesTwoVariableName = $"{Temperature}TimesTwo";
+                var temperatureTimesTwoVariableName = $"{QueryTestsHelper.Temperature}TimesTwo";
                 var inlineVariables = new Dictionary<string, TimeSeriesVariable>
                 {
-                    [Temperature] = temperatureNumericVariable,
+                    [QueryTestsHelper.Temperature] = temperatureNumericVariable,
                     [temperatureTimesTwoVariableName] = temperatureNumericVariableTimesTwo,
                 };
 
@@ -94,14 +92,14 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         .And
                          .OnlyContain(timeStamp => timeStamp <= endTime);
                         seriesEventsPage.Properties.Count.Should().Be(3); // EventCount, Temperature and TemperatureTimesTwo
-                        seriesEventsPage.Properties.Should().Contain((property) => property.Name == Temperature)
+                        seriesEventsPage.Properties.Should().Contain((property) => property.Name == QueryTestsHelper.Temperature)
                         .And
                          .Contain((property) => property.Name == temperatureTimesTwoVariableName);
 
                         // Assert that the values for the Temperature property is equal to the values for the other property, multiplied by 2
                         var temperatureValues = seriesEventsPage
                         .Properties
-                        .First((property) => property.Name == Temperature)
+                        .First((property) => property.Name == QueryTestsHelper.Temperature)
                         .Values.Cast<double>().ToList();
 
                         var temperatureTimesTwoValues = seriesEventsPage
@@ -126,9 +124,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 var humidityNumericVariable = new NumericVariable(
                     new TimeSeriesExpression("$event.Humidity"),
                     new TimeSeriesExpression("avg($value)"));
-                inlineVariables[Humidity] = humidityNumericVariable;
-                querySeriesRequestOptions.ProjectedVariables.Add(Temperature);
-                querySeriesRequestOptions.ProjectedVariables.Add(Humidity);
+                inlineVariables[QueryTestsHelper.Humidity] = humidityNumericVariable;
+                querySeriesRequestOptions.ProjectedVariables.Add(QueryTestsHelper.Temperature);
+                querySeriesRequestOptions.ProjectedVariables.Add(QueryTestsHelper.Humidity);
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
                     AsyncPageable<QueryResultPage> querySeriesEventsPages = tsiClient.QuerySeriesAsync(tsiId, startTime, endTime, querySeriesRequestOptions);
@@ -140,9 +138,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         .And
                          .OnlyContain(timeStamp => timeStamp <= endTime);
                         seriesEventsPage.Properties.Count.Should().Be(2); // Temperature and Humidity
-                        seriesEventsPage.Properties.Should().Contain((property) => property.Name == Temperature)
+                        seriesEventsPage.Properties.Should().Contain((property) => property.Name == QueryTestsHelper.Temperature)
                         .And
-                         .Contain((property) => property.Name == Humidity);
+                         .Contain((property) => property.Name == QueryTestsHelper.Humidity);
                     }
 
                     return null;
@@ -175,13 +173,13 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         seriesEventsPage.Timestamps.Should().HaveCount(2);
                         seriesEventsPage.Properties.Should().HaveCount(2)
                         .And
-                         .Contain((property) => property.Name == Temperature)
+                         .Contain((property) => property.Name == QueryTestsHelper.Temperature)
                         .And
-                         .Contain((property) => property.Name == Humidity);
+                         .Contain((property) => property.Name == QueryTestsHelper.Humidity);
 
                         var temperatureValues = seriesEventsPage
                         .Properties
-                        .First((property) => property.Name == Temperature)
+                        .First((property) => property.Name == QueryTestsHelper.Temperature)
                         .Values.Cast<double>().ToList();
                         temperatureValues.Should().AllBeEquivalentTo(1.2);
                     }
@@ -197,13 +195,13 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     seriesEventsPage.Timestamps.Should().HaveCount(1);
                     seriesEventsPage.Properties.Should().HaveCount(2)
                     .And
-                     .Contain((property) => property.Name == Temperature)
+                     .Contain((property) => property.Name == QueryTestsHelper.Temperature)
                     .And
-                     .Contain((property) => property.Name == Humidity);
+                     .Contain((property) => property.Name == QueryTestsHelper.Humidity);
 
                     var temperatureValues = seriesEventsPage
                     .Properties
-                    .First((property) => property.Name == Temperature)
+                    .First((property) => property.Name == QueryTestsHelper.Temperature)
                     .Values.Cast<double>().ToList();
                     temperatureValues.Should().AllBeEquivalentTo(1.2);
                 }
