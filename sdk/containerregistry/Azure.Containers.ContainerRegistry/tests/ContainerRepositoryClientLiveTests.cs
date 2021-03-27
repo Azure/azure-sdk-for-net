@@ -18,7 +18,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
         {
             Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
@@ -329,6 +329,35 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreNotEqual(null, firstPage);
             Assert.AreEqual(secondDigest, firstPage.Values[0].Digest);
             Assert.GreaterOrEqual(pageCount, minExpectedPages);
+        }
+
+        [RecordedTest]
+        public async Task CanGetArtifactsOrdered()
+        {
+            // Arrange
+            string repository = $"library/node";
+            string tag = "newest";
+            var client = CreateClient(repository);
+            if (this.Mode != RecordedTestMode.Playback)
+            {
+                await ImportImage(repository, tag);
+            }
+
+            // Act
+            AsyncPageable<RegistryArtifactProperties> artifacts = client.GetRegistryArtifactsAsync(new GetRegistryArtifactOptions(RegistryArtifactOrderBy.LastUpdatedOnDescending));
+
+            // Assert
+            string digest = null;
+            await foreach (RegistryArtifactProperties artifact in artifacts)
+            {
+                digest = artifact.Digest;
+                Assert.That(artifact.Repository.Contains(repository));
+                Assert.That(artifact.Tags.Contains(tag));
+                break;
+            }
+
+            // Clean up
+            await client.DeleteRegistryArtifactAsync(digest);
         }
 
         #endregion
