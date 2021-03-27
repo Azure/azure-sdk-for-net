@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core.TestFramework;
 using Microsoft.Azure.Management.ContainerRegistry;
 using Microsoft.Azure.Management.ContainerRegistry.Models;
@@ -17,11 +18,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
 
+        #region Setup methods
         protected ContainerRepositoryClient CreateClient()
         {
             return InstrumentClient(new ContainerRepositoryClient(
@@ -66,7 +68,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
                         }
                     });
         }
+        #endregion
 
+        #region Repository Tests
         [RecordedTest]
         public async Task CanGetRepositoryProperties()
         {
@@ -109,7 +113,26 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Cleanup
             await client.SetPropertiesAsync(originalContentProperties);
         }
+        #endregion
 
+        #region Registry Artifact Tests
+        [RecordedTest]
+        public async Task CanGetRegistryArtifactProperties()
+        {
+            // Arrange
+            ContainerRepositoryClient client = CreateClient();
+            string tag = "v1";
+
+            // Act
+            RegistryArtifactProperties properties = await client.GetRegistryArtifactPropertiesAsync(tag);
+
+            // Assert
+            Assert.Contains("v1", properties.Tags.ToList());
+            Assert.AreEqual(_repositoryName, properties.Repository);
+        }
+        #endregion
+
+        #region Tag Tests
         [RecordedTest]
         public async Task CanGetTagProperties()
         {
@@ -183,5 +206,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetTagPropertiesAsync(tag); });
         }
+        #endregion
     }
 }

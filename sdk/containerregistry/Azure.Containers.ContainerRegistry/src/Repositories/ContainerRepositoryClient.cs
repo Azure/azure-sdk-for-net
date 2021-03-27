@@ -130,7 +130,7 @@ namespace Azure.Containers.ContainerRegistry
         }
         #endregion
 
-        #region Manifest methods
+        #region Registry Artifact/Manifest methods
         ///// <summary> Get the collection of tags for a repository. </summary>
         ///// <param name="options"> Options to override default collection getting behavior. </param>
         ///// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -223,7 +223,7 @@ namespace Azure.Containers.ContainerRegistry
 
             try
             {
-                string digest = IsDigest(tagOrDigest) ? tagOrDigest : 
+                string digest = IsDigest(tagOrDigest) ? tagOrDigest :
                     (await _restClient.GetTagPropertiesAsync(_repository, tagOrDigest, cancellationToken).ConfigureAwait(false)).Value.Digest;
 
                 return await _restClient.GetRegistryArtifactPropertiesAsync(_repository, digest, cancellationToken).ConfigureAwait(false);

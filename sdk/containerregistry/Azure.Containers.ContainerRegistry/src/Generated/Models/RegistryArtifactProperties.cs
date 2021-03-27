@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
@@ -16,35 +15,10 @@ namespace Azure.Containers.ContainerRegistry
     public partial class RegistryArtifactProperties
     {
         /// <summary> Initializes a new instance of RegistryArtifactProperties. </summary>
-        /// <param name="repository"> Image name. </param>
-        /// <param name="digest"> Manifest. </param>
-        /// <param name="tags"> List of tags. </param>
-        /// <param name="writeableProperties"> Changeable attributes. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="repository"/>, <paramref name="digest"/>, <paramref name="tags"/>, or <paramref name="writeableProperties"/> is null. </exception>
-        internal RegistryArtifactProperties(string repository, string digest, IEnumerable<string> tags, ContentProperties writeableProperties)
+        internal RegistryArtifactProperties()
         {
-            if (repository == null)
-            {
-                throw new ArgumentNullException(nameof(repository));
-            }
-            if (digest == null)
-            {
-                throw new ArgumentNullException(nameof(digest));
-            }
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
-            if (writeableProperties == null)
-            {
-                throw new ArgumentNullException(nameof(writeableProperties));
-            }
-
-            Repository = repository;
-            Digest = digest;
-            RegistryArtifacts = new ChangeTrackingList<ManifestAttributesManifestReferences>();
-            Tags = tags.ToList();
-            WriteableProperties = writeableProperties;
+            References = new ChangeTrackingList<ManifestAttributesManifestReferences>();
+            Tags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of RegistryArtifactProperties. </summary>
@@ -55,10 +29,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="lastUpdatedOn"> Last update time. </param>
         /// <param name="cpuArchitecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>
-        /// <param name="registryArtifacts"> List of manifest attributes details. </param>
+        /// <param name="references"> List of manifest attributes details. </param>
         /// <param name="tags"> List of tags. </param>
-        /// <param name="writeableProperties"> Changeable attributes. </param>
-        internal RegistryArtifactProperties(string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> registryArtifacts, IReadOnlyList<string> tags, ContentProperties writeableProperties)
+        /// <param name="writeableProperties"> Writeable properties of the resource. </param>
+        internal RegistryArtifactProperties(string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
         {
             Repository = repository;
             Digest = digest;
@@ -67,7 +41,7 @@ namespace Azure.Containers.ContainerRegistry
             LastUpdatedOn = lastUpdatedOn;
             CpuArchitecture = cpuArchitecture;
             OperatingSystem = operatingSystem;
-            RegistryArtifacts = registryArtifacts;
+            References = references;
             Tags = tags;
             WriteableProperties = writeableProperties;
         }
@@ -86,11 +60,9 @@ namespace Azure.Containers.ContainerRegistry
         public string CpuArchitecture { get; }
         /// <summary> Operating system. </summary>
         public string OperatingSystem { get; }
-        /// <summary> List of manifest attributes details. </summary>
-        public IReadOnlyList<ManifestAttributesManifestReferences> RegistryArtifacts { get; }
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
-        /// <summary> Changeable attributes. </summary>
+        /// <summary> Writeable properties of the resource. </summary>
         public ContentProperties WriteableProperties { get; }
     }
 }
