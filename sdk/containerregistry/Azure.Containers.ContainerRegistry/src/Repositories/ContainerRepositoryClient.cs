@@ -261,6 +261,44 @@ namespace Azure.Containers.ContainerRegistry
             return tagOrDigest.Contains(":");
         }
 
+        /// <summary> Update manifest attributes. </summary>
+        /// <param name="digest"> Manifest digest. </param>
+        /// <param name="value"> Manifest properties value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> SetManifestPropertiesAsync(string digest, ContentProperties value, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetManifestProperties)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.UpdateManifestAttributesAsync(_repository, digest, value, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Update manifest attributes. </summary>
+        /// <param name="digest"> Manifest digest. </param>
+        /// <param name="value"> Manifest properties value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response SetManifestProperties(string digest, ContentProperties value, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetManifestProperties)}");
+            scope.Start();
+            try
+            {
+                return _restClient.UpdateManifestAttributes(_repository, digest, value, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Tag methods

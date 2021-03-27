@@ -124,37 +124,23 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string tag = "v1";
             int helloWorldManifestReferences = 9;
 
-            RegistryArtifactProperties arm64LinuxImage = new RegistryArtifactProperties(
-                digest: null,
-                architecture: "arm64",
-                operatingSystem: "linux"
-            );
-
-            RegistryArtifactProperties amd64WindowsImage = new RegistryArtifactProperties(
-                digest: null,
-                architecture: "amd64",
-                operatingSystem: "windows"
-            );
-
             // Act
             RegistryArtifactProperties properties = await client.GetRegistryArtifactPropertiesAsync(tag);
 
             // Assert
             Assert.Contains("v1", properties.Tags.ToList());
             Assert.AreEqual(_repositoryName, properties.Repository);
-            Assert.AreEqual(helloWorldManifestReferences, properties.RegistryArtifacts.Count);
+            Assert.GreaterOrEqual(helloWorldManifestReferences, properties.RegistryArtifacts.Count);
 
             Assert.IsTrue(properties.RegistryArtifacts.Any(
                 artifact => {
-                    return
-                    artifact.CpuArchitecture == arm64LinuxImage.CpuArchitecture &&
-                    artifact.OperatingSystem == arm64LinuxImage.OperatingSystem; } ));
+                    return artifact.CpuArchitecture == "arm64" &&
+                           artifact.OperatingSystem == "linux"; } ));
 
             Assert.IsTrue(properties.RegistryArtifacts.Any(
                 artifact => {
-                    return
-                    artifact.CpuArchitecture == amd64WindowsImage.CpuArchitecture &&
-                    artifact.OperatingSystem == amd64WindowsImage.OperatingSystem;
+                    return artifact.CpuArchitecture == "amd64" &&
+                           artifact.OperatingSystem == "windows";
                 }));
         }
 
@@ -181,6 +167,41 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.AreEqual("arm64", properties.CpuArchitecture);
             Assert.AreEqual("linux", properties.OperatingSystem);
         }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanSetManifestProperties()
+        {
+            // Arrange
+            ContainerRepositoryClient client = CreateClient();
+            string tag = "latest";
+            TagProperties tagProperties = await client.GetTagPropertiesAsync(tag);
+            string digest = tagProperties.Digest;
+            RegistryArtifactProperties artifactProperties = await client.GetRegistryArtifactPropertiesAsync(digest);
+            ContentProperties originalContentProperties = artifactProperties.WriteableProperties;
+
+            // Act
+            await client.SetManifestPropertiesAsync(
+                digest,
+                new ContentProperties()
+                {
+                    CanList = false,
+                    CanRead = false,
+                    CanWrite = false,
+                    CanDelete = false
+                });
+
+            // Assert
+            RegistryArtifactProperties properties = await client.GetRegistryArtifactPropertiesAsync(digest);
+
+            Assert.IsFalse(properties.WriteableProperties.CanList);
+            Assert.IsFalse(properties.WriteableProperties.CanRead);
+            Assert.IsFalse(properties.WriteableProperties.CanWrite);
+            Assert.IsFalse(properties.WriteableProperties.CanDelete);
+
+            // Cleanup
+            await client.SetManifestPropertiesAsync(digest, originalContentProperties);
+        }
+
         #endregion
 
         #region Tag Tests

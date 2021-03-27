@@ -30,7 +30,7 @@ namespace Azure.Containers.ContainerRegistry
 
                 foreach (var reference in this.References)
                 {
-                    fromReferences.Add(RegistryArtifactProperties.FromReference(reference));
+                    fromReferences.Add(FromReference(reference));
                 }
 
                 return fromReferences.AsReadOnly();
