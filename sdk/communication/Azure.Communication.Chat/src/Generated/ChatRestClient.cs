@@ -58,7 +58,7 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             if (repeatabilityRequestId != null)
             {
-                request.Headers.Add("repeatability-Request-Id", repeatabilityRequestId);
+                request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
