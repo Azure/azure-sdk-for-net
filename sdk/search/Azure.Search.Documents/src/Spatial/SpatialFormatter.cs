@@ -111,9 +111,11 @@ namespace Azure.Search.Documents
 
             if (polygon.Rings.Count != 1)
             {
+#pragma warning disable CA2208 // Instantiate argument exceptions correctly
                 throw new ArgumentException(
                     $"A {nameof(GeoPolygon)} must have exactly one {nameof(GeoPolygon.Rings)} to form a searchable polygon.",
-                    $"{nameof(polygon)}");
+                    $"{nameof(polygon)}.{nameof(polygon.Rings)}");
+#pragma warning restore CA2208 // Instantiate argument exceptions correctly
             }
 
             return EncodePolygon(polygon.Rings[0]);
