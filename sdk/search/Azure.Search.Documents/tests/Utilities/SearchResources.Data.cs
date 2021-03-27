@@ -389,7 +389,7 @@ namespace Azure.Search.Documents.Tests
                 ["smokingAllowed"] = SmokingAllowed,
                 ["lastRenovationDate"] = LastRenovationDate,
                 ["rating"] = Rating,
-                ["geoLocation"] = GeoLocation.AsDocument(),
+                ["geoLocation"] = GeoLocation,
                 ["location"] = Location.AsDocument(),
                 ["address"] = Address?.AsDocument(),
                 // With no elements to infer the type during deserialization, we must assume object[].

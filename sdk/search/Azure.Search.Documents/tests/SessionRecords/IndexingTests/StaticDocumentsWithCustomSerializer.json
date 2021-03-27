@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027cfhecnlk\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027cachnegy\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "1800",
         "Content-Type": "application/json",
-        "traceparent": "00-90e0637f4a2c3744be93f38b0a6c00e5-e14ababab5f7cd40-00",
+        "traceparent": "00-17fcbca085949c4bbf320f3fffcef2d3-c29a56bc30bf6240-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210324.1",
-          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "c8e9b9c67f63aadb0e6bf6eb18bc47be",
         "x-ms-return-client-request-id": "true"
@@ -91,8 +91,8 @@
         "client-request-id": "c8e9b9c6-7f63-aadb-0e6b-f6eb18bc47be",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Thu, 25 Mar 2021 00:22:35 GMT",
-        "elapsed-time": "92",
+        "Date": "Sat, 27 Mar 2021 04:33:52 GMT",
+        "elapsed-time": "132",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -113,15 +113,15 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027cfhecnlk\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027cachnegy\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-20e4fc4c0566fb49b41189d02591d57f-c65ba1d763c5b244-00",
+        "traceparent": "00-274c86173d2cf94b8e60bdeccf9e86c9-b60153e736eedb40-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210324.1",
-          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "49f86160a889777af9bc347f99fadf50",
         "x-ms-return-client-request-id": "true"
@@ -133,8 +133,8 @@
         "client-request-id": "49f86160-a889-777a-f9bc-347f99fadf50",
         "Content-Length": "1788",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Thu, 25 Mar 2021 00:22:37 GMT",
-        "elapsed-time": "20",
+        "Date": "Sat, 27 Mar 2021 04:33:55 GMT",
+        "elapsed-time": "13",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -146,15 +146,15 @@
       "ResponseBody": "{\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Secret Point Motel\u0022,\u0022description\u0022:\u0022The hotel is ideally located on the main commercial artery of the city in the heart of New York. A few minutes away is Time\u0027s Square and the historic centre of the city, as well as other places of interest that make New York one of America\u0027s most attractive and cosmopolitan cities.\u0022,\u0022descriptionFr\u0022:\u0022L\u0027h\\u00f4tel est id\\u00e9alement situ\\u00e9 sur la principale art\\u00e8re commerciale de la ville en plein c\\u0153ur de New York. A quelques minutes se trouve la place du temps et le centre historique de la ville, ainsi que d\u0027autres lieux d\u0027int\\u00e9r\\u00eat qui font de New York l\u0027une des villes les plus attractives et cosmopolites de l\u0027Am\\u00e9rique.\u0022,\u0022category\u0022:\u0022Boutique\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022air conditioning\u0022,\u0022concierge\u0022],\u0022parkingIncluded\u0022:false,\u0022smokingAllowed\u0022:true,\u0022lastRenovationDate\u0022:\u00221970-01-18T05:00:00Z\u0022,\u0022rating\u0022:4,\u0022location\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-73.975403,40.760586],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022geoLocation\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-73.975403,40.760586],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022address\u0022:{\u0022streetAddress\u0022:\u0022677 5th Ave\u0022,\u0022city\u0022:\u0022New York\u0022,\u0022stateProvince\u0022:\u0022NY\u0022,\u0022country\u0022:\u0022USA\u0022,\u0022postalCode\u0022:\u002210022\u0022},\u0022rooms\u0022:[{\u0022description\u0022:\u0022Budget Room, 1 Queen Bed (Cityside)\u0022,\u0022descriptionFr\u0022:\u0022Chambre \\u00c9conomique, 1 grand lit (c\\u00f4t\\u00e9 ville)\u0022,\u0022type\u0022:\u0022Budget Room\u0022,\u0022baseRate\u0022:9.69,\u0022bedOptions\u0022:\u00221 Queen Bed\u0022,\u0022sleepsCount\u0022:2,\u0022smokingAllowed\u0022:true,\u0022tags\u0022:[\u0022vcr/dvd\u0022]},{\u0022description\u0022:\u0022Budget Room, 1 King Bed (Mountain View)\u0022,\u0022descriptionFr\u0022:\u0022Chambre \\u00c9conomique, 1 tr\\u00e8s grand lit (Mountain View)\u0022,\u0022type\u0022:\u0022Budget Room\u0022,\u0022baseRate\u0022:8.09,\u0022bedOptions\u0022:\u00221 King Bed\u0022,\u0022sleepsCount\u0022:2,\u0022smokingAllowed\u0022:true,\u0022tags\u0022:[\u0022vcr/dvd\u0022,\u0022jacuzzi tub\u0022]}]}"
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027cfhecnlk\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027cachnegy\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-713ac926064c6940b0ad4b6f32c88a7f-7b9e7d8967c03440-00",
+        "traceparent": "00-7ad7b3b891b5a04b9141e2535e895c8e-8765c2de649f1741-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210324.1",
-          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "39742dd9385e6cc960a5d241bb91dc0d",
         "x-ms-return-client-request-id": "true"
@@ -164,8 +164,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "39742dd9-385e-6cc9-60a5-d241bb91dc0d",
-        "Date": "Thu, 25 Mar 2021 00:22:37 GMT",
-        "elapsed-time": "157",
+        "Date": "Sat, 27 Mar 2021 04:33:55 GMT",
+        "elapsed-time": "163",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "39742dd9-385e-6cc9-60a5-d241bb91dc0d",
@@ -177,7 +177,7 @@
   ],
   "Variables": {
     "RandomSeed": "1820603944",
-    "SearchIndexName": "cfhecnlk",
+    "SearchIndexName": "cachnegy",
     "SEARCH_ENDPOINT_SUFFIX": null
   }
 }

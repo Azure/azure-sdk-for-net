@@ -161,8 +161,8 @@ namespace Azure.Search.Documents.Tests
         public static GeoPoint CreateGeoPoint(double longitude, double latitude) =>
             new GeoPoint(new GeoPosition(longitude, latitude));
 
-        public static SearchDocument CreateDynamicGeoPoint(double longitude, double latitude) =>
-            CreateGeoPoint(longitude, latitude).AsDocument();
+        public static GeoPoint CreateDynamicGeoPoint(double longitude, double latitude) =>
+            CreateGeoPoint(longitude, latitude);
 
         public static GeographyPoint CreatePoint(double longitude, double latitude) =>
             // Note: GeographyPoint takes latitude first, unlike GeoPoint
@@ -170,36 +170,6 @@ namespace Azure.Search.Documents.Tests
 
         public static SearchDocument CreateDynamicPoint(double longitude, double latitude) =>
             CreatePoint(longitude, latitude).AsDocument();
-
-        /// <summary>
-        /// Converts the <see cref="GeoPoint"/> to a <see cref="SearchDocument"/>.
-        /// </summary>
-        /// <param name="value">The <see cref="GeoPoint"/> to convert.</param>
-        /// <returns>A <see cref="SearchDocument"/> for the given <paramref name="value"/>.</returns>
-        public static SearchDocument AsDocument(this GeoPoint value)
-        {
-            if (value == null)
-            {
-                return null;
-            }
-
-            List<double> coords = new List<double>
-            {
-                value.Coordinates.Longitude,
-                value.Coordinates.Latitude,
-            };
-
-            if (value.Coordinates.Altitude != null)
-            {
-                coords.Add(value.Coordinates.Altitude.Value);
-            }
-
-            return new SearchDocument()
-            {
-                ["type"] = "GeoPoint",
-                ["coordinates"] = coords.ToArray()
-            };
-        }
 
         /// <summary>
         /// Converts the <see cref="GeographyPoint"/> to a <see cref="SearchDocument"/>.

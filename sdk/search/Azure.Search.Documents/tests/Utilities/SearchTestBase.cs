@@ -147,16 +147,27 @@ namespace Azure.Search.Documents.Tests
         /// <param name="path">Optional expression path.</param>
         public static void AssertApproximate(object expected, object actual, string path = null)
         {
-            if (expected is SearchDocument e && actual is SearchDocument a)
+            if (expected is SearchDocument e)
             {
-                foreach (string key in e.Keys)
+                if (actual is SearchDocument a)
                 {
-                    object eValue = e[key];
-                    object aValue =
-                        (eValue is DateTimeOffset) ? a.GetDateTimeOffset(key) :
-                        (eValue is double) ? a.GetDouble(key) :
-                        a[key];
-                    AssertApproximate(eValue, aValue, path != null ? path + "." + key : key);
+                    foreach (string key in e.Keys)
+                    {
+                        object eValue = e[key];
+                        object aValue =
+                            (eValue is DateTimeOffset) ? a.GetDateTimeOffset(key) :
+                            (eValue is double) ? a.GetDouble(key) :
+                            a[key];
+                        AssertApproximate(eValue, aValue, path != null ? path + "." + key : key);
+                    }
+                }
+                else if (actual is GeoPoint agPt)
+                {
+                    var eValue = (double[])e["coordinates"];
+
+                    var expectedGeoPosition = new GeoPosition(eValue[0], eValue[1], eValue.Length == 3 ? eValue[2] : null);
+
+                    AssertEqual(expectedGeoPosition, agPt.Coordinates, path != null ? $"{path}.{nameof(GeoPoint.Coordinates)}" : nameof(GeoPoint.Coordinates));
                 }
             }
             else if (expected is GeoPoint ePt && actual is GeoPoint aPt)

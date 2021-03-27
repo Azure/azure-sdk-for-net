@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027jqnustnc\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027aknvvcio\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "1048",
         "Content-Type": "application/json",
-        "traceparent": "00-3fb62741f438c74dbc8515e147da131c-c1f548cdc4e6464c-00",
+        "traceparent": "00-1e3f2923d512c049aaac71149fe462c3-b174a4128cce8547-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210324.1",
-          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "aa5f713be58bf17803b0715e17f2aff2",
         "x-ms-return-client-request-id": "true"
@@ -60,8 +60,8 @@
         "client-request-id": "aa5f713b-e58b-f178-03b0-715e17f2aff2",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Thu, 25 Mar 2021 00:17:25 GMT",
-        "elapsed-time": "111",
+        "Date": "Sat, 27 Mar 2021 04:26:57 GMT",
+        "elapsed-time": "144",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -82,15 +82,15 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027jqnustnc\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027aknvvcio\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-d2cb3c9f519c074f9872fef08cea5223-7fd867adeba36145-00",
+        "traceparent": "00-91e5780cfe56ad4fbfa92f930f4a6597-aec2eaea1f9a9240-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210324.1",
-          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "93de715e8cce15b225b9af5b7103eb25",
         "x-ms-return-client-request-id": "true"
@@ -102,8 +102,8 @@
         "client-request-id": "93de715e-8cce-15b2-25b9-af5b7103eb25",
         "Content-Length": "1065",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Thu, 25 Mar 2021 00:17:27 GMT",
-        "elapsed-time": "18",
+        "Date": "Sat, 27 Mar 2021 04:26:59 GMT",
+        "elapsed-time": "11",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -115,15 +115,15 @@
       "ResponseBody": "{\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Fancy Stay\u0022,\u0022description\u0022:\u0022Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.\u0022,\u0022descriptionFr\u0022:\u0022Meilleur h\\u00f4tel en ville si vous aimez les h\\u00f4tels de luxe. Ils ont une magnifique piscine \\u00e0 d\\u00e9bordement, un spa et un concierge tr\\u00e8s utile. L\u0027emplacement est parfait \\u2013 en plein centre, \\u00e0 proximit\\u00e9 de toutes les attractions touristiques. Nous recommandons fortement cet h\\u00f4tel.\u0022,\u0022category\u0022:\u0022Luxury\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022view\u0022,\u0022wifi\u0022,\u0022concierge\u0022],\u0022parkingIncluded\u0022:false,\u0022smokingAllowed\u0022:false,\u0022lastRenovationDate\u0022:\u00222010-06-27T00:00:00Z\u0022,\u0022rating\u0022:5,\u0022location\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-122.131577,47.678581],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022geoLocation\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-122.131577,47.678581],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022address\u0022:null,\u0022rooms\u0022:[]}"
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027jqnustnc\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027aknvvcio\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-0fea005bf4accc45b20d8f8e4ebdec1b-d6b12a13920ca041-00",
+        "traceparent": "00-79d0143db04f2147912f382bcb88f0b7-9d8be93ef2f8e54a-00",
         "User-Agent": [
-          "azsdk-net-Search.Documents/11.3.0-alpha.20210324.1",
-          "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
+          "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
         ],
         "x-ms-client-request-id": "3c0735ca040bd9897a3c734084c58a72",
         "x-ms-return-client-request-id": "true"
@@ -133,8 +133,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "3c0735ca-040b-d989-7a3c-734084c58a72",
-        "Date": "Thu, 25 Mar 2021 00:17:28 GMT",
-        "elapsed-time": "201",
+        "Date": "Sat, 27 Mar 2021 04:26:59 GMT",
+        "elapsed-time": "173",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "3c0735ca-040b-d989-7a3c-734084c58a72",
@@ -146,7 +146,7 @@
   ],
   "Variables": {
     "RandomSeed": "1353165967",
-    "SearchIndexName": "jqnustnc",
+    "SearchIndexName": "aknvvcio",
     "SEARCH_ENDPOINT_SUFFIX": null
   }
 }
