@@ -3,6 +3,7 @@ Param (
   [ValidateNotNullOrEmpty()]
   [string] $PackagePath,
   [string] $ArtifactName,
+  [string] $CertificateFingerPrint,
   [string] $WorkingDirectory
 )
 
@@ -16,12 +17,11 @@ $SignTool = Join-Path $WinKitsDir $WinVersion.Name x64 signtool.exe
 New-Item -Path $WorkingDirectory -Name "Validation" -ItemType "directory"
 $ValidationDirectory = (Join-Path $WorkingDirectory Validation)
 
-$packageZip = (Join-Path $ValidationDirectory package.zip)
-Copy-Item -Path $PackagePath -Destination $packageZip
-Expand-Archive -LiteralPath $packageZip (Join-Path $ValidationDirectory extracted)
+Expand-Archive -LiteralPath $PackagePath (Join-Path $ValidationDirectory extracted)
 
 $PackageName = Split-Path -Path $PackagePath -Leaf
-$PackageDlls = Get-ChildItem -Path (Join-Path $ValidationDirectory extracted ** *.dll) -Recurse
+$DllsAndScripts = Get-ChildItem -Path (Join-Path $ValidationDirectory extracted) -Include *.dll, *.ps1 -Recurse
+$PackageDlls = Get-ChildItem -Path (Join-Path $ValidationDirectory extracted) -Include *.dll -Recurse
 $NuspecFile = Get-ChildItem -Path (Join-Path $ValidationDirectory extracted ** *.nuspec) -Recurse
 
 $NuspecContent = new-object xml
@@ -30,11 +30,19 @@ $PackageId = $NuspecContent.package.metadata.id
 $PackageVersion = $NuspecContent.package.metadata.version
 $ProjectUrl = $NuspecContent.package.metadata.projectUrl
 $Description = $NuspecContent.package.metadata.description
+$Author = $NuspecContent.package.metadata.authors
 
 $IsValidPackage = $true
 
-LogDebug "Validating that Binaries and Packages are Signed..."
-foreach ($file in $PackageDlls) {
+LogDebug "Validating that the Package is Signed..."
+nuget veriy -Signatures $PackagePath -CertificateFingerprint $CertificateFingerPrint
+if ($LASTEXITCODE -ne 0) {
+    LogError "Validation Failed. Package [$(Split-Path $PackagePath -Leaf)] is not signed."
+    $IsValidPackage = $false
+}
+
+LogDebug "Validating that Binaries and Scripts are Signed..."
+foreach ($file in $DllsAndScripts) {
     &$SignTool verify /pa $file.FullName
     if ($LASTEXITCODE -ne 0) {
         LogError "Validation Failed. Library [$($file.FullName)] is not signed."
@@ -68,6 +76,18 @@ foreach ($file in $PackageDlls) {
 }
 Pop-Location
 
+LogDebug "Validating Packages Id..."
+if ([string]::IsNullOrWhiteSpace($PackageId) -or !($PackageId.StartsWith("Azure") -or $PackageId.StartsWith("Microsoft"))) {
+    LogError "Validation Failed. Package Id is not valid"
+    $IsValidPackage = $false
+}
+
+LogDebug "Validating Author..."
+if ($Author -ne "Microsoft") {
+    LogError "Validation Failed. Package Author is not valid."
+    $IsValidPackage = $false
+}
+
 LogDebug "Validating Packages Descriptiion..."
 if ([string]::IsNullOrWhiteSpace($Description)) {
     LogError "Validation Failed. Package Description is missing"
@@ -81,7 +101,7 @@ if ([string]::IsNullOrWhiteSpace($ProjectUrl)) {
 }
 
 try {
-    if ((Invoke-webrequest -method head -uri $ProjectUrl).StatusDescription -ne "OK") {
+    if ((Invoke-WebRequest -method head -uri $ProjectUrl).StatusDescription -ne "OK") {
         LogError "Validation Failed. Project URL is not valid"
         $IsValidPackage = $false
     }
