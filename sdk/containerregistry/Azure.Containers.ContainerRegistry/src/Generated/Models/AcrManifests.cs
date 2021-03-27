@@ -16,22 +16,24 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of AcrManifests. </summary>
         internal AcrManifests()
         {
-            RegistryArtifacts = new ChangeTrackingList<RegistryArtifactProperties>();
+            Manifests = new ChangeTrackingList<ManifestAttributesBase>();
         }
 
         /// <summary> Initializes a new instance of AcrManifests. </summary>
         /// <param name="repository"> Image name. </param>
-        /// <param name="registryArtifacts"> List of manifests. </param>
+        /// <param name="manifests"> List of manifests. </param>
         /// <param name="link"> . </param>
-        internal AcrManifests(string repository, IReadOnlyList<RegistryArtifactProperties> registryArtifacts, string link)
+        internal AcrManifests(string repository, IReadOnlyList<ManifestAttributesBase> manifests, string link)
         {
             Repository = repository;
-            RegistryArtifacts = registryArtifacts;
+            Manifests = manifests;
             Link = link;
         }
 
         /// <summary> Image name. </summary>
         public string Repository { get; }
+        /// <summary> List of manifests. </summary>
+        public IReadOnlyList<ManifestAttributesBase> Manifests { get; }
         public string Link { get; }
     }
 }

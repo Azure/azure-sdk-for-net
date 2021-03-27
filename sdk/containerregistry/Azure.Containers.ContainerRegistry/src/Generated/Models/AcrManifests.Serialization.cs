@@ -16,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         internal static AcrManifests DeserializeAcrManifests(JsonElement element)
         {
             Optional<string> imageName = default;
-            Optional<IReadOnlyList<RegistryArtifactProperties>> manifests = default;
+            Optional<IReadOnlyList<ManifestAttributesBase>> manifests = default;
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,10 +32,10 @@ namespace Azure.Containers.ContainerRegistry
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RegistryArtifactProperties> array = new List<RegistryArtifactProperties>();
+                    List<ManifestAttributesBase> array = new List<ManifestAttributesBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegistryArtifactProperties.DeserializeRegistryArtifactProperties(item));
+                        array.Add(ManifestAttributesBase.DeserializeManifestAttributesBase(item));
                     }
                     manifests = array;
                     continue;

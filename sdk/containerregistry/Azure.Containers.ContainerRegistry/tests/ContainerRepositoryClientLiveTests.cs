@@ -24,17 +24,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         #region Setup methods
-        protected ContainerRepositoryClient CreateClient()
+        protected ContainerRepositoryClient CreateClient(string repository = null)
         {
             return InstrumentClient(new ContainerRepositoryClient(
                 new Uri(TestEnvironment.Endpoint),
-                _repositoryName,
+                repository ?? _repositoryName,
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new ContainerRegistryClientOptions())
             ));
         }
 
-        public async Task ImportImage(string tag)
+        public async Task ImportImage(string repository, string tag)
         {
             var credential = new AzureCredentials(
                 new ServicePrincipalLoginInformation
@@ -50,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             var importSource = new ImportSource
             {
-                SourceImage = "library/hello-world",
+                SourceImage = repository,
                 RegistryUri = "registry.hub.docker.com"
             };
 
@@ -64,7 +64,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                         Source = importSource,
                         TargetTags = new List<string>()
                         {
-                            $"library/hello-world:{tag}"
+                            $"{repository}:{tag}"
                         }
                     });
         }
@@ -117,7 +117,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         #region Registry Artifact Tests
         [RecordedTest]
-        public async Task CanGetRegistryArtifactPropertiesForManifestList()
+        public async Task CanGetMultiArchitectureImageProperties()
         {
             // Arrange
             ContainerRepositoryClient client = CreateClient();
@@ -128,7 +128,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             RegistryArtifactProperties properties = await client.GetRegistryArtifactPropertiesAsync(tag);
 
             // Assert
-            Assert.Contains("v1", properties.Tags.ToList());
+            Assert.Contains(tag, properties.Tags.ToList());
             Assert.AreEqual(_repositoryName, properties.Repository);
             Assert.GreaterOrEqual(helloWorldManifestReferences, properties.RegistryArtifacts.Count);
 
@@ -145,7 +145,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetRegistryArtifactPropertiesForManifest()
+        public async Task CanGetArtifactProperties()
         {
             // Arrange
             ContainerRepositoryClient client = CreateClient();
@@ -206,12 +206,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanDeleteRegistryArtifact()
         {
             // Arrange
-            ContainerRepositoryClient client = CreateClient();
+            string repository = $"library/node";
             string tag = "test-delete-image";
+            ContainerRepositoryClient client = CreateClient(repository);
 
             if (this.Mode != RecordedTestMode.Playback)
             {
-                await ImportImage(tag);
+                await ImportImage(repository, tag);
             }
 
             TagProperties tagProperties = await client.GetTagPropertiesAsync(tag);
@@ -230,6 +231,104 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetRegistryArtifactPropertiesAsync(tag); });
+        }
+
+        [RecordedTest]
+        public async Task CanGetArtifacts()
+        {
+            // Arrange
+            var client = CreateClient();
+
+            // Act
+            AsyncPageable<RegistryArtifactProperties> images = client.GetRegistryArtifactsAsync();
+
+            RegistryArtifactProperties latest = null;
+            await foreach (RegistryArtifactProperties image in images)
+            {
+                if (image.Tags.Count > 0 && image.Tags.Contains("latest"))
+                {
+                    latest = image;
+                    break;
+                }
+            }
+
+            // Assert
+            Assert.IsNotNull(latest);
+            Assert.AreEqual(_repositoryName, latest.Repository);
+        }
+
+        [RecordedTest]
+        public async Task CanGetArtifactsWithCustomPageSize()
+        {
+            // Arrange
+            var client = CreateClient();
+            int pageSize = 2;
+            int minExpectedPages = 2;
+
+            // Act
+            AsyncPageable<RegistryArtifactProperties> artifacts = client.GetRegistryArtifactsAsync();
+            var pages = artifacts.AsPages(pageSizeHint: pageSize);
+
+            int pageCount = 0;
+            await foreach (var page in pages)
+            {
+                Assert.GreaterOrEqual(page.Values.Count, pageSize);
+                pageCount++;
+            }
+
+            // Assert
+            Assert.IsTrue(pageCount >= minExpectedPages);
+        }
+
+        [RecordedTest]
+        public async Task CanGetArtifactsStartingMidCollection()
+        {
+            // Arrange
+            var client = CreateClient();
+            int pageSize = 1;
+            int minExpectedPages = 2;
+
+            AsyncPageable<RegistryArtifactProperties> artifacts = client.GetRegistryArtifactsAsync();
+            string firstDigest = null;
+            string secondDigest = null;
+            int artifactCount = 0;
+            await foreach (var artifact in artifacts)
+            {
+                if (artifactCount == 0)
+                {
+                    firstDigest = artifact.Digest;
+                }
+
+                if (artifactCount == 1)
+                {
+                    secondDigest = artifact.Digest;
+                    break;
+                }
+
+                artifactCount++;
+            }
+
+            // Act
+            artifacts = client.GetRegistryArtifactsAsync();
+            var pages = artifacts.AsPages($"</acr/v1/{_repositoryName}/_manifests?last={firstDigest}&n={pageSize}>");
+
+            int pageCount = 0;
+            Page<RegistryArtifactProperties> firstPage = null;
+            await foreach (var page in pages)
+            {
+                if (pageCount == 0)
+                {
+                    firstPage = page;
+                }
+
+                Assert.LessOrEqual(page.Values.Count, pageSize);
+                pageCount++;
+            }
+
+            // Assert
+            Assert.AreNotEqual(null, firstPage);
+            Assert.AreEqual(secondDigest, firstPage.Values[0].Digest);
+            Assert.GreaterOrEqual(pageCount, minExpectedPages);
         }
 
         #endregion
@@ -291,7 +390,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             if (this.Mode != RecordedTestMode.Playback)
             {
-                await ImportImage(tag);
+                await ImportImage(_repositoryName, tag);
             }
 
             // Act

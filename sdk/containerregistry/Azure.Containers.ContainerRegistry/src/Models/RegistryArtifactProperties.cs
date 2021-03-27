@@ -26,18 +26,18 @@ namespace Azure.Containers.ContainerRegistry
         {
             get
             {
-                List<RegistryArtifactProperties> fromReferences = new List<RegistryArtifactProperties>();
+                List<RegistryArtifactProperties> artifacts = new List<RegistryArtifactProperties>();
 
                 foreach (var reference in this.References)
                 {
-                    fromReferences.Add(FromReference(reference));
+                    artifacts.Add(FromManifestAttributesManifestReferences(reference));
                 }
 
-                return fromReferences.AsReadOnly();
+                return artifacts.AsReadOnly();
             }
         }
 
-        internal static RegistryArtifactProperties FromReference(ManifestAttributesManifestReferences reference)
+        internal static RegistryArtifactProperties FromManifestAttributesManifestReferences(ManifestAttributesManifestReferences reference)
         {
             return new RegistryArtifactProperties(
                 reference.Digest,
