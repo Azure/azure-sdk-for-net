@@ -122,6 +122,19 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             ContainerRepositoryClient client = CreateClient();
             string tag = "v1";
+            int helloWorldManifestReferences = 9;
+
+            RegistryArtifactProperties arm64LinuxImage = new RegistryArtifactProperties(
+                digest: null,
+                architecture: "arm64",
+                operatingSystem: "linux"
+            );
+
+            RegistryArtifactProperties amd64WindowsImage = new RegistryArtifactProperties(
+                digest: null,
+                architecture: "amd64",
+                operatingSystem: "windows"
+            );
 
             // Act
             RegistryArtifactProperties properties = await client.GetRegistryArtifactPropertiesAsync(tag);
@@ -129,6 +142,20 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             Assert.Contains("v1", properties.Tags.ToList());
             Assert.AreEqual(_repositoryName, properties.Repository);
+            Assert.AreEqual(helloWorldManifestReferences, properties.RegistryArtifacts.Count);
+
+            Assert.IsTrue(properties.RegistryArtifacts.Any(
+                artifact => {
+                    return
+                    artifact.CpuArchitecture == arm64LinuxImage.CpuArchitecture &&
+                    artifact.OperatingSystem == arm64LinuxImage.OperatingSystem; } ));
+
+            Assert.IsTrue(properties.RegistryArtifacts.Any(
+                artifact => {
+                    return
+                    artifact.CpuArchitecture == amd64WindowsImage.CpuArchitecture &&
+                    artifact.OperatingSystem == amd64WindowsImage.OperatingSystem;
+                }));
         }
         #endregion
 
