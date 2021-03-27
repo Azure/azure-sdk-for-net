@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027kcyjxtta\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027xcjgprgj\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "826",
         "Content-Type": "application/json",
-        "traceparent": "00-5cd18b0d2af96b41959c698fac760525-a6bf0a16041d1c41-00",
+        "traceparent": "00-2184581d3eea4344a553b95ffec2cb78-20df8a1d0d729d46-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -77,8 +77,8 @@
         "client-request-id": "f96451fd-9a9b-b6aa-27a6-41cc3cfd13f5",
         "Content-Length": "236",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 27 Mar 2021 04:34:42 GMT",
-        "elapsed-time": "92",
+        "Date": "Sat, 27 Mar 2021 18:31:20 GMT",
+        "elapsed-time": "102",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -111,12 +111,12 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027kcyjxtta\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027xcjgprgj\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-7f72db2972f74049a098199adacdac94-286b771565f7f64e-00",
+        "traceparent": "00-b0e0a2a077edc340a4db825fd79d699b-0c80affb883ac74c-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -129,8 +129,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "a64b5fc1-cb1f-757c-c931-73215f4860fa",
-        "Date": "Sat, 27 Mar 2021 04:34:42 GMT",
-        "elapsed-time": "173",
+        "Date": "Sat, 27 Mar 2021 18:31:20 GMT",
+        "elapsed-time": "210",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "a64b5fc1-cb1f-757c-c931-73215f4860fa",
@@ -142,7 +142,9 @@
   ],
   "Variables": {
     "RandomSeed": "824277234",
-    "SearchIndexName": "kcyjxtta",
-    "SEARCH_ENDPOINT_SUFFIX": null
+    "SearchIndexName": "xcjgprgj",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

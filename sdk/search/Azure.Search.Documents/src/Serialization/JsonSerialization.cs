@@ -27,6 +27,8 @@ namespace Azure.Search.Documents
         /// </summary>
         private const string DateTimeOutputFormat = "o";
 
+        private static readonly GeoJsonConverter s_geoJsonConverter = new();
+
         /// <summary>
         /// We parse dates using variations of the round-trip format with
         /// different sub-second precision.
@@ -70,7 +72,7 @@ namespace Azure.Search.Documents
             options.Converters.Add(SearchDateTimeOffsetConverter.Shared);
             options.Converters.Add(SearchDateTimeConverter.Shared);
             options.Converters.Add(SearchDocumentConverter.Shared);
-            options.Converters.Add(new GeoJsonConverter());
+            options.Converters.Add(s_geoJsonConverter);
 
             return options;
         }

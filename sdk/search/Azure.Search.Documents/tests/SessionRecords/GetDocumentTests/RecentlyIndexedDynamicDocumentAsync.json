@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027rklehbry\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027ucwxtgdx\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "1048",
         "Content-Type": "application/json",
-        "traceparent": "00-350ae9d031974242bded796e81ba0fed-155542310a635c45-00",
+        "traceparent": "00-b795fa346e7b0340b4003d927389386a-d8f3b1d6572ede4e-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -60,8 +60,8 @@
         "client-request-id": "83633163-49f5-4d2b-909c-d08d181068ae",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 27 Mar 2021 04:26:32 GMT",
-        "elapsed-time": "122",
+        "Date": "Sat, 27 Mar 2021 18:23:09 GMT",
+        "elapsed-time": "116",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -82,12 +82,12 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027rklehbry\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027ucwxtgdx\u0027)/docs(\u00271\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-4586c2e072c0734daaab8cec221029b7-03fd37ee1250884b-00",
+        "traceparent": "00-259ceb67dd788e49a75e188aedb481e2-8af674a567e2d84b-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -102,8 +102,8 @@
         "client-request-id": "ce0b4ac0-0085-d030-f1ea-2ddc1d5a427d",
         "Content-Length": "1065",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 27 Mar 2021 04:26:34 GMT",
-        "elapsed-time": "11",
+        "Date": "Sat, 27 Mar 2021 18:23:11 GMT",
+        "elapsed-time": "12",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -115,12 +115,12 @@
       "ResponseBody": "{\u0022hotelId\u0022:\u00221\u0022,\u0022hotelName\u0022:\u0022Fancy Stay\u0022,\u0022description\u0022:\u0022Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, and a really helpful concierge. The location is perfect -- right downtown, close to all the tourist attractions. We highly recommend this hotel.\u0022,\u0022descriptionFr\u0022:\u0022Meilleur h\\u00f4tel en ville si vous aimez les h\\u00f4tels de luxe. Ils ont une magnifique piscine \\u00e0 d\\u00e9bordement, un spa et un concierge tr\\u00e8s utile. L\u0027emplacement est parfait \\u2013 en plein centre, \\u00e0 proximit\\u00e9 de toutes les attractions touristiques. Nous recommandons fortement cet h\\u00f4tel.\u0022,\u0022category\u0022:\u0022Luxury\u0022,\u0022tags\u0022:[\u0022pool\u0022,\u0022view\u0022,\u0022wifi\u0022,\u0022concierge\u0022],\u0022parkingIncluded\u0022:false,\u0022smokingAllowed\u0022:false,\u0022lastRenovationDate\u0022:\u00222010-06-27T00:00:00Z\u0022,\u0022rating\u0022:5,\u0022location\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-122.131577,47.678581],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022geoLocation\u0022:{\u0022type\u0022:\u0022Point\u0022,\u0022coordinates\u0022:[-122.131577,47.678581],\u0022crs\u0022:{\u0022type\u0022:\u0022name\u0022,\u0022properties\u0022:{\u0022name\u0022:\u0022EPSG:4326\u0022}}},\u0022address\u0022:null,\u0022rooms\u0022:[]}"
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027rklehbry\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027ucwxtgdx\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-4adf55809f261b448e0b25341d6370ef-da825bd0a124ad4b-00",
+        "traceparent": "00-ea05ee1306efa04bb0ca2321bcae452c-06a02c8b749f1741-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -133,8 +133,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "08f0ae6a-8095-3d42-543c-f9077e3d28e5",
-        "Date": "Sat, 27 Mar 2021 04:26:34 GMT",
-        "elapsed-time": "161",
+        "Date": "Sat, 27 Mar 2021 18:23:11 GMT",
+        "elapsed-time": "175",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "08f0ae6a-8095-3d42-543c-f9077e3d28e5",
@@ -146,7 +146,10 @@
   ],
   "Variables": {
     "RandomSeed": "1375466831",
-    "SearchIndexName": "rklehbry",
-    "SEARCH_ENDPOINT_SUFFIX": null
+    "SearchIndexName": "ucwxtgdx",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

@@ -1,12 +1,12 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027vcjtxlyr\u0027)/docs(\u0027ThisDocumentDoesNotExist\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027mbqvlxmt\u0027)/docs(\u0027ThisDocumentDoesNotExist\u0027)?api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-5314e57d3a6b0a4a8a9152033aef3273-203830e10bb2c54e-00",
+        "traceparent": "00-2b821a1e697d334ea33e23a4d413e9f5-98d20cf036261247-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -19,26 +19,23 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "ba21e91c-66fa-a803-c9d4-4523eaf36c73",
-        "Content-Language": "en",
-        "Content-Length": "74",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 27 Mar 2021 04:23:11 GMT",
-        "elapsed-time": "6",
+        "Content-Length": "0",
+        "Date": "Sat, 27 Mar 2021 18:19:52 GMT",
+        "elapsed-time": "5",
         "Expires": "-1",
         "Pragma": "no-cache",
-        "Preference-Applied": "odata.include-annotations=\u0022*\u0022",
         "request-id": "ba21e91c-66fa-a803-c9d4-4523eaf36c73",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "x-ms-client-request-id": "ba21e91c-66fa-a803-c9d4-4523eaf36c73"
       },
-      "ResponseBody": {
-        "Message": "The index \u0027vcjtxlyr\u0027 for service \u0027mohitc-acs\u0027 was not found."
-      }
+      "ResponseBody": []
     }
   ],
   "Variables": {
     "RandomSeed": "500232658",
-    "SearchIndexName": "vcjtxlyr",
-    "SEARCH_ENDPOINT_SUFFIX": null
+    "SearchIndexName": "mbqvlxmt",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027fpyioiaj\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027lwuhsdmj\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
@@ -36,8 +36,8 @@
         "Content-Language": "en",
         "Content-Length": "55",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 27 Mar 2021 05:09:28 GMT",
-        "elapsed-time": "83",
+        "Date": "Sat, 27 Mar 2021 18:43:13 GMT",
+        "elapsed-time": "67",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -54,12 +54,12 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027fpyioiaj\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027lwuhsdmj\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-a0e1dfadd472a64ca3c3095756e70576-5187f9ec06682947-00",
+        "traceparent": "00-370d8174adf9b144b67738cb8c41811c-70e87ff0bc260643-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -72,8 +72,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "a522fd35-141b-7174-122c-cf9c9ccbaae0",
-        "Date": "Sat, 27 Mar 2021 05:09:28 GMT",
-        "elapsed-time": "168",
+        "Date": "Sat, 27 Mar 2021 18:43:13 GMT",
+        "elapsed-time": "199",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "a522fd35-141b-7174-122c-cf9c9ccbaae0",
@@ -85,7 +85,10 @@
   ],
   "Variables": {
     "RandomSeed": "978400005",
-    "SearchIndexName": "fpyioiaj",
-    "SEARCH_ENDPOINT_SUFFIX": null
+    "SearchIndexName": "lwuhsdmj",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

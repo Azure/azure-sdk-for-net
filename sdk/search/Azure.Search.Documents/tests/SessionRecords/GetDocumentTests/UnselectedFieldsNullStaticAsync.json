@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027xkbfgtcy\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dywtslve\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "1535",
         "Content-Type": "application/json",
-        "traceparent": "00-c13f11a85e8ce343a4660142d762e38e-af32d5b274d76b4c-00",
+        "traceparent": "00-ca5191704645bd448d5057c986f92612-4241666b3c96ca4e-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -90,8 +90,8 @@
         "client-request-id": "4601d572-68f6-3229-3dd1-260264c08611",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 27 Mar 2021 04:28:38 GMT",
-        "elapsed-time": "135",
+        "Date": "Sat, 27 Mar 2021 18:25:15 GMT",
+        "elapsed-time": "153",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -112,12 +112,12 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027xkbfgtcy\u0027)/docs(\u00272\u0027)?$select=description%2ChotelName%2Caddress%2Fcity%2Crooms%2FbaseRate\u0026api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dywtslve\u0027)/docs(\u00272\u0027)?$select=description%2ChotelName%2Caddress%2Fcity%2Crooms%2FbaseRate\u0026api-version=2020-06-30",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
-        "traceparent": "00-5a41bd7bc5692248afbe4e81b96673ec-173a74d064e9fb48-00",
+        "traceparent": "00-d201acd4e4119c41b67568f33c1b66bc-a6e7309fa5614446-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -132,8 +132,8 @@
         "client-request-id": "630df8ec-3f92-9a81-79bf-fcb17ecb2dbb",
         "Content-Length": "288",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 27 Mar 2021 04:28:40 GMT",
-        "elapsed-time": "10",
+        "Date": "Sat, 27 Mar 2021 18:25:17 GMT",
+        "elapsed-time": "11",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -159,12 +159,12 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027xkbfgtcy\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dywtslve\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-65967cf81339114595eccbd97ae3df48-209deb1a1b175148-00",
+        "traceparent": "00-8c819cfc95a66d4f9d826723455330c7-7e1b32d51dfd9445-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -177,8 +177,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "ffc541c8-c037-b5bd-6ff1-a35b4863fc4b",
-        "Date": "Sat, 27 Mar 2021 04:28:40 GMT",
-        "elapsed-time": "165",
+        "Date": "Sat, 27 Mar 2021 18:25:17 GMT",
+        "elapsed-time": "174",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "ffc541c8-c037-b5bd-6ff1-a35b4863fc4b",
@@ -190,7 +190,10 @@
   ],
   "Variables": {
     "RandomSeed": "495263731",
-    "SearchIndexName": "xkbfgtcy",
-    "SEARCH_ENDPOINT_SUFFIX": null
+    "SearchIndexName": "dywtslve",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

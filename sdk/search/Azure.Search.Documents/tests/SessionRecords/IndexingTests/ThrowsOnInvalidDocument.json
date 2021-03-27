@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dkgqeorp\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027yukybbrg\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "39",
         "Content-Type": "application/json",
-        "traceparent": "00-cccd6bfc72ef2748ad2bff37d459bc6b-7bd366d8066e924a-00",
+        "traceparent": "00-a11f486eb2207b41b0a313f76d286df3-eb142f33b9383e47-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -30,8 +30,8 @@
         "Content-Language": "en",
         "Content-Length": "124",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 27 Mar 2021 04:35:06 GMT",
-        "elapsed-time": "105",
+        "Date": "Sat, 27 Mar 2021 18:31:44 GMT",
+        "elapsed-time": "101",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -48,12 +48,12 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027dkgqeorp\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027yukybbrg\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-cfd7460d2eb98748ba6cf41b1bf54d3d-4b5315538c20bb46-00",
+        "traceparent": "00-8c19234296ad7e4581cbe02efa4ad0ea-fdf9ef2a0a2cf541-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -66,7 +66,7 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "4d64c218-771b-3b58-0d58-d15764058397",
-        "Date": "Sat, 27 Mar 2021 04:35:06 GMT",
+        "Date": "Sat, 27 Mar 2021 18:31:44 GMT",
         "elapsed-time": "170",
         "Expires": "-1",
         "Pragma": "no-cache",
@@ -79,7 +79,9 @@
   ],
   "Variables": {
     "RandomSeed": "687109065",
-    "SearchIndexName": "dkgqeorp",
-    "SEARCH_ENDPOINT_SUFFIX": null
+    "SearchIndexName": "yukybbrg",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

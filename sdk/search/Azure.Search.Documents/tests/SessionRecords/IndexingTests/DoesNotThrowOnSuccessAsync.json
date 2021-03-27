@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027onqelors\u0027)/docs/search.index?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027kcwkainu\u0027)/docs/search.index?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "282",
         "Content-Type": "application/json",
-        "traceparent": "00-ee7026b717004c45aaa2c00a276415c4-cd4919bcc41ae542-00",
+        "traceparent": "00-36d843ef71df4d4f82fb3a91ecfa5a25-1725ac7e7437e349-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -43,8 +43,8 @@
         "client-request-id": "c055820d-a40e-8584-3ead-e3fe89eb38c1",
         "Content-Length": "74",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Sat, 27 Mar 2021 04:38:24 GMT",
-        "elapsed-time": "95",
+        "Date": "Sat, 27 Mar 2021 18:35:01 GMT",
+        "elapsed-time": "153",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -65,12 +65,12 @@
       }
     },
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027onqelors\u0027)?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027kcwkainu\u0027)?api-version=2020-06-30",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-64fdfa52357b3549b74c350881f5508a-d7481bc25f3f9b4b-00",
+        "traceparent": "00-ad7cf0febcc28540a12e4124421fb596-6ed19d97810efe4f-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -83,8 +83,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "65b0cdbe-1d28-6f2c-a1f3-272e2444350b",
-        "Date": "Sat, 27 Mar 2021 04:38:24 GMT",
-        "elapsed-time": "204",
+        "Date": "Sat, 27 Mar 2021 18:35:01 GMT",
+        "elapsed-time": "166",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "65b0cdbe-1d28-6f2c-a1f3-272e2444350b",
@@ -96,7 +96,9 @@
   ],
   "Variables": {
     "RandomSeed": "109207449",
-    "SearchIndexName": "onqelors",
-    "SEARCH_ENDPOINT_SUFFIX": null
+    "SearchIndexName": "kcwkainu",
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

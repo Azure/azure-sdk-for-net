@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027pghdlhff\u0027)/docs/search.post.autocomplete?api-version=2020-06-30",
+      "RequestUri": "https://mohitc-acs.search.windows.net/indexes(\u0027nkplulhj\u0027)/docs/search.post.autocomplete?api-version=2020-06-30",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=none",
         "api-key": "Sanitized",
         "Content-Length": "85",
         "Content-Type": "application/json",
-        "traceparent": "00-0a7ba9b02fe996458f69863f1cdf5671-fe9298e7ad6de44a-00",
+        "traceparent": "00-2d9b08c3332bc54ba7f1318239068868-07c306a991eeec43-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )"
@@ -28,8 +28,8 @@
         "Content-Language": "en",
         "Content-Length": "317",
         "Content-Type": "application/json; odata.metadata=none",
-        "Date": "Fri, 26 Mar 2021 23:30:53 GMT",
-        "elapsed-time": "3",
+        "Date": "Sat, 27 Mar 2021 06:10:11 GMT",
+        "elapsed-time": "5",
         "Expires": "-1",
         "OData-Version": "4.0",
         "Pragma": "no-cache",
@@ -54,7 +54,9 @@
   ],
   "Variables": {
     "RandomSeed": "1361948098",
-    "SearchIndexName": "pghdlhff",
-    "SEARCH_ENDPOINT_SUFFIX": null
+    "SearchIndexName": "nkplulhj",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_QUERY_API_KEY": "Sanitized",
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }

@@ -8,7 +8,7 @@
         "api-key": "Sanitized",
         "Content-Length": "4314",
         "Content-Type": "application/json",
-        "traceparent": "00-891a8e0e5422fe4c9e66e18311ce144b-c40d03da7a080640-00",
+        "traceparent": "00-cbd31bf3cb23294db0aa909df1cc319a-5961b5fb6f05ae4b-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -329,9 +329,9 @@
         "client-request-id": "5cad1ef4-d125-aded-2bff-eebfd431dec8",
         "Content-Length": "6655",
         "Content-Type": "application/json; odata.metadata=minimal",
-        "Date": "Sat, 27 Mar 2021 04:43:12 GMT",
-        "elapsed-time": "536",
-        "ETag": "W/\u00220x8D8F0DAD452AB15\u0022",
+        "Date": "Sat, 27 Mar 2021 18:43:16 GMT",
+        "elapsed-time": "655",
+        "ETag": "W/\u00220x8D8F1502F5F0635\u0022",
         "Expires": "-1",
         "Location": "https://mohitc-acs.search.windows.net/indexes(\u0027wvhobppu\u0027)?api-version=2020-06-30",
         "OData-Version": "4.0",
@@ -343,7 +343,7 @@
       },
       "ResponseBody": {
         "@odata.context": "https://mohitc-acs.search.windows.net/$metadata#indexes/$entity",
-        "@odata.etag": "\u00220x8D8F0DAD452AB15\u0022",
+        "@odata.etag": "\u00220x8D8F1502F5F0635\u0022",
         "name": "wvhobppu",
         "defaultScoringProfile": null,
         "fields": [
@@ -774,7 +774,7 @@
       "RequestHeaders": {
         "Accept": "application/json; odata.metadata=minimal",
         "api-key": "Sanitized",
-        "traceparent": "00-dcfd9a819397d34d863b7938f2681d97-bd37c77109411740-00",
+        "traceparent": "00-192503ecd2479e42ae629393a4e8dd90-13c4ad76a7d68340-00",
         "User-Agent": [
           "azsdk-net-Search.Documents/11.3.0-alpha.20210326.1",
           "(.NET Core 4.6.29719.03; Microsoft Windows 10.0.19043 )"
@@ -787,8 +787,8 @@
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
         "client-request-id": "d6e52008-fe3a-95c5-a76f-10680172906f",
-        "Date": "Sat, 27 Mar 2021 04:43:12 GMT",
-        "elapsed-time": "201",
+        "Date": "Sat, 27 Mar 2021 18:43:16 GMT",
+        "elapsed-time": "231",
         "Expires": "-1",
         "Pragma": "no-cache",
         "request-id": "d6e52008-fe3a-95c5-a76f-10680172906f",
@@ -801,6 +801,8 @@
   "Variables": {
     "RandomSeed": "96077012",
     "SearchIndexName": "wvhobppu",
-    "SEARCH_ENDPOINT_SUFFIX": null
+    "SEARCH_ADMIN_API_KEY": "Sanitized",
+    "SEARCH_ENDPOINT_SUFFIX": null,
+    "SEARCH_SERVICE_NAME": "mohitc-acs"
   }
 }
