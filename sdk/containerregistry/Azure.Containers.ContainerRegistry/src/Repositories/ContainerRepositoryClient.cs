@@ -299,6 +299,42 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        /// <summary> Delete registry artifact. </summary>
+        /// <param name="digest"> Manifest digest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteRegistryArtifactAsync(string digest, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteRegistryArtifact)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.DeleteManifestAsync(_repository, digest, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete registry artifact. </summary>
+        /// <param name="digest"> Manifest digest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteRegistryArtifact(string digest, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteRegistryArtifact)}");
+            scope.Start();
+            try
+            {
+                return _restClient.DeleteManifest(_repository, digest, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Tag methods

@@ -202,6 +202,36 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.SetManifestPropertiesAsync(digest, originalContentProperties);
         }
 
+        [RecordedTest, NonParallelizable]
+        public async Task CanDeleteRegistryArtifact()
+        {
+            // Arrange
+            ContainerRepositoryClient client = CreateClient();
+            string tag = "test-delete-image";
+
+            if (this.Mode != RecordedTestMode.Playback)
+            {
+                await ImportImage(tag);
+            }
+
+            TagProperties tagProperties = await client.GetTagPropertiesAsync(tag);
+            string digest = tagProperties.Digest;
+
+            // Act
+            await client.DeleteRegistryArtifactAsync(digest);
+
+            // Assert
+
+            // This will be removed, pending investigation into potential race condition.
+            // https://github.com/azure/azure-sdk-for-net/issues/19699
+            if (this.Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(5000);
+            }
+
+            Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetRegistryArtifactPropertiesAsync(tag); });
+        }
+
         #endregion
 
         #region Tag Tests
@@ -257,7 +287,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             ContainerRepositoryClient client = CreateClient();
-            string tag = "test-delete";
+            string tag = "test-delete-tag";
 
             if (this.Mode != RecordedTestMode.Playback)
             {
