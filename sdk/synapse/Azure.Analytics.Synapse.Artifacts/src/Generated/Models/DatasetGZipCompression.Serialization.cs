@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DatasetGZipCompressionConverter))]
     public partial class DatasetGZipCompression : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -58,6 +61,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetGZipCompression(type, additionalProperties, Optional.ToNullable(level));
+        }
+
+        internal partial class DatasetGZipCompressionConverter : JsonConverter<DatasetGZipCompression>
+        {
+            public override void Write(Utf8JsonWriter writer, DatasetGZipCompression model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DatasetGZipCompression Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDatasetGZipCompression(document.RootElement);
+            }
         }
     }
 }

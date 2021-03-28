@@ -560,7 +560,7 @@ namespace Azure.Core.Tests
             var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
             cts.Cancel();
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await firstRequestTask);
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
             responseMre.Set();
 
             var response = await secondRequestTask;
@@ -595,10 +595,10 @@ namespace Azure.Core.Tests
             cts1.Cancel();
             cts2.Cancel();
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await firstRequestTask);
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
             responseMre.Set();
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await secondRequestTask);
+            Assert.CatchAsync<OperationCanceledException>(async () => await secondRequestTask);
         }
 
         private class TokenCredentialStub : TokenCredential

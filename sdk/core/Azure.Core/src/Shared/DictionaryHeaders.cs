@@ -80,16 +80,22 @@ namespace Azure.Core
         /// <returns><c>true</c> if the specified header is stored in the collection, otherwise <c>false</c>.</returns>
         public bool TryGetHeaderValues(string name, out IEnumerable<string> values)
         {
-            var result = _headers.TryGetValue(name, out object objValue);
-            if (objValue is List<string> valuesList)
+            if (_headers.TryGetValue(name, out object objValue))
             {
-                values = valuesList;
+                if (objValue is List<string> valuesList)
+                {
+                    values = valuesList;
+                }
+                else
+                {
+                    values = new List<string> { objValue as string };
+                }
+
+                return true;
             }
-            else
-            {
-                values = new List<string> { objValue as string };
-            }
-            return result;
+
+            values = null;
+            return false;
         }
 
         /// <summary>
