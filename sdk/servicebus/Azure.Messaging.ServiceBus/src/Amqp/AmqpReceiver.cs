@@ -284,9 +284,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 if (!_receiveLink.TryGetOpenedObject(out link))
                 {
-                    link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+                    link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout))
+                        .ConfigureAwait(false);
                 }
+
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+                using var registration = cancellationToken.Register(static state =>
+                {
+                    ReceivingAmqpLink receiveLink = (ReceivingAmqpLink)state;
+                    // deliberate fire & forget since this is a best effort and we are not interested in any exceptions
+                    _ = receiveLink.CloseAsync(TimeSpan.Zero);
+                }, link, useSynchronizationContext: false);
 
                 var messagesReceived = await Task.Factory.FromAsync
                 (
@@ -312,12 +321,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         {
                             link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                         }
+
                         receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
                         message.Dispose();
                     }
                 }
 
                 return receivedMessages;
+            }
+            catch (OperationCanceledException) when(cancellationToken.IsCancellationRequested)
+            {
+                throw;
             }
             catch (Exception exception)
             {
