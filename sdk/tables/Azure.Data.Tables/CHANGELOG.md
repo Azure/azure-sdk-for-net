@@ -11,6 +11,7 @@ Thank you to our developer community members who helped to make Azure Tables bet
 ### Changed
 
 - Removed the `Timestamp` property from the serialized entity when sending it to the service as it is ignored by the service (A community contribution, courtesy of _[joelverhagen](https://github.com/joelverhagen))_
+- Fixed handling of paging headers when Table Storage returned a `x-ms-continuation-NextPartitionKey` but no `x-ms-continuation-NextRowKey`. This was causing an HTTP 400 Bad Request on the subsequent page query.
 
 ## 12.0.0-beta.6 (2021-03-09)
 
