@@ -4,6 +4,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Communication.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -59,13 +60,6 @@ namespace Azure.Communication.Identity.Tests
                     CollectionAssert.AreEquivalent(scopes, payload.Scopes);
                 }
             }
-        }
-
-        public enum AuthMethod
-        {
-            ConnectionString,
-            KeyCredential,
-            TokenCredential,
         }
     }
 }
