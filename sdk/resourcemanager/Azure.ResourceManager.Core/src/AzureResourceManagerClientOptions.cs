@@ -7,6 +7,9 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
+using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Azure.ResourceManager.Core
 {
@@ -16,6 +19,11 @@ namespace Azure.ResourceManager.Core
     public sealed class AzureResourceManagerClientOptions : ClientOptions
     {
         private readonly ConcurrentDictionary<Type, object> _overrides = new ConcurrentDictionary<Type, object>();
+
+        /// <summary>
+        /// Gets the ApiVersions object
+        /// </summary>
+        public ApiVersions ApiVersions { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureResourceManagerClientOptions"/> class.
@@ -50,6 +58,7 @@ namespace Azure.ResourceManager.Core
                 Copy(other);
             DefaultLocation = defaultLocation;
             ApiVersionOverrides = new Dictionary<string, string>();
+            ApiVersions = new ApiVersions(this);
         }
 
         /// <summary>

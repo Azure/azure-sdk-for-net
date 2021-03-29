@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Core
             _credentials = credential;
             _baseUri = baseUri;
             _clientOptions = options ?? new AzureResourceManagerClientOptions();
-
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptionOperations(defaultSubscriptionId).Get().Value;
+            _clientOptions.ApiVersions.SetProviderClient(credential, baseUri, DefaultSubscription.Id.Subscription);
         }
 
         /// <summary>
