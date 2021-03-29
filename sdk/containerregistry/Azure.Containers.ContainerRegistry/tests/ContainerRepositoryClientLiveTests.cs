@@ -134,17 +134,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             Assert.IsTrue(properties.RegistryArtifacts.Any(
                 artifact =>
-                {
-                    return artifact.CpuArchitecture == "arm64" &&
-                           artifact.OperatingSystem == "linux";
-                }));
+                    artifact.CpuArchitecture == "arm64" &&
+                    artifact.OperatingSystem == "linux" ));
 
             Assert.IsTrue(properties.RegistryArtifacts.Any(
                 artifact =>
-                {
-                    return artifact.CpuArchitecture == "amd64" &&
-                           artifact.OperatingSystem == "windows";
-                }));
+                    artifact.CpuArchitecture == "amd64" &&
+                    artifact.OperatingSystem == "windows"));
         }
 
         [RecordedTest]
@@ -156,12 +152,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             RegistryArtifactProperties listProperties = await client.GetRegistryArtifactPropertiesAsync(tag);
-            var arm64LinuxImage = listProperties.RegistryArtifacts.Where(
-               artifact =>
-               {
-                   return artifact.CpuArchitecture == "arm64" &&
-                          artifact.OperatingSystem == "linux";
-               }).First();
+            var arm64LinuxImage = listProperties.RegistryArtifacts.First(
+                artifact =>
+                    artifact.CpuArchitecture == "arm64" &&
+                    artifact.OperatingSystem == "linux");
             RegistryArtifactProperties properties = await client.GetRegistryArtifactPropertiesAsync(arm64LinuxImage.Digest);
 
             // Assert
