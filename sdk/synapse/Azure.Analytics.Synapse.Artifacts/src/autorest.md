@@ -61,6 +61,7 @@ directive:
           path.endsWith("TabularTranslator") ||
           path.endsWith("TextFormat") ||
           path.endsWith("TriggerDependencyProvisioningStatus") ||
+          path.endsWith("TypeConversionSettings") ||
           path.endsWith("WorkspaceIdentity") ||
           path.endsWith("WorkspaceUpdateParameters"))
       {

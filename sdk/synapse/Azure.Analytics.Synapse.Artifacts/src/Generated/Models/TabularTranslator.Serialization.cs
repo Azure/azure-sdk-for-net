@@ -145,7 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    typeConversionSettings = Models.TypeConversionSettings.DeserializeTypeConversionSettings(property.Value);
+                    typeConversionSettings = TypeConversionSettings.DeserializeTypeConversionSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
