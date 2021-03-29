@@ -14,7 +14,13 @@
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release are the changes for Cloud Services (extended support) API Version 2021-03-01 which includes ARM based CloudServices APIs, CloudServiceRoles APIs, CloudServiceRoleInstances APIs, CloudServicesUpdateDomain APIs and CloudServiceOperatingSystems APIs. 
+        This is a public release of the Azure Compute SDK. Included with this release are
+        1. Added SecurityProfile, purchasePlan properties for managed Disks.
+        2. Added burstingEnabled flag in managed Disks for paid bursting functionality.
+        3. Added Standard SSD ZRS storage account type support for managed Disks.
+        4. Added RotationToLatestKeyVersionEnabled flag in managedDisk to support rotation of keys for Disk Encryption Sets.
+        5. Added supportsHibernation flag in managed Disks to support VM hibneration functionality.
+        6. Changed PrivateEndpoint property to read-only.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
