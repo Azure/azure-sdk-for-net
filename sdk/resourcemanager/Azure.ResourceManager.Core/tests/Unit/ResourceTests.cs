@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.Core.Tests
             "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account2")]
         public void CompareToObject(int expected, string id1, string id2)
         {
-            var resource1 = new TestResource<ResourceGroupResourceIdentifier>(id1);
-            var resource2 = new TestResource<ResourceGroupResourceIdentifier>(id2);
+            TestResource<ResourceGroupResourceIdentifier> resource1 = new TestResource<ResourceGroupResourceIdentifier>(id1);
+            TestResource<ResourceGroupResourceIdentifier> resource2 = new TestResource<ResourceGroupResourceIdentifier>(id2);
             Assert.AreEqual(expected, resource1.CompareTo(resource2));
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Core.Tests
             "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account2")]
         public void CompareToString(int expected, string id1, string id2)
         {
-            var resource1 = new TestResource<ResourceGroupResourceIdentifier>(id1);
+            TestResource<ResourceGroupResourceIdentifier> resource1 = new TestResource<ResourceGroupResourceIdentifier>(id1);
             Assert.AreEqual(expected, resource1.CompareTo(id2));
         }
 
