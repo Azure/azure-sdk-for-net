@@ -1,6 +1,4 @@
 # Azure Communication SMS client library for .NET
-> Server Version: 
-Sms client: 2021-03-29
 
 This package contains a C# SDK for Azure Communication Services for SMS and Telephony.
 
