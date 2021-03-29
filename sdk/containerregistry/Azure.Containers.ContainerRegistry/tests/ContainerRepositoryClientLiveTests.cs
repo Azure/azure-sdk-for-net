@@ -133,9 +133,9 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.GreaterOrEqual(helloWorldManifestReferences, properties.RegistryArtifacts.Count);
 
             Assert.IsTrue(properties.RegistryArtifacts.Any(
-                artifact => {
-                    return artifact.CpuArchitecture == "arm64" &&
-                           artifact.OperatingSystem == "linux"; } ));
+                artifact => 
+                    artifact.CpuArchitecture == "arm64" &&
+                    artifact.OperatingSystem == "linux" ));
 
             Assert.IsTrue(properties.RegistryArtifacts.Any(
                 artifact => {
