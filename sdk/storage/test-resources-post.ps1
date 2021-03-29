@@ -109,7 +109,7 @@ $content =
       <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountZone.queue.$EndpointSuffix</QueueServiceSecondaryEndpoint>
       <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountZone.file.$EndpointSuffix</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountZone.table.$EndpointSuffix</TableServiceSecondaryEndpoint>
-      <ConnectionString>$PrimaryConnectionString</ConnectionString>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;BlobEndpoint=https://$PrimaryAccountName.$PrimaryAccountZone.blob.$EndpointSuffix;FileEndpoint=https://$PrimaryAccountName.$PrimaryAccountZone.file.$EndpointSuffix;QueueEndpoint=https://$PrimaryAccountName.$PrimaryAccountZone.queue.$EndpointSuffix;TableEndpoint=https://$PrimaryAccountName.$PrimaryAccountZone.table.$EndpointSuffix</ConnectionString>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>NamespaceTenant</TenantName>
