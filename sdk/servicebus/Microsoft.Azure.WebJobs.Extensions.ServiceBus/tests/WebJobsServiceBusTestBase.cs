@@ -20,7 +20,7 @@ using static Azure.Messaging.ServiceBus.Tests.ServiceBusScope;
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
     [NonParallelizable]
-    [LiveOnly]
+    //[LiveOnly]
     public class WebJobsServiceBusTestBase
     {
         // surrounding with % indicates that this is used as a pointer to an app setting rather than
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         protected const string FirstSubscriptionNameKey = "%" + _firstSubscriptionNameKey + "%";
 
         private const string _secondSubscriptionNameKey = "webjobstestsubscription2";
-        protected const string SecondSubscriptionNameKey = "%" + _secondSubscriptionNameKey  + "%";
+        protected const string SecondSubscriptionNameKey = "%" + _secondSubscriptionNameKey + "%";
 
         private const string _secondaryNamespaceQueueKey = "webjobtestsecondarynamespacequeue";
         protected const string SecondaryNamespaceQueueNameKey = "%" + _secondaryNamespaceQueueKey + "%";
@@ -104,23 +104,37 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await _topicScope.DisposeAsync();
         }
 
-        protected (JobHost JobHost, IHost Host) BuildHost<TJobClass>(Action<IHostBuilder> configurationDelegate = null, bool startHost = true)
+        protected (JobHost JobHost, IHost Host) BuildHost<TJobClass>(
+            Action<IHostBuilder> configurationDelegate = null,
+            bool startHost = true,
+            bool useTokenCredential = false)
         {
+            var settings = new Dictionary<string, string>
+            {
+                {_firstQueueNameKey, _firstQueueScope.QueueName},
+                {_secondQueueNameKey, _secondQueueScope.QueueName},
+                {_thirdQueueNameKey, _thirdQueueScope.QueueName},
+                {_topicNameKey, _topicScope.TopicName},
+                {_firstSubscriptionNameKey, _topicScope.SubscriptionNames[0]},
+                {_secondSubscriptionNameKey, _topicScope.SubscriptionNames[1]},
+                {_secondaryNamespaceQueueKey, _secondaryNamespaceQueueScope.QueueName},
+                {SecondaryConnectionStringKey, ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespaceConnectionString}
+            };
+            if (useTokenCredential)
+            {
+                settings.Add("AzureWebJobsServiceBus:fullyQualifiedNamespace", ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace);
+                settings.Add("AzureWebJobsServiceBus:clientId", ServiceBusTestEnvironment.Instance.ClientId);
+                settings.Add("AzureWebJobsServiceBus:clientSecret", ServiceBusTestEnvironment.Instance.ClientSecret);
+                settings.Add("AzureWebJobsServiceBus:tenantId", ServiceBusTestEnvironment.Instance.TenantId);
+            }
+            else
+            {
+                settings.Add("AzureWebJobsServiceBus", ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            }
             var hostBuilder = new HostBuilder()
                .ConfigureAppConfiguration(builder =>
                {
-                   builder.AddInMemoryCollection(new Dictionary<string, string>
-                   {
-                       {"AzureWebJobsServiceBus", ServiceBusTestEnvironment.Instance.ServiceBusConnectionString},
-                       {_firstQueueNameKey, _firstQueueScope.QueueName},
-                       {_secondQueueNameKey, _secondQueueScope.QueueName},
-                       {_thirdQueueNameKey, _thirdQueueScope.QueueName},
-                       {_topicNameKey, _topicScope.TopicName},
-                       {_firstSubscriptionNameKey, _topicScope.SubscriptionNames[0]},
-                       {_secondSubscriptionNameKey, _topicScope.SubscriptionNames[1]},
-                       {_secondaryNamespaceQueueKey, _secondaryNamespaceQueueScope.QueueName},
-                       {SecondaryConnectionStringKey, ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespaceConnectionString}
-                   });
+                   builder.AddInMemoryCollection(settings);
                })
                .ConfigureDefaultTestHost<TJobClass>(b =>
                {

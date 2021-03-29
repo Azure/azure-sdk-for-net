@@ -49,22 +49,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         Queue = 0,
         Topic = 1,
     }
-    public partial class MessageProcessor
-    {
-        public MessageProcessor(Azure.Messaging.ServiceBus.ServiceBusProcessor processor) { }
-        public virtual System.Threading.Tasks.Task<bool> BeginProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions messageActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public virtual System.Threading.Tasks.Task CompleteProcessingMessageAsync(Microsoft.Azure.WebJobs.ServiceBus.ServiceBusMessageActions messageActions, Azure.Messaging.ServiceBus.ServiceBusReceivedMessage message, Microsoft.Azure.WebJobs.Host.Executors.FunctionResult result, System.Threading.CancellationToken cancellationToken) { throw null; }
-    }
-    public partial class MessagingProvider
-    {
-        public MessagingProvider(Microsoft.Extensions.Options.IOptions<Microsoft.Azure.WebJobs.ServiceBus.ServiceBusOptions> serviceBusOptions) { }
-        public virtual Azure.Messaging.ServiceBus.ServiceBusReceiver CreateBatchMessageReceiver(string entityPath, string connectionString) { throw null; }
-        public virtual Azure.Messaging.ServiceBus.ServiceBusClient CreateClient(string connectionString) { throw null; }
-        public virtual Microsoft.Azure.WebJobs.ServiceBus.MessageProcessor CreateMessageProcessor(string entityPath, string connectionString) { throw null; }
-        public virtual Azure.Messaging.ServiceBus.ServiceBusSender CreateMessageSender(string entityPath, string connectionString) { throw null; }
-        public virtual Azure.Messaging.ServiceBus.ServiceBusProcessor CreateProcessor(string entityPath, string connectionString) { throw null; }
-        public virtual Microsoft.Azure.WebJobs.ServiceBus.SessionMessageProcessor CreateSessionMessageProcessor(string entityPath, string connectionString) { throw null; }
-    }
     public partial class ServiceBusMessageActions
     {
         internal ServiceBusMessageActions() { }
@@ -78,7 +62,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     {
         public ServiceBusOptions() { }
         public bool AutoCompleteMessages { get { throw null; } set { } }
-        public string ConnectionString { get { throw null; } set { } }
         public System.Func<Azure.Messaging.ServiceBus.ProcessErrorEventArgs, System.Threading.Tasks.Task> ExceptionHandler { get { throw null; } set { } }
         public System.TimeSpan MaxAutoLockRenewalDuration { get { throw null; } set { } }
         public int MaxConcurrentCalls { get { throw null; } set { } }

@@ -10,6 +10,7 @@ using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -23,15 +24,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private ServiceBusListener _listener;
         private ServiceBusScaleMonitor _scaleMonitor;
         private ServiceBusOptions _serviceBusOptions;
-        private Mock<ServiceBusAccount> _mockServiceBusAccount;
         private Mock<ITriggeredFunctionExecutor> _mockExecutor;
-        private Mock<MessagingProvider> _mockMessagingProvider;
+        private Mock<ServiceBusClientFactory> _mockClientFactory;
         private Mock<MessageProcessor> _mockMessageProcessor;
+        private Mock<AzureComponentFactory> _mockComponentFactory;
         private TestLoggerProvider _loggerProvider;
         private LoggerFactory _loggerFactory;
         private string _functionId = "test-functionid";
         private string _entityPath = "test-entity-path";
         private string _testConnection = "Endpoint=sb://test.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
+        private string _connection = "connection";
 
         [SetUp]
         public void Setup()
@@ -43,21 +45,29 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, messageProcessor);
 
             _serviceBusOptions = new ServiceBusOptions();
-            _mockMessagingProvider = new Mock<MessagingProvider>(MockBehavior.Strict, new OptionsWrapper<ServiceBusOptions>(_serviceBusOptions));
+            _mockClientFactory = new Mock<ServiceBusClientFactory>();
 
-            _mockMessagingProvider
-                .Setup(p => p.CreateMessageProcessor(_entityPath, _testConnection))
+            _mockClientFactory
+                .Setup(p => p.CreateMessageProcessor(_entityPath, _connection))
                 .Returns(_mockMessageProcessor.Object);
-
-            _mockServiceBusAccount = new Mock<ServiceBusAccount>(MockBehavior.Strict);
-            _mockServiceBusAccount.Setup(a => a.ConnectionString).Returns(_testConnection);
 
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
+            _mockComponentFactory = new Mock<AzureComponentFactory>();
 
-            _listener = new ServiceBusListener(_functionId, EntityType.Queue, _entityPath, false, _mockExecutor.Object, _serviceBusOptions, _mockServiceBusAccount.Object,
-                                _mockMessagingProvider.Object, _loggerFactory, false);
+            _listener = new ServiceBusListener(
+                _functionId,
+                EntityType.Queue,
+                _entityPath,
+                false,
+                _mockExecutor.Object,
+                _serviceBusOptions,
+                _connection,
+                _mockClientFactory.Object,
+                _loggerFactory,
+                false);
+
             _scaleMonitor = (ServiceBusScaleMonitor)_listener.GetMonitor();
         }
 
@@ -109,11 +119,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         public async Task GetMetrics_HandlesExceptions()
         {
             // MessagingEntityNotFoundException
-            _mockMessagingProvider
-                .Setup(p => p.CreateBatchMessageReceiver(_entityPath, _testConnection))
+            _mockClientFactory
+                .Setup(p => p.CreateBatchMessageReceiver(_entityPath, _connection))
                 .Throws(new ServiceBusException("", reason: ServiceBusFailureReason.MessagingEntityNotFound));
-            ServiceBusListener listener = new ServiceBusListener(_functionId, EntityType.Queue, _entityPath, false, _mockExecutor.Object, _serviceBusOptions,
-                                                _mockServiceBusAccount.Object, _mockMessagingProvider.Object, _loggerFactory, false);
+            ServiceBusListener listener = CreateListener();
 
             var metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
@@ -127,11 +136,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _loggerProvider.ClearAllLogMessages();
 
             // UnauthorizedAccessException
-            _mockMessagingProvider
-                .Setup(p => p.CreateBatchMessageReceiver(_entityPath, _testConnection))
+            _mockClientFactory
+                .Setup(p => p.CreateBatchMessageReceiver(_entityPath, _connection))
                 .Throws(new UnauthorizedAccessException(""));
-            listener = new ServiceBusListener(_functionId, EntityType.Queue, _entityPath, false, _mockExecutor.Object, _serviceBusOptions,
-                                                _mockServiceBusAccount.Object, _mockMessagingProvider.Object, _loggerFactory, false);
+            listener = CreateListener();
 
             metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
@@ -147,11 +155,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             _loggerProvider.ClearAllLogMessages();
 
             // Generic Exception
-            _mockMessagingProvider
-                .Setup(p => p.CreateBatchMessageReceiver(_entityPath, _testConnection))
+            _mockClientFactory
+                .Setup(p => p.CreateBatchMessageReceiver(_entityPath, _connection))
                 .Throws(new Exception("Uh oh"));
-            listener = new ServiceBusListener(_functionId, EntityType.Queue, _entityPath, false, _mockExecutor.Object, _serviceBusOptions,
-                                                _mockServiceBusAccount.Object, _mockMessagingProvider.Object, _loggerFactory, false);
+            listener = CreateListener();
 
             metrics = await ((ServiceBusScaleMonitor)listener.GetMonitor()).GetMetricsAsync();
 
@@ -162,6 +169,21 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
 
             warning = _loggerProvider.GetAllLogMessages().Single(p => p.Level == LogLevel.Warning);
             Assert.AreEqual($"Error querying for Service Bus queue scale status: Uh oh", warning.FormattedMessage);
+        }
+
+        private ServiceBusListener CreateListener()
+        {
+            return new ServiceBusListener(
+                _functionId,
+                EntityType.Queue,
+                _entityPath,
+                false,
+                _mockExecutor.Object,
+                _serviceBusOptions,
+                _connection,
+                _mockClientFactory.Object,
+                _loggerFactory,
+                false);
         }
 
         [Test]

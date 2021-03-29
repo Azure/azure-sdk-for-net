@@ -12,7 +12,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
     /// <summary>
     /// This class defines a strategy used for processing Service Bus messages.
     /// </summary>
-    public class MessageProcessor
+    internal class MessageProcessor
     {
         /// <summary>
         /// Initializes a new instance of <see cref="MessageProcessor"/>.

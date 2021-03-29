@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
     {
         private readonly ServiceBusListener _listener;
         private readonly Mock<ITriggeredFunctionExecutor> _mockExecutor;
-        private readonly Mock<MessagingProvider> _mockMessagingProvider;
+        private readonly Mock<ServiceBusClientFactory> _mockMessagingProvider;
         private readonly Mock<MessageProcessor> _mockMessageProcessor;
         private readonly TestLoggerProvider _loggerProvider;
         private readonly LoggerFactory _loggerFactory;
@@ -42,25 +42,31 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             };
             _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor);
 
-            _mockMessagingProvider = new Mock<MessagingProvider>(MockBehavior.Strict, new OptionsWrapper<ServiceBusOptions>(config));
+            _mockMessagingProvider = new Mock<ServiceBusClientFactory>();
 
             _mockMessagingProvider
-                .Setup(p => p.CreateMessageProcessor(_entityPath, _testConnection))
+                .Setup(p => p.CreateMessageProcessor(_entityPath, "connection"))
                 .Returns(_mockMessageProcessor.Object);
 
             _mockMessagingProvider
-                    .Setup(p => p.CreateBatchMessageReceiver(_entityPath, _testConnection))
+                    .Setup(p => p.CreateBatchMessageReceiver(_entityPath, "connection"))
                     .Returns(receiver);
-
-            Mock<ServiceBusAccount> mockServiceBusAccount = new Mock<ServiceBusAccount>(MockBehavior.Strict);
-            mockServiceBusAccount.Setup(a => a.ConnectionString).Returns(_testConnection);
 
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
 
-            _listener = new ServiceBusListener(_functionId, EntityType.Queue, _entityPath, false, _mockExecutor.Object, config, mockServiceBusAccount.Object,
-                                _mockMessagingProvider.Object, _loggerFactory, false);
+            _listener = new ServiceBusListener(
+                _functionId,
+                EntityType.Queue,
+                _entityPath,
+                false,
+                _mockExecutor.Object,
+                config,
+                "connection",
+                _mockMessagingProvider.Object,
+                _loggerFactory,
+                false);
         }
 
         [Test]

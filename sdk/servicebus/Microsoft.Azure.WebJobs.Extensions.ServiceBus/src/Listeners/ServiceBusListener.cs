@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -18,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
     internal sealed class ServiceBusListener : IListener, IScaleMonitorProvider
     {
-        private readonly MessagingProvider _messagingProvider;
+        private readonly ServiceBusClientFactory _clientFactory;
         private readonly ITriggeredFunctionExecutor _triggerExecutor;
         private readonly string _functionId;
         private readonly EntityType _entityType;
@@ -26,7 +27,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly bool _isSessionsEnabled;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly MessageProcessor _messageProcessor;
-        private readonly ServiceBusAccount _serviceBusAccount;
         private readonly ServiceBusOptions _serviceBusOptions;
         private readonly ILoggerFactory _loggerFactory;
         private readonly bool _singleDispatch;
@@ -43,8 +43,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         private Lazy<ServiceBusScaleMonitor> _scaleMonitor;
 
-        public ServiceBusListener(string functionId, EntityType entityType, string entityPath, bool isSessionsEnabled, ITriggeredFunctionExecutor triggerExecutor,
-            ServiceBusOptions config, ServiceBusAccount serviceBusAccount, MessagingProvider messagingProvider, ILoggerFactory loggerFactory, bool singleDispatch)
+        public ServiceBusListener(
+            string functionId,
+            EntityType entityType,
+            string entityPath,
+            bool isSessionsEnabled,
+            ITriggeredFunctionExecutor triggerExecutor,
+            ServiceBusOptions options,
+            string connection,
+            ServiceBusClientFactory clientFactory,
+            ILoggerFactory loggerFactory,
+            bool singleDispatch)
         {
             _functionId = functionId;
             _entityType = entityType;
@@ -52,24 +61,23 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _isSessionsEnabled = isSessionsEnabled;
             _triggerExecutor = triggerExecutor;
             _cancellationTokenSource = new CancellationTokenSource();
-            _messagingProvider = messagingProvider;
-            _serviceBusAccount = serviceBusAccount;
+            _clientFactory = clientFactory;
             _loggerFactory = loggerFactory;
             _logger = loggerFactory.CreateLogger<ServiceBusListener>();
-            _batchReceiver = CreateMessageReceiver();
-            _sessionClient = CreateSessionClient();
-            _scaleMonitor = new Lazy<ServiceBusScaleMonitor>(() => new ServiceBusScaleMonitor(_functionId, _entityType, _entityPath, _serviceBusAccount.ConnectionString, _batchReceiver, _loggerFactory));
+            _batchReceiver = new Lazy<ServiceBusReceiver>(() => _clientFactory.CreateBatchMessageReceiver(_entityPath, connection));
+            _sessionClient = new Lazy<ServiceBusClient>(() => _clientFactory.CreateSessionClient(connection));
+            _scaleMonitor = new Lazy<ServiceBusScaleMonitor>(() => new ServiceBusScaleMonitor(_functionId, _entityType, _entityPath, connection, _batchReceiver, _loggerFactory, _clientFactory));
             _singleDispatch = singleDispatch;
 
             if (_isSessionsEnabled)
             {
-                _sessionMessageProcessor = _messagingProvider.CreateSessionMessageProcessor(_entityPath, _serviceBusAccount.ConnectionString);
+                _sessionMessageProcessor = _clientFactory.CreateSessionMessageProcessor(_entityPath, connection);
             }
             else
             {
-                _messageProcessor = _messagingProvider.CreateMessageProcessor(entityPath, _serviceBusAccount.ConnectionString);
+                _messageProcessor = _clientFactory.CreateMessageProcessor(_entityPath, connection);
             }
-            _serviceBusOptions = config;
+            _serviceBusOptions = options;
         }
 
         internal ServiceBusReceiver BatchReceiver => _batchReceiver.Value;
@@ -115,7 +123,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         throw new InvalidOperationException("The listener has not yet been started or has already been stopped.");
                     }
 
-                    // Unregister* methods stop new messages from being processed while allowing in-flight messages to complete.
+                    // StopProcessingAsync method stop new messages from being processed while allowing in-flight messages to complete.
                     // As the amount of time functions are allowed to complete processing varies by SKU, we specify max timespan
                     // as the amount of time Service Bus SDK should wait for in-flight messages to complete procesing after
                     // unregistering the message handler so that functions have as long as the host continues to run time to complete.
@@ -177,16 +185,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                 _disposed = true;
             }
-        }
-
-        private Lazy<ServiceBusReceiver> CreateMessageReceiver()
-        {
-            return new Lazy<ServiceBusReceiver>(() => _messagingProvider.CreateBatchMessageReceiver(_entityPath, _serviceBusAccount.ConnectionString));
-        }
-
-        private Lazy<ServiceBusClient> CreateSessionClient()
-        {
-            return new Lazy<ServiceBusClient>(() => _messagingProvider.CreateSessionClient(_serviceBusAccount.ConnectionString));
         }
 
         internal async Task ProcessMessageAsync(ProcessMessageEventArgs args)

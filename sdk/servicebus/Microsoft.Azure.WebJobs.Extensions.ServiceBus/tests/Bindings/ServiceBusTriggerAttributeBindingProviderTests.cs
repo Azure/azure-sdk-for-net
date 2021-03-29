@@ -12,28 +12,28 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Extensions.Azure;
+using Azure.Messaging.ServiceBus.Tests;
+using System.Collections.Generic;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 {
     public class ServiceBusTriggerAttributeBindingProviderTests
     {
-        private readonly Mock<MessagingProvider> _mockMessagingProvider;
         private readonly ServiceBusTriggerAttributeBindingProvider _provider;
-        private readonly IConfiguration _configuration;
 
         public ServiceBusTriggerAttributeBindingProviderTests()
         {
-            _configuration = new ConfigurationBuilder()
-                .AddEnvironmentVariables()
-                .Build();
+            var configuration = CreateConfiguration(new KeyValuePair<string, string>(Constants.DefaultConnectionStringName, "defaultConnection"));
+
             Mock<INameResolver> mockResolver = new Mock<INameResolver>(MockBehavior.Strict);
 
-            ServiceBusOptions config = new ServiceBusOptions();
-            _mockMessagingProvider = new Mock<MessagingProvider>(MockBehavior.Strict, new OptionsWrapper<ServiceBusOptions>(config));
+            ServiceBusOptions options = new ServiceBusOptions();
 
             Mock<IConverterManager> convertManager = new Mock<IConverterManager>(MockBehavior.Default);
+            var factory = new ServiceBusClientFactory(configuration, Mock.Of<AzureComponentFactory>(), new OptionsWrapper<ServiceBusOptions>(options), new AzureEventSourceLogForwarder(new NullLoggerFactory()));
 
-            _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, config, _mockMessagingProvider.Object, _configuration, NullLoggerFactory.Instance, convertManager.Object);
+            _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, options, factory, NullLoggerFactory.Instance, convertManager.Object);
         }
 
         [Test]
@@ -60,15 +60,22 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
         internal static void TestJob_AccountOverride(
             [ServiceBusTriggerAttribute("test"),
-             ServiceBusAccount(Constants.DefaultConnectionStringName)] ServiceBusMessage message)
+             ServiceBusAccount(ServiceBusTestEnvironment.ServiceBusConnectionStringEnvironmentVariable)]
+            ServiceBusMessage message)
         {
             message = new ServiceBusMessage();
         }
 
         internal static void TestJob(
-            [ServiceBusTriggerAttribute("test", Connection = Constants.DefaultConnectionStringName)] ServiceBusMessage message)
+            [ServiceBusTriggerAttribute("test", Connection = ServiceBusTestEnvironment.ServiceBusConnectionStringEnvironmentVariable)]
+            ServiceBusMessage message)
         {
             message = new ServiceBusMessage();
+        }
+
+        private IConfiguration CreateConfiguration(params KeyValuePair<string, string>[] data)
+        {
+            return new ConfigurationBuilder().AddInMemoryCollection(data).Build();
         }
     }
 }

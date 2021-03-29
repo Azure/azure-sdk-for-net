@@ -7,9 +7,12 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -23,12 +26,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
         public ServiceBusAttributeBindingProviderTests()
         {
-            _configuration = new ConfigurationBuilder()
-                .AddEnvironmentVariables()
-                .Build();
+            _configuration = new ConfigurationBuilder().AddInMemoryCollection(new KeyValuePair<string, string>[] { new("connection", "connectionString") }).Build();
+
             Mock<INameResolver> mockResolver = new Mock<INameResolver>(MockBehavior.Strict);
             ServiceBusOptions config = new ServiceBusOptions();
-            _provider = new ServiceBusAttributeBindingProvider(mockResolver.Object, config, _configuration, new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(config)));
+            _provider = new ServiceBusAttributeBindingProvider(mockResolver.Object, new ServiceBusClientFactory(_configuration, new Mock<AzureComponentFactory>().Object, new OptionsWrapper<ServiceBusOptions>(config), new AzureEventSourceLogForwarder(new NullLoggerFactory())));
         }
 
         [Test]
@@ -55,13 +57,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
         internal static void TestJob_AccountOverride(
             [ServiceBusAttribute("test"),
-             ServiceBusAccount(Constants.DefaultConnectionStringName)] out ServiceBusMessage message)
+             ServiceBusAccount(ServiceBusTestEnvironment.ServiceBusConnectionStringEnvironmentVariable)] out ServiceBusMessage message)
         {
             message = new ServiceBusMessage();
         }
 
         internal static void TestJob(
-            [ServiceBusAttribute("test", Connection = Constants.DefaultConnectionStringName)] out ServiceBusMessage message)
+            [ServiceBusAttribute("test", Connection = ServiceBusTestEnvironment.ServiceBusConnectionStringEnvironmentVariable)]
+            out ServiceBusMessage message)
         {
             message = new ServiceBusMessage();
         }
