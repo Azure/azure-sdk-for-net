@@ -49,5 +49,39 @@ namespace Azure.ResourceManager.Core
             }
             writer.WriteEndObject();
         }
+
+        /// <summary>
+        /// Deserialize the input Json object.
+        /// </summary>
+        /// <param name="element"> The Json object need to be deserialized. </param>
+        internal static ResourceType DeserializeResourceType(JsonElement element)
+        {
+            Optional<string> type = default;
+            Optional<string> nameSpace = default;
+            Optional<ResourceType> parent = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("namespace"))
+                {
+                    nameSpace = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("parent"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ToString().Equals("{}"))
+                    {
+                        continue;
+                    }
+                    parent = DeserializeResourceType(property.Value);
+                    continue;
+                }
+            }
+            return new ResourceType(nameSpace.Value + "/" + type.Value);
+        }
     }
 }

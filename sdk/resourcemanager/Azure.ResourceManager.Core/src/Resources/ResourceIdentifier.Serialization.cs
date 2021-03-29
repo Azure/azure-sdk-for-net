@@ -56,5 +56,24 @@ namespace Azure.ResourceManager.Core
             }
             writer.WriteEndObject();
         }
+
+        /// <summary>
+        /// Deserialize the input Json object.
+        /// </summary>
+        /// <param name="element"> The Json object need to be deserialized. </param>
+        internal static ResourceIdentifier DeserializeResourceIdentifier(JsonElement element)
+        {
+            Optional<string> id = default;
+
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"))
+                {
+                    id = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new ResourceIdentifier(id.Value);
+        }
     }
 }

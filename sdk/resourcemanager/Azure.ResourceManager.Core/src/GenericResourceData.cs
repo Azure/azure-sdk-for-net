@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the generic azure resource data model.
     /// </summary>
-    public class GenericResourceData : TrackedResource<ResourceManager.Resources.Models.GenericResource>
+    public partial class GenericResourceData : TrackedResource<ResourceManager.Resources.Models.GenericResource>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceData"/> class.
