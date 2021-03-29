@@ -148,7 +148,7 @@
                 }
             };
 
-            var scheduleInfo = new ScheduleProperties
+            var scheduleInfo = new SUCScheduleProperties
             {
                 Frequency = ScheduleFrequency.Day,
                 StartTime = DateTime.Parse("2019-05-05T19:26:00.000"),
