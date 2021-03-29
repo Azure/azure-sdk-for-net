@@ -63,7 +63,7 @@ Uses cspell (from NPM) to check spelling of recently changed files
 
 .DESCRIPTION
 This script checks files that have changed relative to a base branch (default 
-`master`) for spelling errors. Dictionaries and spelling configurations reside 
+branch) for spelling errors. Dictionaries and spelling configurations reside 
 in a configurable `cspell.json` location.
 
 This script uses `npx` and assumes that NodeJS (and by extension `npm` and `npx`
