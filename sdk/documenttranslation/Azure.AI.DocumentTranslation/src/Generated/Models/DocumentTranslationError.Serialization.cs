@@ -15,7 +15,7 @@ namespace Azure.AI.DocumentTranslation
     {
         internal static DocumentTranslationError DeserializeDocumentTranslationError(JsonElement element)
         {
-            Optional<DocumentTranslationErrorCode> code = default;
+            DocumentTranslationErrorCode code = default;
             string message = default;
             Optional<string> target = default;
             Optional<InnerErrorV2> innerError = default;
@@ -23,11 +23,6 @@ namespace Azure.AI.DocumentTranslation
             {
                 if (property.NameEquals("code"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     code = new DocumentTranslationErrorCode(property.Value.GetString());
                     continue;
                 }
@@ -52,7 +47,7 @@ namespace Azure.AI.DocumentTranslation
                     continue;
                 }
             }
-            return new DocumentTranslationError(Optional.ToNullable(code), message, target.Value, innerError.Value);
+            return new DocumentTranslationError(code, message, target.Value, innerError.Value);
         }
     }
 }

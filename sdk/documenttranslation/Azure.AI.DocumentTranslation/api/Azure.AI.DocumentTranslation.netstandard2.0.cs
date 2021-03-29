@@ -53,7 +53,7 @@ namespace Azure.AI.DocumentTranslation
     public partial class DocumentTranslationError
     {
         internal DocumentTranslationError() { }
-        public Azure.AI.DocumentTranslation.DocumentTranslationErrorCode? ErrorCode { get { throw null; } }
+        public Azure.AI.DocumentTranslation.DocumentTranslationErrorCode ErrorCode { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
     }
@@ -156,10 +156,10 @@ namespace Azure.AI.DocumentTranslation
     }
     public partial class TranslationGlossary
     {
-        public TranslationGlossary(System.Uri glossaryUri) { }
+        public TranslationGlossary(System.Uri glossaryUri, string format) { }
+        public string Format { get { throw null; } }
         public string FormatVersion { get { throw null; } set { } }
         public System.Uri GlossaryUri { get { throw null; } }
-        public string Version { get { throw null; } set { } }
     }
     public partial class TranslationSource
     {

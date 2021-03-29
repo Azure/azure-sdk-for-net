@@ -42,7 +42,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(source, target, "fr");
             var operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             if (operation.DocumentsSucceeded < 1)
             {
@@ -74,7 +74,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             input.AddTarget(targetArabic, "ar");
             var operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             if (operation.DocumentsSucceeded < 3)
             {
@@ -109,7 +109,7 @@ namespace Azure.AI.DocumentTranslation.Tests
 
             var operation = await client.StartTranslationAsync(inputs);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             if (operation.DocumentsSucceeded < 2)
             {
@@ -146,7 +146,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(source, targets);
             var operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             if (operation.DocumentsSucceeded < 1)
             {
@@ -183,7 +183,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(source, targets);
             var operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
 
             if (operation.DocumentsSucceeded < 1)
             {
@@ -220,7 +220,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(source, targets);
             var operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync(PollingInterval);
             var documents = operation.GetAllDocumentStatusesAsync();
 
             List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();

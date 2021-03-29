@@ -21,8 +21,8 @@ namespace Azure.AI.DocumentTranslation
         [CodeGenMember("StorageSource")]
         internal string StorageSource { get; set; }
 
-        /// <summary> Format. </summary>
-        [CodeGenMember("Format")]
+        /// <summary> Optional format version.  If not specified, default is used. </summary>
+        [CodeGenMember("Version")]
         public string FormatVersion { get; set; }
     }
 }
