@@ -51,7 +51,7 @@ namespace Proto.Authorization
         /// <param name="subscription">The subscription containign the role assignment</param>
         /// <param name="scope">The target of the role assignment</param>
         /// <returns>A <see cref="RoleAssignmentContainer"/> that allows creating and listing RoleAssignments</returns>
-        public static RoleAssignmentContainer GetRoleAssigmentContainerAtScope(this SubscriptionOperations subscription, Resource scope)
+        public static RoleAssignmentContainer GetRoleAssigmentContainerAtScope(this SubscriptionOperations subscription, Resource<TenantResourceIdentifier> scope)
         {
             return new RoleAssignmentContainer(subscription, scope.Id);
         }

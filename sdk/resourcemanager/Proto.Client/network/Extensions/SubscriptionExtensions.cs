@@ -19,7 +19,7 @@ namespace Proto.Network
         private static NetworkManagementClient GetNetworkClient(Uri baseUri, string subscriptionGuid, TokenCredential credential, AzureResourceManagerClientOptions clientOptions)
         {
             return new NetworkManagementClient(
-                subscriptionGuid,
+                subscription.Id.SubscriptionId,
                 baseUri,
                 credential,
                 clientOptions.Convert<NetworkManagementClientOptions>());

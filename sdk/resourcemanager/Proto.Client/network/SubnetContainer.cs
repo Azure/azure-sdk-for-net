@@ -10,7 +10,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing collection of Subnets and their operations over a VirtualNetwork.
     /// </summary>
-    public class SubnetContainer : ResourceContainerBase<Subnet, SubnetData>
+    public class SubnetContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, Subnet, SubnetData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubnetContainer"/> class.
@@ -21,11 +21,16 @@ namespace Proto.Network
         {
         }
 
+        /// <summary>
+        /// Typed Resource Identifier for the container.
+        /// </summary>
+        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
+
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => VirtualNetworkOperations.ResourceType;
 
         private SubnetsOperations Operations => new NetworkManagementClient(
-            Id.Subscription,
+            Id.SubscriptionId,
             BaseUri,
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).Subnets;
@@ -33,7 +38,7 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override ArmResponse<Subnet> CreateOrUpdate(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, Id.Name, name, resourceDetails.Model, cancellationToken);
+            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken);
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
                 operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 s => new Subnet(Parent, new SubnetData(s)));
@@ -42,7 +47,7 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override async Task<ArmResponse<Subnet>> CreateOrUpdateAsync(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroup, Id.Name, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
+            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
                 await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 s => new Subnet(Parent, new SubnetData(s)));
@@ -52,7 +57,7 @@ namespace Proto.Network
         public override ArmOperation<Subnet> StartCreateOrUpdate(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
-                Operations.StartCreateOrUpdate(Id.ResourceGroup, Id.Name, name, resourceDetails.Model, cancellationToken),
+                Operations.StartCreateOrUpdate(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken),
                 s => new Subnet(Parent, new SubnetData(s)));
         }
 
@@ -60,7 +65,7 @@ namespace Proto.Network
         public async override Task<ArmOperation<Subnet>> StartCreateOrUpdateAsync(string name, SubnetData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<Subnet, Azure.ResourceManager.Network.Models.Subnet>(
-                await Operations.StartCreateOrUpdateAsync(Id.ResourceGroup, Id.Name, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),
+                await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, Id.Name, name, resourceDetails.Model, cancellationToken).ConfigureAwait(false),
                 s => new Subnet(Parent, new SubnetData(s)));
         }
 
@@ -93,7 +98,7 @@ namespace Proto.Network
         public Pageable<Subnet> List(CancellationToken cancellationToken = default)
         {
             return new PhWrappingPageable<Azure.ResourceManager.Network.Models.Subnet, Subnet>(
-                Operations.List(Id.ResourceGroup, Id.Name, cancellationToken),
+                Operations.List(Id.ResourceGroupName, Id.Name, cancellationToken),
                 convertor());
         }
 
@@ -105,7 +110,7 @@ namespace Proto.Network
         public AsyncPageable<Subnet> ListAsync(CancellationToken cancellationToken = default)
         {
             return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.Subnet, Subnet>(
-                Operations.ListAsync(Id.ResourceGroup, Id.Name, cancellationToken),
+                Operations.ListAsync(Id.ResourceGroupName, Id.Name, cancellationToken),
                 convertor());
         }
 
@@ -117,14 +122,14 @@ namespace Proto.Network
         /// <inheritdoc/>
         public override ArmResponse<Subnet> Get(string subnetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(Operations.Get(Id.ResourceGroup, Id.Name, subnetName, cancellationToken: cancellationToken),
+            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(Operations.Get(Id.ResourceGroupName, Id.Name, subnetName, cancellationToken: cancellationToken),
                 n => new Subnet(Parent, new SubnetData(n)));
         }
         
         /// <inheritdoc/>
         public override async Task<ArmResponse<Subnet>> GetAsync(string subnetName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(await Operations.GetAsync(Id.ResourceGroup, Id.Name, subnetName, null, cancellationToken),
+            return new PhArmResponse<Subnet, Azure.ResourceManager.Network.Models.Subnet>(await Operations.GetAsync(Id.ResourceGroupName, Id.Name, subnetName, null, cancellationToken),
                 n => new Subnet(Parent, new SubnetData(n)));
         }
     }

@@ -17,9 +17,9 @@ namespace Proto.Client
             foreach(var armResource in sub.ListVirtualMachinesByName("-e"))
             {
                 var vmOperations = VirtualMachineOperations.FromGeneric(armResource);
-                Console.WriteLine($"Stopping {armResource.Id.ResourceGroup} : {armResource.Id.Name}");
+                Console.WriteLine($"Stopping {vmOperations.Id.ResourceGroupName} : {armResource.Id.Name}");
                 vmOperations.PowerOff();
-                Console.WriteLine($"Starting {armResource.Id.ResourceGroup} : {armResource.Id.Name}");
+                Console.WriteLine($"Starting {vmOperations.Id.ResourceGroupName} : {armResource.Id.Name}");
                 vmOperations.PowerOn();
             }
             

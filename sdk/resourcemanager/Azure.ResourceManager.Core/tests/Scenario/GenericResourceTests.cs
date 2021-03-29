@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task GetGenericsBadApiVersion()
         {
-            ResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
+            ResourceGroupResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
             AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
-            options.ApiVersions.SetApiVersion(rgid.Type, "1500-10-10");
+            options.ApiVersions.SetApiVersion(rgid.ResourceType, "1500-10-10");
             var client = GetArmClient(options);
             var subOp = client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, rgid);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task GetGenericsGoodApiVersion()
         {
-            ResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
+            ResourceGroupResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
             AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
             var client = GetArmClient(options);
             var subOp = client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);

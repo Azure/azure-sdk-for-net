@@ -8,7 +8,7 @@ namespace Proto.Billing
     /// <summary>
     /// A class representing the availability set data model.
     /// </summary>
-    public class BillingAccountData : TrackedResource<Azure.ResourceManager.Billing.Models.BillingAccount>
+    public class BillingAccountData : TrackedResource<TenantResourceIdentifier, Azure.ResourceManager.Billing.Models.BillingAccount>
     {
 
         /// <summary>

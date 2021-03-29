@@ -42,6 +42,7 @@ namespace Proto.Compute
                         s => new VirtualMachine(subscription, new VirtualMachineData(s)));
                 }
             );
+                subscription.Id.SubscriptionId,
         }
 
         /// <summary>

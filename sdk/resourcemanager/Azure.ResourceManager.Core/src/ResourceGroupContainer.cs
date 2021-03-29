@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing collection of ResourceGroupContainer and their operations over a ResourceGroup.
     /// </summary>
-    public class ResourceGroupContainer : ResourceContainerBase<ResourceGroup, ResourceGroupData>
+    public class ResourceGroupContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, ResourceGroup, ResourceGroupData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceGroupContainer"/> class for mocking.
@@ -34,11 +34,20 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => SubscriptionOperations.ResourceType;
 
-        private ResourceGroupsOperations Operations => new ResourcesManagementClient(
-            BaseUri,
-            Id.Subscription,
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>()).ResourceGroups;
+        private ResourceGroupsOperations Operations 
+        {
+            get
+            {
+                string subscriptionId;
+                if (Id is null || !Id.TryGetSubscriptionId(out subscriptionId))
+                    subscriptionId = Guid.NewGuid().ToString();
+                return new ResourcesManagementClient(
+                BaseUri,
+                subscriptionId,
+                Credential,
+                ClientOptions.Convert<ResourcesManagementClientOptions>()).ResourceGroups;
+            }
+        }
 
         /// <summary>
         /// Constructs an object used to create a resource group.
@@ -48,7 +57,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="managedBy"> Who the resource group is managed by. </param>
         /// <returns> A builder with <see cref="ResourceGroup"/> and <see cref="ResourceGroupData"/>. </returns>
         /// <exception cref="ArgumentNullException"> Location cannot be null. </exception>
-        public ArmBuilder<ResourceGroup, ResourceGroupData> Construct(LocationData location, IDictionary<string, string> tags = default, string managedBy = default)
+        public ArmBuilder<ResourceGroupResourceIdentifier, ResourceGroup, ResourceGroupData> Construct(LocationData location, IDictionary<string, string> tags = default, string managedBy = default)
         {
             if (location is null)
                 throw new ArgumentNullException(nameof(location));
@@ -57,7 +66,7 @@ namespace Azure.ResourceManager.Core
             if (!(tags is null))
                 model.Tags.ReplaceWith(tags);
             model.ManagedBy = managedBy;
-            return new ArmBuilder<ResourceGroup, ResourceGroupData>(this, new ResourceGroupData(model));
+            return new ArmBuilder<ResourceGroupResourceIdentifier, ResourceGroup, ResourceGroupData>(this, new ResourceGroupData(model));
         }
 
         /// <inheritdoc/>
