@@ -1061,32 +1061,23 @@ namespace Azure.Search.Documents.Tests
 
             List<EventWrittenEventArgs> eventData = _listener.EventData.ToList();
 
-            if (eventData.Count == 9)
-            {
-                // In the async version of the test, we get an additional event - eventData[6].EventName == "TargetFrameworkSet"
-                // Remove it, so the assert checks are the same in both runs.
-                eventData.RemoveAt(6);
-            }
-
             Assert.AreEqual(8, eventData.Count);
-            Assert.AreEqual("PendingQueueResized", eventData[0].EventName);
+            Assert.AreEqual("PendingQueueResized", eventData[0].EventName);         // 1. All events are pushed into the pending queue.
             Assert.AreEqual(512, eventData[0].GetProperty<int>("queueSize"));
-            Assert.AreEqual("PendingQueueResized", eventData[1].EventName);
+            Assert.AreEqual("PendingQueueResized", eventData[1].EventName);         // 2. All events are pulled out of the pending queue.
             Assert.AreEqual(0, eventData[1].GetProperty<int>("queueSize"));
-            Assert.AreEqual("BatchSubmitted", eventData[2].EventName);
+            Assert.AreEqual("BatchSubmitted", eventData[2].EventName);              // 3. A batch is created for submission and contains all events.
             Assert.AreEqual(512, eventData[2].GetProperty<int>("batchSize"));
-            Assert.AreEqual("BatchActionCountUpdated", eventData[3].EventName);
+            Assert.AreEqual("BatchActionCountUpdated", eventData[3].EventName);     // 4. Batch is split up and default action count is updated.
             Assert.AreEqual(512, eventData[3].GetProperty<int>("oldBatchCount"));
             Assert.AreEqual(256, eventData[3].GetProperty<int>("newBatchCount"));
-            Assert.AreEqual("RetryQueueResized", eventData[4].EventName);
+            Assert.AreEqual("RetryQueueResized", eventData[4].EventName);           // 5. Second part of the batch is pushed into the retry queue.
             Assert.AreEqual(256, eventData[4].GetProperty<int>("queueSize"));
-            Assert.AreEqual("BatchSubmitted", eventData[5].EventName);
+            Assert.AreEqual("BatchSubmitted", eventData[5].EventName);              // 6. First part of the batch is submitted.
             Assert.AreEqual(256, eventData[5].GetProperty<int>("batchSize"));
-            Assert.AreEqual("BatchSubmitted", eventData[5].EventName);
-            Assert.AreEqual(256, eventData[5].GetProperty<int>("batchSize"));
-            Assert.AreEqual("RetryQueueResized", eventData[6].EventName);
+            Assert.AreEqual("RetryQueueResized", eventData[6].EventName);           // 7. Remaining events are pulled out of the retry queue.
             Assert.AreEqual(0, eventData[6].GetProperty<int>("queueSize"));
-            Assert.AreEqual("BatchSubmitted", eventData[7].EventName);
+            Assert.AreEqual("BatchSubmitted", eventData[7].EventName);              // 8. Second part of the batch is submitted.
             Assert.AreEqual(256, eventData[7].GetProperty<int>("batchSize"));
 
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
