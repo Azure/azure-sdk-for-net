@@ -133,12 +133,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.GreaterOrEqual(helloWorldManifestReferences, properties.RegistryArtifacts.Count);
 
             Assert.IsTrue(properties.RegistryArtifacts.Any(
-                artifact => {
+                artifact =>
+                {
                     return artifact.CpuArchitecture == "arm64" &&
-                           artifact.OperatingSystem == "linux"; } ));
+                           artifact.OperatingSystem == "linux";
+                }));
 
             Assert.IsTrue(properties.RegistryArtifacts.Any(
-                artifact => {
+                artifact =>
+                {
                     return artifact.CpuArchitecture == "amd64" &&
                            artifact.OperatingSystem == "windows";
                 }));
@@ -338,26 +341,33 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string repository = $"library/node";
             string tag = "newest";
             var client = CreateClient(repository);
-            if (this.Mode != RecordedTestMode.Playback)
+
+            try
             {
-                await ImportImage(repository, tag);
+                if (this.Mode != RecordedTestMode.Playback)
+                {
+                    await ImportImage(repository, tag);
+                }
+
+                // Act
+                AsyncPageable<RegistryArtifactProperties> artifacts = client.GetRegistryArtifactsAsync(new GetRegistryArtifactOptions(RegistryArtifactOrderBy.LastUpdatedOnDescending));
+
+                // Assert
+                string digest = null;
+                await foreach (RegistryArtifactProperties artifact in artifacts)
+                {
+                    digest = artifact.Digest;
+                    Assert.That(artifact.Repository.Contains(repository));
+                    Assert.That(artifact.Tags.Contains(tag));
+                    break;
+                }
             }
-
-            // Act
-            AsyncPageable<RegistryArtifactProperties> artifacts = client.GetRegistryArtifactsAsync(new GetRegistryArtifactOptions(RegistryArtifactOrderBy.LastUpdatedOnDescending));
-
-            // Assert
-            string digest = null;
-            await foreach (RegistryArtifactProperties artifact in artifacts)
+            finally
             {
-                digest = artifact.Digest;
-                Assert.That(artifact.Repository.Contains(repository));
-                Assert.That(artifact.Tags.Contains(tag));
-                break;
+                // Clean up
+                var properties = await client.GetTagPropertiesAsync(tag).ConfigureAwait(false);
+                await client.DeleteRegistryArtifactAsync(properties.Value.Digest);
             }
-
-            // Clean up
-            await client.DeleteRegistryArtifactAsync(digest);
         }
 
         #endregion
