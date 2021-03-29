@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System.IO;
+using System.Text;
+using System.Text.Json;
+using Azure.Core;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
@@ -224,6 +228,57 @@ namespace Azure.ResourceManager.Core.Tests
             Sku sku1 = new Sku(null, null, null, null);
             Sku sku2 = sku1;
             Assert.IsTrue(sku1.Equals(sku2));
+        }
+
+        [Test]
+        public void SerializationTest()
+        {
+            string expected = "{\"properties\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}}";
+            Sku sku = new("NameForSku", "TierForSku", "FamilyForSku", "SizeForSku", 123456789);
+            var stream = new MemoryStream();
+            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteObjectValue(sku);
+            writer.WriteEndObject();
+            writer.Flush();
+            string json = Encoding.UTF8.GetString(stream.ToArray());
+            Assert.IsTrue(expected.Equals(json));
+        }
+
+        [Test]
+        public void InvalidSerializationTest()
+        {
+            Sku sku = new(null, null, null, null);
+            var stream = new MemoryStream();
+            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteObjectValue(sku);
+            writer.WriteEndObject();
+            writer.Flush();
+            string json = Encoding.UTF8.GetString(stream.ToArray());
+            Assert.IsTrue(json.Equals("{\"properties\":{}}"));
+        }
+
+        [Test]
+        public void DeserializationTest()
+        {
+            string json = "{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":123456789}";
+            JsonElement element = JsonDocument.Parse(json).RootElement;
+            Sku sku = Sku.DeserializeSku(element);
+            Assert.IsTrue(sku.Name.Equals("NameForSku"));
+            Assert.IsTrue(sku.Capacity == 123456789);
+        }
+
+        [Test]
+        public void InvalidDeserializationTest()
+        {
+            string json = "{\"name\":\"NameForSku\",\"notTier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\"}";
+            JsonElement element = JsonDocument.Parse(json).RootElement;
+            Sku sku = Sku.DeserializeSku(element);
+            Assert.IsTrue(sku.Tier == null);
+            Assert.IsTrue(sku.Capacity == null);
         }
     }
 }

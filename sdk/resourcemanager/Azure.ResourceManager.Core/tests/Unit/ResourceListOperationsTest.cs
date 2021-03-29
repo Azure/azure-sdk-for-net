@@ -4,6 +4,8 @@ using System.Reflection;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Azure.ResourceManager.Core.Tests
 {

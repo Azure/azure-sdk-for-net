@@ -11,7 +11,7 @@ namespace Proto.Client
             Scenario scenario = null;
             try
             {
-                scenario = ScenarioFactory.GetScenario(Scenarios.All);
+                scenario = ScenarioFactory.GetScenario(Scenarios.GenericResourceOperationsExample);
                 scenario.Execute();
             }
             finally
