@@ -20,6 +20,8 @@ namespace Azure.Data.Tables
     /// </summary>
     public class TableClient
     {
+        private static readonly char[] ContinuationTokenSplit = new[] { ' ' };
+
         private readonly string _table;
         private readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
@@ -1136,7 +1138,7 @@ namespace Azure.Data.Tables
                 return (null, null);
             }
 
-            var tokens = continuationToken.Split(new[] { ' ' }, 2);
+            var tokens = continuationToken.Split(ContinuationTokenSplit, 2);
             return (tokens[0], tokens.Length > 1 && tokens[1].Length > 0 ? tokens[1] : null);
         }
     }
