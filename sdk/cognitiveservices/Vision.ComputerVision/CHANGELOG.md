@@ -2,6 +2,8 @@
 
 ## 7.0.0 (2021-04-12)
 
+Supports v3.2 Cognitive Services Computer Vision API endpoints.
+
 ### Added
 
 * Added model versioning support
@@ -15,6 +17,8 @@
 ## 6.1.0-beta.1 (Unreleased)
 
 ## 6.0.0 (2020-10-09)
+
+Supports v3.1 Cognitive Services Computer Vision API endpoints.
 
 ### Added
 
