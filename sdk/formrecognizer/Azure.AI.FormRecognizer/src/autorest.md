@@ -6,8 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file:
-    - .\swagger\fr2.1p2.json
+tag: release_2_1_preview.3
+require:
+    - https://github.com/Azure/azure-rest-api-specs/blob/58a20b09f1563a66c9301ed3ba1e5b433f5f5ff4/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 ```
 
 
@@ -30,6 +31,22 @@ directive:
     $.properties.readResults["x-nullable"] = true;
     $.properties.pageResults["x-nullable"] = true;
     $.properties.documentResults["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ReadResult
+  transform: >
+    $.properties.selectionMarks["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.KeyValueType
+  transform: >
+    $["x-nullable"] = true;
 ```
 
 ``` yaml

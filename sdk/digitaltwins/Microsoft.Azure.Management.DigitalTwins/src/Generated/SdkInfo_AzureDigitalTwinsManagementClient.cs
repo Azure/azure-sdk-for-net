@@ -19,11 +19,24 @@ namespace Microsoft.Azure.Management.DigitalTwins
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DigitalTwins", "DigitalTwins", "2020-10-31"),
-                new Tuple<string, string, string>("DigitalTwins", "DigitalTwinsEndpoint", "2020-10-31"),
-                new Tuple<string, string, string>("DigitalTwins", "Operations", "2020-10-31"),
+                new Tuple<string, string, string>("DigitalTwins", "DigitalTwins", "2020-12-01"),
+                new Tuple<string, string, string>("DigitalTwins", "DigitalTwinsEndpoint", "2020-12-01"),
+                new Tuple<string, string, string>("DigitalTwins", "Operations", "2020-12-01"),
+                new Tuple<string, string, string>("DigitalTwins", "PrivateEndpointConnections", "2020-12-01"),
+                new Tuple<string, string, string>("DigitalTwins", "PrivateLinkResources", "2020-12-01"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/digitaltwins/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\code\\Azure\\asfn1\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "dab488ef4572b30dee885044331326f8d1c8d329";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

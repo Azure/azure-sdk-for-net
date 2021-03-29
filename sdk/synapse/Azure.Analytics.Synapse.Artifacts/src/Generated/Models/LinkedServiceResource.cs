@@ -10,7 +10,7 @@ using System;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Linked service resource type. </summary>
-    public partial class LinkedServiceResource : AzureEntityResource
+    public partial class LinkedServiceResource : SubResource
     {
         /// <summary> Initializes a new instance of LinkedServiceResource. </summary>
         /// <param name="properties"> Properties of linked service. </param>

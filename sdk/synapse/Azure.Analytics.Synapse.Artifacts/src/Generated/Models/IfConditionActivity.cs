@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> This activity evaluates a boolean expression and executes either the activities under the ifTrueActivities property or the ifFalseActivities property depending on the result of the expression. </summary>
-    public partial class IfConditionActivity : Activity
+    public partial class IfConditionActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of IfConditionActivity. </summary>
         /// <param name="name"> Activity name. </param>

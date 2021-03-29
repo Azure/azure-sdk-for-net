@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, ARMProxyResource notebookCreateUpdateParameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateUpdateParameters notebookCreateUpdateParameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="notebookCreateUpdateParameters"> The notebook workspace to create for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="notebookCreateUpdateParameters"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, ARMProxyResource notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateUpdateParameters notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="notebookCreateUpdateParameters"> The notebook workspace to create for the current database account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, or <paramref name="notebookCreateUpdateParameters"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, ARMProxyResource notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceGroupName, string accountName, NotebookWorkspaceName notebookWorkspaceName, NotebookWorkspaceCreateUpdateParameters notebookCreateUpdateParameters, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {

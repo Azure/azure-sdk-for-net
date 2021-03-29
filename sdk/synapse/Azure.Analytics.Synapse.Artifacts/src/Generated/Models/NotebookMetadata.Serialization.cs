@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(NotebookMetadataConverter))]
     public partial class NotebookMetadata : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -73,6 +76,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new NotebookMetadata(kernelspec.Value, languageInfo.Value, additionalProperties);
+        }
+
+        internal partial class NotebookMetadataConverter : JsonConverter<NotebookMetadata>
+        {
+            public override void Write(Utf8JsonWriter writer, NotebookMetadata model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override NotebookMetadata Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeNotebookMetadata(document.RootElement);
+            }
         }
     }
 }

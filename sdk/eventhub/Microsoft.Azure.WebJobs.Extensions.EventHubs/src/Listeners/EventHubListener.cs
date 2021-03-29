@@ -141,7 +141,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 var triggerInput = new EventHubTriggerInput
                 {
                     Events = events,
-                    PartitionContext = context
+                    ProcessorPartition = context
                 };
 
                 TriggeredFunctionData input = null;
@@ -271,9 +271,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     {
                         writer.WritePropertyName("runtimeInformation");
                         writer.WriteStartObject();
-                        WritePropertyIfNotNull(writer, "lastEnqueuedOffset", context.LastEnqueuedEventProperties.Value.Offset?.ToString(CultureInfo.InvariantCulture));
-                        WritePropertyIfNotNull(writer, "lastSequenceNumber", context.LastEnqueuedEventProperties.Value.SequenceNumber?.ToString(CultureInfo.InvariantCulture));
-                        WritePropertyIfNotNull(writer, "lastEnqueuedTimeUtc", context.LastEnqueuedEventProperties.Value.EnqueuedTime?.ToString("o", CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastEnqueuedOffset", context.LastEnqueuedEventProperties.Offset?.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastSequenceNumber", context.LastEnqueuedEventProperties.SequenceNumber?.ToString(CultureInfo.InvariantCulture));
+                        WritePropertyIfNotNull(writer, "lastEnqueuedTimeUtc", context.LastEnqueuedEventProperties.EnqueuedTime?.ToString("o", CultureInfo.InvariantCulture));
                         writer.WriteEndObject();
                     }
                     writer.WriteEndObject();

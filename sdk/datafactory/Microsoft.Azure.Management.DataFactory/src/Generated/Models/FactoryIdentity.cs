@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,10 +34,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="principalId">The principal id of the identity.</param>
         /// <param name="tenantId">The client tenant id of the
         /// identity.</param>
-        public FactoryIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?))
+        /// <param name="userAssignedIdentities">List of user assigned
+        /// identities for the factory.</param>
+        public FactoryIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?), IDictionary<string, object> userAssignedIdentities = default(IDictionary<string, object>))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
+            UserAssignedIdentities = userAssignedIdentities;
             CustomInit();
         }
         /// <summary>
@@ -64,8 +69,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public System.Guid? TenantId { get; private set; }
 
         /// <summary>
-        /// The identity type. Currently the only supported type is
-        /// 'SystemAssigned'.
+        /// Gets or sets list of user assigned identities for the factory.
+        /// </summary>
+        [JsonProperty(PropertyName = "userAssignedIdentities")]
+        public IDictionary<string, object> UserAssignedIdentities { get; set; }
+
+        /// <summary>
+        /// The identity type.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public static string Type { get; private set; }

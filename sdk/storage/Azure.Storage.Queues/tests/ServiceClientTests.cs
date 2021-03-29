@@ -11,6 +11,7 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
@@ -22,7 +23,7 @@ namespace Azure.Storage.Queues.Test
             : base(async, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
-        [Test]
+        [RecordedTest]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -46,7 +47,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(accountName, builder2.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
@@ -59,7 +60,7 @@ namespace Azure.Storage.Queues.Test
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_Uri()
         {
             var accountName = "accountName";
@@ -74,7 +75,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(accountName, builder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
             // Arrange
@@ -90,7 +91,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(properties);
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_AzureSasCredential_VerifyNoSasInUri()
         {
             // Arrange
@@ -104,7 +105,7 @@ namespace Azure.Storage.Queues.Test
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetQueuesAsync()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
@@ -117,7 +118,7 @@ namespace Azure.Storage.Queues.Test
             TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetQueuesAsync_Marker()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
@@ -135,7 +136,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsTrue(queues.Any(c => test.Queue.Uri == InstrumentClient(service.GetQueueClient(c.Name)).Uri));
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task GetQueuesAsync_MaxResults()
         {
@@ -150,7 +151,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(1, page.Values.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetQueuesAsync_Prefix()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
@@ -172,7 +173,7 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetQueuesAsync_Metadata()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
@@ -184,7 +185,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(first.Metadata);
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task GetQueuesAsync_Error()
         {
@@ -195,28 +196,28 @@ namespace Azure.Storage.Queues.Test
         }
 
         #region Secondary Storage
-        [Test]
+        [RecordedTest]
         public async Task GetQueuesAsync_SecondaryStorageFirstRetrySuccessful()
         {
             TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
             AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetQueuesAsync_SecondaryStorageSecondRetrySuccessful()
         {
             TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(2); // two GET failures means the GET request should end up using the PRIMARY host
             AssertSecondaryStorageSecondRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetQueuesAsync_SecondaryStorageThirdRetrySuccessful()
         {
             TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3); // three GET failures means the GET request should end up using the SECONDARY host
             AssertSecondaryStorageThirdRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetQueuesAsync_SecondaryStorage404OnSecondary()
         {
             TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3, true);  // three GET failures + 404 on SECONDARY host means the GET request should end up using the PRIMARY host
@@ -237,7 +238,7 @@ namespace Azure.Storage.Queues.Test
         #endregion
 
         #region GetProperties
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync()
         {
             // Arrange
@@ -250,7 +251,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(response.Value.Logging.RetentionPolicy);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -267,7 +268,7 @@ namespace Azure.Storage.Queues.Test
         #endregion
 
         #region SetProperties
-        [Test]
+        [RecordedTest]
         public async Task SetPropertiesAsync()
         {
             // Arrange
@@ -307,7 +308,7 @@ namespace Azure.Storage.Queues.Test
             await service.SetPropertiesAsync(originalProperties);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPropertiesAsync_ExistingProperties()
         {
             // Arrange
@@ -341,7 +342,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalCors.Count(), properties.Cors.Count());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
@@ -360,7 +361,7 @@ namespace Azure.Storage.Queues.Test
         #endregion
 
         #region GenerateSasTests
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
@@ -395,7 +396,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsTrue(serviceClient4.CanGenerateAccountSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_GetQueueClient()
         {
             // Arrange
@@ -434,7 +435,24 @@ namespace Azure.Storage.Queues.Test
             Assert.IsTrue(queueClient4.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
+        public void CanGenerateAccountSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<QueueServiceClient>();
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateAccountSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateAccountSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateAccountSasUri);
+        }
+
+        [RecordedTest]
         public void GenerateAccountSas_RequiredParameters()
         {
             // Arrange
@@ -463,7 +481,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateAccountSas_Builder()
         {
             var constants = new TestConstants(this);
@@ -498,7 +516,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateAccountSas_WrongService_Service()
         {
             var constants = new TestConstants(this);
@@ -531,5 +549,17 @@ namespace Azure.Storage.Queues.Test
             }
         }
         #endregion
+
+        [RecordedTest]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<QueueServiceClient>(TestConfigDefault.ConnectionString, new QueueClientOptions()).Object;
+            mock = new Mock<QueueServiceClient>(TestConfigDefault.ConnectionString).Object;
+            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), new QueueClientOptions()).Object;
+            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
+            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
+            mock = new Mock<QueueServiceClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new QueueClientOptions()).Object;
+        }
     }
 }

@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 Assert.That(
                     async () =>
-                    await GetNoRetryClient().AcceptSessionAsync(
+                    await CreateNoRetryClient().AcceptSessionAsync(
                         scope.QueueName,
                         sessionId),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionCannotBeLocked));
@@ -607,7 +607,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await receiver.RenewSessionLockAsync();
 
-                Assert.True(receiver.SessionLockedUntil >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
+                Assert.Greater(receiver.SessionLockedUntil, firstLockedUntilUtcTime);
 
                 // Complete Messages
                 await receiver.CompleteMessageAsync(receivedMessage.LockToken);
@@ -685,7 +685,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var sessionId = "sessionId";
                 var receiver = await client.AcceptSessionAsync(scope.QueueName, sessionId);

@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> This activity executes inner activities until the specified boolean expression results to true or timeout is reached, whichever is earlier. </summary>
-    public partial class UntilActivity : Activity
+    public partial class UntilActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of UntilActivity. </summary>
         /// <param name="name"> Activity name. </param>

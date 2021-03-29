@@ -122,6 +122,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                                                              bool enableSession,
                                                              bool forceQueueCreation = false,
                                                              TimeSpan? lockDuration = default,
+                                                             string overrideNamespace = default,
                                                              [CallerMemberName] string caller = "")
         {
             // If there was an override and the force flag is not set for creation, then build a scope
@@ -138,7 +139,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             var azureSubscription = ServiceBusTestEnvironment.Instance.SubscriptionId;
             var resourceGroup = ServiceBusTestEnvironment.Instance.ResourceGroup;
-            var serviceBusNamespace = ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
+            var serviceBusNamespace = overrideNamespace ?? ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
             var token = await AquireManagementTokenAsync().ConfigureAwait(false);
 
             string CreateName() => $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";

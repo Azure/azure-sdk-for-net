@@ -62,7 +62,14 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="inboundIpRules">This can be used to restrict traffic
         /// from specific IPs instead of all IPs. Note: These are considered
         /// only if PublicNetworkAccess is enabled.</param>
-        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>))
+        /// <param name="sku">The Sku pricing tier for the topic.</param>
+        /// <param name="identity">Identity information for the
+        /// resource.</param>
+        /// <param name="kind">Kind of the resource. Possible values include:
+        /// 'Azure', 'AzureArc'</param>
+        /// <param name="extendedLocation">Extended location of the
+        /// resource.</param>
+        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), ResourceSku sku = default(ResourceSku), IdentityInfo identity = default(IdentityInfo), string kind = default(string), ExtendedLocation extendedLocation = default(ExtendedLocation))
             : base(location, id, name, type, tags)
         {
             PrivateEndpointConnections = privateEndpointConnections;
@@ -73,6 +80,10 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             MetricResourceId = metricResourceId;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
+            Sku = sku;
+            Identity = identity;
+            Kind = kind;
+            ExtendedLocation = extendedLocation;
             CustomInit();
         }
 
@@ -142,6 +153,31 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundIpRules")]
         public IList<InboundIpRule> InboundIpRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sku pricing tier for the topic.
+        /// </summary>
+        [JsonProperty(PropertyName = "sku")]
+        public ResourceSku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets identity information for the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityInfo Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets kind of the resource. Possible values include:
+        /// 'Azure', 'AzureArc'
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
+
+        /// <summary>
+        /// Gets or sets extended location of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Validate the object.

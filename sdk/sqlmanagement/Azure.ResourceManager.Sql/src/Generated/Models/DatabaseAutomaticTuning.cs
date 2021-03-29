@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Database-level Automatic Tuning. </summary>
-    public partial class DatabaseAutomaticTuning : Resource
+    public partial class DatabaseAutomaticTuning : ProxyResource
     {
         /// <summary> Initializes a new instance of DatabaseAutomaticTuning. </summary>
         public DatabaseAutomaticTuning()

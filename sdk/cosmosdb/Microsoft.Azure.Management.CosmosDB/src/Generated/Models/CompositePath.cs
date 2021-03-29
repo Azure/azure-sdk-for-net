@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// to. Index paths typically start with root and end with wildcard
         /// (/path/*)</param>
         /// <param name="order">Sort order for composite paths. Possible values
-        /// include: 'Ascending', 'Descending'</param>
+        /// include: 'ascending', 'descending'</param>
         public CompositePath(string path = default(string), string order = default(string))
         {
             Path = path;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
 
         /// <summary>
         /// Gets or sets sort order for composite paths. Possible values
-        /// include: 'Ascending', 'Descending'
+        /// include: 'ascending', 'descending'
         /// </summary>
         [JsonProperty(PropertyName = "order")]
         public string Order { get; set; }

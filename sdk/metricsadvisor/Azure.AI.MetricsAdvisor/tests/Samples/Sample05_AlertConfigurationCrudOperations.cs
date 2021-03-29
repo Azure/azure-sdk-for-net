@@ -31,27 +31,30 @@ namespace Azure.AI.MetricsAdvisor.Samples
             //@@ string anomalyDetectionConfigurationId = "<anomalyDetectionConfigurationId>";
 
             string configurationName = "Sample anomaly alert configuration";
-            var idsOfHooksToAlert = new List<string>() { hookId };
 
-            var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
-            var metricAlertConfigurations = new List<MetricAnomalyAlertConfiguration>()
+            AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration()
             {
-                new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope)
+                Name = configurationName
             };
 
-            AnomalyAlertConfiguration alertConfiguration = new AnomalyAlertConfiguration(configurationName, idsOfHooksToAlert, metricAlertConfigurations);
+            alertConfiguration.IdsOfHooksToAlert.Add(hookId);
 
-            Response<string> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
+            var scope = MetricAnomalyAlertScope.GetScopeForWholeSeries();
+            var metricAlertConfiguration = new MetricAnomalyAlertConfiguration(anomalyDetectionConfigurationId, scope);
 
-            string alertConfigurationId = response.Value;
+            alertConfiguration.MetricAlertConfigurations.Add(metricAlertConfiguration);
 
-            Console.WriteLine($"Alert configuration ID: {alertConfigurationId}");
+            Response<AnomalyAlertConfiguration> response = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
+
+            AnomalyAlertConfiguration createdAlertConfiguration = response.Value;
+
+            Console.WriteLine($"Alert configuration ID: {createdAlertConfiguration.Id}");
             #endregion
 
             // Delete the anomaly alert configuration to clean up the Metrics Advisor resource. Do not
             // perform this step if you intend to keep using the configuration.
 
-            await adminClient.DeleteAlertConfigurationAsync(alertConfigurationId);
+            await adminClient.DeleteAlertConfigurationAsync(createdAlertConfiguration.Id);
         }
 
         [Test]

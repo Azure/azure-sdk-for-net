@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A managed server security alert policy. </summary>
-    public partial class ManagedServerSecurityAlertPolicy : Resource
+    public partial class ManagedServerSecurityAlertPolicy : ProxyResource
     {
         /// <summary> Initializes a new instance of ManagedServerSecurityAlertPolicy. </summary>
         public ManagedServerSecurityAlertPolicy()

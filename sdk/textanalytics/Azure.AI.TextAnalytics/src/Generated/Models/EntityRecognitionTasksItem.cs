@@ -11,21 +11,13 @@ using Azure.AI.TextAnalytics.Models;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The TasksStateTasksEntityRecognitionTasksItem. </summary>
-    public partial class EntityRecognitionTasksItem : TaskState
+    internal partial class EntityRecognitionTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of EntityRecognitionTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        /// <param name="resultsInternal"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resultsInternal"/> is null. </exception>
-        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, JobStatus status, EntitiesResult resultsInternal) : base(lastUpdateDateTime, status)
+        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
-            if (resultsInternal == null)
-            {
-                throw new ArgumentNullException(nameof(resultsInternal));
-            }
-
-            ResultsInternal = resultsInternal;
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionTasksItem. </summary>
@@ -33,7 +25,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
         /// <param name="resultsInternal"> . </param>
-        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, EntitiesResult resultsInternal) : base(lastUpdateDateTime, name, status)
+        internal EntityRecognitionTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, EntitiesResult resultsInternal) : base(lastUpdateDateTime, name, status)
         {
             ResultsInternal = resultsInternal;
         }

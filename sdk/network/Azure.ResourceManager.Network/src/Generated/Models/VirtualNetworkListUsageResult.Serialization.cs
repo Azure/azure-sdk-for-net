@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkListUsageResult
+    internal partial class VirtualNetworkListUsageResult
     {
         internal static VirtualNetworkListUsageResult DeserializeVirtualNetworkListUsageResult(JsonElement element)
         {

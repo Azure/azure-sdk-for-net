@@ -10,8 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraTableGetPropertiesOptions
+    public partial class CassandraTableGetPropertiesOptions : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Throughput))
+            {
+                writer.WritePropertyName("throughput");
+                writer.WriteNumberValue(Throughput.Value);
+            }
+            if (Optional.IsDefined(AutoscaleSettings))
+            {
+                writer.WritePropertyName("autoscaleSettings");
+                writer.WriteObjectValue(AutoscaleSettings);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static CassandraTableGetPropertiesOptions DeserializeCassandraTableGetPropertiesOptions(JsonElement element)
         {
             Optional<int> throughput = default;

@@ -35,6 +35,7 @@ try
     {
         Console.WriteLine($"  Text: {entity.Text}");
         Console.WriteLine($"  Offset: {entity.Offset}");
+        Console.WriteLine($"  Length: {entity.Length}");
         Console.WriteLine($"  Category: {entity.Category}");
         if (!string.IsNullOrEmpty(entity.SubCategory))
             Console.WriteLine($"  SubCategory: {entity.SubCategory}");
@@ -107,6 +108,7 @@ foreach (RecognizeEntitiesResult entitiesInDocument in entititesPerDocuments)
         {
             Console.WriteLine($"    Text: {entity.Text}");
             Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    Length: {entity.Length}");
             Console.WriteLine($"    Category: {entity.Category}");
             if (!string.IsNullOrEmpty(entity.SubCategory))
                 Console.WriteLine($"    SubCategory: {entity.SubCategory}");
@@ -184,6 +186,7 @@ foreach (RecognizeEntitiesResult entitiesInDocument in entitiesInDocuments)
         {
             Console.WriteLine($"    Text: {entity.Text}");
             Console.WriteLine($"    Offset: {entity.Offset}");
+            Console.WriteLine($"    Length: {entity.Length}");
             Console.WriteLine($"    Category: {entity.Category}");
             if (!string.IsNullOrEmpty(entity.SubCategory))
                 Console.WriteLine($"    SubCategory: {entity.SubCategory}");

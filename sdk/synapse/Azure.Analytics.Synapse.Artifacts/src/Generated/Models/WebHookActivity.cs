@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> WebHook activity. </summary>
-    public partial class WebHookActivity : Activity
+    public partial class WebHookActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of WebHookActivity. </summary>
         /// <param name="name"> Activity name. </param>

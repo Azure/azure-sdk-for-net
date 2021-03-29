@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Analytics.Synapse.AccessControl.Models
 {
     /// <summary> Role Assignment response details. </summary>
@@ -17,20 +19,28 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
 
         /// <summary> Initializes a new instance of RoleAssignmentDetails. </summary>
         /// <param name="id"> Role Assignment ID. </param>
-        /// <param name="roleId"> Role ID of the Synapse Built-In Role. </param>
+        /// <param name="roleDefinitionId"> Role ID of the Synapse Built-In Role. </param>
         /// <param name="principalId"> Object ID of the AAD principal or security-group. </param>
-        internal RoleAssignmentDetails(string id, string roleId, string principalId)
+        /// <param name="scope"> Scope at the role assignment is created. </param>
+        /// <param name="principalType"> Type of the principal Id: User, Group or ServicePrincipal. </param>
+        internal RoleAssignmentDetails(string id, Guid? roleDefinitionId, Guid? principalId, string scope, string principalType)
         {
             Id = id;
-            RoleId = roleId;
+            RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;
+            Scope = scope;
+            PrincipalType = principalType;
         }
 
         /// <summary> Role Assignment ID. </summary>
         public string Id { get; }
         /// <summary> Role ID of the Synapse Built-In Role. </summary>
-        public string RoleId { get; }
+        public Guid? RoleDefinitionId { get; }
         /// <summary> Object ID of the AAD principal or security-group. </summary>
-        public string PrincipalId { get; }
+        public Guid? PrincipalId { get; }
+        /// <summary> Scope at the role assignment is created. </summary>
+        public string Scope { get; }
+        /// <summary> Type of the principal Id: User, Group or ServicePrincipal. </summary>
+        public string PrincipalType { get; }
     }
 }

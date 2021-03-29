@@ -17,11 +17,13 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetDimensionValuesWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetDimensionValuesWithMinimumSetup(bool useTokenCredential)
         {
             const string dimensionName = "city";
 
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var valueCount = 0;
 
@@ -68,9 +70,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetMetricSeriesDefinitionsWithMinimumSetup()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricSeriesDefinitionsWithMinimumSetup(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var options = new GetMetricSeriesDefinitionsOptions(SamplingStartTime);
 
@@ -95,8 +99,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
         [RecordedTest]
         public async Task GetMetricSeriesDefinitionsWithOptionalDimensionFilter()
         {
-            var cityFilter = new List<string>() { "Belo Horizonte", "Los Angeles", "Osaka" };
-            var categoryFilter = new List<string>() { "__SUM__", "Shoes Handbags & Sunglasses" };
+            var cityFilter = new List<string>() { "Belo Horizonte", "Chennai", "Hong Kong" };
+            var categoryFilter = new List<string>() { "__SUM__", "Outdoors" };
 
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
@@ -132,9 +136,11 @@ namespace Azure.AI.MetricsAdvisor.Tests
         }
 
         [RecordedTest]
-        public async Task GetMetricSeriesData()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricSeriesData(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var seriesKey1 = new DimensionKey();
             seriesKey1.AddDimensionColumn("city", "Delhi");
@@ -144,10 +150,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
             seriesKey2.AddDimensionColumn("city", "Koltaka");
             seriesKey2.AddDimensionColumn("category", "__SUM__");
 
-            var seriesKeys = new List<DimensionKey>() { seriesKey1, seriesKey2 };
             var returnedKeys = new List<DimensionKey>();
 
-            var options = new GetMetricSeriesDataOptions(seriesKeys, SamplingStartTime, SamplingEndTime);
+            var options = new GetMetricSeriesDataOptions(SamplingStartTime, SamplingEndTime)
+            {
+                SeriesToFilter = { seriesKey1, seriesKey2 }
+            };
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(MetricId, options))
             {
@@ -169,13 +177,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 returnedKeys.Add(seriesData.Definition.SeriesKey);
             }
 
-            Assert.That(seriesKeys, Is.EquivalentTo(returnedKeys));
+            Assert.That(returnedKeys.Count, Is.EqualTo(2));
+            Assert.That(returnedKeys.Contains(seriesKey1));
+            Assert.That(returnedKeys.Contains(seriesKey2));
         }
 
         [RecordedTest]
-        public async Task GetMetricEnrichmentStatuses()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetMetricEnrichmentStatuses(bool useTokenCredential)
         {
-            MetricsAdvisorClient client = GetMetricsAdvisorClient();
+            MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
             var options = new GetMetricEnrichmentStatusesOptions(SamplingStartTime, SamplingEndTime);
 

@@ -42,26 +42,17 @@ namespace Microsoft.Extensions.Hosting
                 {
                     // Map old property names for backwards compatibility
                     // do it before the binding so new property names take precedence
-                    options.InvokeProcessorAfterReceiveTimeout = section.GetValue(
-                        "EventProcessorOptions:InvokeProcessorAfterReceiveTimeout",
-                        options.InvokeProcessorAfterReceiveTimeout);
-
-                    options.EventProcessorOptions.TrackLastEnqueuedEventProperties = section.GetValue(
+                    options.TrackLastEnqueuedEventProperties = section.GetValue(
                         "EventProcessorOptions:EnableReceiverRuntimeMetric",
-                        options.EventProcessorOptions.TrackLastEnqueuedEventProperties);
+                        options.TrackLastEnqueuedEventProperties);
 
                     options.MaxBatchSize = section.GetValue(
                         "EventProcessorOptions:MaxBatchSize",
                         options.MaxBatchSize);
 
-                    var receiveTimeout = section.GetValue<TimeSpan?>(
-                        "EventProcessorOptions:ReceiveTimeout",
-                        null);
-
-                    if (receiveTimeout != null)
-                    {
-                        options.EventProcessorOptions.MaximumWaitTime = receiveTimeout.Value;
-                    }
+                    options.PrefetchCount = section.GetValue(
+                        "EventProcessorOptions:PrefetchCount",
+                        options.PrefetchCount);
 
                     var leaseDuration = section.GetValue<TimeSpan?>(
                         "PartitionManagerOptions:LeaseDuration",
@@ -69,7 +60,7 @@ namespace Microsoft.Extensions.Hosting
 
                     if (leaseDuration != null)
                     {
-                        options.EventProcessorOptions.PartitionOwnershipExpirationInterval = leaseDuration.Value;
+                        options.PartitionOwnershipExpirationInterval = leaseDuration.Value;
                     }
 
                     var renewInterval = section.GetValue<TimeSpan?>(
@@ -78,7 +69,7 @@ namespace Microsoft.Extensions.Hosting
 
                     if (renewInterval != null)
                     {
-                        options.EventProcessorOptions.LoadBalancingUpdateInterval = renewInterval.Value;
+                        options.LoadBalancingUpdateInterval = renewInterval.Value;
                     }
                 })
                 .BindOptions<EventHubOptions>();
@@ -93,26 +84,25 @@ namespace Microsoft.Extensions.Hosting
 
         internal static void ConfigureInitialOffsetOptions(EventHubOptions options)
         {
-            string offsetType = options?.InitialOffsetOptions?.Type?.ToLower(CultureInfo.InvariantCulture) ?? string.Empty;
-            if (!string.IsNullOrEmpty(offsetType))
+            OffsetType? type = options?.InitialOffsetOptions?.Type;
+            if (type.HasValue)
             {
-                switch (offsetType)
+                switch (type)
                 {
-                    case "fromstart":
+                    case OffsetType.FromStart:
                         options.EventProcessorOptions.DefaultStartingPosition = EventPosition.Earliest;
                         break;
-                    case "fromend":
+                    case OffsetType.FromEnd:
                         options.EventProcessorOptions.DefaultStartingPosition = EventPosition.Latest;
                         break;
-                    case "fromenqueuedtime":
+                    case OffsetType.FromEnqueuedTime:
                         try
                         {
-                            DateTime enqueuedTimeUTC = DateTime.Parse(options.InitialOffsetOptions.EnqueuedTimeUTC, CultureInfo.InvariantCulture).ToUniversalTime();
-                            options.EventProcessorOptions.DefaultStartingPosition = EventPosition.FromEnqueuedTime(enqueuedTimeUTC);
+                            options.EventProcessorOptions.DefaultStartingPosition = EventPosition.FromEnqueuedTime(options.InitialOffsetOptions.EnqueuedTimeUtc.Value);
                         }
                         catch (FormatException fe)
                         {
-                            string message = $"{nameof(EventHubOptions)}:{nameof(InitialOffsetOptions)}:{nameof(InitialOffsetOptions.EnqueuedTimeUTC)} is configured with an invalid format. " +
+                            string message = $"{nameof(EventHubOptions)}:{nameof(InitialOffsetOptions)}:{nameof(InitialOffsetOptions.EnqueuedTimeUtc)} is configured with an invalid format. " +
                                 "Please use a format supported by DateTime.Parse().  e.g. 'yyyy-MM-ddTHH:mm:ssZ'";
                             throw new InvalidOperationException(message, fe);
                         }

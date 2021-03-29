@@ -47,11 +47,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         /// <returns>A <see cref="DisposableDataFeed"/> instance from which the ID of the created data feed can be obtained.</returns>
         public static async Task<DisposableDataFeed> CreateDataFeedAsync(MetricsAdvisorAdministrationClient adminClient, DataFeed dataFeed)
         {
-            string dataFeedId = await adminClient.CreateDataFeedAsync(dataFeed);
+            DataFeed createdDataFeed = await adminClient.CreateDataFeedAsync(dataFeed);
 
-            Assert.That(dataFeedId, Is.Not.Null.And.Not.Empty);
+            Assert.That(createdDataFeed, Is.Not.Null);
+            Assert.That(createdDataFeed.Id, Is.Not.Null.And.Not.Empty);
 
-            return new DisposableDataFeed(adminClient, dataFeedId);
+            return new DisposableDataFeed(adminClient, createdDataFeed.Id);
         }
 
         /// <summary>

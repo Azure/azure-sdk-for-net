@@ -3,6 +3,7 @@
 
 using System;
 using System.Globalization;
+using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -155,6 +156,8 @@ namespace Azure.Messaging.EventHubs.Core
 
                 case TimeoutException _:
                 case SocketException _:
+                case IOException _:
+                case UnauthorizedAccessException _:
                     return true;
 
                 default:

@@ -98,7 +98,7 @@ namespace Azure.Messaging.ServiceBus
         ///    messages are kept together and in order as they are transferred.
         ///    See <a href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</a>.
         /// </remarks>
-        internal string TransactionPartitionKey => AmqpMessage.GetViaPartitionKey();
+        public string TransactionPartitionKey => AmqpMessage.GetViaPartitionKey();
 
         /// <summary>Gets the session identifier for a session-aware entity.</summary>
         /// <value>The session identifier. Maximum length is 128 characters.</value>

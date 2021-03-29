@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(WorkspaceConverter))]
     public partial class Workspace : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -135,6 +137,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<ManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
             Optional<WorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
             Optional<PurviewConfiguration> purviewConfiguration = default;
+            Optional<string> adlaResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -331,11 +334,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("adlaResourceId"))
+                        {
+                            adlaResourceId = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value);
+            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, adlaResourceId.Value);
+        }
+
+        internal partial class WorkspaceConverter : JsonConverter<Workspace>
+        {
+            public override void Write(Utf8JsonWriter writer, Workspace model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override Workspace Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWorkspace(document.RootElement);
+            }
         }
     }
 }

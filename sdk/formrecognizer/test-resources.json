@@ -11,7 +11,7 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": "canadacentral",
+            "defaultValue": "[resourceGroup().location]",
             "metadata": {
                 "description": "The location of the resource. By default, this is the same as the resource group."
             }
@@ -20,7 +20,7 @@
             "defaultValue": "formrecognizer",
             "type": "string"
         },
-        "endpointSuffix": {
+        "cognitiveServicesEndpointSuffix": {
             "defaultValue": ".cognitiveservices.azure.com",
             "type": "string"
         },
@@ -48,7 +48,7 @@
         },
         "trainingDataResourceId": {
             "type": "string",
-            "defaultValue": "[resourceId('2cd617ea-1866-46b1-90e3-fffb087ebf9b', 'TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
+            "defaultValue": "[resourceId('TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
         },
         "trainingDataSasProperties": {
             "type": "object",
@@ -81,7 +81,7 @@
     "variables": {
         "roleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
-        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]"
+        "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('cognitiveServicesEndpointSuffix'))]"
     },
     "resources": [
         {

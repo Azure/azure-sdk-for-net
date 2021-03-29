@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of rerun triggers. </summary>
-    internal partial class RerunTriggerListResponse
+    public partial class RerunTriggerListResponse
     {
         /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
         /// <param name="value"> List of rerun triggers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RerunTriggerListResponse(IEnumerable<RerunTriggerResource> value)
+        public RerunTriggerListResponse(IEnumerable<RerunTriggerResource> value)
         {
             if (value == null)
             {
@@ -27,8 +27,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
+        /// <summary> Initializes a new instance of RerunTriggerListResponse. </summary>
+        /// <param name="value"> List of rerun triggers. </param>
+        /// <param name="nextLink"> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </param>
+        internal RerunTriggerListResponse(IList<RerunTriggerResource> value, string nextLink)
+        {
+            Value = value;
+            NextLink = nextLink;
+        }
+
         /// <summary> List of rerun triggers. </summary>
-        public IReadOnlyList<RerunTriggerResource> Value { get; }
+        public IList<RerunTriggerResource> Value { get; }
         /// <summary> The continuation token for getting the next page of results, if any remaining results exist, null otherwise. </summary>
         public string NextLink { get; }
     }

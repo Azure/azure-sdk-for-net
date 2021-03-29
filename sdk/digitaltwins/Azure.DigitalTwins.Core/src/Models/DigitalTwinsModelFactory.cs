@@ -36,7 +36,8 @@ namespace Azure.DigitalTwins.Core
         /// <summary>
         /// Initializes a new instance of <see cref="IncomingRelationship"/> for mocking purposes.
         /// </summary>
-        /// <param name="relationshipId"> A user-provided string representing the id of this relationship, unique in the context of the source digital twin, i.e. sourceId + relationshipId is unique in the context of the service. </param>
+        /// <param name="relationshipId"> A user-provided string representing the id of this relationship, unique in the context of the source digital twin,
+        /// i.e. sourceId + relationshipId is unique in the context of the service.</param>
         /// <param name="sourceId"> The id of the source digital twin. </param>
         /// <param name="relationshipName"> The name of the relationship. </param>
         /// <param name="relationshipLink"> Link to the relationship, to be used for deletion. </param>

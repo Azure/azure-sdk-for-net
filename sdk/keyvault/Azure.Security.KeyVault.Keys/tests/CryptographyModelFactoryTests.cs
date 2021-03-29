@@ -11,13 +11,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
     {
         [Test]
         public void DecryptOptionsRequiresCiphertext() =>
-            Assert.AreEqual("ciphertext", Assert.Throws<ArgumentNullException>(() => CryptographyModelFactory.DecryptOptions(EncryptionAlgorithm.A128Cbc, null)).ParamName);
+            Assert.AreEqual("ciphertext", Assert.Throws<ArgumentNullException>(() => CryptographyModelFactory.DecryptParameters(EncryptionAlgorithm.A128Cbc, null)).ParamName);
 
         [Test]
         public void DecryptOptionsOnlyRequired()
         {
             byte[] buffer = new byte[] { 0, 1, 2, 3 };
-            DecryptOptions options = CryptographyModelFactory.DecryptOptions(EncryptionAlgorithm.A128Cbc, buffer, null, null);
+            DecryptParameters options = CryptographyModelFactory.DecryptParameters(EncryptionAlgorithm.A128Cbc, buffer, null, null);
 
             Assert.AreEqual(EncryptionAlgorithm.A128Cbc, options.Algorithm);
             CollectionAssert.AreEqual(buffer, options.Ciphertext);
@@ -30,8 +30,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void DecryptOptionsAll()
         {
             byte[] buffer = new byte[] { 0, 1, 2, 3 };
-            DecryptOptions options = CryptographyModelFactory.DecryptOptions(EncryptionAlgorithm.A128Cbc, buffer, buffer, buffer);
-            options.AdditionalAuthenticatedData = buffer;
+            DecryptParameters options = CryptographyModelFactory.DecryptParameters(EncryptionAlgorithm.A128Cbc, buffer, buffer, buffer, buffer);
 
             Assert.AreEqual(EncryptionAlgorithm.A128Cbc, options.Algorithm);
             CollectionAssert.AreEqual(buffer, options.Ciphertext);
@@ -42,13 +41,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         [Test]
         public void EncryptOptionsRequiresPlaintext() =>
-            Assert.AreEqual("plaintext", Assert.Throws<ArgumentNullException>(() => CryptographyModelFactory.EncryptOptions(EncryptionAlgorithm.A128Cbc, null)).ParamName);
+            Assert.AreEqual("plaintext", Assert.Throws<ArgumentNullException>(() => CryptographyModelFactory.EncryptParameters(EncryptionAlgorithm.A128Cbc, null)).ParamName);
 
         [Test]
         public void EncryptOptionsOnlyRequired()
         {
             byte[] buffer = new byte[] { 0, 1, 2, 3 };
-            EncryptOptions options = CryptographyModelFactory.EncryptOptions(EncryptionAlgorithm.A128Cbc, buffer);
+            EncryptParameters options = CryptographyModelFactory.EncryptParameters(EncryptionAlgorithm.A128Cbc, buffer);
 
             Assert.AreEqual(EncryptionAlgorithm.A128Cbc, options.Algorithm);
             CollectionAssert.AreEqual(buffer, options.Plaintext);
@@ -60,8 +59,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         public void EncryptOptionsAll()
         {
             byte[] buffer = new byte[] { 0, 1, 2, 3 };
-            EncryptOptions options = CryptographyModelFactory.EncryptOptions(EncryptionAlgorithm.A128Cbc, buffer, buffer);
-            options.AdditionalAuthenticatedData = buffer;
+            EncryptParameters options = CryptographyModelFactory.EncryptParameters(EncryptionAlgorithm.A128Cbc, buffer, buffer, buffer);
 
             Assert.AreEqual(EncryptionAlgorithm.A128Cbc, options.Algorithm);
             CollectionAssert.AreEqual(buffer, options.Plaintext);

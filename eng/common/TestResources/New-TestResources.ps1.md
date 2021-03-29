@@ -231,6 +231,8 @@ Optional subscription ID to use for new resources when logging in as a
 provisioner.
 You can also use Set-AzContext if not provisioning.
 
+The default is the Azure SDK Developer Playground subscription ID.
+
 ```yaml
 Type: String
 Parameter Sets: Provisioner
@@ -238,7 +240,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: faa080af-c1d8-40ad-9cce-e1a450ca5b57
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

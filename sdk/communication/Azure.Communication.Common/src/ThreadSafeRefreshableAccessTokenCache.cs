@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
+#nullable enable
+
 namespace Azure.Communication
 {
     /// <summary>

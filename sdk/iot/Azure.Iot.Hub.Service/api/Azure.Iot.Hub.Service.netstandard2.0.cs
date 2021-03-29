@@ -211,7 +211,7 @@ namespace Azure.Iot.Hub.Service.Models
         public ConfigurationContent() { }
         public System.Collections.Generic.IDictionary<string, object> DeviceContent { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, object> ModuleContent { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> ModulesContent { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, object>> ModulesContent { get { throw null; } }
     }
     public partial class ConfigurationMetrics
     {

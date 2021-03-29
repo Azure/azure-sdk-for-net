@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A list of application security groups. </summary>
-    public partial class ApplicationSecurityGroupListResult
+    internal partial class ApplicationSecurityGroupListResult
     {
         /// <summary> Initializes a new instance of ApplicationSecurityGroupListResult. </summary>
         internal ApplicationSecurityGroupListResult()

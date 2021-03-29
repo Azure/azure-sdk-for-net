@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualRouterPeeringListResult
+    internal partial class VirtualRouterPeeringListResult
     {
         internal static VirtualRouterPeeringListResult DeserializeVirtualRouterPeeringListResult(JsonElement element)
         {

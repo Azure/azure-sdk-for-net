@@ -22,7 +22,9 @@ namespace Microsoft.Azure.Management.Storage.Models
     public enum ListSharesExpand
     {
         [EnumMember(Value = "deleted")]
-        Deleted
+        Deleted,
+        [EnumMember(Value = "snapshots")]
+        Snapshots
     }
     internal static class ListSharesExpandEnumExtension
     {
@@ -37,6 +39,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 case ListSharesExpand.Deleted:
                     return "deleted";
+                case ListSharesExpand.Snapshots:
+                    return "snapshots";
             }
             return null;
         }
@@ -47,6 +51,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 case "deleted":
                     return ListSharesExpand.Deleted;
+                case "snapshots":
+                    return ListSharesExpand.Snapshots;
             }
             return null;
         }

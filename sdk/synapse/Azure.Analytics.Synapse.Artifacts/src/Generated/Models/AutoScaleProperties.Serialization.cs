@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(AutoScalePropertiesConverter))]
     public partial class AutoScaleProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -72,6 +75,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new AutoScaleProperties(Optional.ToNullable(minNodeCount), Optional.ToNullable(enabled), Optional.ToNullable(maxNodeCount));
+        }
+
+        internal partial class AutoScalePropertiesConverter : JsonConverter<AutoScaleProperties>
+        {
+            public override void Write(Utf8JsonWriter writer, AutoScaleProperties model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AutoScaleProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAutoScaleProperties(document.RootElement);
+            }
         }
     }
 }

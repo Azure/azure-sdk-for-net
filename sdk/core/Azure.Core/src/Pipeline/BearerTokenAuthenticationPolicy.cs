@@ -32,7 +32,8 @@ namespace Azure.Core.Pipeline
         public BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes)
             : this(credential, scopes, TimeSpan.FromMinutes(5), TimeSpan.FromSeconds(30)) { }
 
-        internal BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay) {
+        internal BearerTokenAuthenticationPolicy(TokenCredential credential, IEnumerable<string> scopes, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
+        {
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(scopes, nameof(scopes));
 
@@ -58,7 +59,7 @@ namespace Azure.Core.Pipeline
                 throw new InvalidOperationException("Bearer token authentication is not permitted for non TLS protected (https) endpoints.");
             }
 
-            string headerValue = await _accessTokenCache.GetHeaderValueAsync(message, async);
+            string headerValue = await _accessTokenCache.GetHeaderValueAsync(message, async).ConfigureAwait(false);
             message.Request.SetHeader(HttpHeader.Names.Authorization, headerValue);
 
             if (async)
@@ -94,55 +95,81 @@ namespace Azure.Core.Pipeline
                 bool getTokenFromCredential;
                 TaskCompletionSource<HeaderValueInfo> headerValueTcs;
                 TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs;
-                (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources();
+                int maxCancellationRetries = 3;
 
-                if (getTokenFromCredential)
+                while (true)
                 {
-                    if (backgroundUpdateTcs != null)
+                    (headerValueTcs, backgroundUpdateTcs, getTokenFromCredential) = GetTaskCompletionSources();
+                    if (getTokenFromCredential)
                     {
-                        HeaderValueInfo info = headerValueTcs.Task.EnsureCompleted();
-                        _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, message, async));
-                        return info.HeaderValue;
-                    }
+                        if (backgroundUpdateTcs != null)
+                        {
+#pragma warning disable AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
+                            HeaderValueInfo info = headerValueTcs.Task.EnsureCompleted();
+#pragma warning restore AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
+                            _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(backgroundUpdateTcs, info, message, async));
+                            return info.HeaderValue;
+                        }
 
-                    try
-                    {
-                        HeaderValueInfo info = await GetHeaderValueFromCredentialAsync(message, async, message.CancellationToken);
-                        headerValueTcs.SetResult(info);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        headerValueTcs.SetCanceled();
-                        throw;
-                    }
-                    catch (Exception exception)
-                    {
-                        headerValueTcs.SetException(exception);
-                        throw;
-                    }
-                }
-
-                var headerValueTask = headerValueTcs.Task;
-                if (!headerValueTask.IsCompleted)
-                {
-                    if (async)
-                    {
-                        await headerValueTask.AwaitWithCancellation(message.CancellationToken);
-                    }
-                    else
-                    {
                         try
                         {
-                            headerValueTask.Wait(message.CancellationToken);
+                            HeaderValueInfo info = await GetHeaderValueFromCredentialAsync(message, async, message.CancellationToken).ConfigureAwait(false);
+                            headerValueTcs.SetResult(info);
                         }
-                        catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
+                        catch (OperationCanceledException)
+                        {
+                            headerValueTcs.SetCanceled();
+                            throw;
+                        }
+                        catch (Exception exception)
+                        {
+                            headerValueTcs.SetException(exception);
+                            throw;
+                        }
+                    }
+
+                    var headerValueTask = headerValueTcs.Task;
+                    try
+                    {
+                        if (!headerValueTask.IsCompleted)
+                        {
+                            if (async)
+                            {
+                                await headerValueTask.AwaitWithCancellation(message.CancellationToken);
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    headerValueTask.Wait(message.CancellationToken);
+                                }
+                                catch (AggregateException) { } // ignore exception here to rethrow it with EnsureCompleted
+                            }
+                        }
+
+#pragma warning disable AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
+                        return headerValueTcs.Task.EnsureCompleted().HeaderValue;
+#pragma warning restore AZC0111 // DO NOT use EnsureCompleted in possibly asynchronous scope.
+                    }
+
+                    catch (TaskCanceledException) when (!message.CancellationToken.IsCancellationRequested)
+                    {
+                        maxCancellationRetries--;
+
+                        // If the current message has no CancellationToken and we have tried this 3 times, throw.
+                        if (!message.CancellationToken.CanBeCanceled && maxCancellationRetries <= 0)
+                        {
+                            throw;
+                        }
+
+                        // We were waiting on a previous headerValueTcs operation which was canceled.
+                        //Retry the call to GetTaskCompletionSources.
+                        continue;
                     }
                 }
-
-                return headerValueTcs.Task.EnsureCompleted().HeaderValue;
             }
 
-            private (TaskCompletionSource<HeaderValueInfo> tcs, TaskCompletionSource<HeaderValueInfo>? backgroundUpdateTcs, bool getTokenFromCredential) GetTaskCompletionSources()
+            private (TaskCompletionSource<HeaderValueInfo> Tcs, TaskCompletionSource<HeaderValueInfo>? BackgroundUpdateTcs, bool GetTokenFromCredential) GetTaskCompletionSources()
             {
                 lock (_syncObj)
                 {
@@ -192,7 +219,7 @@ namespace Azure.Core.Pipeline
                 var cts = new CancellationTokenSource(_tokenRefreshRetryDelay);
                 try
                 {
-                    HeaderValueInfo newInfo = await GetHeaderValueFromCredentialAsync(httpMessage, async, cts.Token);
+                    HeaderValueInfo newInfo = await GetHeaderValueFromCredentialAsync(httpMessage, async, cts.Token).ConfigureAwait(false);
                     backgroundUpdateTcs.SetResult(newInfo);
                 }
                 catch (OperationCanceledException oce) when (cts.IsCancellationRequested)

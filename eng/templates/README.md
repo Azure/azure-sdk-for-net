@@ -1,5 +1,5 @@
-# DotNet project templates
-
+# DotNet project templates (DO NOT USE!)
+*  This is for Track 2 .NET SDK (Azure.ResourceManager.XXX) which is still in the work. Not for track 1 .NET SDK (Microsoft.Azure.Management.XXX)
 ## Azure.ResourceManager SDK client library template
 
 ### To install the template (one-time step), run following commands:
@@ -8,8 +8,8 @@
 ---
 
 
-### To list help and creation options for this template:
-* dotnet new azuremgmt -h
+###  list help and (ToAzure.ResourceManager.XXX) creation options for  this template:
+* dotnet new azuremgmt -!
 
 Following parameter is available
 | Parameter | Required | Description |

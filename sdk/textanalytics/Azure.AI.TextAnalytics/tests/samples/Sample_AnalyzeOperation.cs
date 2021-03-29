@@ -3,7 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Linq;
+using System.Threading;
 using Azure.AI.TextAnalytics.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -14,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples: SamplesBase<TextAnalyticsTestEnvironment>
     {
         [Test]
-        public async Task AnalyzeOperation()
+        public void AnalyzeOperation()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
@@ -23,87 +24,157 @@ namespace Azure.AI.TextAnalytics.Samples
 
             #region Snippet:TextAnalyticsAnalyzeOperation
 
-            string document = @"We went to Contoso Steakhouse located at midtown NYC last week for a dinner party, 
-                                and we adore the spot! They provide marvelous food and they have a great menu. The
-                                chief cook happens to be the owner (I think his name is John Doe) and he is super 
-                                nice, coming out of the kitchen and greeted us all. We enjoyed very much dining in 
-                                the place! The Sirloin steak I ordered was tender and juicy, and the place was impeccably
-                                clean. You can even pre-order from their online menu at www.contososteakhouse.com, 
-                                call 312-555-0176 or send email to order@contososteakhouse.com! The only complaint 
-                                I have is the food didn't come fast enough. Overall I highly recommend it!";
+            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
+                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
+                                We tried again today and it was amazing. Everyone in my family liked the trail although
+                                it was too challenging for the less athletic among us.
+                                Not necessarily recommended for small children.
+                                A hotel close to the trail offers services for childcare in case you want that.";
+
+            string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
+                                our anniversary so they helped me organize a little surprise for my partner.
+                                The room was clean and with the decoration I requested. It was perfect!";
+
+            string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
+                                They had great amenities that included an indoor pool, a spa, and a bar.
+                                The spa offered couples massages which were really good. 
+                                The spa was clean and felt very peaceful. Overall the whole experience was great.
+                                We will definitely come back.";
+
             var batchDocuments = new List<TextDocumentInput>
             {
-                new TextDocumentInput("1", document)
+                new TextDocumentInput("1", documentA)
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("2", documentB)
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("3", documentC)
                 {
                      Language = "en",
                 }
             };
 
-            AnalyzeOperationOptions operationOptions = new AnalyzeOperationOptions()
+            TextAnalyticsActions actions = new TextAnalyticsActions()
             {
-                KeyPhrasesTaskParameters = new KeyPhrasesTaskParameters(),
-                EntitiesTaskParameters = new EntitiesTaskParameters(),
-                PiiTaskParameters = new PiiTaskParameters(),
+                ExtractKeyPhrasesOptions = new List<ExtractKeyPhrasesOptions>() { new ExtractKeyPhrasesOptions() },
+                RecognizeEntitiesOptions = new List<RecognizeEntitiesOptions>() { new RecognizeEntitiesOptions() },
+                RecognizePiiEntitiesOptions = new List<RecognizePiiEntitiesOptions>() { new RecognizePiiEntitiesOptions() },
+                RecognizeLinkedEntitiesOptions = new List<RecognizeLinkedEntitiesOptions>() { new RecognizeLinkedEntitiesOptions() },
                 DisplayName = "AnalyzeOperationSample"
             };
 
-            AnalyzeOperation operation = client.StartAnalyzeOperationBatch(batchDocuments, operationOptions);
+            AnalyzeBatchActionsOperation operation = client.StartAnalyzeBatchActions(batchDocuments, actions);
 
-            await operation.WaitForCompletionAsync();
+            TimeSpan pollingInterval = new TimeSpan(1000);
 
-            AnalyzeOperationResult resultCollection = operation.Value;
-
-            RecognizeEntitiesResultCollection entitiesResult = resultCollection.Tasks.EntityRecognitionTasks[0].Results;
-
-            ExtractKeyPhrasesResultCollection keyPhrasesResult = resultCollection.Tasks.KeyPhraseExtractionTasks[0].Results;
-
-            RecognizePiiEntitiesResultCollection piiResult = resultCollection.Tasks.EntityRecognitionPiiTasks[0].Results;
-
-            Console.WriteLine("Recognized Entities");
-
-            foreach (RecognizeEntitiesResult result in entitiesResult)
+            while (!operation.HasCompleted)
             {
-                Console.WriteLine($"    Recognized the following {result.Entities.Count} entities:");
+                Thread.Sleep(pollingInterval);
+                operation.UpdateStatus();
 
-                foreach (CategorizedEntity entity in result.Entities)
+                Console.WriteLine($"Status: {operation.Status}");
+                //If operation has not started, all other fields are null
+                if (operation.Status != TextAnalyticsOperationStatus.NotStarted)
                 {
-                    Console.WriteLine($"    Entity: {entity.Text}");
-                    Console.WriteLine($"    Category: {entity.Category}");
-                    Console.WriteLine($"    Offset: {entity.Offset}");
-                    Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                    Console.WriteLine($"Expires On: {operation.ExpiresOn}");
+                    Console.WriteLine($"Last modified: {operation.LastModified}");
+                    if (!string.IsNullOrEmpty(operation.DisplayName))
+                        Console.WriteLine($"Display name: {operation.DisplayName}");
+                    Console.WriteLine($"Total actions: {operation.TotalActions}");
+                    Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
+                    Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
+                    Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");
                 }
-                Console.WriteLine("");
             }
 
-            Console.WriteLine("Recognized PII Entities");
-
-            foreach (RecognizePiiEntitiesResult result in piiResult)
+            foreach (AnalyzeBatchActionsResult documentsInPage in operation.GetValues())
             {
-                Console.WriteLine($"    Recognized the following {result.Entities.Count} PII entities:");
+                RecognizeEntitiesResultCollection entitiesResult = documentsInPage.RecognizeEntitiesActionsResults.FirstOrDefault().Result;
 
-                foreach (PiiEntity entity in result.Entities)
+                ExtractKeyPhrasesResultCollection keyPhrasesResult = documentsInPage.ExtractKeyPhrasesActionsResults.FirstOrDefault().Result;
+
+                RecognizePiiEntitiesResultCollection piiResult = documentsInPage.RecognizePiiEntitiesActionsResults.FirstOrDefault().Result;
+
+                RecognizeLinkedEntitiesResultCollection linkedEntitiesResult = documentsInPage.RecognizeLinkedEntitiesActionsResults.FirstOrDefault().Result;
+
+                Console.WriteLine("Recognized Entities");
+
+                foreach (RecognizeEntitiesResult result in entitiesResult)
                 {
-                    Console.WriteLine($"    Entity: {entity.Text}");
-                    Console.WriteLine($"    Category: {entity.Category}");
-                    Console.WriteLine($"    Offset: {entity.Offset}");
-                    Console.WriteLine($"    ConfidenceScore: {entity.ConfidenceScore}");
-                    Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                    Console.WriteLine($"  Recognized the following {result.Entities.Count} entities:");
+
+                    foreach (CategorizedEntity entity in result.Entities)
+                    {
+                        Console.WriteLine($"  Entity: {entity.Text}");
+                        Console.WriteLine($"  Category: {entity.Category}");
+                        Console.WriteLine($"  Offset: {entity.Offset}");
+                        Console.WriteLine($"  Length: {entity.Length}");
+                        Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
+                        Console.WriteLine($"  SubCategory: {entity.SubCategory}");
+                    }
+                    Console.WriteLine("");
                 }
-                Console.WriteLine("");
-            }
 
-            Console.WriteLine("Key Phrases");
+                Console.WriteLine("Recognized PII Entities");
 
-            foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
-            {
-                Console.WriteLine($"    Recognized the following {result.KeyPhrases.Count} Keyphrases:");
-
-                foreach (string keyphrase in result.KeyPhrases)
+                foreach (RecognizePiiEntitiesResult result in piiResult)
                 {
-                    Console.WriteLine($"    {keyphrase}");
+                    Console.WriteLine($"  Recognized the following {result.Entities.Count} PII entities:");
+
+                    foreach (PiiEntity entity in result.Entities)
+                    {
+                        Console.WriteLine($"  Entity: {entity.Text}");
+                        Console.WriteLine($"  Category: {entity.Category}");
+                        Console.WriteLine($"  Offset: {entity.Offset}");
+                        Console.WriteLine($"  Length: {entity.Length}");
+                        Console.WriteLine($"  ConfidenceScore: {entity.ConfidenceScore}");
+                        Console.WriteLine($"  SubCategory: {entity.SubCategory}");
+                    }
+                    Console.WriteLine("");
                 }
-                Console.WriteLine("");
+
+                Console.WriteLine("Key Phrases");
+
+                foreach (ExtractKeyPhrasesResult result in keyPhrasesResult)
+                {
+                    Console.WriteLine($"  Recognized the following {result.KeyPhrases.Count} Keyphrases:");
+
+                    foreach (string keyphrase in result.KeyPhrases)
+                    {
+                        Console.WriteLine($"  {keyphrase}");
+                    }
+                    Console.WriteLine("");
+                }
+
+                Console.WriteLine("Recognized Linked Entities");
+
+                foreach (RecognizeLinkedEntitiesResult result in linkedEntitiesResult)
+                {
+                    Console.WriteLine($"  Recognized the following {result.Entities.Count} linked entities:");
+
+                    foreach (LinkedEntity entity in result.Entities)
+                    {
+                        Console.WriteLine($"  Entity: {entity.Name}");
+                        Console.WriteLine($"  DataSource: {entity.DataSource}");
+                        Console.WriteLine($"  DataSource EntityId: {entity.DataSourceEntityId}");
+                        Console.WriteLine($"  Language: {entity.Language}");
+                        Console.WriteLine($"  DataSource Url: {entity.Url}");
+
+                        Console.WriteLine($"  Total Matches: {entity.Matches.Count()}");
+                        foreach (LinkedEntityMatch match in entity.Matches)
+                        {
+                            Console.WriteLine($"    Match Text: {match.Text}");
+                            Console.WriteLine($"    ConfidenceScore: {match.ConfidenceScore}");
+                            Console.WriteLine($"    Offset: {match.Offset}");
+                            Console.WriteLine($"    Length: {match.Length}");
+                        }
+                        Console.WriteLine("");
+                    }
+                    Console.WriteLine("");
+                }
             }
         }
 

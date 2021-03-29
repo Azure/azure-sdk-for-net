@@ -291,7 +291,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Returns the details of full restore operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual async Task<Response<RestoreDetailsInternal>> GetRestoreDetailsAsync(string jobId, CancellationToken cancellationToken = default)
@@ -313,7 +313,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Returns the details of full restore operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual Response<RestoreDetailsInternal> GetRestoreDetails(string jobId, CancellationToken cancellationToken = default)
@@ -335,7 +335,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Returns the details of selective restore operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual async Task<Response<SelectiveKeyRestoreDetailsInternal>> GetSelectiveKeyRestoreDetailsAsync(string jobId, CancellationToken cancellationToken = default)
@@ -358,7 +358,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Returns the details of selective restore operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full restore operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual Response<SelectiveKeyRestoreDetailsInternal> GetSelectiveKeyRestoreDetails(string jobId, CancellationToken cancellationToken = default)
@@ -381,7 +381,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Returns the details of full backup operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full backup operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual async Task<Response<FullBackupDetailsInternal>> GetBackupDetailsAsync(string jobId, CancellationToken cancellationToken = default)
@@ -403,7 +403,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Returns the details of full backup operation.
         /// </summary>
         /// <param name="jobId"> The Job Id returned part of the full backup operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="jobId"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual Response<FullBackupDetailsInternal> GetBackupDetails(string jobId, CancellationToken cancellationToken = default)

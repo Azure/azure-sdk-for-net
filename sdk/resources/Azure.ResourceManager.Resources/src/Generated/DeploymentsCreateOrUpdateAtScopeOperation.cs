@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Resources
     public partial class DeploymentsCreateOrUpdateAtScopeOperation : Operation<DeploymentExtended>, IOperationSource<DeploymentExtended>
     {
         private readonly ArmOperationHelpers<DeploymentExtended> _operation;
+
+        /// <summary> Initializes a new instance of DeploymentsCreateOrUpdateAtScopeOperation for mocking. </summary>
+        protected DeploymentsCreateOrUpdateAtScopeOperation()
+        {
+        }
+
         internal DeploymentsCreateOrUpdateAtScopeOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<DeploymentExtended>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DeploymentsCreateOrUpdateAtScopeOperation");

@@ -58,6 +58,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// traffic selectors.</param>
         /// <param name="ipsecPolicies">The IPSec Policies to be considered by
         /// this connection.</param>
+        /// <param name="trafficSelectorPolicies">The Traffic Selector Policies
+        /// to be considered by this connection.</param>
         /// <param name="enableRateLimiting">EnableBgp flag.</param>
         /// <param name="enableInternetSecurity">Enable internet
         /// security.</param>
@@ -76,7 +78,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), IList<VpnSiteLinkConnection> vpnLinkConnections = default(IList<VpnSiteLinkConnection>), RoutingConfiguration routingConfiguration = default(RoutingConfiguration), string name = default(string), string etag = default(string))
+        public VpnConnection(string id = default(string), SubResource remoteVpnSite = default(SubResource), int? routingWeight = default(int?), int? dpdTimeoutSeconds = default(int?), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), IList<TrafficSelectorPolicy> trafficSelectorPolicies = default(IList<TrafficSelectorPolicy>), bool? enableRateLimiting = default(bool?), bool? enableInternetSecurity = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), IList<VpnSiteLinkConnection> vpnLinkConnections = default(IList<VpnSiteLinkConnection>), RoutingConfiguration routingConfiguration = default(RoutingConfiguration), string name = default(string), string etag = default(string))
             : base(id)
         {
             RemoteVpnSite = remoteVpnSite;
@@ -91,6 +93,7 @@ namespace Microsoft.Azure.Management.Network.Models
             EnableBgp = enableBgp;
             UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
             IpsecPolicies = ipsecPolicies;
+            TrafficSelectorPolicies = trafficSelectorPolicies;
             EnableRateLimiting = enableRateLimiting;
             EnableInternetSecurity = enableInternetSecurity;
             UseLocalAzureIpAddress = useLocalAzureIpAddress;
@@ -181,6 +184,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipsecPolicies")]
         public IList<IpsecPolicy> IpsecPolicies { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Traffic Selector Policies to be considered by this
+        /// connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.trafficSelectorPolicies")]
+        public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; set; }
 
         /// <summary>
         /// Gets or sets enableBgp flag.

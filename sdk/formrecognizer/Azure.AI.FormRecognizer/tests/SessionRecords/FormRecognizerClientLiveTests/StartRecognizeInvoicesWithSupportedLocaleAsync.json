@@ -1,0 +1,1551 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyze?includeTextDetails=true\u0026locale=en-US",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "76742",
+        "Content-Type": "image/tiff",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-ad2f69786e9c8c4fbf043355b827a1c4-cccc10568a412542-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "4d714fa88f4734304863e4add8fa2968",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "9eabba61-9544-40db-b276-9a935631d2d8",
+        "Content-Length": "0",
+        "Date": "Tue, 23 Mar 2021 00:31:45 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/9eabba61-9544-40db-b276-9a935631d2d8",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "172"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/9eabba61-9544-40db-b276-9a935631d2d8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "dac731275bd9c4ff4d174aa5d013c352",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3d3e0fa1-c1a9-438b-b2e2-24502b694f02",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:31:45 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "8"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-23T00:31:45Z",
+        "lastUpdatedDateTime": "2021-03-23T00:31:45Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/9eabba61-9544-40db-b276-9a935631d2d8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "43a248413afbab9a784c5b32adad8cd3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "220f3533-e0b9-4949-a087-7657eb24e4b3",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:31:46 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "32"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-23T00:31:45Z",
+        "lastUpdatedDateTime": "2021-03-23T00:31:45Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/9eabba61-9544-40db-b276-9a935631d2d8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "808a05c66fbc4de34fadff2f458a6435",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3c5360a4-17a4-44ca-ab00-2354aaee40d1",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:31:48 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "10"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-23T00:31:45Z",
+        "lastUpdatedDateTime": "2021-03-23T00:31:45Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/9eabba61-9544-40db-b276-9a935631d2d8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "906c929fe658ec6d971c618d00cd17a0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "35d67db0-9061-4acc-b640-d2fe8c6c09fb",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:31:49 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "12"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-23T00:31:45Z",
+        "lastUpdatedDateTime": "2021-03-23T00:31:45Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/9eabba61-9544-40db-b276-9a935631d2d8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "cadf768b4388d1966454f34e3a6a66ed",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9d0eb49f-19df-41ad-8825-ee1bbd7d8398",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:31:50 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "9"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-23T00:31:45Z",
+        "lastUpdatedDateTime": "2021-03-23T00:31:45Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyzeResults/9eabba61-9544-40db-b276-9a935631d2d8",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "1a9225e7fc41df7b989de99f0e564d82",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a54623c4-ccad-466d-a81b-a0508a8a0ce1",
+        "Content-Length": "10827",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 23 Mar 2021 00:31:51 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "status": "succeeded",
+        "createdDateTime": "2021-03-23T00:31:45Z",
+        "lastUpdatedDateTime": "2021-03-23T00:31:51Z",
+        "analyzeResult": {
+          "version": "2.1.0",
+          "readResults": [
+            {
+              "page": 1,
+              "angle": 0,
+              "width": 1700,
+              "height": 2200,
+              "unit": "pixel",
+              "lines": [
+                {
+                  "text": "Contoso",
+                  "boundingBox": [
+                    105,
+                    231,
+                    289,
+                    232,
+                    289,
+                    274,
+                    105,
+                    273
+                  ],
+                  "words": [
+                    {
+                      "text": "Contoso",
+                      "boundingBox": [
+                        106,
+                        232,
+                        284,
+                        234,
+                        283,
+                        274,
+                        105,
+                        274
+                      ],
+                      "confidence": 0.994
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "Address:",
+                  "boundingBox": [
+                    159,
+                    299,
+                    279,
+                    300,
+                    279,
+                    326,
+                    159,
+                    325
+                  ],
+                  "words": [
+                    {
+                      "text": "Address:",
+                      "boundingBox": [
+                        161,
+                        299,
+                        279,
+                        301,
+                        279,
+                        326,
+                        160,
+                        325
+                      ],
+                      "confidence": 0.994
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "Invoice For: Microsoft",
+                  "boundingBox": [
+                    875,
+                    299,
+                    1165,
+                    299,
+                    1165,
+                    326,
+                    875,
+                    326
+                  ],
+                  "words": [
+                    {
+                      "text": "Invoice",
+                      "boundingBox": [
+                        876,
+                        300,
+                        962,
+                        299,
+                        963,
+                        327,
+                        877,
+                        326
+                      ],
+                      "confidence": 0.967
+                    },
+                    {
+                      "text": "For:",
+                      "boundingBox": [
+                        968,
+                        299,
+                        1027,
+                        299,
+                        1028,
+                        327,
+                        969,
+                        327
+                      ],
+                      "confidence": 0.994
+                    },
+                    {
+                      "text": "Microsoft",
+                      "boundingBox": [
+                        1033,
+                        299,
+                        1164,
+                        300,
+                        1165,
+                        326,
+                        1033,
+                        327
+                      ],
+                      "confidence": 0.994
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "1 Redmond way Suite",
+                  "boundingBox": [
+                    160,
+                    337,
+                    432,
+                    337,
+                    432,
+                    367,
+                    160,
+                    366
+                  ],
+                  "words": [
+                    {
+                      "text": "1",
+                      "boundingBox": [
+                        160,
+                        338,
+                        172,
+                        339,
+                        172,
+                        364,
+                        161,
+                        364
+                      ],
+                      "confidence": 0.996
+                    },
+                    {
+                      "text": "Redmond",
+                      "boundingBox": [
+                        177,
+                        339,
+                        300,
+                        339,
+                        300,
+                        367,
+                        177,
+                        365
+                      ],
+                      "confidence": 0.996
+                    },
+                    {
+                      "text": "way",
+                      "boundingBox": [
+                        305,
+                        339,
+                        359,
+                        338,
+                        359,
+                        368,
+                        305,
+                        367
+                      ],
+                      "confidence": 0.999
+                    },
+                    {
+                      "text": "Suite",
+                      "boundingBox": [
+                        364,
+                        338,
+                        429,
+                        337,
+                        429,
+                        367,
+                        364,
+                        368
+                      ],
+                      "confidence": 0.996
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "1020 Enterprise Way",
+                  "boundingBox": [
+                    1037,
+                    337,
+                    1312,
+                    338,
+                    1312,
+                    372,
+                    1037,
+                    371
+                  ],
+                  "words": [
+                    {
+                      "text": "1020",
+                      "boundingBox": [
+                        1038,
+                        338,
+                        1095,
+                        339,
+                        1095,
+                        372,
+                        1038,
+                        372
+                      ],
+                      "confidence": 0.994
+                    },
+                    {
+                      "text": "Enterprise",
+                      "boundingBox": [
+                        1102,
+                        339,
+                        1241,
+                        339,
+                        1240,
+                        373,
+                        1102,
+                        372
+                      ],
+                      "confidence": 0.994
+                    },
+                    {
+                      "text": "Way",
+                      "boundingBox": [
+                        1247,
+                        339,
+                        1312,
+                        339,
+                        1311,
+                        373,
+                        1247,
+                        373
+                      ],
+                      "confidence": 0.997
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "6000 Redmond, WA",
+                  "boundingBox": [
+                    159,
+                    375,
+                    410,
+                    375,
+                    410,
+                    403,
+                    159,
+                    404
+                  ],
+                  "words": [
+                    {
+                      "text": "6000",
+                      "boundingBox": [
+                        159,
+                        377,
+                        217,
+                        377,
+                        217,
+                        404,
+                        159,
+                        404
+                      ],
+                      "confidence": 0.986
+                    },
+                    {
+                      "text": "Redmond,",
+                      "boundingBox": [
+                        223,
+                        377,
+                        354,
+                        376,
+                        355,
+                        405,
+                        223,
+                        404
+                      ],
+                      "confidence": 0.995
+                    },
+                    {
+                      "text": "WA",
+                      "boundingBox": [
+                        360,
+                        376,
+                        404,
+                        375,
+                        404,
+                        404,
+                        360,
+                        405
+                      ],
+                      "confidence": 0.997
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "Sunnayvale, CA 87659",
+                  "boundingBox": [
+                    1036,
+                    378,
+                    1334,
+                    377,
+                    1334,
+                    406,
+                    1036,
+                    408
+                  ],
+                  "words": [
+                    {
+                      "text": "Sunnayvale,",
+                      "boundingBox": [
+                        1038,
+                        379,
+                        1197,
+                        379,
+                        1197,
+                        408,
+                        1038,
+                        407
+                      ],
+                      "confidence": 0.994
+                    },
+                    {
+                      "text": "CA",
+                      "boundingBox": [
+                        1203,
+                        379,
+                        1240,
+                        379,
+                        1239,
+                        407,
+                        1203,
+                        408
+                      ],
+                      "confidence": 0.998
+                    },
+                    {
+                      "text": "87659",
+                      "boundingBox": [
+                        1251,
+                        378,
+                        1331,
+                        378,
+                        1330,
+                        405,
+                        1251,
+                        407
+                      ],
+                      "confidence": 0.982
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "99243",
+                  "boundingBox": [
+                    157,
+                    415,
+                    238,
+                    414,
+                    238,
+                    439,
+                    158,
+                    440
+                  ],
+                  "words": [
+                    {
+                      "text": "99243",
+                      "boundingBox": [
+                        159,
+                        415,
+                        235,
+                        414,
+                        235,
+                        440,
+                        160,
+                        441
+                      ],
+                      "confidence": 0.996
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "Invoice Number",
+                  "boundingBox": [
+                    104,
+                    572,
+                    318,
+                    572,
+                    318,
+                    598,
+                    104,
+                    598
+                  ],
+                  "words": [
+                    {
+                      "text": "Invoice",
+                      "boundingBox": [
+                        105,
+                        572,
+                        199,
+                        572,
+                        199,
+                        599,
+                        105,
+                        599
+                      ],
+                      "confidence": 0.983
+                    },
+                    {
+                      "text": "Number",
+                      "boundingBox": [
+                        205,
+                        572,
+                        317,
+                        573,
+                        317,
+                        599,
+                        205,
+                        599
+                      ],
+                      "confidence": 0.996
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "Invoice Date",
+                  "boundingBox": [
+                    385,
+                    572,
+                    552,
+                    572,
+                    552,
+                    597,
+                    385,
+                    597
+                  ],
+                  "words": [
+                    {
+                      "text": "Invoice",
+                      "boundingBox": [
+                        386,
+                        573,
+                        480,
+                        572,
+                        480,
+                        598,
+                        386,
+                        598
+                      ],
+                      "confidence": 0.967
+                    },
+                    {
+                      "text": "Date",
+                      "boundingBox": [
+                        487,
+                        572,
+                        549,
+                        573,
+                        548,
+                        598,
+                        487,
+                        598
+                      ],
+                      "confidence": 0.994
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "Invoice Due Date",
+                  "boundingBox": [
+                    661,
+                    568,
+                    894,
+                    568,
+                    894,
+                    601,
+                    661,
+                    601
+                  ],
+                  "words": [
+                    {
+                      "text": "Invoice",
+                      "boundingBox": [
+                        664,
+                        569,
+                        760,
+                        569,
+                        760,
+                        601,
+                        664,
+                        602
+                      ],
+                      "confidence": 0.962
+                    },
+                    {
+                      "text": "Due",
+                      "boundingBox": [
+                        766,
+                        569,
+                        818,
+                        569,
+                        819,
+                        601,
+                        766,
+                        601
+                      ],
+                      "confidence": 0.997
+                    },
+                    {
+                      "text": "Date",
+                      "boundingBox": [
+                        825,
+                        569,
+                        893,
+                        568,
+                        893,
+                        602,
+                        825,
+                        601
+                      ],
+                      "confidence": 0.994
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "Charges",
+                  "boundingBox": [
+                    947,
+                    573,
+                    1061,
+                    574,
+                    1061,
+                    602,
+                    947,
+                    600
+                  ],
+                  "words": [
+                    {
+                      "text": "Charges",
+                      "boundingBox": [
+                        948,
+                        573,
+                        1056,
+                        574,
+                        1056,
+                        602,
+                        948,
+                        600
+                      ],
+                      "confidence": 0.996
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "VAT ID",
+                  "boundingBox": [
+                    1225,
+                    572,
+                    1320,
+                    572,
+                    1320,
+                    596,
+                    1225,
+                    597
+                  ],
+                  "words": [
+                    {
+                      "text": "VAT",
+                      "boundingBox": [
+                        1226,
+                        573,
+                        1280,
+                        572,
+                        1280,
+                        597,
+                        1227,
+                        598
+                      ],
+                      "confidence": 0.997
+                    },
+                    {
+                      "text": "ID",
+                      "boundingBox": [
+                        1287,
+                        572,
+                        1313,
+                        572,
+                        1312,
+                        597,
+                        1287,
+                        597
+                      ],
+                      "confidence": 0.996
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "34278587",
+                  "boundingBox": [
+                    105,
+                    679,
+                    230,
+                    679,
+                    230,
+                    705,
+                    105,
+                    705
+                  ],
+                  "words": [
+                    {
+                      "text": "34278587",
+                      "boundingBox": [
+                        107,
+                        680,
+                        227,
+                        680,
+                        227,
+                        705,
+                        107,
+                        705
+                      ],
+                      "confidence": 0.995
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "6/18/2017",
+                  "boundingBox": [
+                    386,
+                    680,
+                    510,
+                    679,
+                    510,
+                    704,
+                    386,
+                    705
+                  ],
+                  "words": [
+                    {
+                      "text": "6/18/2017",
+                      "boundingBox": [
+                        387,
+                        680,
+                        508,
+                        680,
+                        507,
+                        705,
+                        387,
+                        705
+                      ],
+                      "confidence": 0.989
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "6/24/2017",
+                  "boundingBox": [
+                    667,
+                    679,
+                    792,
+                    679,
+                    792,
+                    704,
+                    667,
+                    705
+                  ],
+                  "words": [
+                    {
+                      "text": "6/24/2017",
+                      "boundingBox": [
+                        668,
+                        679,
+                        789,
+                        679,
+                        790,
+                        705,
+                        667,
+                        705
+                      ],
+                      "confidence": 0.994
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                },
+                {
+                  "text": "$56,651.49 PT",
+                  "boundingBox": [
+                    1074,
+                    680,
+                    1279,
+                    679,
+                    1280,
+                    704,
+                    1074,
+                    706
+                  ],
+                  "words": [
+                    {
+                      "text": "$56,651.49",
+                      "boundingBox": [
+                        1075,
+                        680,
+                        1213,
+                        680,
+                        1213,
+                        706,
+                        1075,
+                        707
+                      ],
+                      "confidence": 0.991
+                    },
+                    {
+                      "text": "PT",
+                      "boundingBox": [
+                        1238,
+                        679,
+                        1277,
+                        679,
+                        1277,
+                        704,
+                        1238,
+                        705
+                      ],
+                      "confidence": 0.998
+                    }
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "pageResults": [
+            {
+              "page": 1,
+              "tables": [
+                {
+                  "rows": 3,
+                  "columns": 6,
+                  "cells": [
+                    {
+                      "rowIndex": 0,
+                      "columnIndex": 0,
+                      "text": "Invoice Number",
+                      "boundingBox": [
+                        101,
+                        556,
+                        380,
+                        558,
+                        380,
+                        662,
+                        101,
+                        661
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/8/words/0",
+                        "#/readResults/0/lines/8/words/1"
+                      ]
+                    },
+                    {
+                      "rowIndex": 0,
+                      "columnIndex": 1,
+                      "text": "Invoice Date",
+                      "boundingBox": [
+                        380,
+                        558,
+                        658,
+                        558,
+                        659,
+                        662,
+                        380,
+                        662
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/9/words/0",
+                        "#/readResults/0/lines/9/words/1"
+                      ]
+                    },
+                    {
+                      "rowIndex": 0,
+                      "columnIndex": 2,
+                      "text": "Invoice Due Date",
+                      "boundingBox": [
+                        658,
+                        558,
+                        941,
+                        558,
+                        941,
+                        662,
+                        659,
+                        662
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/10/words/0",
+                        "#/readResults/0/lines/10/words/1",
+                        "#/readResults/0/lines/10/words/2"
+                      ]
+                    },
+                    {
+                      "rowIndex": 0,
+                      "columnIndex": 3,
+                      "columnSpan": 2,
+                      "text": "Charges",
+                      "boundingBox": [
+                        941,
+                        558,
+                        1220,
+                        558,
+                        1220,
+                        662,
+                        941,
+                        662
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/11/words/0"
+                      ]
+                    },
+                    {
+                      "rowIndex": 0,
+                      "columnIndex": 5,
+                      "text": "VAT ID",
+                      "boundingBox": [
+                        1220,
+                        558,
+                        1499,
+                        556,
+                        1500,
+                        661,
+                        1220,
+                        662
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/12/words/0",
+                        "#/readResults/0/lines/12/words/1"
+                      ]
+                    },
+                    {
+                      "rowIndex": 1,
+                      "columnIndex": 0,
+                      "rowSpan": 2,
+                      "text": "34278587",
+                      "boundingBox": [
+                        101,
+                        661,
+                        380,
+                        662,
+                        380,
+                        771,
+                        101,
+                        771
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/13/words/0"
+                      ]
+                    },
+                    {
+                      "rowIndex": 1,
+                      "columnIndex": 1,
+                      "rowSpan": 2,
+                      "text": "6/18/2017",
+                      "boundingBox": [
+                        380,
+                        662,
+                        659,
+                        662,
+                        661,
+                        771,
+                        380,
+                        771
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/14/words/0"
+                      ]
+                    },
+                    {
+                      "rowIndex": 1,
+                      "columnIndex": 2,
+                      "rowSpan": 2,
+                      "text": "6/24/2017",
+                      "boundingBox": [
+                        659,
+                        662,
+                        941,
+                        662,
+                        941,
+                        771,
+                        661,
+                        771
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/15/words/0"
+                      ]
+                    },
+                    {
+                      "rowIndex": 1,
+                      "columnIndex": 3,
+                      "rowSpan": 2,
+                      "columnSpan": 2,
+                      "text": "$56,651.49",
+                      "boundingBox": [
+                        941,
+                        662,
+                        1220,
+                        662,
+                        1220,
+                        771,
+                        941,
+                        771
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/16/words/0"
+                      ]
+                    },
+                    {
+                      "rowIndex": 1,
+                      "columnIndex": 5,
+                      "rowSpan": 2,
+                      "text": "PT",
+                      "boundingBox": [
+                        1220,
+                        662,
+                        1500,
+                        661,
+                        1500,
+                        769,
+                        1220,
+                        771
+                      ],
+                      "elements": [
+                        "#/readResults/0/lines/16/words/1"
+                      ]
+                    }
+                  ],
+                  "boundingBox": [
+                    100,
+                    556,
+                    1499,
+                    556,
+                    1498,
+                    771,
+                    99,
+                    771
+                  ]
+                }
+              ]
+            }
+          ],
+          "documentResults": [
+            {
+              "docType": "prebuilt:invoice",
+              "pageRange": [
+                1,
+                1
+              ],
+              "fields": {
+                "CustomerAddress": {
+                  "type": "string",
+                  "valueString": "1020 Enterprise Way Sunnayvale, CA 87659",
+                  "text": "1020 Enterprise Way Sunnayvale, CA 87659",
+                  "boundingBox": [
+                    1038,
+                    338,
+                    1331.1,
+                    338.9,
+                    1330.9,
+                    408.4,
+                    1037.8,
+                    407.5
+                  ],
+                  "page": 1,
+                  "confidence": 0.955,
+                  "elements": [
+                    "#/readResults/0/lines/4/words/0",
+                    "#/readResults/0/lines/4/words/1",
+                    "#/readResults/0/lines/4/words/2",
+                    "#/readResults/0/lines/6/words/0",
+                    "#/readResults/0/lines/6/words/1",
+                    "#/readResults/0/lines/6/words/2"
+                  ]
+                },
+                "CustomerAddressRecipient": {
+                  "type": "string",
+                  "valueString": "Microsoft",
+                  "text": "Microsoft",
+                  "boundingBox": [
+                    1033,
+                    299,
+                    1164,
+                    300,
+                    1165,
+                    326,
+                    1033,
+                    327
+                  ],
+                  "page": 1,
+                  "confidence": 0.981,
+                  "elements": [
+                    "#/readResults/0/lines/2/words/2"
+                  ]
+                },
+                "CustomerName": {
+                  "type": "string",
+                  "valueString": "Microsoft",
+                  "text": "Microsoft",
+                  "boundingBox": [
+                    1033,
+                    299,
+                    1164,
+                    300,
+                    1165,
+                    326,
+                    1033,
+                    327
+                  ],
+                  "page": 1,
+                  "confidence": 0.981,
+                  "elements": [
+                    "#/readResults/0/lines/2/words/2"
+                  ]
+                },
+                "DueDate": {
+                  "type": "date",
+                  "valueDate": "2017-06-24",
+                  "text": "6/24/2017",
+                  "boundingBox": [
+                    668,
+                    679,
+                    789,
+                    679,
+                    790,
+                    705,
+                    667,
+                    705
+                  ],
+                  "page": 1,
+                  "confidence": 0.981,
+                  "elements": [
+                    "#/readResults/0/lines/15/words/0"
+                  ]
+                },
+                "InvoiceDate": {
+                  "type": "date",
+                  "valueDate": "2017-06-18",
+                  "text": "6/18/2017",
+                  "boundingBox": [
+                    387,
+                    680,
+                    508,
+                    680,
+                    507,
+                    705,
+                    387,
+                    705
+                  ],
+                  "page": 1,
+                  "confidence": 0.962,
+                  "elements": [
+                    "#/readResults/0/lines/14/words/0"
+                  ]
+                },
+                "InvoiceId": {
+                  "type": "string",
+                  "valueString": "34278587",
+                  "text": "34278587",
+                  "boundingBox": [
+                    107,
+                    680,
+                    227,
+                    680,
+                    227,
+                    705,
+                    107,
+                    705
+                  ],
+                  "page": 1,
+                  "confidence": 0.963,
+                  "elements": [
+                    "#/readResults/0/lines/13/words/0"
+                  ]
+                },
+                "Items": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Amount": {
+                          "type": "number",
+                          "valueNumber": 56651.49,
+                          "text": "$56,651.49",
+                          "boundingBox": [
+                            1075,
+                            680,
+                            1213,
+                            680,
+                            1213,
+                            706,
+                            1075,
+                            707
+                          ],
+                          "page": 1,
+                          "confidence": 0.801,
+                          "elements": [
+                            "#/readResults/0/lines/16/words/0"
+                          ]
+                        },
+                        "Date": {
+                          "type": "date",
+                          "valueDate": "2017-06-18",
+                          "text": "6/18/2017",
+                          "boundingBox": [
+                            387,
+                            680,
+                            508,
+                            680,
+                            507,
+                            705,
+                            387,
+                            705
+                          ],
+                          "page": 1,
+                          "confidence": 0.436,
+                          "elements": [
+                            "#/readResults/0/lines/14/words/0"
+                          ]
+                        },
+                        "ProductCode": {
+                          "type": "string",
+                          "valueString": "34278587",
+                          "text": "34278587",
+                          "boundingBox": [
+                            107,
+                            680,
+                            227,
+                            680,
+                            227,
+                            705,
+                            107,
+                            705
+                          ],
+                          "page": 1,
+                          "confidence": 0.665,
+                          "elements": [
+                            "#/readResults/0/lines/13/words/0"
+                          ]
+                        },
+                        "Tax": {
+                          "type": "number",
+                          "text": "PT",
+                          "boundingBox": [
+                            1238,
+                            679,
+                            1277,
+                            679,
+                            1277,
+                            704,
+                            1238,
+                            705
+                          ],
+                          "page": 1,
+                          "confidence": 0.462,
+                          "elements": [
+                            "#/readResults/0/lines/16/words/1"
+                          ]
+                        }
+                      },
+                      "text": "34278587 6/18/2017 6/24/2017 $56,651.49 PT",
+                      "boundingBox": [
+                        107,
+                        679,
+                        1277,
+                        679,
+                        1277,
+                        707,
+                        107,
+                        707
+                      ],
+                      "page": 1,
+                      "confidence": 0.885,
+                      "elements": [
+                        "#/readResults/0/lines/13/words/0",
+                        "#/readResults/0/lines/14/words/0",
+                        "#/readResults/0/lines/15/words/0",
+                        "#/readResults/0/lines/16/words/0",
+                        "#/readResults/0/lines/16/words/1"
+                      ]
+                    }
+                  ]
+                },
+                "VendorAddress": {
+                  "type": "string",
+                  "valueString": "1 Redmond way Suite 6000 Redmond, WA 99243",
+                  "text": "1 Redmond way Suite 6000 Redmond, WA 99243",
+                  "boundingBox": [
+                    159,
+                    337,
+                    429,
+                    337,
+                    429,
+                    441,
+                    159,
+                    441
+                  ],
+                  "page": 1,
+                  "confidence": 0.953,
+                  "elements": [
+                    "#/readResults/0/lines/3/words/0",
+                    "#/readResults/0/lines/3/words/1",
+                    "#/readResults/0/lines/3/words/2",
+                    "#/readResults/0/lines/3/words/3",
+                    "#/readResults/0/lines/5/words/0",
+                    "#/readResults/0/lines/5/words/1",
+                    "#/readResults/0/lines/5/words/2",
+                    "#/readResults/0/lines/7/words/0"
+                  ]
+                },
+                "VendorName": {
+                  "type": "string",
+                  "valueString": "Contoso",
+                  "text": "Contoso",
+                  "boundingBox": [
+                    106,
+                    232,
+                    284,
+                    234,
+                    283,
+                    274,
+                    105,
+                    274
+                  ],
+                  "page": 1,
+                  "confidence": 0.981,
+                  "elements": [
+                    "#/readResults/0/lines/0/words/0"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "RandomSeed": "875552751"
+  }
+}

@@ -18,9 +18,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="granularityName"> granularity of the time series. </param>
         /// <param name="metrics"> measure list. </param>
         /// <param name="dataStartFrom"> ingestion start time. </param>
-        /// <param name="dataSourceParameter"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedName"/>, <paramref name="metrics"/>, or <paramref name="dataSourceParameter"/> is null. </exception>
-        public AzureDataLakeStorageGen2DataFeed(string dataFeedName, DataFeedGranularityType granularityName, IEnumerable<DataFeedMetric> metrics, DateTimeOffset dataStartFrom, AzureDataLakeStorageGen2Parameter dataSourceParameter) : base(dataFeedName, granularityName, metrics, dataStartFrom)
+        /// <exception cref="ArgumentNullException"> <paramref name="dataFeedName"/> or <paramref name="metrics"/> is null. </exception>
+        public AzureDataLakeStorageGen2DataFeed(string dataFeedName, DataFeedGranularityType granularityName, IEnumerable<DataFeedMetric> metrics, DateTimeOffset dataStartFrom) : base(dataFeedName, granularityName, metrics, dataStartFrom)
         {
             if (dataFeedName == null)
             {
@@ -30,12 +29,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 throw new ArgumentNullException(nameof(metrics));
             }
-            if (dataSourceParameter == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceParameter));
-            }
 
-            DataSourceParameter = dataSourceParameter;
             DataSourceType = DataFeedSourceType.AzureDataLakeStorageGen2;
         }
 

@@ -32,10 +32,13 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// identity.</param>
         /// <param name="clientId">The client id of user assigned
         /// identity.</param>
-        public ClusterIdentityUserAssignedIdentitiesValue(string principalId = default(string), string clientId = default(string))
+        /// <param name="tenantId">The tenant id of user assigned
+        /// identity.</param>
+        public ClusterIdentityUserAssignedIdentitiesValue(string principalId = default(string), string clientId = default(string), string tenantId = default(string))
         {
             PrincipalId = principalId;
             ClientId = clientId;
+            TenantId = tenantId;
             CustomInit();
         }
 
@@ -55,6 +58,12 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "clientId")]
         public string ClientId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the tenant id of user assigned identity.
+        /// </summary>
+        [JsonProperty(PropertyName = "tenantId")]
+        public string TenantId { get; set; }
 
     }
 }

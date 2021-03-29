@@ -10,13 +10,13 @@ using System;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Defines the response of a provision trigger dependency operation. </summary>
-    internal partial class TriggerDependencyProvisioningStatus
+    public partial class TriggerDependencyProvisioningStatus
     {
         /// <summary> Initializes a new instance of TriggerDependencyProvisioningStatus. </summary>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="provisioningStatus"> Provisioning status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="provisioningStatus"/> is null. </exception>
-        internal TriggerDependencyProvisioningStatus(string triggerName, string provisioningStatus)
+        public TriggerDependencyProvisioningStatus(string triggerName, string provisioningStatus)
         {
             if (triggerName == null)
             {
@@ -32,8 +32,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Trigger name. </summary>
-        public string TriggerName { get; }
+        public string TriggerName { get; set; }
         /// <summary> Provisioning status. </summary>
-        public string ProvisioningStatus { get; }
+        public string ProvisioningStatus { get; set; }
     }
 }

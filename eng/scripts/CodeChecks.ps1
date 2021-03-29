@@ -9,7 +9,7 @@ param (
     [string] $ProjectDirectory,
 
     [Parameter()]
-    [string] $SDKType = "client"
+    [string] $SDKType = "all"
 )
 
 $ErrorActionPreference = 'Stop'
@@ -77,9 +77,6 @@ try {
         Write-Host "Re-generating clients"
         Invoke-Block {
             & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
-
-            # https://github.com/Azure/azure-sdk-for-net/issues/8584
-            # & $repoRoot\storage\generate.ps1
         }
     }
 
@@ -101,7 +98,11 @@ try {
         if ($LastExitCode -ne 0) {
             $status = git status -s | Out-String
             $status = $status -replace "`n","`n    "
-            LogError "Generated code is not up to date. You may need to run eng\scripts\Update-Snippets.ps1 or sdk\storage\generate.ps1 or eng\scripts\Export-API.ps1"
+            LogError "Generated code is not up to date.`n" + `
+                "You may need to rebase on the latest master, `n" + `
+                "run 'eng\scripts\Update-Snippets.ps1' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md#updating-sample-snippets), `n" + `
+                "run 'eng\scripts\Export-API.ps1' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md#public-api-additions) `n" +
+                "run 'dotnet build /t:GenerateCode' to update the generated code."
         }
     }
 }

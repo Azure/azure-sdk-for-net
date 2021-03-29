@@ -1332,7 +1332,7 @@ namespace Storage.Tests
 
                 var parameters = StorageManagementTestUtilities.GetDefaultStorageAccountParameters();
                 parameters.Location = "centraluseuap";
-                parameters.Identity = new Identity { };
+                parameters.Identity = new Identity() { Type = IdentityType.SystemAssigned};
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
@@ -1720,10 +1720,9 @@ namespace Storage.Tests
                     {
                         Actions = new ManagementPolicyAction()
                         {
-                            BaseBlob = new ManagementPolicyBaseBlob(delete: new DateAfterModification(1000)),
-                            Snapshot = new ManagementPolicySnapShot(new DateAfterCreation(100))
+                            BaseBlob = new ManagementPolicyBaseBlob(delete: new DateAfterModification(1000))
                         },
-                        Filters = new ManagementPolicyFilter(blobTypes: new List<string>() { "blockBlob" }),
+                        Filters = new ManagementPolicyFilter(blobTypes: new List<string>() { "blockBlob", "appendBlob" }),
                     }
                 };
                 rules.Add(rule2);
@@ -1735,7 +1734,8 @@ namespace Storage.Tests
                     {
                         Actions = new ManagementPolicyAction()
                         {
-                            Snapshot = new ManagementPolicySnapShot(new DateAfterCreation(200))
+                            Snapshot = new ManagementPolicySnapShot(new DateAfterCreation(100), new DateAfterCreation(200), new DateAfterCreation(150)),
+                            Version = new ManagementPolicyVersion(new DateAfterCreation(10), new DateAfterCreation(20), new DateAfterCreation(15))
                         },
                         Filters = new ManagementPolicyFilter(blobTypes: new List<string>() { "blockBlob" }),
                     }
@@ -1798,6 +1798,15 @@ namespace Storage.Tests
                         if (rule1.Definition.Actions.Snapshot != null || rule2.Definition.Actions.Snapshot != null)
                         {
                             CompareDateAfterCreation(rule1.Definition.Actions.Snapshot.Delete, rule1.Definition.Actions.Snapshot.Delete);
+                            CompareDateAfterCreation(rule1.Definition.Actions.Snapshot.TierToArchive, rule1.Definition.Actions.Snapshot.TierToArchive);
+                            CompareDateAfterCreation(rule1.Definition.Actions.Snapshot.TierToCool, rule1.Definition.Actions.Snapshot.TierToCool);
+                        }
+
+                        if (rule1.Definition.Actions.Version != null || rule2.Definition.Actions.Version != null)
+                        {
+                            CompareDateAfterCreation(rule1.Definition.Actions.Version.Delete, rule1.Definition.Actions.Version.Delete);
+                            CompareDateAfterCreation(rule1.Definition.Actions.Version.TierToArchive, rule1.Definition.Actions.Version.TierToArchive);
+                            CompareDateAfterCreation(rule1.Definition.Actions.Version.TierToCool, rule1.Definition.Actions.Version.TierToCool);
                         }
                         break;
                     }
@@ -2253,29 +2262,30 @@ namespace Storage.Tests
                 var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
 
                 //Create EcryptionScope
-                EncryptionScope es = storageMgmtClient.EncryptionScopes.Put(rgname, accountName, "testscope", new EncryptionScope(name: "testscope", source: EncryptionScopeSource.MicrosoftStorage, state: EncryptionScopeState.Disabled));
+                EncryptionScope es = storageMgmtClient.EncryptionScopes.Put(rgname, accountName, "testscope", new EncryptionScope(name: "testscope", source: EncryptionScopeSource.MicrosoftStorage, state: EncryptionScopeState.Enabled, requireInfrastructureEncryption: true));
                 Assert.Equal("testscope", es.Name);
-                Assert.Equal(EncryptionScopeState.Disabled, es.State);
+                Assert.Equal(EncryptionScopeState.Enabled, es.State);
                 Assert.Equal(EncryptionScopeSource.MicrosoftStorage, es.Source);
+                Assert.True(es.RequireInfrastructureEncryption.Value);
 
                 // Get EcryptionScope
                 es = storageMgmtClient.EncryptionScopes.Get(rgname, accountName, "testscope");
                 Assert.Equal("testscope", es.Name);
-                Assert.Equal(EncryptionScopeState.Disabled, es.State);
+                Assert.Equal(EncryptionScopeState.Enabled, es.State);
                 Assert.Equal(EncryptionScopeSource.MicrosoftStorage, es.Source);
 
                 // Patch EcryptionScope
-                es.State = EncryptionScopeState.Enabled;
+                es.State = EncryptionScopeState.Disabled;
                 es = storageMgmtClient.EncryptionScopes.Patch(rgname, accountName, "testscope", es);
                 Assert.Equal("testscope", es.Name);
-                Assert.Equal(EncryptionScopeState.Enabled, es.State);
+                Assert.Equal(EncryptionScopeState.Disabled, es.State);
                 Assert.Equal(EncryptionScopeSource.MicrosoftStorage, es.Source);
 
                 //List EcryptionScope
                 IPage<EncryptionScope> ess = storageMgmtClient.EncryptionScopes.List(rgname, accountName);
                 es = ess.First();
                 Assert.Equal("testscope", es.Name);
-                Assert.Equal(EncryptionScopeState.Enabled, es.State);
+                Assert.Equal(EncryptionScopeState.Disabled, es.State);
                 Assert.Equal(EncryptionScopeSource.MicrosoftStorage, es.Source);
             }
         }
@@ -2491,6 +2501,84 @@ namespace Storage.Tests
                     }
                 }
                 Assert.True(ruleFound);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountCreateWithEnableNfsV3()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account with StorageV2
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.PremiumLRS },
+                    Kind = Kind.StorageV2,
+                    Location = StorageManagementTestUtilities.DefaultLocation,
+                    EnableNfsV3 = false
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.NotNull(account.PrimaryEndpoints.Web);
+                Assert.Equal(Kind.StorageV2, account.Kind);
+                Assert.False(account.EnableNfsV3);
+            }
+        }
+
+        [Fact]
+        public void StorageAccountUpdateWithAllowSharedKeyAccess()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account with hot
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardGRS },
+                    Kind = Kind.Storage,
+                    Location = StorageManagementTestUtilities.DefaultLocation,
+                    AllowSharedKeyAccess = false
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.False(account.AllowSharedKeyAccess);
+
+                var parameter = new StorageAccountUpdateParameters
+                {
+                    AllowSharedKeyAccess = true,
+                    EnableHttpsTrafficOnly = false
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameter);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.True(account.AllowSharedKeyAccess);
+
+                parameter = new StorageAccountUpdateParameters
+                {
+                    AllowSharedKeyAccess = false,
+                    EnableHttpsTrafficOnly = false
+                };
+                storageMgmtClient.StorageAccounts.Update(rgname, accountName, parameter);
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                StorageManagementTestUtilities.VerifyAccountProperties(account, false);
+                Assert.False(account.AllowSharedKeyAccess);
             }
         }
     }

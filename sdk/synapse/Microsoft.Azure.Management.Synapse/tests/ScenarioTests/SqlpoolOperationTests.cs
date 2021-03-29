@@ -35,7 +35,11 @@ namespace Microsoft.Azure.Management.Synapse.Tests
                     break;
                 }
 
-                Thread.Sleep(30000);
+                if (IsRecordMode)
+                {
+                    Thread.Sleep(30000);
+                }
+
                 Assert.True(i < 60, "Synapse Workspace is not in succeeded state even after 30 min.");
             }
 
@@ -59,7 +63,10 @@ namespace Microsoft.Azure.Management.Synapse.Tests
                     break;
                 }
 
-                Thread.Sleep(30000);
+                if (IsRecordMode)
+                {
+                    Thread.Sleep(30000);
+                }
                 Assert.True(i < 60, "Synapse SqlPool is not in succeeded state even after 30 min.");
             }
 
@@ -72,7 +79,11 @@ namespace Microsoft.Azure.Management.Synapse.Tests
             };
 
             SynapseClient.SqlPools.Update(CommonData.ResourceGroupName, workspaceName, sqlpoolName, sqlPoolPatchInfo);
-            Thread.Sleep(30000);
+            if (IsRecordMode)
+            {
+                Thread.Sleep(30000);
+            }
+
             var sqlpoolUpdate = SynapseClient.SqlPools.Get(CommonData.ResourceGroupName, workspaceName, sqlpoolName);
             Assert.NotNull(sqlpoolUpdate.Tags);
             Assert.Equal("TestUpdate", sqlpoolUpdate.Tags["TestTag"]);

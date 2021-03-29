@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
-using Azure.Messaging.ServiceBus.Tests;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Sender
@@ -126,27 +124,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
                 batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>()));
-
-                await sender.SendMessagesAsync(batch);
-            }
-        }
-
-        [Test]
-        public async Task CanSendLargeMessageBatch()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
-            {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-
-                // Actual limit is set by the service; query it from the batch.  Because this will be used for the
-                // message body, leave some padding for the conversion and batch envelope.
-                var size = (long)(Math.Floor(batch.MaxSizeInBytes / 3.0f) - 150);
-
-                batch.TryAddMessage(new ServiceBusMessage(new byte[size]));
-                batch.TryAddMessage(new ServiceBusMessage(new byte[size]));
-                batch.TryAddMessage(new ServiceBusMessage(new byte[size]));
 
                 await sender.SendMessagesAsync(batch);
             }

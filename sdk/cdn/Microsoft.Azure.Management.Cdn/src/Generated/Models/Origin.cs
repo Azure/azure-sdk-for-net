@@ -78,8 +78,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="privateEndpointStatus">The approval status for the
         /// connection to the Private Link. Possible values include: 'Pending',
         /// 'Approved', 'Rejected', 'Disconnected', 'Timeout'</param>
-        public Origin(string id = default(string), string name = default(string), string type = default(string), string hostName = default(string), int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = default(string), int? priority = default(int?), int? weight = default(int?), bool? enabled = default(bool?), string privateLinkAlias = default(string), string privateLinkResourceId = default(string), string privateLinkLocation = default(string), string privateLinkApprovalMessage = default(string), string resourceState = default(string), string provisioningState = default(string), string privateEndpointStatus = default(string))
-            : base(id, name, type)
+        public Origin(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string hostName = default(string), int? httpPort = default(int?), int? httpsPort = default(int?), string originHostHeader = default(string), int? priority = default(int?), int? weight = default(int?), bool? enabled = default(bool?), string privateLinkAlias = default(string), string privateLinkResourceId = default(string), string privateLinkLocation = default(string), string privateLinkApprovalMessage = default(string), string resourceState = default(string), string provisioningState = default(string), string privateEndpointStatus = default(string))
+            : base(id, name, type, systemData)
         {
             HostName = hostName;
             HttpPort = httpPort;

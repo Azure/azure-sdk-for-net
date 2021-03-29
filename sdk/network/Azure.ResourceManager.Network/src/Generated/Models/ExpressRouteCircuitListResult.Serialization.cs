@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitListResult
+    internal partial class ExpressRouteCircuitListResult
     {
         internal static ExpressRouteCircuitListResult DeserializeExpressRouteCircuitListResult(JsonElement element)
         {

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ExecuteSsisPackageActivityConverter))]
     public partial class ExecuteSsisPackageActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -110,7 +113,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in ProjectConnectionManagers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteStartObject();
+                    foreach (var item0 in item.Value)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        writer.WriteObjectValue(item0.Value);
+                    }
+                    writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
@@ -121,7 +130,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in PackageConnectionManagers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteStartObject();
+                    foreach (var item0 in item.Value)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        writer.WriteObjectValue(item0.Value);
+                    }
+                    writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
@@ -167,8 +182,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IntegrationRuntimeReference connectVia = default;
             Optional<IDictionary<string, SsisExecutionParameter>> projectParameters = default;
             Optional<IDictionary<string, SsisExecutionParameter>> packageParameters = default;
-            Optional<IDictionary<string, object>> projectConnectionManagers = default;
-            Optional<IDictionary<string, object>> packageConnectionManagers = default;
+            Optional<IDictionary<string, IDictionary<string, SsisExecutionParameter>>> projectConnectionManagers = default;
+            Optional<IDictionary<string, IDictionary<string, SsisExecutionParameter>>> packageConnectionManagers = default;
             Optional<IDictionary<string, SsisPropertyOverride>> propertyOverrides = default;
             Optional<SsisLogLocation> logLocation = default;
             IDictionary<string, object> additionalProperties = default;
@@ -336,10 +351,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, IDictionary<string, SsisExecutionParameter>> dictionary = new Dictionary<string, IDictionary<string, SsisExecutionParameter>>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
+                                foreach (var property2 in property1.Value.EnumerateObject())
+                                {
+                                    dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                }
+                                dictionary.Add(property1.Name, dictionary0);
                             }
                             projectConnectionManagers = dictionary;
                             continue;
@@ -351,10 +371,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            Dictionary<string, IDictionary<string, SsisExecutionParameter>> dictionary = new Dictionary<string, IDictionary<string, SsisExecutionParameter>>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetObject());
+                                Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
+                                foreach (var property2 in property1.Value.EnumerateObject())
+                                {
+                                    dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                }
+                                dictionary.Add(property1.Name, dictionary0);
                             }
                             packageConnectionManagers = dictionary;
                             continue;
@@ -391,6 +416,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ExecuteSsisPackageActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, packageLocation, runtime.Value, loggingLevel.Value, environmentPath.Value, executionCredential.Value, connectVia, Optional.ToDictionary(projectParameters), Optional.ToDictionary(packageParameters), Optional.ToDictionary(projectConnectionManagers), Optional.ToDictionary(packageConnectionManagers), Optional.ToDictionary(propertyOverrides), logLocation.Value);
+        }
+
+        internal partial class ExecuteSsisPackageActivityConverter : JsonConverter<ExecuteSsisPackageActivity>
+        {
+            public override void Write(Utf8JsonWriter writer, ExecuteSsisPackageActivity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ExecuteSsisPackageActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeExecuteSsisPackageActivity(document.RootElement);
+            }
         }
     }
 }

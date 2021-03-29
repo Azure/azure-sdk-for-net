@@ -184,10 +184,8 @@ namespace SignalR.Tests
                 {
                     Name = isStandard ? "Free_F1" : "Standard_S1",
                     Tier = isStandard ? "Free" : "Standard",
-                    Size = isStandard ? "F1" : "S1",
                     Capacity = capacity,
                 },
-                HostNamePrefix = TestUtilities.GenerateName("signalr-service-test"),
                 Features = new List<SignalRFeature> {
                         new SignalRFeature { Value = "Serverless" }
                     },

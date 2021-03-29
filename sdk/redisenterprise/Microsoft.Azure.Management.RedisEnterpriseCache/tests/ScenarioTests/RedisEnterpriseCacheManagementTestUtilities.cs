@@ -13,10 +13,10 @@ namespace AzureRedisEnterpriseCache.Tests.ScenarioTests
         /// Default constructor for management clients, using the TestSupport Infrastructure
         /// </summary>
         /// <param name="testBase">the test class</param>
-        /// <returns>A redis cache management client, created from the current context (environment variables)</returns>
-        public static redisenterpriseClient GetRedisEnterpriseManagementClient(this TestBase testBase, MockContext context)
+        /// <returns>A Redis Enterprise cache management client, created from the current context (environment variables)</returns>
+        public static RedisEnterpriseManagementClient GetRedisEnterpriseManagementClient(this TestBase testBase, MockContext context)
         {
-            return context.GetServiceClient<redisenterpriseClient>();
+            return context.GetServiceClient<RedisEnterpriseManagementClient>();
         }
 
         /// <summary>

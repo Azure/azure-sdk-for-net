@@ -181,6 +181,20 @@
             }
         },
         {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "[variables('mgmtApiVersion')]",
+            "name": "[concat(variables('dataLakeAccountName'), '/default')]",
+            "properties": {
+                "containerDeleteRetentionPolicy": {
+                    "enabled": true,
+                    "days": 1
+                }
+            },
+            "dependsOn": [
+                "[variables('dataLakeAccountName')]"
+            ]
+        },
+        {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "[variables('mgmtApiVersion')]",
             "name": "[variables('softDeleteAccountName')]",

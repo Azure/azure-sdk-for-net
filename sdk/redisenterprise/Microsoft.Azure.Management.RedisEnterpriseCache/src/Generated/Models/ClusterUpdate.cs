@@ -37,7 +37,8 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// <param name="sku">The SKU to create, which affects price,
         /// performance, and features.</param>
         /// <param name="minimumTlsVersion">The minimum TLS version for the
-        /// cluster to support, e.g. '1.2'</param>
+        /// cluster to support, e.g. '1.2'. Possible values include: '1.0',
+        /// '1.1', '1.2'</param>
         /// <param name="hostName">DNS name of the cluster endpoint</param>
         /// <param name="provisioningState">Current provisioning status of the
         /// cluster. Possible values include: 'Succeeded', 'Failed',
@@ -79,7 +80,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
 
         /// <summary>
         /// Gets or sets the minimum TLS version for the cluster to support,
-        /// e.g. '1.2'
+        /// e.g. '1.2'. Possible values include: '1.0', '1.1', '1.2'
         /// </summary>
         [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
         public string MinimumTlsVersion { get; set; }

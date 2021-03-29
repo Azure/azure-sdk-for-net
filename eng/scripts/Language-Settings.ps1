@@ -1,24 +1,51 @@
 $Language = "dotnet"
 $LanguageShort = "net"
+$LanguageDisplayName = ".NET"
 $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 
-function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
+function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory)
 {
-  $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
-  if (Test-Path $projectPath)
-  {
-    $projectData = New-Object -TypeName XML
-    $projectData.load($projectPath)
-    $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
-    return [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
-  }
-  else
+  $projDirPath = (Join-Path $pkgPath "src")
+
+  if (!(Test-Path $projDirPath))
   {
     return $null
   }
+
+  $projectPaths = @(Resolve-Path (Join-Path $projDirPath "*.csproj"))
+  
+  if ($projectpaths.Count -ge 1) {
+    $projectPath = $projectPaths[0].path
+    if ($projectPaths.Count -gt 1) {
+      LogWarning "There is more than on csproj file in the projectpath/src directory. First project picked."
+    }
+  }
+  else {
+    return $null
+  }
+
+  if ($projectPath -and (Test-Path $projectPath))
+  {
+    $pkgName = Split-Path -Path $projectPath -LeafBase 
+    $projectData = New-Object -TypeName XML
+    $projectData.load($projectPath)
+    $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
+    $sdkType = "client"
+    if ($pkgName -match "\.ResourceManager\." -or $pkgName -match "\.Management\.")
+    {
+      $sdkType = "mgmt"
+    }
+    $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
+    $pkgProp.SdkType = $sdkType
+    $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
+    $pkgProp.ArtifactName = $pkgName
+    return $pkgProp
+  }
+
+  return $null
 }
 
 # Returns the nuget publish status of a package id and version.
@@ -63,6 +90,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
   Expand-Archive -Path $zipFileLocation -DestinationPath $workFolder
   [xml] $packageXML = Get-ChildItem -Path "$workFolder/*.nuspec" | Get-Content
   $pkgId = $packageXML.package.metadata.id
+  $docsReadMeName = $pkgId -replace "^Azure." , ""
   $pkgVersion = $packageXML.package.metadata.version
 
   $changeLogLoc = @(Get-ChildItem -Path $workFolder -Recurse -Include "CHANGELOG.md")[0]
@@ -86,6 +114,7 @@ function Get-dotnet-PackageInfoFromPackageFile ($pkg, $workingDirectory)
     Deployable     = $forceCreate -or !(IsNugetPackageVersionPublished -pkgId $pkgId -pkgVersion $pkgVersion)
     ReleaseNotes   = $releaseNotes
     ReadmeContent  = $readmeContent
+    DocsReadMeName = $docsReadMeName
   }
 }
 
@@ -145,7 +174,7 @@ function Publish-dotnet-GithubIODocs ($DocLocation, $PublicArtifactLocation)
 function Get-dotnet-GithubIoDocIndex()
 {
   # Update the main.js and docfx.json language content
-  UpdateDocIndexFiles -appTitleLang ".NET"
+  UpdateDocIndexFiles -appTitleLang $LanguageDisplayName
   # Fetch out all package metadata from csv file.
   $metadata = Get-CSVMetadata -MetadataUri $MetadataUri
   # Get the artifacts name from blob storage
@@ -153,7 +182,7 @@ function Get-dotnet-GithubIoDocIndex()
   # Build up the artifact to service name mapping for GithubIo toc.
   $tocContent = Get-TocMapping -metadata $metadata -artifacts $artifacts
   # Generate yml/md toc files and build site.
-  GenerateDocfxTocContent -tocContent $tocContent -lang "NET"
+  GenerateDocfxTocContent -tocContent $tocContent -lang $LanguageDisplayName
 }
 
 # details on CSV schema can be found here
@@ -201,20 +230,21 @@ function Update-dotnet-CIConfig($pkgs, $ciRepo, $locationInDocRepo, $monikerId=$
 }
 
 # function is used to auto generate API View
-function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName = "")
+function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName)
 {
   # Find all nupkg files in given artifact directory
-  $pkg = Get-dotnet-Package-Artifacts $artifactDir
+  $PackageArtifactPath = Join-Path $artifactDir $packageName
+  $pkg = Get-dotnet-Package-Artifacts $PackageArtifactPath
   if (!$pkg)
   {
-    Write-Host "Package is not available in artifact path $($artifactDir)"
+    Write-Host "Package is not available in artifact path $($PackageArtifactPath)"
     return $null
   }
   $packages = @{ $pkg.Name = $pkg.FullName }
   return $packages
 }
 
-function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseDate, $BuildType=$null, $GroupId=$null)
+function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseDate)
 {
   if($null -eq $ReleaseDate)
   {
@@ -222,4 +252,16 @@ function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseD
   }
   & "$EngDir/scripts/Update-PkgVersion.ps1" -ServiceDirectory $ServiceDirectory -PackageName $PackageName `
   -NewVersionString $Version -ReleaseDate $ReleaseDate
+}
+
+function GetExistingPackageVersions ($PackageName, $GroupId=$null)
+{
+  try {
+    $existingVersion = Invoke-RestMethod -Method GET -Uri "https://api.nuget.org/v3-flatcontainer/${PackageName}/index.json"
+    return $existingVersion.versions
+  }
+  catch {
+    LogError "Failed to retrieve package versions. `n$_"
+    return $null
+  }
 }

@@ -27,5 +27,12 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public const string CANCELLING = "CANCELLING";
         public const string CANCELLED = "CANCELLED";
         public const string FAILED = "FAILED";
+        public const string VALIDATING = "VALIDATING";
+        public const string VALIDATIONCOMPLETE = "VALIDATION_COMPLETE";
+        public const string VALIDATIONFAILED = "VALIDATION_FAILED";
+        public const string RESTOREINPROGRESS = "RESTORE_IN_PROGRESS";
+        public const string RESTORECOMPLETED = "RESTORE_COMPLETED";
+        public const string BACKUPINPROGRESS = "BACKUP_IN_PROGRESS";
+        public const string BACKUPCOMPLETED = "BACKUP_COMPLETED";
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class MetricBaselinesResponse
+    internal partial class MetricBaselinesResponse
     {
         internal static MetricBaselinesResponse DeserializeMetricBaselinesResponse(JsonElement element)
         {

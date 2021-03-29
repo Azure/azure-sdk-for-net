@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkGatewayListResult
+    internal partial class VirtualNetworkGatewayListResult
     {
         internal static VirtualNetworkGatewayListResult DeserializeVirtualNetworkGatewayListResult(JsonElement element)
         {

@@ -11,9 +11,11 @@ using Azure.Storage.Queues.Tests;
 using NUnit.Framework;
 using Azure.Core;
 using Azure.Storage.Sas;
-using Azure.Core.TestFramework;
-using System.Buffers.Text;
 using System.Text;
+using Moq;
+using Azure.Storage.Queues.Specialized;
+using Moq.Protected;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Queues.Test
 {
@@ -24,7 +26,7 @@ namespace Azure.Storage.Queues.Test
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -51,7 +53,7 @@ namespace Azure.Storage.Queues.Test
             //Assert.AreEqual("accountName", builder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_ConnectionString_Sas()
         {
             // Arrange
@@ -104,7 +106,7 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_Uri()
         {
             var accountName = "accountName";
@@ -118,7 +120,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(accountName, builder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
@@ -131,7 +133,7 @@ namespace Azure.Storage.Queues.Test
                 new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
             // Arrange
@@ -147,7 +149,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(properties);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
         {
             // Arrange
@@ -162,7 +164,7 @@ namespace Azure.Storage.Queues.Test
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
@@ -184,7 +186,7 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_FromService()
         {
             var name = GetNewQueueName();
@@ -205,7 +207,7 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_WithOauth()
         {
             // Arrange
@@ -227,7 +229,7 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_WithAccountSas()
         {
             // Arrange
@@ -249,7 +251,7 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_WithQueueServiceSas()
         {
             // Arrange
@@ -279,7 +281,7 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateAsync_Error()
         {
             // Arrange
@@ -294,7 +296,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueAlreadyExists", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_NotExists()
         {
             // Arrange
@@ -312,7 +314,7 @@ namespace Azure.Storage.Queues.Test
             await queue.DeleteIfExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_Exists()
         {
             // Arrange
@@ -331,7 +333,7 @@ namespace Azure.Storage.Queues.Test
             await queue.DeleteIfExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_ExistsDifferentMetadata()
         {
             // Arrange
@@ -351,7 +353,7 @@ namespace Azure.Storage.Queues.Test
             await queue.DeleteIfExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateIfNotExistsAsync_Error()
         {
             // Arrange
@@ -366,7 +368,7 @@ namespace Azure.Storage.Queues.Test
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExistsAsync_Exists()
         {
             // Arrange
@@ -385,7 +387,7 @@ namespace Azure.Storage.Queues.Test
             await queue.DeleteIfExistsAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExistsAsync_NotExists()
         {
             // Arrange
@@ -400,7 +402,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ExistsAsync_Error()
         {
             // Arrange
@@ -415,7 +417,7 @@ namespace Azure.Storage.Queues.Test
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfExistsAsync_Exists()
         {
             // Arrange
@@ -431,7 +433,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsTrue(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfExistsAsync_NotExists()
         {
             // Arrange
@@ -446,7 +448,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsFalse(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteIfExistsAsync_Error()
         {
             // Arrange
@@ -461,7 +463,7 @@ namespace Azure.Storage.Queues.Test
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync()
         {
             // Arrange
@@ -474,7 +476,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(queueProperties);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -490,7 +492,7 @@ namespace Azure.Storage.Queues.Test
 
         #region Secondary Storage
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_SecondaryStorage()
         {
             QueueClient queueClient = GetQueueClient_SecondaryAccount_ReadEnabledOnRetry(1, out TestExceptionPolicy testExceptionPolicy);
@@ -507,7 +509,7 @@ namespace Azure.Storage.Queues.Test
         }
         #endregion
 
-        [Test]
+        [RecordedTest]
         public async Task SetMetadataAsync_OnCreate()
         {
             // Arrange
@@ -520,7 +522,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual("data", result.Value.Metadata["meta"]);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetMetadataAsync_Metadata()
         {
             // Arrange
@@ -537,7 +539,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [Test]
+        [RecordedTest]
         public async Task SetMetadataAsync_Error()
         {
             // Arrange
@@ -552,7 +554,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccessPolicyAsync()
         {
             // Arrange
@@ -575,7 +577,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [Test]
+        [RecordedTest]
         public async Task GetAccessPolicyAsync_Error()
         {
             // Arrange
@@ -589,7 +591,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetAccessPolicyAsync()
         {
             await using DisposingQueue test = await GetTestQueueAsync();
@@ -600,7 +602,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [Test]
+        [RecordedTest]
         public async Task SetAccessPolicyAsync_Error()
         {
             // Arrange
@@ -615,7 +617,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteAsync()
         {
             // Arrange
@@ -631,7 +633,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreNotEqual(default, result.Headers.RequestId, $"{nameof(result)} may not be populated");
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteAsync_FromService()
         {
             var name = GetNewQueueName();
@@ -651,7 +653,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [Test]
+        [RecordedTest]
         public async Task DeleteAsync_Error()
         {
             // Arrange
@@ -665,7 +667,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendMessageAsync()
         {
             // Arrange
@@ -681,7 +683,7 @@ namespace Azure.Storage.Queues.Test
             Assert.NotNull(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendReceiveNullMessageAsync()
         {
             // Arrange
@@ -699,7 +701,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(string.Empty, receivedMessage.MessageText);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task EncodesOutgoingMessage()
         {
             // Arrange
@@ -720,7 +722,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(encodedText, receivedMessage.MessageText);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task EncodesOutgoingMessageAndRespectsSegmentBoundaries()
         {
             // Arrange
@@ -743,7 +745,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual("payload", receivedMessage.Body.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DecodesReceivedMessage()
         {
             // Arrange
@@ -764,7 +766,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(messageText, receivedMessage.MessageText);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DecodesPeekedMessage()
         {
             // Arrange
@@ -785,7 +787,94 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(messageText, receivedMessage.MessageText);
         }
 
-        [Test]
+        [RecordedTest]
+        public async Task FailsOnInvalidPeekedMessageIfNoHandlerIsProvided()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<FormatException>(
+                encodingClient.PeekMessagesAsync(),
+                e =>
+                {
+                    StringAssert.Contains("The input is not a valid Base-64 string", e.Message);
+                });
+        }
+
+        [RecordedTest]
+        public async Task CanHandleInvalidPeekedMessageAndReturnValid()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            PeekedMessage badMessage = null;
+            PeekedMessage badMessage2 = null;
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    badMessage = arg.PeekedMessage;
+                    return Task.CompletedTask;
+                },
+                arg =>
+                {
+                    badMessage2 = arg.PeekedMessage;
+                    return Task.CompletedTask;
+                });
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            PeekedMessage[] peekedMessages = await encodingClient.PeekMessagesAsync(10);
+
+            // Assert
+            Assert.AreEqual(1, peekedMessages.Count());
+            Assert.NotNull(badMessage);
+            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
+            Assert.NotNull(badMessage2);
+            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
+        }
+
+        [RecordedTest]
+        public async Task PropagatesExceptionIfInvalidPeekedMessageAndHandlerThrows()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM1");
+                },
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM2");
+                });
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<AggregateException>(
+                encodingClient.PeekMessagesAsync(10),
+                e =>
+                {
+                    Assert.AreEqual(2, e.InnerExceptions.Count);
+                    Assert.AreEqual("KABOOM1", e.InnerExceptions[0].Message);
+                    Assert.AreEqual("KABOOM2", e.InnerExceptions[1].Message);
+                });
+        }
+
+        [RecordedTest]
         public async Task CanSendAndReceiveNonUTFBytes()
         {
             // Arrange
@@ -806,7 +895,140 @@ namespace Azure.Storage.Queues.Test
             CollectionAssert.AreEqual(content, receivedMessage.Body.ToArray());
         }
 
-        [Test]
+        [RecordedTest]
+        public async Task FailsOnInvalidQueueMessageIfNoHandlerIsProvided()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(test.Queue.Name, QueueMessageEncoding.Base64);
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<FormatException>(
+                encodingClient.ReceiveMessagesAsync(),
+                e =>
+                {
+                    StringAssert.Contains("The input is not a valid Base-64 string", e.Message);
+                });
+        }
+
+        [RecordedTest]
+        public async Task CanHandleInvalidMessageAndReturnValid()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            QueueMessage badMessage = null;
+            QueueMessage badMessage2 = null;
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    badMessage = arg.ReceivedMessage;
+                    return Task.CompletedTask;
+                },
+                arg =>
+                {
+                    badMessage2 = arg.ReceivedMessage;
+                    return Task.CompletedTask;
+                });
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            QueueMessage[] queueMessages = await encodingClient.ReceiveMessagesAsync(10);
+
+            // Assert
+            Assert.AreEqual(1, queueMessages.Count());
+            Assert.NotNull(badMessage);
+            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
+            Assert.NotNull(badMessage2);
+            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
+        }
+
+        [RecordedTest]
+        public async Task TakesSnapshotOfMessageDecodingFailedHandlersAtConstruction()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            QueueMessage badMessage = null;
+            QueueMessage badMessage2 = null;
+            QueueMessage badMessage3 = null;
+            var options = GetOptions();
+            options.MessageEncoding = QueueMessageEncoding.Base64;
+            options.MessageDecodingFailed += arg =>
+            {
+                badMessage = arg.ReceivedMessage;
+                return Task.CompletedTask;
+            };
+            options.MessageDecodingFailed += arg =>
+            {
+                badMessage2 = arg.ReceivedMessage;
+                return Task.CompletedTask;
+            };
+
+            var encodingClient = GetServiceClient_SharedKey(options).GetQueueClient(test.Queue.Name);
+
+            // add third handler after client creation
+            options.MessageDecodingFailed += arg =>
+            {
+                badMessage3 = arg.ReceivedMessage;
+                return Task.CompletedTask;
+            };
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            QueueMessage[] queueMessages = await encodingClient.ReceiveMessagesAsync(10);
+
+            // Assert
+            Assert.AreEqual(1, queueMessages.Count());
+            Assert.NotNull(badMessage);
+            Assert.AreEqual(nonEncodedContent, badMessage.Body.ToString());
+            Assert.NotNull(badMessage2);
+            Assert.AreEqual(nonEncodedContent, badMessage2.Body.ToString());
+            Assert.Null(badMessage3);
+        }
+
+        [RecordedTest]
+        public async Task PropagatesExceptionIfInvalidQueueMessageAndHandlerThrows()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+            var encodingClient = GetEncodingClient(
+                test.Queue.Name,
+                QueueMessageEncoding.Base64,
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM1");
+                },
+                arg =>
+                {
+                    throw new ArgumentException("KABOOM2");
+                });
+            var nonEncodedContent = "test_content";
+
+            await test.Queue.SendMessageAsync(nonEncodedContent);
+            await encodingClient.SendMessageAsync(nonEncodedContent);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<AggregateException>(
+                encodingClient.ReceiveMessagesAsync(10),
+                e =>
+                {
+                    Assert.AreEqual(2, e.InnerExceptions.Count);
+                    Assert.AreEqual("KABOOM1", e.InnerExceptions[0].Message);
+                    Assert.AreEqual("KABOOM2", e.InnerExceptions[1].Message);
+                });
+        }
+
+        [RecordedTest]
         public async Task SendMessageAsync_SAS()
         {
             // Arrange
@@ -840,7 +1062,7 @@ namespace Azure.Storage.Queues.Test
             Assert.NotNull(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendMessageAsync_SasWithIdentifier()
         {
             // Arrange
@@ -886,7 +1108,7 @@ namespace Azure.Storage.Queues.Test
             Assert.NotNull(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendMessageAsync_Min()
         {
             // Arrange
@@ -899,7 +1121,7 @@ namespace Azure.Storage.Queues.Test
             Assert.NotNull(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SendMessageAsync_ExtendedExceptionMessage()
         {
             // Arrange
@@ -919,7 +1141,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [Test]
+        [RecordedTest]
         public async Task SendMessageAsync_Error()
         {
             // Arrange
@@ -933,7 +1155,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ReceiveMessagesAsync()
         {
             // Arrange
@@ -952,7 +1174,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(2, response.Value.Count());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ReceiveMessagesAsync_Min()
         {
             // Arrange
@@ -970,7 +1192,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [Test]
+        [RecordedTest]
         public async Task ReceiveMessagesAsync_Error()
         {
             // Arrange
@@ -984,7 +1206,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ReceiveMessageAsync()
         {
             // Arrange
@@ -1001,7 +1223,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(messageText, response.Value.MessageText);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ReceiveMessageAsync_Min()
         {
             // Arrange
@@ -1017,7 +1239,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(messageText, response.Value.MessageText);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ReceiveMessageAsync_EmptyQueue()
         {
             // Arrange
@@ -1032,7 +1254,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNull(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ReceiveMessageAsync_EmptyQueue_With_ResponseCast()
         {
             // Arrange
@@ -1048,7 +1270,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [Test]
+        [RecordedTest]
         public async Task ReceiveMessageAsync_Error()
         {
             // Arrange
@@ -1062,7 +1284,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task PeekMessagesAsync()
         {
             // Arrange
@@ -1079,7 +1301,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(2, response.Value.Count());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task PeekMessagesAsync_Min()
         {
             // Arrange
@@ -1097,7 +1319,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [Test]
+        [RecordedTest]
         public async Task PeekMessagesAsync_Error()
         {
             // Arrange
@@ -1111,7 +1333,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task PeekMessageAsync()
         {
             // Arrange
@@ -1128,7 +1350,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [Test]
+        [RecordedTest]
         public async Task PeekMessageAsync_Error()
         {
             // Arrange
@@ -1142,7 +1364,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task PeekMessageAsync_EmptyQueue()
         {
             // Arrange
@@ -1155,7 +1377,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNull(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task PeekMessageAsync_EmptyQueue_WithResponseCast()
         {
             // Arrange
@@ -1168,7 +1390,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNull(message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ClearMessagesAsync()
         {
             // Arrange
@@ -1186,7 +1408,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         // Note that this test intentionally does not call queue.CreateAsync()
-        [Test]
+        [RecordedTest]
         public async Task ClearMessagesAsync_Error()
         {
             // Arrange
@@ -1200,7 +1422,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("QueueNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteMessageAsync()
         {
             // Arrange
@@ -1214,7 +1436,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(result.Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteMessagAsync_Error()
         {
             // Arrange
@@ -1226,7 +1448,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteMessageAsync_DeletePeek()
         {
             // Arrange
@@ -1241,7 +1463,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(result.Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateMessageAsync_Update()
         {
             // Arrange
@@ -1262,7 +1484,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateMessageAsync_Min()
         {
             // Arrange
@@ -1282,7 +1504,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsNotNull(result.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateMessageAsync_UpdateDequeuedMessage()
         {
             await using DisposingQueue test = await GetTestQueueAsync();
@@ -1313,7 +1535,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(update.Value.NextVisibleOn, newMessage.NextVisibleOn);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateMessageAsync_UpdatePeek()
         {
             // Arrange
@@ -1334,7 +1556,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(message1, peekedMessage.MessageText);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateMessageAsync_Error()
         {
             // Arrange
@@ -1346,7 +1568,7 @@ namespace Azure.Storage.Queues.Test
                 actualException => Assert.AreEqual("MessageNotFound", actualException.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task UpdateMessageAsync_UpdateVisibilityTimeoutOnlyPreservesContent()
         {
             // Arrange
@@ -1368,7 +1590,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         #region GenerateSasTests
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
@@ -1405,7 +1627,24 @@ namespace Azure.Storage.Queues.Test
             Assert.IsTrue(container4.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
+        public void CanGenerateSas_Mockable()
+        {
+            // Act
+            var directory = new Mock<QueueClient>();
+            directory.Setup(x => x.CanGenerateSasUri).Returns(false);
+
+            // Assert
+            Assert.IsFalse(directory.Object.CanGenerateSasUri);
+
+            // Act
+            directory.Setup(x => x.CanGenerateSasUri).Returns(true);
+
+            // Assert
+            Assert.IsTrue(directory.Object.CanGenerateSasUri);
+        }
+
+        [RecordedTest]
         public void GenerateSas_RequiredParameters()
         {
             // Arrange
@@ -1435,7 +1674,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_Builder()
         {
             var constants = new TestConstants(this);
@@ -1472,7 +1711,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateSas_BuilderWrongName()
         {
             // Arrange
@@ -1505,5 +1744,66 @@ namespace Azure.Storage.Queues.Test
             }
         }
         #endregion
+
+        [RecordedTest]
+        public void CanMockQueueServiceClientRetrieval()
+        {
+            // Arrange
+            Mock<QueueClient> queueClientMock = new Mock<QueueClient>();
+            Mock<QueueServiceClient> queueServiceClientMock = new Mock<QueueServiceClient>();
+            queueClientMock.Protected().Setup<QueueServiceClient>("GetParentQueueServiceClientCore").Returns(queueServiceClientMock.Object);
+
+            // Act
+            var queueServiceClient = queueClientMock.Object.GetParentQueueServiceClient();
+
+            // Assert
+            Assert.IsNotNull(queueServiceClient);
+            Assert.AreSame(queueServiceClientMock.Object, queueServiceClient);
+        }
+
+        [RecordedTest]
+        public async Task CanGetParentQueueServiceClient()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act
+            var queueServiceClient = test.Queue.GetParentQueueServiceClient();
+            // make sure that client is functional
+            QueueServiceProperties queueServiceProperties = await queueServiceClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(test.Queue.AccountName, queueServiceClient.AccountName);
+        }
+
+        [RecordedTest]
+        public async Task CanGetParentQueueServiceClient_WithAccountSAS()
+        {
+            // Arrange
+            QueueClient queueClient = InstrumentClient(
+                GetServiceClient_AccountSas(
+                    sasCredentials: GetNewAccountSasCredentials(resourceTypes: AccountSasResourceTypes.All))
+                .GetQueueClient(GetNewQueueName()));
+
+            // Act
+            var queueServiceClient = queueClient.GetParentQueueServiceClient();
+            // make sure that client is functional
+            QueueServiceProperties queueServiceProperties = await queueServiceClient.GetPropertiesAsync();
+
+            // Assert
+            Assert.AreEqual(queueClient.AccountName, queueServiceClient.AccountName);
+        }
+
+        [RecordedTest]
+        public void CanMockClientConstructors()
+        {
+            // One has to call .Object to trigger constructor. It's lazy.
+            var mock = new Mock<QueueClient>(TestConfigDefault.ConnectionString, "queuename", new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(TestConfigDefault.ConnectionString, "queuename").Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), GetOAuthCredential(TestConfigHierarchicalNamespace), new QueueClientOptions()).Object;
+        }
     }
 }

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Processor;
-using Azure.Messaging.EventHubs.Processor.Tests;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
 

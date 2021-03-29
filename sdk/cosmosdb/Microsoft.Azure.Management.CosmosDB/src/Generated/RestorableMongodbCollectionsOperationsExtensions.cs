@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.CosmosDB
     public static partial class RestorableMongodbCollectionsOperationsExtensions
     {
             /// <summary>
-            /// Lists all the restorable Azure Cosmos DB MongoDB collection available for a
-            /// specific database.
+            /// Show the event feed of all mutations done on all the Azure Cosmos DB
+            /// MongoDB collections under a specific database.  This helps in scenario
+            /// where container was accidentally deleted.  This API requires
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
+            /// permission
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,7 +40,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The instanceId GUID of a restorable database account.
             /// </param>
             /// <param name='restorableMongodbDatabaseRid'>
-            /// The resource id of the restorable Mongo database.
+            /// The resource ID of the MongoDB database.
             /// </param>
             public static IEnumerable<RestorableMongodbCollectionGetResult> List(this IRestorableMongodbCollectionsOperations operations, string location, string instanceId, string restorableMongodbDatabaseRid = default(string))
             {
@@ -45,8 +48,11 @@ namespace Microsoft.Azure.Management.CosmosDB
             }
 
             /// <summary>
-            /// Lists all the restorable Azure Cosmos DB MongoDB collection available for a
-            /// specific database.
+            /// Show the event feed of all mutations done on all the Azure Cosmos DB
+            /// MongoDB collections under a specific database.  This helps in scenario
+            /// where container was accidentally deleted.  This API requires
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
+            /// permission
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,7 +64,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// The instanceId GUID of a restorable database account.
             /// </param>
             /// <param name='restorableMongodbDatabaseRid'>
-            /// The resource id of the restorable Mongo database.
+            /// The resource ID of the MongoDB database.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

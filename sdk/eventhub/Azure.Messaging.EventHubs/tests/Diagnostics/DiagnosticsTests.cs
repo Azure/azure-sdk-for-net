@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
 
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
-            await producer.SendAsync(eventData);
+            await producer.SendAsync(new[] { eventData });
 
             activity.Stop();
 

@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Client options for Network. </summary>
-    public class NetworkManagementClientOptions : ClientOptions
+    public partial class NetworkManagementClientOptions : ClientOptions
     {
     }
 }

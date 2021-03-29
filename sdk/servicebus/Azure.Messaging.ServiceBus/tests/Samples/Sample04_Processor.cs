@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 string connectionString = TestEnvironment.ServiceBusConnectionString;
                 string queueName = scope.QueueName;
-                await using var client = GetClient();
+                await using var client = CreateClient();
 
                 #region Snippet:ServiceBusProcessMessages
                 //@@ string connectionString = "<connection_string>";

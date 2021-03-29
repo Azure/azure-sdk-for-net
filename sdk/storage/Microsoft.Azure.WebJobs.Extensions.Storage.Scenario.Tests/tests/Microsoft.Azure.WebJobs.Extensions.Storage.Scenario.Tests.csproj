@@ -13,7 +13,6 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="System.Memory" VersionOverride="4.5.4" />
-    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +23,9 @@
 
   <ItemGroup>
     <Compile Include="$(AzureStorageWebjobsExtensionSharedTestSources)\**\*.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <None Include="$(AzureStorageSharedTestSources)\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

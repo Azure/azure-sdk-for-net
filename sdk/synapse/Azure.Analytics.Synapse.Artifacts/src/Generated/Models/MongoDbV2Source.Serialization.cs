@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(MongoDbV2SourceConverter))]
     public partial class MongoDbV2Source : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -154,6 +157,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new MongoDbV2Source(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, filter.Value, cursorMethods.Value, batchSize.Value, queryTimeout.Value);
+        }
+
+        internal partial class MongoDbV2SourceConverter : JsonConverter<MongoDbV2Source>
+        {
+            public override void Write(Utf8JsonWriter writer, MongoDbV2Source model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override MongoDbV2Source Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMongoDbV2Source(document.RootElement);
+            }
         }
     }
 }

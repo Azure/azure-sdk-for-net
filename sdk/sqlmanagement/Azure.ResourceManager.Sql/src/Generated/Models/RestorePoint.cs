@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Database restore points. </summary>
-    public partial class RestorePoint : Resource
+    public partial class RestorePoint : ProxyResource
     {
         /// <summary> Initializes a new instance of RestorePoint. </summary>
         public RestorePoint()

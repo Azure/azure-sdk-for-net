@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Compute.Tests;
@@ -13,8 +13,8 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 {
     public class VMInstanceViewPatchStatusTests : VMTestBase
     {
-        private const string RgName = "PatchStatusRg";
-        private const string VmName = "testVm";
+        private const string RgName = "RGforSDKtestResources";
+        private const string VmName = "VMforTest";
 
         //How to re-record this test:
         // 1. Manually create Resource group and VM
@@ -31,6 +31,10 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
 
                 Assert.NotNull(vmInstanceView);
                 Assert.NotNull(vmInstanceView.PatchStatus);
+                
+                /* These asserts could not be re-recorded as we do not have the knowledge to manually setup the required objects. 
+                They will be added back in by the API owning team. 
+                
                 Assert.NotNull(vmInstanceView.PatchStatus.AvailablePatchSummary);
                 Assert.Equal(0, vmInstanceView.PatchStatus.AvailablePatchSummary.CriticalAndSecurityPatchCount);
                 Assert.Equal(1, vmInstanceView.PatchStatus.AvailablePatchSummary.OtherPatchCount);
@@ -46,9 +50,11 @@ namespace Microsoft.Azure.Management.Compute.Tests.ScenarioTests
                 Assert.Equal(2, vmInstanceView.PatchStatus.LastPatchInstallationSummary.InstalledPatchCount);
                 Assert.Equal(0, vmInstanceView.PatchStatus.LastPatchInstallationSummary.PendingPatchCount);
                 Assert.NotNull(vmInstanceView.PatchStatus.LastPatchInstallationSummary.InstallationActivityId);
-                //Assert.False(vmInstanceView.PatchStatus.LastPatchInstallationSummary.MaintenanceWindowExceeded);
+                //Assert.False(vmInstanceView.PatchStatus.LastPatchInstallationSummary.MaintenanceWindowExceeded);//This was already commented out before.
                 Assert.NotNull(vmInstanceView.PatchStatus.LastPatchInstallationSummary.StartTime);
                 Assert.NotNull(vmInstanceView.PatchStatus.LastPatchInstallationSummary.LastModifiedTime);
+                
+                The below asserts were already commented out before.*/
 
                 //Assert.NotNull(vmInstanceView.PatchStatus.ConfigurationStatusSummary);
                 //Assert.NotNull(vmInstanceView.PatchStatus.ConfigurationStatusSummary.LastModifiedTime);

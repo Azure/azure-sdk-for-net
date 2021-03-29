@@ -2595,6 +2595,27 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string DatabricksLinkedServiceMSI = @"
+{
+    ""name"": ""DatabricksLinkedService"",
+    ""properties"": {
+        ""type"": ""AzureDatabricks"",
+        ""typeProperties"": {
+            ""domain"": ""https://westeurope.azuredatabricks.net/"",
+            ""authentication"": ""MSI"",
+            ""workspaceResourceId"": ""/subscriptions/1e42591f-1f0c-4c5a-b7f2-a268f6105ec5/resourceGroups/keshADF_test/providers/Microsoft.Databricks/workspaces/keshPremDB"",
+            ""newClusterVersion"": ""5.5.x-gpu-scala2.11"",
+            ""newClusterNumOfWorker"": ""1"",
+            ""newClusterNodeType"": ""Standard_NC12"",
+            ""newClusterDriverNodeType"": ""Standard_DS3_v2"",
+            ""policyId"": ""ED5F86CD7C000363""
+        }
+    }
+}
+";
+
         [JsonSample]
         public const string DatabricksLinkedServiceWithNewClusterPy3 = @"
 {

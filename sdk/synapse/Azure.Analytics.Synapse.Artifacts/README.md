@@ -39,22 +39,22 @@ az synapse workspace create \
 ### Authenticate the client
 In order to interact with part of the Azure Synapse Analytics service, you'll need to create an instance of the respective client class:
 
-- [BigDataPoolsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/BigDataPoolsClient.cs)
-- [DataFlowClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/DataFlowClient.cs)
-- [DataFlowDebugSessionClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/DataFlowDebugSessionClient.cs)
-- [DatasetClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/DatasetClient.cs)
-- [IntegrationRuntimesClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/IntegrationRuntimesClient.cs)
-- [LinkedServiceClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/LinkedServiceClient.cs)
-- [NotebookClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/NotebookClient.cs)
-- [PipelineClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/PipelineClient.cs)
-- [PipelineRunClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/PipelineRunClient.cs)
-- [SparkJobDefinitionClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/SparkJobDefinitionClient.cs)
-- [SqlPoolsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/SqlPoolsClient.cs)
-- [SqlScriptClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/SqlScriptClient.cs)
-- [TriggerClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/TriggerClient.cs)
-- [TriggerRunClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/TriggerRunClient.cs)
-- [WorkspaceClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/WorkspaceClient.cs)
-- [WorkspaceGitRepoManagementClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Customization/WorkspaceGitRepoManagementClient.cs)
+- [BigDataPoolsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/BigDataPoolsClient.cs)
+- [DataFlowClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/DataFlowClient.cs)
+- [DataFlowDebugSessionClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/DataFlowDebugSessionClient.cs)
+- [DatasetClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/DatasetClient.cs)
+- [IntegrationRuntimesClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/IntegrationRuntimesClient.cs)
+- [LinkedServiceClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/LinkedServiceClient.cs)
+- [NotebookClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/NotebookClient.cs)
+- [PipelineClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/PipelineClient.cs)
+- [PipelineRunClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/PipelineRunClient.cs)
+- [SparkJobDefinitionClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/SparkJobDefinitionClient.cs)
+- [SqlPoolsClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/SqlPoolsClient.cs)
+- [SqlScriptClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/SqlScriptClient.cs)
+- [TriggerClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/TriggerClient.cs)
+- [TriggerRunClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/TriggerRunClient.cs)
+- [WorkspaceClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/WorkspaceClient.cs)
+- [WorkspaceGitRepoManagementClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Artifacts/src/Generated/WorkspaceGitRepoManagementClient.cs)
 
 You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
@@ -124,6 +124,20 @@ For information about the target frameworks of the Azure Synapse client library,
 
 ### NotebookControlClient
 With a notebook client you can create, update, list, and delete pipelines, datasets, data flows, notebooks, Spark job definitions, SQL scripts, linked services and triggers.
+
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Troubleshooting
 

@@ -122,7 +122,7 @@ namespace NetApp.Tests.ResourceTests
         [Fact(Skip ="BackupPolicy service side bug causes this to fail, re-enable when fixed")]
         //[Fact]
         public void CreateVolumeWithBackupPolicy()
-        {
+        {            
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType()))
             {
@@ -204,6 +204,10 @@ namespace NetApp.Tests.ResourceTests
                     DataProtection = disableDataProtection
                 };
 
+                if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
+                {
+                    Thread.Sleep(delay);
+                }   
                 // patch
                 var disabledBackupVolume = netAppMgmtClient.Volumes.Update(disableVolumePatch, ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.poolName1, ResourceUtils.backupVolumeName1);
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
@@ -251,9 +255,13 @@ namespace NetApp.Tests.ResourceTests
                 };
 
                 var resultbackupPolicy = netAppMgmtClient.BackupPolicies.Update(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName1, patchBackupPolicy);
-                Assert.NotNull(resultbackupPolicy);                               
+                Assert.NotNull(resultbackupPolicy);
                 Assert.NotNull(resultbackupPolicy.DailyBackupsToKeep);
-                Assert.Equal(patchBackupPolicy.DailyBackupsToKeep, resultbackupPolicy.DailyBackupsToKeep);
+
+                var getResultbackupPolicy = netAppMgmtClient.BackupPolicies.Get(ResourceUtils.resourceGroup, ResourceUtils.volumeBackupAccountName1, ResourceUtils.backupPolicyName1);
+                Assert.NotNull(getResultbackupPolicy);                               
+                Assert.NotNull(getResultbackupPolicy.DailyBackupsToKeep);
+                Assert.Equal(patchBackupPolicy.DailyBackupsToKeep, getResultbackupPolicy.DailyBackupsToKeep);
                 
                 if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Record")
                 {

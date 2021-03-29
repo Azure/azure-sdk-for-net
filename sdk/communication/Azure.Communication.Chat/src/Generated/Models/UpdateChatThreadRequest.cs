@@ -7,7 +7,7 @@
 
 namespace Azure.Communication.Chat
 {
-    /// <summary> The UpdateChatThreadRequest. </summary>
+    /// <summary> Request payload for updating a chat thread. </summary>
     internal partial class UpdateChatThreadRequest
     {
         /// <summary> Initializes a new instance of UpdateChatThreadRequest. </summary>

@@ -24,8 +24,12 @@ namespace Microsoft.Azure.Management.CosmosDB
     public partial interface IRestorableSqlResourcesOperations
     {
         /// <summary>
-        /// Lists all the restorable Azure Cosmos DB SQL resources available
-        /// for a specific database account at a given time and location.
+        /// Return a list of database and container combo that exist on the
+        /// account at the given timestamp and location. This helps in
+        /// scenarios to validate what resources exist at given timestamp and
+        /// location. This API requires
+        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
+        /// permission.
         /// </summary>
         /// <param name='location'>
         /// Cosmos DB region, with spaces between words and each word
@@ -46,7 +50,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

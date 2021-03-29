@@ -20,6 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class DataFlowDebugSessionCreateDataFlowDebugSessionOperation : Operation<CreateDataFlowDebugSessionResponse>, IOperationSource<CreateDataFlowDebugSessionResponse>
     {
         private readonly ArmOperationHelpers<CreateDataFlowDebugSessionResponse> _operation;
+
+        /// <summary> Initializes a new instance of DataFlowDebugSessionCreateDataFlowDebugSessionOperation for mocking. </summary>
+        protected DataFlowDebugSessionCreateDataFlowDebugSessionOperation()
+        {
+        }
+
         internal DataFlowDebugSessionCreateDataFlowDebugSessionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<CreateDataFlowDebugSessionResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowDebugSessionCreateDataFlowDebugSessionOperation");

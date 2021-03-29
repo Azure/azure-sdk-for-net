@@ -83,54 +83,19 @@ The [Label][label_concept] property of a Configuration Setting provides a way to
 
 For example, MaxRequests may be 100 in "NorthAmerica" and 200 in "WestEurope". By creating a Configuration Setting named MaxRequests with a label of "NorthAmerica" and another, only with a different value, with a "WestEurope" label, an application can seamlessly retrieve Configuration Settings as it runs in these two dimensions.
 
-Properties of a Configuration Setting:
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
-```C# Snippet:SettingProperties
-/// <summary>
-/// The primary identifier of the configuration setting.
-/// A <see cref="Key"/> is used together with a <see cref="Label"/> to uniquely identify a configuration setting.
-/// </summary>
-public string Key { get; set; }
-
-/// <summary>
-/// A value used to group configuration settings.
-/// A <see cref="Label"/> is used together with a <see cref="Key"/> to uniquely identify a configuration setting.
-/// </summary>
-public string Label { get; set; }
-
-/// <summary>
-/// The configuration setting's value.
-/// </summary>
-public string Value { get; set; }
-
-/// <summary>
-/// The content type of the configuration setting's value.
-/// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
-/// </summary>
-public string ContentType { get; set; }
-
-/// <summary>
-/// An ETag indicating the state of a configuration setting within a configuration store.
-/// </summary>
-public ETag ETag { get; internal set; }
-
-/// <summary>
-/// The last time a modifying operation was performed on the given configuration setting.
-/// </summary>
-public DateTimeOffset? LastModified { get; internal set; }
-
-/// <summary>
-/// A value indicating whether the configuration setting is read only.
-/// A read only configuration setting may not be modified until it is made writable.
-/// </summary>
-public bool? IsReadOnly { get; internal set; }
-
-/// <summary>
-/// A dictionary of tags used to assign additional properties to a configuration setting.
-/// These can be used to indicate how a configuration setting may be applied.
-/// </summary>
-public IDictionary<string, string> Tags
-```
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 

@@ -161,6 +161,10 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string metricId = MetricId;
 
+            var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
+            var endTime = DateTimeOffset.UtcNow;
+            var options = new GetMetricSeriesDataOptions(startTime, endTime);
+
             // Only the two time series with the keys specified below will be returned.
 
             var seriesKey1 = new DimensionKey();
@@ -171,11 +175,8 @@ namespace Azure.AI.MetricsAdvisor.Samples
             seriesKey2.AddDimensionColumn("city", "Hong Kong");
             seriesKey2.AddDimensionColumn("category", "Industrial & Scientific");
 
-            var filter = new List<DimensionKey>() { seriesKey1, seriesKey2 };
-
-            var startTime = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
-            var endTime = DateTimeOffset.UtcNow;
-            var options = new GetMetricSeriesDataOptions(filter, startTime, endTime);
+            options.SeriesToFilter.Add(seriesKey1);
+            options.SeriesToFilter.Add(seriesKey2);
 
             await foreach (MetricSeriesData seriesData in client.GetMetricSeriesDataAsync(metricId, options))
             {

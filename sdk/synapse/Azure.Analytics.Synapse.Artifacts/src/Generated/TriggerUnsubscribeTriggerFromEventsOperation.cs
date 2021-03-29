@@ -20,6 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class TriggerUnsubscribeTriggerFromEventsOperation : Operation<TriggerSubscriptionOperationStatus>, IOperationSource<TriggerSubscriptionOperationStatus>
     {
         private readonly ArmOperationHelpers<TriggerSubscriptionOperationStatus> _operation;
+
+        /// <summary> Initializes a new instance of TriggerUnsubscribeTriggerFromEventsOperation for mocking. </summary>
+        protected TriggerUnsubscribeTriggerFromEventsOperation()
+        {
+        }
+
         internal TriggerUnsubscribeTriggerFromEventsOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<TriggerSubscriptionOperationStatus>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TriggerUnsubscribeTriggerFromEventsOperation");

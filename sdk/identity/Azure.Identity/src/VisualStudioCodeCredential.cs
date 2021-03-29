@@ -71,7 +71,7 @@ namespace Azure.Identity
                 var cloudInstance = GetAzureCloudInstance(environmentName);
                 string storedCredentials = GetStoredCredentials(environmentName);
 
-                var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
+                var result = await _client.AcquireTokenByRefreshToken(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenant, async, cancellationToken).ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException e)

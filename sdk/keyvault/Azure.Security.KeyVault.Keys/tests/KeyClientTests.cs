@@ -31,6 +31,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.ThrowsAsync<ArgumentException>(() => Client.CreateKeyAsync(string.Empty, KeyType.Ec));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateEcKeyAsync(null));
             Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateRsaKeyAsync(null));
+            Assert.ThrowsAsync<ArgumentNullException>(() => Client.CreateOctKeyAsync(null));
         }
 
         [Test]

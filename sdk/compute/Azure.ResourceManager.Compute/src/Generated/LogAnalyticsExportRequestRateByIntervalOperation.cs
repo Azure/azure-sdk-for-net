@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Compute
     public partial class LogAnalyticsExportRequestRateByIntervalOperation : Operation<LogAnalyticsOperationResult>, IOperationSource<LogAnalyticsOperationResult>
     {
         private readonly ArmOperationHelpers<LogAnalyticsOperationResult> _operation;
+
+        /// <summary> Initializes a new instance of LogAnalyticsExportRequestRateByIntervalOperation for mocking. </summary>
+        protected LogAnalyticsExportRequestRateByIntervalOperation()
+        {
+        }
+
         internal LogAnalyticsExportRequestRateByIntervalOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<LogAnalyticsOperationResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LogAnalyticsExportRequestRateByIntervalOperation");

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Communication
 {
-    internal class CommunicationServiceCreateOrUpdateHeaders
+    internal partial class CommunicationServiceCreateOrUpdateHeaders
     {
         private readonly Response _response;
         public CommunicationServiceCreateOrUpdateHeaders(Response response)

@@ -21,6 +21,10 @@ namespace Azure.Identity
         private const int ProbeImdsEndpointEvent = 4;
         private const int ImdsEndpointFoundEvent = 5;
         private const int ImdsEndpointUnavailableEvent = 6;
+        private const int MsalLogVerboseEvent = 7;
+        private const int MsalLogInfoEvent = 8;
+        private const int MsalLogWarningEvent = 9;
+        private const int MsalLogErrorEvent = 10;
 
         private AzureIdentityEventSource() : base(EventSourceName, EventSourceSettings.Default, AzureEventSourceListener.TraitName, AzureEventSourceListener.TraitValue) { }
 
@@ -102,18 +106,27 @@ namespace Azure.Identity
         }
 
         [NonEvent]
-        public void ImdsEndpointUnavailable(Uri uri)
+        public void ImdsEndpointUnavailable(Uri uri, string error)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                ImdsEndpointUnavailable(uri.ToString());
+                ImdsEndpointUnavailable(uri.ToString(), error);
             }
         }
 
-        [Event(ImdsEndpointUnavailableEvent, Level = EventLevel.Informational, Message = "IMDS endpoint is did not respond. Endpoint: {0}")]
-        public void ImdsEndpointUnavailable(string uri)
+        [NonEvent]
+        public void ImdsEndpointUnavailable(Uri uri, Exception e)
         {
-            WriteEvent(ImdsEndpointUnavailableEvent, uri);
+            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                ImdsEndpointUnavailable(uri.ToString(), FormatException(e));
+            }
+        }
+
+        [Event(ImdsEndpointUnavailableEvent, Level = EventLevel.Informational, Message = "IMDS endpoint is not available. Endpoint: {0}. Error: {1}")]
+        public void ImdsEndpointUnavailable(string uri, string error)
+        {
+            WriteEvent(ImdsEndpointUnavailableEvent, uri, error);
         }
 
         [NonEvent]
@@ -140,6 +153,55 @@ namespace Azure.Identity
             }
             while (ex != null);
             return sb.ToString();
+        }
+
+        [NonEvent]
+        public void LogMsal(Microsoft.Identity.Client.LogLevel level, string message, bool containsPii)
+        {
+            if (!containsPii)
+            {
+                switch (level)
+                {
+                    case Microsoft.Identity.Client.LogLevel.Error when IsEnabled(EventLevel.Error, EventKeywords.All):
+                        LogMsalError(message);
+                        break;
+                    case Microsoft.Identity.Client.LogLevel.Warning when IsEnabled(EventLevel.Warning, EventKeywords.All):
+                        LogMsalWarning(message);
+                        break;
+                    case Microsoft.Identity.Client.LogLevel.Info when IsEnabled(EventLevel.Informational, EventKeywords.All):
+                        LogMsalInformational(message);
+                        break;
+                    case Microsoft.Identity.Client.LogLevel.Verbose when IsEnabled(EventLevel.Verbose, EventKeywords.All):
+                        LogMsalVerbose(message);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        [Event(MsalLogErrorEvent, Level = EventLevel.Error, Message = "{0}")]
+        public void LogMsalError(string message)
+        {
+            WriteEvent(MsalLogErrorEvent, message);
+        }
+
+        [Event(MsalLogWarningEvent, Level = EventLevel.Warning, Message = "{0}")]
+        public void LogMsalWarning(string message)
+        {
+            WriteEvent(MsalLogWarningEvent, message);
+        }
+
+        [Event(MsalLogInfoEvent, Level = EventLevel.Informational, Message = "{0}")]
+        public void LogMsalInformational(string message)
+        {
+            WriteEvent(MsalLogInfoEvent, message);
+        }
+
+        [Event(MsalLogVerboseEvent, Level = EventLevel.Verbose, Message = "{0}")]
+        public void LogMsalVerbose(string message)
+        {
+            WriteEvent(MsalLogVerboseEvent, message);
         }
 
         [NonEvent]

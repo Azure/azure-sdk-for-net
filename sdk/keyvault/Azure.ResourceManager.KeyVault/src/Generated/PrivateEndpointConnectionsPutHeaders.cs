@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal class PrivateEndpointConnectionsPutHeaders
+    internal partial class PrivateEndpointConnectionsPutHeaders
     {
         private readonly Response _response;
         public PrivateEndpointConnectionsPutHeaders(Response response)

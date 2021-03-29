@@ -4,7 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.ServiceBus.Core;
 using Moq;
 using NUnit.Framework;
 
@@ -79,11 +81,31 @@ namespace Azure.Messaging.ServiceBus.Tests
 
         internal ServiceBusConnection GetMockedConnection()
         {
+            var mockTransportReceiver = new Mock<TransportReceiver>();
+            mockTransportReceiver
+                .Setup(receiver => receiver.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Returns(async (int maximumMessageCount, TimeSpan? maxWaitTime, CancellationToken cancellationToken) =>
+                {
+                    await Task.Delay(Timeout.Infinite, cancellationToken);
+                    throw new NotImplementedException();
+                });
+
             var mockConnection = new Mock<ServiceBusConnection>();
 
             mockConnection
                 .Setup(connection => connection.RetryOptions)
                 .Returns(new ServiceBusRetryOptions());
+
+            mockConnection
+                .Setup(connection => connection.CreateTransportReceiver(
+                    It.IsAny<string>(),
+                    It.IsAny<ServiceBusRetryPolicy>(),
+                    It.IsAny<ServiceBusReceiveMode>(),
+                    It.IsAny<uint>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<bool>()))
+                .Returns(mockTransportReceiver.Object);
             return mockConnection.Object;
         }
     }
