@@ -1,5 +1,8 @@
 # Release History
 
+## 12.8.1 (2021-03-29)
+- Fixed bug where ClientDiagnostics's DiagnosticListener was leaking resources.
+
 ## 12.8.0 (2021-01-12)
 - Includes all features from 12.8.0-beta.1
 - Fixed bug where the Stream returned by BlobBaseClient.OpenRead() would return a different Length after calls to Seek().

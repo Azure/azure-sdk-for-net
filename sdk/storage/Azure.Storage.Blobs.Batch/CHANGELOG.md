@@ -1,5 +1,8 @@
 # Release History
 
+## 12.5.1 (2021-03-29)
+- Fixed bug where ClientDiagnostics's DiagnosticListener was leaking resources.
+
 ## 12.5.0 (2020-01-12)
 - Includes all features from 12.5.0-beta.1.
 - This release contains bug fixes to improve quality.

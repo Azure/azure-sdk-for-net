@@ -1,5 +1,8 @@
 # Release History
 
+## 12.7.1 (2021-03-29)
+- This release contains bug fixes to improve quality.
+
 ## 12.7.0 (2021-01-12)
 - Includes all features from 12.7.0-beta.1
 - Fixed bug where parsing the connection string only accepted lowercase values
