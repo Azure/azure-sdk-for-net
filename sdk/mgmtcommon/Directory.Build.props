@@ -1,7 +1,6 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <IsMgmtProject Condition="'$(IsMgmtProject)' == ''">true</IsMgmtProject>
-    <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == ''">false</IsDataPlaneProject>
+    <IsLegacyMgmtProject Condition="'$(IsLegacyMgmtProject)' == ''">true</IsLegacyMgmtProject>
   </PropertyGroup>
   <PropertyGroup>
     <SkipBaselineTargetFxMatching>true</SkipBaselineTargetFxMatching>

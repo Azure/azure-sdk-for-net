@@ -1,5 +1,11 @@
 # Release History
 
+## 1.12.0-beta.1 (Unreleased)
+
+### Added
+
+- Added `HttpPipeline.CreateHttpMessagePropertiesScope` that can be used to inject scoped properties into `HttpMessage`.
+
 ## 1.11.0 (2021-03-22)
 
 ### Added

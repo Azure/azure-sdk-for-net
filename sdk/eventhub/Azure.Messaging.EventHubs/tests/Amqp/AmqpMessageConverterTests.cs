@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using Azure.Messaging.EventHubs.Amqp;
 using Microsoft.Azure.Amqp;
@@ -366,6 +367,20 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var eventData = new EventData(new byte[0]);
             Assert.That(() => new AmqpMessageConverter().CreateMessageFromEvent(eventData, "annotation"), Throws.Nothing);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateMessageFromEvent" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateMessageFromEventDoesNotTriggerPropertiesInstantation()
+        {
+            var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
+            using var message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
+
+            Assert.That(GetEventDataPropertiesBackingStore(eventData), Is.Null, "Translation should not have cause the properties dictionary to be instantiated.");
         }
 
         /// <summary>
@@ -1257,6 +1272,27 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateEventFromMessage" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void CreateEventFromMessageDoesNotPopulatePropertiesByDefault()
+        {
+            var body = new byte[] { 0x11, 0x22, 0x33 };
+
+            using var bodyStream = new MemoryStream(body, false);
+            using var message = AmqpMessage.Create(bodyStream, true);
+
+            var converter = new AmqpMessageConverter();
+            var eventData = converter.CreateEventFromMessage(message);
+
+            Assert.That(eventData, Is.Not.Null, "The event should have been created.");
+            Assert.That(GetEventDataPropertiesBackingStore(eventData), Is.Null, "The event should have a null properties dictionary.");
+            Assert.That(eventData.SystemProperties, Is.SameAs(GetEventDataEmptySystemProperties()), "The event should have the default empty system properties.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateMessageFromEvent" />
         ///   method.
         /// </summary>
@@ -1566,5 +1602,33 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(properties.LastEnqueuedTime, Is.EqualTo(lastEnqueueTime), "The last enqueued time should match");
             Assert.That(properties.IsEmpty, Is.EqualTo(isEmpty), "The empty flag should match");
         }
+
+        /// <summary>
+        ///   Retrieves the empty system properties dictionary from the Event Data
+        ///   type, using its private field.
+        /// </summary>
+        ///
+        /// <returns>The empty dictionary used as the default for the <see cref="EventData.SystemProperties" /> set.</returns>
+        ///
+        private static IReadOnlyDictionary<string, object> GetEventDataEmptySystemProperties() =>
+            (IReadOnlyDictionary<string, object>)
+                typeof(EventData)
+                    .GetField("EmptySystemProperties", BindingFlags.Static | BindingFlags.NonPublic)
+                    .GetValue(null);
+
+        /// <summary>
+        ///   Retrieves the backing store for the Properties dictionary from the Event Data
+        ///   type, using its private field.
+        /// </summary>
+        ///
+        /// <param name="eventData">The instance to read the field from.</param>
+        ///
+        /// <returns>The backing store for the <see cref="EventData.Properties" /> set.</returns>
+        ///
+        private static IReadOnlyDictionary<string, object> GetEventDataPropertiesBackingStore(EventData eventData) =>
+            (IReadOnlyDictionary<string, object>)
+                typeof(EventData)
+                    .GetField("_properties", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(eventData);
     }
 }

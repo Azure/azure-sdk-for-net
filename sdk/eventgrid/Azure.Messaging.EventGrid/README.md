@@ -7,7 +7,7 @@ Use the client library for Azure Event Grid to:
 - Consume events that have been delivered to event handlers
 - Generate SAS tokens to authenticate the client publishing events to Azure Event Grid topics
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventGrid/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventgrid.html) | [Product documentation](https://docs.microsoft.com/azure/event-grid/) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples)
+  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventgrid/Azure.Messaging.EventGrid/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.EventGrid/) | [API reference documentation](https://azure.github.io/azure-sdk-for-net/eventgrid.html) | [Product documentation](https://docs.microsoft.com/azure/event-grid/) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/samples) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventgrid/Azure.Messaging.EventGrid/MigrationGuide.md)
 
 ## Getting started
 

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DynamicsCrmLinkedServiceConverter))]
     public partial class DynamicsCrmLinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -313,6 +316,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DynamicsCrmLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password.Value, servicePrincipalId.Value, Optional.ToNullable(servicePrincipalCredentialType), servicePrincipalCredential.Value, encryptedCredential.Value);
+        }
+
+        internal partial class DynamicsCrmLinkedServiceConverter : JsonConverter<DynamicsCrmLinkedService>
+        {
+            public override void Write(Utf8JsonWriter writer, DynamicsCrmLinkedService model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DynamicsCrmLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDynamicsCrmLinkedService(document.RootElement);
+            }
         }
     }
 }

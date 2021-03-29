@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SqlSourceConverter))]
     public partial class SqlSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -165,6 +168,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SqlSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, Optional.ToDictionary(storedProcedureParameters));
+        }
+
+        internal partial class SqlSourceConverter : JsonConverter<SqlSource>
+        {
+            public override void Write(Utf8JsonWriter writer, SqlSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SqlSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSqlSource(document.RootElement);
+            }
         }
     }
 }

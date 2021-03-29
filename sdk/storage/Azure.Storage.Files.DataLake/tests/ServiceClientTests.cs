@@ -402,6 +402,217 @@ namespace Azure.Storage.Files.DataLake.Tests
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
 
+        [Test]
+        public async Task GetPropertiesAsync()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+
+            // Act
+            Response<DataLakeServiceProperties> response = await service.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.DeleteRetentionPolicy);
+        }
+
+        [Test]
+        public async Task GetPropertiesAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient service = InstrumentClient(
+                new DataLakeServiceClient(
+                    GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.GetPropertiesAsync(),
+                e => { });
+        }
+
+        [Test]
+        [NonParallelizable]
+        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
+        public async Task SetPropertiesAsync_DeleteRetentionPolicy()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeServiceProperties properties = await service.GetPropertiesAsync();
+            DataLakeRetentionPolicy originalRetentionPolicy = properties.DeleteRetentionPolicy;
+            properties.DeleteRetentionPolicy = new DataLakeRetentionPolicy
+            {
+                Enabled = true,
+                Days = 3
+            };
+
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Assert
+            properties = await service.GetPropertiesAsync();
+            Assert.IsTrue(properties.DeleteRetentionPolicy.Enabled);
+            Assert.AreEqual(3, properties.DeleteRetentionPolicy.Days);
+
+            // Cleanup
+            properties.DeleteRetentionPolicy = originalRetentionPolicy;
+            await service.SetPropertiesAsync(properties);
+            properties = await service.GetPropertiesAsync();
+            Assert.AreEqual(originalRetentionPolicy.Enabled, properties.DeleteRetentionPolicy.Enabled);
+            Assert.AreEqual(originalRetentionPolicy.Days, properties.DeleteRetentionPolicy.Days);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task SetPropertiesAsync_Logging()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeServiceProperties properties = await service.GetPropertiesAsync();
+            DataLakeAnalyticsLogging originalLogging = properties.Logging;
+            properties.Logging = new DataLakeAnalyticsLogging
+            {
+                Version = "1.0",
+                Delete = true,
+                Read = true,
+                Write = true,
+                RetentionPolicy = new DataLakeRetentionPolicy
+                {
+                    Enabled = true,
+                    Days = 1
+                }
+            };
+
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Assert
+            properties = await service.GetPropertiesAsync();
+            Assert.AreEqual("1.0", properties.Logging.Version);
+            Assert.IsTrue(properties.Logging.Delete);
+            Assert.IsTrue(properties.Logging.Read);
+            Assert.IsTrue(properties.Logging.Write);
+            Assert.IsTrue(properties.Logging.RetentionPolicy.Enabled);
+            Assert.AreEqual(1, properties.Logging.RetentionPolicy.Days);
+
+            // Cleanup
+            properties.Logging = originalLogging;
+            await service.SetPropertiesAsync(properties);
+            properties = await service.GetPropertiesAsync();
+            Assert.AreEqual(originalLogging.RetentionPolicy.Days, properties.Logging.RetentionPolicy.Days);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task SetProperties_HourAndMinuteMetrics()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeServiceProperties properties = await service.GetPropertiesAsync();
+            DataLakeMetrics originalHourMetrics = properties.HourMetrics;
+            DataLakeMetrics originalMinuteMetrics = properties.MinuteMetrics;
+
+            properties.HourMetrics = new DataLakeMetrics
+            {
+                Version = "1.0",
+                Enabled = true,
+                RetentionPolicy = new DataLakeRetentionPolicy
+                {
+                    Enabled = true,
+                    Days = 1
+                },
+                IncludeApis = false
+            };
+
+            properties.MinuteMetrics = new DataLakeMetrics
+            {
+                Version = "1.0",
+                Enabled = true,
+                RetentionPolicy = new DataLakeRetentionPolicy
+                {
+                    Enabled = true,
+                    Days = 2
+                },
+                IncludeApis = false
+            };
+
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Assert
+            properties = await service.GetPropertiesAsync();
+            Assert.AreEqual("1.0", properties.HourMetrics.Version);
+            Assert.IsTrue(properties.HourMetrics.Enabled);
+            Assert.IsTrue(properties.HourMetrics.RetentionPolicy.Enabled);
+            Assert.AreEqual(1, properties.HourMetrics.RetentionPolicy.Days);
+            Assert.IsFalse(properties.HourMetrics.IncludeApis);
+            Assert.AreEqual("1.0", properties.MinuteMetrics.Version);
+            Assert.IsTrue(properties.MinuteMetrics.Enabled);
+            Assert.IsTrue(properties.MinuteMetrics.RetentionPolicy.Enabled);
+            Assert.AreEqual(2, properties.MinuteMetrics.RetentionPolicy.Days);
+            Assert.IsFalse(properties.MinuteMetrics.IncludeApis);
+
+            // Cleanup
+            properties.HourMetrics = originalHourMetrics;
+            properties.MinuteMetrics = originalMinuteMetrics;
+            await service.SetPropertiesAsync(properties);
+            properties = await service.GetPropertiesAsync();
+            Assert.AreEqual(originalHourMetrics.RetentionPolicy.Days, properties.HourMetrics.RetentionPolicy.Days);
+            Assert.AreEqual(originalMinuteMetrics.RetentionPolicy.Days, properties.MinuteMetrics.RetentionPolicy.Days);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task SetPropertiesAsync_Cors()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeServiceProperties properties = await service.GetPropertiesAsync();
+            DataLakeCorsRule[] originalCors = properties.Cors.ToArray();
+            properties.Cors =
+                new[]
+                {
+                    new DataLakeCorsRule
+                    {
+                        MaxAgeInSeconds = 1000,
+                        AllowedHeaders = "x-ms-meta-data*,x-ms-meta-target*,x-ms-meta-abc",
+                        AllowedMethods = "PUT,GET",
+                        AllowedOrigins = "*",
+                        ExposedHeaders = "x-ms-meta-*"
+                    }
+                };
+
+            // Act
+            await service.SetPropertiesAsync(properties);
+
+            // Assert
+            properties = await service.GetPropertiesAsync();
+            Assert.AreEqual(1, properties.Cors.Count());
+            Assert.IsTrue(properties.Cors[0].MaxAgeInSeconds == 1000);
+
+            // Cleanup
+            properties.Cors = originalCors;
+            await service.SetPropertiesAsync(properties);
+            properties = await service.GetPropertiesAsync();
+            Assert.AreEqual(originalCors.Count(), properties.Cors.Count());
+        }
+
+        [Test]
+        public async Task SetPropertiesAsync_Error()
+        {
+            // Arrange
+            DataLakeServiceClient service = GetServiceClient_SharedKey();
+            DataLakeServiceProperties properties = (await service.GetPropertiesAsync()).Value;
+            DataLakeServiceClient invalidService = InstrumentClient(
+                new DataLakeServiceClient(
+                    GetServiceClient_SharedKey().Uri,
+                    GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                invalidService.SetPropertiesAsync(properties),
+                e => { });
+        }
+
         //[Test]
         //[PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_06_12)]

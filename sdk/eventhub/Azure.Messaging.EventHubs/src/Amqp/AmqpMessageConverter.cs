@@ -308,7 +308,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             var body = new ArraySegment<byte>((bodyBytes.IsEmpty) ? Array.Empty<byte>() : bodyBytes.ToArray());
             var message = AmqpMessage.Create(new Data { Value = body });
 
-            if (source.Properties?.Count > 0)
+            if ((source.HasProperties) && (source.Properties.Count > 0))
             {
                 message.ApplicationProperties ??= new ApplicationProperties();
 
@@ -363,10 +363,12 @@ namespace Azure.Messaging.EventHubs.Amqp
             // If there were application properties associated with the message, translate them
             // to the event.
 
-            var properties = new Dictionary<string, object>();
+            var properties = default(Dictionary<string, object>);
 
             if (source.Sections.HasFlag(SectionFlag.ApplicationProperties))
             {
+                properties = new Dictionary<string, object>();
+
                 foreach (KeyValuePair<MapKey, object> pair in source.ApplicationProperties.Map)
                 {
                     if (TryCreateEventPropertyForAmqpProperty(pair.Value, out object propertyValue))
@@ -401,10 +403,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static ParsedAnnotations ParseSystemAnnotations(AmqpMessage source)
         {
-            var systemProperties = new ParsedAnnotations
-            {
-                ServiceAnnotations = new Dictionary<string, object>()
-            };
+            var systemProperties = new ParsedAnnotations();
 
             object amqpValue;
             object propertyValue;
@@ -413,7 +412,9 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if (source.Sections.HasFlag(SectionFlag.MessageAnnotations))
             {
-                Annotations annotations = source.MessageAnnotations.Map;
+                systemProperties.ServiceAnnotations ??= new Dictionary<string, object>();
+
+                var annotations = source.MessageAnnotations.Map;
                 var processed = new HashSet<string>();
 
                 if ((annotations.TryGetValue(AmqpProperty.EnqueuedTime, out amqpValue))
@@ -510,12 +511,13 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             if (source.Sections.HasFlag(SectionFlag.Properties))
             {
-                Properties properties = source.Properties;
+                var properties = source.Properties;
 
                 void conditionalAdd(string name, object value, bool condition)
                 {
                     if (condition)
                     {
+                        systemProperties.ServiceAnnotations ??= new Dictionary<string, object>();
                         systemProperties.ServiceAnnotations.Add(name, value);
                     }
                 }

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(StoreWriteSettingsConverter))]
     public partial class StoreWriteSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -85,6 +88,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new StoreWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties);
+        }
+
+        internal partial class StoreWriteSettingsConverter : JsonConverter<StoreWriteSettings>
+        {
+            public override void Write(Utf8JsonWriter writer, StoreWriteSettings model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override StoreWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeStoreWriteSettings(document.RootElement);
+            }
         }
     }
 }

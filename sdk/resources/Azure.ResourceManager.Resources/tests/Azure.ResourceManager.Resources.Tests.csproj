@@ -8,6 +8,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Resources.csproj" />
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <None Update="ScenarioTests\*.json">

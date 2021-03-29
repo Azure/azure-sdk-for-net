@@ -1,9 +1,5 @@
 # Azure Communication Phone Numbers client library for .NET
 
-> Server Version:
-
-> Phone number client: 2020-07-20-preview1
-
 Azure Communication Phone Numbers is managing phone numbers for Azure Communication Services.
 
 [Source code][source] <!--| [Package (NuGet)][package]--> | [Product documentation][product_docs] | [Samples][source_samples]
@@ -15,7 +11,7 @@ Azure Communication Phone Numbers is managing phone numbers for Azure Communicat
 Install the Azure Communication Phone Numbers client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-dotnet add package Azure.Communication.PhoneNumbers --version 1.0.0-beta.5
+dotnet add package Azure.Communication.PhoneNumbers --version 1.0.0-beta.6
 ```
 
 ### Prerequisites
@@ -135,7 +131,7 @@ If you no longer need a phone number you can release it.
 
 ```C# Snippet:ReleasePhoneNumbersAsync
 var purchasedPhoneNumber = "<purchased_phone_number>";
-var releaseOperation = client.StartReleasePhoneNumber(purchasedPhoneNumber);
+var releaseOperation = await client.StartReleasePhoneNumberAsync(purchasedPhoneNumber);
 await releaseOperation.WaitForCompletionResponseAsync();
 ```
 

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SftpLocationConverter))]
     public partial class SftpLocation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -74,6 +77,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SftpLocation(type, folderPath.Value, fileName.Value, additionalProperties);
+        }
+
+        internal partial class SftpLocationConverter : JsonConverter<SftpLocation>
+        {
+            public override void Write(Utf8JsonWriter writer, SftpLocation model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override SftpLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSftpLocation(document.RootElement);
+            }
         }
     }
 }
