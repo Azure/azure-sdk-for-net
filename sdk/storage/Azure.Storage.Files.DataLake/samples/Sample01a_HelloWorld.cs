@@ -233,9 +233,9 @@ namespace Azure.Storage.Files.DataLake.Samples
             string sampleFileContent = CreateTempFile(SampleFileContent.Substring(0, contentLength));
 
             // Make StorageSharedKeyCredential to pass to the serviceClient
-            string storageAccountName = StorageAccountName;
-            string storageAccountKey = StorageAccountKey;
-            Uri serviceUri = StorageAccountBlobUri;
+            string storageAccountName = "devextesthns";
+            string storageAccountKey = "MS0/rZ9oKjwtwZfPh7tUdmeVfxCd0jjKOMNqgNW5Es6t1wsc2tvY+BwQHRS1vfJsKbpxe5NdqnaKUnIZebbnCQ==";
+            Uri serviceUri = new Uri("http://devextesthns.z16.blob.storage.azure.net");
 
             StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
 
