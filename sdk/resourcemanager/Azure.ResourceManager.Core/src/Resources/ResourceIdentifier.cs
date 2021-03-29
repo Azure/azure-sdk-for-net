@@ -68,11 +68,19 @@ namespace Azure.ResourceManager.Core
             switch (parts[0].ToLowerInvariant())
             {
                 case SubscriptionsKey:
-                    return CreateBaseSubscriptionIdentifier(parts[1], parts.Trim(2));
+                    {
+                        ResourceIdentifier id = CreateBaseSubscriptionIdentifier(parts[1], parts.Trim(2));
+                        id.StringValue = resourceId;
+                        return id;
+                    }
                 case ProvidersKey:
                     {
                         if (parts.Count > 3)
-                            return CreateTenantIdentifier(new TenantResourceIdentifier(new ResourceType(parts[1], parts[2]), parts[3]), parts.Trim(4));
+                        {
+                            ResourceIdentifier id = CreateTenantIdentifier(new TenantResourceIdentifier(new ResourceType(parts[1], parts[2]), parts[3]), parts.Trim(4));
+                            id.StringValue = resourceId;
+                            return id;
+                        }
                         throw new ArgumentOutOfRangeException(nameof(resourceId), "Invalid resource id.");
                     }
                 default:
@@ -89,8 +97,6 @@ namespace Azure.ResourceManager.Core
         /// <returns> The resource identifier for the given resource path. </returns>
         internal static ResourceIdentifier CreateBaseSubscriptionIdentifier(string subscriptionId, List<string> parts)
         {
-            if (parts is null)
-                throw new ArgumentNullException(nameof(parts));
             Guid subscriptionGuid;
             if (!Guid.TryParse(subscriptionId, out subscriptionGuid))
                 throw new ArgumentOutOfRangeException(nameof(subscriptionId), "Invalid subscription id.");
@@ -110,12 +116,11 @@ namespace Azure.ResourceManager.Core
                             if (parts.Count > 3)
                                 return CreateSubscriptionIdentifier(new SubscriptionResourceIdentifier(subscription,
                                     parts[1], parts[2], parts[3]), parts.Skip(4).ToList());
-                            throw new InvalidOperationException("Invalid resource string");
+                            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource string");
                         }
                     default:
                         {
-                            return CreateSubscriptionIdentifier(new SubscriptionResourceIdentifier(subscription,
-                                parts[0], parts[1]), parts.Skip(2).ToList());
+                            throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
                         }
                 }
             }
@@ -175,7 +180,7 @@ namespace Azure.ResourceManager.Core
                         throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
                     }
                 default:
-                    return CreateResourceGroupIdentifier(new ResourceGroupResourceIdentifier(parent, parts[0], parts[1]), parts.Trim(2));
+                    throw new ArgumentOutOfRangeException(nameof(parts), "Invalid resource id.");
             }
         }
 
@@ -277,6 +282,14 @@ namespace Azure.ResourceManager.Core
                     }
 
                     return _stringValue;
+                }
+            }
+
+            set
+            {
+                lock (lockObject)
+                {
+                    _stringValue = value;
                 }
             }
         }
@@ -386,8 +399,6 @@ namespace Azure.ResourceManager.Core
         public bool Equals(ResourceIdentifier other)
         {
             if (other is null)
-                return this is null;
-            if (this is null)
                 return false;
             return string.Equals(this.ToString(), other.ToString(), StringComparison.InvariantCultureIgnoreCase);
         }
@@ -402,9 +413,7 @@ namespace Azure.ResourceManager.Core
         public int CompareTo(ResourceIdentifier other)
         {
             if (other is null)
-                return this is null ? 0 : 1;
-            if (this is null)
-                return -1;
+                return 1;
             return string.Compare(this.ToString(), other.ToString(), StringComparison.InvariantCultureIgnoreCase);
         }
 
@@ -416,7 +425,7 @@ namespace Azure.ResourceManager.Core
                 return resourceObj.Equals(this);
             string stringObj = obj as string;
             if (!(stringObj is null))
-                return ResourceIdentifier.Create(stringObj).Equals(this);
+                return this.Equals(ResourceIdentifier.Create(stringObj));
             return false;
         }
 

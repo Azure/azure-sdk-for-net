@@ -77,8 +77,9 @@ namespace Azure.ResourceManager.Core
             }
             else
             {
-                var id = ResourceIdentifier.Create(resourceIdOrSubscriptionId) as SubscriptionResourceIdentifier;
-                if (id is null)
+                ResourceIdentifier rawId = ResourceIdentifier.Create(resourceIdOrSubscriptionId);
+                SubscriptionResourceIdentifier id =  rawId as SubscriptionResourceIdentifier;
+                if (id is null || rawId.TryGetLocation(out _) || rawId.TryGetResourceGroupName(out _))
                     throw new ArgumentException("Not a valid subscription level resource", nameof(resourceIdOrSubscriptionId));
                 Name = id.Name;
                 ResourceType = id.ResourceType;

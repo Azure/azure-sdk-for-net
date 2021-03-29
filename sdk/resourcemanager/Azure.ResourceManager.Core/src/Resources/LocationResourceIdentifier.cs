@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="parent"> The identifier of the subscription that is the parent of this resource. </param>
         /// <param name="location"> The name of the location. </param>
-        internal LocationResourceIdentifier(SubscriptionResourceIdentifier parent, string location)
-            : base(parent, ResourceIdentifier.LocationsKey, location)
+        internal LocationResourceIdentifier(SubscriptionResourceIdentifier parent, LocationData location)
+            : base(parent, ResourceIdentifier.LocationsKey, location.Name)
         {
             Location = location;
         }

@@ -27,17 +27,6 @@ namespace Azure.ResourceManager.Core
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TenantResourceIdentifier"/> class 
-        /// for resources in the Microsoft.Resources namespace.
-        /// </summary>
-        /// <param name="typeName">The simple name of the type, without slashes (/). </param>
-        /// <param name="resourceName"> The name of the resource.</param>
-        internal TenantResourceIdentifier(string typeName, string resourceName)
-           : this(new ResourceType("Microsoft.Resources", typeName), resourceName)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TenantResourceIdentifier"/> class 
         /// for resources in the same namespace as their parent.
         /// </summary>
         /// <param name="parent"> The parent resource id. </param>
@@ -70,8 +59,9 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceId"> The string representation of a resource identifier. </param>
         public TenantResourceIdentifier(string resourceId)
         {
-            var id = ResourceIdentifier.Create(resourceId) as TenantResourceIdentifier;
-            if (id is null)
+            var rawId = ResourceIdentifier.Create(resourceId);
+            TenantResourceIdentifier id = rawId as TenantResourceIdentifier;
+            if (id is null || rawId.TryGetSubscriptionId(out _))
                 throw new ArgumentException("Not a valid tenant level resource", nameof(resourceId));
             Name = id.Name;
             ResourceType = id.ResourceType;

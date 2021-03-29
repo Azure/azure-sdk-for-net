@@ -187,11 +187,52 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [TestCase("UnformattedString", Description ="Too Few Elements")]
-        [TestCase("/subs/sub1/rgs/rg1/", Description =  "No known parts")] 
-        [TestCase("/subscriptions/sub1/resourceGroups", Description = "Too few parts")]
+        [TestCase("/subs/sub1/rgs/rg1/", Description =  "No known parts")]
+        [TestCase("/subscriptions/sub1/rgs/rg1/", Description = "Subscription not a Guid")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/resourceGroups", Description = "Too few parts")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets", Description = "Subscription resource with too few parts")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/widgets/myWidget", Description = "Subscription resource with invalid child")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/resourceGroups/myRg/widgets", Description = "ResourceGroup ID with Too few parts")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/resourceGroups/myRg/widgets/myWidget", Description = "ResourceGroup ID with invalid child")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/resourceGroups/myRg/providers/Microsoft.Widgets/widgets", Description = "ResourceGroup provider ID with Too few parts")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/locations/westus2/incomplete", Description = "Too few parts for location resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/locations/westus2/providers/incomplete", Description = "Too few parts for location resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/locations/westus2/providers/myProvider/myResource/myResourceName/providers/incomplete", Description = "Too few parts for location resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/resourceGroups/myRg/providers/Company.MyProvider/myResources/myResourceName/providers/incomplete", Description = "Too few parts for resource group resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Company.MyProvider/myResources/myResourceName/providers/incomplete", Description = "Too few parts for subscription resource")]
+        [TestCase("/providers/Company.MyProvider/myResources/myResourceName/providers/incomplete", Description = "Too few parts for tenant resource")]
         public void ThrowsOnInvalidUri(string resourceId)
         {
             Assert.Throws<ArgumentOutOfRangeException>(new TestDelegate(() => ConvertToResourceId(resourceId)));
+        }
+
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/locations/westus2/myResourceType/myResourceName", Description = "location child resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/locations/westus2/myResourceType/myResourceName/mySingletonResource", Description = "location child singleton resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/locations/westus2/providers/myProvider/myResourceType/myResourceName", Description = "location provider resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/locations/westus2/providers/myProvider/myResourceType/myResourceName/myChildResource/myChildResourceName", Description = "location provider child resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/locations/westus2/providers/myProvider/myResourceType/myResourceName/providers/mySecondNamespace/myChildResource/myChildResourceName", Description = "location extension resource")]
+        public void CanParseValidLocationResource(string resourceId)
+        {
+            var id = ConvertToResourceId(resourceId);
+            Assert.AreEqual(id.ToString(), resourceId);
+        }
+
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets/myWidget/configuration", Description ="singleton homed in a subscription resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets/myWidget/providers/Contoso.Extensions/extensions/myExtension", Description = "Extension over a subscription resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets/myWidget/flanges/myFlange", Description = "Child of a subscription resource")]
+        public void CanParseValidSubscriptionResource( string resourceId)
+        {
+            SubscriptionResourceIdentifier subscription = resourceId;
+            Assert.AreEqual(resourceId.ToString(), resourceId);
+        }
+
+        [TestCase("/providers/Contoso.Widgets/widgets/myWidget/configuration", Description = "singleton homed in a tenant resource")]
+        [TestCase("/providers/Contoso.Widgets/widgets/myWidget/providers/Contoso.Extensions/extensions/myExtension", Description = "Extension over a subscription resource")]
+        [TestCase("/providers/Contoso.Widgets/widgets/myWidget/flanges/myFlange", Description = "Child of a subscription resource")]
+        public void CanParseValidTenantResource(string resourceId)
+        {
+            TenantResourceIdentifier tenant = resourceId;
+            Assert.AreEqual(resourceId.ToString(), resourceId);
         }
 
         public ResourceIdentifier ConvertToResourceId(string resourceId)
@@ -215,6 +256,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(null, null, true)]
         [TestCase(TrackedResourceId, ChildResourceId, false)]
         [TestCase(ChildResourceId, TrackedResourceId, false)]
+        [TestCase(TrackedResourceId, null, false)]
         [TestCase(null, TrackedResourceId, false)]
         public void Equals(string resourceProviderID1, string resourceProviderID2, bool expected)
         {
@@ -224,6 +266,139 @@ namespace Azure.ResourceManager.Core.Tests
                 Assert.AreEqual(expected, a.Equals(b));
 
             Assert.AreEqual(expected, ResourceIdentifier.Equals(a,b));
+        }
+
+        [Test]
+        public void EqualsObj()
+        {
+            object input = TrackedResourceId;
+            ResourceIdentifier resource = new ResourceGroupResourceIdentifier(TrackedResourceId);
+            Assert.AreEqual(true, resource.Equals(input));
+            Assert.IsFalse(resource.Equals(new object()));
+        }
+
+        [Test]
+        public void TryGetPropertiesForTenantResource()
+        {
+            TenantResourceIdentifier id1 = "/providers/Contoso.Widgets/widgets/myWidget";
+            Assert.AreEqual(false, id1.TryGetSubscriptionId(out _));
+            Assert.AreEqual(false, id1.TryGetLocation(out _));
+            Assert.AreEqual(false, id1.TryGetResourceGroupName(out _));
+            Assert.AreEqual(false, id1.TryGetParent(out _));
+            TenantResourceIdentifier id2 = "/providers/Contoso.Widgets/widgets/myWidget/flages/myFlange";
+            ResourceIdentifier parent;
+            Assert.AreEqual(true, id2.TryGetParent(out parent));
+            Assert.AreEqual(true, id1.Equals(parent));
+        }
+
+        [Test]
+        public void TryGetPropertiesForSubscriptionResource()
+        {
+            SubscriptionResourceIdentifier id1 = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/providers/Contoso.Widgets/widgets/myWidget";
+            string subscription;
+            Assert.AreEqual(true, id1.TryGetSubscriptionId(out subscription));
+            Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", subscription);
+            Assert.AreEqual(false, id1.TryGetLocation(out _));
+            Assert.AreEqual(false, id1.TryGetResourceGroupName(out _));
+            ResourceIdentifier expectedId = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101";
+            ResourceIdentifier parentId;
+            Assert.AreEqual(true, id1.TryGetParent(out parentId));
+            Assert.IsTrue(expectedId.Equals(parentId));
+        }
+
+        [Test]
+        public void TryGetPropertiesForLocationResource()
+        {
+            LocationResourceIdentifier id1 = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2/providers/Contoso.Widgets/widgets/myWidget";
+            string subscription;
+            Assert.AreEqual(true, id1.TryGetSubscriptionId(out subscription));
+            Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", subscription);
+            LocationData location;
+            Assert.AreEqual(true, id1.TryGetLocation(out location));
+            Assert.AreEqual(LocationData.WestUS2, location);
+            Assert.AreEqual(false, id1.TryGetResourceGroupName(out _));
+            ResourceIdentifier expectedId = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2";
+            ResourceIdentifier parentId;
+            Assert.AreEqual(true, id1.TryGetParent(out parentId));
+            Assert.IsTrue(expectedId.Equals(parentId));
+        }
+
+        [Test]
+        public void TryGetPropertiesForResourceGroupResource()
+        {
+            ResourceGroupResourceIdentifier id1 = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg/providers/Contoso.Widgets/widgets/myWidget";
+            string subscription;
+            Assert.AreEqual(true, id1.TryGetSubscriptionId(out subscription));
+            Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", subscription);
+            Assert.AreEqual(false, id1.TryGetLocation(out _));
+            string resourceGroupName;
+            Assert.AreEqual(true, id1.TryGetResourceGroupName(out resourceGroupName));
+            Assert.AreEqual("myRg", resourceGroupName);
+            ResourceIdentifier expectedId = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg";
+            ResourceIdentifier parentId;
+            Assert.AreEqual(true, id1.TryGetParent(out parentId));
+            Assert.IsTrue(expectedId.Equals(parentId));
+        }
+
+        [TestCase("/providers/Contoso.Widgets/widgets/myWidget", null, null, null, null, Description = "TenantResourceIdentifier")]
+        [TestCase("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/providers/Contoso.Widgets/widgets/myWidget",
+            "6b085460-5f21-477e-ba44-1035046e9101", null, null, "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101",
+            Description = "SubscriptionResourceIdentifier")]
+        [TestCase("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2/providers/Contoso.Widgets/widgets/myWidget",
+            "6b085460-5f21-477e-ba44-1035046e9101", "westus2", null, "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2",
+            Description = "LocationResourceIdentifier")]
+        [TestCase("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg/providers/Contoso.Widgets/widgets/myWidget", 
+            "6b085460-5f21-477e-ba44-1035046e9101", null, "myRg", "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg", 
+            Description = "ResourceGroupResourceIdentifier")]
+        public void TryGetPropertiesForGenericResource(string resourceId, string subscription, string location, string resourceGroup, string parent)
+        {
+            ResourceIdentifier id1 = resourceId;
+            string outputSubscription;
+            Assert.AreEqual(!(subscription is null), id1.TryGetSubscriptionId(out outputSubscription));
+            if (!(subscription is null))
+                Assert.AreEqual(subscription, outputSubscription);
+            LocationData outputLocation;
+            Assert.AreEqual(!(location is null), id1.TryGetLocation(out outputLocation));
+            if (!(location is null))
+                Assert.AreEqual(location, outputLocation.Name);
+            string outputResourceGroup;
+            Assert.AreEqual(!(resourceGroup is null), id1.TryGetResourceGroupName(out outputResourceGroup));
+            if (!(resourceGroup is null))
+                Assert.AreEqual(resourceGroup, outputResourceGroup);
+            ResourceIdentifier outputParent;
+            Assert.AreEqual(!(parent is null), id1.TryGetParent(out outputParent));
+            if (!(parent is null))
+                Assert.AreEqual(parent, outputParent.ToString());
+        }
+
+        [TestCase("/providers/Contoso.Widgets//widgets/myWidget", Description = "TenantResourceIdentifier")]
+        [TestCase("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/providers//Contoso.Widgets/widgets/myWidget",
+            Description = "SubscriptionResourceIdentifier")]
+        [TestCase("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101//locations/westus2/providers/Contoso.Widgets/widgets/myWidget",
+            Description = "LocationResourceIdentifier")]
+        [TestCase("/subscriptions//6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg/providers/Contoso.Widgets/widgets/myWidget",
+            Description = "ResourceGroupResourceIdentifier")]
+        public void ResourceIdRetainsOriginalInput(string resourceId)
+        {
+            ResourceIdentifier id = resourceId;
+            Assert.AreEqual(id.ToString(), resourceId);
+        }
+
+        [Test]
+        public void ThrowOnMistypedResource()
+        {
+            TenantResourceIdentifier tenant;
+            Assert.Throws<ArgumentException>(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101");
+            Assert.Throws<ArgumentException>(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
+            Assert.Throws<ArgumentException>(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
+            SubscriptionResourceIdentifier subscription;
+            Assert.Throws<ArgumentException>(() => subscription = "/providers/Contoso.Widgets/widgets/myWidget");
+            Assert.Throws<ArgumentException>(() => subscription = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
+            Assert.Throws<ArgumentException>(() => subscription = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
+            ResourceGroupResourceIdentifier group;
+            Assert.Throws<ArgumentException>(() => group = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101");
+            LocationResourceIdentifier location;
+            Assert.Throws<ArgumentException>(() => location = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101");
         }
 
         [TestCase(TrackedResourceId, TrackedResourceId, 0)]
