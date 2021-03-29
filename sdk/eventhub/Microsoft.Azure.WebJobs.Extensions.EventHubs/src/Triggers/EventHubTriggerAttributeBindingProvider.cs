@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                  var options = _options.Value;
                  if (singleDispatch && !options.IsSingleDispatchEnabled)
                  {
-                     throw new NotSupportedException("The single dispatch is not supported, please use batch processing (switch the bound parameter to an array).");
+                     throw new NotSupportedException("Binding to individual events is not supported. Please use batch processing by binding to an array instead.");
                  }
 
                  var checkpointStore = new BlobsCheckpointStore(
