@@ -11,7 +11,7 @@ namespace Proto.Network
     /// A class representing the NetworkSecurityGroup data model.
     /// </summary>
     public class NetworkSecurityGroupData :
-        TrackedResource<Azure.ResourceManager.Network.Models.NetworkSecurityGroup>
+        TrackedResource<ResourceGroupResourceIdentifier, Azure.ResourceManager.Network.Models.NetworkSecurityGroup>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NetworkSecurityGroupData"/> class.

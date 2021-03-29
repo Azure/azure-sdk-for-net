@@ -10,24 +10,26 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing collection of resources and their operations over their parent.
     /// </summary>
+    /// <typeparam name="TIdentifier"> The type of the resource identifier. </typeparam>
     /// <typeparam name="TOperations"> The type of the class containing operations for the underlying resource. </typeparam>
     /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
-    public abstract class ResourceContainerBase<TOperations, TResource> : ContainerBase<TOperations>
-        where TOperations : ResourceOperationsBase<TOperations>
-        where TResource : Resource
+    public abstract class ResourceContainerBase<TIdentifier, TOperations, TResource> : ContainerBase<TIdentifier, TOperations>
+        where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
+        where TResource : Resource<TIdentifier>
+        where TIdentifier : TenantResourceIdentifier
     {
         private static readonly object _parentLock = new object();
         private object _parentResource;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceContainerBase{TOperations, TResource}"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ResourceContainerBase{TIdentifier, TOperations, TResource}"/> class for mocking.
         /// </summary>
         protected ResourceContainerBase()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceContainerBase{TOperations, TData}"/> class.
+        /// Initializes a new instance of the <see cref="ResourceContainerBase{TIdentifier, TOperations, TData}"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         protected ResourceContainerBase(ResourceOperationsBase parent)
@@ -42,8 +44,8 @@ namespace Azure.ResourceManager.Core
         /// <exception cref="InvalidOperationException"> Resource identifier is not a valid type for this container. </exception>
         protected override void Validate(ResourceIdentifier identifier)
         {
-            if (identifier.Type != ValidResourceType)
-                throw new InvalidOperationException($"{identifier.Type} is not a valid container for {Id.Type}");
+            if (identifier.ResourceType != ValidResourceType)
+                throw new InvalidOperationException($"{identifier.ResourceType} is not a valid container for {Id.ResourceType}");
         }
 
         /// <summary>
@@ -112,11 +114,13 @@ namespace Azure.ResourceManager.Core
         /// Gets the location of the parent object.
         /// </summary>
         /// <typeparam name="TParent"> The type of the parents full resource object. </typeparam>
+        /// <typeparam name="TParentId"> The type of the parents resource id. </typeparam>
         /// <typeparam name="TParentOperations"> The type of the parents operations object. </typeparam>
         /// <returns> The <see cref="LocationData"/> associated with the parent object. </returns>
-        protected TParent GetParentResource<TParent, TParentOperations>()
+        protected TParent GetParentResource<TParent, TParentId, TParentOperations>()
             where TParent : TParentOperations
-            where TParentOperations : ResourceOperationsBase<TParent>
+            where TParentOperations : ResourceOperationsBase<TParentId, TParent>
+            where TParentId : ResourceIdentifier
         {
             if (_parentResource is null)
             {

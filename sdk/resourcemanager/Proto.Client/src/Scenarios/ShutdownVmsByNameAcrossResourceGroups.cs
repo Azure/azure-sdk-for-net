@@ -27,9 +27,9 @@ namespace Proto.Client
             {
                 if (reg.IsMatch(vm.Id.Name))
                 {
-                    Console.WriteLine($"Stopping {vm.Id.ResourceGroup} {vm.Id.Name}");
+                    Console.WriteLine($"Stopping {vm.Id.ResourceGroupName} {vm.Id.Name}");
                     vm.PowerOff();
-                    Console.WriteLine($"Starting {vm.Id.ResourceGroup} {vm.Id.Name}");
+                    Console.WriteLine($"Starting {vm.Id.ResourceGroupName} {vm.Id.Name}");
                     vm.PowerOn();
                 }
             });
