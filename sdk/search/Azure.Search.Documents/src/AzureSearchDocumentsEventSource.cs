@@ -40,21 +40,21 @@ namespace Azure.Search.Documents
             }
         }
 
-        [Event(BatchSubmittedEvent, Level = EventLevel.Informational, Message = "Indexing publisher has submitted batch of size {0}.")]
-        public void BatchSubmitted(int batchSize)
+        [Event(BatchSubmittedEvent, Level = EventLevel.Informational, Message = "Indexing publisher at {0} has submitted batch of size {1}.")]
+        public void BatchSubmitted(string endPoint, int batchSize)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                WriteEvent(BatchSubmittedEvent, batchSize);
+                WriteEvent(BatchSubmittedEvent, endPoint, batchSize);
             }
         }
 
-        [Event(BatchActionCountUpdatedEvent, Level = EventLevel.Informational, Message = "Indexing publisher has updated the starting batch action count from {0} to {1}.")]
-        public void BatchActionCountUpdated(int oldBatchCount, int newBatchCount)
+        [Event(BatchActionCountUpdatedEvent, Level = EventLevel.Informational, Message = "Indexing publisher at {0} has updated the starting batch action count from {1} to {2}.")]
+        public void BatchActionCountUpdated(string endPoint, int oldBatchCount, int newBatchCount)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.All))
             {
-                WriteEvent(BatchActionCountUpdatedEvent, oldBatchCount, newBatchCount);
+                WriteEvent(BatchActionCountUpdatedEvent, endPoint, oldBatchCount, newBatchCount);
             }
         }
     }

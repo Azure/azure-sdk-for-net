@@ -1067,17 +1067,21 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("PendingQueueResized", eventData[1].EventName);         // 2. All events are pulled out of the pending queue.
             Assert.AreEqual(0, eventData[1].GetProperty<int>("queueSize"));
             Assert.AreEqual("BatchSubmitted", eventData[2].EventName);              // 3. A batch is created for submission and contains all events.
+            Assert.NotNull(eventData[2].GetProperty<string>("endPoint"));
             Assert.AreEqual(512, eventData[2].GetProperty<int>("batchSize"));
             Assert.AreEqual("BatchActionCountUpdated", eventData[3].EventName);     // 4. Batch is split up and default action count is updated.
+            Assert.NotNull(eventData[3].GetProperty<string>("endPoint"));
             Assert.AreEqual(512, eventData[3].GetProperty<int>("oldBatchCount"));
             Assert.AreEqual(256, eventData[3].GetProperty<int>("newBatchCount"));
             Assert.AreEqual("RetryQueueResized", eventData[4].EventName);           // 5. Second part of the batch is pushed into the retry queue.
             Assert.AreEqual(256, eventData[4].GetProperty<int>("queueSize"));
             Assert.AreEqual("BatchSubmitted", eventData[5].EventName);              // 6. First part of the batch is submitted.
+            Assert.NotNull(eventData[5].GetProperty<string>("endPoint"));
             Assert.AreEqual(256, eventData[5].GetProperty<int>("batchSize"));
             Assert.AreEqual("RetryQueueResized", eventData[6].EventName);           // 7. Remaining events are pulled out of the retry queue.
             Assert.AreEqual(0, eventData[6].GetProperty<int>("queueSize"));
             Assert.AreEqual("BatchSubmitted", eventData[7].EventName);              // 8. Second part of the batch is submitted.
+            Assert.NotNull(eventData[7].GetProperty<string>("endPoint"));
             Assert.AreEqual(256, eventData[7].GetProperty<int>("batchSize"));
 
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
