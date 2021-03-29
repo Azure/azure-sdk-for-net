@@ -1,5 +1,15 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 20.0.0
+- Upgrade to rest api version 2021-02-01.
+- Support KeyPolicy,SasPolicy in create/update Storage account.
+- Added a new property "CreationTime" to Microsoft.Azure.Management.Storage.Models.StorageAccountKey object.
+
+**Breaking changes**
+
+- StorageManagementClient.FileShares.List() parameter "expand" type change to enum to string.
+- StorageManagementClient.FileShares.Create() parameter "expand" type change to enum to string.
+
 ### Changes in 19.0.0
 - Upgrade to rest api version 2021-01-01
 - Support create/get/delete/list File share snapshot
