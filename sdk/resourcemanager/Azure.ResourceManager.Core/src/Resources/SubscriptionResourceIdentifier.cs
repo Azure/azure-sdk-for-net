@@ -105,7 +105,15 @@ namespace Azure.ResourceManager.Core
         /// Convert a string resource id into a subscription resource identifier.
         /// </summary>
         /// <param name="other"> The string representation of a resource identifier. </param>
-        public static implicit operator SubscriptionResourceIdentifier(string other) => (other is null ? null : new SubscriptionResourceIdentifier(other));
+        public static implicit operator SubscriptionResourceIdentifier(string other)
+        {
+            if (other is null)
+                return null;
+            SubscriptionResourceIdentifier id = ResourceIdentifier.Create(other) as SubscriptionResourceIdentifier;
+            if (id is null)
+                throw new ArgumentException("Not a valid subscription level resource", nameof(other));
+            return id;
+        }
 
         internal override string ToResourceString()
         {

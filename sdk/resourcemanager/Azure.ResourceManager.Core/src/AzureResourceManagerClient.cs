@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Core
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptionOperations(defaultSubscriptionId).Get().Value;
-            _clientOptions.ApiVersions.SetProviderClient(credential, baseUri, DefaultSubscription.Id.Subscription);
+            _clientOptions.ApiVersions.SetProviderClient(credential, baseUri, DefaultSubscription.Id.SubscriptionId);
         }
 
         /// <summary>

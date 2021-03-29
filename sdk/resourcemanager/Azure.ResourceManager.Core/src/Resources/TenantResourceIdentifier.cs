@@ -73,6 +73,14 @@ namespace Azure.ResourceManager.Core
         /// Convert a string resource identifier into a TenantResourceIdentifier.
         /// </summary>
         /// <param name="other"> The string representation of a subscription resource identifier. </param>
-        public static implicit operator TenantResourceIdentifier(string other) => (other is null ? null : new TenantResourceIdentifier(other));
+        public static implicit operator TenantResourceIdentifier(string other)
+        {
+            if (other is null)
+                return null;
+            TenantResourceIdentifier id = ResourceIdentifier.Create(other) as TenantResourceIdentifier;
+            if (id is null)
+                throw new ArgumentException("Not a valid tenant level resource", nameof(other));
+            return id;
+        }
     }
 }

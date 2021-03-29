@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Core
 
         private string GetApiVersion(CancellationToken cancellationToken)
         {
-            string version = ClientOptions.ApiVersions.TryGetApiVersion(Id.Type, cancellationToken);
+            string version = ClientOptions.ApiVersions.TryGetApiVersion(Id.ResourceType, cancellationToken);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resouce id was given {Id}");
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Core
         }
         private async Task<string> GetApiVersionAsync(CancellationToken cancellationToken)
         {
-            string version = await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.Type, cancellationToken).ConfigureAwait(false);
+            string version = await ClientOptions.ApiVersions.TryGetApiVersionAsync(Id.ResourceType, cancellationToken).ConfigureAwait(false);
             if (version is null)
             {
                 throw new InvalidOperationException($"An invalid resouce id was given {Id}");

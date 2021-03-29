@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Core
         {
             var id = ResourceIdentifier.Create(resourceId) as LocationResourceIdentifier;
             if (id is null)
-                throw new ArgumentException("Not a valid tenant level resource", nameof(resourceId));
+                throw new ArgumentException("Not a valid location level resource", nameof(resourceId));
             Name = id.Name;
             ResourceType = id.ResourceType;
             Parent = id.Parent;
@@ -88,6 +88,14 @@ namespace Azure.ResourceManager.Core
         /// Convert resourceId string to LocationResourceIdentifier.
         /// </summary>
         /// <param name="other">A string representation of a resource id.</param>
-        public static implicit operator LocationResourceIdentifier(string other) => (other is null ? null : new LocationResourceIdentifier(other));
+        public static implicit operator LocationResourceIdentifier(string other)
+        {
+            if (other is null)
+                return null;
+            LocationResourceIdentifier id = ResourceIdentifier.Create(other) as LocationResourceIdentifier;
+            if (id is null)
+                throw new ArgumentException("Not a valid location level resource", nameof(other));
+            return id;
+        }
     }
 }

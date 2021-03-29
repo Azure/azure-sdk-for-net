@@ -388,13 +388,18 @@ namespace Azure.ResourceManager.Core.Tests
         public void ThrowOnMistypedResource()
         {
             TenantResourceIdentifier tenant;
-            Assert.Throws<ArgumentException>(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101");
-            Assert.Throws<ArgumentException>(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
-            Assert.Throws<ArgumentException>(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
+            Assert.Throws<ArgumentException>(() => tenant = new TenantResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101"));
+            Assert.Throws<ArgumentException>(() => tenant = new TenantResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2"));
+            Assert.Throws<ArgumentException>(() => tenant = new TenantResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg"));
+            Assert.DoesNotThrow(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101");
+            Assert.DoesNotThrow(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
+            Assert.DoesNotThrow(() => tenant = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
             SubscriptionResourceIdentifier subscription;
             Assert.Throws<ArgumentException>(() => subscription = "/providers/Contoso.Widgets/widgets/myWidget");
-            Assert.Throws<ArgumentException>(() => subscription = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
-            Assert.Throws<ArgumentException>(() => subscription = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
+            Assert.Throws<ArgumentException>(() => subscription = new SubscriptionResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2"));
+            Assert.Throws<ArgumentException>(() => subscription = new SubscriptionResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg"));
+            Assert.DoesNotThrow(() => subscription = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
+            Assert.DoesNotThrow(() => subscription = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
             ResourceGroupResourceIdentifier group;
             Assert.Throws<ArgumentException>(() => group = "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101");
             LocationResourceIdentifier location;

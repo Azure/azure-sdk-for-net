@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="target">he <see cref="ResourceGroupResourceIdentifier"/> of the target of this extension resource.</param>
         /// <param name="childResourceType">The full ARM resource type of the extension.</param>
         /// <param name="childResourceName">The name of the extension resource.</param>
-        internal ResourceGroupResourceIdentifier(ResourceGroupResourceIdentifier target,  string childResourceType, string childResourceName)
+        internal ResourceGroupResourceIdentifier(ResourceGroupResourceIdentifier target, string childResourceType, string childResourceName)
             : base(target, childResourceType, childResourceName)
         {
             ResourceGroupName = target.ResourceGroupName;
@@ -83,6 +83,14 @@ namespace Azure.ResourceManager.Core
         /// Convert a string into a resource group resource identifier.
         /// </summary>
         /// <param name="other">The string representation of a resource Id.</param>
-        public static implicit operator ResourceGroupResourceIdentifier(string other) => (other is null ? null : new ResourceGroupResourceIdentifier(other));
+        public static implicit operator ResourceGroupResourceIdentifier(string other)
+        {
+            if (other is null)
+                return null;
+            ResourceGroupResourceIdentifier id = ResourceIdentifier.Create(other) as ResourceGroupResourceIdentifier;
+            if (id is null)
+                throw new ArgumentException("Not a valid resource group level resource", nameof(other));
+            return id;
+        }
     }
 }
