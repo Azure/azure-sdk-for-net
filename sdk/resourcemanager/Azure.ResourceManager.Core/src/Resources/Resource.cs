@@ -8,13 +8,14 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the base resource used by all azure resources.
     /// </summary>
+    [ReferenceType]
     public abstract class Resource : IEquatable<Resource>, IEquatable<string>, IComparable<Resource>,
         IComparable<string>
     {
         /// <summary>
         /// Gets or sets the resource identifier.
         /// </summary>
-        public abstract ResourceIdentifier Id { get; protected set; }
+        public virtual ResourceIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets the name.

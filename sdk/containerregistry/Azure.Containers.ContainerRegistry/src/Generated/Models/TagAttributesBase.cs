@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Tag attribute details. </summary>
@@ -18,18 +20,16 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of TagAttributesBase. </summary>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
-        /// <param name="createdTime"> Tag created time. </param>
-        /// <param name="lastUpdateTime"> Tag last update time. </param>
-        /// <param name="signed"> Is signed. </param>
-        /// <param name="changeableAttributes"> Changeable attributes. </param>
-        internal TagAttributesBase(string name, string digest, string createdTime, string lastUpdateTime, bool? signed, ChangeableAttributes changeableAttributes)
+        /// <param name="createdOn"> Tag created time. </param>
+        /// <param name="lastUpdatedOn"> Tag last update time. </param>
+        /// <param name="modifiableProperties"> Changeable attributes. </param>
+        internal TagAttributesBase(string name, string digest, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, ContentProperties modifiableProperties)
         {
             Name = name;
             Digest = digest;
-            CreatedTime = createdTime;
-            LastUpdateTime = lastUpdateTime;
-            Signed = signed;
-            ChangeableAttributes = changeableAttributes;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            ModifiableProperties = modifiableProperties;
         }
 
         /// <summary> Tag name. </summary>
@@ -37,12 +37,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Tag digest. </summary>
         public string Digest { get; }
         /// <summary> Tag created time. </summary>
-        public string CreatedTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Tag last update time. </summary>
-        public string LastUpdateTime { get; }
-        /// <summary> Is signed. </summary>
-        public bool? Signed { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> Changeable attributes. </summary>
-        public ChangeableAttributes ChangeableAttributes { get; }
+        public ContentProperties ModifiableProperties { get; }
     }
 }

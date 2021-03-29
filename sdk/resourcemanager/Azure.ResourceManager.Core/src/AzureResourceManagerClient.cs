@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentNullException(nameof(credential));
 
             ClientOptions = options ?? new AzureResourceManagerClientOptions();
-
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptionOperations(defaultSubscriptionId).Get().Value;
+            _clientOptions.ApiVersions.SetProviderClient(credential, baseUri, DefaultSubscription.Id.Subscription);
         }
 
         /// <summary>

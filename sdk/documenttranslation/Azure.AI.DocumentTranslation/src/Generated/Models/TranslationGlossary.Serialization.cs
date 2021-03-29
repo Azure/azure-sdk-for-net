@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
     public partial class TranslationGlossary : IUtf8JsonSerializable
     {
@@ -16,7 +16,7 @@ namespace Azure.AI.DocumentTranslation.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("glossaryUrl");
-            writer.WriteStringValue(GlossaryUrl.AbsoluteUri);
+            writer.WriteStringValue(GlossaryUri.AbsoluteUri);
             if (Optional.IsDefined(FormatVersion))
             {
                 writer.WritePropertyName("format");

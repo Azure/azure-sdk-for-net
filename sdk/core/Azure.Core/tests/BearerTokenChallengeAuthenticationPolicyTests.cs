@@ -537,6 +537,70 @@ namespace Azure.Core.Tests
             Assert.CatchAsync<InvalidOperationException>(async () => await firstRequestTask);
         }
 
+        [Test]
+        public async Task BearerTokenChallengeAuthenticationPolicy_CancelledFirstRequestDoesNotCancelPendingSecondRequest()
+        {
+            var currentTime = DateTime.UtcNow;
+            var requestMre = new ManualResetEventSlim(false);
+            var responseMre = new ManualResetEventSlim(false);
+            var cts = new CancellationTokenSource();
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                requestMre.Set();
+                responseMre.Wait(c);
+                return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
+            }, IsAsync);
+
+            var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport((req) => new MockResponse(200));
+
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts.Token);
+            requestMre.Wait();
+
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
+            cts.Cancel();
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () => await firstRequestTask);
+            responseMre.Set();
+
+            var response = await secondRequestTask;
+            Assert.That(response.Status, Is.EqualTo(200));
+        }
+
+        [Test]
+        public void BearerTokenChallengeAuthenticationPolicy_CancelledFirstRequestAndCancelledSecondRequest()
+        {
+            var currentTime = DateTime.UtcNow;
+            var requestMre = new ManualResetEventSlim(false);
+            var responseMre = new ManualResetEventSlim(false);
+            var cts1 = new CancellationTokenSource();
+            var cts2 = new CancellationTokenSource();
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                requestMre.Set();
+                responseMre.Wait(c);
+                return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport((req) =>
+            {
+                return new MockResponse(200);
+            });
+
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts1.Token);
+            requestMre.Wait();
+
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts2.Token);
+            cts1.Cancel();
+            cts2.Cancel();
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () => await firstRequestTask);
+            responseMre.Set();
+
+            Assert.ThrowsAsync<OperationCanceledException>(async () => await secondRequestTask);
+        }
+
         private class TokenCredentialStub : TokenCredential
         {
             public TokenCredentialStub(Func<TokenRequestContext, CancellationToken, AccessToken> handler, bool isAsync)

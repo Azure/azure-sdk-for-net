@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Test
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_RoundTrip()
         {
             BlobServiceClient service = GetServiceClient_AccountSas();
@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(expectedUri, actualUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_RegularUrl_AccountTest()
         {
             // Arrange
@@ -56,7 +56,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_RegularUrl_ContainerTest()
         {
             // Arrange
@@ -80,7 +80,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_RegularUrl_BlobTest()
         {
             // Arrange
@@ -104,7 +104,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_RegularUrl_PortTest()
         {
             // Arrange
@@ -128,7 +128,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_RegularUrl_SnapshotTest()
         {
             // Arrange
@@ -152,7 +152,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_RegularUrl_VersionIdTest()
         {
             // Arrange
@@ -176,7 +176,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_RegularUrl_SasTest()
         {
             // Arrange
@@ -212,14 +212,14 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_RegularUrl_CNAME()
         {
             var blobUriBuilder = new BlobUriBuilder(new Uri("http://www.contoso.com"));
             Assert.AreEqual(string.Empty, blobUriBuilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_AccountNamePeriod()
         {
             var blobUriBuilder = new BlobUriBuilder(new Uri("https://account.z.blob.core.windows.net/share/dir"));
@@ -227,7 +227,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("account", blobUriBuilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_AccountNameError()
         {
             var blobUriBuilder = new BlobUriBuilder(new Uri("http://notaurl"));
@@ -235,7 +235,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsEmpty(blobUriBuilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_RegularUrl_MalformedSubdomain()
         {
             // account and blob swapped
@@ -252,7 +252,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(string.Empty, blobUriBuilder3.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_IPStyleUrl_AccountTest()
         {
             // Arrange
@@ -277,7 +277,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_IPStyleUrl_ContainerTest()
         {
             // Arrange
@@ -302,7 +302,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_IPStyleUrl_BlobTest()
         {
             // Arrange
@@ -327,7 +327,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_IPStyleUrl_PortTest()
         {
             // Arrange
@@ -352,7 +352,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_IPStyleUrl_PortTestContainer()
         {
             // Arrange
@@ -377,7 +377,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_IPStyleUrl_PortTestBlob()
         {
             // Arrange
@@ -402,7 +402,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_PortTest_SlashUri()
         {
             // Arrange
@@ -426,7 +426,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_IPStyleUrl_NonAsciiUri()
         {
             // Arrange
@@ -450,7 +450,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_LocalDockerUrl_PortTest()
         {
             // Arrange
@@ -476,7 +476,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_LocalDockerUrl_PortTestContainer()
         {
             // Arrange
@@ -502,7 +502,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_LocalDockerUrl_PortTestBlob()
         {
             // Arrange
@@ -528,7 +528,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_LocalDockerUrl_Azurite()
         {
             // Arrange
@@ -553,7 +553,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_LocalDockerUrl_AzuriteContainer()
         {
             // Arrange
@@ -578,7 +578,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_LocalDockerUrl_AzuriteBlob()
         {
             // Arrange
@@ -603,7 +603,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_CustomUri_AccountContainerBlobTest()
         {
             // Arrange
@@ -628,7 +628,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_IPStyleUrl_SnapshotTest()
         {
             // Arrange
@@ -653,7 +653,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_IPStyleUrl_VersionIdTest()
         {
             // Arrange
@@ -678,7 +678,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_IPStyleUrl_SasTest()
         {
             // Arrange
@@ -714,7 +714,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("2020-10-27", "2020-10-28")]
         [TestCase("2020-10-27T12:10Z", "2020-10-28T13:20Z")]
         [TestCase("2020-10-27T12:10:11Z", "2020-10-28T13:20:14Z")]
@@ -734,7 +734,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"));
         }
 
-        [Test]
+        [RecordedTest]
         public void BlobUriBuilder_SasInvalidStartExpiryTimeFormat()
         {
             // Arrange

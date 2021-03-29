@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core.TestFramework;
@@ -22,6 +23,26 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
             var serviceCollection = new ServiceCollection();
 
             serviceCollection.AddDataProtection().PersistKeysToAzureBlobStorage(await GetBlobClient("testblob"));
+            var services = serviceCollection.BuildServiceProvider();
+
+            var dataProtector = services.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
+            var protectedText = dataProtector.Protect("Hello world!");
+
+            var anotherServices = serviceCollection.BuildServiceProvider();
+            var anotherDataProtector = anotherServices.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
+            var unprotectedText = anotherDataProtector.Unprotect(protectedText);
+
+            Assert.AreEqual("Hello world!", unprotectedText);
+        }
+
+        [Test]
+        public async Task PersistsKeysToAzureBlobWhenBlobAlreadyExists()
+        {
+            var serviceCollection = new ServiceCollection();
+            var client = await GetBlobClient("testblob3");
+            await client.UploadAsync(Stream.Null, overwrite: true);
+
+            serviceCollection.AddDataProtection().PersistKeysToAzureBlobStorage(client);
             var services = serviceCollection.BuildServiceProvider();
 
             var dataProtector = services.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");

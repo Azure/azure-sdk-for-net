@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
             }
-
+            
             SessionRecording?.Dispose(true);
             GlobalClient = null;
         }

@@ -127,7 +127,7 @@ namespace Azure.Identity.Tests
             bool onCreateVsCalled = false;
             bool onCreateVsCodeCalled = false;
 
-            using (new TestEnvVar(new ()
+            using (new TestEnvVar(new()
             {
                 { "AZURE_CLIENT_ID", expClientId },
                 { "AZURE_USERNAME", expUsername },
@@ -199,7 +199,7 @@ namespace Azure.Identity.Tests
             bool onCreateVsCalled = false;
             bool onCreateVsCodeCalled = false;
 
-            using (new TestEnvVar(new ()
+            using (new TestEnvVar(new()
             {
                     { "AZURE_CLIENT_ID", expClientId },
                     { "AZURE_USERNAME", expUsername },

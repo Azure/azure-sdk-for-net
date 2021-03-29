@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.MachineLearningServices
     public partial class MachineLearningServiceCreateOrUpdateOperation : Operation<ServiceResource>, IOperationSource<ServiceResource>
     {
         private readonly ArmOperationHelpers<ServiceResource> _operation;
+
+        /// <summary> Initializes a new instance of MachineLearningServiceCreateOrUpdateOperation for mocking. </summary>
+        protected MachineLearningServiceCreateOrUpdateOperation()
+        {
+        }
+
         internal MachineLearningServiceCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ServiceResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "MachineLearningServiceCreateOrUpdateOperation");

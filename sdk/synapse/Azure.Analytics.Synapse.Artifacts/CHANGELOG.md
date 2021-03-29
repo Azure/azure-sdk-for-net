@@ -1,9 +1,13 @@
 # Release History
 
-## 1.0.0-preview.7 (Unreleased)
+## 1.0.0-preview.8 (Unreleased)
+
+
+## 1.0.0-preview.7 (2021-03-17)
 
 ### Added
 - Many models classes now have public getters.
+- Added new `LibraryClient` and associated support types.
 
 ## 1.0.0-preview.6 (2021-02-10)
 

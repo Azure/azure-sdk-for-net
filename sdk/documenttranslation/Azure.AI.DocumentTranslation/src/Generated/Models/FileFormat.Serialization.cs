@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.DocumentTranslation
 {
-    internal partial class FileFormat
+    public partial class FileFormat
     {
         internal static FileFormat DeserializeFileFormat(JsonElement element)
         {

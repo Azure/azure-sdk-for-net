@@ -47,7 +47,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
             try
             {
                 // Create TSI instances
-                Response<InstancesOperationError[]> createInstancesResult = await client
+                Response<TimeSeriesOperationError[]> createInstancesResult = await client
                     .CreateOrReplaceTimeSeriesInstancesAsync(timeSeriesInstances)
                     .ConfigureAwait(false);
 
@@ -78,7 +78,7 @@ namespace Azure.Iot.TimeSeriesInsights.Tests
                 // clean up
                 try
                 {
-                    Response<InstancesOperationError[]> deleteInstancesResponse = await client
+                    Response<TimeSeriesOperationError[]> deleteInstancesResponse = await client
                         .DeleteInstancesAsync(timeSeriesInstances.Select((instance) => instance.TimeSeriesId))
                         .ConfigureAwait(false);
 

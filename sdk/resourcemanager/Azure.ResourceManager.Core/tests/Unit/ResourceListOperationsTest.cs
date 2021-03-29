@@ -4,6 +4,8 @@ using System.Reflection;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Azure.ResourceManager.Core.Tests
 {
@@ -123,14 +125,14 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var resource = new GenericResourceExpanded();
 
-            // See TODO in GenericResourceOperations.Valide().
-            // resource.Id = "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup";
             resource.Location = location;
             resource.Tags.ReplaceWith(tags ?? new Dictionary<string, string>());
             resource.Sku = sku;
             resource.Plan = plan;
             resource.Kind = kind;
             resource.ManagedBy = managedBy;
+            var field = typeof(GenericResourceExpanded).BaseType.BaseType.GetField("<Id>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic);
+            field.SetValue(resource, "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup");
             return resource;
         }
     }

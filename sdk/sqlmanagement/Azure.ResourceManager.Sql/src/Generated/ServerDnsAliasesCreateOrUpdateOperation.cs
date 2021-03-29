@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ServerDnsAliasesCreateOrUpdateOperation : Operation<ServerDnsAlias>, IOperationSource<ServerDnsAlias>
     {
         private readonly ArmOperationHelpers<ServerDnsAlias> _operation;
+
+        /// <summary> Initializes a new instance of ServerDnsAliasesCreateOrUpdateOperation for mocking. </summary>
+        protected ServerDnsAliasesCreateOrUpdateOperation()
+        {
+        }
+
         internal ServerDnsAliasesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ServerDnsAlias>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ServerDnsAliasesCreateOrUpdateOperation");

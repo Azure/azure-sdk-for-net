@@ -127,17 +127,20 @@ namespace Azure.Core.Pipeline
 
         private static HttpClient CreateDefaultClient()
         {
-            var httpClientHandler = new HttpClientHandler();
+#if NETFRAMEWORK || NETSTANDARD
+            HttpClientHandler httpMessageHandler = new HttpClientHandler();
+#else
+
+            SocketsHttpHandler httpMessageHandler = new SocketsHttpHandler();
+#endif
             if (HttpEnvironmentProxy.TryCreate(out IWebProxy webProxy))
             {
-                httpClientHandler.Proxy = webProxy;
+                httpMessageHandler.Proxy = webProxy;
             }
 
-#if NETFRAMEWORK
-            ServicePointHelpers.SetLimits(httpClientHandler);
-#endif
+            ServicePointHelpers.SetLimits(httpMessageHandler);
 
-            return new HttpClient(httpClientHandler)
+            return new HttpClient(httpMessageHandler)
             {
                 // Timeouts are handled by the pipeline
                 Timeout = Timeout.InfiniteTimeSpan

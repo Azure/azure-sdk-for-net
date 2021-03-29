@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Perf.Infrastructure
         /// <inheritdoc/>
         public override async Task GlobalSetupAsync()
         {
-            SearchIndex index = new (_indexName)
+            SearchIndex index = new(_indexName)
             {
                 Fields = new FieldBuilder().Build(typeof(Hotel)),
                 Suggesters = { new SearchSuggester(SuggesterName, new string[] { nameof(Hotel.Description), nameof(Hotel.HotelName) }) }
