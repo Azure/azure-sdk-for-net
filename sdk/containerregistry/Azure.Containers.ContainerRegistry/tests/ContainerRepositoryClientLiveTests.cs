@@ -153,12 +153,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Act
             RegistryArtifactProperties listProperties = await client.GetRegistryArtifactPropertiesAsync(tag);
-            var arm64LinuxImage = listProperties.RegistryArtifacts.Where(
-               artifact =>
-               {
-                   return artifact.CpuArchitecture == "arm64" &&
-                          artifact.OperatingSystem == "linux";
-               }).First();
+            var arm64LinuxImage = listProperties.RegistryArtifacts.First(
+                artifact =>
+                    artifact.CpuArchitecture == "arm64" &&
+                    artifact.OperatingSystem == "linux");
             RegistryArtifactProperties properties = await client.GetRegistryArtifactPropertiesAsync(arm64LinuxImage.Digest);
 
             // Assert
