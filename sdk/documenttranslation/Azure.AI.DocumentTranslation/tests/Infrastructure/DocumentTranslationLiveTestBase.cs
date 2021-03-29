@@ -23,6 +23,20 @@ namespace Azure.AI.DocumentTranslation.Tests
             Sanitizer = new DocumentTranslationRecordedTestSanitizer();
         }
 
+        private static readonly List<TestDocument> oneTestDocuments = new()
+        {
+            new TestDocument("Document1.txt", "First english test document"),
+        };
+
+        private static readonly List<TestDocument> twoTestDocuments = new()
+        {
+            new TestDocument("Document1.txt", "First english test document"),
+            new TestDocument("File2.txt", "Second english test file"),
+        };
+
+        protected List<TestDocument> OneDocumentList = oneTestDocuments;
+        protected List<TestDocument> TwoDocumentList = twoTestDocuments;
+
         public DocumentTranslationClient GetClient(
             AzureKeyCredential credential = default,
             DocumentTranslationClientOptions options = default)
@@ -53,7 +67,7 @@ namespace Azure.AI.DocumentTranslation.Tests
                 await containerClient.UploadBlobAsync(documents[i].Name, stream);
             }
 
-            var expiresOn = DateTimeOffset.Now.AddHours(1);
+            var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
             return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Read, expiresOn);
         }
 
@@ -64,7 +78,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             var containerClient = GetBlobContainerClient(containerName);
             await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
-            var expiresOn = DateTimeOffset.Now.AddHours(1);
+            var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
             return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn);
         }
     }
