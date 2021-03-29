@@ -7,6 +7,12 @@
       "commands": [
         "reportgenerator"
       ]
+    },
+    "dotnet-script": {
+      "version": "1.0.1",
+      "commands": [
+        "dotnet-script"
+      ]
     }
   }
 }
