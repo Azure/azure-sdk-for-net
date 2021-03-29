@@ -6,8 +6,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-01695272e04a56488c82b09371c8a156-22c15e2ac2025344-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-1555c153a0479543a1d043b14c24f0cd-28a092477297554a-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "3695fd9e94edfd5380f0b108166a8ea6",
         "x-ms-return-client-request-id": "true"
       },
@@ -23,7 +23,7 @@
         "Connection": "keep-alive",
         "Content-Length": "221",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Mar 2021 18:56:20 GMT",
+        "Date": "Mon, 29 Mar 2021 18:01:06 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -32,7 +32,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022,error=\u0022invalid_token\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "134eb908-203d-498d-8bca-8a48633cd45c"
+        "X-Ms-Correlation-Request-Id": "08546c30-224d-43bc-bb46-0bccb6c88066"
       },
       "ResponseBody": {
         "errors": [
@@ -57,8 +57,8 @@
         "Accept": "application/json",
         "Content-Length": "89",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-01695272e04a56488c82b09371c8a156-ec96a31241d6b949-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-1555c153a0479543a1d043b14c24f0cd-6e4096f957917b4c-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "ee6a7180c2d6db1df043132fafea04f7",
         "x-ms-return-client-request-id": "true"
       },
@@ -67,11 +67,11 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Mar 2021 18:56:20 GMT",
+        "Date": "Mon, 29 Mar 2021 18:01:06 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "821dc2df-9de2-4688-8732-65132fe67e60"
+        "X-Ms-Correlation-Request-Id": "7dfc6369-f2b8-4734-a1cb-eca6910678a5"
       },
       "ResponseBody": {
         "refresh_token": "Sanitized"
@@ -84,8 +84,8 @@
         "Accept": "application/json",
         "Content-Length": "148",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-01695272e04a56488c82b09371c8a156-36f77a353cb3ca42-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-1555c153a0479543a1d043b14c24f0cd-e7632ba35126ee44-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "b46b61619483904eaf33427ebdd22868",
         "x-ms-return-client-request-id": "true"
       },
@@ -94,11 +94,11 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Mar 2021 18:56:20 GMT",
+        "Date": "Mon, 29 Mar 2021 18:01:06 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "2075fb35-5fd2-4571-aef5-533b8b149e0f"
+        "X-Ms-Correlation-Request-Id": "8629438e-77cd-483a-8c64-1352eeee5985"
       },
       "ResponseBody": {
         "access_token": "Sanitized"
@@ -110,8 +110,8 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-01695272e04a56488c82b09371c8a156-22c15e2ac2025344-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210326.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-1555c153a0479543a1d043b14c24f0cd-28a092477297554a-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "3695fd9e94edfd5380f0b108166a8ea6",
         "x-ms-return-client-request-id": "true"
       },
@@ -127,7 +127,7 @@
         "Connection": "keep-alive",
         "Content-Length": "1952",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 26 Mar 2021 18:56:20 GMT",
+        "Date": "Mon, 29 Mar 2021 18:01:06 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -135,7 +135,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "4629302e-e842-423b-8f6b-314b9fcb04a4"
+        "X-Ms-Correlation-Request-Id": "ffb53a56-c6d3-42b9-9141-2492f47a03f6"
       },
       "ResponseBody": {
         "registry": "annelocontainerregistry.azurecr.io",
@@ -144,8 +144,8 @@
           {
             "name": "newest",
             "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-26T18:03:50.2465744Z",
-            "lastUpdateTime": "2021-03-26T18:03:50.2465744Z",
+            "createdTime": "2021-03-29T17:57:44.968777Z",
+            "lastUpdateTime": "2021-03-29T17:57:44.968777Z",
             "signed": false,
             "changeableAttributes": {
               "deleteEnabled": true,
@@ -157,21 +157,8 @@
           {
             "name": "v4",
             "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-26T00:34:42.262762Z",
-            "lastUpdateTime": "2021-03-26T00:34:42.262762Z",
-            "signed": false,
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true
-            }
-          },
-          {
-            "name": "v1",
-            "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-26T00:34:41.9308749Z",
-            "lastUpdateTime": "2021-03-26T00:34:41.9308749Z",
+            "createdTime": "2021-03-27T21:14:31.5776278Z",
+            "lastUpdateTime": "2021-03-27T21:14:31.5776278Z",
             "signed": false,
             "changeableAttributes": {
               "deleteEnabled": true,
@@ -183,8 +170,8 @@
           {
             "name": "v2",
             "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-26T00:34:41.6491723Z",
-            "lastUpdateTime": "2021-03-26T00:34:41.6491723Z",
+            "createdTime": "2021-03-27T21:14:31.2678985Z",
+            "lastUpdateTime": "2021-03-27T21:14:31.2678985Z",
             "signed": false,
             "changeableAttributes": {
               "deleteEnabled": true,
@@ -196,8 +183,21 @@
           {
             "name": "v3",
             "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-26T00:34:41.4210562Z",
-            "lastUpdateTime": "2021-03-26T00:34:41.4210562Z",
+            "createdTime": "2021-03-27T21:14:31.2202119Z",
+            "lastUpdateTime": "2021-03-27T21:14:31.2202119Z",
+            "signed": false,
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "name": "v1",
+            "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
+            "createdTime": "2021-03-27T21:14:30.6504147Z",
+            "lastUpdateTime": "2021-03-27T21:14:30.6504147Z",
             "signed": false,
             "changeableAttributes": {
               "deleteEnabled": true,
@@ -209,8 +209,8 @@
           {
             "name": "latest",
             "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-26T00:32:48.8147521Z",
-            "lastUpdateTime": "2021-03-26T00:32:48.8147521Z",
+            "createdTime": "2021-03-27T21:14:30.3122024Z",
+            "lastUpdateTime": "2021-03-27T21:14:30.3122024Z",
             "signed": false,
             "changeableAttributes": {
               "deleteEnabled": true,
@@ -224,7 +224,7 @@
     }
   ],
   "Variables": {
-    "CLIENT_ID": "d038bf45-724f-4059-b46f-6673da62635f",
+    "CLIENT_ID": "5487e79a-c0c4-47e2-ad50-7e6c236bc76f",
     "CONTAINERREGISTRY_ENDPOINT": "https://annelocontainerregistry.azurecr.io",
     "CONTAINERREGISTRY_REGISTRY_NAME": "annelocontainerregistry",
     "RandomSeed": "512060743",
