@@ -20,6 +20,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
 {
+    [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/19575")]
     public class VersionLevelWormTests : BlobTestBase
     {
         public VersionLevelWormTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
@@ -355,7 +356,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsFalse(legalHoldResponse.Value.LegalHoldEnabled);
 
             // Delete blob snapshot.
-            await blob.WithVersion(metadataResponse.Value.VersionId).DeleteAsync();
+            //await blob.WithVersion(metadataResponse.Value.VersionId).DeleteAsync();
         }
 
         [Test]
@@ -772,7 +773,8 @@ namespace Azure.Storage.Blobs.Test
 
             DisposingVersionLevelWormContainer disposingVersionLevelWormContainer = new DisposingVersionLevelWormContainer(
                 tenantConfiguration,
-                containerClient);
+                containerClient,
+                Mode);
             await disposingVersionLevelWormContainer.CreateAsync();
             return disposingVersionLevelWormContainer;
         }
@@ -786,15 +788,6 @@ namespace Azure.Storage.Blobs.Test
                 minute: initalDateTimeOffset.Minute,
                 second: initalDateTimeOffset.Second,
                 offset: TimeSpan.Zero);
-
-        private async Task WaitForImmutabilityPolicyToExpire(DateTimeOffset expiryTime)
-        {
-            TimeSpan remainingImmutibilityPolicyTime = expiryTime - Recording.UtcNow;
-            if (remainingImmutibilityPolicyTime > TimeSpan.Zero)
-            {
-                await Delay((int)remainingImmutibilityPolicyTime.TotalMilliseconds + 250);
-            }
-        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type
@@ -806,16 +799,25 @@ namespace Azure.Storage.Blobs.Test
         private TenantConfiguration _tenantConfiguration;
         private StorageManagementClient _storageManagementClient;
 
+        private RecordedTestMode _testMode;
+
         public DisposingVersionLevelWormContainer(
             TenantConfiguration tenantConfiguration,
-            BlobContainerClient containerClient)
+            BlobContainerClient containerClient,
+            RecordedTestMode recordedTestMode)
         {
             _tenantConfiguration = tenantConfiguration;
             Container = containerClient;
+            _testMode = recordedTestMode;
         }
 
         public async Task CreateAsync()
         {
+            if (_testMode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
             string subscriptionId = "ba45b233-e2ef-4169-8808-49eb0d8eba0d";
             string token = await GetAuthToken();
             TokenCredentials tokenCredentials = new TokenCredentials(token);
@@ -832,6 +834,11 @@ namespace Azure.Storage.Blobs.Test
 
         public async ValueTask DisposeAsync()
         {
+            if (_testMode == RecordedTestMode.Playback)
+            {
+                return;
+            }
+
             if (Container != null)
             {
                 await foreach (BlobItem blobItem in Container.GetBlobsAsync(BlobTraits.ImmutabilityPolicy | BlobTraits.LegalHold))

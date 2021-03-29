@@ -6,13 +6,13 @@
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-e3ab95de4e4d9f468704b8907108a3aa-74c9359bbd82ce4b-00",
+        "traceparent": "00-ac3533000f37224797dbd3aecfb99385-f2b426ed50a6b340-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210319.1",
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210329.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "a880a6b8-4c88-c1b4-8d62-4d0acc24cd4e",
-        "x-ms-date": "Fri, 19 Mar 2021 20:50:17 GMT",
+        "x-ms-date": "Mon, 29 Mar 2021 22:46:14 GMT",
         "x-ms-legal-hold": "true",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-08-04"
@@ -22,36 +22,36 @@
       "ResponseHeaders": {
         "Content-Length": "216",
         "Content-Type": "application/xml",
-        "Date": "Fri, 19 Mar 2021 20:50:16 GMT",
+        "Date": "Mon, 29 Mar 2021 22:46:14 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "a880a6b8-4c88-c1b4-8d62-4d0acc24cd4e",
         "x-ms-error-code": "BlobNotFound",
-        "x-ms-request-id": "4001c315-901e-0015-0901-1d0902000000",
+        "x-ms-request-id": "098f1dba-501e-001c-06ed-24e384000000",
         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
         "\u003CError\u003E\u003CCode\u003EBlobNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified blob does not exist.\n",
-        "RequestId:4001c315-901e-0015-0901-1d0902000000\n",
-        "Time:2021-03-19T20:50:16.9688597Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:098f1dba-501e-001c-06ed-24e384000000\n",
+        "Time:2021-03-29T22:46:14.3491420Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     },
     {
-      "RequestUri": "https://seanoauthstage.blob.core.windows.net/test-container-d10a8b3d-2a20-f8b2-75e7-d8d92ac9c2cb?restype=container\u0026comp=list",
+      "RequestUri": "https://seanoauthstage.blob.core.windows.net/test-container-d10a8b3d-2a20-f8b2-75e7-d8d92ac9c2cb?restype=container\u0026comp=list\u0026include=Immutabilitypolicy%2CLegalhold",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-311912d462ac594fa3f705ff1e9f355c-26155f482bb8a54b-00",
+        "traceparent": "00-9028ec1582c62e4c87ec4503f5d55739-74210523bd7c2045-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210319.1",
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210329.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "83d51a46-73a6-5b1a-96c9-93acf66e8472",
-        "x-ms-date": "Fri, 19 Mar 2021 20:50:17 GMT",
+        "x-ms-date": "Mon, 29 Mar 2021 22:46:14 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-version": "2020-08-04"
       },
@@ -59,14 +59,14 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/xml",
-        "Date": "Fri, 19 Mar 2021 20:50:16 GMT",
+        "Date": "Mon, 29 Mar 2021 22:46:14 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "83d51a46-73a6-5b1a-96c9-93acf66e8472",
-        "x-ms-request-id": "4001c316-901e-0015-0a01-1d0902000000",
+        "x-ms-request-id": "098f1dbd-501e-001c-07ed-24e384000000",
         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanoauthstage.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-d10a8b3d-2a20-f8b2-75e7-d8d92ac9c2cb\u0022\u003E\u003CBlobs /\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
