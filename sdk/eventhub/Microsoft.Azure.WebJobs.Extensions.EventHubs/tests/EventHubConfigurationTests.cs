@@ -288,5 +288,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             Assert.AreSame(oce, logMessage.Exception);
             Assert.AreEqual(expectedMessage + string.Format(_template, typeof(OperationCanceledException).Name), logMessage.FormattedMessage);
         }
+
+        [Test]
+        public void IsSingleDispatchEnabled_Disabled_ByDefault()
+        {
+            Assert.False(new EventHubOptions().IsSingleDispatchEnabled);
+        }
     }
 }
