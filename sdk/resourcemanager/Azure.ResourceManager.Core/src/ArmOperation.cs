@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.Core
     /// </summary>
     /// <typeparam name="TOperations"> The <see cref="OperationsBase"/> to return representing the result of the ArmOperation. </typeparam>
     public abstract class ArmOperation<TOperations> : Operation<TOperations>
+        where TOperations : class
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmOperation{TOperations}"/> class for mocking.
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public ArmResponse<TOperations> WaitForCompletion(CancellationToken cancellationToken = default)
+        public Response<TOperations> WaitForCompletion(CancellationToken cancellationToken = default)
         {
             return WaitForCompletion(ArmOperationHelpers<TOperations>.DefaultPollingInterval.Seconds, cancellationToken);
         }
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public ArmResponse<TOperations> WaitForCompletion(int pollingInterval, CancellationToken cancellationToken = default)
+        public Response<TOperations> WaitForCompletion(int pollingInterval, CancellationToken cancellationToken = default)
         {
             var polling = TimeSpan.FromSeconds(pollingInterval);
             while (true)
@@ -71,7 +72,8 @@ namespace Azure.ResourceManager.Core
                 UpdateStatus(cancellationToken);
                 if (HasCompleted)
                 {
-                    return Response.FromValue(Value, GetRawResponse()) as ArmResponse<TOperations>;
+                    Response<TOperations> response = Response.FromValue(Value, GetRawResponse());
+                    return new PhArmResponse<TOperations, TOperations>(response, old => old);
                 }
 
                 Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);

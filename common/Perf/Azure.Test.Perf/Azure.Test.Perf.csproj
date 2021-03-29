@@ -17,4 +17,8 @@
     <Compile Include="..\..\PerfStressShared\PerfStressUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\sdk\core\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj" />
+  </ItemGroup>
+
 </Project>

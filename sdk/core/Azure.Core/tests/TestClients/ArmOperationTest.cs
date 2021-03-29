@@ -9,6 +9,7 @@ using Azure.ResourceManager.Core;
 namespace Azure.Core.Tests
 {
     public class ArmOperationTest<T> : ArmOperation<T>
+        where T : class
     {
         private T _value;
         protected ArmOperationTest()
@@ -30,7 +31,7 @@ namespace Azure.Core.Tests
 
         public override Response GetRawResponse()
         {
-            throw new NotImplementedException();
+            return Response.FromValue(_value, null) as Response;
         }
 
         public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
@@ -45,12 +46,12 @@ namespace Azure.Core.Tests
 
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return new ValueTask<Response>(Response.FromValue(_value, null) as Response);
         }
 
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return Response.FromValue(_value, null) as Response;
         }
     }
 }

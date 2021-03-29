@@ -129,8 +129,8 @@ namespace Azure.Core.Tests.Management
         {
             ManagementTestClient client = InstrumentClient(new ManagementTestClient());
             TestResourceOperations rgOp = client.GetTestResourceOperations();
-            var testResourceOp = await rgOp.GetArmOperationAsync().ConfigureAwait(false);
-            var testResource = (await testResourceOp.WaitForCompletionAsync().ConfigureAwait(false)).Value;
+            var testResourceOp = await rgOp.GetArmOperationAsync();
+            TestResource testResource = await testResourceOp.WaitForCompletionAsync();
             Assert.AreEqual("TestResourceProxy", testResource.GetType().Name);
             Assert.AreEqual("success", testResource.Method());
         }
