@@ -66,6 +66,20 @@ namespace Azure.Containers.ContainerRegistry
         public static bool operator !=(Azure.Containers.ContainerRegistry.RegistryArtifactOrderBy left, Azure.Containers.ContainerRegistry.RegistryArtifactOrderBy right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class RegistryArtifactProperties
+    {
+        internal RegistryArtifactProperties() { }
+        public string CpuArchitecture { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public string Digest { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
+        public string OperatingSystem { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Containers.ContainerRegistry.RegistryArtifactProperties> References { get { throw null; } }
+        public string Repository { get { throw null; } }
+        public long? Size { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Tags { get { throw null; } }
+        public Azure.Containers.ContainerRegistry.ContentProperties WriteableProperties { get { throw null; } }
+    }
     public partial class RepositoryProperties
     {
         internal RepositoryProperties() { }
