@@ -2,6 +2,8 @@
 
 ## 12.8.0-beta.3 (Unreleased)
 
+## 12.7.1 (2021-03-29)
+- This release contains bug fixes to improve quality.
 
 ## 12.8.0-beta.2 (2021-03-09)
 - This release contains bug fixes to improve quality.
