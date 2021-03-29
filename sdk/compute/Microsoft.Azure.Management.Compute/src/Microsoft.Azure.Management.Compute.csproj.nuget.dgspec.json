@@ -1,0 +1,90 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\projects\\azure-sdk-for-net\\sdk\\compute\\Microsoft.Azure.Management.Compute\\src\\Microsoft.Azure.Management.Compute.csproj": {}
+  },
+  "projects": {
+    "C:\\projects\\azure-sdk-for-net\\sdk\\compute\\Microsoft.Azure.Management.Compute\\src\\Microsoft.Azure.Management.Compute.csproj": {
+      "version": "45.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\projects\\azure-sdk-for-net\\sdk\\compute\\Microsoft.Azure.Management.Compute\\src\\Microsoft.Azure.Management.Compute.csproj",
+        "projectName": "Microsoft.Azure.Management.Compute",
+        "projectPath": "C:\\projects\\azure-sdk-for-net\\sdk\\compute\\Microsoft.Azure.Management.Compute\\src\\Microsoft.Azure.Management.Compute.csproj",
+        "packagesPath": "C:\\Users\\shpa\\.nuget\\packages\\",
+        "outputPath": "C:\\projects\\azure-sdk-for-net\\sdk\\compute\\Microsoft.Azure.Management.Compute\\src",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\projects\\azure-sdk-for-net\\NuGet.Config",
+          "C:\\projects\\NuGet.Config",
+          "C:\\Users\\shpa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://azuresdkartifacts.blob.core.windows.net/azure-sdk-tools/index.json": {},
+          "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Microsoft.Rest.ClientRuntime": {
+              "target": "Package",
+              "version": "[2.3.20, 3.0.0)"
+            },
+            "Microsoft.Rest.ClientRuntime.Azure": {
+              "target": "Package",
+              "version": "[3.3.19, 4.0.0)"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[10.0.3, )"
+            },
+            "System.Net.Http": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.407\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
