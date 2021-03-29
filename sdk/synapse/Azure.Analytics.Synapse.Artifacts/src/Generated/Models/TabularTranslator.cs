@@ -26,13 +26,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="collectionReference"> The JSON Path of the Nested Array that is going to do cross-apply. Type: object (or Expression with resultType object). </param>
         /// <param name="mapComplexValuesToString"> Whether to map complex (array and object) values to simple strings in json format. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="mappings"> Column mappings with logical types. Tabular-&gt;tabular example: [{&quot;source&quot;:{&quot;name&quot;:&quot;CustomerName&quot;,&quot;type&quot;:&quot;String&quot;},&quot;sink&quot;:{&quot;name&quot;:&quot;ClientName&quot;,&quot;type&quot;:&quot;String&quot;}},{&quot;source&quot;:{&quot;name&quot;:&quot;CustomerAddress&quot;,&quot;type&quot;:&quot;String&quot;},&quot;sink&quot;:{&quot;name&quot;:&quot;ClientAddress&quot;,&quot;type&quot;:&quot;String&quot;}}].  Hierarchical-&gt;tabular example: [{&quot;source&quot;:{&quot;path&quot;:&quot;$.CustomerName&quot;,&quot;type&quot;:&quot;String&quot;},&quot;sink&quot;:{&quot;name&quot;:&quot;ClientName&quot;,&quot;type&quot;:&quot;String&quot;}},{&quot;source&quot;:{&quot;path&quot;:&quot;$.CustomerAddress&quot;,&quot;type&quot;:&quot;String&quot;},&quot;sink&quot;:{&quot;name&quot;:&quot;ClientAddress&quot;,&quot;type&quot;:&quot;String&quot;}}]. Type: object (or Expression with resultType object). </param>
-        internal TabularTranslator(string type, IDictionary<string, object> additionalProperties, object columnMappings, object schemaMapping, object collectionReference, object mapComplexValuesToString, object mappings) : base(type, additionalProperties)
+        /// <param name="typeConversion"> Whether to enable the advanced type conversion feature in the Copy activity. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="typeConversionSettings"> Type conversion settings. </param>
+        internal TabularTranslator(string type, IDictionary<string, object> additionalProperties, object columnMappings, object schemaMapping, object collectionReference, object mapComplexValuesToString, object mappings, object typeConversion, TypeConversionSettings typeConversionSettings) : base(type, additionalProperties)
         {
             ColumnMappings = columnMappings;
             SchemaMapping = schemaMapping;
             CollectionReference = collectionReference;
             MapComplexValuesToString = mapComplexValuesToString;
             Mappings = mappings;
+            TypeConversion = typeConversion;
+            TypeConversionSettings = typeConversionSettings;
             Type = type ?? "TabularTranslator";
         }
 
@@ -46,5 +50,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object MapComplexValuesToString { get; set; }
         /// <summary> Column mappings with logical types. Tabular-&gt;tabular example: [{&quot;source&quot;:{&quot;name&quot;:&quot;CustomerName&quot;,&quot;type&quot;:&quot;String&quot;},&quot;sink&quot;:{&quot;name&quot;:&quot;ClientName&quot;,&quot;type&quot;:&quot;String&quot;}},{&quot;source&quot;:{&quot;name&quot;:&quot;CustomerAddress&quot;,&quot;type&quot;:&quot;String&quot;},&quot;sink&quot;:{&quot;name&quot;:&quot;ClientAddress&quot;,&quot;type&quot;:&quot;String&quot;}}].  Hierarchical-&gt;tabular example: [{&quot;source&quot;:{&quot;path&quot;:&quot;$.CustomerName&quot;,&quot;type&quot;:&quot;String&quot;},&quot;sink&quot;:{&quot;name&quot;:&quot;ClientName&quot;,&quot;type&quot;:&quot;String&quot;}},{&quot;source&quot;:{&quot;path&quot;:&quot;$.CustomerAddress&quot;,&quot;type&quot;:&quot;String&quot;},&quot;sink&quot;:{&quot;name&quot;:&quot;ClientAddress&quot;,&quot;type&quot;:&quot;String&quot;}}]. Type: object (or Expression with resultType object). </summary>
         public object Mappings { get; set; }
+        /// <summary> Whether to enable the advanced type conversion feature in the Copy activity. Type: boolean (or Expression with resultType boolean). </summary>
+        public object TypeConversion { get; set; }
+        /// <summary> Type conversion settings. </summary>
+        public TypeConversionSettings TypeConversionSettings { get; set; }
     }
 }

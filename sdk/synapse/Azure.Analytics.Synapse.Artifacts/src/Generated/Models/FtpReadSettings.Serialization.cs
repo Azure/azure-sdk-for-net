@@ -34,6 +34,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("wildcardFileName");
                 writer.WriteObjectValue(WildcardFileName);
             }
+            if (Optional.IsDefined(EnablePartitionDiscovery))
+            {
+                writer.WritePropertyName("enablePartitionDiscovery");
+                writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
+            }
+            if (Optional.IsDefined(PartitionRootPath))
+            {
+                writer.WritePropertyName("partitionRootPath");
+                writer.WriteObjectValue(PartitionRootPath);
+            }
+            if (Optional.IsDefined(DeleteFilesAfterCompletion))
+            {
+                writer.WritePropertyName("deleteFilesAfterCompletion");
+                writer.WriteObjectValue(DeleteFilesAfterCompletion);
+            }
+            if (Optional.IsDefined(FileListPath))
+            {
+                writer.WritePropertyName("fileListPath");
+                writer.WriteObjectValue(FileListPath);
+            }
             if (Optional.IsDefined(UseBinaryTransfer))
             {
                 writer.WritePropertyName("useBinaryTransfer");
@@ -59,6 +79,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> recursive = default;
             Optional<object> wildcardFolderPath = default;
             Optional<object> wildcardFileName = default;
+            Optional<bool> enablePartitionDiscovery = default;
+            Optional<object> partitionRootPath = default;
+            Optional<object> deleteFilesAfterCompletion = default;
+            Optional<object> fileListPath = default;
             Optional<bool> useBinaryTransfer = default;
             string type = default;
             Optional<object> maxConcurrentConnections = default;
@@ -96,6 +120,46 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     wildcardFileName = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("enablePartitionDiscovery"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enablePartitionDiscovery = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("partitionRootPath"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    partitionRootPath = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("deleteFilesAfterCompletion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deleteFilesAfterCompletion = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("fileListPath"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    fileListPath = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("useBinaryTransfer"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -124,7 +188,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FtpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(useBinaryTransfer));
+            return new FtpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, deleteFilesAfterCompletion.Value, fileListPath.Value, Optional.ToNullable(useBinaryTransfer));
         }
 
         internal partial class FtpReadSettingsConverter : JsonConverter<FtpReadSettings>

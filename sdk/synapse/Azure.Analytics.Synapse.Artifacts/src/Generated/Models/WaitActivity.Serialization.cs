@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
             writer.WritePropertyName("waitTimeInSeconds");
-            writer.WriteNumberValue(WaitTimeInSeconds);
+            writer.WriteObjectValue(WaitTimeInSeconds);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            int waitTimeInSeconds = default;
+            object waitTimeInSeconds = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         if (property0.NameEquals("waitTimeInSeconds"))
                         {
-                            waitTimeInSeconds = property0.Value.GetInt32();
+                            waitTimeInSeconds = property0.Value.GetObject();
                             continue;
                         }
                     }

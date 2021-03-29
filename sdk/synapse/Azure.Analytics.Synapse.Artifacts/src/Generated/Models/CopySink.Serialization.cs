@@ -64,6 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AzureBlobFSSink": return AzureBlobFSSink.DeserializeAzureBlobFSSink(element);
                     case "AzureDataExplorerSink": return AzureDataExplorerSink.DeserializeAzureDataExplorerSink(element);
                     case "AzureDataLakeStoreSink": return AzureDataLakeStoreSink.DeserializeAzureDataLakeStoreSink(element);
+                    case "AzureDatabricksDeltaLakeSink": return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element);
                     case "AzureMySqlSink": return AzureMySqlSink.DeserializeAzureMySqlSink(element);
                     case "AzurePostgreSqlSink": return AzurePostgreSqlSink.DeserializeAzurePostgreSqlSink(element);
                     case "AzureQueueSink": return AzureQueueSink.DeserializeAzureQueueSink(element);
@@ -87,9 +88,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "OracleSink": return OracleSink.DeserializeOracleSink(element);
                     case "OrcSink": return OrcSink.DeserializeOrcSink(element);
                     case "ParquetSink": return ParquetSink.DeserializeParquetSink(element);
+                    case "RestSink": return RestSink.DeserializeRestSink(element);
                     case "SalesforceServiceCloudSink": return SalesforceServiceCloudSink.DeserializeSalesforceServiceCloudSink(element);
                     case "SalesforceSink": return SalesforceSink.DeserializeSalesforceSink(element);
                     case "SapCloudForCustomerSink": return SapCloudForCustomerSink.DeserializeSapCloudForCustomerSink(element);
+                    case "SnowflakeSink": return SnowflakeSink.DeserializeSnowflakeSink(element);
                     case "SqlDWSink": return SqlDWSink.DeserializeSqlDWSink(element);
                     case "SqlMISink": return SqlMISink.DeserializeSqlMISink(element);
                     case "SqlServerSink": return SqlServerSink.DeserializeSqlServerSink(element);

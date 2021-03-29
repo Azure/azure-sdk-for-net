@@ -24,6 +24,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("writeBehavior");
                 writer.WriteStringValue(WriteBehavior.Value.ToString());
             }
+            if (Optional.IsDefined(HttpRequestTimeout))
+            {
+                writer.WritePropertyName("httpRequestTimeout");
+                writer.WriteObjectValue(HttpRequestTimeout);
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(WriteBatchSize))
@@ -62,6 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static SapCloudForCustomerSink DeserializeSapCloudForCustomerSink(JsonElement element)
         {
             Optional<SapCloudForCustomerSinkWriteBehavior> writeBehavior = default;
+            Optional<object> httpRequestTimeout = default;
             string type = default;
             Optional<object> writeBatchSize = default;
             Optional<object> writeBatchTimeout = default;
@@ -80,6 +86,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     writeBehavior = new SapCloudForCustomerSinkWriteBehavior(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("httpRequestTimeout"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    httpRequestTimeout = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -140,7 +156,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapCloudForCustomerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, Optional.ToNullable(writeBehavior));
+            return new SapCloudForCustomerSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, Optional.ToNullable(writeBehavior), httpRequestTimeout.Value);
         }
 
         internal partial class SapCloudForCustomerSinkConverter : JsonConverter<SapCloudForCustomerSink>

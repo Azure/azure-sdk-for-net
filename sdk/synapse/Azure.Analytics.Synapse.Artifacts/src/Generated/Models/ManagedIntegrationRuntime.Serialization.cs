@@ -19,6 +19,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(ManagedVirtualNetwork))
+            {
+                writer.WritePropertyName("managedVirtualNetwork");
+                writer.WriteObjectValue(ManagedVirtualNetwork);
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(Description))
@@ -50,6 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static ManagedIntegrationRuntime DeserializeManagedIntegrationRuntime(JsonElement element)
         {
             Optional<IntegrationRuntimeState> state = default;
+            Optional<ManagedVirtualNetworkReference> managedVirtualNetwork = default;
             IntegrationRuntimeType type = default;
             Optional<string> description = default;
             Optional<IntegrationRuntimeComputeProperties> computeProperties = default;
@@ -66,6 +72,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     state = new IntegrationRuntimeState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("managedVirtualNetwork"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    managedVirtualNetwork = ManagedVirtualNetworkReference.DeserializeManagedVirtualNetworkReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -113,7 +129,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntime(type, description.Value, additionalProperties, Optional.ToNullable(state), computeProperties.Value, ssisProperties.Value);
+            return new ManagedIntegrationRuntime(type, description.Value, additionalProperties, Optional.ToNullable(state), managedVirtualNetwork.Value, computeProperties.Value, ssisProperties.Value);
         }
 
         internal partial class ManagedIntegrationRuntimeConverter : JsonConverter<ManagedIntegrationRuntime>
