@@ -23,24 +23,23 @@ namespace Azure.ResourceManager.Core
         protected ContainerBase()
         {
         }
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerBase{TIdentifier, TOperations}"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ContainerBase(ClientContext clientContext, ResourceIdentifier id)
+        internal ContainerBase(ClientContext clientContext, TIdentifier id)
             : base(clientContext, id)
-        protected ContainerBase(AzureResourceManagerClientOptions options, TIdentifier id, TokenCredential credential, Uri baseUri)
         {
         }
-
+       
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerBase{TOperations, TIdentifier}"/> class.
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         protected ContainerBase(ResourceOperationsBase parent)
-            : this(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri), parent.Id)
+            : this(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri), (TIdentifier) parent.Id)
         {
             Parent = parent;
         }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Core.Extensions;
 
 namespace Azure.ResourceManager.Core
@@ -30,12 +31,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"></param>
         internal ResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
-        /// </summary>
-        {
+        { 
         }
     }
 
