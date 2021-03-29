@@ -19,7 +19,7 @@ namespace Azure.Core.TestFramework
 
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
-            // Workaround https://github.com/dotnet/corefx/issues/42600
+            // Work around https://github.com/dotnet/corefx/issues/42600
             if (eventData.EventId == -1)
             {
                 return;

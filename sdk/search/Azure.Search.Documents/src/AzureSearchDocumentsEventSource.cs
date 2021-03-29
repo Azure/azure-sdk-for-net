@@ -25,37 +25,25 @@ namespace Azure.Search.Documents
         [Event(PendingQueueResizedEvent, Level = EventLevel.Verbose, Message = "Indexing publisher pending queue size = {0}.")]
         public void PendingQueueResized(int queueSize)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.All))
-            {
-                WriteEvent(PendingQueueResizedEvent, queueSize);
-            }
+            WriteEvent(PendingQueueResizedEvent, queueSize);
         }
 
         [Event(RetryQueueResizedEvent, Level = EventLevel.Verbose, Message = "Indexing publisher retry queue size = {0}.")]
         public void RetryQueueResized(int queueSize)
         {
-            if (IsEnabled(EventLevel.Verbose, EventKeywords.All))
-            {
-                WriteEvent(RetryQueueResizedEvent, queueSize);
-            }
+            WriteEvent(RetryQueueResizedEvent, queueSize);
         }
 
         [Event(BatchSubmittedEvent, Level = EventLevel.Informational, Message = "Indexing publisher at {0} has submitted batch of size {1}.")]
         public void BatchSubmitted(string endPoint, int batchSize)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
-            {
-                WriteEvent(BatchSubmittedEvent, endPoint, batchSize);
-            }
+            WriteEvent(BatchSubmittedEvent, endPoint, batchSize);
         }
 
         [Event(BatchActionCountUpdatedEvent, Level = EventLevel.Informational, Message = "Indexing publisher at {0} has updated the starting batch action count from {1} to {2}.")]
         public void BatchActionCountUpdated(string endPoint, int oldBatchCount, int newBatchCount)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.All))
-            {
-                WriteEvent(BatchActionCountUpdatedEvent, endPoint, oldBatchCount, newBatchCount);
-            }
+            WriteEvent(BatchActionCountUpdatedEvent, endPoint, oldBatchCount, newBatchCount);
         }
     }
 }
