@@ -41,6 +41,7 @@
 
   <PropertyGroup>
     <IsMgmtClientLibrary Condition="'$(IsMgmtClientLibrary)' == '' and ($(MSBuildProjectName.StartsWith('Azure.Management.')) or $(MSBuildProjectName.StartsWith('Azure.ResourceManager.')))">true</IsMgmtClientLibrary>
+    <MgmtAutorestVersion>3.0.0-beta.20210319.1</MgmtAutorestVersion>
     <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="$(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
     <IsPerfProject Condition="$(MSBuildProjectName.EndsWith('.Perf'))">true</IsPerfProject>
