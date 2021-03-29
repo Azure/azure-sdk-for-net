@@ -106,23 +106,17 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Top != null)
+            if (Top > 1000)
             {
-                if (Top > 1000)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Top", 1000);
-                }
-                if (Top < 1)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Top", 1);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Top", 1000);
             }
-            if (Skip != null)
+            if (Top < 1)
             {
-                if (Skip < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Skip", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Top", 1);
+            }
+            if (Skip < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Skip", 0);
             }
         }
     }
