@@ -393,7 +393,7 @@
         },
         "SECONDARY_STORAGE_ACCOUNT_ZONE": {
             "type": "string",
-            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).secondaryEndpoints.blob, '.'),1))]"
+            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('secondaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob, '.'),1))]"
         },
         "BLOB_STORAGE_ACCOUNT_NAME": {
             "type": "string",
@@ -417,7 +417,7 @@
         },
         "PREMIUM_STORAGE_ACCOUNT_ZONE": {
             "type": "string",
-            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).premiumEndpoints.blob, '.'),1))]"
+            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('premiumAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob, '.'),1))]"
         },
         "DATALAKE_STORAGE_ACCOUNT_NAME": {
             "type": "string",
@@ -429,7 +429,7 @@
         },
         "DATALAKE_STORAGE_ACCOUNT_ZONE": {
             "type": "string",
-            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).datalakeEndpoints.blob, '.'),1))]"
+            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('dataLakeAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob, '.'),1))]"
         },
         "SOFT_DELETE_ACCOUNT_NAME": {
             "type": "string",
@@ -441,7 +441,7 @@
         },
         "SOFT_DELETE_STORAGE_ACCOUNT_ZONE": {
             "type": "string",
-            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).softDeleteEndpoints.blob, '.'),1))]"
+            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('softDeleteAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob, '.'),1))]"
         },
         "PREMIUM_FILE_STORAGE_ACCOUNT_NAME": {
             "type": "string",
@@ -453,7 +453,7 @@
         },
         "PREMIUM_FILE_STORAGE_ACCOUNT_ZONE": {
             "type": "string",
-            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).premiumFileEndpoints.blob, '.'),1))]"
+            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('premiumFileAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob, '.'),1))]"
         },
         "AZUREWEBJOBSSTORAGE": {
             "type": "string",
@@ -465,7 +465,7 @@
         },
         "ENDPOINT_SUFFIX": {
             "type": "string",
-            "value": "[variables('testEndpointSuffix')]"
+            "value": "[parameters('testEndpointSuffix')]"
         },
         "KEYVAULT_URI": {
             "type": "string",
