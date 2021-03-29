@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation
@@ -14,10 +16,28 @@ namespace Azure.AI.DocumentTranslation
     public partial class FileFormat
     {
         /// <summary> Initializes a new instance of FileFormat. </summary>
-        internal FileFormat()
+        /// <param name="format"> Name of the format. </param>
+        /// <param name="fileExtensions"> Supported file extension for this format. </param>
+        /// <param name="contentTypes"> Supported Content-Types for this format. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="format"/>, <paramref name="fileExtensions"/>, or <paramref name="contentTypes"/> is null. </exception>
+        internal FileFormat(string format, IEnumerable<string> fileExtensions, IEnumerable<string> contentTypes)
         {
-            FileExtensions = new ChangeTrackingList<string>();
-            ContentTypes = new ChangeTrackingList<string>();
+            if (format == null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
+            if (fileExtensions == null)
+            {
+                throw new ArgumentNullException(nameof(fileExtensions));
+            }
+            if (contentTypes == null)
+            {
+                throw new ArgumentNullException(nameof(contentTypes));
+            }
+
+            Format = format;
+            FileExtensions = fileExtensions.ToList();
+            ContentTypes = contentTypes.ToList();
             FormatVersions = new ChangeTrackingList<string>();
         }
 
@@ -25,12 +45,14 @@ namespace Azure.AI.DocumentTranslation
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
+        /// <param name="defaultFormatVersion"> Default version if none is specified. </param>
         /// <param name="formatVersions"> Supported Version. </param>
-        internal FileFormat(string format, IReadOnlyList<string> fileExtensions, IReadOnlyList<string> contentTypes, IReadOnlyList<string> formatVersions)
+        internal FileFormat(string format, IReadOnlyList<string> fileExtensions, IReadOnlyList<string> contentTypes, string defaultFormatVersion, IReadOnlyList<string> formatVersions)
         {
             Format = format;
             FileExtensions = fileExtensions;
             ContentTypes = contentTypes;
+            DefaultFormatVersion = defaultFormatVersion;
             FormatVersions = formatVersions;
         }
 
