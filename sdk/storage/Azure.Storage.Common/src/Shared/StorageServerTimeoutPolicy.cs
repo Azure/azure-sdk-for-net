@@ -17,9 +17,25 @@ namespace Azure.Storage
 
         public override void OnSendingRequest(HttpMessage message)
         {
-            if (message.TryGetProperty(Constants.ServerTimeout.HttpMessagePropertyKey, out var value) && value is TimeSpan timeout)
+            if (message.TryGetProperty(Constants.ServerTimeout.HttpMessagePropertyKey, out var value))
             {
-                message.Request.Uri.Query += $"{Constants.ServerTimeout.QueryParameterKey}={Convert.ToInt32(timeout.TotalSeconds)}";
+                if (value is int timeout)
+                {
+                    string query = message.Request.Uri.Query;
+                    if (string.IsNullOrEmpty(query))
+                    {
+                        message.Request.Uri.Query += $"?{Constants.ServerTimeout.QueryParameterKey}={timeout}";
+                    }
+                    else if (!query.Contains($"{Constants.ServerTimeout.QueryParameterKey}="))
+                    {
+                        message.Request.Uri.Query += $"&{Constants.ServerTimeout.QueryParameterKey}={timeout}";
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException(
+                        $"{Constants.ServerTimeout.HttpMessagePropertyKey} http message property must be an int but was {value?.GetType()}");
+                }
             }
         }
     }

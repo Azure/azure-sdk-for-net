@@ -114,7 +114,7 @@ namespace Azure.Storage
 
             return HttpPipelineBuilder.Build(
                options,
-               Array.Empty<HttpPipelinePolicy>(),
+               perCallPolicies,
                perRetryClientPolicies.ToArray(),
                classifier);
         }
