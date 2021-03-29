@@ -1,14 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/library%2Fhello-world/_tags/test-delete-tag",
-      "RequestMethod": "DELETE",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/library%2Fnode/_manifests?orderby=timedesc",
+      "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e0dfe97235276b4aac30cbdb13cf2b78-69d07da4cdae8243-00",
+        "traceparent": "00-846286a87a912d4c98711e4f817a6f1c-4b7c7cafe4993d4a-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "dba6f073d96a2c3d5dd8e75898de3f48",
+        "x-ms-client-request-id": "c8ba8dde5df7c79a3de424e046725f36",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -23,16 +23,16 @@
         "Connection": "keep-alive",
         "Content-Length": "214",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 18:11:56 GMT",
+        "Date": "Mon, 29 Mar 2021 18:10:35 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains",
           "max-age=31536000; includeSubDomains"
         ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:library/hello-world:delete\u0022,error=\u0022invalid_token\u0022",
+        "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:library/node:metadata_read\u0022,error=\u0022invalid_token\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "e7ab39af-725d-43eb-b211-887aef5f38e0"
+        "X-Ms-Correlation-Request-Id": "2c304a81-fcc6-4ad8-b98d-07a6e4f56075"
       },
       "ResponseBody": {
         "errors": [
@@ -42,148 +42,7 @@
             "detail": [
               {
                 "Type": "repository",
-                "Name": "library/hello-world",
-                "Action": "delete"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://annelocontainerregistry.azurecr.io/oauth2/exchange",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "89",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-e0dfe97235276b4aac30cbdb13cf2b78-726dc690f8c37744-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "065244d0a522ebc3220a5d1d6f65d67f",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "grant_type=access_token\u0026service=annelocontainerregistry.azurecr.io\u0026access_token=Sanitized",
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Connection": "keep-alive",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 18:11:56 GMT",
-        "Server": "openresty",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "e0b1a880-6d0d-4daf-a74a-f82d0b60ed42"
-      },
-      "ResponseBody": {
-        "refresh_token": "Sanitized"
-      }
-    },
-    {
-      "RequestUri": "https://annelocontainerregistry.azurecr.io/oauth2/token",
-      "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Content-Length": "141",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-e0dfe97235276b4aac30cbdb13cf2b78-0c1b5f7097b62b48-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "0a5ba8fa3f8a79652fd3b308aa0e7906",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": "grant_type=refresh_token\u0026service=annelocontainerregistry.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3adelete\u0026refresh_token=Sanitized",
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Connection": "keep-alive",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 18:11:56 GMT",
-        "Server": "openresty",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "9fc15d25-b10c-42fc-8d21-dec4f1e1f994"
-      },
-      "ResponseBody": {
-        "access_token": "Sanitized"
-      }
-    },
-    {
-      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/library%2Fhello-world/_tags/test-delete-tag",
-      "RequestMethod": "DELETE",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-e0dfe97235276b4aac30cbdb13cf2b78-69d07da4cdae8243-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "dba6f073d96a2c3d5dd8e75898de3f48",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 202,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "0",
-        "Date": "Mon, 29 Mar 2021 18:11:57 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Client-Request-Id": "dba6f073d96a2c3d5dd8e75898de3f48",
-        "X-Ms-Correlation-Request-Id": "e1899b0c-d3c3-4acc-9b00-9cf08422145e",
-        "X-Ms-Int-Docker-Content-Digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-        "X-Ms-Request-Id": "711930fc-a3f4-45cf-b89a-002747c2a88d"
-      },
-      "ResponseBody": []
-    },
-    {
-      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/library%2Fhello-world/_tags/test-delete-tag",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "traceparent": "00-45ffaff655ab054bb959e765bf3ed510-a7ec61ebf019064a-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "79d03e146fd4cd3b2cbab8607b1fbcf8",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 401,
-      "ResponseHeaders": {
-        "Access-Control-Expose-Headers": [
-          "Docker-Content-Digest",
-          "WWW-Authenticate",
-          "Link",
-          "X-Ms-Correlation-Request-Id"
-        ],
-        "Connection": "keep-alive",
-        "Content-Length": "221",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 18:12:02 GMT",
-        "Docker-Distribution-Api-Version": "registry/2.0",
-        "Server": "openresty",
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains",
-          "max-age=31536000; includeSubDomains"
-        ],
-        "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022,error=\u0022invalid_token\u0022",
-        "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "730fe641-3868-4305-b4ee-ae71dc7d4e69"
-      },
-      "ResponseBody": {
-        "errors": [
-          {
-            "code": "UNAUTHORIZED",
-            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
-            "detail": [
-              {
-                "Type": "repository",
-                "Name": "library/hello-world",
+                "Name": "library/node",
                 "Action": "metadata_read"
               }
             ]
@@ -198,9 +57,9 @@
         "Accept": "application/json",
         "Content-Length": "89",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-45ffaff655ab054bb959e765bf3ed510-de0a1ed5df0b0946-00",
+        "traceparent": "00-846286a87a912d4c98711e4f817a6f1c-3dc3be82988e4e40-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "f05e6702348291bedfd8d64ef1bb4114",
+        "x-ms-client-request-id": "34ed89d3a695b1beca34237ccd3417d7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "grant_type=access_token\u0026service=annelocontainerregistry.azurecr.io\u0026access_token=Sanitized",
@@ -208,11 +67,11 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 18:12:02 GMT",
+        "Date": "Mon, 29 Mar 2021 18:10:35 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "2a7ffdc8-bd7b-4da5-83b0-3c9741c3f525"
+        "X-Ms-Correlation-Request-Id": "1413bba8-e62f-4e94-9639-ea5c501f83de"
       },
       "ResponseBody": {
         "refresh_token": "Sanitized"
@@ -223,41 +82,41 @@
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Content-Length": "148",
+        "Content-Length": "141",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-45ffaff655ab054bb959e765bf3ed510-77cc51808f14af43-00",
+        "traceparent": "00-846286a87a912d4c98711e4f817a6f1c-3715304afccc2348-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "310957905d948aab6c8dded08604fe10",
+        "x-ms-client-request-id": "98c037e1d592aa8fbcc711b3d50b075c",
         "x-ms-return-client-request-id": "true"
       },
-      "RequestBody": "grant_type=refresh_token\u0026service=annelocontainerregistry.azurecr.io\u0026scope=repository%3alibrary%2fhello-world%3ametadata_read\u0026refresh_token=Sanitized",
+      "RequestBody": "grant_type=refresh_token\u0026service=annelocontainerregistry.azurecr.io\u0026scope=repository%3alibrary%2fnode%3ametadata_read\u0026refresh_token=Sanitized",
       "StatusCode": 200,
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 18:12:02 GMT",
+        "Date": "Mon, 29 Mar 2021 18:10:35 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "c132c640-f929-4cbc-ae30-03737873159a"
+        "X-Ms-Correlation-Request-Id": "45e17f8f-30e5-460e-a385-907d6593808a"
       },
       "ResponseBody": {
         "access_token": "Sanitized"
       }
     },
     {
-      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/library%2Fhello-world/_tags/test-delete-tag",
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/acr/v1/library%2Fnode/_manifests?orderby=timedesc",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-45ffaff655ab054bb959e765bf3ed510-a7ec61ebf019064a-00",
+        "traceparent": "00-846286a87a912d4c98711e4f817a6f1c-4b7c7cafe4993d4a-00",
         "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "79d03e146fd4cd3b2cbab8607b1fbcf8",
+        "x-ms-client-request-id": "c8ba8dde5df7c79a3de424e046725f36",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
-      "StatusCode": 404,
+      "StatusCode": 200,
       "ResponseHeaders": {
         "Access-Control-Expose-Headers": [
           "Docker-Content-Digest",
@@ -266,9 +125,9 @@
           "X-Ms-Correlation-Request-Id"
         ],
         "Connection": "keep-alive",
-        "Content-Length": "80",
+        "Content-Length": "1750",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 18:12:02 GMT",
+        "Date": "Mon, 29 Mar 2021 18:10:36 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -276,23 +135,225 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "43998686-b892-4dc8-87c5-c3323f283372"
+        "X-Ms-Correlation-Request-Id": "95e0f308-cfa2-4524-919a-4c64cdb43f45"
+      },
+      "ResponseBody": {
+        "registry": "annelocontainerregistry.azurecr.io",
+        "imageName": "library/node",
+        "manifests": [
+          {
+            "digest": "sha256:35b326a83fc2d8d3f34b2b72c62e25eed19a3a83c501650edcd722242ed0249f",
+            "imageSize": 0,
+            "createdTime": "2021-03-29T18:09:36.8902193Z",
+            "lastUpdateTime": "2021-03-29T18:09:36.8902193Z",
+            "mediaType": "application/vnd.docker.distribution.manifest.list.v2\u002Bjson",
+            "tags": [
+              "newest"
+            ],
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "digest": "sha256:e101cb7f870862bf54fbba4fbce2ef7d821fe926313406cb904dbef9179d2e4e",
+            "imageSize": 0,
+            "createdTime": "2021-03-27T21:15:59.4970892Z",
+            "lastUpdateTime": "2021-03-27T21:15:59.4970892Z",
+            "architecture": "arm64",
+            "os": "linux",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true,
+              "quarantineState": "Passed"
+            }
+          },
+          {
+            "digest": "sha256:d66c11f62793ec5d00678a387b0279781b6b84190e720eb5422a4566c4bbc25f",
+            "imageSize": 0,
+            "createdTime": "2021-03-27T21:15:56.5373551Z",
+            "lastUpdateTime": "2021-03-27T21:15:56.5373551Z",
+            "architecture": "amd64",
+            "os": "linux",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true,
+              "quarantineState": "Passed"
+            }
+          },
+          {
+            "digest": "sha256:f897b1887943cd7dd2a15f18e9743cc1aea8f55b7995eb9a25583406ee57438f",
+            "imageSize": 0,
+            "createdTime": "2021-03-27T21:15:54.904544Z",
+            "lastUpdateTime": "2021-03-27T21:15:54.904544Z",
+            "architecture": "arm",
+            "os": "linux",
+            "mediaType": "application/vnd.docker.distribution.manifest.v2\u002Bjson",
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true,
+              "quarantineState": "Passed"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/v2/library%2Fnode/manifests/sha256%3A35b326a83fc2d8d3f34b2b72c62e25eed19a3a83c501650edcd722242ed0249f",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a12a678a08d8fd4dac1307f339669a06-79884d620691534e-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "1673209bbfeb37cecf08fdc2391ef908",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 401,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "207",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 18:10:36 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:library/node:delete\u0022,error=\u0022invalid_token\u0022",
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Correlation-Request-Id": "06ffcbcc-6133-4cbc-b366-1f1534eaddc5"
       },
       "ResponseBody": {
         "errors": [
           {
-            "code": "TAG_UNKNOWN",
-            "message": "the specified tag does not exist"
+            "code": "UNAUTHORIZED",
+            "message": "authentication required, visit https://aka.ms/acr/authorization for more information.",
+            "detail": [
+              {
+                "Type": "repository",
+                "Name": "library/node",
+                "Action": "delete"
+              }
+            ]
           }
         ]
       }
+    },
+    {
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/oauth2/exchange",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "89",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "traceparent": "00-a12a678a08d8fd4dac1307f339669a06-47eb914d757b5e4e-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "0ffe4ccdc6b1fea3fa4277ce950adcbe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "grant_type=access_token\u0026service=annelocontainerregistry.azurecr.io\u0026access_token=Sanitized",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 18:10:36 GMT",
+        "Server": "openresty",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Ms-Correlation-Request-Id": "73357411-ec3a-4763-a1d3-67cd0d75d823"
+      },
+      "ResponseBody": {
+        "refresh_token": "Sanitized"
+      }
+    },
+    {
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/oauth2/token",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "134",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "traceparent": "00-a12a678a08d8fd4dac1307f339669a06-bfcbd1116dc84f48-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "ade0c72d00c122eb6988c989d7cc719e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": "grant_type=refresh_token\u0026service=annelocontainerregistry.azurecr.io\u0026scope=repository%3alibrary%2fnode%3adelete\u0026refresh_token=Sanitized",
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 18:10:36 GMT",
+        "Server": "openresty",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Ms-Correlation-Request-Id": "8a311362-35fd-491d-8ce1-2290f412f5ca"
+      },
+      "ResponseBody": {
+        "access_token": "Sanitized"
+      }
+    },
+    {
+      "RequestUri": "https://annelocontainerregistry.azurecr.io/v2/library%2Fnode/manifests/sha256%3A35b326a83fc2d8d3f34b2b72c62e25eed19a3a83c501650edcd722242ed0249f",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a12a678a08d8fd4dac1307f339669a06-79884d620691534e-00",
+        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "1673209bbfeb37cecf08fdc2391ef908",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": [
+          "Docker-Content-Digest",
+          "WWW-Authenticate",
+          "Link",
+          "X-Ms-Correlation-Request-Id"
+        ],
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Date": "Mon, 29 Mar 2021 18:10:36 GMT",
+        "Docker-Distribution-Api-Version": "registry/2.0",
+        "Server": "openresty",
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains",
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Ms-Client-Request-Id": "1673209bbfeb37cecf08fdc2391ef908",
+        "X-Ms-Correlation-Request-Id": "3e2ff235-c5cc-49da-b035-163c2708397d",
+        "X-Ms-Request-Id": "fd4c4e2c-a8eb-473a-8226-2d1fa2432521"
+      },
+      "ResponseBody": []
     }
   ],
   "Variables": {
     "CLIENT_ID": "5487e79a-c0c4-47e2-ad50-7e6c236bc76f",
     "CONTAINERREGISTRY_ENDPOINT": "https://annelocontainerregistry.azurecr.io",
     "CONTAINERREGISTRY_REGISTRY_NAME": "annelocontainerregistry",
-    "RandomSeed": "1462872878",
+    "RandomSeed": "1225852654",
     "RESOURCE_GROUP": "rg-annelocontainerregistry",
     "SUBSCRIPTION_ID": "faa080af-c1d8-40ad-9cce-e1a450ca5b57",
     "TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47"
