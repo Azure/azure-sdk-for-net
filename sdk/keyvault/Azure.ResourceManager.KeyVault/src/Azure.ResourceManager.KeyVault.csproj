@@ -10,5 +10,9 @@
     <!-- TODO: Temp workaround. Should be fixed prio release  -->
     <NoWarn>$(NoWarn);AZC0001;AZC0008;</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+  </ItemGroup>
 </Project>
 
