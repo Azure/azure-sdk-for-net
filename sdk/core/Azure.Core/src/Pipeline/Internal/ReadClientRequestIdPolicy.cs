@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.Core.Pipeline
 {
     internal class ReadClientRequestIdPolicy : HttpPipelineSynchronousPolicy
@@ -19,9 +21,16 @@ namespace Azure.Core.Pipeline
             {
                 message.Request.ClientRequestId = value;
             }
-            else if (message.TryGetProperty(MessagePropertyKey, out object? propertyValue) && propertyValue is string stringValue)
+            else if (message.TryGetProperty(MessagePropertyKey, out object? propertyValue))
             {
-                message.Request.ClientRequestId = stringValue;
+                if (propertyValue is string stringValue)
+                {
+                    message.Request.ClientRequestId = stringValue;
+                }
+                else
+                {
+                    throw new ArgumentException($"{MessagePropertyKey} http message property must be a string but was {propertyValue?.GetType()}");
+                }
             }
         }
     }
