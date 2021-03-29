@@ -11,22 +11,24 @@ using Azure.Core;
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> Providers status. </summary>
-    public partial class ProviderStatusList
+    internal partial class ProviderStatusList
     {
         /// <summary> Initializes a new instance of ProviderStatusList. </summary>
         internal ProviderStatusList()
         {
-            Values = new ChangeTrackingList<ProviderStatus>();
+            Value = new ChangeTrackingList<ProviderStatus>();
         }
 
         /// <summary> Initializes a new instance of ProviderStatusList. </summary>
-        /// <param name="values"> . </param>
+        /// <param name="value"> . </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
-        internal ProviderStatusList(IReadOnlyList<ProviderStatus> values, string nextLink)
+        internal ProviderStatusList(IReadOnlyList<ProviderStatus> value, string nextLink)
         {
-            Values = values;
+            Value = value;
             NextLink = nextLink;
         }
+
+        public IReadOnlyList<ProviderStatus> Value { get; }
         /// <summary> Link to the next page of results. </summary>
         public string NextLink { get; }
     }

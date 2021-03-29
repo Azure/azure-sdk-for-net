@@ -46,8 +46,12 @@ namespace Azure.Security.KeyVault
             // As a result, before we know the auth scheme we need to avoid sending an unprotected body to Key Vault.
             // We don't currently support this enhanced auth scheme in the SDK but we still don't want to send any unprotected data to vaults which require it.
 
-            message.SetProperty(KeyVaultStashedContentKey, message.Request.Content);
-            message.Request.Content = null;
+            // Do not overwrite previous contents if retrying after initial request failed (e.g. timeout).
+            if (!message.TryGetProperty(KeyVaultStashedContentKey, out _))
+            {
+                message.SetProperty(KeyVaultStashedContentKey, message.Request.Content);
+                message.Request.Content = null;
+            }
         }
 
         protected override async ValueTask<bool> AuthenticateRequestOnChallengeAsync(HttpMessage message, bool async)

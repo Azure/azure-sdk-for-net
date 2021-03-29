@@ -300,4 +300,7 @@
   <data name="InvalidEndpointAddress" xml:space="preserve">
     <value>The endpoint address could not be parsed; it was either malformed or not using the `sb://` scheme.</value>
   </data>
+  <data name="UnsupportedCredential" xml:space="preserve">
+    <value>The credential provided is not a supported type.</value>
+  </data>
 </root>

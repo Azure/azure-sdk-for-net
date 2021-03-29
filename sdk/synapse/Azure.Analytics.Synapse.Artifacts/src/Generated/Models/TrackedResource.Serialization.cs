@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(TrackedResourceConverter))]
     public partial class TrackedResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -78,6 +81,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new TrackedResource(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location);
+        }
+
+        internal partial class TrackedResourceConverter : JsonConverter<TrackedResource>
+        {
+            public override void Write(Utf8JsonWriter writer, TrackedResource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override TrackedResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeTrackedResource(document.RootElement);
+            }
         }
     }
 }

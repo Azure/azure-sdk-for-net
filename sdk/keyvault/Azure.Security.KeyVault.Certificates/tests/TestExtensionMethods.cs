@@ -3,6 +3,7 @@
 
 using System;
 using System.Security.Cryptography;
+using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
 
 namespace Azure.Security.KeyVault.Certificates.Tests
@@ -35,5 +36,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             "P-521" => 521,
             _ => throw new NotSupportedException($"{keyCurveName} is not supported"),
         };
+
+        public static MockResponse WithContent(this MockResponse response, string content)
+        {
+            response.SetContent(content);
+            return response;
+        }
     }
 }

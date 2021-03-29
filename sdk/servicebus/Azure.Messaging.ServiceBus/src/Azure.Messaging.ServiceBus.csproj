@@ -20,7 +20,6 @@
     <PackageReference Include="Azure.Core.Amqp" />
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <!--This can be removed once this dependency is added to Core in the next release.-->
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
@@ -40,6 +39,10 @@
     <Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" Link="SharedSource\Azure.Core\ValueStopwatch.cs" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" Link="SharedSource\Azure.Core\PageResponseEnumerator.cs" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="SharedSource\Azure.Core\AzureResourceProviderNamespaceAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--This is temporary until the new version of Azure.Core.Amqp is released.-->
+    <ProjectReference Include="..\..\..\core\Azure.Core.Amqp\src\Azure.Core.Amqp.csproj" />
   </ItemGroup>
 
   <ItemGroup>

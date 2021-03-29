@@ -4,7 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    -  https://github.com/Azure/azure-sdk-for-js/blob/f3a5137513bfe904eeaddcd2d1d73191da90a63c/sdk/containerregistry/container-registry/swagger/containerregistry.json
+    -  https://github.com/Azure/azure-sdk-for-js/blob/16dd0bdd8cb94df32bba7c1a1299b33627990889/sdk/containerregistry/container-registry/swagger/containerregistry.json
+
 model-namespace: false
 ```
 
@@ -19,7 +20,7 @@ directive:
 ``` yaml
 directive:
   from: swagger-document
-  where: $.definitions.ManifestAttributes
+  where: $.definitions.ManifestAttributes_manifest_references
   transform: >
     $["x-accessibility"] = "internal"
 ```

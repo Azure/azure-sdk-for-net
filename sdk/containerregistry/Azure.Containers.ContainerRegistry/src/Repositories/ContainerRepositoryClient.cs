@@ -13,8 +13,12 @@ namespace Azure.Containers.ContainerRegistry
     public partial class ContainerRepositoryClient
     {
         private readonly HttpPipeline _pipeline;
+        private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRepositoryRestClient _restClient;
+
+        private readonly AuthenticationRestClient _acrAuthClient;
+        private readonly string AcrAadScope = "https://management.core.windows.net/.default";
 
         private readonly string _repository;
 
@@ -23,37 +27,29 @@ namespace Azure.Containers.ContainerRegistry
         public virtual Uri Endpoint { get; }
 
         /// <summary>
-        /// <param name="endpoint"></param>
-        /// <param name="repository"> Name of the image (including the namespace). </param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
         /// </summary>
-        public ContainerRepositoryClient(Uri endpoint, string repository, string username, string password) : this(endpoint, repository, username, password, new ContainerRegistryClientOptions())
+        public ContainerRepositoryClient(Uri endpoint, string repository, TokenCredential credential) : this(endpoint, repository, credential, new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary>
-        /// <param name="endpoint"></param>
-        /// <param name="repository"> Name of the image (including the namespace). </param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="options"></param>
         /// </summary>
-        public ContainerRepositoryClient(Uri endpoint, string repository, string username, string password, ContainerRegistryClientOptions options)
+        public ContainerRepositoryClient(Uri endpoint, string repository, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(repository, nameof(repository));
-            Argument.AssertNotNull(username, nameof(username));
-            Argument.AssertNotNull(password, nameof(password));
+            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
-
-            _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy(username, password));
-
-            _clientDiagnostics = new ClientDiagnostics(options);
 
             Endpoint = endpoint;
             _repository = repository;
 
+            _clientDiagnostics = new ClientDiagnostics(options);
+
+            _acrAuthPipeline = HttpPipelineBuilder.Build(options);
+            _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
+
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, AcrAadScope, _acrAuthClient));
             _restClient = new ContainerRegistryRepositoryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
         }
 
@@ -132,6 +128,88 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
+        /// <summary> Get the collection of tags for a repository. </summary>
+        /// <param name="options"> Options to override default collection getting behavior. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<TagProperties> GetTagsAsync(GetTagOptions options = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<TagProperties>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTags)}");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.GetTagsAsync(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            async Task<Page<TagProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTags)}");
+                scope.Start();
+                try
+                {
+                    string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
+                    var response = await _restClient.GetTagsNextPageAsync(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Get the collection of tags for a repository. </summary>
+        /// <param name="options"> Options to override default collection getting behavior. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<TagProperties> GetTags(GetTagOptions options = null, CancellationToken cancellationToken = default)
+        {
+            Page<TagProperties> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTags)}");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.GetTags(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<TagProperties> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTags)}");
+                scope.Start();
+                try
+                {
+                    string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
+                    var response = _restClient.GetTagsNextPage(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken);
+                    return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
         /// <summary> Get tag properties by tag. </summary>
         /// <param name="tag"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -198,6 +276,42 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 return _restClient.UpdateTagAttributes(_repository, tag, value, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete tag. </summary>
+        /// <param name="tag"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> DeleteTagAsync(string tag, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteTag)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.DeleteTagAsync(_repository, tag, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete tag. </summary>
+        /// <param name="tag"> Tag name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response DeleteTag(string tag, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteTag)}");
+            scope.Start();
+            try
+            {
+                return _restClient.DeleteTag(_repository, tag, cancellationToken);
             }
             catch (Exception e)
             {

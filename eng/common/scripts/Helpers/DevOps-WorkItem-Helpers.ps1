@@ -163,13 +163,17 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
 
   $workItems = Invoke-AzBoardsCmd "query" $parameters $outputCommand
 
+  if ($workItems -and $workItems.Count -eq 1000) {
+    Write-Warning "Retrieved the max of 1000 items so item list might not be complete."
+  }
+
   foreach ($wi in $workItems)
   {
     $localKey = BuildHashKeyNoNull $wi.fields["Custom.Language"] $wi.fields["Custom.Package"] $wi.fields["Custom.PackageVersionMajorMinor"]
     if (!$localKey) {
       $packageWorkItemWithoutKeyFields[$wi.id] = $wi
       Write-Host "Skipping package [$($wi.id)]$($wi.fields['System.Title']) which is missing required fields language, package, or version."
-      continue 
+      continue
     }
     if ($packageWorkItems.ContainsKey($localKey) -and $packageWorkItems[$localKey].id -ne $wi.id) {
       Write-Warning "Already found package [$($packageWorkItems[$localKey].id)] with key [$localKey], using that one instead of [$($wi.id)]."
@@ -177,7 +181,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
     else {
       Write-Verbose "Caching package [$($wi.id)] for [$localKey]"
       $packageWorkItems[$localKey] = $wi
-    } 
+    }
   }
 
   if ($key -and $packageWorkItems.ContainsKey($key)) {
@@ -216,7 +220,7 @@ function UpdateWorkItemParent($childWorkItem, $parentWorkItem, $outputCommand = 
 
 function CreateWorkItemParent($id, $parentId, $oldParentId, $outputCommand = $true)
 {
-  # Have to remove old parent first if you want to add a new parent. 
+  # Have to remove old parent first if you want to add a new parent.
   if ($oldParentId)
   {
      $parameters = $ReleaseDevOpsCommonParameters
@@ -287,7 +291,7 @@ function UpdateWorkItem($id, $fields, $title, $state, $assignedTo, $outputComman
 
 function UpdatePackageWorkItemReleaseState($id, $state, $releaseType, $outputCommand = $true)
 {
-  $fields = "`"Custom.ReleaseType=${releaseType}`"" 
+  $fields = "`"Custom.ReleaseType=${releaseType}`""
   return UpdateWorkItem -id $id -state $state -fields $fields -outputCommand $outputCommand
 }
 
@@ -399,10 +403,10 @@ function FindOrCreatePackageGroupParent($serviceName, $packageDisplayName, $outp
   $localKey = BuildHashKey $serviceName $packageDisplayName
   Write-Host "[$($workItem.id)]$localKey - Created Parent"
   $parentWorkItems[$localKey] = $workItem
-  return $workItem 
+  return $workItem
 }
 
-function FindOrCreateServiceParent($serviceName, $outputCommand = $true) 
+function FindOrCreateServiceParent($serviceName, $outputCommand = $true)
 {
   $serviceParent = FindParentWorkItem $serviceName -outputCommand $outputCommand
   if ($serviceParent) {
@@ -733,7 +737,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
     {
       $versionSet[$version] = $plannedVersionSet[$version]
     }
-    else 
+    else
     {
       # Looks like we shipped this version so remove it from the planned set
       $plannedVersionSet.Remove($version)
@@ -778,7 +782,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
 
   # If no version files to update do nothing
   if ($fieldUpdates.Count -eq 0) {
-    return
+    return $pkgWorkItem
   }
 
   $versionsForDebug = ($versionList | Foreach-Object { $_.Version }) -join ","
@@ -798,7 +802,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
     $encodedToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes([string]::Format("{0}:{1}", "", $devops_pat)))
     $headers = @{ Authorization = "Basic $encodedToken" }
   }
-  else 
+  else
   {
     # Get a temp access token from the logged in az cli user for azure devops resource
     $jwt_accessToken = (az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv)
@@ -806,5 +810,6 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
   }
   $response = Invoke-RestMethod -Method PATCH `
     -Uri "https://dev.azure.com/azure-sdk/_apis/wit/workitems/${id}?api-version=6.0" `
-    -Headers $headers -Body $body -ContentType "application/json-patch+json"
+    -Headers $headers -Body $body -ContentType "application/json-patch+json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
+  return $response
 }

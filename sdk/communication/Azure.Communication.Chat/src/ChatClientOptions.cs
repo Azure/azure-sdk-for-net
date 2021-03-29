@@ -14,7 +14,7 @@ namespace Azure.Communication.Chat
         /// <summary>
         /// The latest version of the Chat service.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_03_01_Preview5;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_03_07;
 
         internal string ApiVersion { get; }
 
@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2021_03_01_Preview5 => "2021-03-01-preview5",
+                ServiceVersion.V2021_03_07 => "2021-03-07",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
         }
@@ -39,7 +39,7 @@ namespace Azure.Communication.Chat
             /// The V1 of the Chat service.
             /// </summary>
             #pragma warning disable CA1707 // Identifiers should not contain underscores
-            V2021_03_01_Preview5 = 1
+            V2021_03_07 = 1
             #pragma warning restore CA1707 // Identifiers should not contain underscores
 
         }
