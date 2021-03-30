@@ -91,7 +91,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             try
             {
-                if (this.Mode != RecordedTestMode.Playback)
+                if (Mode != RecordedTestMode.Playback)
                 {
                     await ImportImage(_repositoryName, tags);
                 }
@@ -101,7 +101,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 // This will be removed, pending investigation into potential race condition.
                 // https://github.com/azure/azure-sdk-for-net/issues/19699
-                if (this.Mode != RecordedTestMode.Playback)
+                if (Mode != RecordedTestMode.Playback)
                 {
                     await Task.Delay(5000);
                 }
@@ -112,7 +112,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             finally
             {
                 // Clean up - put the repository with tags back.
-                if (this.Mode != RecordedTestMode.Playback)
+                if (Mode != RecordedTestMode.Playback)
                 {
                     await ImportImage(_repositoryName, tags);
                 }
@@ -212,7 +212,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             string tag = "test-delete-image";
             ContainerRepositoryClient client = CreateClient(repository);
 
-            if (this.Mode != RecordedTestMode.Playback)
+            if (Mode != RecordedTestMode.Playback)
             {
                 await ImportImage(repository, tag);
             }
@@ -227,7 +227,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // This will be removed, pending investigation into potential race condition.
             // https://github.com/azure/azure-sdk-for-net/issues/19699
-            if (this.Mode != RecordedTestMode.Playback)
+            if (Mode != RecordedTestMode.Playback)
             {
                 await Task.Delay(5000);
             }
@@ -343,7 +343,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             try
             {
-                if (this.Mode != RecordedTestMode.Playback)
+                if (Mode != RecordedTestMode.Playback)
                 {
                     await ImportImage(repository, tag);
                 }
@@ -468,7 +468,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateClient();
-            if (this.Mode != RecordedTestMode.Playback)
+            if (Mode != RecordedTestMode.Playback)
             {
                 await ImportImage(_repositoryName, "newest");
             }
@@ -523,7 +523,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ContainerRepositoryClient client = CreateClient();
             string tag = "test-delete-tag";
 
-            if (this.Mode != RecordedTestMode.Playback)
+            if (Mode != RecordedTestMode.Playback)
             {
                 await ImportImage(_repositoryName, tag);
             }
@@ -535,7 +535,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // This will be removed, pending investigation into potential race condition.
             // https://github.com/azure/azure-sdk-for-net/issues/19699
-            if (this.Mode != RecordedTestMode.Playback)
+            if (Mode != RecordedTestMode.Playback)
             {
                 await Task.Delay(5000);
             }

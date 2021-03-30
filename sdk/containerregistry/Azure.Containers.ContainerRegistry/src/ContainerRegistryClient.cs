@@ -50,6 +50,11 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
+        /// <summary>
+        /// Ge the service endpoint for this client.
+        /// </summary>
+        public Uri Endpoint {  get { return _endpoint; } }
+
         /// <summary> List repositories. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<string> GetRepositoriesAsync(CancellationToken cancellationToken = default)

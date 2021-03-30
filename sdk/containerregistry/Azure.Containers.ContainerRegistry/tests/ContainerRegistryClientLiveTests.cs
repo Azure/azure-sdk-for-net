@@ -118,7 +118,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             try
             {
-                if (this.Mode != RecordedTestMode.Playback)
+                if (Mode != RecordedTestMode.Playback)
                 {
                     await ImportImage(repository, tags);
                 }
@@ -129,7 +129,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Assert
                 // This will be removed, pending investigation into potential race condition.
                 // https://github.com/azure/azure-sdk-for-net/issues/19699
-                if (this.Mode != RecordedTestMode.Playback)
+                if (Mode != RecordedTestMode.Playback)
                 {
                     await Task.Delay(5000);
                 }
@@ -147,7 +147,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             finally
             {
                 // Clean up - put the repository with tags back.
-                if (this.Mode != RecordedTestMode.Playback)
+                if (Mode != RecordedTestMode.Playback)
                 {
                     await ImportImage(repository, tags);
                 }
