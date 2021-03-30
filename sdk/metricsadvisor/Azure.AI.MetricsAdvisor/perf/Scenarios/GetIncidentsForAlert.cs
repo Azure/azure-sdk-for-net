@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.MetricsAdvisor.Perf
 {
-    public class GetIncidentRootCausesTest : MetricsAdvisorTest<MetricsAdvisorPerfOptions>
+    public class GetIncidentsForAlert : MetricsAdvisorTest<MetricsAdvisorPerfOptions>
     {
-        public GetIncidentRootCausesTest(MetricsAdvisorPerfOptions options) : base(options)
+        public GetIncidentsForAlert(MetricsAdvisorPerfOptions options) : base(options)
         {
             ValidateOptions();
         }
@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Perf
         {
             int count = 0;
 
-            foreach (var _ in Client.GetIncidentRootCauses(DetectionConfigurationId, IncidentId, cancellationToken: cancellationToken))
+            foreach (var _ in Client.GetIncidents(AlertConfigurationId, AlertId, cancellationToken: cancellationToken))
             {
                 if (++count >= Options.Count)
                 {
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Perf
         {
             int count = 0;
 
-            await foreach (var _ in Client.GetIncidentRootCausesAsync(DetectionConfigurationId, IncidentId, cancellationToken: cancellationToken))
+            await foreach (var _ in Client.GetIncidentsAsync(AlertConfigurationId, AlertId, cancellationToken: cancellationToken))
             {
                 if (++count >= Options.Count)
                 {
@@ -44,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Perf
         {
             int count = 0;
 
-            foreach (var _ in Client.GetIncidentRootCauses(DetectionConfigurationId, IncidentId))
+            foreach (var _ in Client.GetIncidents(AlertConfigurationId, AlertId))
             {
                 if (++count >= Options.Count)
                 {
@@ -54,7 +54,7 @@ namespace Azure.AI.MetricsAdvisor.Perf
 
             if (count < Options.Count)
             {
-                throw new ArgumentException($"The provided incident does not have enough root causes for this test. "
+                throw new ArgumentException($"The provided alert does not have enough incidents for this test. "
                     + $"Expected: {Options.Count}. Actual: {count}. Please set '--count {count}' or lower.");
             }
         }

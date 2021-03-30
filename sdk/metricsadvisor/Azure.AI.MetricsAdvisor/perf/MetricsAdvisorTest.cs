@@ -4,7 +4,7 @@
 using System;
 using Azure.Test.Perf;
 
-namespace Azure.AI.MetricsAdvisor
+namespace Azure.AI.MetricsAdvisor.Perf
 {
     public abstract class MetricsAdvisorTest<TOptions> : PerfTest<TOptions> where TOptions : PerfOptions
     {
