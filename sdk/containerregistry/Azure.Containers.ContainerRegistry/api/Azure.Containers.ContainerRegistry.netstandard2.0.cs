@@ -5,6 +5,8 @@ namespace Azure.Containers.ContainerRegistry
         protected ContainerRegistryClient() { }
         public ContainerRegistryClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public ContainerRegistryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.DeleteRepositoryResult> DeleteRepository(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.DeleteRepositoryResult>> DeleteRepositoryAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<string> GetRepositories(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<string> GetRepositoriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -22,6 +24,8 @@ namespace Azure.Containers.ContainerRegistry
         public ContainerRepositoryClient(System.Uri endpoint, string repository, Azure.Core.TokenCredential credential) { }
         public ContainerRepositoryClient(System.Uri endpoint, string repository, Azure.Core.TokenCredential credential, Azure.Containers.ContainerRegistry.ContainerRegistryClientOptions options) { }
         public virtual System.Uri Endpoint { get { throw null; } }
+        public virtual Azure.Response<Azure.Containers.ContainerRegistry.DeleteRepositoryResult> Delete(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Containers.ContainerRegistry.DeleteRepositoryResult>> DeleteAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteRegistryArtifact(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteRegistryArtifactAsync(string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteTag(string tag, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -50,6 +54,12 @@ namespace Azure.Containers.ContainerRegistry
         public bool? CanList { get { throw null; } set { } }
         public bool? CanRead { get { throw null; } set { } }
         public bool? CanWrite { get { throw null; } set { } }
+    }
+    public partial class DeleteRepositoryResult
+    {
+        internal DeleteRepositoryResult() { }
+        public System.Collections.Generic.IReadOnlyList<string> DeletedRegistryArtifactDigests { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> DeletedTags { get { throw null; } }
     }
     public partial class GetRegistryArtifactOptions
     {

@@ -134,9 +134,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Delete the repository identified by `name`. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeleteRepositoryResult>> DeleteAsync(string name, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteRepository)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(Delete)}");
             scope.Start();
             try
             {
@@ -152,9 +152,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Delete the repository identified by `name`. </summary>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeleteRepositoryResult> DeleteRepository(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DeleteRepositoryResult> Delete(string name, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteRepository)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(Delete)}");
             scope.Start();
             try
             {

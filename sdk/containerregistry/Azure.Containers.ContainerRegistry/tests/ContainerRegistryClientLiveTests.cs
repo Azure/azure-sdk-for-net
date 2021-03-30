@@ -11,7 +11,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
 {
     public class ContainerRegistryClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -127,6 +127,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 await client.DeleteRepositoryAsync(repository);
 
                 // Assert
+                // This will be removed, pending investigation into potential race condition.
+                // https://github.com/azure/azure-sdk-for-net/issues/19699
+                if (this.Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(5000);
+                }
+
                 var repositories = client.GetRepositoriesAsync();
 
                 await foreach (var item in repositories)

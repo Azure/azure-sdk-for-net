@@ -6,8 +6,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1555c153a0479543a1d043b14c24f0cd-28a092477297554a-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-10e596f564bc3e45be526465a9edfcef-effe9c9d14fe5b40-00",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210330.1",
+          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "3695fd9e94edfd5380f0b108166a8ea6",
         "x-ms-return-client-request-id": "true"
       },
@@ -23,7 +26,7 @@
         "Connection": "keep-alive",
         "Content-Length": "221",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 18:01:06 GMT",
+        "Date": "Tue, 30 Mar 2021 18:12:12 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -32,7 +35,7 @@
         ],
         "WWW-Authenticate": "Bearer realm=\u0022https://annelocontainerregistry.azurecr.io/oauth2/token\u0022,service=\u0022annelocontainerregistry.azurecr.io\u0022,scope=\u0022repository:library/hello-world:metadata_read\u0022,error=\u0022invalid_token\u0022",
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "08546c30-224d-43bc-bb46-0bccb6c88066"
+        "X-Ms-Correlation-Request-Id": "7c1f4e03-9664-4f88-93ae-1beda01e373e"
       },
       "ResponseBody": {
         "errors": [
@@ -57,8 +60,11 @@
         "Accept": "application/json",
         "Content-Length": "89",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-1555c153a0479543a1d043b14c24f0cd-6e4096f957917b4c-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-10e596f564bc3e45be526465a9edfcef-62a69d609c5d8b4a-00",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210330.1",
+          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "ee6a7180c2d6db1df043132fafea04f7",
         "x-ms-return-client-request-id": "true"
       },
@@ -67,11 +73,11 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 18:01:06 GMT",
+        "Date": "Tue, 30 Mar 2021 18:12:13 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "7dfc6369-f2b8-4734-a1cb-eca6910678a5"
+        "X-Ms-Correlation-Request-Id": "660767d8-58dc-494d-910a-619133317504"
       },
       "ResponseBody": {
         "refresh_token": "Sanitized"
@@ -84,8 +90,11 @@
         "Accept": "application/json",
         "Content-Length": "148",
         "Content-Type": "application/x-www-form-urlencoded",
-        "traceparent": "00-1555c153a0479543a1d043b14c24f0cd-e7632ba35126ee44-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-10e596f564bc3e45be526465a9edfcef-990dc5156e434e4f-00",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210330.1",
+          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "b46b61619483904eaf33427ebdd22868",
         "x-ms-return-client-request-id": "true"
       },
@@ -94,11 +103,11 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 18:01:06 GMT",
+        "Date": "Tue, 30 Mar 2021 18:12:13 GMT",
         "Server": "openresty",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "X-Ms-Correlation-Request-Id": "8629438e-77cd-483a-8c64-1352eeee5985"
+        "X-Ms-Correlation-Request-Id": "b21db0f8-35be-4a65-81e2-f1535ce2aca9"
       },
       "ResponseBody": {
         "access_token": "Sanitized"
@@ -110,8 +119,11 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-1555c153a0479543a1d043b14c24f0cd-28a092477297554a-00",
-        "User-Agent": "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-10e596f564bc3e45be526465a9edfcef-effe9c9d14fe5b40-00",
+        "User-Agent": [
+          "azsdk-net-Containers.ContainerRegistry/1.0.0-alpha.20210330.1",
+          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
+        ],
         "x-ms-client-request-id": "3695fd9e94edfd5380f0b108166a8ea6",
         "x-ms-return-client-request-id": "true"
       },
@@ -125,9 +137,9 @@
           "X-Ms-Correlation-Request-Id"
         ],
         "Connection": "keep-alive",
-        "Content-Length": "1952",
+        "Content-Length": "1954",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 29 Mar 2021 18:01:06 GMT",
+        "Date": "Tue, 30 Mar 2021 18:12:13 GMT",
         "Docker-Distribution-Api-Version": "registry/2.0",
         "Server": "openresty",
         "Strict-Transport-Security": [
@@ -135,7 +147,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": "nosniff",
-        "X-Ms-Correlation-Request-Id": "ffb53a56-c6d3-42b9-9141-2492f47a03f6"
+        "X-Ms-Correlation-Request-Id": "2bf252ab-b2d9-4fa0-bb19-8782093ede09"
       },
       "ResponseBody": {
         "registry": "annelocontainerregistry.azurecr.io",
@@ -144,60 +156,8 @@
           {
             "name": "newest",
             "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-29T17:57:44.968777Z",
-            "lastUpdateTime": "2021-03-29T17:57:44.968777Z",
-            "signed": false,
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true
-            }
-          },
-          {
-            "name": "v4",
-            "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-27T21:14:31.5776278Z",
-            "lastUpdateTime": "2021-03-27T21:14:31.5776278Z",
-            "signed": false,
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true
-            }
-          },
-          {
-            "name": "v2",
-            "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-27T21:14:31.2678985Z",
-            "lastUpdateTime": "2021-03-27T21:14:31.2678985Z",
-            "signed": false,
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true
-            }
-          },
-          {
-            "name": "v3",
-            "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-27T21:14:31.2202119Z",
-            "lastUpdateTime": "2021-03-27T21:14:31.2202119Z",
-            "signed": false,
-            "changeableAttributes": {
-              "deleteEnabled": true,
-              "writeEnabled": true,
-              "readEnabled": true,
-              "listEnabled": true
-            }
-          },
-          {
-            "name": "v1",
-            "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-27T21:14:30.6504147Z",
-            "lastUpdateTime": "2021-03-27T21:14:30.6504147Z",
+            "createdTime": "2021-03-30T18:12:05.7609474Z",
+            "lastUpdateTime": "2021-03-30T18:12:05.7609474Z",
             "signed": false,
             "changeableAttributes": {
               "deleteEnabled": true,
@@ -209,8 +169,60 @@
           {
             "name": "latest",
             "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
-            "createdTime": "2021-03-27T21:14:30.3122024Z",
-            "lastUpdateTime": "2021-03-27T21:14:30.3122024Z",
+            "createdTime": "2021-03-30T18:11:15.8793729Z",
+            "lastUpdateTime": "2021-03-30T18:11:15.8793729Z",
+            "signed": false,
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "name": "v4",
+            "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
+            "createdTime": "2021-03-30T18:11:14.7917019Z",
+            "lastUpdateTime": "2021-03-30T18:11:14.7917019Z",
+            "signed": false,
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "name": "v2",
+            "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
+            "createdTime": "2021-03-30T18:11:14.4082592Z",
+            "lastUpdateTime": "2021-03-30T18:11:14.4082592Z",
+            "signed": false,
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "name": "v3",
+            "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
+            "createdTime": "2021-03-30T18:11:14.0955725Z",
+            "lastUpdateTime": "2021-03-30T18:11:14.0955725Z",
+            "signed": false,
+            "changeableAttributes": {
+              "deleteEnabled": true,
+              "writeEnabled": true,
+              "readEnabled": true,
+              "listEnabled": true
+            }
+          },
+          {
+            "name": "v1",
+            "digest": "sha256:308866a43596e83578c7dfa15e27a73011bdd402185a84c5cd7f32a88b501a24",
+            "createdTime": "2021-03-30T18:11:13.8882079Z",
+            "lastUpdateTime": "2021-03-30T18:11:13.8882079Z",
             "signed": false,
             "changeableAttributes": {
               "deleteEnabled": true,

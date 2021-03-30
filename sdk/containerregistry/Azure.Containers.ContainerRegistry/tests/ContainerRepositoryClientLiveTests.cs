@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -99,6 +99,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
                 // Act
                 await client.DeleteAsync(repository);
+
+                // This will be removed, pending investigation into potential race condition.
+                // https://github.com/azure/azure-sdk-for-net/issues/19699
+                if (this.Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(5000);
+                }
 
                 // Assert
                 Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetPropertiesAsync(); });
