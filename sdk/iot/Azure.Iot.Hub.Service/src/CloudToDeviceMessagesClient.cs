@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Iot.Hub.Service
+namespace Azure.IoT.Hub.Service
 {
     /// <summary>
     /// C2D Messages Client place holder

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The connection state of the device. </summary>
     public readonly partial struct TwinConnectionState : IEquatable<TwinConnectionState>

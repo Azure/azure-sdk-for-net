@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Iot.Hub.Service.Models;
+using Azure.IoT.Hub.Service.Models;
 
-namespace Azure.Iot.Hub.Service
+namespace Azure.IoT.Hub.Service
 {
     /// <summary>
     /// Jobs client to support Import, Export and Scheduled Jobs.

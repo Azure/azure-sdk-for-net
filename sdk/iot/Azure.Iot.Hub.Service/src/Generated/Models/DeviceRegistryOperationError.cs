@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The device registry operation error details. </summary>
     public partial class DeviceRegistryOperationError

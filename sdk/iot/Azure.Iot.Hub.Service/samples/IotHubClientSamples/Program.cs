@@ -3,12 +3,12 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Iot.Hub.Service.Authentication;
+using Azure.IoT.Hub.Service.Authentication;
 using CommandLine;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 
-namespace Azure.Iot.Hub.Service.Samples
+namespace Azure.IoT.Hub.Service.Samples
 {
     public class Program
     {

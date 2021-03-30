@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The enabled status of the device. If disabled, the device cannot connect to the service. </summary>
     public readonly partial struct TwinStatus : IEquatable<TwinStatus>

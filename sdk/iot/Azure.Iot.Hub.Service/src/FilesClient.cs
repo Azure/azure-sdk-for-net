@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Azure.Iot.Hub.Service
+namespace Azure.IoT.Hub.Service
 {
     /// <summary>
     /// Files Client place holder

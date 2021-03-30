@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The configuration metrics for Iot Hub devices and modules. </summary>
     public partial class ConfigurationMetrics

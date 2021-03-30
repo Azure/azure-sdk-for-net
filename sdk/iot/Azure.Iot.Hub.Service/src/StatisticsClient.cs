@@ -4,9 +4,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Iot.Hub.Service.Models;
+using Azure.IoT.Hub.Service.Models;
 
-namespace Azure.Iot.Hub.Service
+namespace Azure.IoT.Hub.Service
 {
     /// <summary>
     /// Statistics client to acquire information about IoT Hub statistics.

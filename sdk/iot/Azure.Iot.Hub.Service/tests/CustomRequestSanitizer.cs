@@ -4,7 +4,7 @@
 using System;
 using Azure.Core.TestFramework;
 
-namespace Azure.Iot.Hub.Service.Tests
+namespace Azure.IoT.Hub.Service.Tests
 {
     /// <summary>
     /// Custom sanitizer to remove secrets from the recorded json files used for playback tests.

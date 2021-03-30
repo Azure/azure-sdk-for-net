@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Iot.Hub.Service
+namespace Azure.IoT.Hub.Service
 {
     /// <summary>
     /// Helper functions for using the <see cref="IfMatchPrecondition"/> enum.

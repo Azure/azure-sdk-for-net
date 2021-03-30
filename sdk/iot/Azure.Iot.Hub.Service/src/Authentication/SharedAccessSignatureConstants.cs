@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Iot.Hub.Service.Authentication
+namespace Azure.IoT.Hub.Service.Authentication
 {
     /// <summary>
     /// The constants used for building the IoT hub service shared access signature token.

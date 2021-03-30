@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The JobProperties. </summary>
     public partial class JobProperties

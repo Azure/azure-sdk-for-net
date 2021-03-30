@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary>
     /// Parameters to execute a direct method on the device.

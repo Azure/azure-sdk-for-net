@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Iot.Hub.Service.Models;
+using Azure.IoT.Hub.Service.Models;
 using NUnit.Framework;
 
-namespace Azure.Iot.Hub.Service.Tests
+namespace Azure.IoT.Hub.Service.Tests
 {
     /// <summary>
     /// Test all APIs of the StatisticsClient.

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The result of a device message queue purge operation. </summary>
     public partial class PurgeMessageQueueResult

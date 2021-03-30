@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>Azure.Iot.Hub.Service.Samples</RootNamespace>
+    <RootNamespace>Azure.IoT.Hub.Service.Samples</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

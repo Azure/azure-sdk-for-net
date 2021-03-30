@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Azure.Iot.Hub.Service.Samples
+namespace Azure.IoT.Hub.Service.Samples
 {
     /// <summary>
     /// This sample goes through the usage of statistics on the IoT Hub.

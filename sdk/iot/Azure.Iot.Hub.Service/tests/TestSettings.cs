@@ -7,7 +7,7 @@ using System.Reflection;
 using Azure.Core.TestFramework;
 using Microsoft.Extensions.Configuration;
 
-namespace Azure.Iot.Hub.Service.Tests
+namespace Azure.IoT.Hub.Service.Tests
 {
     /// <summary>
     /// These are the settings that will be used by the end-to-end tests.

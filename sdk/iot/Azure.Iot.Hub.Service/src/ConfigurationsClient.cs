@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Iot.Hub.Service.Models;
+using Azure.IoT.Hub.Service.Models;
 
-namespace Azure.Iot.Hub.Service
+namespace Azure.IoT.Hub.Service
 {
     /// <summary>
     /// Configuration client for automatic device/module management (ADM)
@@ -70,7 +70,7 @@ namespace Azure.Iot.Hub.Service
         {
             Argument.AssertNotNull(configuration, nameof(configuration));
             string ifMatchHeaderValue = IfMatchPreconditionExtensions.GetIfMatchHeaderValue(precondition, configuration.Etag);
-            return _configurationRestClient.CreateOrUpdateAsync(configuration.Id, configuration,ifMatchHeaderValue, cancellationToken);
+            return _configurationRestClient.CreateOrUpdateAsync(configuration.Id, configuration, ifMatchHeaderValue, cancellationToken);
         }
 
         /// <summary>

@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Iot.Hub.Service
+namespace Azure.IoT.Hub.Service
 {
     /// <summary>
     /// Options that allow configuration of requests sent to the IoTHub service.

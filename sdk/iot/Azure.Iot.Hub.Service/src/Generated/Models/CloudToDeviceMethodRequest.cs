@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The parameters to execute a direct method on the device. </summary>
     public partial class CloudToDeviceMethodRequest

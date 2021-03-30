@@ -1,7 +1,7 @@
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
-# Azure.Iot.Hub.Service
+# Azure.IoT.Hub.Service
 
 Run `./generateCode.ps1` in this directory to generate the code.
 

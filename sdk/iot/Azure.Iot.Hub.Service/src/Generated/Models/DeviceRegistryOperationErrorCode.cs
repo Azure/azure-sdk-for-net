@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The error code. </summary>
     public readonly partial struct DeviceRegistryOperationErrorCode : IEquatable<DeviceRegistryOperationErrorCode>

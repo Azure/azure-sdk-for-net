@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.Iot.Hub.Service.Authentication
+namespace Azure.IoT.Hub.Service.Authentication
 {
     /// <summary>
     /// The shared access signature based HTTP pipeline policy.

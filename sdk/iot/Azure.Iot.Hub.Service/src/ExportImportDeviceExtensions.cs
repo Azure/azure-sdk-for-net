@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.Iot.Hub.Service.Models;
+using Azure.IoT.Hub.Service.Models;
 
-namespace Azure.Iot.Hub.Service
+namespace Azure.IoT.Hub.Service
 {
     /// <summary>
     /// Helper functions for mutating the <see cref="ExportImportDevice"/> instance.

@@ -5,11 +5,11 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Iot.Hub.Service.Authentication;
+using Azure.IoT.Hub.Service.Authentication;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Azure.Iot.Hub.Service.Tests
+namespace Azure.IoT.Hub.Service.Tests
 {
     [Category("Unit")]
     [Parallelizable(ParallelScope.All)]

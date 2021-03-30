@@ -4,9 +4,9 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Iot.Hub.Service.Authentication;
+using Azure.IoT.Hub.Service.Authentication;
 
-namespace Azure.Iot.Hub.Service
+namespace Azure.IoT.Hub.Service
 {
     /// <summary>
     /// The IoT Hub Service Client.

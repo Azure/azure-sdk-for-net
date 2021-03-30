@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.Iot.Hub.Service
+namespace Azure.IoT.Hub.Service
 {
     /// <summary>
     /// The condition on which an operation will be executed against a service resource. Each value maps to a possible use of the If-Match header. The If-Match header is described in RFC7232.

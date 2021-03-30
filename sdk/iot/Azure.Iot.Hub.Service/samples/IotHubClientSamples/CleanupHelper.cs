@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Iot.Hub.Service.Models;
+using Azure.IoT.Hub.Service.Models;
 
-namespace Azure.Iot.Hub.Service.Samples
+namespace Azure.IoT.Hub.Service.Samples
 {
     /// <summary>
     /// Helper class to help cleanup resources created by the sample runs.

@@ -3,9 +3,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Iot.Hub.Service.Models;
+using Azure.IoT.Hub.Service.Models;
 
-namespace Azure.Iot.Hub.Service.Samples
+namespace Azure.IoT.Hub.Service.Samples
 {
     /// <summary>
     /// This sample goes through the usage of Configuration on the IoT Hub.
@@ -25,7 +25,7 @@ namespace Azure.Iot.Hub.Service.Samples
         {
             string testConfigurationId = $"configuration{Random.Next(MaxRandomValue)}";
             TwinConfiguration twinConfiguration = CreateSampleConfig(testConfigurationId);
-            
+
             // Create a Twin Configuration.
             await CreateConfigurationAsync(twinConfiguration);
 
@@ -121,7 +121,7 @@ namespace Azure.Iot.Hub.Service.Samples
 
                 twinConfiguration.Priority = Random.Next(MaxRandomValue);
                 Console.WriteLine($"Updating twin configuration with Id: '{twinConfiguration.Id}''s priority to: '{twinConfiguration.Priority}'");
-                Response <TwinConfiguration> response = await IoTHubServiceClient.Configurations
+                Response<TwinConfiguration> response = await IoTHubServiceClient.Configurations
                     .CreateOrUpdateConfigurationAsync(twinConfiguration, IfMatchPrecondition.UnconditionalIfMatch)
                     .ConfigureAwait(false);
 

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> Represents the Device Method Invocation Results. </summary>
     public partial class CloudToDeviceMethodResponse

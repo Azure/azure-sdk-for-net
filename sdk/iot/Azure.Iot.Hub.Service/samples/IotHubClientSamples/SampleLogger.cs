@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Iot.Hub.Service.Samples
+namespace Azure.IoT.Hub.Service.Samples
 {
     internal static class SampleLogger
     {

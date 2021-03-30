@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The desired and reported properties of the twin. The maximum depth of the object is 10. </summary>
     public partial class TwinProperties

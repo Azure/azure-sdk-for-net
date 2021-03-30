@@ -4,7 +4,7 @@
 using System;
 using CommandLine;
 
-namespace Azure.Iot.Hub.Service.Samples
+namespace Azure.IoT.Hub.Service.Samples
 {
     public class CommandLineOptions
     {

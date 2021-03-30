@@ -8,7 +8,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Azure.Iot.Hub.Service.Authentication
+namespace Azure.IoT.Hub.Service.Authentication
 {
     /// <summary>
     /// Builds the shared access signature based on the access policy passed.

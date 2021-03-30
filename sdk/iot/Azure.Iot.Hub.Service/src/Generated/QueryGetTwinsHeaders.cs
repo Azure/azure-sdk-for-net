@@ -8,7 +8,7 @@
 using Azure;
 using Azure.Core;
 
-namespace Azure.Iot.Hub.Service
+namespace Azure.IoT.Hub.Service
 {
     internal partial class QueryGetTwinsHeaders
     {

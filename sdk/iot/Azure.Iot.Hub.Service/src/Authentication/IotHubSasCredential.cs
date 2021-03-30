@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.Iot.Hub.Service.Authentication
+namespace Azure.IoT.Hub.Service.Authentication
 {
     /// <summary>
     /// The IoT Hub credentials, to be used for authenticating against an IoT Hub instance via SAS tokens.

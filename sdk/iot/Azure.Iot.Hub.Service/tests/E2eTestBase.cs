@@ -6,7 +6,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Iot.Hub.Service.Tests
+namespace Azure.IoT.Hub.Service.Tests
 {
     /// <summary>
     /// This class will initialize all the settings and create and instance of the IoT Hub service client.

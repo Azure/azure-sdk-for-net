@@ -3,9 +3,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Iot.Hub.Service.Models;
+using Azure.IoT.Hub.Service.Models;
 
-namespace Azure.Iot.Hub.Service.Samples
+namespace Azure.IoT.Hub.Service.Samples
 {
     /// <summary>
     /// This sample shows how to start the import and export jobs and check their status.

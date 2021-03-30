@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The status of capabilities enabled on the device. </summary>
     public partial class DeviceCapabilities

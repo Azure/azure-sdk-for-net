@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Iot.Hub.Service.Models
+namespace Azure.IoT.Hub.Service.Models
 {
     /// <summary> The authentication type used for connecting to the storage account. </summary>
     public readonly partial struct JobPropertiesStorageAuthenticationType : IEquatable<JobPropertiesStorageAuthenticationType>
