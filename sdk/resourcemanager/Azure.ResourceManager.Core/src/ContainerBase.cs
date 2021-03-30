@@ -53,17 +53,23 @@ namespace Azure.ResourceManager.Core
         /// Returns the resource from Azure if it exists.
         /// </summary>
         /// <param name="resourceName"> The name of the resource you want to get. </param>
+        /// <param name="cancellationToken"> A token to allow the caller to cancel the call to the service.
+        /// The default value is <see cref="CancellationToken.None" />. </param>
         /// <returns> Whether or not the resource existed. </returns>
-        public virtual TOperations TryGet(string resourceName)
+        public virtual TOperations TryGet(string resourceName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ContainerBase.TryGet");
+            using var scope = Diagnostics.CreateScope("ContainerBase`2.TryGet");
             scope.Start();
 
             var op = GetOperation(resourceName);
 
             try
             {
-                return op.Get().Value;
+                return op.Get(cancellationToken).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
             }
             catch (Exception e)
             {
@@ -81,7 +87,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> Whether or not the resource existed. </returns>
         public async virtual Task<TOperations> TryGetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
-            using var scope = Diagnostics.CreateScope("ContainerBase.TryGetAsync");
+            using var scope = Diagnostics.CreateScope("ContainerBase`2.TryGet");
             scope.Start();
 
             var op = GetOperation(resourceName);
@@ -89,6 +95,10 @@ namespace Azure.ResourceManager.Core
             try
             {
                 return (await op.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
+            }
+            catch (RequestFailedException e) when (e.Status == 404)
+            {
+                return null;
             }
             catch (Exception e)
             {

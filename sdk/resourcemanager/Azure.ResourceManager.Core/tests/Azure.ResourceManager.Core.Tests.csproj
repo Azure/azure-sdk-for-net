@@ -28,6 +28,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="SessionRecords\ContainerTryGetTest\" />
     <Folder Include="SessionRecords\ResourceGroupOperationsTests\" />
   </ItemGroup>
 
