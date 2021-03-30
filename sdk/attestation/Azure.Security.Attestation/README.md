@@ -10,8 +10,13 @@ Azure Attestation receives evidence from compute entities, turns them into a set
 
 > NOTE: This is a preliminary SDK for the Microsoft Azure Attestation service. It provides all the essential functionality to access the Azure Attestation service, it should be considered 'as-is" and is subject to changes in the future.
 
+  [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/attestation) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Security.Attestation/1.0.0-beta.1/) | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/attestation) | [Product documentation](https://docs.microsoft.com/en-us/azure/attestation/)
+
 ## Getting started
-### Adding the package to your project
+
+### Prerequisites
+* An [Azure subscription][azure_sub].
+* An existing Azure Attestation Instance, or you can use the "shared provider" available in each Azure region. If you need to create an Azure Attestation service instance, you can use the Azure Portal or [Azure CLI][azure_cli].
 
 ### Install the package
 Install the Microsoft Azure Attestation client library for .NET with [NuGet][nuget]:
@@ -19,11 +24,6 @@ Install the Microsoft Azure Attestation client library for .NET with [NuGet][nug
 ```PowerShell
 dotnet add package <your project name> Azure.Security.Attestation --version 1.0.0-beta.2
 ```
-
-### Prerequisites
-* An [Azure subscription][azure_sub].
-* An existing Azure Attestation Instance, or you can use the "shared provider" available in each Azure region. If you need to create an Azure Attestation service instance, you can use the Azure Portal or [Azure CLI][azure_cli].
-
 
 ### Authenticate the client
 In order to interact with the Azure Attestation service, you'll need to create an instance of the [Attestation Client][key_client_class] class. You need a **attestation instance url**, which you may see as "DNS Name" in the portal,
