@@ -338,6 +338,88 @@ namespace Azure.Containers.ContainerRegistry
         #endregion
 
         #region Tag methods
+		        /// <summary> Get the collection of tags for a repository. </summary>
+        /// <param name="options"> Options to override default collection getting behavior. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<TagProperties> GetTagsAsync(GetTagOptions options = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<TagProperties>> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTags)}");
+                scope.Start();
+                try
+                {
+                    var response = await _restClient.GetTagsAsync(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            async Task<Page<TagProperties>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTags)}");
+                scope.Start();
+                try
+                {
+                    string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
+                    var response = await _restClient.GetTagsNextPageAsync(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary> Get the collection of tags for a repository. </summary>
+        /// <param name="options"> Options to override default collection getting behavior. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<TagProperties> GetTags(GetTagOptions options = null, CancellationToken cancellationToken = default)
+        {
+            Page<TagProperties> FirstPageFunc(int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTags)}");
+                scope.Start();
+                try
+                {
+                    var response = _restClient.GetTags(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            Page<TagProperties> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTags)}");
+                scope.Start();
+                try
+                {
+                    string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
+                    var response = _restClient.GetTagsNextPage(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken);
+                    return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
         /// <summary> Get tag properties by tag. </summary>
         /// <param name="tag"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

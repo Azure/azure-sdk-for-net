@@ -135,7 +135,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.IsTrue(properties.RegistryArtifacts.Any(
                 artifact =>
                     artifact.CpuArchitecture == "arm64" &&
-                    artifact.OperatingSystem == "linux" ));
+                    artifact.OperatingSystem == "linux"));
 
             Assert.IsTrue(properties.RegistryArtifacts.Any(
                 artifact =>
@@ -368,6 +368,82 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         #region Tag Tests
         [RecordedTest]
+        public async Task CanGetTags()
+        {
+            // Arrange
+            var client = CreateClient();
+
+            // Act
+            AsyncPageable<TagProperties> tags = client.GetTagsAsync();
+
+            bool gotV1Tag = false;
+            await foreach (TagProperties tag in tags)
+            {
+                if (tag.Name.Contains("v1"))
+                {
+                    gotV1Tag = true;
+                }
+            }
+
+            // Assert
+            Assert.IsTrue(gotV1Tag);
+        }
+
+        [RecordedTest]
+        public async Task CanGetTagsWithCustomPageSize()
+        {
+            // Arrange
+            var client = CreateClient();
+            int pageSize = 2;
+            int minExpectedPages = 2;
+
+            // Act
+            AsyncPageable<TagProperties> tags = client.GetTagsAsync();
+            var pages = tags.AsPages(pageSizeHint: pageSize);
+
+            int pageCount = 0;
+            await foreach (var page in pages)
+            {
+                Assert.IsTrue(page.Values.Count <= pageSize);
+                pageCount++;
+            }
+
+            // Assert
+            Assert.IsTrue(pageCount >= minExpectedPages);
+        }
+
+        [RecordedTest]
+        public async Task CanGetTagsStartingMidCollection()
+        {
+            // Arrange
+            var client = CreateClient();
+            int pageSize = 1;
+            int minExpectedPages = 2;
+
+            // Act
+            AsyncPageable<TagProperties> tags = client.GetTagsAsync();
+            var pages = tags.AsPages($"</acr/v1/{_repositoryName}/_tags?last=v1&n={pageSize}>");
+
+            int pageCount = 0;
+            Page<TagProperties> firstPage = null;
+            await foreach (var page in pages)
+            {
+                if (pageCount == 0)
+                {
+                    firstPage = page;
+                }
+
+                Assert.IsTrue(page.Values.Count <= pageSize);
+                pageCount++;
+            }
+
+            // Assert
+            Assert.AreNotEqual(null, firstPage);
+            Assert.AreEqual("v2", firstPage.Values[0].Name);
+            Assert.GreaterOrEqual(pageCount, minExpectedPages);
+        }
+
+        [RecordedTest]
         public async Task CanGetTagProperties()
         {
             // Arrange
@@ -380,6 +456,27 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Assert
             Assert.AreEqual(tag, properties.Name);
             Assert.AreEqual(_repositoryName, properties.Repository);
+        }
+
+        [RecordedTest]
+        public async Task CanGetTagsOrdered()
+        {
+            // Arrange
+            var client = CreateClient();
+            if (this.Mode != RecordedTestMode.Playback)
+            {
+                await ImportImage(_repositoryName, "newest");
+            }
+
+            // Act
+            AsyncPageable<TagProperties> tags = client.GetTagsAsync(new GetTagOptions(TagOrderBy.LastUpdatedOnDescending));
+
+            // Assert
+            await foreach (TagProperties tag in tags)
+            {
+                Assert.That(tag.Name.Contains("newest"));
+                break;
+            }
         }
 
         [RecordedTest, NonParallelizable]

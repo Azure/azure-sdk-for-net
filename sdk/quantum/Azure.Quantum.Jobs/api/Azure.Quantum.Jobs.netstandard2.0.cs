@@ -150,12 +150,6 @@ namespace Azure.Quantum.Jobs.Models
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Quantum.Jobs.Models.TargetStatus> Targets { get { throw null; } }
     }
-    public partial class ProviderStatusList
-    {
-        internal ProviderStatusList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Quantum.Jobs.Models.ProviderStatus> Values { get { throw null; } }
-    }
     public partial class QuantumJobQuota
     {
         internal QuantumJobQuota() { }
@@ -166,12 +160,6 @@ namespace Azure.Quantum.Jobs.Models
         public string ProviderId { get { throw null; } }
         public Azure.Quantum.Jobs.Models.DimensionScope? Scope { get { throw null; } }
         public float? Utilization { get { throw null; } }
-    }
-    public partial class QuantumJobQuotaList
-    {
-        internal QuantumJobQuotaList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Quantum.Jobs.Models.QuantumJobQuota> Values { get { throw null; } }
     }
     public partial class SasUriResponse
     {

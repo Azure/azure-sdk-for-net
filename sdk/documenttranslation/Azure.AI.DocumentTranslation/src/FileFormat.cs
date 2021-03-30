@@ -9,8 +9,12 @@ namespace Azure.AI.DocumentTranslation
     [CodeGenModel("FileFormat")]
     public partial class FileFormat
     {
-        /// <summary> Supported Version. </summary>
+        /// <summary> Supported format versions. </summary>
         [CodeGenMember("Versions")]
         public IReadOnlyList<string> FormatVersions { get; }
+
+        /// <summary> Default format version if none is specified. </summary>
+        [CodeGenMember("DefaultVersion")]
+        internal string DefaultFormatVersion { get; }
     }
 }

@@ -14,15 +14,17 @@ namespace Azure.AI.DocumentTranslation
     public partial class DocumentTranslationError
     {
         /// <summary> Initializes a new instance of DocumentTranslationError. </summary>
+        /// <param name="errorCode"> Enums containing high level error codes. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        internal DocumentTranslationError(string message)
+        internal DocumentTranslationError(DocumentTranslationErrorCode errorCode, string message)
         {
             if (message == null)
             {
                 throw new ArgumentNullException(nameof(message));
             }
 
+            ErrorCode = errorCode;
             Message = message;
         }
         /// <summary> Gets high level error message. </summary>
