@@ -14,15 +14,27 @@ namespace Azure.AI.MetricsAdvisor.Perf
 
         public override void Run(CancellationToken cancellationToken)
         {
+            int count = 0;
+
             foreach (var _ in Client.GetAnomalies(AlertConfigurationId, AlertId, cancellationToken: cancellationToken))
             {
+                if (++count >= Options.Count)
+                {
+                    break;
+                }
             }
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
+            int count = 0;
+
             await foreach (var _ in Client.GetAnomaliesAsync(AlertConfigurationId, AlertId, cancellationToken: cancellationToken))
             {
+                if (++count >= Options.Count)
+                {
+                    break;
+                }
             }
         }
     }
