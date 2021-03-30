@@ -71,7 +71,7 @@ Use the [Azure CLI][azure_cli] snippet below to create/get client secret credent
 
 ## Key concepts
 
-There are four major familes of functionality provided in this preview SDK: 
+There are four major families of functionality provided in this preview SDK: 
 - [SGX and TPM enclave attestation.](#attestation)
 - [MAA Attestation Token signing certificate discovery and validation.](#attestation-token-signing-certificate-discovery-and-validation)  
 - [Attestation Policy management.](#policy-management)
