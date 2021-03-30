@@ -637,7 +637,7 @@ namespace Azure.Messaging.ServiceBus
                     {
                         await ActiveReceiveTask.ConfigureAwait(false);
                     }
-                    catch (Exception ex) when (ex is TaskCanceledException || ex is OperationCanceledException)
+                    catch (OperationCanceledException)
                     {
                         // Nothing to do here.  These exceptions are expected.
                     }
