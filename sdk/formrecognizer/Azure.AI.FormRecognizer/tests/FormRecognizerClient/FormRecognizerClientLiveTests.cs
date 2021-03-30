@@ -993,6 +993,44 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
         }
 
+        [RecordedTest]
+        [TestCase("1", 1)]
+        [TestCase("1-2", 2)]
+        public async Task StartRecognizeReceiptsWithOnePageArgument(string pages, int expected)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeReceiptsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeReceiptsAsync(stream, new RecognizeReceiptsOptions() { Pages = { pages } });
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.AreEqual(expected, forms.Count);
+        }
+
+        [RecordedTest]
+        [TestCase("1", "3", 2)]
+        [TestCase("1-2", "3", 3)]
+        public async Task StartRecognizeReceiptsWithMultiplePageArgument(string page1, string page2, int expected)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeReceiptsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeReceiptsAsync(stream, new RecognizeReceiptsOptions() { Pages = { page1, page2 } });
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.AreEqual(expected, forms.Count);
+        }
+
         #endregion
 
         #region StartRecognizeBusinessCards
@@ -1435,6 +1473,44 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
         }
 
+        [RecordedTest]
+        [TestCase("1", 1)]
+        [TestCase("1-2", 2)]
+        public async Task StartRecognizeBusinessCardsWithOnePageArgument(string pages, int expected)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeBusinessCardsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeBusinessCardsAsync(stream, new RecognizeBusinessCardsOptions() { Pages = { pages } });
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.AreEqual(expected, forms.Count);
+        }
+
+        [RecordedTest]
+        [TestCase("1", "3", 2)]
+        [TestCase("1-2", "3", 3)]
+        public async Task StartRecognizeBusinessCardsWithMultiplePageArgument(string page1, string page2, int expected)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeBusinessCardsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeBusinessCardsAsync(stream, new RecognizeBusinessCardsOptions() { Pages = { page1, page2 } });
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.AreEqual(expected, forms.Count);
+        }
+
         #endregion
 
         #region StartRecognizeInvoices
@@ -1801,6 +1877,46 @@ namespace Azure.AI.FormRecognizer.Tests
                 ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesAsync(stream, new RecognizeInvoicesOptions() { Locale = "not-locale" }));
             }
             Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
+        }
+
+        [RecordedTest]
+        [TestCase("1", 1)]
+        [TestCase("1-2", 2)]
+        public async Task StartRecognizeInvoicesWithOnePageArgument(string pages, int expected)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeInvoicesOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeInvoicesAsync(stream, new RecognizeInvoicesOptions() { Pages = { pages } });
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+            int pageCount = forms.Sum(f => f.Pages.Count);
+
+            Assert.AreEqual(expected, pageCount);
+        }
+
+        [RecordedTest]
+        [TestCase("1", "3", 2)]
+        [TestCase("1-2", "3", 3)]
+        public async Task StartRecognizeInvoicesWithMultiplePageArgument(string page1, string page2, int expected)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeInvoicesOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeInvoicesAsync(stream, new RecognizeInvoicesOptions() { Pages = { page1, page2 } });
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+            int pageCount = forms.Sum(f => f.Pages.Count);
+
+            Assert.AreEqual(expected, pageCount);
         }
 
         #endregion
@@ -2385,6 +2501,48 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("2003", ex.ErrorCode);
             Assert.True(operation.HasCompleted);
             Assert.False(operation.HasValue);
+        }
+
+        [RecordedTest]
+        [TestCase("1", 1)]
+        [TestCase("1-2", 2)]
+        public async Task StartRecognizeCustomFormsWithOnePageArgument(string pages, int expected)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeCustomFormsOperation operation;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, ContainerType.MultipageFiles);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, new RecognizeCustomFormsOptions() { Pages = { pages } });
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.AreEqual(expected, forms.Count);
+        }
+
+        [RecordedTest]
+        [TestCase("1", "3", 2)]
+        [TestCase("1-2", "3", 3)]
+        public async Task StartRecognizeCustomFormsWithMultiplePageArgument(string page1, string page2, int expected)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeCustomFormsOperation operation;
+
+            await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false, ContainerType.MultipageFiles);
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream, new RecognizeCustomFormsOptions() { Pages = { page1, page2 } });
+            }
+
+            RecognizedFormCollection forms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.AreEqual(expected, forms.Count);
         }
 
         #endregion

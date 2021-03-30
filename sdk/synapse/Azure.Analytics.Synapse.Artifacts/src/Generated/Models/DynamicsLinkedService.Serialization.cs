@@ -59,22 +59,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName");
-                writer.WriteStringValue(HostName);
+                writer.WriteObjectValue(HostName);
             }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port");
-                writer.WriteStringValue(Port);
+                writer.WriteObjectValue(Port);
             }
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri");
-                writer.WriteStringValue(ServiceUri);
+                writer.WriteObjectValue(ServiceUri);
             }
             if (Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName");
-                writer.WriteStringValue(OrganizationName);
+                writer.WriteObjectValue(OrganizationName);
             }
             writer.WritePropertyName("authenticationType");
             writer.WriteStringValue(AuthenticationType.ToString());
@@ -125,10 +125,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<object>> annotations = default;
             DynamicsDeploymentType deploymentType = default;
-            Optional<string> hostName = default;
-            Optional<string> port = default;
-            Optional<string> serviceUri = default;
-            Optional<string> organizationName = default;
+            Optional<object> hostName = default;
+            Optional<object> port = default;
+            Optional<object> serviceUri = default;
+            Optional<object> organizationName = default;
             DynamicsAuthenticationType authenticationType = default;
             Optional<object> username = default;
             Optional<SecretBase> password = default;
@@ -206,22 +206,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("hostName"))
                         {
-                            hostName = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            hostName = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("port"))
                         {
-                            port = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            port = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("serviceUri"))
                         {
-                            serviceUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            serviceUri = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("organizationName"))
                         {
-                            organizationName = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            organizationName = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("authenticationType"))

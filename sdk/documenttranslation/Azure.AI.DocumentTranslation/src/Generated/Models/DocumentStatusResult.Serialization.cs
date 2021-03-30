@@ -15,7 +15,8 @@ namespace Azure.AI.DocumentTranslation
     {
         internal static DocumentStatusResult DeserializeDocumentStatusResult(JsonElement element)
         {
-            Uri path = default;
+            Optional<Uri> path = default;
+            Uri sourcePath = default;
             DateTimeOffset createdDateTimeUtc = default;
             DateTimeOffset lastActionDateTimeUtc = default;
             TranslationStatus status = default;
@@ -28,7 +29,17 @@ namespace Azure.AI.DocumentTranslation
             {
                 if (property.NameEquals("path"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     path = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sourcePath"))
+                {
+                    sourcePath = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdDateTimeUtc"))
@@ -82,7 +93,7 @@ namespace Azure.AI.DocumentTranslation
                     continue;
                 }
             }
-            return new DocumentStatusResult(path, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error.Value, progress, id, characterCharged);
+            return new DocumentStatusResult(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error.Value, progress, id, characterCharged);
         }
     }
 }

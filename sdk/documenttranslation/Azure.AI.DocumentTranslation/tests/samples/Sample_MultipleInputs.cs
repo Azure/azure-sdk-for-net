@@ -36,12 +36,13 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
             //@@ Uri arabicTargetSasUri = <arabic target SAS URI>;
             //@@ Uri spanishTargetSasUri = <spanish target SAS URI>;
             //@@ Uri frenchGlossarySasUri = <french glossary SAS URI>;
+            var glossaryFormat = "TSV";
 
-            var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+            var input1 = new DocumentTranslationInput(source1SasUriUri, frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
             input1.AddTarget(spanishTargetSasUri, "es");
 
             var input2 = new DocumentTranslationInput(source2SasUri, arabicTargetSasUri, "ar");
-            input2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri));
+            input2.AddTarget(frenchTargetSasUri, "fr", new TranslationGlossary(frenchGlossarySasUri, glossaryFormat));
 
             var inputs = new List<DocumentTranslationInput>()
                 {

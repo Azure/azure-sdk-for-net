@@ -54,6 +54,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
+            if (Optional.IsDefined(ConnectionProperties))
+            {
+                writer.WritePropertyName("connectionProperties");
+                writer.WriteObjectValue(ConnectionProperties);
+            }
             writer.WritePropertyName("clientId");
             writer.WriteObjectValue(ClientId);
             if (Optional.IsDefined(ClientSecret))
@@ -97,6 +102,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IDictionary<string, ParameterSpecification>> parameters = default;
             Optional<IList<object>> annotations = default;
+            Optional<object> connectionProperties = default;
             object clientId = default;
             Optional<SecretBase> clientSecret = default;
             Optional<object> useEncryptedEndpoints = default;
@@ -166,6 +172,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("connectionProperties"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            connectionProperties = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("clientId"))
                         {
                             clientId = property0.Value.GetObject();
@@ -227,7 +243,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceMarketingCloudLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clientId, clientSecret.Value, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
+            return new SalesforceMarketingCloudLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionProperties.Value, clientId, clientSecret.Value, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
         }
 
         internal partial class SalesforceMarketingCloudLinkedServiceConverter : JsonConverter<SalesforceMarketingCloudLinkedService>

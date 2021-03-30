@@ -23,8 +23,8 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> architecture = default;
             Optional<string> os = default;
             Optional<IReadOnlyList<ManifestAttributesManifestReferences>> references = default;
-            IReadOnlyList<string> tags = default;
-            ContentProperties changeableAttributes = default;
+            Optional<IReadOnlyList<string>> tags = default;
+            Optional<ContentProperties> changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("digest"))
@@ -89,6 +89,11 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -99,11 +104,16 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("changeableAttributes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     changeableAttributes = ContentProperties.DeserializeContentProperties(property.Value);
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture.Value, os.Value, Optional.ToList(references), tags, changeableAttributes);
+            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture.Value, os.Value, Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
         }
     }
 }

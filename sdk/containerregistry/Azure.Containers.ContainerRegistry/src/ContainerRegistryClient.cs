@@ -77,7 +77,7 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
-                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesNextPageAsync(uriReference, last: null, n: pageSizeHint, cancellationToken).ConfigureAwait(false);
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesNextPageAsync(uriReference, last: null, n: null, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -117,7 +117,7 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
-                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositoriesNextPage(uriReference, last: null, n: pageSizeHint, cancellationToken);
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositoriesNextPage(uriReference, last: null, n: null, cancellationToken);
                     return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -130,7 +130,7 @@ namespace Azure.Containers.ContainerRegistry
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
-        private static string ParseUriReferenceFromLinkHeader(string linkValue)
+        internal static string ParseUriReferenceFromLinkHeader(string linkValue)
         {
             // Per the Docker v2 HTTP API spec, the Link header is an RFC5988
             // compliant rel='next' with URL to next result set, if available.

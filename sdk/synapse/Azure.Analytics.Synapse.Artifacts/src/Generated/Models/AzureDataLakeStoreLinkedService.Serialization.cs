@@ -71,6 +71,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("tenant");
                 writer.WriteObjectValue(Tenant);
             }
+            if (Optional.IsDefined(AzureCloudType))
+            {
+                writer.WritePropertyName("azureCloudType");
+                writer.WriteObjectValue(AzureCloudType);
+            }
             if (Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName");
@@ -111,6 +116,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> servicePrincipalId = default;
             Optional<SecretBase> servicePrincipalKey = default;
             Optional<object> tenant = default;
+            Optional<object> azureCloudType = default;
             Optional<object> accountName = default;
             Optional<object> subscriptionId = default;
             Optional<object> resourceGroupName = default;
@@ -213,6 +219,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             tenant = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("azureCloudType"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            azureCloudType = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("accountName"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -259,7 +275,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataLakeStoreLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, dataLakeStoreUri, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, accountName.Value, subscriptionId.Value, resourceGroupName.Value, encryptedCredential.Value);
+            return new AzureDataLakeStoreLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, dataLakeStoreUri, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, accountName.Value, subscriptionId.Value, resourceGroupName.Value, encryptedCredential.Value);
         }
 
         internal partial class AzureDataLakeStoreLinkedServiceConverter : JsonConverter<AzureDataLakeStoreLinkedService>

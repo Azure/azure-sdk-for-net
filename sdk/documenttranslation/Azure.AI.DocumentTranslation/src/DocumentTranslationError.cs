@@ -11,11 +11,11 @@ namespace Azure.AI.DocumentTranslation
     {
         /// <summary> Enums containing high level error codes. </summary>
         [CodeGenMember("Code")]
-        public DocumentTranslationErrorCode? ErrorCode { get; }
+        public DocumentTranslationErrorCode ErrorCode { get; }
 
         internal InnerErrorV2 InnerError { get; }
 
-        internal DocumentTranslationError(DocumentTranslationErrorCode? errorCode, string message, string target, InnerErrorV2 innerError)
+        internal DocumentTranslationError(DocumentTranslationErrorCode errorCode, string message, string target, InnerErrorV2 innerError)
         {
             if (innerError != null)
             {

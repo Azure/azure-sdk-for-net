@@ -354,7 +354,7 @@ namespace Azure.AI.DocumentTranslation
 
                 try
                 {
-                    var response = _serviceClient.GetOperationDocumentsStatus(new Guid(Id), null, null, cancellationToken);
+                    var response = _serviceClient.GetOperationDocumentsStatus(new Guid(Id), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -397,7 +397,7 @@ namespace Azure.AI.DocumentTranslation
 
                 try
                 {
-                    var response = await _serviceClient.GetOperationDocumentsStatusAsync(new Guid(Id), null, null, cancellationToken).ConfigureAwait(false);
+                    var response = await _serviceClient.GetOperationDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

@@ -303,7 +303,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeReceiptsOptions.Pages.Count == 0 ? null : recognizeReceiptsOptions.Pages,
                     receipt,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -344,7 +344,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeReceiptsOptions.Pages.Count == 0 ? null : recognizeReceiptsOptions.Pages,
                     receipt,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -383,7 +383,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeReceiptsOptions.Pages.Count == 0 ? null : recognizeReceiptsOptions.Pages,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -422,7 +422,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = ServiceClient.AnalyzeReceiptAsync(
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeReceiptsOptions.Pages.Count == 0 ? null : recognizeReceiptsOptions.Pages,
                     sourcePath,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -467,7 +467,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeBusinessCardsOptions.Pages.Count == 0 ? null : recognizeBusinessCardsOptions.Pages,
                     businessCard,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -508,7 +508,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeBusinessCardsOptions.Pages.Count == 0 ? null : recognizeBusinessCardsOptions.Pages,
                     businessCard,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -547,7 +547,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = await ServiceClient.AnalyzeBusinessCardAsyncAsync(
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeBusinessCardsOptions.Pages.Count == 0 ? null : recognizeBusinessCardsOptions.Pages,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -586,7 +586,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = ServiceClient.AnalyzeBusinessCardAsync(
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeBusinessCardsOptions.Pages.Count == 0 ? null : recognizeBusinessCardsOptions.Pages,
                     sourcePath,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -631,7 +631,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeInvoicesOptions.Pages.Count == 0 ? null : recognizeInvoicesOptions.Pages,
                     invoice,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -672,7 +672,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeInvoicesOptions.Pages.Count == 0 ? null : recognizeInvoicesOptions.Pages,
                     invoice,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -711,7 +711,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = await ServiceClient.AnalyzeInvoiceAsyncAsync(
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeInvoicesOptions.Pages.Count == 0 ? null : recognizeInvoicesOptions.Pages,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -750,7 +750,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = ServiceClient.AnalyzeInvoiceAsync(
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeInvoicesOptions.Pages.Count == 0 ? null : recognizeInvoicesOptions.Pages,
                     sourcePath,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -796,7 +796,7 @@ namespace Azure.AI.FormRecognizer
                     guid,
                     formContentType,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
-                    null, // TODO: pass pages.
+                    recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     form,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -838,7 +838,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = ServiceClient.AnalyzeWithCustomModel(
                     guid,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
-                    null, // TODO: pass pages.
+                    recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     sourcePath,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -881,7 +881,7 @@ namespace Azure.AI.FormRecognizer
                     guid,
                     formContentType,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
-                    null, // TODO: pass pages.
+                    recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     form,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -923,7 +923,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = await ServiceClient.AnalyzeWithCustomModelAsync(
                     guid,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
-                    null, // TODO: pass pages.
+                    recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);

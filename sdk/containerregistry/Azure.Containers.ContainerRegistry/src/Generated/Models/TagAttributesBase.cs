@@ -26,7 +26,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
-        /// <param name="writeableProperties"> Changeable attributes. </param>
+        /// <param name="writeableProperties"> Writeable properties of the resource. </param>
         internal TagAttributesBase(string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ContentProperties writeableProperties)
         {
             Name = name;
@@ -44,7 +44,7 @@ namespace Azure.Containers.ContainerRegistry
         public DateTimeOffset CreatedOn { get; }
         /// <summary> Tag last update time. </summary>
         public DateTimeOffset LastUpdatedOn { get; }
-        /// <summary> Changeable attributes. </summary>
+        /// <summary> Writeable properties of the resource. </summary>
         public ContentProperties WriteableProperties { get; }
     }
 }
