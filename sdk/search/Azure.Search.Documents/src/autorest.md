@@ -13,8 +13,8 @@ copy them locally in `/sdk/search/generate.ps1` and reference them here.
 ```yaml
 title: SearchServiceClient
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/55c3979124d193ab8cd4c5409a3e9f67739ca571/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchindex.json
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/55c3979124d193ab8cd4c5409a3e9f67739ca571/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchservice.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/47b422a4d1ea9f4736739a4a6a19d4a8a2fe54d9/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchindex.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/47b422a4d1ea9f4736739a4a6a19d4a8a2fe54d9/specification/search/data-plane/Azure.Search/preview/2020-06-30/searchservice.json
 ```
 
 ## Release hacks

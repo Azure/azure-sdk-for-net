@@ -11,11 +11,53 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SearchIndexerSkill : IUtf8JsonSerializable
+    public partial class DocumentExtractionSkill : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(ParsingMode))
+            {
+                if (ParsingMode != null)
+                {
+                    writer.WritePropertyName("parsingMode");
+                    writer.WriteStringValue(ParsingMode);
+                }
+                else
+                {
+                    writer.WriteNull("parsingMode");
+                }
+            }
+            if (Optional.IsDefined(DataToExtract))
+            {
+                if (DataToExtract != null)
+                {
+                    writer.WritePropertyName("dataToExtract");
+                    writer.WriteStringValue(DataToExtract);
+                }
+                else
+                {
+                    writer.WriteNull("dataToExtract");
+                }
+            }
+            if (Optional.IsCollectionDefined(Configuration))
+            {
+                if (Configuration != null)
+                {
+                    writer.WritePropertyName("configuration");
+                    writer.WriteStartObject();
+                    foreach (var item in Configuration)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("configuration");
+                }
+            }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
             if (Optional.IsDefined(Name))
@@ -50,28 +92,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static SearchIndexerSkill DeserializeSearchIndexerSkill(JsonElement element)
+        internal static DocumentExtractionSkill DeserializeDocumentExtractionSkill(JsonElement element)
         {
-            if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "#Microsoft.Skills.Custom.WebApiSkill": return WebApiSkill.DeserializeWebApiSkill(element);
-                    case "#Microsoft.Skills.Text.CustomEntityLookupSkill": return CustomEntityLookupSkill.DeserializeCustomEntityLookupSkill(element);
-                    case "#Microsoft.Skills.Text.EntityRecognitionSkill": return EntityRecognitionSkill.DeserializeEntityRecognitionSkill(element);
-                    case "#Microsoft.Skills.Text.KeyPhraseExtractionSkill": return KeyPhraseExtractionSkill.DeserializeKeyPhraseExtractionSkill(element);
-                    case "#Microsoft.Skills.Text.LanguageDetectionSkill": return LanguageDetectionSkill.DeserializeLanguageDetectionSkill(element);
-                    case "#Microsoft.Skills.Text.MergeSkill": return MergeSkill.DeserializeMergeSkill(element);
-                    case "#Microsoft.Skills.Text.SentimentSkill": return SentimentSkill.DeserializeSentimentSkill(element);
-                    case "#Microsoft.Skills.Text.SplitSkill": return SplitSkill.DeserializeSplitSkill(element);
-                    case "#Microsoft.Skills.Text.TranslationSkill": return TextTranslationSkill.DeserializeTextTranslationSkill(element);
-                    case "#Microsoft.Skills.Util.ConditionalSkill": return ConditionalSkill.DeserializeConditionalSkill(element);
-                    case "#Microsoft.Skills.Util.DocumentExtractionSkill": return DocumentExtractionSkill.DeserializeDocumentExtractionSkill(element);
-                    case "#Microsoft.Skills.Util.ShaperSkill": return ShaperSkill.DeserializeShaperSkill(element);
-                    case "#Microsoft.Skills.Vision.ImageAnalysisSkill": return ImageAnalysisSkill.DeserializeImageAnalysisSkill(element);
-                    case "#Microsoft.Skills.Vision.OcrSkill": return OcrSkill.DeserializeOcrSkill(element);
-                }
-            }
+            Optional<string> parsingMode = default;
+            Optional<string> dataToExtract = default;
+            Optional<IDictionary<string, object>> configuration = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -80,6 +105,41 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("parsingMode"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        parsingMode = null;
+                        continue;
+                    }
+                    parsingMode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataToExtract"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dataToExtract = null;
+                        continue;
+                    }
+                    dataToExtract = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("configuration"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        configuration = null;
+                        continue;
+                    }
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                    }
+                    configuration = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("@odata.type"))
                 {
                     odataType = property.Value.GetString();
@@ -121,7 +181,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs);
+            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, parsingMode.Value, dataToExtract.Value, Optional.ToDictionary(configuration));
         }
     }
 }
