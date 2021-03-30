@@ -6,6 +6,10 @@
     <RootNamespace>Azure.IoT.Hub.Service.Samples</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU' Or '$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>NU5104</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.2.2" />
