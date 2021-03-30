@@ -1,6 +1,6 @@
 # Release History
 
-## 7.0.0 (2021-04-12)
+## 7.0.0-beta.1 (Unreleased)
 
 Supports v3.2 Cognitive Services Computer Vision API endpoints.
 
