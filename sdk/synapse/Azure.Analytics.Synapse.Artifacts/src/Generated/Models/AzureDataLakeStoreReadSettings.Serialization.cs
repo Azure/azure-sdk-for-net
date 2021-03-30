@@ -34,10 +34,35 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("wildcardFileName");
                 writer.WriteObjectValue(WildcardFileName);
             }
+            if (Optional.IsDefined(FileListPath))
+            {
+                writer.WritePropertyName("fileListPath");
+                writer.WriteObjectValue(FileListPath);
+            }
+            if (Optional.IsDefined(ListAfter))
+            {
+                writer.WritePropertyName("listAfter");
+                writer.WriteObjectValue(ListAfter);
+            }
+            if (Optional.IsDefined(ListBefore))
+            {
+                writer.WritePropertyName("listBefore");
+                writer.WriteObjectValue(ListBefore);
+            }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery");
                 writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
+            }
+            if (Optional.IsDefined(PartitionRootPath))
+            {
+                writer.WritePropertyName("partitionRootPath");
+                writer.WriteObjectValue(PartitionRootPath);
+            }
+            if (Optional.IsDefined(DeleteFilesAfterCompletion))
+            {
+                writer.WritePropertyName("deleteFilesAfterCompletion");
+                writer.WriteObjectValue(DeleteFilesAfterCompletion);
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
@@ -69,7 +94,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> recursive = default;
             Optional<object> wildcardFolderPath = default;
             Optional<object> wildcardFileName = default;
+            Optional<object> fileListPath = default;
+            Optional<object> listAfter = default;
+            Optional<object> listBefore = default;
             Optional<bool> enablePartitionDiscovery = default;
+            Optional<object> partitionRootPath = default;
+            Optional<object> deleteFilesAfterCompletion = default;
             Optional<object> modifiedDatetimeStart = default;
             Optional<object> modifiedDatetimeEnd = default;
             string type = default;
@@ -108,6 +138,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     wildcardFileName = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("fileListPath"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    fileListPath = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("listAfter"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    listAfter = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("listBefore"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    listBefore = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("enablePartitionDiscovery"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -116,6 +176,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     enablePartitionDiscovery = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("partitionRootPath"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    partitionRootPath = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("deleteFilesAfterCompletion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deleteFilesAfterCompletion = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("modifiedDatetimeStart"))
@@ -156,7 +236,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataLakeStoreReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(enablePartitionDiscovery), modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
+            return new AzureDataLakeStoreReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, listAfter.Value, listBefore.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
         }
 
         internal partial class AzureDataLakeStoreReadSettingsConverter : JsonConverter<AzureDataLakeStoreReadSettings>

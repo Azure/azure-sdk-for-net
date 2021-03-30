@@ -60,8 +60,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties");
             writer.WriteStartObject();
-            writer.WritePropertyName("dataFlow");
-            writer.WriteObjectValue(DataFlow);
+            if (Optional.IsDefined(Dataflow))
+            {
+                writer.WritePropertyName("dataflow");
+                writer.WriteObjectValue(Dataflow);
+            }
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging");
@@ -76,6 +79,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WritePropertyName("compute");
                 writer.WriteObjectValue(Compute);
+            }
+            if (Optional.IsDefined(TraceLevel))
+            {
+                writer.WritePropertyName("traceLevel");
+                writer.WriteObjectValue(TraceLevel);
+            }
+            if (Optional.IsDefined(ContinueOnError))
+            {
+                writer.WritePropertyName("continueOnError");
+                writer.WriteObjectValue(ContinueOnError);
+            }
+            if (Optional.IsDefined(RunConcurrently))
+            {
+                writer.WritePropertyName("runConcurrently");
+                writer.WriteObjectValue(RunConcurrently);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -95,10 +113,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
-            DataFlowReference dataFlow = default;
+            Optional<DataFlowReference> dataflow = default;
             Optional<DataFlowStagingInfo> staging = default;
             Optional<IntegrationRuntimeReference> integrationRuntime = default;
             Optional<ExecuteDataFlowActivityTypePropertiesCompute> compute = default;
+            Optional<object> traceLevel = default;
+            Optional<object> continueOnError = default;
+            Optional<object> runConcurrently = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -177,9 +198,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("dataFlow"))
+                        if (property0.NameEquals("dataflow"))
                         {
-                            dataFlow = DataFlowReference.DeserializeDataFlowReference(property0.Value);
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataflow = DataFlowReference.DeserializeDataFlowReference(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("staging"))
@@ -212,13 +238,43 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             compute = ExecuteDataFlowActivityTypePropertiesCompute.DeserializeExecuteDataFlowActivityTypePropertiesCompute(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("traceLevel"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            traceLevel = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("continueOnError"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            continueOnError = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("runConcurrently"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            runConcurrently = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataFlow, staging.Value, integrationRuntime.Value, compute.Value);
+            return new ExecuteDataFlowActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, dataflow.Value, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value);
         }
 
         internal partial class ExecuteDataFlowActivityConverter : JsonConverter<ExecuteDataFlowActivity>

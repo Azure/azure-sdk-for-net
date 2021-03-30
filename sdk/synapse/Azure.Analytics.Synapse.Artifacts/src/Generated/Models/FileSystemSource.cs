@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of FileSystemSource. </summary>
         public FileSystemSource()
         {
+            AdditionalColumns = new ChangeTrackingList<AdditionalColumns>();
             Type = "FileSystemSource";
         }
 
@@ -25,13 +27,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> . </param>
         /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
-        internal FileSystemSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </param>
+        internal FileSystemSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object recursive, IList<AdditionalColumns> additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             Recursive = recursive;
+            AdditionalColumns = additionalColumns;
             Type = type ?? "FileSystemSource";
         }
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
         public object Recursive { get; set; }
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </summary>
+        public IList<AdditionalColumns> AdditionalColumns { get; }
     }
 }

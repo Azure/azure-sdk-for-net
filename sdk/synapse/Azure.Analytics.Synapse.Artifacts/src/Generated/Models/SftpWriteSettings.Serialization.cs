@@ -24,6 +24,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("operationTimeout");
                 writer.WriteObjectValue(OperationTimeout);
             }
+            if (Optional.IsDefined(UseTempFileRename))
+            {
+                writer.WritePropertyName("useTempFileRename");
+                writer.WriteObjectValue(UseTempFileRename);
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(MaxConcurrentConnections))
@@ -47,6 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static SftpWriteSettings DeserializeSftpWriteSettings(JsonElement element)
         {
             Optional<object> operationTimeout = default;
+            Optional<object> useTempFileRename = default;
             string type = default;
             Optional<object> maxConcurrentConnections = default;
             Optional<object> copyBehavior = default;
@@ -62,6 +68,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     operationTimeout = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("useTempFileRename"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    useTempFileRename = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -92,7 +108,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SftpWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties, operationTimeout.Value);
+            return new SftpWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties, operationTimeout.Value, useTempFileRename.Value);
         }
 
         internal partial class SftpWriteSettingsConverter : JsonConverter<SftpWriteSettings>
