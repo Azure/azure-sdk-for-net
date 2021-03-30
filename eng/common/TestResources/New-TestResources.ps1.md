@@ -55,8 +55,8 @@ specified in $ProvisionerApplicationId and $ProvisionerApplicationSecret.
 
 ### EXAMPLE 1
 ```
-Connect-AzAccount -Subscription "REPLACE_WITH_SUBSCRIPTION_ID"
-New-TestResources.ps1 -ServiceDirectory 'keyvault'
+Connect-AzAccount -Subscription 'REPLACE_WITH_SUBSCRIPTION_ID'
+New-TestResources.ps1 keyvault
 ```
 
 Run this in a desktop environment to create new AAD apps and Service Principals
@@ -228,10 +228,13 @@ Accept wildcard characters: False
 
 ### -SubscriptionId
 Optional subscription ID to use for new resources when logging in as a
-provisioner.
-You can also use Set-AzContext if not provisioning.
+provisioner. You can also use Set-AzContext if not provisioning.
 
-The default is the Azure SDK Developer Playground subscription ID.
+If you do not specify a SubscriptionId and are not logged in, once will be
+automatically selected for you by the Connect-AzAccount cmdlet.
+
+Once you are logged in (or were previously), the selected SubscriptionId
+will be used for subsequent operations that are specific to a subscription.
 
 ```yaml
 Type: String

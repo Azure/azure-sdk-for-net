@@ -24,11 +24,13 @@ example using Azure Search. The script will create a service principal automatic
 or you may create a service principal you can save and reuse subsequently.
 
 Note that `-Subscription` is an optional parameter but recommended if your account
-is a member of multiple subscriptions.
+is a member of multiple subscriptions. If you didn't specify it when logging in,
+you should select your desired subscription using `Select-AzSubscription`. The
+default can be saved using `Set-AzDefault` for future sessions.
 
 ```powershell
 Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
-eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory 'search' -SubscriptionId 'YOUR SUBSCRIPTION ID'
+eng\common\TestResources\New-TestResources.ps1 search
 ```
 
 The `OutFile` switch will be set by default if you are running this for a .NET project on Windows. This will save test environment settings
