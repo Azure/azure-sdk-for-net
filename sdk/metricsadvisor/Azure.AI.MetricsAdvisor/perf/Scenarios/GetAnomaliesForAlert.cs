@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.MetricsAdvisor.Perf
 {
-    public class GetAnomaliesForAlert : MetricsAdvisorTest<MetricsAdvisorPerfOptions>
+    public sealed class GetAnomaliesForAlert : MetricsAdvisorTest<MetricsAdvisorPerfOptions>
     {
         public GetAnomaliesForAlert(MetricsAdvisorPerfOptions options) : base(options)
         {

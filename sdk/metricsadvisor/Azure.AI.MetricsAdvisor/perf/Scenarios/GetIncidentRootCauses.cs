@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.MetricsAdvisor.Perf
 {
-    public class GetIncidentRootCauses : MetricsAdvisorTest<MetricsAdvisorPerfOptions>
+    public sealed class GetIncidentRootCauses : MetricsAdvisorTest<MetricsAdvisorPerfOptions>
     {
         public GetIncidentRootCauses(MetricsAdvisorPerfOptions options) : base(options)
         {
