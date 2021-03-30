@@ -2,17 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Task = System.Threading.Tasks.Task;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
-    public class ContainerRegistryClientLiveTests : RecordedTestBase<ContainerRegistryTestEnvironment>
+    public class ContainerRegistryClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync)
+        public ContainerRegistryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
-            Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
 
         private ContainerRegistryClient CreateClient()
@@ -99,6 +99,52 @@ namespace Azure.Containers.ContainerRegistry.Tests
             Assert.NotNull(firstPage);
             Assert.AreEqual("library/busybox", firstPage.Values[0]);
             Assert.IsTrue(pageCount >= minExpectedPages);
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanDeleteRepostitory()
+        {
+            // Arrange
+            string repository = $"library/hello-world";
+            List<string> tags = new List<string>()
+            {
+                "latest",
+                "v1",
+                "v2",
+                "v3",
+                "v4",
+            };
+            var client = CreateClient();
+
+            try
+            {
+                if (this.Mode != RecordedTestMode.Playback)
+                {
+                    await ImportImage(repository, tags);
+                }
+
+                // Act
+                await client.DeleteRepositoryAsync(repository);
+
+                // Assert
+                var repositories = client.GetRepositoriesAsync();
+
+                await foreach (var item in repositories)
+                {
+                    if (item.Contains(repository))
+                    {
+                        Assert.Fail($"Repository {repository} was not deleted.");
+                    }
+                }
+            }
+            finally
+            {
+                // Clean up - put the repository with tags back.
+                if (this.Mode != RecordedTestMode.Playback)
+                {
+                    await ImportImage(repository, tags);
+                }
+            }
         }
     }
 }

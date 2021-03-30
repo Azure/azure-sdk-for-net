@@ -5,22 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.TestFramework;
-using Microsoft.Azure.Management.ContainerRegistry;
-using Microsoft.Azure.Management.ContainerRegistry.Models;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.Azure.Management.ResourceManager.Fluent.Authentication;
 using NUnit.Framework;
 using Task = System.Threading.Tasks.Task;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
-    public class ContainerRepositoryClientLiveTests : RecordedTestBase<ContainerRegistryTestEnvironment>
+    public class ContainerRepositoryClientLiveTests : ContainerRegistryRecordedTestBase
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
-            Sanitizer = new ContainerRegistryRecordedTestSanitizer();
         }
 
         #region Setup methods
@@ -34,40 +29,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ));
         }
 
-        public async Task ImportImage(string repository, string tag)
-        {
-            var credential = new AzureCredentials(
-                new ServicePrincipalLoginInformation
-                {
-                    ClientId = TestEnvironment.ClientId,
-                    ClientSecret = TestEnvironment.ClientSecret,
-                },
-                TestEnvironment.TenantId,
-                AzureEnvironment.AzureGlobalCloud);
-
-            var _registryClient = new ContainerRegistryManagementClient(credential.WithDefaultSubscription(TestEnvironment.SubscriptionId));
-            _registryClient.SubscriptionId = TestEnvironment.SubscriptionId;
-
-            var importSource = new ImportSource
-            {
-                SourceImage = repository,
-                RegistryUri = "registry.hub.docker.com"
-            };
-
-            await _registryClient.Registries.ImportImageAsync(
-                resourceGroupName: TestEnvironment.ResourceGroup,
-                registryName: TestEnvironment.Registry,
-                parameters:
-                    new ImportImageParameters
-                    {
-                        Mode = ImportMode.Force,
-                        Source = importSource,
-                        TargetTags = new List<string>()
-                        {
-                            $"{repository}:{tag}"
-                        }
-                    });
-        }
         #endregion
 
         #region Repository Tests
@@ -112,6 +73,44 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             // Cleanup
             await client.SetPropertiesAsync(originalContentProperties);
+        }
+
+        [RecordedTest, NonParallelizable]
+        public async Task CanDeleteRepository()
+        {
+            // Arrange
+            string repository = $"library/hello-world";
+            List<string> tags = new List<string>()
+            {
+                "latest",
+                "v1",
+                "v2",
+                "v3",
+                "v4",
+            };
+            var client = CreateClient();
+
+            try
+            {
+                if (this.Mode != RecordedTestMode.Playback)
+                {
+                    await ImportImage(repository, tags);
+                }
+
+                // Act
+                await client.DeleteAsync(repository);
+
+                // Assert
+                Assert.ThrowsAsync<RequestFailedException>(async () => { await client.GetPropertiesAsync(); });
+            }
+            finally
+            {
+                // Clean up - put the repository with tags back.
+                if (this.Mode != RecordedTestMode.Playback)
+                {
+                    await ImportImage(repository, tags);
+                }
+            }
         }
         #endregion
 

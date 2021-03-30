@@ -16,6 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly ContainerRegistryRepositoryRestClient _restClient;
+        private readonly ContainerRegistryRestClient _registryRestClient;
 
         private readonly AuthenticationRestClient _acrAuthClient;
         private readonly string AcrAadScope = "https://management.core.windows.net/.default";
@@ -51,6 +52,7 @@ namespace Azure.Containers.ContainerRegistry
 
             _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, AcrAadScope, _acrAuthClient));
             _restClient = new ContainerRegistryRepositoryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
+            _registryRestClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
@@ -121,6 +123,42 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 return _restClient.SetProperties(_repository, value, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete the repository identified by `name`. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string name, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteRepository)}");
+            scope.Start();
+            try
+            {
+                return await _registryRestClient.DeleteRepositoryAsync(name, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete the repository identified by `name`. </summary>
+        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DeleteRepositoryResult> DeleteRepository(string name, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteRepository)}");
+            scope.Start();
+            try
+            {
+                return _registryRestClient.DeleteRepository(name, cancellationToken);
             }
             catch (Exception e)
             {
