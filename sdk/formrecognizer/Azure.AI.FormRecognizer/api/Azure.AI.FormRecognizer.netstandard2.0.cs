@@ -174,6 +174,7 @@ namespace Azure.AI.FormRecognizer
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
         public bool IncludeFieldElements { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.FormRecognizerLocale? Locale { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Pages { get { throw null; } }
     }
     public partial class RecognizeContentOptions
     {
@@ -187,6 +188,7 @@ namespace Azure.AI.FormRecognizer
         public RecognizeCustomFormsOptions() { }
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
         public bool IncludeFieldElements { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Pages { get { throw null; } }
     }
     public partial class RecognizeInvoicesOptions
     {
@@ -194,6 +196,7 @@ namespace Azure.AI.FormRecognizer
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
         public bool IncludeFieldElements { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.FormRecognizerLocale? Locale { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Pages { get { throw null; } }
     }
     public partial class RecognizeReceiptsOptions
     {
@@ -201,6 +204,7 @@ namespace Azure.AI.FormRecognizer
         public Azure.AI.FormRecognizer.FormContentType? ContentType { get { throw null; } set { } }
         public bool IncludeFieldElements { get { throw null; } set { } }
         public Azure.AI.FormRecognizer.FormRecognizerLocale? Locale { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Pages { get { throw null; } }
     }
 }
 namespace Azure.AI.FormRecognizer.Models
