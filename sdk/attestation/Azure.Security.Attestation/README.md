@@ -26,7 +26,7 @@ dotnet add package Azure.Security.Attestation --prerelease
 ```
 
 ### Authenticate the client
-In order to interact with the Azure Attestation service, you'll need to create an instance of the [Attestation Client][key_client_class] class. You need a **attestation instance url**, which you may see as "DNS Name" in the portal,
+In order to interact with the Microsoft Azure Attestation service, you'll need to create an instance of the [Attestation Client][key_client_class] class. You need a **attestation instance url**, which you may see as "DNS Name" in the portal,
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
