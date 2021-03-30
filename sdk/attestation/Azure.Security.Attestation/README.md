@@ -22,7 +22,7 @@ Azure Attestation receives evidence from compute entities, turns them into a set
 Install the Microsoft Azure Attestation client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package <your project name> Azure.Security.Attestation --version 1.0.0-beta.2
+dotnet add package Azure.Security.Attestation --prerelease
 ```
 
 ### Authenticate the client
