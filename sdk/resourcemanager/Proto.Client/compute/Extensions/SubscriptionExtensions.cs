@@ -14,7 +14,7 @@ namespace Proto.Compute
     /// </summary>
     public static class SubscriptionExtensions
     {
-        private static ComputeManagementClient GetComputeClient(Uri baseUri, string subscriptionGuid, TokenCredential credential, AzureResourceManagerClientOptions clientOptions)
+        private static ComputeManagementClient GetComputeClient(Uri baseUri, string subscriptionGuid, TokenCredential credential, ArmClientOptions clientOptions)
         {
             return new ComputeManagementClient(
                 baseUri,

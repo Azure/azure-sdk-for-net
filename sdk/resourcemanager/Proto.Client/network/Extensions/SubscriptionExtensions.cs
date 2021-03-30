@@ -16,7 +16,7 @@ namespace Proto.Network
     {
         #region Virtual Network Operations
 
-        private static NetworkManagementClient GetNetworkClient(Uri baseUri, string subscriptionGuid, TokenCredential credential, AzureResourceManagerClientOptions clientOptions)
+        private static NetworkManagementClient GetNetworkClient(Uri baseUri, string subscriptionGuid, TokenCredential credential, ArmClientOptions clientOptions)
         {
             return new NetworkManagementClient(
                 subscriptionGuid,
