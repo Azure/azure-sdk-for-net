@@ -8,7 +8,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Representation of a publisher plan for marketplace RPs.
     /// </summary>
-    public sealed class Plan : IEquatable<Plan>, IComparable<Plan>
+    public sealed partial class Plan : IEquatable<Plan>, IComparable<Plan>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Plan"/> class.
