@@ -39,7 +39,8 @@ namespace Proto.Client
         GetByContainersAsync,
         CheckResourceGroupOpsAsync,
         TenantResource,
-        CheckResourceGroupContainerAsync
+        CheckResourceGroupContainerAsync,
+        GenericResourceOperationsExample
     }
 
     class ScenarioFactory

@@ -4,6 +4,7 @@
 using Azure;
 using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Core;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,6 +28,14 @@ namespace Proto.Authorization
         internal RoleAssignmentOperations(GenericResourceOperations genericOperations)
             : base(genericOperations)
         {
+            string subscriptionId;
+            if (!Id.TryGetSubscriptionId(out subscriptionId))
+            {
+                // TODO: Remove this once we have swapped in the REST client
+                subscriptionId = Guid.Empty.ToString();
+            }
+
+            Operations = new AuthorizationManagementClient(subscriptionId, BaseUri, Credential).RoleAssignments;
         }
 
         /// <summary>
@@ -37,16 +46,20 @@ namespace Proto.Authorization
         internal RoleAssignmentOperations(OperationsBase operation, ResourceIdentifier id)
             : base(operation, id)
         {
+            string subscriptionId;
+            if (!Id.TryGetSubscriptionId(out subscriptionId))
+            {
+                // TODO: Remove this once we have swapped in the REST client
+                subscriptionId = Guid.Empty.ToString();
+            }
+
+            Operations = new AuthorizationManagementClient(subscriptionId, BaseUri, Credential).RoleAssignments;
         }
 
         /// <inheritdoc/>
         protected override ResourceType ValidResourceType => ResourceType;
 
-        private RoleAssignmentsOperations Operations => new AuthorizationManagementClient(
-            Id.Subscription,
-            BaseUri,
-            Credential,
-            ClientOptions.Convert<AuthorizationManagementClientOptions>()).RoleAssignments;
+        private RoleAssignmentsOperations Operations { get; }
 
         /// <inheritdoc/>
         public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)

@@ -11,15 +11,15 @@ namespace Proto.Client
             Scenario scenario = null;
             try
             {
-                scenario = ScenarioFactory.GetScenario(Scenarios.StartCreateSingleVmExampleAsync);
+                scenario = ScenarioFactory.GetScenario(Scenarios.GenericResourceOperationsExample);
                 scenario.Execute();
             }
             finally
             {
                 foreach (var rgId in Scenario.CleanUp)
                 {
-                    ResourceIdentifier id = new ResourceIdentifier(rgId);
-                    var rg = new AzureResourceManagerClient(new DefaultAzureCredential()).GetSubscriptionOperations(id.Subscription).GetResourceGroupOperations(id.ResourceGroup);
+                    var id = new ResourceGroupResourceIdentifier(rgId);
+                    var rg = new AzureResourceManagerClient(new DefaultAzureCredential()).GetSubscriptionOperations(id.SubscriptionId).GetResourceGroupOperations(id.ResourceGroupName);
                     Console.WriteLine($"--------Deleting {rg.Id.Name}--------");
                     try
                     {

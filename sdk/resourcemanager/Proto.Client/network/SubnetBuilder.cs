@@ -5,7 +5,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing a builder object to help create a subnet.
     /// </summary>
-    public class SubnetBuilder : ArmBuilder<Subnet, SubnetData>
+    public class SubnetBuilder : ArmBuilder<ResourceGroupResourceIdentifier, Subnet, SubnetData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SubnetBuilder"/> class.

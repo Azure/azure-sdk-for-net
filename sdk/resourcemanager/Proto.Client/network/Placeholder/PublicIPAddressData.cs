@@ -11,7 +11,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing the public IP address data model.
     /// </summary>
-    public class PublicIPAddressData : TrackedResource<PublicIPAddress>
+    public class PublicIPAddressData : TrackedResource<ResourceGroupResourceIdentifier, PublicIPAddress>
     {
         /// <summary>
         /// Gets the resource type definition for a public IP address.

@@ -17,14 +17,14 @@ namespace Proto.Compute
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="AvailabilitySet" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for an AvailabilitySet. </exception>
         /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
-        public static AvailabilitySetOperations GetAvailabilitySetOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
+        public static AvailabilitySetOperations GetAvailabilitySetOperations(this AzureResourceManagerClient client, ResourceGroupResourceIdentifier resourceId)
         {
             if (resourceId is null)
                 throw new ArgumentNullException(nameof(resourceId));
-            if (resourceId.Type != AvailabilitySetOperations.ResourceType)
-                throw new ArgumentException($"{nameof(resourceId.Type)} provided is not for an AvailabilitySet.", nameof(resourceId.Type));
+            if (resourceId.ResourceType != AvailabilitySetOperations.ResourceType)
+                throw new ArgumentException($"{nameof(resourceId.ResourceType)} provided is not for an AvailabilitySet.", nameof(resourceId.ResourceType));
 
-            return client.GetSubscriptionOperations(resourceId.Subscription).GetResourceGroupOperations(resourceId.ResourceGroup).GetAvailabilitySetOperations(resourceId.Name);
+            return client.GetSubscriptionOperations(resourceId.SubscriptionId).GetResourceGroupOperations(resourceId.ResourceGroupName).GetAvailabilitySetOperations(resourceId.Name);
         }
 
         /// <summary>
@@ -35,14 +35,14 @@ namespace Proto.Compute
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="VirtualMachine" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for a VirtualMachine. </exception>
         /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
-        public static VirtualMachineOperations GetVirtualMachineOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
+        public static VirtualMachineOperations GetVirtualMachineOperations(this AzureResourceManagerClient client, ResourceGroupResourceIdentifier resourceId)
         {
             if (resourceId is null)
                 throw new ArgumentNullException(nameof(resourceId));
-            if (resourceId.Type != VirtualMachineOperations.ResourceType)
-                throw new ArgumentException($"{nameof(resourceId.Type)} provided is not for a VirtualMachine.", nameof(resourceId.Type));
+            if (resourceId.ResourceType != VirtualMachineOperations.ResourceType)
+                throw new ArgumentException($"{nameof(resourceId.ResourceType)} provided is not for a VirtualMachine.", nameof(resourceId.ResourceType));
 
-            return client.GetSubscriptionOperations(resourceId.Subscription).GetResourceGroupOperations(resourceId.ResourceGroup).GetVirtualMachineOperations(resourceId.Name);
+            return client.GetSubscriptionOperations(resourceId.SubscriptionId).GetResourceGroupOperations(resourceId.ResourceGroupName).GetVirtualMachineOperations(resourceId.Name);
         }
     }
 }
