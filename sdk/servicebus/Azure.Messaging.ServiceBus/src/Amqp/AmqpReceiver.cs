@@ -282,57 +282,82 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 if (!_receiveLink.TryGetOpenedObject(out link))
                 {
-                    link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout)).ConfigureAwait(false);
+                    link = await _receiveLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout))
+                        .ConfigureAwait(false);
                 }
+
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-                var messagesReceived = await Task.Factory
-                    .FromAsync<(ReceivingAmqpLink, int, TimeSpan?, TimeSpan), IEnumerable<AmqpMessage>>
-                (
-                    static (arguments, callback, state) =>
-                    {
-                        var (link, maxMessages, maxWaitTime, timeout) = arguments;
-                        return link.BeginReceiveRemoteMessages(
-                            maxMessages,
-                            TimeSpan.FromMilliseconds(20),
-                            maxWaitTime ?? timeout,
-                            callback,
-                            link);
-                    },
-                    static asyncResult =>
-                    {
-                        var link = (ReceivingAmqpLink)asyncResult.AsyncState;
-                        bool received = link.EndReceiveMessages(asyncResult, out IEnumerable<AmqpMessage> amqpMessages);
-                        return received ? amqpMessages : Enumerable.Empty<AmqpMessage>();
-                    },
-                    (link, maxMessages, maxWaitTime, timeout),
-                    default
+                var receiveMessagesCompletionSource =
+                    new TaskCompletionSource<IEnumerable<AmqpMessage>>(TaskCreationOptions
+                        .RunContinuationsAsynchronously);
+
+                using var registration = cancellationToken.Register(static state =>
+                {
+                    var tcs = (TaskCompletionSource<IEnumerable<AmqpMessage>>)state;
+                    tcs.TrySetCanceled();
+                }, receiveMessagesCompletionSource, useSynchronizationContext: false);
+
+                // in case BeginReceiveRemoteMessages throws exception will be materialized on the synchronous path
+                _ = Task.Factory
+                    .FromAsync<(ReceivingAmqpLink, int, TimeSpan?, TimeSpan,
+                        TaskCompletionSource<IEnumerable<AmqpMessage>>)>
+                    (
+                        static(arguments, callback, state) =>
+                        {
+                            var (link, maxMessages, maxWaitTime, timeout, receiveMessagesCompletionSource) = arguments;
+                            return link.BeginReceiveRemoteMessages(
+                                maxMessages,
+                                TimeSpan.FromMilliseconds(20),
+                                maxWaitTime ?? timeout,
+                                callback,
+                                (link, receiveMessagesCompletionSource));
+                        },
+                        static asyncResult =>
+                        {
+                            var (link, receiveMessagesCompletionSource) =
+                                ((ReceivingAmqpLink, TaskCompletionSource<IEnumerable<AmqpMessage>>))asyncResult
+                                    .AsyncState;
+                            bool received =
+                                link.EndReceiveMessages(asyncResult, out IEnumerable<AmqpMessage> amqpMessages);
+                            receiveMessagesCompletionSource.TrySetResult(received
+                                ? amqpMessages
+                                : Enumerable.Empty<AmqpMessage>());
+                        },
+                        (link, maxMessages, maxWaitTime, timeout, receiveMessagesCompletionSource),
+                        default
                     ).ConfigureAwait(false);
 
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                var messagesReceived = await receiveMessagesCompletionSource.Task
+                    .ConfigureAwait(false);
+
                 // If event messages were received, then package them for consumption and
                 // return them.
-
                 foreach (AmqpMessage message in messagesReceived)
                 {
                     if (_receiveMode == ServiceBusReceiveMode.ReceiveAndDelete)
                     {
                         link.DisposeDelivery(message, true, AmqpConstants.AcceptedOutcome);
                     }
+
                     receivedMessages.Add(AmqpMessageConverter.AmqpMessageToSBMessage(message));
                     message.Dispose();
                 }
 
                 return receivedMessages;
             }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
             catch (Exception exception)
             {
                 ExceptionDispatchInfo.Capture(AmqpExceptionHelper.TranslateException(
-                    exception,
-                    link?.GetTrackingId(),
-                    null,
-                    !cancellationToken.IsCancellationRequested && HasLinkCommunicationError(link)))
-                .Throw();
+                        exception,
+                        link?.GetTrackingId(),
+                        null,
+                        !cancellationToken.IsCancellationRequested && HasLinkCommunicationError(link)))
+                    .Throw();
 
                 throw; // will never be reached
             }
