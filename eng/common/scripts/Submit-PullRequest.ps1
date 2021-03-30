@@ -108,12 +108,19 @@ else {
     $resp | Write-Verbose
     LogDebug "Pull request created https://github.com/$RepoOwner/$RepoName/pull/$($resp.number)"
   
+    $prOwnerUser = $resp.user.login
+
     # setting variable to reference the pull request by number
     Write-Host "##vso[task.setvariable variable=Submitted.PullRequest.Number]$($resp.number)"
 
-    if ($UserReviewers -or $TeamReviewers) {
+    # ensure that the user that was used to create the PR is not attempted to add as a reviewer
+    # we cast to an array to ensure that length-1 arrays actually stay as array values
+    $cleanedUsers = @(SplitParameterArray -members $UserReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ }
+    $cleanedTeamReviewers = @(SplitParameterArray -members $TeamReviewers) | ? { $_ -ne $prOwnerUser -and $null -ne $_ }
+
+    if ($cleanedUsers -or $cleanedTeamReviewers) {
       Add-GitHubPullRequestReviewers -RepoOwner $RepoOwner -RepoName $RepoName -PrNumber $resp.number `
-      -Users $UserReviewers -Teams $TeamReviewers -AuthToken $AuthToken
+      -Users $cleanedUsers -Teams $cleanedTeamReviewers -AuthToken $AuthToken
     }
 
     if ($CloseAfterOpenForTesting) {

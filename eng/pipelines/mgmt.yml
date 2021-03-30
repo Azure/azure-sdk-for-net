@@ -38,6 +38,7 @@ pr:
     - sdk/blueprint/Microsoft.Azure.Management.Blueprint
     - sdk/botservice/Microsoft.Azure.Management.BotService
     - sdk/cdn/Microsoft.Azure.Management.Cdn
+    - sdk/changeanalysis/Microsoft.Azure.Management.ChangeAnalysis
     - sdk/cognitiveservices/Microsoft.Azure.Management.CognitiveServices
     - sdk/compute/Microsoft.Azure.Management.Compute
     - sdk/confluent/Microsoft.Azure.Management.Confluent
@@ -68,6 +69,7 @@ pr:
     - sdk/eng/mgmt
     - sdk/eventgrid/Microsoft.Azure.Management.EventGrid
     - sdk/eventhub/Microsoft.Azure.Management.EventHub
+    - sdk/extendedlocation/Microsoft.Azure.Management.ExtendedLocation
     - sdk/frontdoor/Microsoft.Azure.Management.FrontDoor
     - sdk/guestconfiguration/Microsoft.Azure.Management.GuestConfiguration
     - sdk/hdinsight/Microsoft.Azure.Management.HDInsight

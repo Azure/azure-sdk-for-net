@@ -16,4 +16,10 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Containers.ContainerRegistry.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7\System.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

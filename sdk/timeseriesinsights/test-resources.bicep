@@ -116,54 +116,6 @@ resource consumerGroup 'Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGrou
     }
 }
 
-var userIdentityName = 'userIdentity'
-resource userIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
-    name: '${userIdentityName}'
-    location: az.resourceGroup().location
-}
-
-var roleAssignmentName = guid(az.resourceGroup().name)
-var ownerRoleDefinitionId = '8e3af657-a8ff-443c-a75c-2fe8c4bcb635'
-resource userIdentityRoleAssignment 'Microsoft.Authorization/roleAssignments@2018-09-01-preview' = {
-    name: '${roleAssignmentName}'
-    properties: {
-        roleDefinitionId: '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/${ownerRoleDefinitionId}'
-        principalId: '${reference(userIdentity.id, '2018-11-30').principalId}'
-        principalType: 'ServicePrincipal'
-    }
-}
-
-var deviceName = 'device1'
-
-resource deviceCreationScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
-    name: 'createIotHubDevice'
-    kind: 'AzureCLI'
-    location: az.resourceGroup().location
-    identity: {
-        type: 'UserAssigned'
-        userAssignedIdentities: {
-            '${userIdentity.id}': {}
-        }
-    }
-    properties: {
-        azCliVersion: '2.9.1'
-        retentionInterval: 'P1D'
-        arguments: '${iotHubName} ${deviceName}'
-        scriptContent: '''
-      az extension add --name azure-iot -y
-  
-      az iot hub device-identity create --hub-name $1 --device-id $2
-      connectionstring=$(az iot hub device-identity connection-string show --hub-name $1 --device-id $2 -o tsv)
-      
-      result="{\"device-connection-string\":"\""$connectionstring"\""}"
-      echo $result | jq -c > $AZ_SCRIPTS_OUTPUT_PATH    
-      '''
-    }
-    dependsOn: [
-        userIdentityRoleAssignment
-    ]
-}
-
 resource environment 'Microsoft.TimeSeriesInsights/environments@2018-08-15-preview' = {
     name: environmentName
     location: region
@@ -226,5 +178,7 @@ resource storageaccount 'Microsoft.Storage/storageAccounts@2018-11-01' = {
     properties: {}
 }
 
+var hubKeysId = resourceId('Microsoft.Devices/IotHubs/Iothubkeys', iotHubName, 'iothubowner')
+
 output TIMESERIESINSIGHTS_URL string = '${environment.properties.dataAccessFqdn}'
-output IOTHUB_CONNECTION_STRING string = deviceCreationScript.properties.outputs['device-connection-string']
+output IOTHUB_CONNECTION_STRING string = 'HostName=${iotHubName}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=${listkeys(hubKeysId, '2019-11-04').primaryKey}'

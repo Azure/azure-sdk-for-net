@@ -2,6 +2,8 @@
 
 ## 1.0.0-preview.8 (Unreleased)
 
+### Changed
+- Exposed Serialization and Deserialization methods.
 
 ## 1.0.0-preview.7 (2021-03-17)
 

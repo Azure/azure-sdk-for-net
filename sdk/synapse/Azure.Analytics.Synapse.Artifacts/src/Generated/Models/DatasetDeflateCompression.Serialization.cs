@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(DatasetDeflateCompressionConverter))]
     public partial class DatasetDeflateCompression : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -58,6 +61,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new DatasetDeflateCompression(type, additionalProperties, Optional.ToNullable(level));
+        }
+
+        internal partial class DatasetDeflateCompressionConverter : JsonConverter<DatasetDeflateCompression>
+        {
+            public override void Write(Utf8JsonWriter writer, DatasetDeflateCompression model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override DatasetDeflateCompression Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeDatasetDeflateCompression(document.RootElement);
+            }
         }
     }
 }
