@@ -134,6 +134,8 @@ Install-Module platyPS -Scope CurrentUser -Force
 New-MarkdownHelp -Command .\New-TestResources.ps1 -OutputFolder . -Force
 ```
 
+After the markdown files are generated, please make sure all "http" URIs use "https".
+
 PowerShell markdown documentation created with [platyPS][].
 
   [New-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/New-TestResources.ps1.md

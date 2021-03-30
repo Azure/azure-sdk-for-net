@@ -632,7 +632,7 @@ is passed to the ARM template as 'tenantId'.
 Optional subscription ID to use for new resources when logging in as a
 provisioner. You can also use Set-AzContext if not provisioning.
 
-If you do not specify a SubscriptionId and are not logged in, once will be
+If you do not specify a SubscriptionId and are not logged in, one will be
 automatically selected for you by the Connect-AzAccount cmdlet.
 
 Once you are logged in (or were previously), the selected SubscriptionId

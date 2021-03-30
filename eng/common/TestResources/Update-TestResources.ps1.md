@@ -102,7 +102,7 @@ Optional subscription ID to use when deleting resources when logging in as a
 provisioner.
 You can also use Set-AzContext if not provisioning.
 
-If you do not specify a SubscriptionId and are not logged in, once will be
+If you do not specify a SubscriptionId and are not logged in, one will be
 automatically selected for you by the Connect-AzAccount cmdlet.
 
 Once you are logged in (or were previously), the selected SubscriptionId
@@ -142,7 +142,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

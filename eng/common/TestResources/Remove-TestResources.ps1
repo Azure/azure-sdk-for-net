@@ -229,6 +229,7 @@ $exitActions.Invoke()
 <#
 .SYNOPSIS
 Deletes the resource group deployed for a service directory from Azure.
+
 .DESCRIPTION
 Removes a resource group and all its resources previously deployed using
 New-TestResources.ps1.
@@ -237,37 +238,48 @@ you will be asked to log in with Connect-AzAccount. Alternatively, you (or a
 build pipeline) can pass $ProvisionerApplicationId and
 $ProvisionerApplicationSecret to authenticate a service principal with access to
 create resources.
+
 .PARAMETER BaseName
 A name to use in the resource group and passed to the ARM template as 'baseName'.
 This will delete the resource group named 'rg-<baseName>'
+
 .PARAMETER ResourceGroupName
 The name of the resource group to delete.
+
 .PARAMETER TenantId
 The tenant ID of a service principal when a provisioner is specified.
+
 .PARAMETER SubscriptionId
 Optional subscription ID to use when deleting resources when logging in as a
 provisioner. You can also use Set-AzContext if not provisioning.
 
-If you do not specify a SubscriptionId and are not logged in, once will be
+If you do not specify a SubscriptionId and are not logged in, one will be
 automatically selected for you by the Connect-AzAccount cmdlet.
 
 Once you are logged in (or were previously), the selected SubscriptionId
 will be used for subsequent operations that are specific to a subscription.
+
 .PARAMETER ProvisionerApplicationId
 A service principal ID to provision test resources when a provisioner is specified.
+
 .PARAMETER ProvisionerApplicationSecret
 A service principal secret (password) to provision test resources when a provisioner is specified.
+
 .PARAMETER ServiceDirectory
 A directory under 'sdk' in the repository root - optionally with subdirectories
 specified - in which to discover pre removal script named 'remove-test-resources-pre.json'.
+
 .PARAMETER Environment
 Name of the cloud environment. The default is the Azure Public Cloud
 ('PublicCloud')
+
 .PARAMETER Force
 Force removal of resource group without asking for user confirmation
+
 .EXAMPLE
 Remove-TestResources.ps1 keyvault -Force
 Use the currently logged-in account to delete the resources created for Key Vault testing.
+
 .EXAMPLE
 Remove-TestResources.ps1 `
     -ResourceGroupName "${env:AZURE_RESOURCEGROUP_NAME}" `
@@ -279,4 +291,5 @@ Remove-TestResources.ps1 `
 When run in the context of an Azure DevOps pipeline, this script removes the
 resource group whose name is stored in the environment variable
 AZURE_RESOURCEGROUP_NAME.
+
 #>
