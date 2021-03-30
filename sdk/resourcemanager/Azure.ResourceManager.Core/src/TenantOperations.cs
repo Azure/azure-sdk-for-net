@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// The resource type for subscription
         /// </summary>
-        public static readonly ResourceType ResourceType = "/tenants"; // placeholder pending on the outcome of ADO #5199
+        public static readonly ResourceType ResourceType = ResourceType.RootResourceType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="baseUri"> The base URI of the service. </param>
         internal TenantOperations(AzureResourceManagerClientOptions options, TokenCredential credential, Uri baseUri)
-            : base(new ClientContext(options, credential, baseUri), "/tenants")
+            : base(new ClientContext(options, credential, baseUri), ResourceIdentifier.RootResourceIdentifier)
         {
         }
 

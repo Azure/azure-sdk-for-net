@@ -66,11 +66,19 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the resource client.
         /// </summary>
-        protected ResourcesManagementClient ResourcesClient => new ResourcesManagementClient(
-            BaseUri,
-            Id.Subscription,
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>());
+        protected ResourcesManagementClient ResourcesClient
+        {
+            get
+            {
+                string subscription;
+                if (!Id.TryGetSubscriptionId(out subscription))
+                {
+                    subscription = Guid.Empty.ToString();
+                }
+
+                return new ResourcesManagementClient(BaseUri, subscription, Credential, ClientOptions.Convert<ResourcesManagementClientOptions>());
+            }
+        }
 
         /// <summary>
         /// Validate the resource identifier against current operations.
@@ -78,8 +86,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="identifier"> The resource identifier. </param>
         protected virtual void Validate(ResourceIdentifier identifier)
         {
-            if (identifier?.Type != ValidResourceType)
-                throw new ArgumentException($"Invalid resource type {identifier?.Type} expected {ValidResourceType}");
+            if (identifier?.ResourceType != ValidResourceType)
+                throw new ArgumentException($"Invalid resource type {identifier?.ResourceType} expected {ValidResourceType}");
         }
     }
 }

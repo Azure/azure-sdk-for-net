@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.Core;
 using Azure.ResourceManager.Core.Extensions;
 
 namespace Azure.ResourceManager.Core
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"></param>
         internal ResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
             : base(clientContext, id)
-        {
+        { 
         }
     }
 
@@ -38,20 +39,22 @@ namespace Azure.ResourceManager.Core
     /// Base class for all operations over a resource
     /// </summary>
     /// <typeparam name="TOperations"> The type implementing operations over the resource. </typeparam>
+    /// <typeparam name="TIdentifier"> The The identifier type for the resource. </typeparam>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "Types differ by type argument only")]
-    public abstract class ResourceOperationsBase<TOperations> : ResourceOperationsBase
-        where TOperations : ResourceOperationsBase<TOperations>
+    public abstract class ResourceOperationsBase<TIdentifier, TOperations> : ResourceOperationsBase
+        where TOperations : ResourceOperationsBase<TIdentifier, TOperations> where TIdentifier : ResourceIdentifier
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class for /mocking.
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TIdentifier, TOperations}"/> class for mocking.
         /// </summary>
         protected ResourceOperationsBase()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class.
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TIdentifier, TOperations}"/> class.
         /// </summary>
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
         /// <param name="parentOperations"> The resource representing the parent resource. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         protected ResourceOperationsBase(OperationsBase parentOperations, ResourceIdentifier id)
@@ -60,13 +63,21 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceOperationsBase{TOperations}"/> class.
+        /// Initializes a new instance of the <see cref="ResourceOperationsBase"/> class.
         /// </summary>
         /// <param name="clientContext"></param>
         /// <param name="id"></param>
         internal ResourceOperationsBase(ClientContext clientContext, string id)
             : base(clientContext, id)
         {
+        }
+
+        /// <summary>
+        /// The typed resource identifier for the underlying resource
+        /// </summary>
+        public virtual new TIdentifier Id
+        {
+            get { return base.Id as TIdentifier; }
         }
 
         /// <summary>

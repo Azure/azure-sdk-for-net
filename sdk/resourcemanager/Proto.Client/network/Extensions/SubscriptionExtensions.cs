@@ -35,7 +35,7 @@ namespace Proto.Network
             return subscription.ListResources(
                 (baseUri, credential, options) =>
                 {
-                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.Subscription, credential, options);
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var vmOperations = networkClient.VirtualNetworks;
                     var result = vmOperations.ListAll();
                     return new PhWrappingPageable<Azure.ResourceManager.Network.Models.VirtualNetwork, VirtualNetwork>(
@@ -55,7 +55,7 @@ namespace Proto.Network
             return subscription.ListResourcesAsync(
                 (baseUri, credential, options) =>
                 {
-                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.Subscription, credential, options);
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var vmOperations = networkClient.VirtualNetworks;
                     var result = vmOperations.ListAllAsync();
                     return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.VirtualNetwork, VirtualNetwork>(
@@ -79,7 +79,7 @@ namespace Proto.Network
             return subscription.ListResources(
                 (baseUri, credential, options) =>
                 {
-                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.Subscription, credential, options);
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var publicIPAddressesOperations = networkClient.PublicIPAddresses;
                     var result = publicIPAddressesOperations.ListAll();
                     return new PhWrappingPageable<Azure.ResourceManager.Network.Models.PublicIPAddress, PublicIpAddress>(
@@ -99,7 +99,7 @@ namespace Proto.Network
             return subscription.ListResourcesAsync(
                 (baseUri, credential, options) =>
                 {
-                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.Subscription, credential, options);
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var publicIPAddressesOperations = networkClient.PublicIPAddresses;
                     var result = publicIPAddressesOperations.ListAllAsync();
                     return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.PublicIPAddress, PublicIpAddress>(
@@ -123,7 +123,7 @@ namespace Proto.Network
             return subscription.ListResources(
                 (baseUri, credential, options) =>
                 {
-                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.Subscription, credential, options);
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var networkInterfacesOperations = networkClient.NetworkInterfaces;
                     var result = networkInterfacesOperations.ListAll();
                     return new PhWrappingPageable<Azure.ResourceManager.Network.Models.NetworkInterface, NetworkInterface>(
@@ -143,7 +143,7 @@ namespace Proto.Network
             return subscription.ListResourcesAsync(
                 (baseUri, credential, options) =>
                 {
-                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.Subscription, credential, options);
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var networkInterfacesOperations = networkClient.NetworkInterfaces;
                     var result = networkInterfacesOperations.ListAllAsync();
                     return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.NetworkInterface, NetworkInterface>(
@@ -167,7 +167,7 @@ namespace Proto.Network
             return subscription.ListResources(
                 (baseUri, credential, options) =>
                 {
-                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.Subscription, credential, options);
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                     var networkSecurityGroupsOperations = networkClient.NetworkSecurityGroups;
                     var result = networkSecurityGroupsOperations.ListAll();
                     return new PhWrappingPageable<Azure.ResourceManager.Network.Models.NetworkSecurityGroup, NetworkSecurityGroup>(
@@ -187,7 +187,7 @@ namespace Proto.Network
             return subscription.ListResourcesAsync(
                (baseUri, credential, options) =>
                {
-                   NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.Subscription, credential, options);
+                   NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
                    var networkSecurityGroupsOperations = networkClient.NetworkSecurityGroups;
                    var result = networkSecurityGroupsOperations.ListAllAsync();
                    return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.NetworkSecurityGroup, NetworkSecurityGroup>(

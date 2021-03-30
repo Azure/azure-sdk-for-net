@@ -13,7 +13,7 @@ namespace Proto.Billing
     /// <summary>
     /// A class representing the operations that can be performed over a specific availability set.
     /// </summary>
-    public class BillingAccountOperations : ResourceOperationsBase<BillingAccount>
+    public class BillingAccountOperations : ResourceOperationsBase<TenantResourceIdentifier, BillingAccount>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class.
