@@ -29,7 +29,7 @@ namespace Azure.Core.TestFramework
             }
 
             var type = result.GetType();
-            if (type.Name.StartsWith("Task"))
+            if (type.Name.StartsWith("Task")) //have to add case for container proxy
             {
                 var taskResultType = type.GetGenericArguments()[0];
                 if (taskResultType.Name.StartsWith("ArmResponse") || taskResultType.Name.StartsWith("ArmOperation"))

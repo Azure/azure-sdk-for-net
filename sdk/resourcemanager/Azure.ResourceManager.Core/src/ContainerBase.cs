@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="parent"> The resource representing the parent resource. </param>
         protected ContainerBase(ResourceOperationsBase parent)
-            : this(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri), parent.Id as TIdentifier)
+            : base(new ClientContext(parent.ClientOptions, parent.Credential, parent.BaseUri), parent.Id)
         {
             Parent = parent;
         }
