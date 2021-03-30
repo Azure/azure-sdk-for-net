@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.TestFramework
             return null;
         }
 
-        protected ArmClient GetArmClient()
+        protected ArmClient GetArmClient(ArmClientOptions clientOptions = default)
         {
-            var options = InstrumentClientOptions(new ArmClientOptions());
+            var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 
             return CreateClient<ArmClient>(
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.TestFramework
             {
                 throw new InvalidOperationException("The test didn't instrument any clients but had recordings. Please call InstrumentClient for the client being recorded.");
             }
-
+            
             SessionRecording?.Dispose(true);
             GlobalClient = null;
         }

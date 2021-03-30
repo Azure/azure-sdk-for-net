@@ -15,7 +15,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing collection of PublicIpAddress and their operations over a resource group.
     /// </summary>
-    public class PublicIpAddressContainer : ResourceContainerBase<PublicIpAddress, PublicIPAddressData>
+    public class PublicIpAddressContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, PublicIpAddress, PublicIPAddressData>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PublicIpAddressContainer"/> class.
@@ -27,12 +27,17 @@ namespace Proto.Network
         }
 
         /// <summary>
+        /// Typed Resource Identifier for the container.
+        /// </summary>
+        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
+
+        /// <summary>
         /// Gets the valid resource type for this resource.
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
         private PublicIPAddressesOperations Operations => new NetworkManagementClient(
-            Id.Subscription,
+            Id.SubscriptionId,
             BaseUri,
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).PublicIPAddresses;
@@ -40,7 +45,7 @@ namespace Proto.Network
         /// <inheritdoc />
         public override ArmResponse<PublicIpAddress> CreateOrUpdate(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails, cancellationToken);
+            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
             return new PhArmResponse<PublicIpAddress, PublicIPAddress>(
                 operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 n => new PublicIpAddress(Parent, new PublicIPAddressData(n)));
@@ -49,7 +54,7 @@ namespace Proto.Network
         /// <inheritdoc />
         public override async Task<ArmResponse<PublicIpAddress>> CreateOrUpdateAsync(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroup, name, resourceDetails, cancellationToken).ConfigureAwait(false);
+            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<PublicIpAddress, PublicIPAddress>(
                 await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 n => new PublicIpAddress(Parent, new PublicIPAddressData(n)));
@@ -59,7 +64,7 @@ namespace Proto.Network
         public override ArmOperation<PublicIpAddress> StartCreateOrUpdate(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<PublicIpAddress, PublicIPAddress>(
-                Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails, cancellationToken),
+                Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken),
                 n => new PublicIpAddress(Parent, new PublicIPAddressData(n)));
         }
 
@@ -67,7 +72,7 @@ namespace Proto.Network
         public override async Task<ArmOperation<PublicIpAddress>> StartCreateOrUpdateAsync(string name, PublicIPAddressData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<PublicIpAddress, PublicIPAddress>(
-                await Operations.StartCreateOrUpdateAsync(Id.ResourceGroup, name, resourceDetails, cancellationToken).ConfigureAwait(false),
+                await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false),
                 n => new PublicIpAddress(Parent, new PublicIPAddressData(n)));
         }
 
@@ -76,9 +81,9 @@ namespace Proto.Network
         /// </summary>
         /// <param name="location"> The location to create the network security group. </param>
         /// <returns> Object used to create a <see cref="PublicIpAddress"/>. </returns>
-        public ArmBuilder<PublicIpAddress, PublicIPAddressData> Construct(LocationData location = null)
+        public ArmBuilder<ResourceGroupResourceIdentifier, PublicIpAddress, PublicIPAddressData> Construct(LocationData location = null)
         {
-            var parent = GetParentResource<ResourceGroup, ResourceGroupOperations>();
+            var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
             var ipAddress = new PublicIPAddress()
             {
                 PublicIPAddressVersion = IPVersion.IPv4.ToString(),
@@ -86,7 +91,7 @@ namespace Proto.Network
                 Location = location ?? parent.Data.Location,
             };
 
-            return new ArmBuilder<PublicIpAddress, PublicIPAddressData>(this, new PublicIPAddressData(ipAddress));
+            return new ArmBuilder<ResourceGroupResourceIdentifier, PublicIpAddress, PublicIPAddressData>(this, new PublicIPAddressData(ipAddress));
         }
 
         /// <summary>
@@ -176,13 +181,13 @@ namespace Proto.Network
                 /// <inheritdoc />
         public override ArmResponse<PublicIpAddress> Get(string publicIpAddressesName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.Get(Id.ResourceGroup, publicIpAddressesName, cancellationToken: cancellationToken), Convertor());
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.Get(Id.ResourceGroupName, publicIpAddressesName, cancellationToken: cancellationToken), Convertor());
         }
 
         /// <inheritdoc/>
         public override async Task<ArmResponse<PublicIpAddress>> GetAsync(string publicIpAddressesName, CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroup, publicIpAddressesName, cancellationToken: cancellationToken), Convertor());
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroupName, publicIpAddressesName, cancellationToken: cancellationToken), Convertor());
         }     
     }
 }

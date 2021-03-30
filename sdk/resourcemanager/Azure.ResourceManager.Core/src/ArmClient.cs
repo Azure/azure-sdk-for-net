@@ -102,6 +102,7 @@ namespace Azure.ResourceManager.Core
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptionOperations(defaultSubscriptionId).Get().Value;
+            _clientOptions.ApiVersions.SetProviderClient(credential, baseUri, DefaultSubscription.Id.SubscriptionId);
         }
 
         /// <summary>
@@ -145,9 +146,9 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="resourceGroupId"> The resource identifier of the resource group. </param>
         /// <returns> Resource group operations. </returns>
-        public virtual ResourceGroupOperations GetResourceGroupOperations(ResourceIdentifier resourceGroupId)
+        public virtual ResourceGroupOperations GetResourceGroupOperations(ResourceGroupResourceIdentifier resourceGroupId)
         {
-            return GetSubscriptionOperations(resourceGroupId.Subscription).GetResourceGroupOperations(resourceGroupId.ResourceGroup);
+            return GetSubscriptionOperations(resourceGroupId.SubscriptionId).GetResourceGroupOperations(resourceGroupId.ResourceGroupName);
         }
 
         /// <summary>

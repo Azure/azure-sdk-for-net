@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="user"> Dictionary with a <see cref="ResourceIdentifier"/> key and a <see cref="UserAssignedIdentity"/> object value. </param>
         /// <param name="useSystemAssigned"> Flag for using <see cref="SystemAssignedIdentity"/> or not. </param>
-        public ResourceIdentity(Dictionary<ResourceIdentifier, UserAssignedIdentity> user, bool useSystemAssigned)
+        public ResourceIdentity(Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> user, bool useSystemAssigned)
         {
             // check for combination of user and system on the impact to type value
             SystemAssignedIdentity = useSystemAssigned ? new SystemAssignedIdentity() : null;
-            UserAssignedIdentities = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
+            UserAssignedIdentities = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
             if (user != null)
             {
-                foreach (KeyValuePair<ResourceIdentifier, UserAssignedIdentity> id in user)
+                foreach (KeyValuePair<ResourceGroupResourceIdentifier, UserAssignedIdentity> id in user)
                 {
                     UserAssignedIdentities.Add(id.Key, id.Value);
                 }
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="systemAssigned"> The <see cref="SystemAssignedIdentity"/> to use. </param>
         /// <param name="user"> Dictionary with a <see cref="ResourceIdentifier"/> key and a <see cref="UserAssignedIdentity"/> object value. </param>
-        public ResourceIdentity(SystemAssignedIdentity systemAssigned, IDictionary<ResourceIdentifier, UserAssignedIdentity> user)
+        public ResourceIdentity(SystemAssignedIdentity systemAssigned, IDictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> user)
         {
             // TODO: remove this constructor later
             SystemAssignedIdentity = systemAssigned;
             if (user == null)
             {
-                UserAssignedIdentities = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
+                UserAssignedIdentities = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
             }
             else
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets a dictionary of the User Assigned Identities.
         /// </summary>
-        public IDictionary<ResourceIdentifier, UserAssignedIdentity> UserAssignedIdentities { get; private set; }
+        public IDictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> UserAssignedIdentities { get; private set; }
 
         /// <summary>
         /// Converts a <see cref="JsonElement"/> into an <see cref="ResourceIdentity"/> object.
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Core
             }
 
             Optional<SystemAssignedIdentity> systemAssignedIdentity = default;
-            IDictionary<ResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
+            IDictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity> userAssignedIdentities = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
             string type = string.Empty;
             foreach (var property in element.EnumerateObject())
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Core
                     {
                         resourceId = keyValuePair.Name;
                         var userAssignedIdentity = UserAssignedIdentity.Deserialize(keyValuePair.Value);
-                        userAssignedIdentities.Add(resourceId, userAssignedIdentity);
+                        userAssignedIdentities.Add(new ResourceGroupResourceIdentifier(resourceId), userAssignedIdentity);
                     }
 
                     continue;

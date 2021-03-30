@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Azure Resource Manager client options.
         /// </summary>
-        public ArmClientOptions ClientOptions { get; }
+        public virtual ArmClientOptions ClientOptions { get; }
 
         /// <summary>
         /// Gets the Azure credential.
         /// </summary>
-        public TokenCredential Credential { get; }
+        public virtual TokenCredential Credential { get; }
 
         /// <summary>
         /// Gets the base URI of the service.
         /// </summary>
-        public Uri BaseUri { get; }
+        public virtual Uri BaseUri { get; }
 
         /// <summary>
         /// Gets the valid Azure resource type for the current operations.
@@ -68,11 +68,19 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the resource client.
         /// </summary>
-        protected ResourcesManagementClient ResourcesClient => new ResourcesManagementClient(
-            BaseUri,
-            Id.Subscription,
-            Credential,
-            ClientOptions.Convert<ResourcesManagementClientOptions>());
+        protected ResourcesManagementClient ResourcesClient
+        {
+            get
+            {
+                string subscription;
+                if (!Id.TryGetSubscriptionId(out subscription))
+                {
+                    subscription = Guid.Empty.ToString();
+                }
+
+                return new ResourcesManagementClient(BaseUri, subscription, Credential, ClientOptions.Convert<ResourcesManagementClientOptions>());
+            }
+        }
 
         /// <summary>
         /// Validate the resource identifier against current operations.
@@ -80,8 +88,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="identifier"> The resource identifier. </param>
         protected virtual void Validate(ResourceIdentifier identifier)
         {
-            if (identifier?.Type != ValidResourceType)
-                throw new ArgumentException($"Invalid resource type {identifier?.Type} expected {ValidResourceType}");
+            if (identifier?.ResourceType != ValidResourceType)
+                throw new ArgumentException($"Invalid resource type {identifier?.ResourceType} expected {ValidResourceType}");
         }
     }
 }

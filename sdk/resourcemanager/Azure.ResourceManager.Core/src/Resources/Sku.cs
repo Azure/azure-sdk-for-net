@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// A class representing SKU for resource
+    /// A class representing SKU for resource.
     /// </summary>
-    public sealed class Sku : IEquatable<Sku>, IComparable<Sku>
+    public sealed partial class Sku : IEquatable<Sku>, IComparable<Sku>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Sku"/> class.

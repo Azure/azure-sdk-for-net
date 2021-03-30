@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void GetSubscriptionOperation()
         {
             var sub = Client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
-            Assert.AreEqual(sub.Id.Subscription, TestEnvironment.SubscriptionId);
+            Assert.AreEqual(sub.Id.SubscriptionId, TestEnvironment.SubscriptionId);
         }
 
         [TestCase(null)]

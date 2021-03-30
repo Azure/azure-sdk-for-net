@@ -54,12 +54,12 @@ namespace Proto.Client
             var data = aset.Get().Value.Data;
 
             ShouldThrow<ArgumentException>(
-                () => rgOps.CreateResource<AvailabilitySetContainer, AvailabilitySet, AvailabilitySetData>("", data), 
+                () => rgOps.CreateResource<AvailabilitySetContainer, AvailabilitySet, ResourceGroupResourceIdentifier, AvailabilitySetData>("", data), 
                 "CreateResource with empty string didn't throw",
                 "CreateResource");
             
             await ShouldThrowAsync<ArgumentException>(
-                async () => await rgOps.CreateResourceAsync<AvailabilitySetContainer, AvailabilitySet, AvailabilitySetData>(" ", data),
+                async () => await rgOps.CreateResourceAsync<AvailabilitySetContainer, ResourceGroupResourceIdentifier, AvailabilitySet, AvailabilitySetData>(" ", data),
                 "CreateResourceAsync with whitespaces string didn't throw",
                 "CreateResourceAsync");
 
@@ -104,12 +104,12 @@ namespace Proto.Client
                 "StartRemoveTagAsync");
 
             ShouldThrow<ArgumentNullException>(
-                () => rgOps.CreateResource<AvailabilitySetContainer, AvailabilitySet, AvailabilitySetData>("tester", null),
+                () => rgOps.CreateResource<AvailabilitySetContainer, AvailabilitySet, ResourceGroupResourceIdentifier, AvailabilitySetData>("tester", null),
                 "CreateResource model exception not thrown",
                 "CreateResource");
 
             await ShouldThrowAsync<ArgumentNullException>(
-                async () => await rgOps.CreateResourceAsync<AvailabilitySetContainer, AvailabilitySet, AvailabilitySetData>("tester", null),
+                async () => await rgOps.CreateResourceAsync<AvailabilitySetContainer, ResourceGroupResourceIdentifier, AvailabilitySet, AvailabilitySetData>("tester", null),
                 "CreateResourceAsync model exception not thrown",
                 "CreateResourceAsync");
 
