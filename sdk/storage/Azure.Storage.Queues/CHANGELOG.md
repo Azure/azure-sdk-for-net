@@ -1,7 +1,12 @@
 # Release History
 
-## 12.7.0-beta.2 (Unreleased)
+## 12.7.0-beta.3 (Unreleased)
 
+## 12.6.1 (2021-03-29)
+- Fixed bug where ClientDiagnostics's DiagnosticListener was leaking resources.
+
+## 12.7.0-beta.2 (2021-03-09)
+- This preview contains bug fixes to improve quality.
 
 ## 12.7.0-beta.1 (2021-02-09)
 - Fixed bug where QueueClient.CanGenerateSasUri and QueueServiceClient.CanGenerateSasUri was not mockable.

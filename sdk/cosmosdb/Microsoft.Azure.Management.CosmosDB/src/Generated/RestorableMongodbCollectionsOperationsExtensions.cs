@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// Show the event feed of all mutations done on all the Azure Cosmos DB
             /// MongoDB collections under a specific database.  This helps in scenario
             /// where container was accidentally deleted.  This API requires
-            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/*/read'
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
             /// permission
             /// </summary>
             /// <param name='operations'>
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// Show the event feed of all mutations done on all the Azure Cosmos DB
             /// MongoDB collections under a specific database.  This helps in scenario
             /// where container was accidentally deleted.  This API requires
-            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/*/read'
+            /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
             /// permission
             /// </summary>
             /// <param name='operations'>

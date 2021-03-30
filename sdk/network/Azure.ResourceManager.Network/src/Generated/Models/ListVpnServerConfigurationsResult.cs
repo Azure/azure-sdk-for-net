@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of the request to list all VpnServerConfigurations. It contains a list of VpnServerConfigurations and a URL nextLink to get the next set of results. </summary>
-    public partial class ListVpnServerConfigurationsResult
+    internal partial class ListVpnServerConfigurationsResult
     {
         /// <summary> Initializes a new instance of ListVpnServerConfigurationsResult. </summary>
         internal ListVpnServerConfigurationsResult()

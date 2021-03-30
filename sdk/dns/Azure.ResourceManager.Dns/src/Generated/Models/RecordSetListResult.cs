@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> The response to a record set List operation. </summary>
-    public partial class RecordSetListResult
+    internal partial class RecordSetListResult
     {
         /// <summary> Initializes a new instance of RecordSetListResult. </summary>
         internal RecordSetListResult()

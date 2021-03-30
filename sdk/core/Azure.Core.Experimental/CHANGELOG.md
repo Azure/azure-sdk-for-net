@@ -1,6 +1,15 @@
 # Release History
 
-## 0.1.0-preview.10 (Unreleased)
+## 0.1.0-preview.12 (Unreleased)
+
+
+## 0.1.0-preview.11 (2021-03-22)
+
+### New Features
+- Improved debugging experience for `JsonData`.
+- `JsonData` can be used with `JsonSerializer`
+
+## 0.1.0-preview.10 (2021-03-09)
 
 
 ## 0.1.0-preview.9 (2021-02-09)

@@ -1878,7 +1878,7 @@ namespace Azure.Storage.Files.Shares
                                 async,
                                 cancellationToken)
                                 .EnsureCompleted()
-                                .Item2,
+                                .ContentStream,
                         async startOffset =>
                             (await StartDownloadAsync(
                                 range,
@@ -1888,7 +1888,7 @@ namespace Azure.Storage.Files.Shares
                                 async,
                                 cancellationToken)
                                 .ConfigureAwait(false))
-                                .Item2,
+                                .ContentStream,
                         ClientConfiguration.Pipeline.ResponseClassifier,
                         Constants.MaxReliabilityRetries);
 
@@ -1944,7 +1944,7 @@ namespace Azure.Storage.Files.Shares
         /// <returns>
         /// <see cref="Response{ShareFileDownloadInfo}"/> and a <see cref="Stream"/>.
         /// </returns>
-        private async Task<(Response<ShareFileDownloadInfo>, Stream)> StartDownloadAsync(
+        private async Task<(Response<ShareFileDownloadInfo> Response, Stream ContentStream)> StartDownloadAsync(
             HttpRange range = default,
             bool rangeGetContentHash = default,
             long startOffset = 0,

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 using Azure.Core;
 
@@ -11,6 +12,7 @@ namespace Azure.Identity
     /// <summary>
     /// An exception indicating a <see cref="TokenCredential"/> did not attempt to authenticate and retrieve <see cref="AccessToken"/>, as its prerequisite information or state was not available.
     /// </summary>
+    [Serializable]
     public class CredentialUnavailableException : AuthenticationFailedException
     {
         /// <summary>
@@ -49,6 +51,16 @@ namespace Azure.Identity
 
             var innerException = new AggregateException("Multiple exceptions were encountered while attempting to authenticate.", exceptions);
             return new CredentialUnavailableException(errorMsg.ToString(), innerException);
+        }
+
+        /// <summary>
+        /// A constructor used for serialization.
+        /// </summary>
+        /// <param name="info">The <see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The <see cref="StreamingContext"/>.</param>
+        /// <returns></returns>
+        protected CredentialUnavailableException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 }

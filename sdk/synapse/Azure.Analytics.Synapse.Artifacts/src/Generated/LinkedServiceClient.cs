@@ -21,16 +21,40 @@ namespace Azure.Analytics.Synapse.Artifacts
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal LinkedServiceRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of LinkedServiceClient for mocking. </summary>
         protected LinkedServiceClient()
         {
         }
+
+        /// <summary> Initializes a new instance of LinkedServiceClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public LinkedServiceClient(Uri endpoint, TokenCredential credential, ArtifactsClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+
+            options ??= new ArtifactsClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new LinkedServiceRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+        }
+
         /// <summary> Initializes a new instance of LinkedServiceClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal LinkedServiceClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2019-06-01-preview")
+        internal LinkedServiceClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2019-06-01-preview")
         {
             RestClient = new LinkedServiceRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(AmazonS3LinkedServiceConverter))]
     public partial class AmazonS3LinkedService : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -201,6 +204,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonS3LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, accessKeyId.Value, secretAccessKey.Value, serviceUrl.Value, encryptedCredential.Value);
+        }
+
+        internal partial class AmazonS3LinkedServiceConverter : JsonConverter<AmazonS3LinkedService>
+        {
+            public override void Write(Utf8JsonWriter writer, AmazonS3LinkedService model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AmazonS3LinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAmazonS3LinkedService(document.RootElement);
+            }
         }
     }
 }

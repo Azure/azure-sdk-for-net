@@ -17,7 +17,7 @@ parameters:
   default: packages
 - name: SDKType
   type: string
-  default: client
+  default: all
 - name: ServiceDirectory
   type: string
   default: not-specified
@@ -36,6 +36,23 @@ parameters:
 - name: TestTimeoutInMinutes
   type: number
   default: 60
+- name: MatrixConfigs
+  type: object
+  default:
+    - Name: NET_ci_test_base
+      Path: eng/pipelines/templates/stages/platform-matrix.json
+      Selection: sparse
+      NonSparseParameters: AdditionalTestArguments
+      GenerateVMJobs: true
+- name: AdditionalMatrixConfigs
+  type: object
+  default: []
+- name: MatrixFilters
+  type: object
+  default: []
+- name: MatrixReplace
+  type: object
+  default: []
 
 variables:
   - template: ../variables/globals.yml
@@ -43,7 +60,7 @@ variables:
 stages:
   - stage: Build
     jobs:
-    - template: ../jobs/archetype-sdk-client.yml
+    - template: /eng/pipelines/templates/jobs/ci.yml
       parameters:
         SDKType: ${{ parameters.SDKType }}
         ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
@@ -54,6 +71,13 @@ stages:
         ArtifactName: packages
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
         TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+        MatrixConfigs:
+          - ${{ each config in parameters.MatrixConfigs }}:
+            -  ${{ config }}
+          - ${{ each config in parameters.AdditionalMatrixConfigs }}:
+            -  ${{ config }}
+        MatrixFilters: ${{ parameters.MatrixFilters }}
+        MatrixReplace: ${{ parameters.MatrixReplace }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:

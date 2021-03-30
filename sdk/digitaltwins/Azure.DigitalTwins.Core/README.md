@@ -131,16 +131,17 @@ Simply follow the instructions provided by the bot.
 You will only need to do this once across all repos using our CLA.
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct].
-For more information see the Code of Conduct FAQ or contact opencode@microsoft.com with any additional questions or comments.
+For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact opencode@microsoft.com with any additional questions or comments.
 
 <!-- LINKS -->
 [microsoft_sdk_download]: https://azure.microsoft.com/downloads/?sdk=net
 [azure_sdk_target_frameworks]: https://github.com/azure/azure-sdk-for-net#target-frameworks
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
-[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins
+[source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/digitaltwins/Azure.DigitalTwins.Core/src
 [package]: https://www.nuget.org/packages/Azure.DigitalTwins.Core
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com/
 [azure_rest_api]: https://docs.microsoft.com/rest/api/azure/

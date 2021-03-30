@@ -35,8 +35,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             try
             {
-                FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
-                Controller controller = await faultTolerantController.GetOrCreateAsync(timeout).ConfigureAwait(false);
+                Controller controller = await GetController(timeout).ConfigureAwait(false);
+
                 AmqpTransactionId = await controller.DeclareAsync().ConfigureAwait(false);
                 ServiceBusEventSource.Log.TransactionDeclared(_transactionId, AmqpTransactionId);
                 return this;
@@ -47,6 +47,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 _transactionManager.RemoveEnlistment(_transactionId);
                 throw;
             }
+        }
+
+        private async Task<Controller> GetController(TimeSpan timeout)
+        {
+            FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
+            Controller controller = await faultTolerantController.GetOrCreateAsync(timeout).ConfigureAwait(false);
+            return controller;
         }
 
         protected override void OnSafeClose(AmqpTransactionEnlistment value)
@@ -67,10 +74,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             try
             {
-                FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
-                Controller controller = await faultTolerantController.GetOrCreateAsync(_timeout)
-                    .ConfigureAwait(false);
-
+                Controller controller = await GetController(_timeout).ConfigureAwait(false);
                 await controller.DischargeAsync(AmqpTransactionId, fail: false).ConfigureAwait(false);
                 singlePhaseEnlistment.Committed();
                 ServiceBusEventSource.Log.TransactionDischarged(
@@ -100,10 +104,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             try
             {
-                FaultTolerantAmqpObject<Controller> faultTolerantController = _connectionScope.TransactionController;
-                Controller controller = await faultTolerantController.GetOrCreateAsync(_timeout)
-                    .ConfigureAwait(false);
-
+                Controller controller = await GetController(_timeout).ConfigureAwait(false);
                 await controller.DischargeAsync(AmqpTransactionId, fail: true).ConfigureAwait(false);
                 singlePhaseEnlistment.Aborted();
                 ServiceBusEventSource.Log.TransactionDischarged(_transactionId, AmqpTransactionId, true);

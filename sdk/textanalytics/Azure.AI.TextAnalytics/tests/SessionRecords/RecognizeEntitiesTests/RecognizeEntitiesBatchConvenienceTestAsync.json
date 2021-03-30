@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/general?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Content-Length": "191",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-1ef00cd16f03e042a78aae27de4be8b6-8208f699d0362940-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-cff026a25dc531499f30a49b1ddb41d9-e7794784a16d5047-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "d2ffe8a9cd41c6a7f7eddf3ba0def75e",
         "x-ms-return-client-request-id": "true"
       },
@@ -29,14 +29,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "53f70398-76a3-422f-9f25-31573773292b",
+        "apim-request-id": "587bb3d4-44de-4432-a771-1ace569b2e9f",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Sat, 06 Feb 2021 03:49:04 GMT",
+        "Date": "Wed, 24 Feb 2021 16:56:09 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "67"
+        "x-envoy-upstream-service-time": "55"
       },
       "ResponseBody": {
         "documents": [

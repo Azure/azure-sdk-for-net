@@ -18,7 +18,7 @@ namespace Azure.Storage.Queues.Test
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_RegularUrl_AccountTest()
         {
             // Arrange
@@ -43,7 +43,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_RegularUrl_QueueTest()
         {
             // Arrange
@@ -68,7 +68,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_RegularUrl_MessagesTest()
         {
             // Arrange
@@ -93,7 +93,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_RegularUrl_MessageIdTest()
         {
             // Arrange
@@ -118,7 +118,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_RegularUrl_PortTest()
         {
             // Arrange
@@ -143,7 +143,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_RegularUrl_SasTest()
         {
             // Arrange
@@ -180,7 +180,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_IPStyleUrl_AccountTest()
         {
             // Arrange
@@ -205,7 +205,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_IPStyleUrl_QueueTest()
         {
             // Arrange
@@ -230,7 +230,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_IPStyleUrl_MessagesTest()
         {
             // Arrange
@@ -255,7 +255,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_IPStyleUrl_MessageIdTest()
         {
             // Arrange
@@ -280,7 +280,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_IPStyleUrl_PortTest()
         {
             // Arrange
@@ -305,7 +305,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_IPStyleUrl_PortTestQueue()
         {
             // Arrange
@@ -330,7 +330,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_IPStyleUrl_AccountOnlyTest()
         {
             // Arrange
@@ -355,7 +355,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_IPStyleUrl_SasTest()
         {
             // Arrange
@@ -392,14 +392,14 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_RegularUrl_CNAME()
         {
             var queueUriBUilder = new QueueUriBuilder(new Uri("http://www.contoso.com"));
             Assert.AreEqual(string.Empty, queueUriBUilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_AccountNamePeriod()
         {
             var queueUriBuilder = new QueueUriBuilder(new Uri("https://account.z.queue.core.windows.net/share/dir"));
@@ -407,7 +407,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual("account", queueUriBuilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_AccountNameError()
         {
             var queueUriBuilder = new QueueUriBuilder(new Uri("http://notaurl"));
@@ -415,7 +415,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsEmpty(queueUriBuilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_MalformedSubdomain()
         {
             // account and queue swapped
@@ -432,7 +432,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(string.Empty, queueUriBuilder3.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("2020-10-27", "2020-10-28")]
         [TestCase("2020-10-27T12:10Z", "2020-10-28T13:20Z")]
         [TestCase("2020-10-27T12:10:11Z", "2020-10-28T13:20:14Z")]
@@ -452,7 +452,7 @@ namespace Azure.Storage.Queues.Test
             Assert.IsTrue(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"));
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueUriBuilder_SasInvalidStartExpiryTimeFormat()
         {
             // Arrange

@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// account at the given timestamp and location. This helps in
         /// scenarios to validate what resources exist at given timestamp and
         /// location. This API requires
-        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/*/read'
+        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
         /// permission.
         /// </summary>
         /// <param name='location'>

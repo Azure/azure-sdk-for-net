@@ -60,6 +60,13 @@ namespace Azure.Messaging.ServiceBus
         internal string Identifier { get; }
 
         /// <summary>
+        /// Gets the transaction group associated with the receiver. This is an
+        /// arbitrary string that is used to all senders, receivers, and processors that you
+        /// wish to use in a transaction that spans multiple different queues, topics, or subscriptions.
+        /// </summary>
+        public virtual string TransactionGroup { get; }
+
+        /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusReceiver"/> has been closed.
         /// </summary>
         ///
@@ -476,6 +483,16 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <exception cref="ServiceBusException">
+        ///   The lock for the message has expired or the message has already been completed. This does not apply for session-enabled
+        ///   entities.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        /// </exception>
+        /// <exception cref="ServiceBusException">
+        ///   The lock for the session has expired or the message has already been completed. This only applies for session-enabled
+        ///   entities.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        /// </exception>
         public virtual async Task CompleteMessageAsync(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)
@@ -546,6 +563,16 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///  <exception cref="ServiceBusException">
+        ///   The lock for the message has expired or the message has already been completed. This does not apply for session-enabled
+        ///   entities.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        /// </exception>
+        /// <exception cref="ServiceBusException">
+        ///   The lock for the session has expired or the message has already been completed. This only applies for session-enabled
+        ///   entities.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        /// </exception>
         public virtual async Task AbandonMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = null,
@@ -624,6 +651,16 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="ServiceBusClient.CreateReceiver(string, string, ServiceBusReceiverOptions)"/>.
         /// This operation can only be performed when <see cref="ReceiveMode"/> is set to <see cref="ServiceBusReceiveMode.PeekLock"/>.
         /// </remarks>
+        /// <exception cref="ServiceBusException">
+        ///   The lock for the message has expired or the message has already been completed. This does not apply for session-enabled
+        ///   entities.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        /// </exception>
+        /// <exception cref="ServiceBusException">
+        ///   The lock for the session has expired or the message has already been completed. This only applies for session-enabled
+        ///   entities.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        /// </exception>
         public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = null,
@@ -677,6 +714,16 @@ namespace Azure.Messaging.ServiceBus
         /// You can use EntityNameHelper.FormatDeadLetterPath(string) to help with this.
         /// This operation can only be performed on messages that were received by this receiver.
         /// </remarks>
+        ///  <exception cref="ServiceBusException">
+        ///   The lock for the message has expired or the message has already been completed. This does not apply for session-enabled
+        ///   entities.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        /// </exception>
+        /// <exception cref="ServiceBusException">
+        ///   The lock for the session has expired or the message has already been completed. This only applies for session-enabled
+        ///   entities.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        /// </exception>
         public virtual async Task DeadLetterMessageAsync(
             ServiceBusReceivedMessage message,
             string deadLetterReason,
@@ -791,6 +838,16 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
+        ///  <exception cref="ServiceBusException">
+        ///   The lock for the message has expired or the message has already been completed. This does not apply for session-enabled
+        ///   entities.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        /// </exception>
+        /// <exception cref="ServiceBusException">
+        ///   The lock for the session has expired or the message has already been completed. This only applies for session-enabled
+        ///   entities.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.SessionLockLost"/> in this case.
+        /// </exception>
         public virtual async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,
             IDictionary<string, object> propertiesToModify = null,
@@ -905,6 +962,10 @@ namespace Azure.Messaging.ServiceBus
         /// Throws if the messages have not been deferred.</returns>
         /// <seealso cref="DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         /// <seealso cref="DeferMessageAsync(string, IDictionary{string, object}, CancellationToken)"/>
+        /// <exception cref="ServiceBusException">
+        ///   The specified sequence number does not correspond to a message that has been deferred.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageNotFound"/> in this case.
+        /// </exception>
         public virtual async Task<IReadOnlyList<ServiceBusReceivedMessage>> ReceiveDeferredMessagesAsync(
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
@@ -965,6 +1026,10 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <param name="message">The <see cref="ServiceBusReceivedMessage"/> to renew the lock for.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <exception cref="ServiceBusException">
+        ///   The lock for the message has expired or the message has already been completed.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageLockLost"/> in this case.
+        /// </exception>
         public virtual async Task RenewMessageLockAsync(
             ServiceBusReceivedMessage message,
             CancellationToken cancellationToken = default)

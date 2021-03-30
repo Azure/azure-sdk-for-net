@@ -33,7 +33,11 @@ namespace Azure.Identity.Tests
             // is always made.  This allows tests to be replayed independently and in any order
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-                typeof(SecretClient).Assembly.GetType("Azure.Security.KeyVault.ChallengeBasedAuthenticationPolicy+AuthenticationChallenge").GetMethod("ClearCache", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, null);
+                // Check the old method name and the new method name until temporarily
+                var type = typeof(SecretClient).Assembly.GetType("Azure.Security.KeyVault.ChallengeBasedAuthenticationPolicy+AuthenticationChallenge") ??
+                    typeof(SecretClient).Assembly.GetType("Azure.Security.KeyVault.ChallengeBasedAuthenticationPolicy");
+
+                type.GetMethod("ClearCache", BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, null);
             }
         }
 

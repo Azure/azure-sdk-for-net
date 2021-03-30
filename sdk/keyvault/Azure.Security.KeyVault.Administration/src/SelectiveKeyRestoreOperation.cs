@@ -52,6 +52,9 @@ namespace Azure.Security.KeyVault.Administration
             _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationSelectiveKeyRestoreOperationHeaders, SelectiveKeyRestoreResult, SelectiveKeyRestoreDetailsInternal>(value, response, client);
         }
 
+        /// <summary> Initializes a new instance of <see cref="SelectiveKeyRestoreOperation" /> for mocking. </summary>
+        protected SelectiveKeyRestoreOperation() {}
+
         /// <summary>
         /// The start time of the restore operation.
         /// </summary>

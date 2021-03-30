@@ -1,7 +1,29 @@
 # Release History
 
-## 5.4.0-beta.1 (Unreleased)
+## 5.4.0-beta.2 (Unreleased)
 
+## 5.4.0-beta.1 (2021-03-17)
+
+### Changes
+
+#### New Features
+
+- Returned the idempotent publishing feature to the public API surface.
+
+
+## 5.3.1 (2021-03-09)
+
+### Changes
+
+#### Key Bug Fixes
+
+- Fixed an issue where long-lived credentials (more than 49 days) were overflowing refresh timer limits and being rejected.
+
+- Added detection and recovery for a race condition that occurred when the Event Hubs service closed a connection or link after the client had validated its state and was performing an operation; this will now be properly retried with a fresh connection/link.
+
+- Extended retry scenarios to include generic I/O exceptions, as they are typically transient network failures.
+
+- Extended retry scenarios to include authorization failures, as the Event Hubs services do not differentiate between authentication and authorization, callers cannot reason about whether an `Unauthorized` return from an operation indicates that the call will never succeed or may trigger a credential renewal that may allow success.
 
 ## 5.3.0 (2021-02-09)
 
@@ -210,9 +232,9 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### Consuming events
 
-- A new primitive, `EventProcessor<TPartition>`, has been implemented to serve as an extensibility point for creating a custom event processor instance.  It offers built-in fault tolerance, load balancing, and structure while allowing tuning for low-level network configuration, processing of events in batches, and customization for the storage of checkpoints.  More detail can be found in the [design proposal](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/event-processor%7BT%7D-proposal.md).
+- A new primitive, `EventProcessor<TPartition>`, has been implemented to serve as an extensibility point for creating a custom event processor instance.  It offers built-in fault tolerance, load balancing, and structure while allowing tuning for low-level network configuration, processing of events in batches, and customization for the storage of checkpoints.  More detail can be found in the [design proposal](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-event-processor%7BT%7D.md).
 
-- A new primitive, `PartitionProcessor`, has been implemented to serve as a low-level means of reading batches of events from a single partition with greater control over network configuration.  More detail can be found in the [design proposal](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/partition-receiver-proposal.md).
+- A new primitive, `PartitionProcessor`, has been implemented to serve as a low-level means of reading batches of events from a single partition with greater control over network configuration.  More detail can be found in the [design proposal](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Azure.Messaging.EventHubs/design/proposal-partition-receiver.md).
 
 #### Publishing events
 

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of server keys. </summary>
-    public partial class ServerKeyListResult
+    internal partial class ServerKeyListResult
     {
         /// <summary> Initializes a new instance of ServerKeyListResult. </summary>
         internal ServerKeyListResult()

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ManagedIntegrationRuntimeConverter))]
     public partial class ManagedIntegrationRuntime : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -111,6 +114,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ManagedIntegrationRuntime(type, description.Value, additionalProperties, Optional.ToNullable(state), computeProperties.Value, ssisProperties.Value);
+        }
+
+        internal partial class ManagedIntegrationRuntimeConverter : JsonConverter<ManagedIntegrationRuntime>
+        {
+            public override void Write(Utf8JsonWriter writer, ManagedIntegrationRuntime model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ManagedIntegrationRuntime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeManagedIntegrationRuntime(document.RootElement);
+            }
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Communication;
 
 namespace Azure.Communication.Chat
 {
@@ -49,10 +50,10 @@ namespace Azure.Communication.Chat
         /// <param name="content"> Content of a chat message. </param>
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="createdOn"> The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        /// <param name="senderId"> The id of the chat message sender. </param>
+        /// <param name="senderCommunicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
         /// <param name="deletedOn"> The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="editedOn"> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
-        internal ChatMessageInternal(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContentInternal content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
+        internal ChatMessageInternal(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContentInternal content, string senderDisplayName, DateTimeOffset createdOn, CommunicationIdentifierModel senderCommunicationIdentifier, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
         {
             Id = id;
             Type = type;
@@ -61,7 +62,7 @@ namespace Azure.Communication.Chat
             Content = content;
             SenderDisplayName = senderDisplayName;
             CreatedOn = createdOn;
-            SenderId = senderId;
+            SenderCommunicationIdentifier = senderCommunicationIdentifier;
             DeletedOn = deletedOn;
             EditedOn = editedOn;
         }
@@ -80,8 +81,8 @@ namespace Azure.Communication.Chat
         public string SenderDisplayName { get; }
         /// <summary> The timestamp when the chat message arrived at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset CreatedOn { get; }
-        /// <summary> The id of the chat message sender. </summary>
-        public string SenderId { get; }
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+        public CommunicationIdentifierModel SenderCommunicationIdentifier { get; }
         /// <summary> The timestamp (if applicable) when the message was deleted. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The last timestamp (if applicable) when the message was edited. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>

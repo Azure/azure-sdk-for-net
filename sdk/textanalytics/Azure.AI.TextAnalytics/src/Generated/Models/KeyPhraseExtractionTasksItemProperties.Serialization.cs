@@ -14,16 +14,21 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static KeyPhraseExtractionTasksItemProperties DeserializeKeyPhraseExtractionTasksItemProperties(JsonElement element)
         {
-            KeyPhraseResult results = default;
+            Optional<KeyPhraseResult> results = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     results = KeyPhraseResult.DeserializeKeyPhraseResult(property.Value);
                     continue;
                 }
             }
-            return new KeyPhraseExtractionTasksItemProperties(results);
+            return new KeyPhraseExtractionTasksItemProperties(results.Value);
         }
     }
 }

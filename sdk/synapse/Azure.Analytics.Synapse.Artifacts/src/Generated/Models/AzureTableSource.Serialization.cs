@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(AzureTableSourceConverter))]
     public partial class AzureTableSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -138,6 +141,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureTableSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, azureTableSourceQuery.Value, azureTableSourceIgnoreTableNotFound.Value);
+        }
+
+        internal partial class AzureTableSourceConverter : JsonConverter<AzureTableSource>
+        {
+            public override void Write(Utf8JsonWriter writer, AzureTableSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AzureTableSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAzureTableSource(document.RootElement);
+            }
         }
     }
 }

@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MediaLiveEventIngestHeartbeatEventDataConverter))]
     public partial class MediaLiveEventIngestHeartbeatEventData
     {
         internal static MediaLiveEventIngestHeartbeatEventData DeserializeMediaLiveEventIngestHeartbeatEventData(JsonElement element)
@@ -125,6 +128,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new MediaLiveEventIngestHeartbeatEventData(trackType.Value, trackName.Value, Optional.ToNullable(bitrate), Optional.ToNullable(incomingBitrate), lastTimestamp.Value, timescale.Value, Optional.ToNullable(overlapCount), Optional.ToNullable(discontinuityCount), Optional.ToNullable(nonincreasingCount), Optional.ToNullable(unexpectedBitrate), state.Value, Optional.ToNullable(healthy));
+        }
+
+        internal partial class MediaLiveEventIngestHeartbeatEventDataConverter : JsonConverter<MediaLiveEventIngestHeartbeatEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MediaLiveEventIngestHeartbeatEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override MediaLiveEventIngestHeartbeatEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMediaLiveEventIngestHeartbeatEventData(document.RootElement);
+            }
         }
     }
 }

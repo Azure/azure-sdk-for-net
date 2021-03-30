@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="size">Size of backup</param>
         /// <param name="label">Label for backup</param>
         /// <param name="backupType">Type of backup adhoc or scheduled</param>
-        public BackupPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), string backupId = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), long? size = default(long?), string label = default(string), string backupType = default(string))
+        /// <param name="failureReason">Failure reason</param>
+        public BackupPatch(IDictionary<string, string> tags = default(IDictionary<string, string>), string backupId = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), long? size = default(long?), string label = default(string), string backupType = default(string), string failureReason = default(string))
         {
             Tags = tags;
             BackupId = backupId;
@@ -51,6 +52,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             Size = size;
             Label = label;
             BackupType = backupType;
+            FailureReason = failureReason;
             CustomInit();
         }
 
@@ -106,6 +108,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.backupType")]
         public string BackupType { get; private set; }
+
+        /// <summary>
+        /// Gets failure reason
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.failureReason")]
+        public string FailureReason { get; private set; }
 
         /// <summary>
         /// Validate the object.

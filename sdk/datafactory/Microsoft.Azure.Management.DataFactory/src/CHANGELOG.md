@@ -1,5 +1,12 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.15.0
+###  Feature Additions
+- Added WebActivity support for Service Principal
+- Added PipelineEndpoint with version and DataPathAssignments fields in AzureMLExecutePipeline
+- Added pipeline policy and Elapsed Time Metric
+- Fixed WebActivity dynamic authentication
+
 ## Version 4.14.0
 ###  Feature Additions
 - Added encryption property for Customer Managed Key

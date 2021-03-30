@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Spark.Tests
                 new Uri(TestEnvironment.EndpointUrl),
                 TestEnvironment.SparkPoolName,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new SparkClientOptions())
+                options: InstrumentClientOptions(new SparkClientOptions())
             ));
         }
 

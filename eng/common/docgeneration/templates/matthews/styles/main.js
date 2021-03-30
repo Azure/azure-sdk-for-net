@@ -153,6 +153,33 @@ function httpGetLatestAsync(targetUrl, latestVersions, packageName) {
     })
 }
 
+function loadedOtherVersions(url, latestVersions, publishedVersions, selector, collapsible, packageName) {
+    var hasAdded = function (currentVersion) {
+        return $(publishedVersions).children('li').filter(function() {
+            return $(this).text() === currentVersion
+        }).length || $(latestVersions).children('li').filter(function() {
+            return $(this).text() === currentVersion
+        }).length
+    }
+    httpGetAsync(url, function (responseText) {
+        if (responseText) {
+            options = responseText.match(/[^\r\n]+/g)
+            for (var i in options) {
+                if (!hasAdded(options[i])) {
+                    $(publishedVersions).append('<li><a href="' + getPackageUrl(SELECTED_LANGUAGE, packageName, options[i]) + '" target="_blank">' + options[i] + '</a></li>')
+                }
+            }
+        }
+        else {
+            $(publishedVersions).append('<li>No discovered versions present in blob storage.</li>')
+        }                
+        $(selector).addClass("loaded")
+        if ($(publishedVersions).children('li').length < 1) {
+            $(collapsible).remove()
+        }
+    })
+}
+
 function populateIndexList(selector, packageName) {
     var url = "https://azuresdkdocs.blob.core.windows.net/$web/" + SELECTED_LANGUAGE + "/" + packageName + "/versioning/versions"
     var latestGAUrl = "https://azuresdkdocs.blob.core.windows.net/$web/" + SELECTED_LANGUAGE + "/" + packageName + "/versioning/latest-ga"
@@ -170,6 +197,7 @@ function populateIndexList(selector, packageName) {
     }
     $(latestVersions).after(collapsible)
     $(collapsible).after(publishedVersions)
+
     // Add collapsible arrows on versioned docs.
     $(collapsible).on('click', function(event) {
         event.preventDefault();
@@ -179,19 +207,7 @@ function populateIndexList(selector, packageName) {
         $(this).toggleClass('down')
         if ($(this).hasClass('down')) {
             if (!$(selector).hasClass('loaded')){
-                httpGetAsync(url, function (responseText) {
-                    if (responseText) {
-                        options = responseText.match(/[^\r\n]+/g)
-                        for (var i in options) {
-                            $(publishedVersions).append('<li><a href="' + getPackageUrl(SELECTED_LANGUAGE, packageName, options[i]) + '" target="_blank">' + options[i] + '</a></li>')
-    
-                        }
-                    }
-                    else {
-                        $(publishedVersions).append('<li>No discovered versions present in blob storage.</li>')
-                    }                
-                    $(selector).addClass("loaded")
-                })
+                loadedOtherVersions(url, latestVersions, publishedVersions, selector, collapsible, packageName)
             }
             $(publishedVersions).show()
         } else {

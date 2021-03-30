@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of PostgreSqlDataFeedPatch. </summary>
         public PostgreSqlDataFeedPatch()
         {
-            DataSourceType = DataFeedDetailPatchDataSourceType.PostgreSql;
+            DataSourceType = DataFeedSourceType.PostgreSql;
         }
 
         public SqlSourceParameter DataSourceParameter { get; set; }

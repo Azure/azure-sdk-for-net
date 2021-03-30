@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
-using Azure.Messaging.ServiceBus.Tests;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Sender
@@ -128,48 +126,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 batch.TryAddMessage(new ServiceBusMessage(Array.Empty<byte>()));
 
                 await sender.SendMessagesAsync(batch);
-            }
-        }
-
-        [Test]
-        public async Task CanSendLargeMessageBatch()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: true, enableSession: true))
-            {
-                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
-                ServiceBusSender sender = client.CreateSender(scope.QueueName);
-                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
-
-                await AddAndSendMessages();
-
-                batch.Clear();
-                Assert.AreEqual(0, batch.Count);
-                Assert.AreEqual(0, batch.SizeInBytes);
-
-                await AddAndSendMessages();
-
-                async Task AddAndSendMessages()
-                {
-                    // service limits to 4500 messages but we have not added this to our client validation yet
-                    while (batch.Count < 4500 && batch.TryAddMessage(
-                        new ServiceBusMessage(new byte[50])
-                        {
-                            MessageId = "new message ID that takes up some space",
-                            SessionId = "sessionId",
-                            PartitionKey = "sessionId",
-                            ApplicationProperties = { { "key", "value" } }
-                        }))
-                    {
-                    }
-
-                    if (batch.Count < 4500)
-                    {
-                        // the difference in size from the max allowable size should be less than the size of 1 message
-                        Assert.IsTrue(batch.MaxSizeInBytes - batch.SizeInBytes < 180);
-                    }
-                    Assert.Greater(batch.Count, 0);
-                    await sender.SendMessagesAsync(batch);
-                }
             }
         }
 

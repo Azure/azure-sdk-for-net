@@ -14,14 +14,29 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ShareSignedIdentifier() { }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
         internal ShareSignedIdentifier(string id)
         {
             Id = id;
+        }
+
+        /// <summary>
+        /// Creates a new ShareSignedIdentifier instance.
+        /// </summary>
+        public ShareSignedIdentifier()
+            : this(false)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new ShareSignedIdentifier instance.
+        /// </summary>
+        /// <param name="skipInitialization">Whether to skip initializing nested objects.</param>
+        internal ShareSignedIdentifier(bool skipInitialization)
+        {
+            if (!skipInitialization)
+            {
+                AccessPolicy = new Azure.Storage.Files.Shares.Models.ShareAccessPolicy();
+            }
         }
     }
 }

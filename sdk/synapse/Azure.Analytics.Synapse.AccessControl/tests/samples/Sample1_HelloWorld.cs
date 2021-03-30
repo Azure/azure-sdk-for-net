@@ -37,7 +37,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             Guid roleId = role.Id.Value;
 
             string assignedScope = "workspaces/<my-workspace-name>";
-            /*@@*/assignedScope = "workspaces/workspacechhamosynapse";
+            /*@@*/assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
 
             // Replace the string below with the ID you'd like to assign the role.
             Guid principalId = /*<my-principal-id>"*/ Guid.NewGuid();

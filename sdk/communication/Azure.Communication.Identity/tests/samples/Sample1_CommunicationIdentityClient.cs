@@ -41,7 +41,7 @@ namespace Azure.Communication.Identity.Samples
             #endregion Snippet:CreateCommunicationTokenAsync
 
             #region  Snippet:CreateCommunicationTokenAsync
-            Response<AccessToken> tokenResponse = await client.IssueTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
+            Response<AccessToken> tokenResponse = await client.GetTokenAsync(user, scopes: new[] { CommunicationTokenScope.Chat });
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
             Console.WriteLine($"Token: {token}");
@@ -76,7 +76,7 @@ namespace Azure.Communication.Identity.Samples
             #endregion Snippet:CreateCommunicationToken
 
             #region  Snippet:CreateCommunicationToken
-            Response<AccessToken> tokenResponse = client.IssueToken(user, scopes: new[] { CommunicationTokenScope.Chat });
+            Response<AccessToken> tokenResponse = client.GetToken(user, scopes: new[] { CommunicationTokenScope.Chat });
             string token = tokenResponse.Value.Token;
             DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
             Console.WriteLine($"Token: {token}");
@@ -90,6 +90,20 @@ namespace Azure.Communication.Identity.Samples
             #region Snippet:DeleteACommunicationUser
             Response deleteResponse = client.DeleteUser(user);
             #endregion Snippet:DeleteACommunicationUser
+        }
+
+        [Test]
+        public async Task CreateUserAndToken()
+        {
+            var connectionString = TestEnvironment.ConnectionString;
+            var client = new CommunicationIdentityClient(connectionString);
+            client = CreateClientWithConnectionString();
+            #region  Snippet:CreateCommunicationUserAndToken
+            Response<CommunicationUserIdentifierAndToken> response = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat });
+            var (user, token) = response.Value;
+            Console.WriteLine($"User id: {user.Id}");
+            Console.WriteLine($"Token: {token.Token}");
+            #endregion Snippet:CreateCommunicationToken
         }
 
         [Test]

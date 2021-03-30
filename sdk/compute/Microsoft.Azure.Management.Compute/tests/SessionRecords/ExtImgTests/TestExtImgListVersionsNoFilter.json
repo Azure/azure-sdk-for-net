@@ -1,61 +1,61 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Compute/artifacttypes/vmextension/types/VMAccessAgent/versions?api-version=2020-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjRmYjIzZTMtNmJhMy00MWYwLTliNmUtZTQxMTMxZDVkNjFlL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LkNvbXB1dGUvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy9WTUFjY2Vzc0FnZW50L3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/westus/publishers/Microsoft.Compute/artifacttypes/vmextension/types/VMAccessAgent/versions?api-version=2020-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvd2VzdHVzL3B1Ymxpc2hlcnMvTWljcm9zb2Z0LkNvbXB1dGUvYXJ0aWZhY3R0eXBlcy92bWV4dGVuc2lvbi90eXBlcy9WTUFjY2Vzc0FnZW50L3ZlcnNpb25zP2FwaS12ZXJzaW9uPTIwMjAtMTItMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9dc785be-557b-471d-8df0-93f979944c7c"
+          "041df348-6096-438d-b6b0-48e473b44325"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.19041.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/36.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.18363.",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/39.0.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 20 May 2020 17:34:30 GMT"
-        ],
         "Pragma": [
           "no-cache"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "12718db6-6203-49e9-8be9-ad7f76f87489_132326429749466189"
+          "03e6c753-1db2-4ec7-a057-8ff6011fb55c_132371506024985746"
         ],
         "x-ms-request-id": [
-          "1a784a22-4647-4411-9a3f-66c5299f4289"
+          "da107f0a-f7f4-4ac3-97f8-454c2fdb79a7"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0",
+          "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
           "11999"
         ],
         "x-ms-correlation-request-id": [
-          "5d58ef32-8e75-4cc5-b2ea-93f031685008"
+          "8a85221e-cadf-4596-bac5-3a19f1c7c6d6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20200520T173430Z:5d58ef32-8e75-4cc5-b2ea-93f031685008"
+          "EASTUS2:20201229T160239Z:8a85221e-cadf-4596-bac5-3a19f1c7c6d6"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
+        "Date": [
+          "Tue, 29 Dec 2020 16:02:39 GMT"
+        ],
         "Content-Length": [
-          "263"
+          "3627"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -64,12 +64,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.4.5\",\r\n    \"id\": \"/Subscriptions/24fb23e3-6ba3-41f0-9b6e-e41131d5d61e/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.4.5\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.0\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/1.0\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.0.2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/1.0.2\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"1.0.3\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/1.0.3\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.0\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.0\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.0.1\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.0.1\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.0.2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.0.2\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.3\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.3\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.4\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.4\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.4.1\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.4.1\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.4.2\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.4.2\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.4.3\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.4.3\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.4.4\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.4.4\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.4.5\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.4.5\"\r\n  },\r\n  {\r\n    \"location\": \"westus\",\r\n    \"name\": \"2.4.7\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/westus/Publishers/Microsoft.Compute/ArtifactTypes/VMExtension/Types/VMAccessAgent/Versions/2.4.7\"\r\n  }\r\n]",
       "StatusCode": 200
     }
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "24fb23e3-6ba3-41f0-9b6e-e41131d5d61e"
+    "SubscriptionId": "e37510d7-33b6-4676-886f-ee75bcc01871"
   }
 }

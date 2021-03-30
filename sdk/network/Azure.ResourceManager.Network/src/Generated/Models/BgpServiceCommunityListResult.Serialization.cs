@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BgpServiceCommunityListResult
+    internal partial class BgpServiceCommunityListResult
     {
         internal static BgpServiceCommunityListResult DeserializeBgpServiceCommunityListResult(JsonElement element)
         {

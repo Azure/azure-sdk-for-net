@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -28,7 +29,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// LoadBalancerFrontendIPConfiguration class.
         /// </summary>
-        public LoadBalancerFrontendIPConfiguration(string name = default(string), LoadBalancerFrontendIPConfigurationProperties properties = default(LoadBalancerFrontendIPConfigurationProperties))
+        /// <param name="name">The name of the resource that is unique within
+        /// the set of frontend IP configurations used by the load balancer.
+        /// This name can be used to access the resource.</param>
+        /// <param name="properties">Properties of load balancer frontend ip
+        /// configuration.</param>
+        public LoadBalancerFrontendIPConfiguration(string name, LoadBalancerFrontendIPConfigurationProperties properties)
         {
             Name = name;
             Properties = properties;
@@ -41,14 +47,35 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the name of the resource that is unique within the set
+        /// of frontend IP configurations used by the load balancer. This name
+        /// can be used to access the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets properties of load balancer frontend ip configuration.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public LoadBalancerFrontendIPConfigurationProperties Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Properties == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Properties");
+            }
+        }
     }
 }

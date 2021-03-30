@@ -1,0 +1,238 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit\u0026piiCategories=PhoneNumber",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "175",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b7bc69b6b1b820479f455965bdfe740a-7ab36d8ff313c14d-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "fc3e2e1d014a16e930b2baccef70bd87",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "70e3dbc0-1bdd-44fa-9469-428c3d771151",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
+        "Date": "Tue, 02 Mar 2021 14:35:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "47"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "redactedText": "A developer with SSN 859-98-0987 whose phone number is ************ is building tools with our APIs. They work at Microsoft",
+            "id": "0",
+            "entities": [
+              {
+                "text": "800-102-1100",
+                "category": "PhoneNumber",
+                "offset": 55,
+                "length": 12,
+                "confidenceScore": 0.8
+              }
+            ],
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2021-01-15"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit\u0026piiCategories=PhoneNumber%2COrganization",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "175",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-977af504d2fa6d4d98f8e349fc78ca9d-6f644fbee7f33841-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "f47f8dfecab159d3b57419d3b00cf4bf",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "3ad264ac-ad69-4280-b7e7-276d537e5571",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
+        "Date": "Tue, 02 Mar 2021 14:35:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "44"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "redactedText": "A developer with SSN 859-98-0987 whose phone number is ************ is building tools with our APIs. They work at *********",
+            "id": "0",
+            "entities": [
+              {
+                "text": "800-102-1100",
+                "category": "PhoneNumber",
+                "offset": 55,
+                "length": 12,
+                "confidenceScore": 0.8
+              },
+              {
+                "text": "Microsoft",
+                "category": "Organization",
+                "offset": 114,
+                "length": 9,
+                "confidenceScore": 0.96
+              }
+            ],
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2021-01-15"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit\u0026piiCategories=PhoneNumber%2COrganization%2CUSSocialSecurityNumber",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "175",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-d7c02f1140b4cc4590dc143c5e4c2538-5f8bd0a3f4ed4a4a-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "6fb8769d2a4111b2f0ea31dcd0af3166",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ef04f805-06dc-4e00-867d-88e999fd5b83",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
+        "Date": "Tue, 02 Mar 2021 14:35:18 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "39"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "redactedText": "A developer with SSN *********** whose phone number is ************ is building tools with our APIs. They work at *********",
+            "id": "0",
+            "entities": [
+              {
+                "text": "859-98-0987",
+                "category": "USSocialSecurityNumber",
+                "offset": 21,
+                "length": 11,
+                "confidenceScore": 0.65
+              },
+              {
+                "text": "800-102-1100",
+                "category": "PhoneNumber",
+                "offset": 55,
+                "length": 12,
+                "confidenceScore": 0.8
+              },
+              {
+                "text": "Microsoft",
+                "category": "Organization",
+                "offset": 114,
+                "length": 9,
+                "confidenceScore": 0.96
+              }
+            ],
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2021-01-15"
+      }
+    },
+    {
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit\u0026piiCategories=ABARoutingNumber",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "175",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-9237584e7f18de43b6bd81e80f07bb4d-12f9b17876ff5643-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "d01cb57ef07a53ac5be546d5e8156624",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a8a7ba28-3e7e-44fb-beda-15d7d69c873c",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
+        "Date": "Tue, 02 Mar 2021 14:35:18 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "45"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "redactedText": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
+            "id": "0",
+            "entities": [],
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2021-01-15"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "462222541",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
+  }
+}

@@ -1,15 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       This client library enables working with the Microsoft Azure Communication Phone Numbers service.
       For this release, see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.PhoneNumbers/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.PhoneNumbers/CHANGELOG.md.
     </Description>
     <AssemblyTitle>Azure Communication Phone Numbers Service</AssemblyTitle>
-    <Version>1.0.0-beta.4</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageTags>Microsoft Azure Communication Phone Numbers Service;Microsoft;Azure;Azure Communication Service;Azure Communication Phone Numbers Service;Phone Numbers;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +19,6 @@
   <ItemGroup>
     <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="..\..\Shared\src\StaticTokenCredential.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="..\..\Shared\Properties\CommunicationAssembyInfo.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -34,9 +32,6 @@
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />    
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
   </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />

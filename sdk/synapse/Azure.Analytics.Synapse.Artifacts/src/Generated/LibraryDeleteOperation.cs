@@ -15,9 +15,15 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Synapse.Artifacts
 {
     /// <summary> Delete Library. </summary>
-    internal partial class LibraryDeleteOperation : Operation<Response>, IOperationSource<Response>
+    public partial class LibraryDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of LibraryDeleteOperation for mocking. </summary>
+        protected LibraryDeleteOperation()
+        {
+        }
+
         internal LibraryDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LibraryDeleteOperation");

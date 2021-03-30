@@ -53,7 +53,7 @@ namespace Azure.Core.Pipeline
                         // TODO: #10598 - Determine the correct approach for
                         // surfacing what appear to be nested SearchError
                         // instances.
-                        Debug.Assert(!(error?.Details?.Count > 0));
+                        // Debug.Assert(!(error?.Details?.Count > 0));
                     }
                 }
                 catch (JsonException)

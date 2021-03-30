@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs.Batch.Tests;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Sas;
@@ -25,6 +26,7 @@ namespace Azure.Storage.Blobs.Test
         {
             // Batch delimiters are random so disable body comparison
             Matcher = new RecordMatcher(compareBodies: false);
+            Sanitizer = new BatchStorageRecordedTestSanitizer();
         }
 
         [SetUp]
@@ -43,7 +45,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         #region Batch Mechanics
-        [Test]
+        [RecordedTest]
         public async Task Batch_EmptyFails()
         {
             TestDiagnostics = false;
@@ -58,7 +60,7 @@ namespace Azure.Storage.Blobs.Test
             StringAssert.Contains("Cannot submit an empty batch", ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Batch_Limit()
         {
             await using TestScenario scenario = Scenario();
@@ -75,7 +77,7 @@ namespace Azure.Storage.Blobs.Test
             await client.DeleteBlobsAsync(blobs.Take(256).ToArray());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Batch_Homogenous_Delete()
         {
             await using TestScenario scenario = Scenario();
@@ -91,7 +93,7 @@ namespace Azure.Storage.Blobs.Test
             StringAssert.Contains("already being used for Delete operations", ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Batch_Homogenous_SetTier()
         {
             await using TestScenario scenario = Scenario();
@@ -106,7 +108,7 @@ namespace Azure.Storage.Blobs.Test
             StringAssert.Contains("already being used for SetAccessTier operations", ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Batch_StatusIndicatesCannotRead()
         {
             await using TestScenario scenario = Scenario();
@@ -120,7 +122,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(0, response.Status);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Batch_CannotReadBeforeSubmit()
         {
             await using TestScenario scenario = Scenario();
@@ -135,7 +137,7 @@ namespace Azure.Storage.Blobs.Test
             StringAssert.Contains("Cannot use the Response before calling BlobBatchClient.SubmitBatch", ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Batch_CanUseResponseAfterException()
         {
             await using TestScenario scenario = Scenario();
@@ -159,7 +161,7 @@ namespace Azure.Storage.Blobs.Test
             scenario.AssertStatus(404, response2);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Batch_CannotChangeClients()
         {
             TestDiagnostics = false;
@@ -179,7 +181,7 @@ namespace Azure.Storage.Blobs.Test
             StringAssert.Contains("BlobBatchClient used to create the BlobBatch must be used to submit it", ex.Message);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Batch_AcrossContainers()
         {
             await using TestScenario scenario = Scenario();
@@ -195,7 +197,7 @@ namespace Azure.Storage.Blobs.Test
             scenario.AssertStatus(202, responses);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Batch_SasUri_NotOwner()
         {
             // Create a container using SAS for Auth
@@ -236,7 +238,7 @@ namespace Azure.Storage.Blobs.Test
         #endregion Batch Mechanics
 
         #region Delete
-        [Test]
+        [RecordedTest]
         public async Task Delete_Basic()
         {
             await using TestScenario scenario = Scenario();
@@ -258,7 +260,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task Delete_Basic_AccountSas()
         {
@@ -282,7 +284,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task Delete_ContainerScoped_Basic()
         {
@@ -305,7 +307,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task Delete_ContainerScoped_Basic_ContainerSas()
         {
@@ -342,7 +344,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(blobs);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Delete_Basic_Convenience()
         {
             await using TestScenario scenario = Scenario();
@@ -356,7 +358,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task Delete_Basic_Convenience_AccountSas()
         {
@@ -372,7 +374,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task Delete_ContainerScoped_Basic_Convenience()
         {
@@ -387,7 +389,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task Delete_ContainerScoped_Basic_Convenience_ContainerSas()
         {
@@ -418,7 +420,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(blobs);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Delete_OneFails()
         {
             await using TestScenario scenario = Scenario();
@@ -440,7 +442,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Delete_OneFails_Convenience()
         {
             await using TestScenario scenario = Scenario();
@@ -460,7 +462,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Delete_OneFails_NoThrow()
         {
             await using TestScenario scenario = Scenario();
@@ -480,7 +482,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Delete_MultipleFail()
         {
             await using TestScenario scenario = Scenario();
@@ -501,7 +503,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Delete_MultipleFail_Convenience()
         {
             await using TestScenario scenario = Scenario();
@@ -519,7 +521,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Delete_MultipleFail_NoThrow()
         {
             await using TestScenario scenario = Scenario();
@@ -538,7 +540,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Delete_Error()
         {
             // Arrange
@@ -558,7 +560,7 @@ namespace Azure.Storage.Blobs.Test
         #endregion Delete
 
         #region SetBlobAccessTier
-        [Test]
+        [RecordedTest]
         public async Task SetBlobAccessTier_Basic()
         {
             await using TestScenario scenario = Scenario();
@@ -603,7 +605,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task SetBlobAccessTier_ContainerScoped_Basic()
         {
@@ -625,7 +627,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task SetBlobAccessTier_ContainerScoped_Basic_ContainerSas()
         {
@@ -662,7 +664,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, blobs);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetBlobAccessTier_Basic_Convenience()
         {
             await using TestScenario scenario = Scenario();
@@ -676,7 +678,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetBlobAccessTier_Basic_Convenience_AccountSas()
         {
@@ -692,7 +694,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task SetBlobAccessTier_ContainerScoped_Basic_Convenience()
         {
@@ -707,7 +709,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
         public async Task SetBlobAccessTier_ContainerScoped_Basic_Convenience_ContainerSas()
         {
@@ -738,7 +740,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, blobs);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetBlobAccessTier_OneFails()
         {
             await using TestScenario scenario = Scenario();
@@ -760,7 +762,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetBlobAccessTier_OneFails_Convenience()
         {
             await using TestScenario scenario = Scenario();
@@ -780,7 +782,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetBlobAccessTier_OneFails_NoThrow()
         {
             await using TestScenario scenario = Scenario();
@@ -800,7 +802,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetBlobAccessTier_MultipleFail()
         {
             await using TestScenario scenario = Scenario();
@@ -821,7 +823,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetBlobAccessTier_MultipleFail_Convenience()
         {
             await using TestScenario scenario = Scenario();
@@ -839,7 +841,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetBlobAccessTier_MultipleFail_NoThrow()
         {
             await using TestScenario scenario = Scenario();
@@ -859,7 +861,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, good);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Batch_Dispose_Response_Still_Available()
         {
             await using TestScenario scenario = Scenario();
@@ -880,7 +882,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(blobs);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Batch_Double_Dispose_Response_Still_Available()
         {
             await using TestScenario scenario = Scenario();
@@ -903,7 +905,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertDeleted(blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("service bug - https://github.com/Azure/azure-sdk-for-net/issues/13507")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetBlobAccessTier_Snapshot()
@@ -926,7 +928,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, blobs);
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("service bug - https://github.com/Azure/azure-sdk-for-net/issues/13507")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetBlobAccessTier_Version()
@@ -950,7 +952,7 @@ namespace Azure.Storage.Blobs.Test
             await scenario.AssertTiers(AccessTier.Cool, blobs);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetBlobAccessTier_Error()
         {
             // Arrange
@@ -1003,7 +1005,7 @@ namespace Azure.Storage.Blobs.Test
                 for (int i = 0; i < count; i++)
                 {
                     blobs[i] = _test.InstrumentClient(container.GetBlobClient("blob" + (++_blobId)));
-                    await blobs[i].UploadAsync(new MemoryStream(_test.GetRandomBuffer(Constants.KB)));
+                    await blobs[i].UploadAsync(BinaryData.FromBytes(_test.GetRandomBuffer(Constants.KB)));
                 }
                 return blobs;
             }
@@ -1109,7 +1111,7 @@ namespace Azure.Storage.Blobs.Test
         }
         #endregion Scenario helper
 
-        [Test]
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             var blobServiceClientMock = new Mock<BlobServiceClient>(TestConfigDefault.ConnectionString)

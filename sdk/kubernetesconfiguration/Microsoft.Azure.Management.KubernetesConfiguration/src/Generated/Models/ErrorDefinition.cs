@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,12 +32,10 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// <param name="code">Service specific error code which serves as the
         /// substatus for the HTTP error code.</param>
         /// <param name="message">Description of the error.</param>
-        /// <param name="details">Internal error details.</param>
-        public ErrorDefinition(string code = default(string), string message = default(string), IList<ErrorDefinition> details = default(IList<ErrorDefinition>))
+        public ErrorDefinition(string code, string message)
         {
             Code = code;
             Message = message;
-            Details = details;
             CustomInit();
         }
 
@@ -49,23 +45,17 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets service specific error code which serves as the substatus for
-        /// the HTTP error code.
+        /// Gets or sets service specific error code which serves as the
+        /// substatus for the HTTP error code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; private set; }
+        public string Code { get; set; }
 
         /// <summary>
-        /// Gets description of the error.
+        /// Gets or sets description of the error.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; private set; }
-
-        /// <summary>
-        /// Gets internal error details.
-        /// </summary>
-        [JsonProperty(PropertyName = "details")]
-        public IList<ErrorDefinition> Details { get; private set; }
+        public string Message { get; set; }
 
     }
 }

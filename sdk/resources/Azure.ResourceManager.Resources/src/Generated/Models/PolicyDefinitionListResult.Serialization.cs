@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class PolicyDefinitionListResult
+    internal partial class PolicyDefinitionListResult
     {
         internal static PolicyDefinitionListResult DeserializePolicyDefinitionListResult(JsonElement element)
         {

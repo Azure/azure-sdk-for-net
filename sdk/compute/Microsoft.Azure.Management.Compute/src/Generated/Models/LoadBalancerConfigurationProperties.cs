@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -30,8 +31,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// LoadBalancerConfigurationProperties class.
         /// </summary>
-        /// <param name="frontendIPConfigurations">List of IP</param>
-        public LoadBalancerConfigurationProperties(IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations = default(IList<LoadBalancerFrontendIPConfiguration>))
+        /// <param name="frontendIPConfigurations">Specifies the frontend IP to
+        /// be used for the load balancer. Only IPv4 frontend IP address is
+        /// supported. Each load balancer configuration must have exactly one
+        /// frontend IP configuration.</param>
+        public LoadBalancerConfigurationProperties(IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations)
         {
             FrontendIPConfigurations = frontendIPConfigurations;
             CustomInit();
@@ -43,10 +47,36 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of IP
+        /// Gets or sets specifies the frontend IP to be used for the load
+        /// balancer. Only IPv4 frontend IP address is supported. Each load
+        /// balancer configuration must have exactly one frontend IP
+        /// configuration.
         /// </summary>
         [JsonProperty(PropertyName = "frontendIPConfigurations")]
         public IList<LoadBalancerFrontendIPConfiguration> FrontendIPConfigurations { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (FrontendIPConfigurations == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FrontendIPConfigurations");
+            }
+            if (FrontendIPConfigurations != null)
+            {
+                foreach (var element in FrontendIPConfigurations)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

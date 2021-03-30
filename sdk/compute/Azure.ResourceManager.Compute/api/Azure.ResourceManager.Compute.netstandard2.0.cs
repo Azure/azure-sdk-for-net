@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class ContainerServicesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.ContainerService>
     {
-        internal ContainerServicesCreateOrUpdateOperation() { }
+        protected ContainerServicesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class ContainerServicesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ContainerServicesDeleteOperation() { }
+        protected ContainerServicesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DedicatedHostsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.DedicatedHost>
     {
-        internal DedicatedHostsCreateOrUpdateOperation() { }
+        protected DedicatedHostsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DedicatedHostsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal DedicatedHostsDeleteOperation() { }
+        protected DedicatedHostsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DedicatedHostsUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.DedicatedHost>
     {
-        internal DedicatedHostsUpdateOperation() { }
+        protected DedicatedHostsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskEncryptionSetsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.DiskEncryptionSet>
     {
-        internal DiskEncryptionSetsCreateOrUpdateOperation() { }
+        protected DiskEncryptionSetsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskEncryptionSetsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal DiskEncryptionSetsDeleteOperation() { }
+        protected DiskEncryptionSetsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskEncryptionSetsUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.DiskEncryptionSet>
     {
-        internal DiskEncryptionSetsUpdateOperation() { }
+        protected DiskEncryptionSetsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DisksCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.Disk>
     {
-        internal DisksCreateOrUpdateOperation() { }
+        protected DisksCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DisksDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal DisksDeleteOperation() { }
+        protected DisksDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DisksGrantAccessOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.AccessUri>
     {
-        internal DisksGrantAccessOperation() { }
+        protected DisksGrantAccessOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DisksRevokeAccessOperation : Azure.Operation<Azure.Response>
     {
-        internal DisksRevokeAccessOperation() { }
+        protected DisksRevokeAccessOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DisksUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.Disk>
     {
-        internal DisksUpdateOperation() { }
+        protected DisksUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleriesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.Gallery>
     {
-        internal GalleriesCreateOrUpdateOperation() { }
+        protected GalleriesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleriesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal GalleriesDeleteOperation() { }
+        protected GalleriesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleriesUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.Gallery>
     {
-        internal GalleriesUpdateOperation() { }
+        protected GalleriesUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplicationsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.GalleryApplication>
     {
-        internal GalleryApplicationsCreateOrUpdateOperation() { }
+        protected GalleryApplicationsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplicationsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal GalleryApplicationsDeleteOperation() { }
+        protected GalleryApplicationsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplicationsUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.GalleryApplication>
     {
-        internal GalleryApplicationsUpdateOperation() { }
+        protected GalleryApplicationsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplicationVersionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.GalleryApplicationVersion>
     {
-        internal GalleryApplicationVersionsCreateOrUpdateOperation() { }
+        protected GalleryApplicationVersionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplicationVersionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal GalleryApplicationVersionsDeleteOperation() { }
+        protected GalleryApplicationVersionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplicationVersionsUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.GalleryApplicationVersion>
     {
-        internal GalleryApplicationVersionsUpdateOperation() { }
+        protected GalleryApplicationVersionsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImagesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.GalleryImage>
     {
-        internal GalleryImagesCreateOrUpdateOperation() { }
+        protected GalleryImagesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImagesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal GalleryImagesDeleteOperation() { }
+        protected GalleryImagesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImagesUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.GalleryImage>
     {
-        internal GalleryImagesUpdateOperation() { }
+        protected GalleryImagesUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImageVersionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.GalleryImageVersion>
     {
-        internal GalleryImageVersionsCreateOrUpdateOperation() { }
+        protected GalleryImageVersionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImageVersionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal GalleryImageVersionsDeleteOperation() { }
+        protected GalleryImageVersionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImageVersionsUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.GalleryImageVersion>
     {
-        internal GalleryImageVersionsUpdateOperation() { }
+        protected GalleryImageVersionsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class ImagesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.Image>
     {
-        internal ImagesCreateOrUpdateOperation() { }
+        protected ImagesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class ImagesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ImagesDeleteOperation() { }
+        protected ImagesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class ImagesUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.Image>
     {
-        internal ImagesUpdateOperation() { }
+        protected ImagesUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class LogAnalyticsExportRequestRateByIntervalOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.LogAnalyticsOperationResult>
     {
-        internal LogAnalyticsExportRequestRateByIntervalOperation() { }
+        protected LogAnalyticsExportRequestRateByIntervalOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class LogAnalyticsExportThrottledRequestsOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.LogAnalyticsOperationResult>
     {
-        internal LogAnalyticsExportThrottledRequestsOperation() { }
+        protected LogAnalyticsExportThrottledRequestsOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class SnapshotsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.Snapshot>
     {
-        internal SnapshotsCreateOrUpdateOperation() { }
+        protected SnapshotsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class SnapshotsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal SnapshotsDeleteOperation() { }
+        protected SnapshotsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class SnapshotsGrantAccessOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.AccessUri>
     {
-        internal SnapshotsGrantAccessOperation() { }
+        protected SnapshotsGrantAccessOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class SnapshotsRevokeAccessOperation : Azure.Operation<Azure.Response>
     {
-        internal SnapshotsRevokeAccessOperation() { }
+        protected SnapshotsRevokeAccessOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class SnapshotsUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.Snapshot>
     {
-        internal SnapshotsUpdateOperation() { }
+        protected SnapshotsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineExtensionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachineExtension>
     {
-        internal VirtualMachineExtensionsCreateOrUpdateOperation() { }
+        protected VirtualMachineExtensionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineExtensionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineExtensionsDeleteOperation() { }
+        protected VirtualMachineExtensionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineExtensionsUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachineExtension>
     {
-        internal VirtualMachineExtensionsUpdateOperation() { }
+        protected VirtualMachineExtensionsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -887,7 +887,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetExtensionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtension>
     {
-        internal VirtualMachineScaleSetExtensionsCreateOrUpdateOperation() { }
+        protected VirtualMachineScaleSetExtensionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetExtensionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetExtensionsDeleteOperation() { }
+        protected VirtualMachineScaleSetExtensionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetExtensionsUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtension>
     {
-        internal VirtualMachineScaleSetExtensionsUpdateOperation() { }
+        protected VirtualMachineScaleSetExtensionsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetRollingUpgradesCancelOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetRollingUpgradesCancelOperation() { }
+        protected VirtualMachineScaleSetRollingUpgradesCancelOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeOperation() { }
+        protected VirtualMachineScaleSetRollingUpgradesStartExtensionUpgradeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOperation() { }
+        protected VirtualMachineScaleSetRollingUpgradesStartOSUpgradeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>
     {
-        internal VirtualMachineScaleSetsCreateOrUpdateOperation() { }
+        protected VirtualMachineScaleSetsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsDeallocateOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsDeallocateOperation() { }
+        protected VirtualMachineScaleSetsDeallocateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsDeleteInstancesOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsDeleteInstancesOperation() { }
+        protected VirtualMachineScaleSetsDeleteInstancesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsDeleteOperation() { }
+        protected VirtualMachineScaleSetsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsPerformMaintenanceOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsPerformMaintenanceOperation() { }
+        protected VirtualMachineScaleSetsPerformMaintenanceOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1104,7 +1104,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsPowerOffOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsPowerOffOperation() { }
+        protected VirtualMachineScaleSetsPowerOffOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1117,7 +1117,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsRedeployOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsRedeployOperation() { }
+        protected VirtualMachineScaleSetsRedeployOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsReimageAllOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsReimageAllOperation() { }
+        protected VirtualMachineScaleSetsReimageAllOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1143,7 +1143,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsReimageOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsReimageOperation() { }
+        protected VirtualMachineScaleSetsReimageOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsRestartOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsRestartOperation() { }
+        protected VirtualMachineScaleSetsRestartOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1169,7 +1169,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsSetOrchestrationServiceStateOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsSetOrchestrationServiceStateOperation() { }
+        protected VirtualMachineScaleSetsSetOrchestrationServiceStateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1182,7 +1182,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsStartOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsStartOperation() { }
+        protected VirtualMachineScaleSetsStartOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsUpdateInstancesOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetsUpdateInstancesOperation() { }
+        protected VirtualMachineScaleSetsUpdateInstancesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1208,7 +1208,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetsUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet>
     {
-        internal VirtualMachineScaleSetsUpdateOperation() { }
+        protected VirtualMachineScaleSetsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1221,7 +1221,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMExtensionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachineExtension>
     {
-        internal VirtualMachineScaleSetVMExtensionsCreateOrUpdateOperation() { }
+        protected VirtualMachineScaleSetVMExtensionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1234,7 +1234,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMExtensionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetVMExtensionsDeleteOperation() { }
+        protected VirtualMachineScaleSetVMExtensionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMExtensionsUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachineExtension>
     {
-        internal VirtualMachineScaleSetVMExtensionsUpdateOperation() { }
+        protected VirtualMachineScaleSetVMExtensionsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMsDeallocateOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetVMsDeallocateOperation() { }
+        protected VirtualMachineScaleSetVMsDeallocateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1287,7 +1287,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetVMsDeleteOperation() { }
+        protected VirtualMachineScaleSetVMsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1334,7 +1334,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMsPerformMaintenanceOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetVMsPerformMaintenanceOperation() { }
+        protected VirtualMachineScaleSetVMsPerformMaintenanceOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMsPowerOffOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetVMsPowerOffOperation() { }
+        protected VirtualMachineScaleSetVMsPowerOffOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1360,7 +1360,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMsRedeployOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetVMsRedeployOperation() { }
+        protected VirtualMachineScaleSetVMsRedeployOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMsReimageAllOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetVMsReimageAllOperation() { }
+        protected VirtualMachineScaleSetVMsReimageAllOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1386,7 +1386,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMsReimageOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetVMsReimageOperation() { }
+        protected VirtualMachineScaleSetVMsReimageOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1399,7 +1399,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMsRestartOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetVMsRestartOperation() { }
+        protected VirtualMachineScaleSetVMsRestartOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMsRunCommandOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.RunCommandResult>
     {
-        internal VirtualMachineScaleSetVMsRunCommandOperation() { }
+        protected VirtualMachineScaleSetVMsRunCommandOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1425,7 +1425,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMsStartOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachineScaleSetVMsStartOperation() { }
+        protected VirtualMachineScaleSetVMsStartOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1438,7 +1438,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVMsUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVM>
     {
-        internal VirtualMachineScaleSetVMsUpdateOperation() { }
+        protected VirtualMachineScaleSetVMsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1451,7 +1451,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesCaptureOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachineCaptureResult>
     {
-        internal VirtualMachinesCaptureOperation() { }
+        protected VirtualMachinesCaptureOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1464,7 +1464,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesConvertToManagedDisksOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachinesConvertToManagedDisksOperation() { }
+        protected VirtualMachinesConvertToManagedDisksOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachine>
     {
-        internal VirtualMachinesCreateOrUpdateOperation() { }
+        protected VirtualMachinesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1490,7 +1490,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesDeallocateOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachinesDeallocateOperation() { }
+        protected VirtualMachinesDeallocateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1503,7 +1503,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachinesDeleteOperation() { }
+        protected VirtualMachinesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1570,7 +1570,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesPerformMaintenanceOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachinesPerformMaintenanceOperation() { }
+        protected VirtualMachinesPerformMaintenanceOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1583,7 +1583,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesPowerOffOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachinesPowerOffOperation() { }
+        protected VirtualMachinesPowerOffOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1596,7 +1596,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesReapplyOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachinesReapplyOperation() { }
+        protected VirtualMachinesReapplyOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1609,7 +1609,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesRedeployOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachinesRedeployOperation() { }
+        protected VirtualMachinesRedeployOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1622,7 +1622,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesReimageOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachinesReimageOperation() { }
+        protected VirtualMachinesReimageOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1635,7 +1635,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesRestartOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachinesRestartOperation() { }
+        protected VirtualMachinesRestartOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1648,7 +1648,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesRunCommandOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.RunCommandResult>
     {
-        internal VirtualMachinesRunCommandOperation() { }
+        protected VirtualMachinesRunCommandOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1661,7 +1661,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesStartOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualMachinesStartOperation() { }
+        protected VirtualMachinesStartOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1674,7 +1674,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachinesUpdateOperation : Azure.Operation<Azure.ResourceManager.Compute.Models.VirtualMachine>
     {
-        internal VirtualMachinesUpdateOperation() { }
+        protected VirtualMachinesUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1793,12 +1793,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.SubResource> VirtualMachines { get { throw null; } }
     }
-    public partial class AvailabilitySetListResult
-    {
-        internal AvailabilitySetListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.AvailabilitySet> Value { get { throw null; } }
-    }
     public partial class AvailabilitySetUpdate : Azure.ResourceManager.Compute.Models.UpdateResource
     {
         public AvailabilitySetUpdate() { }
@@ -1844,11 +1838,6 @@ namespace Azure.ResourceManager.Compute.Models
         public ComponentsNj115SSchemasVirtualmachinescalesetidentityPropertiesUserassignedidentitiesAdditionalproperties() { }
         public string ClientId { get { throw null; } }
         public string PrincipalId { get { throw null; } }
-    }
-    public partial class ComputeOperationListResult
-    {
-        internal ComputeOperationListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeOperationValue> Value { get { throw null; } }
     }
     public partial class ComputeOperationValue
     {
@@ -1897,12 +1886,6 @@ namespace Azure.ResourceManager.Compute.Models
         public ContainerServiceLinuxProfile(string adminUsername, Azure.ResourceManager.Compute.Models.ContainerServiceSshConfiguration ssh) { }
         public string AdminUsername { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ContainerServiceSshConfiguration Ssh { get { throw null; } set { } }
-    }
-    public partial class ContainerServiceListResult
-    {
-        internal ContainerServiceListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ContainerService> Value { get { throw null; } }
     }
     public partial class ContainerServiceMasterProfile
     {
@@ -2083,12 +2066,6 @@ namespace Azure.ResourceManager.Compute.Models
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
-    public partial class DedicatedHostGroupListResult
-    {
-        internal DedicatedHostGroupListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHostGroup> Value { get { throw null; } }
-    }
     public partial class DedicatedHostGroupUpdate : Azure.ResourceManager.Compute.Models.UpdateResource
     {
         public DedicatedHostGroupUpdate() { }
@@ -2108,12 +2085,6 @@ namespace Azure.ResourceManager.Compute.Models
         None = 0,
         WindowsServerHybrid = 1,
         WindowsServerPerpetual = 2,
-    }
-    public partial class DedicatedHostListResult
-    {
-        internal DedicatedHostListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHost> Value { get { throw null; } }
     }
     public partial class DedicatedHostUpdate : Azure.ResourceManager.Compute.Models.UpdateResource
     {
@@ -2270,12 +2241,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator !=(Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType left, Azure.ResourceManager.Compute.Models.DiskEncryptionSetIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DiskEncryptionSetList
-    {
-        internal DiskEncryptionSetList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DiskEncryptionSet> Value { get { throw null; } }
-    }
     public partial class DiskEncryptionSetParameters : Azure.ResourceManager.Compute.Models.SubResource
     {
         public DiskEncryptionSetParameters() { }
@@ -2304,12 +2269,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DiskEncryptionSettings> EncryptionSettings { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
-    }
-    public partial class DiskList
-    {
-        internal DiskList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.Disk> Value { get { throw null; } }
     }
     public partial class DiskSku
     {
@@ -2459,12 +2418,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string ReleaseNoteUri { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.OperatingSystemTypes? SupportedOSType { get { throw null; } set { } }
     }
-    public partial class GalleryApplicationList
-    {
-        internal GalleryApplicationList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryApplication> Value { get { throw null; } }
-    }
     public partial class GalleryApplicationUpdate : Azure.ResourceManager.Compute.Models.UpdateResourceDefinition
     {
         public GalleryApplicationUpdate() { }
@@ -2481,12 +2434,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPropertiesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
-    }
-    public partial class GalleryApplicationVersionList
-    {
-        internal GalleryApplicationVersionList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryApplicationVersion> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryApplicationVersionPropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPropertiesProvisioningState>
@@ -2580,12 +2527,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Publisher { get { throw null; } set { } }
         public string Sku { get { throw null; } set { } }
     }
-    public partial class GalleryImageList
-    {
-        internal GalleryImageList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryImage> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryImagePropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryImagePropertiesProvisioningState>
     {
@@ -2633,12 +2574,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
     }
-    public partial class GalleryImageVersionList
-    {
-        internal GalleryImageVersionList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.GalleryImageVersion> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GalleryImageVersionPropertiesProvisioningState : System.IEquatable<Azure.ResourceManager.Compute.Models.GalleryImageVersionPropertiesProvisioningState>
     {
@@ -2679,12 +2614,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
-    }
-    public partial class GalleryList
-    {
-        internal GalleryList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.Gallery> Value { get { throw null; } }
     }
     public partial class GalleryOSDiskImage : Azure.ResourceManager.Compute.Models.GalleryDiskImage
     {
@@ -2820,12 +2749,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Id { get { throw null; } set { } }
         public int? Lun { get { throw null; } set { } }
     }
-    public partial class ImageListResult
-    {
-        internal ImageListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.Image> Value { get { throw null; } }
-    }
     public partial class ImageOSDisk : Azure.ResourceManager.Compute.Models.ImageDisk
     {
         public ImageOSDisk(Azure.ResourceManager.Compute.Models.OperatingSystemTypes osType, Azure.ResourceManager.Compute.Models.OperatingSystemStateTypes osState) { }
@@ -2933,12 +2856,6 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? DisablePasswordAuthentication { get { throw null; } set { } }
         public bool? ProvisionVMAgent { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SshConfiguration Ssh { get { throw null; } set { } }
-    }
-    public partial class ListUsagesResult
-    {
-        internal ListUsagesResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.Usage> Value { get { throw null; } }
     }
     public partial class LogAnalyticsInputBase
     {
@@ -3128,12 +3045,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType? ProximityPlacementGroupType { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> VirtualMachines { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SubResourceWithColocationStatus> VirtualMachineScaleSets { get { throw null; } }
-    }
-    public partial class ProximityPlacementGroupListResult
-    {
-        internal ProximityPlacementGroupListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ProximityPlacementGroup> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProximityPlacementGroupType : System.IEquatable<Azure.ResourceManager.Compute.Models.ProximityPlacementGroupType>
@@ -3329,12 +3240,6 @@ namespace Azure.ResourceManager.Compute.Models
         Location = 0,
         Zone = 1,
     }
-    public partial class ResourceSkusResult
-    {
-        internal ResourceSkusResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ResourceSku> Value { get { throw null; } }
-    }
     public partial class ResourceSkuZoneDetails
     {
         internal ResourceSkuZoneDetails() { }
@@ -3420,12 +3325,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
     }
-    public partial class RunCommandListResult
-    {
-        internal RunCommandListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.RunCommandDocumentBase> Value { get { throw null; } }
-    }
     public partial class RunCommandParameterDefinition
     {
         internal RunCommandParameterDefinition() { }
@@ -3482,12 +3381,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.SnapshotSku Sku { get { throw null; } set { } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public string UniqueId { get { throw null; } }
-    }
-    public partial class SnapshotList
-    {
-        internal SnapshotList() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.Snapshot> Value { get { throw null; } }
     }
     public partial class SnapshotSku
     {
@@ -3551,12 +3444,6 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public SshPublicKeyResource(string location) : base (default(string)) { }
         public string PublicKey { get { throw null; } set { } }
-    }
-    public partial class SshPublicKeysGroupListResult
-    {
-        internal SshPublicKeysGroupListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.SshPublicKeyResource> Value { get { throw null; } }
     }
     public partial class SshPublicKeyUpdateResource : Azure.ResourceManager.Compute.Models.UpdateResource
     {
@@ -3913,12 +3800,6 @@ namespace Azure.ResourceManager.Compute.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.InstanceViewStatus> Statuses { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineAgentInstanceView VmAgent { get { throw null; } }
     }
-    public partial class VirtualMachineListResult
-    {
-        internal VirtualMachineListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachine> Value { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualMachinePriorityTypes : System.IEquatable<Azure.ResourceManager.Compute.Models.VirtualMachinePriorityTypes>
     {
@@ -3992,12 +3873,6 @@ namespace Azure.ResourceManager.Compute.Models
         public string TypeHandlerVersion { get { throw null; } set { } }
         public string TypePropertiesType { get { throw null; } set { } }
     }
-    public partial class VirtualMachineScaleSetExtensionListResult
-    {
-        internal VirtualMachineScaleSetExtensionListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtension> Value { get { throw null; } }
-    }
     public partial class VirtualMachineScaleSetExtensionProfile
     {
         public VirtualMachineScaleSetExtensionProfile() { }
@@ -4057,30 +3932,6 @@ namespace Azure.ResourceManager.Compute.Models
         public VirtualMachineScaleSetIpTag() { }
         public string IpTagType { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
-    }
-    public partial class VirtualMachineScaleSetListOSUpgradeHistory
-    {
-        internal VirtualMachineScaleSetListOSUpgradeHistory() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.UpgradeOperationHistoricalStatusInfo> Value { get { throw null; } }
-    }
-    public partial class VirtualMachineScaleSetListResult
-    {
-        internal VirtualMachineScaleSetListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet> Value { get { throw null; } }
-    }
-    public partial class VirtualMachineScaleSetListSkusResult
-    {
-        internal VirtualMachineScaleSetListSkusResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetSku> Value { get { throw null; } }
-    }
-    public partial class VirtualMachineScaleSetListWithLinkResult
-    {
-        internal VirtualMachineScaleSetListWithLinkResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSet> Value { get { throw null; } }
     }
     public partial class VirtualMachineScaleSetManagedDiskParameters
     {
@@ -4346,12 +4197,6 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.VirtualMachineAgentInstanceView VmAgent { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineHealthStatus VmHealth { get { throw null; } }
     }
-    public partial class VirtualMachineScaleSetVMListResult
-    {
-        internal VirtualMachineScaleSetVMListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetVM> Value { get { throw null; } }
-    }
     public partial class VirtualMachineScaleSetVMNetworkProfileConfiguration
     {
         public VirtualMachineScaleSetVMNetworkProfileConfiguration() { }
@@ -4390,11 +4235,6 @@ namespace Azure.ResourceManager.Compute.Models
         public int? NumberOfCores { get { throw null; } }
         public int? OsDiskSizeInMB { get { throw null; } }
         public int? ResourceDiskSizeInMB { get { throw null; } }
-    }
-    public partial class VirtualMachineSizeListResult
-    {
-        internal VirtualMachineSizeListResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.VirtualMachineSize> Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualMachineSizeTypes : System.IEquatable<Azure.ResourceManager.Compute.Models.VirtualMachineSizeTypes>

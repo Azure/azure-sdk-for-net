@@ -40,11 +40,15 @@ param environmentTimeSeriesIdProperties array {
     maxLength: 3
     default: [
         {
-            'name': 'timeseriesinsights.id'
+            'name': 'building'
             'type': 'string'
         }
         {
-            'name': 'id'
+            'name': 'floor'
+            'type': 'string'
+        }
+        {
+            'name': 'room'
             'type': 'string'
         }
     ]
@@ -63,7 +67,7 @@ param resourceGroup string {
         description: 'If you have an existing IotHub provide the name here. Defaults to the same resource group as the TSI environnment.'
     }
     default: az.resourceGroup().name
-} 
+}
 
 param eventSourceTimestampPropertyName string {
     metadata: {
@@ -77,7 +81,7 @@ param eventSourceKeyName string {
     metadata: {
         description: 'The name of the shared access key that the Time Series Insights service will use to connect to the event hub.'
     }
-    default : 'service'
+    default: 'service'
 }
 
 var rbacOwnerRoleDefinitionId = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635'
@@ -97,8 +101,8 @@ resource iotHub 'Microsoft.Devices/IotHubs@2020-03-01' = {
     location: region
     properties: {}
     sku: {
-      name: 'S1'
-      capacity: 1
+        name: 'S1'
+        capacity: 1
     }
 }
 
@@ -108,7 +112,7 @@ resource consumerGroup 'Microsoft.Devices/IotHubs/eventHubEndpoints/ConsumerGrou
         iotHub
     ]
     properties: {
-      mode: 'Complete'
+        mode: 'Complete'
     }
 }
 
@@ -120,11 +124,11 @@ resource environment 'Microsoft.TimeSeriesInsights/environments@2018-08-15-previ
         storageConfiguration: {
             accountName: storageAccountName
             managementKey: listKeys(resourceId('Microsoft.Storage/storageAccounts', storageAccountName), '2019-06-01').keys[0].value
-          }
-          timeSeriesIdProperties: environmentTimeSeriesIdProperties
-          warmStoreConfiguration: {
+        }
+        timeSeriesIdProperties: environmentTimeSeriesIdProperties
+        warmStoreConfiguration: {
             dataRetention: 'P7D'
-          }  
+        }
     }
     sku: {
         name: 'L1'
@@ -133,7 +137,7 @@ resource environment 'Microsoft.TimeSeriesInsights/environments@2018-08-15-previ
 }
 
 resource eventSource 'Microsoft.TimeSeriesInsights/environments/eventsources@2018-08-15-preview' = {
-    name: concat(environmentName,'/', eventSourceName)
+    name: concat(environmentName, '/', eventSourceName)
     location: region
     kind: 'Microsoft.IoTHub'
     dependsOn: [
@@ -174,4 +178,7 @@ resource storageaccount 'Microsoft.Storage/storageAccounts@2018-11-01' = {
     properties: {}
 }
 
+var hubKeysId = resourceId('Microsoft.Devices/IotHubs/Iothubkeys', iotHubName, 'iothubowner')
+
 output TIMESERIESINSIGHTS_URL string = '${environment.properties.dataAccessFqdn}'
+output IOTHUB_CONNECTION_STRING string = 'HostName=${iotHubName}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=${listkeys(hubKeysId, '2019-11-04').primaryKey}'

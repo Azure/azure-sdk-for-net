@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(PostgreSqlSourceConverter))]
     public partial class PostgreSqlSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -122,6 +125,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new PostgreSqlSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, query.Value);
+        }
+
+        internal partial class PostgreSqlSourceConverter : JsonConverter<PostgreSqlSource>
+        {
+            public override void Write(Utf8JsonWriter writer, PostgreSqlSource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override PostgreSqlSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializePostgreSqlSource(document.RootElement);
+            }
         }
     }
 }

@@ -13,10 +13,13 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// The SourceControl Configuration object.
+    /// The SourceControl Configuration object returned in Get &amp; Put
+    /// response.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class SourceControlConfiguration : ProxyResource
@@ -35,6 +38,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="systemData">Top level metadata
+        /// https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/common-api-contracts.md#system-metadata-for-all-azure-resources</param>
         /// <param name="repositoryUrl">Url of the SourceControl
         /// Repository.</param>
         /// <param name="operatorNamespace">The namespace to which this
@@ -46,14 +51,18 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// include: 'Flux'</param>
         /// <param name="operatorParams">Any Parameters for the Operator
         /// instance in string format.</param>
+        /// <param name="configurationProtectedSettings">Name-value pairs of
+        /// protected configuration settings for the configuration</param>
         /// <param name="operatorScope">Scope at which the operator will be
         /// installed. Possible values include: 'cluster', 'namespace'</param>
         /// <param name="repositoryPublicKey">Public Key associated with this
         /// SourceControl configuration (either generated within the cluster or
         /// provided by the user).</param>
+        /// <param name="sshKnownHostsContents">Base64-encoded known_hosts
+        /// contents containing public SSH keys required to access private Git
+        /// instances</param>
         /// <param name="enableHelmOperator">Option to enable Helm Operator for
-        /// this git configuration. Possible values include: 'true',
-        /// 'false'</param>
+        /// this git configuration.</param>
         /// <param name="helmOperatorProperties">Properties for Helm
         /// operator.</param>
         /// <param name="provisioningState">The provisioning state of the
@@ -61,16 +70,18 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// 'Running', 'Succeeded', 'Failed'</param>
         /// <param name="complianceStatus">Compliance Status of the
         /// Configuration</param>
-        public SourceControlConfiguration(string id = default(string), string name = default(string), string type = default(string), string repositoryUrl = default(string), string operatorNamespace = default(string), string operatorInstanceName = default(string), OperatorType? operatorType = default(OperatorType?), string operatorParams = default(string), OperatorScope? operatorScope = default(OperatorScope?), string repositoryPublicKey = default(string), EnableHelmOperator? enableHelmOperator = default(EnableHelmOperator?), HelmOperatorProperties helmOperatorProperties = default(HelmOperatorProperties), ProvisioningState? provisioningState = default(ProvisioningState?), ComplianceStatus complianceStatus = default(ComplianceStatus))
-            : base(id, name, type)
+        public SourceControlConfiguration(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string repositoryUrl = default(string), string operatorNamespace = default(string), string operatorInstanceName = default(string), string operatorType = default(string), string operatorParams = default(string), IDictionary<string, string> configurationProtectedSettings = default(IDictionary<string, string>), string operatorScope = default(string), string repositoryPublicKey = default(string), string sshKnownHostsContents = default(string), bool? enableHelmOperator = default(bool?), HelmOperatorProperties helmOperatorProperties = default(HelmOperatorProperties), string provisioningState = default(string), ComplianceStatus complianceStatus = default(ComplianceStatus))
+            : base(id, name, type, systemData)
         {
             RepositoryUrl = repositoryUrl;
             OperatorNamespace = operatorNamespace;
             OperatorInstanceName = operatorInstanceName;
             OperatorType = operatorType;
             OperatorParams = operatorParams;
+            ConfigurationProtectedSettings = configurationProtectedSettings;
             OperatorScope = operatorScope;
             RepositoryPublicKey = repositoryPublicKey;
+            SshKnownHostsContents = sshKnownHostsContents;
             EnableHelmOperator = enableHelmOperator;
             HelmOperatorProperties = helmOperatorProperties;
             ProvisioningState = provisioningState;
@@ -108,7 +119,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// Gets or sets type of the operator. Possible values include: 'Flux'
         /// </summary>
         [JsonProperty(PropertyName = "properties.operatorType")]
-        public OperatorType? OperatorType { get; set; }
+        public string OperatorType { get; set; }
 
         /// <summary>
         /// Gets or sets any Parameters for the Operator instance in string
@@ -118,11 +129,18 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         public string OperatorParams { get; set; }
 
         /// <summary>
+        /// Gets or sets name-value pairs of protected configuration settings
+        /// for the configuration
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.configurationProtectedSettings")]
+        public IDictionary<string, string> ConfigurationProtectedSettings { get; set; }
+
+        /// <summary>
         /// Gets or sets scope at which the operator will be installed.
         /// Possible values include: 'cluster', 'namespace'
         /// </summary>
         [JsonProperty(PropertyName = "properties.operatorScope")]
-        public OperatorScope? OperatorScope { get; set; }
+        public string OperatorScope { get; set; }
 
         /// <summary>
         /// Gets public Key associated with this SourceControl configuration
@@ -132,11 +150,18 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         public string RepositoryPublicKey { get; private set; }
 
         /// <summary>
+        /// Gets or sets base64-encoded known_hosts contents containing public
+        /// SSH keys required to access private Git instances
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sshKnownHostsContents")]
+        public string SshKnownHostsContents { get; set; }
+
+        /// <summary>
         /// Gets or sets option to enable Helm Operator for this git
-        /// configuration. Possible values include: 'true', 'false'
+        /// configuration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableHelmOperator")]
-        public EnableHelmOperator? EnableHelmOperator { get; set; }
+        public bool? EnableHelmOperator { get; set; }
 
         /// <summary>
         /// Gets or sets properties for Helm operator.
@@ -150,7 +175,7 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProvisioningState? ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets compliance Status of the Configuration

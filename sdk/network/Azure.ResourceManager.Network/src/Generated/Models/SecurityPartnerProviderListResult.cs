@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListSecurityPartnerProviders API service call. </summary>
-    public partial class SecurityPartnerProviderListResult
+    internal partial class SecurityPartnerProviderListResult
     {
         /// <summary> Initializes a new instance of SecurityPartnerProviderListResult. </summary>
         internal SecurityPartnerProviderListResult()

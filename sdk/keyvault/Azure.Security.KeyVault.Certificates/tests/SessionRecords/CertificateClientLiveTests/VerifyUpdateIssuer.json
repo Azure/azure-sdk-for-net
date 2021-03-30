@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/issuers/2055519887?api-version=7.1",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/issuers/2055519887?api-version=7.2",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "traceparent": "00-bfd30f31c3c3404ba25939f9e8f71885-b5ba274b25218e47-00",
+        "traceparent": "00-a01948742f6f3c46a88bba24202d0c92-3928d6b8910ba44e-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.2.0-alpha.20210205.1",
-          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Security.KeyVault.Certificates/4.2.0-alpha.20210219.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "cce643778afeefb1bb9de1fcfcbe645a",
         "x-ms-return-client-request-id": "true"
@@ -20,7 +20,7 @@
         "Cache-Control": "no-cache",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 05 Feb 2021 21:41:06 GMT",
+        "Date": "Sat, 20 Feb 2021 01:22:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
@@ -28,8 +28,8 @@
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.2.164.0",
-        "x-ms-request-id": "2de074b5-36aa-45ca-985f-8f7f190a2f88",
+        "x-ms-keyvault-service-version": "1.2.164.2",
+        "x-ms-request-id": "d739e5a2-816c-4e03-89cf-59e41991d173",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -40,17 +40,17 @@
       }
     },
     {
-      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/issuers/2055519887?api-version=7.1",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/issuers/2055519887?api-version=7.2",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "23",
         "Content-Type": "application/json",
-        "traceparent": "00-bfd30f31c3c3404ba25939f9e8f71885-b5ba274b25218e47-00",
+        "traceparent": "00-a01948742f6f3c46a88bba24202d0c92-3928d6b8910ba44e-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.2.0-alpha.20210205.1",
-          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Security.KeyVault.Certificates/4.2.0-alpha.20210219.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "cce643778afeefb1bb9de1fcfcbe645a",
         "x-ms-return-client-request-id": "true"
@@ -63,15 +63,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "173",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 05 Feb 2021 21:41:06 GMT",
+        "Date": "Sat, 20 Feb 2021 01:22:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.2.164.0",
-        "x-ms-request-id": "3ba6a1e0-dc21-4d9f-a003-01a7debc3d77",
+        "x-ms-keyvault-service-version": "1.2.164.2",
+        "x-ms-request-id": "f2c38210-8661-4831-bd56-fa704464d4b4",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -79,23 +79,23 @@
         "provider": "ssladmin",
         "attributes": {
           "enabled": true,
-          "created": 1612561267,
-          "updated": 1612561267
+          "created": 1613784147,
+          "updated": 1613784147
         }
       }
     },
     {
-      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/issuers/2055519887?api-version=7.1",
+      "RequestUri": "https://heathskeyvault.vault.azure.net/certificates/issuers/2055519887?api-version=7.2",
       "RequestMethod": "PATCH",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "22",
         "Content-Type": "application/json",
-        "traceparent": "00-0d22a63389f9b84d8bf49e73a7631cb8-194c4988d9daab47-00",
+        "traceparent": "00-f4de0f483479f347afaf1679aab72a62-1f92fc7bdc5b4644-00",
         "User-Agent": [
-          "azsdk-net-Security.KeyVault.Certificates/4.2.0-alpha.20210205.1",
-          "(.NET Core 4.6.29518.01; Microsoft Windows 10.0.19042 )"
+          "azsdk-net-Security.KeyVault.Certificates/4.2.0-alpha.20210219.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "2e452a28b97901d0fbe250ba86747123",
         "x-ms-return-client-request-id": "true"
@@ -108,15 +108,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "172",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 05 Feb 2021 21:41:06 GMT",
+        "Date": "Sat, 20 Feb 2021 01:22:26 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
         "X-Content-Type-Options": "nosniff",
         "x-ms-keyvault-network-info": "conn_type=Ipv4;addr=67.171.12.239;act_addr_fam=InterNetwork;",
         "x-ms-keyvault-region": "westus2",
-        "x-ms-keyvault-service-version": "1.2.164.0",
-        "x-ms-request-id": "f3f56183-69ca-47e5-8cc7-7d732a441cf8",
+        "x-ms-keyvault-service-version": "1.2.164.2",
+        "x-ms-request-id": "d44e2e41-f3d1-4f62-a770-267b48674f8b",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
@@ -124,8 +124,8 @@
         "provider": "onecert",
         "attributes": {
           "enabled": true,
-          "created": 1612561267,
-          "updated": 1612561267
+          "created": 1613784147,
+          "updated": 1613784147
         }
       }
     }

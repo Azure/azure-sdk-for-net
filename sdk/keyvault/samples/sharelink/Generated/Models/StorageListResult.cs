@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Storage.Models
 {
     /// <summary> The storage accounts list result. </summary>
-    public partial class StorageListResult
+    internal partial class StorageListResult
     {
         /// <summary> Initializes a new instance of StorageListResult. </summary>
         internal StorageListResult()

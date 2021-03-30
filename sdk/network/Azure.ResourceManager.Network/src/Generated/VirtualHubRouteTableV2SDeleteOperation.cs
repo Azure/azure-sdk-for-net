@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualHubRouteTableV2SDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of VirtualHubRouteTableV2SDeleteOperation for mocking. </summary>
+        protected VirtualHubRouteTableV2SDeleteOperation()
+        {
+        }
+
         internal VirtualHubRouteTableV2SDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "VirtualHubRouteTableV2SDeleteOperation");

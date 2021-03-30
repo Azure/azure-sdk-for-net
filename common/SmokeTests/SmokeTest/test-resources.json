@@ -32,26 +32,22 @@
         "keyVaultName": "[format('kv-smk-{0}', parameters('baseName'))]",
         "iotHubName": "[format('iot-smoke-{0}', parameters('baseName'))]",
         "eventHubNamespaceName": "[format('eh-smoke-{0}', parameters('baseName'))]",
-        "eventHubName": "myeventhub",
-        "eventHubAuthorizationRuleName": "RootManageSharedAccessKey",
+        "eventHubName": "smoketest",
+        "eventHubsKeyName": "RootManageSharedAccessKey",
+        "eventHubsAuthRuleResourceId": "[resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventHubNamespaceName'), variables('eventHubsKeyName'))]",
         "storageAccountName": "[format('stsmoke{0}', parameters('baseName'))]"
     },
     "resources": [
         {
-            "type": "Microsoft.EventHub/namespaces",
-            "apiVersion": "2018-01-01-preview",
+            "apiVersion": "2015-08-01",
             "name": "[variables('eventHubNamespaceName')]",
+            "type": "Microsoft.EventHub/Namespaces",
             "location": "[parameters('location')]",
             "sku": {
-                "name": "Basic",
-                "tier": "Basic",
-                "capacity": 1
+              "name": "Standard",
+              "tier": "Standard"
             },
             "properties": {
-                "zoneRedundant": false,
-                "isAutoInflateEnabled": false,
-                "maximumThroughputUnits": 0,
-                "kafkaEnabled": false
             }
         },
         {
@@ -159,22 +155,6 @@
             }
         },
         {
-            "type": "Microsoft.EventHub/namespaces/AuthorizationRules",
-            "apiVersion": "2017-04-01",
-            "name": "[format('{0}/{1}', variables('eventHubNamespaceName'), variables('eventHubAuthorizationRuleName'))]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubNamespaceName'))]"
-            ],
-            "properties": {
-                "rights": [
-                    "Listen",
-                    "Manage",
-                    "Send"
-                ]
-            }
-        },
-        {
             "type": "Microsoft.EventHub/namespaces/eventhubs",
             "apiVersion": "2017-04-01",
             "name": "[format('{0}/{1}', variables('eventHubNamespaceName'), variables('eventHubName'))]",
@@ -205,23 +185,6 @@
                 "deleteRetentionPolicy": {
                     "enabled": false
                 }
-            }
-        },
-        {
-            "type": "Microsoft.EventHub/namespaces/eventhubs/authorizationRules",
-            "apiVersion": "2017-04-01",
-            "name": "[concat(variables('eventHubNamespaceName'), '/myeventhub/Test')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('eventHubNamespaceName'), 'myeventhub')]",
-                "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubNamespaceName'))]"
-            ],
-            "properties": {
-                "rights": [
-                    "Manage",
-                    "Listen",
-                    "Send"
-                ]
             }
         },
         {
@@ -277,9 +240,13 @@
             "type": "string",
             "value": "[reference(variables('keyVaultName')).vaultUri]"
         },
-        "EVENT_HUBS_CONNECTION_STRING": {
+        "EVENT_HUBS_NAMESPACE_CONNECTION_STRING": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', variables('eventHubNamespaceName'),  variables('eventHubName'), 'Test'), '2017-04-01').primaryConnectionString]"
+            "value": "[listkeys(variables('eventHubsAuthRuleResourceId'), '2015-08-01').primaryConnectionString]"
+        },
+        "EVENT_HUBS_TESTHUB_NAME": {
+            "type": "string",
+            "value": "[variables('eventHubName')]"
         },
         "BLOB_CONNECTION_STRING": {
             "type": "string",

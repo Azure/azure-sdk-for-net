@@ -3,13 +3,13 @@
 
 using System;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
+    [ClientTestFixture(KeyClientOptions.ServiceVersion.V7_2)]
     public class ManagedHsmLiveTests : KeyClientLiveTests
     {
         public ManagedHsmLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
@@ -22,6 +22,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ? uri
                 // If the AZURE_MANAGEDHSM_URL variable is not defined, we didn't provision one
                 // due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
+                // To provision Managed HSM: New-TestResources.ps1 -AdditionalParameters @{enableHsm=$true}
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
         [Test]

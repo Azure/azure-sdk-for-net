@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(TumblingWindowTriggerDependencyReferenceConverter))]
     public partial class TumblingWindowTriggerDependencyReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -62,6 +65,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new TumblingWindowTriggerDependencyReference(type, referenceTrigger, offset.Value, size.Value);
+        }
+
+        internal partial class TumblingWindowTriggerDependencyReferenceConverter : JsonConverter<TumblingWindowTriggerDependencyReference>
+        {
+            public override void Write(Utf8JsonWriter writer, TumblingWindowTriggerDependencyReference model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override TumblingWindowTriggerDependencyReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeTumblingWindowTriggerDependencyReference(document.RootElement);
+            }
         }
     }
 }

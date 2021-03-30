@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 storageAccountOutput,
                 imageRef,
                 createWithManagedDisks: hasManagedDisks);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             // TODO: AutoRest skips the following methods - Start, Restart, PowerOff, Deallocate
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartStartAsync(rgName, vmScaleSet.Name));
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartReimageAsync(rgName, vmScaleSet.Name));
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Compute.Tests
 
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
                 storageAccountOutput, imageRef, createWithManagedDisks: true);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartRedeployAsync(rgName, vmScaleSet.Name));
 
             passed = true;
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Compute.Tests
 
             var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
                 storageAccountOutput, imageRef, createWithManagedDisks: true);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartStartAsync(rgName, vmScaleSet.Name));
             // Shutdown VM with SkipShutdown = true
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartPowerOffAsync(rgName, vmScaleSet.Name, true));
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.Compute.Tests
 
                 var getTwoVirtualMachineScaleSet = await CreateVMScaleSet_NoAsyncTracking(rgName, vmssName, storageAccountOutput, imageRef,
                     createWithManagedDisks: true);
-                vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-                inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+                vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+                inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
                 await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartPerformMaintenanceAsync(rgName, vmScaleSet.Name));
 
                 passed = true;
@@ -230,8 +230,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 vmScaleSetCustomizer:
                     (virtualMachineScaleSet) => virtualMachineScaleSet.UpgradePolicy = new UpgradePolicy { Mode = UpgradeMode.Manual }
             );
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             var virtualMachineScaleSetInstanceIDs = new VirtualMachineScaleSetVMInstanceIDs()
             {
                 InstanceIds = { "0", "1" }
@@ -277,8 +277,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 storageAccountOutput, imageRef, createWithManagedDisks: true,
                 vmScaleSetCustomizer: virtualMachineScaleSet => virtualMachineScaleSet.UpgradePolicy =
                     new UpgradePolicy { Mode = UpgradeMode.Manual });
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             List<string> virtualMachineScaleSetInstanceIDs = new List<string> { "0", "1" };
             var virtualMachineScaleSetInstanceID = new VirtualMachineScaleSetVMInstanceIDs()
             {
@@ -310,8 +310,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     createWithManagedDisks: true,
                     vmScaleSetCustomizer: virtualMachineScaleSet => virtualMachineScaleSet.UpgradePolicy =
                         new UpgradePolicy { Mode = UpgradeMode.Manual });
-                vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-                inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+                vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+                inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
                 List<string> virtualMachineScaleSetInstanceIDs = new List<string> { "0", "1" };
                 var virtualMachineScaleSetInstanceID = new VirtualMachineScaleSetVMInstanceIDs()
                 {

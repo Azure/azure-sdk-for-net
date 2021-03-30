@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// MongoDB databases under the restorable account.  This helps in scenario
         /// where database was accidentally deleted to get the deletion time.  This API
         /// requires
-        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/*/read'
+        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
         /// permission
         /// </summary>
         /// <param name='location'>
@@ -87,6 +87,17 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// </return>
         public async Task<AzureOperationResponse<IEnumerable<RestorableMongodbDatabaseGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -106,7 +117,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
             }
-            string apiVersion = "2020-06-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -114,7 +124,6 @@ namespace Microsoft.Azure.Management.CosmosDB
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("instanceId", instanceId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -127,9 +136,9 @@ namespace Microsoft.Azure.Management.CosmosDB
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{instanceId}", System.Uri.EscapeDataString(instanceId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
