@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Canonical Representation of a Resource Identity.
     /// </summary>
-    public sealed partial class ResourceIdentifier : IUtf8JsonSerializable
+    public abstract partial class ResourceIdentifier : IUtf8JsonSerializable
     {
         /// <summary>
         /// Serialize the input ResourceIdentifier object.
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.Core
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                writer.WritePropertyName("resourceType");
+                writer.WriteObjectValue(ResourceType);
             }
             if (Optional.IsDefined(Name))
             {
@@ -39,22 +39,61 @@ namespace Azure.ResourceManager.Core
                 writer.WritePropertyName("parent");
                 writer.WriteObjectValue(Parent);
             }
-            if (Optional.IsDefined(ResourceGroup))
+            if (Optional.IsDefined(IsChild))
             {
-                writer.WritePropertyName("resourceGroup");
-                writer.WriteStringValue(ResourceGroup);
-            }
-            if (Optional.IsDefined(Subscription))
-            {
-                writer.WritePropertyName("subscription");
-                writer.WriteStringValue(Subscription);
-            }
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type");
-                writer.WriteObjectValue(Type);
+                writer.WritePropertyName("isChild");
+                writer.WriteBooleanValue(IsChild);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary>
+        /// Deserialize the input Json object.
+        /// </summary>
+        /// <param name="resourceIdentifier"> The output ResourceIdentifier object. </param>
+        /// <param name="element"> The Json object need to be deserialized. </param>
+        internal static void DeserializeResourceIdentifier(ResourceIdentifier resourceIdentifier, JsonElement element)
+        {
+            Optional<ResourceType> resourceType = default;
+            Optional<string> name = default;
+            Optional<ResourceIdentifier> parent = default;
+            Optional<bool> isChild = default;
+
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("resourceType"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ToString().Equals("{\"namespace\":\"\",\"rootResourceType\":{},\"type\":\"\",\"types\":[]}"))
+                    {
+                        continue;
+                    }
+                    resourceType = ResourceType.DeserializeResourceType(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("parent"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null || string.IsNullOrEmpty(property.Value.GetProperty("resourceType").GetProperty("namespace").GetString()))
+                    {
+                        continue;
+                    }
+                    DeserializeResourceIdentifier(parent.Value, property.Value);
+                    continue;
+                }
+                if (property.NameEquals("isChild"))
+                {
+                    isChild = property.Value.GetBoolean();
+                    continue;
+                }
+            }
+            resourceIdentifier.ResourceType = resourceType;
+            resourceIdentifier.Name = name;
+            resourceIdentifier.Parent = parent;
+            resourceIdentifier.IsChild = isChild;
         }
     }
 }

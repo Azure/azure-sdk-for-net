@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Core.Tests
         [Test]
         public void SerializationTest()
         {
-            string expected = "{\"Properties\":{\"id\":{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"name\":\"account1\",\"parent\":{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg\",\"name\":\"testRg\",\"parent\":{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000\",\"name\":\"00000000-0000-0000-0000-000000000000\",\"subscription\":\"00000000-0000-0000-0000-000000000000\",\"type\":{\"namespace\":\"Microsoft.Resources\",\"parent\":{},\"type\":\"subscriptions\"}},\"resourceGroup\":\"testRg\",\"subscription\":\"00000000-0000-0000-0000-000000000000\",\"type\":{\"namespace\":\"Microsoft.Resources\",\"parent\":{},\"type\":\"resourceGroups\"}},\"resourceGroup\":\"testRg\",\"subscription\":\"00000000-0000-0000-0000-000000000000\",\"type\":{\"namespace\":\"Microsoft.ClassicStorage\",\"parent\":{},\"type\":\"storageAccounts\"}},\"name\":\"account1\",\"type\":{\"namespace\":\"Microsoft.ClassicStorage\",\"parent\":{},\"type\":\"storageAccounts\"}}}";
-            TestResource data = new TestResource("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1");
+            string expected = "{\"properties\":{\"id\":{\"resourceType\":{\"namespace\":\"Microsoft.ClassicStorage\",\"rootResourceType\":{},\"type\":\"storageAccounts\",\"types\":[\"storageAccounts\"]},\"name\":\"account1\",\"parent\":{\"resourceType\":{\"namespace\":\"Microsoft.Resources\",\"rootResourceType\":{},\"type\":\"subscriptions/resourceGroups\",\"types\":[\"subscriptions\",\"resourceGroups\"]},\"name\":\"testRg\",\"parent\":{\"resourceType\":{\"namespace\":\"Microsoft.Resources\",\"rootResourceType\":{},\"type\":\"subscriptions\",\"types\":[\"subscriptions\"]},\"name\":\"00000000-0000-0000-0000-000000000000\",\"parent\":{\"resourceType\":{\"namespace\":\"\",\"rootResourceType\":{},\"type\":\"\",\"types\":[]},\"name\":\"\",\"isChild\":false},\"isChild\":false},\"isChild\":true},\"isChild\":false},\"name\":\"account1\",\"type\":{\"namespace\":\"Microsoft.ClassicStorage\",\"rootResourceType\":{},\"type\":\"storageAccounts\",\"types\":[\"storageAccounts\"]}}}";
+            TestResource<ResourceGroupResourceIdentifier> data = new("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1");
             var stream = new MemoryStream();
             Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
             writer.WriteStartObject();
-            writer.WritePropertyName("Properties");
+            writer.WritePropertyName("properties");
             writer.WriteObjectValue(data);
             writer.WriteEndObject();
             writer.Flush();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Core.Tests
         [Test]
         public void InvalidSerializationTest()
         {
-            TestResource data = new TestResource(null);
+            TestResource<ResourceGroupResourceIdentifier> data = new("foo");
             var stream = new MemoryStream();
             Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
             writer.WriteStartObject();
@@ -95,6 +95,18 @@ namespace Azure.ResourceManager.Core.Tests
             writer.Flush();
             string json = Encoding.UTF8.GetString(stream.ToArray());
             Assert.IsTrue(json.Equals("{\"Properties\":{}}"));
+        }
+
+        [Test]
+        public void DeserializationTest()
+        {
+            string json = "{\"id\":{\"resourceType\":{\"namespace\":\"Microsoft.ClassicStorage\",\"rootResourceType\":{},\"type\":\"storageAccounts\",\"types\":[\"storageAccounts\"]},\"name\":\"account1\",\"parent\":{\"resourceType\":{\"namespace\":\"Microsoft.Resources\",\"rootResourceType\":{},\"type\":\"subscriptions/resourceGroups\",\"types\":[\"subscriptions\",\"resourceGroups\"]},\"name\":\"testRg\",\"parent\":{\"resourceType\":{\"namespace\":\"Microsoft.Resources\",\"rootResourceType\":{},\"type\":\"subscriptions\",\"types\":[\"subscriptions\"]},\"name\":\"00000000-0000-0000-0000-000000000000\",\"parent\":{\"resourceType\":{\"namespace\":\"\",\"rootResourceType\":{},\"type\":\"\",\"types\":[]},\"name\":\"\",\"isChild\":false},\"isChild\":false},\"isChild\":true},\"isChild\":false},\"name\":\"account1\",\"type\":{\"namespace\":\"Microsoft.ClassicStorage\",\"rootResourceType\":{},\"type\":\"storageAccounts\",\"types\":[\"storageAccounts\"]}}";
+            JsonElement element = JsonDocument.Parse(json).RootElement;
+            TestResource<ResourceGroupResourceIdentifier> data = new("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/fooRg/providers/Microsoft.ClassicStorage/storageAccounts/fooAccount");
+            data.DeserializeResource(element);
+            Assert.IsTrue(data.Name.Equals("account1"));
+            Assert.IsTrue(data.Type.Equals("storageAccounts"));
+            
         }
     }
 }
