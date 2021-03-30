@@ -149,7 +149,7 @@ namespace Azure.Containers.ContainerRegistry
             return linkValue?.Substring(1, linkValue.IndexOf('>') - 1);
         }
 
-        /// <summary> Delete the repository. </summary>
+        /// <summary> Delete the repository identified by `repostitory`. </summary>
         /// <param name="repository"> Repository name (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string repository, CancellationToken cancellationToken = default)
@@ -167,7 +167,7 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Delete the repository. </summary>
+        /// <summary> Delete the repository identified by `repostitory`. </summary>
         /// <param name="repository"> Repository name (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeleteRepositoryResult> DeleteRepository(string repository, CancellationToken cancellationToken = default)
