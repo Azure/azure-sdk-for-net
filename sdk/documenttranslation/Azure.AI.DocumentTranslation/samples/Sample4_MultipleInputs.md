@@ -70,11 +70,13 @@ await foreach (DocumentStatusResult document in operation.GetValuesAsync())
     Console.WriteLine($"  Status:{document.Status}");
     if (document.Status == TranslationStatus.Succeeded)
     {
-        Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
+        Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
         Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
+        Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
     }
     else
     {
+        Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
         Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
         Console.WriteLine($"  Message: {document.Error.Message}");
     }

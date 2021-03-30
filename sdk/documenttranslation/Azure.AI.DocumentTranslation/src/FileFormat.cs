@@ -15,6 +15,6 @@ namespace Azure.AI.DocumentTranslation
 
         /// <summary> Default format version if none is specified. </summary>
         [CodeGenMember("DefaultVersion")]
-        internal string DefaultFormatVersion { get; }
+        public string DefaultFormatVersion { get; }
     }
 }
