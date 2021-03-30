@@ -15,7 +15,7 @@ Azure Attestation receives evidence from compute entities, turns them into a set
 ## Getting started
 
 ### Prerequisites
-* An [Azure subscription][azure_sub].
+* An Azure subscription.  To use Azure services, including the Microsoft Azure Attestation service, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial][azure_sub] or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 * An existing Azure Attestation Instance, or you can use the "shared provider" available in each Azure region. If you need to create an Azure Attestation service instance, you can use the Azure Portal or [Azure CLI][azure_cli].
 
 ### Install the package
