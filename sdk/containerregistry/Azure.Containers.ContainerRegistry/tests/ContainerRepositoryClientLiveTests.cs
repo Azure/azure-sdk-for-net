@@ -79,7 +79,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanDeleteRepository()
         {
             // Arrange
-            string repository = $"library/hello-world";
             List<string> tags = new List<string>()
             {
                 "latest",
@@ -94,11 +93,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
             {
                 if (this.Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(repository, tags);
+                    await ImportImage(_repositoryName, tags);
                 }
 
                 // Act
-                await client.DeleteAsync(repository);
+                await client.DeleteAsync();
 
                 // This will be removed, pending investigation into potential race condition.
                 // https://github.com/azure/azure-sdk-for-net/issues/19699
@@ -115,7 +114,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 // Clean up - put the repository with tags back.
                 if (this.Mode != RecordedTestMode.Playback)
                 {
-                    await ImportImage(repository, tags);
+                    await ImportImage(_repositoryName, tags);
                 }
             }
         }

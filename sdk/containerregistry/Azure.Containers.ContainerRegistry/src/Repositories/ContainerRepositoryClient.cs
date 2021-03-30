@@ -131,16 +131,15 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Delete the repository identified by `name`. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <summary> Delete the repository. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeleteRepositoryResult>> DeleteAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeleteRepositoryResult>> DeleteAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(Delete)}");
             scope.Start();
             try
             {
-                return await _registryRestClient.DeleteRepositoryAsync(name, cancellationToken).ConfigureAwait(false);
+                return await _registryRestClient.DeleteRepositoryAsync(_repository, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -149,16 +148,15 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Delete the repository identified by `name`. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <summary> Delete the repository. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeleteRepositoryResult> Delete(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DeleteRepositoryResult> Delete(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(Delete)}");
             scope.Start();
             try
             {
-                return _registryRestClient.DeleteRepository(name, cancellationToken);
+                return _registryRestClient.DeleteRepository(_repository, cancellationToken);
             }
             catch (Exception e)
             {

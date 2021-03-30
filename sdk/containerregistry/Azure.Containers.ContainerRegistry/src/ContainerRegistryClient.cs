@@ -144,16 +144,16 @@ namespace Azure.Containers.ContainerRegistry
             return linkValue?.Substring(1, linkValue.IndexOf('>') - 1);
         }
 
-        /// <summary> Delete the repository identified by `name`. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <summary> Delete the repository. </summary>
+        /// <param name="repository"> Repository name (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string repository, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
             scope.Start();
             try
             {
-                return await _restClient.DeleteRepositoryAsync(name, cancellationToken).ConfigureAwait(false);
+                return await _restClient.DeleteRepositoryAsync(repository, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -162,16 +162,16 @@ namespace Azure.Containers.ContainerRegistry
             }
         }
 
-        /// <summary> Delete the repository identified by `name`. </summary>
-        /// <param name="name"> Name of the image (including the namespace). </param>
+        /// <summary> Delete the repository. </summary>
+        /// <param name="repository"> Repository name (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeleteRepositoryResult> DeleteRepository(string name, CancellationToken cancellationToken = default)
+        public virtual Response<DeleteRepositoryResult> DeleteRepository(string repository, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
             scope.Start();
             try
             {
-                return _restClient.DeleteRepository(name, cancellationToken);
+                return _restClient.DeleteRepository(repository, cancellationToken);
             }
             catch (Exception e)
             {
