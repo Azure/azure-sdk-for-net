@@ -1,6 +1,6 @@
 # Azure Attestation client library for .NET
 
-Microsoft Azure Attestation (preview) is a unified solution for remotely verifying the trustworthiness of a platform and integrity of the binaries running inside it. The service supports attestation of the platforms backed by Trusted Platform Modules (TPMs) alongside the ability to attest to the state of Trusted Execution Environments (TEEs) such as Intel® Software Guard Extensions (SGX) enclaves and Virtualization-based Security (VBS) enclaves.
+The Microsoft Azure Attestation (MAA) service is a unified solution for remotely verifying the trustworthiness of a platform and integrity of the binaries running inside it. The service supports attestation of the platforms backed by Trusted Platform Modules (TPMs) alongside the ability to attest to the state of Trusted Execution Environments (TEEs) such as Intel® Software Guard Extensions (SGX) enclaves and Virtualization-based Security (VBS) enclaves.
 
 Attestation is a process for demonstrating that software binaries were properly instantiated on a trusted platform. Remote relying parties can then gain confidence that only such intended software is running on trusted hardware. Azure Attestation is a unified customer-facing service and framework for attestation.
 
@@ -118,10 +118,6 @@ RuntimeData refers to data which is presented to the Intel SGX Quote generation 
 
 InitTime data refers to data which is used to configure the SGX enclave being attested.
 
-### Attestation Policy
-Each Attestation Type has an associated attestation policy which can be used to perform 
-
-The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -160,15 +156,13 @@ Use the `AttestSgxEnclave` method to attest an SGX enclave.
 This example assumes that you have an existing `AttestationClient` object which is configured with the base URI for your endpoint. It also assumes that you have an SGX Quote (`binaryQuote`) generated from within the SGX enclave you are attesting, and "Runtime Data" (`runtimeData`) which is referenced in the SGX Quote.
 
 ```C# Snippet:AttestSgxEnclave
-{
-    // Collect quote and runtime data from OpenEnclave enclave.
+// Collect quote and runtime data from OpenEnclave enclave.
 
-    var attestationResult = client.AttestSgxEnclave(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false).Value;
-    Assert.AreEqual(binaryRuntimeData, attestationResult.DeprecatedEnclaveHeldData);
-    // VERIFY ATTESTATIONRESULT.
-    // Encrypt Data using DeprecatedEnclaveHeldData
-    // Send to enclave.
-}
+var attestationResult = client.AttestSgxEnclave(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false).Value;
+Assert.AreEqual(binaryRuntimeData, attestationResult.DeprecatedEnclaveHeldData);
+// VERIFY ATTESTATIONRESULT.
+// Encrypt Data using DeprecatedEnclaveHeldData
+// Send to enclave.
 ```
 
 ### Get attestation policy
@@ -185,8 +179,7 @@ The `StoredAttestationPolicy` attestation policy document is a JSON Web Signatur
 The `GetPolicy` method retrieves an attestation policy from the service. The `attestationType` parameter is the type of attestation to retrieve.
 ```C# Snippet:GetPolicy
 var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
-var attestClient = new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(),
-    new AttestationClientOptions(validationCallback: (attestationToken, signer) => true));
+
 var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
 var result = policyResult.Value.AttestationPolicy;
 ```
@@ -209,14 +202,12 @@ things = client.list_things()
 
 ### Retrieve Token Certificates
 
-Use `SigningCertificatesClient.get` to retrieve the certificates which can be used to validate the token returned from the attestation service.
+Use `GetSigningCertificatesAsync` to retrieve the certificates which can be used to validate the token returned from the attestation service.
 
-<!-- embedme src\samples\com\azure\security\attestation\ReadmeSamples.java#L89-L92 -->
-```java
+```C# Snippet:GetSigningCertificates
+var client = GetAttestationClient();
 
-AttestationClientBuilder attestationBuilder = getBuilder(httpClient, clientUri);
-
-JsonWebKeySet certs = attestationBuilder.buildSigningCertificatesClient().get();
+IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
 ```
 
 ## Troubleshooting

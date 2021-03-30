@@ -113,12 +113,13 @@ namespace Azure.Security.Attestation.Tests.Samples
             byte[] binaryQuote = Base64Url.Decode(_sgxQuote);
             byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
 
+            #region Snippet:GetSigningCertificates
             var client = GetAttestationClient();
 
             IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
-
-            #region Snippet:AttestSgxEnclave
+            #endregion
             {
+                #region Snippet:AttestSgxEnclave
                 // Collect quote and runtime data from OpenEnclave enclave.
 
                 var attestationResult = client.AttestSgxEnclave(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false).Value;
@@ -126,8 +127,8 @@ namespace Azure.Security.Attestation.Tests.Samples
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
+                #endregion
             }
-            #endregion
             return;
         }
 
@@ -149,8 +150,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             var endpoint = TestEnvironment.AadAttestationUrl;
 #region Snippet:GetPolicy
             var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
-            var attestClient = new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(),
-                new AttestationClientOptions(validationCallback: (attestationToken, signer) => true));
+
             var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
             var result = policyResult.Value.AttestationPolicy;
             #endregion
@@ -178,10 +178,6 @@ namespace Azure.Security.Attestation.Tests.Samples
         private AttestationClient GetAttestationClient()
         {
             string endpoint = TestEnvironment.SharedUkSouth;
-
-            /*TokenCredential credential = TestEnvironment.Credential;*/
-
-            //            string powerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
 
             #region Snippet:CreateAttestationClient
             var options = new AttestationClientOptions();

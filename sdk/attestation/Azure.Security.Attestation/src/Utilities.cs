@@ -80,11 +80,11 @@ namespace Azure.Security.Attestation
                 throw new JsonException();
             }
             string number;
-            if (reader.TryGetInt32(out Int32 intNumber))
+            if (reader.TryGetInt32(out int intNumber))
             {
                 number = intNumber.ToString(CultureInfo.InvariantCulture);
             }
-            else if (reader.TryGetInt64(out Int64 longNumber))
+            else if (reader.TryGetInt64(out long longNumber))
             {
                 number = longNumber.ToString(CultureInfo.InvariantCulture);
             }
