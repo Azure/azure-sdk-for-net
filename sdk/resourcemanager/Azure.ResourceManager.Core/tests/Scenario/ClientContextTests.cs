@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core.Tests
     public class ClientContextTests : ResourceManagerTestBase
     {
         public ClientContextTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
