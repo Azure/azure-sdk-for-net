@@ -1,14 +1,30 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.FormRecognizer.Models
-{
-    // Setting the "internal" access modifier while we don't expose the reading order
-    // feature as part of our design.
+using Azure.Core;
 
-    internal enum ReadingOrder
+namespace Azure.AI.FormRecognizer
+{
+    /// <summary>
+    /// Specifies the order in which recognized text lines are returned in calls to
+    /// recognize content. This can be set in the <see cref="RecognizeContentOptions"/>.
+    /// As the sorting order depends on the detected text, it may change across images
+    /// and OCR version updates. Thus, business logic should be built upon the actual line
+    /// location instead of order.
+    /// </summary>
+    [CodeGenModel("ReadingOrder")]
+    public enum ReadingOrder
     {
+        /// <summary>
+        /// The lines are sorted top to bottom, left to right, although in certain cases
+        /// proximity is treated with higher priority.
+        /// </summary>
         Basic,
+
+        /// <summary>
+        /// The lines are returned in a more human-friendly reading order. Related text lines
+        /// are likely to be in sequence.
+        /// </summary>
         Natural
     }
 }

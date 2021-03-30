@@ -515,6 +515,35 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual("NotSupportedLanguage", ex.ErrorCode);
         }
 
+        [RecordedTest]
+        public async Task StartRecognizeContentWithReadingOrder()
+        {
+            var client = CreateFormRecognizerClient();
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
+            RecognizeContentOperation basicOrderOperation, naturalOrderOperation;
+
+            basicOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = ReadingOrder.Basic });
+            naturalOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = ReadingOrder.Natural });
+
+            await basicOrderOperation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(basicOrderOperation.HasValue);
+
+            await naturalOrderOperation.WaitForCompletionAsync(PollingInterval);
+            Assert.IsTrue(naturalOrderOperation.HasValue);
+
+            var basicOrderFormPage = basicOrderOperation.Value.Single();
+            var naturalOrderFormPage = naturalOrderOperation.Value.Single();
+
+            ValidateFormPage(basicOrderFormPage, includeFieldElements: true, expectedPageNumber: 1);
+            ValidateFormPage(naturalOrderFormPage, includeFieldElements: true, expectedPageNumber: 1);
+
+            var basicOrderLines = basicOrderFormPage.Lines.Select(f => f.Text);
+            var naturalOrderLines = naturalOrderFormPage.Lines.Select(f => f.Text);
+
+            CollectionAssert.AreEquivalent(basicOrderLines, naturalOrderLines);
+            CollectionAssert.AreNotEqual(basicOrderLines, naturalOrderLines);
+        }
+
         #endregion
 
         #region StartRecognizeReceipts

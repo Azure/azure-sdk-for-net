@@ -142,7 +142,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     recognizeContentOptions.Language,
-                    null, // TODO: pass reading order.
+                    recognizeContentOptions.ReadingOrder,
                     form,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -182,7 +182,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     recognizeContentOptions.Language,
-                    null, // TODO: pass reading order.
+                    recognizeContentOptions.ReadingOrder,
                     form,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -220,7 +220,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = ServiceClient.AnalyzeLayoutAsync(
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     recognizeContentOptions.Language,
-                    null, // TODO: pass reading order.
+                    recognizeContentOptions.ReadingOrder,
                     sourcePath,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -258,7 +258,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     recognizeContentOptions.Language,
-                    null, // TODO: pass reading order.
+                    recognizeContentOptions.ReadingOrder,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
