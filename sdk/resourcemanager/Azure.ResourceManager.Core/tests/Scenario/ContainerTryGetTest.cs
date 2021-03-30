@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Core.Tests
 {
     public class ContainerTryGetTest : ResourceManagerTestBase
     {
-        private AzureResourceManagerClient _client;
+        private ArmClient _client;
         private ResourceGroupContainer _container;
         private ResourceGroup _resourceGroup;
         private string _rgName;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             _rgName = Recording.GenerateAssetName("CoreRg");
             _client = GetArmClient();
-            _container = _client.DefaultSubscription.GetResourceGroupContainer();
+            _container = _client.DefaultSubscription.GetResourceGroups();
             _resourceGroup = _container.Construct(LocationData.WestUS2).CreateOrUpdate(_rgName);
         }
 

@@ -10,15 +10,15 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void VersionIsDefault()
         {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
             Assert.AreEqual(FakeResourceApiVersions.Default, options.FakeRpApiVersions().FakeResourceVersion);
         }
 
         [TestCase]
         public void MultiClientSeparateVersions()
         {
-            AzureResourceManagerClientOptions options1 = new AzureResourceManagerClientOptions();
-            AzureResourceManagerClientOptions options2 = new AzureResourceManagerClientOptions();
+            ArmClientOptions options1 = new ArmClientOptions();
+            ArmClientOptions options2 = new ArmClientOptions();
 
             options2.FakeRpApiVersions().FakeResourceVersion = FakeResourceApiVersions.V2019_12_01;
             Assert.AreEqual(FakeResourceApiVersions.Default, options1.FakeRpApiVersions().FakeResourceVersion);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void TestClientOptionsParamCheck()
         {
-            Assert.Throws<ArgumentNullException>(() => { new AzureResourceManagerClientOptions(null); });
-            Assert.Throws<ArgumentNullException>(() => { new AzureResourceManagerClientOptions(null, null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClientOptions(null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClientOptions(null, null); });
 
-            var options = new AzureResourceManagerClientOptions();
+            var options = new ArmClientOptions();
             Assert.Throws<ArgumentNullException>(() => { options.AddPolicy(null, HttpPipelinePosition.PerCall); });
         }
     }

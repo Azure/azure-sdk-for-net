@@ -29,7 +29,7 @@ namespace Proto.Client
                 foreach (var rgId in CleanUp)
                 {
                     ResourceIdentifier id = new ResourceIdentifier(rgId);
-                    var rg = new AzureResourceManagerClient(new DefaultAzureCredential()).GetResourceGroupOperations(rgId);
+                    var rg = new ArmClient(new DefaultAzureCredential()).GetResourceGroupOperations(rgId);
                     Console.WriteLine($"--------Deleting {rg.Id.Name}--------");
                     try
                     {

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="baseUri"> The base URI of the service. </param>
-        protected ContainerBase(AzureResourceManagerClientOptions options, ResourceIdentifier id, TokenCredential credential, Uri baseUri)
+        protected ContainerBase(ArmClientOptions options, ResourceIdentifier id, TokenCredential credential, Uri baseUri)
             : base(options, id, credential, baseUri)
         {
         }

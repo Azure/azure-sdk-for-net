@@ -19,12 +19,12 @@ namespace Proto.Client
 
         private async System.Threading.Tasks.Task ExecuteAsync()
         {
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
+            var client = new ArmClient(new DefaultAzureCredential());
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
 
             // Create Resource Group
             Console.WriteLine($"--------Start create group {Context.RgName}--------");
-            var resourceGroup = subscription.GetResourceGroupContainer().Construct(Context.Loc).CreateOrUpdate(Context.RgName).Value;
+            var resourceGroup = subscription.GetResourceGroups().Construct(Context.Loc).CreateOrUpdate(Context.RgName).Value;
             CleanUp.Add(resourceGroup.Id);
             var rgOps = subscription.GetResourceGroupOperations(Context.RgName);
 
@@ -50,7 +50,7 @@ namespace Proto.Client
 
             // Create AvailabilitySet
             Console.WriteLine("--------Create AvailabilitySet async--------");
-            var aset = (await (await resourceGroup.GetAvailabilitySetContainer().Construct("Aligned").StartCreateOrUpdateAsync(Context.VmName + "_aSet")).WaitForCompletionAsync()).Value;
+            var aset = (await (await resourceGroup.GetAvailabilitySets().Construct("Aligned").StartCreateOrUpdateAsync(Context.VmName + "_aSet")).WaitForCompletionAsync()).Value;
             var data = aset.Get().Value.Data;
 
             ShouldThrow<ArgumentException>(

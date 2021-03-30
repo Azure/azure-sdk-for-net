@@ -6,7 +6,7 @@ namespace Azure.ResourceManager.Core.Tests
 {
     public class ArmBuilderTests : ResourceManagerTestBase
     {
-        private AzureResourceManagerClient _client;
+        private ArmClient _client;
 
         public ArmBuilderTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void TestCreateOrUpdate(string value)
         {
-            Assert.ThrowsAsync<ArgumentException>(async delegate { await _client.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync(value); });
+            Assert.ThrowsAsync<ArgumentException>(async delegate { await _client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(value); });
         }
 
         [TestCase(null)]
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public void TestStartCreateOrUpdate(string value)
         {
-            Assert.ThrowsAsync<ArgumentException>(async delegate { await _client.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(value); });
+            Assert.ThrowsAsync<ArgumentException>(async delegate { await _client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(value); });
         }
     }
 }

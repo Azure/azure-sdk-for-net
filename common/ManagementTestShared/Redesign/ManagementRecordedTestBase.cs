@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ResourceGroupCleanupPolicy OneTimeCleanupPolicy = new ResourceGroupCleanupPolicy();
 
-        protected AzureResourceManagerClient GlobalClient { get; private set; }
+        protected ArmClient GlobalClient { get; private set; }
 
         public TestEnvironment SessionEnvironment { get; private set; }
 
         public TestRecording SessionRecording { get; private set; }
 
-        private AzureResourceManagerClient _cleanupClient;
+        private ArmClient _cleanupClient;
 
         protected ManagementRecordedTestBase(bool isAsync) : base(isAsync)
         {
@@ -39,24 +39,24 @@ namespace Azure.ResourceManager.TestFramework
             SessionEnvironment.Mode = Mode;
         }
 
-        private AzureResourceManagerClient GetCleanupClient()
+        private ArmClient GetCleanupClient()
         {
             if (Mode != RecordedTestMode.Playback)
             {
-                return new AzureResourceManagerClient(
+                return new ArmClient(
                         TestEnvironment.SubscriptionId,
                         TestEnvironment.Credential,
-                        new AzureResourceManagerClientOptions());
+                        new ArmClientOptions());
             }
             return null;
         }
 
-        protected AzureResourceManagerClient GetArmClient()
+        protected ArmClient GetArmClient()
         {
-            var options = InstrumentClientOptions(new AzureResourceManagerClientOptions());
+            var options = InstrumentClientOptions(new ArmClientOptions());
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 
-            return CreateClient<AzureResourceManagerClient>(
+            return CreateClient<ArmClient>(
                 TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
                 options);
@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.TestFramework
 
             StartSessionRecording();
 
-            var options = InstrumentClientOptions(new AzureResourceManagerClientOptions(), SessionRecording);
+            var options = InstrumentClientOptions(new ArmClientOptions(), SessionRecording);
             options.AddPolicy(OneTimeCleanupPolicy, HttpPipelinePosition.PerCall);
 
-            GlobalClient = CreateClient<AzureResourceManagerClient>(
+            GlobalClient = CreateClient<ArmClient>(
                 SessionEnvironment.SubscriptionId,
                 SessionEnvironment.Credential,
                 options);

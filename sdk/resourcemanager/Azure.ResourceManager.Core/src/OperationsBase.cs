@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="baseUri"> The base URI of the service. </param>
-        protected OperationsBase(AzureResourceManagerClientOptions options, ResourceIdentifier id, TokenCredential credential, Uri baseUri)
+        protected OperationsBase(ArmClientOptions options, ResourceIdentifier id, TokenCredential credential, Uri baseUri)
         {
             ClientOptions = options;
             Id = id;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Azure Resource Manager client options.
         /// </summary>
-        public AzureResourceManagerClientOptions ClientOptions { get; }
+        public ArmClientOptions ClientOptions { get; }
 
         /// <summary>
         /// Gets the Azure credential.

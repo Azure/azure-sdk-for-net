@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="baseUri"> The base URI of the service. </param>
-        internal SubscriptionContainer(AzureResourceManagerClientOptions options, TokenCredential credential, Uri baseUri)
+        internal SubscriptionContainer(ArmClientOptions options, TokenCredential credential, Uri baseUri)
             : base(options, null, credential, baseUri)
         {
         }

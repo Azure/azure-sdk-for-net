@@ -15,12 +15,12 @@ namespace Proto.Client
 
         public override void Execute()
         {
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
+            var client = new ArmClient(new DefaultAzureCredential());
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
 
             // Create Resource Group
             Console.WriteLine($"--------Start create group {Context.RgName}--------");
-            var resourceGroup = subscription.GetResourceGroupContainer().Construct(Context.Loc).CreateOrUpdate(Context.RgName).Value;
+            var resourceGroup = subscription.GetResourceGroups().Construct(Context.Loc).CreateOrUpdate(Context.RgName).Value;
             CleanUp.Add(resourceGroup.Id);
             Console.WriteLine("\nResource Group List Available Locations: ");
             var loc = resourceGroup.ListAvailableLocations();
@@ -31,7 +31,7 @@ namespace Proto.Client
 
             // Create AvailabilitySet
             Console.WriteLine("--------Start create AvailabilitySet--------");
-            var aset = resourceGroup.GetAvailabilitySetContainer().Construct("Aligned").CreateOrUpdate(Context.VmName + "_aSet").Value;
+            var aset = resourceGroup.GetAvailabilitySets().Construct("Aligned").CreateOrUpdate(Context.VmName + "_aSet").Value;
             Console.WriteLine("\nAvailability Set List Available Locations: ");
             loc = aset.ListAvailableLocations();
             foreach (var l in loc)
@@ -42,7 +42,7 @@ namespace Proto.Client
             // Create VNet
             Console.WriteLine("--------Start create VNet--------");
             string vnetName = Context.VmName + "_vnet";
-            var vnet = resourceGroup.GetVirtualNetworkContainer().Construct("10.0.0.0/16").CreateOrUpdate(vnetName).Value;
+            var vnet = resourceGroup.GetVirtualNetworks().Construct("10.0.0.0/16").CreateOrUpdate(vnetName).Value;
             Console.WriteLine("\nVirtual Network List Available Locations: ");
             loc = vnet.ListAvailableLocations();
             foreach (var l in loc)
@@ -56,7 +56,7 @@ namespace Proto.Client
 
             //create network security group
             Console.WriteLine("--------Start create NetworkSecurityGroup--------");
-            var nsg = resourceGroup.GetNetworkSecurityGroupContainer().Construct(80).CreateOrUpdate(Context.NsgName).Value;
+            var nsg = resourceGroup.GetNetworkSecurityGroups().Construct(80).CreateOrUpdate(Context.NsgName).Value;
             Console.WriteLine("\nNetwork Security Group List Available Locations: ");
             loc = nsg.ListAvailableLocations();
             foreach (var l in loc)
@@ -66,7 +66,7 @@ namespace Proto.Client
 
             // Create Network Interface
             Console.WriteLine("--------Start create Network Interface--------");
-            var nic = resourceGroup.GetNetworkInterfaceContainer().Construct(subnet.Id).CreateOrUpdate($"{Context.VmName}_nic").Value;
+            var nic = resourceGroup.GetNetworkInterfaces().Construct(subnet.Id).CreateOrUpdate($"{Context.VmName}_nic").Value;
             Console.WriteLine("\nNetwork Interface Container List Available Locations: ");
             loc = nic.ListAvailableLocations();
             foreach (var l in loc)
@@ -76,7 +76,7 @@ namespace Proto.Client
 
             // Create VM
             Console.WriteLine("--------Start create VM--------");
-            var vm = resourceGroup.GetVirtualMachineContainer().Construct(Context.Hostname, "admin-user", "!@#$%asdfA", nic.Id, aset.Id).CreateOrUpdate(Context.VmName).Value;
+            var vm = resourceGroup.GetVirtualMachines().Construct(Context.Hostname, "admin-user", "!@#$%asdfA", nic.Id, aset.Id).CreateOrUpdate(Context.VmName).Value;
             Console.WriteLine("\nVirtual Machine List Available Locations: ");
             loc = vm.ListAvailableLocations();
             foreach (var l in loc)

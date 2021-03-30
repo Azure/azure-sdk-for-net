@@ -12,12 +12,12 @@ namespace Proto.Network
         /// <summary>
         /// Gets the NetworkInterfaceOperations.
         /// </summary>
-        /// <param name="client"> The <see cref="AzureResourceManagerClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="resourceId"> The ResourceIdentifier of the resource that is the target of operations. </param>
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="NetworkInterfaceOperations" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for a NetworkInterfaceOperations. </exception>
         /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
-        public static NetworkInterfaceOperations GetNetworkInterfaceOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
+        public static NetworkInterfaceOperations GetNetworkInterfaceOperations(this ArmClient client, ResourceIdentifier resourceId)
         {
             if (resourceId is null)
                 throw new ArgumentNullException(nameof(resourceId));
@@ -32,12 +32,12 @@ namespace Proto.Network
         /// <summary>
         /// Gets the NetworkSecurityGroupOperations.
         /// </summary>
-        /// <param name="client"> The <see cref="AzureResourceManagerClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="resourceId"> The ResourceIdentifier of the resource that is the target of operations. </param>
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="NetworkSecurityGroup" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for a NetworkSecurityGroup. </exception>
         /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
-        public static NetworkSecurityGroupOperations GetNetworkSecurityGroupOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
+        public static NetworkSecurityGroupOperations GetNetworkSecurityGroupOperations(this ArmClient client, ResourceIdentifier resourceId)
         {
             if (resourceId is null)
                 throw new ArgumentNullException(nameof(resourceId));
@@ -52,12 +52,12 @@ namespace Proto.Network
         /// <summary>
         /// Gets the PublicIpAddressOperations.
         /// </summary>
-        /// <param name="client"> The <see cref="AzureResourceManagerClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="resourceId"> The ResourceIdentifier of the resource that is the target of operations. </param>
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="PublicIpAddress" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for a PublicIpAddress. </exception>
         /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
-        public static PublicIpAddressOperations GetPublicIpAddressOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
+        public static PublicIpAddressOperations GetPublicIpAddressOperations(this ArmClient client, ResourceIdentifier resourceId)
         {
             if (resourceId is null)
                 throw new ArgumentNullException(nameof(resourceId));
@@ -72,12 +72,12 @@ namespace Proto.Network
         /// <summary>
         /// Gets the SubnetOperations.
         /// </summary>
-        /// <param name="client"> The <see cref="AzureResourceManagerClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="resourceId"> The ResourceIdentifier of the resource that is the target of operations. </param>
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="Subnet" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for a Subnet. </exception>
         /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
-        public static SubnetOperations GetSubnetOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
+        public static SubnetOperations GetSubnetOperations(this ArmClient client, ResourceIdentifier resourceId)
         {
             if (resourceId is null)
                 throw new ArgumentNullException(nameof(resourceId));
@@ -92,12 +92,12 @@ namespace Proto.Network
         /// <summary>
         /// Gets the VirtualNetworkOperations.
         /// </summary>
-        /// <param name="client"> The <see cref="AzureResourceManagerClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="resourceId"> The ResourceIdentifier of the resource that is the target of operations. </param>
         /// <returns> Returns an object representing the operations that can be performed over a specific <see cref="VirtualNetwork" />. </returns>
         /// <exception cref="ArgumentException"> ResourceIdentifier provided is not for a VirtualNetwork. </exception>
         /// <exception cref="ArgumentNullException"> ResourceIdentifier cannot be null. </exception>
-        public static VirtualNetworkOperations GetVirtualNetworkOperations(this AzureResourceManagerClient client, ResourceIdentifier resourceId)
+        public static VirtualNetworkOperations GetVirtualNetworkOperations(this ArmClient client, ResourceIdentifier resourceId)
         {
             if (resourceId is null)
                 throw new ArgumentNullException(nameof(resourceId));

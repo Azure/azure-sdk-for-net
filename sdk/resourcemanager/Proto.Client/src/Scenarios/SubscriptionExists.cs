@@ -8,8 +8,8 @@ namespace Proto.Client
     {
         public override void Execute()
         {
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
-            if(client.GetSubscriptionContainer().DoesExist(Context.SubscriptionId))
+            var client = new ArmClient(new DefaultAzureCredential());
+            if(client.GetSubscriptions().DoesExist(Context.SubscriptionId))
             {
                 Console.WriteLine($"Found {Context.SubscriptionId}");
             }
