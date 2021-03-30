@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Perf
         {
             int count = 0;
 
-            foreach (var _ in Client.GetIncidentRootCauses(DetectionConfigurationId, IncidentId, cancellationToken: cancellationToken))
+            foreach (var _ in Client.GetIncidentRootCauses(TestEnvironment.DetectionConfigurationId, TestEnvironment.IncidentId, cancellationToken: cancellationToken))
             {
                 if (++count >= Options.Count)
                 {
@@ -32,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Perf
         {
             int count = 0;
 
-            await foreach (var _ in Client.GetIncidentRootCausesAsync(DetectionConfigurationId, IncidentId, cancellationToken: cancellationToken))
+            await foreach (var _ in Client.GetIncidentRootCausesAsync(TestEnvironment.DetectionConfigurationId, TestEnvironment.IncidentId, cancellationToken: cancellationToken))
             {
                 if (++count >= Options.Count)
                 {
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Perf
         {
             int count = 0;
 
-            foreach (var _ in Client.GetIncidentRootCauses(DetectionConfigurationId, IncidentId))
+            foreach (var _ in Client.GetIncidentRootCauses(TestEnvironment.DetectionConfigurationId, TestEnvironment.IncidentId))
             {
                 if (++count >= Options.Count)
                 {

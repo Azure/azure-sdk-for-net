@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Perf
         {
             int count = 0;
 
-            foreach (var _ in Client.GetAnomalies(AlertConfigurationId, AlertId, cancellationToken: cancellationToken))
+            foreach (var _ in Client.GetAnomalies(TestEnvironment.AlertConfigurationId, TestEnvironment.AlertId, cancellationToken: cancellationToken))
             {
                 if (++count >= Options.Count)
                 {
@@ -32,7 +32,7 @@ namespace Azure.AI.MetricsAdvisor.Perf
         {
             int count = 0;
 
-            await foreach (var _ in Client.GetAnomaliesAsync(AlertConfigurationId, AlertId, cancellationToken: cancellationToken))
+            await foreach (var _ in Client.GetAnomaliesAsync(TestEnvironment.AlertConfigurationId, TestEnvironment.AlertId, cancellationToken: cancellationToken))
             {
                 if (++count >= Options.Count)
                 {
@@ -45,7 +45,7 @@ namespace Azure.AI.MetricsAdvisor.Perf
         {
             int count = 0;
 
-            foreach (var _ in Client.GetAnomalies(AlertConfigurationId, AlertId))
+            foreach (var _ in Client.GetAnomalies(TestEnvironment.AlertConfigurationId, TestEnvironment.AlertId))
             {
                 if (++count >= Options.Count)
                 {

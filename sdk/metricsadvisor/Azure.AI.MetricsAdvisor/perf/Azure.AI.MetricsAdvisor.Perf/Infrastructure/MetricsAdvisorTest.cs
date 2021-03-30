@@ -10,28 +10,16 @@ namespace Azure.AI.MetricsAdvisor.Perf
     {
         public MetricsAdvisorTest(TOptions options) : base(options)
         {
-            var uri = new Uri(MetricsAdvisorUri);
-            var credential = new MetricsAdvisorKeyCredential(MetricsAdvisorSubscriptionKey, MetricsAdvisorApiKey);
+            TestEnvironment = PerfTestEnvironment.Instance;
+
+            var uri = new Uri(TestEnvironment.MetricsAdvisorUri);
+            var credential = new MetricsAdvisorKeyCredential(TestEnvironment.MetricsAdvisorSubscriptionKey, TestEnvironment.MetricsAdvisorApiKey);
 
             Client = new MetricsAdvisorClient(uri, credential);
         }
 
+        protected PerfTestEnvironment TestEnvironment { get; }
+
         protected MetricsAdvisorClient Client { get; }
-
-        protected string DetectionConfigurationId => GetEnvironmentVariable("METRICSADVISOR_DETECTION_CONFIGURATION_ID");
-
-        protected string AlertConfigurationId => GetEnvironmentVariable("METRICSADVISOR_ALERT_CONFIGURATION_ID");
-
-        protected string AlertId => GetEnvironmentVariable("METRICSADVISOR_ALERT_ID");
-
-        protected string IncidentId => GetEnvironmentVariable("METRICSADVISOR_INCIDENT_ID");
-
-        private string MetricsAdvisorAccountName => GetEnvironmentVariable("METRICSADVISOR_ACCOUNT_NAME");
-
-        private string MetricsAdvisorUri => $"https://{MetricsAdvisorAccountName}.cognitiveservices.azure.com";
-
-        private string MetricsAdvisorSubscriptionKey => GetEnvironmentVariable("METRICSADVISOR_SUBSCRIPTION_KEY");
-
-        private string MetricsAdvisorApiKey => GetEnvironmentVariable("METRICSADVISOR_PRIMARY_API_KEY");
     }
 }
