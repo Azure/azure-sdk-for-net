@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommandLineParser" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\src\Azure.AI.MetricsAdvisor.csproj" />
     <ProjectReference Include="..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
   </ItemGroup>

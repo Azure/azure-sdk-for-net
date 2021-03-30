@@ -10,20 +10,28 @@ namespace Azure.AI.MetricsAdvisor
     {
         public MetricsAdvisorTest(TOptions options) : base(options)
         {
+            var uri = new Uri(MetricsAdvisorUri);
+            var credential = new MetricsAdvisorKeyCredential(MetricsAdvisorSubscriptionKey, MetricsAdvisorApiKey);
+
+            Client = new MetricsAdvisorClient(uri, credential);
         }
 
-        protected string MetricsAdvisorUri => $"https://{MetricsAdvisorAccountName}.cognitiveservices.azure.com";
+        protected MetricsAdvisorClient Client { get; }
 
-        protected string MetricsAdvisorSubscriptionKey => GetEnvironmentVariable("METRICSADVISOR_SUBSCRIPTION_KEY");
+        protected string DetectionConfigurationId => GetEnvironmentVariable("METRICSADVISOR_DETECTION_CONFIGURATION_ID");
 
-        protected string MetricsAdvisorApiKey => GetEnvironmentVariable("METRICSADVISOR_PRIMARY_API_KEY");
+        protected string AlertConfigurationId => GetEnvironmentVariable("METRICSADVISOR_ALERT_CONFIGURATION_ID");
 
-        protected string DataFeedId => GetEnvironmentVariable("METRICSADVISOR_DATA_FEED_ID");
+        protected string AlertId => GetEnvironmentVariable("METRICSADVISOR_ALERT_ID");
 
-        protected DateTimeOffset SamplingStartTime => DateTimeOffset.Parse("2020-10-01T00:00:00Z");
-
-        protected DateTimeOffset SamplingEndTime => DateTimeOffset.Parse("2020-10-31T00:00:00Z");
+        protected string IncidentId => GetEnvironmentVariable("METRICSADVISOR_INCIDENT_ID");
 
         private string MetricsAdvisorAccountName => GetEnvironmentVariable("METRICSADVISOR_ACCOUNT_NAME");
+
+        private string MetricsAdvisorUri => $"https://{MetricsAdvisorAccountName}.cognitiveservices.azure.com";
+
+        private string MetricsAdvisorSubscriptionKey => GetEnvironmentVariable("METRICSADVISOR_SUBSCRIPTION_KEY");
+
+        private string MetricsAdvisorApiKey => GetEnvironmentVariable("METRICSADVISOR_PRIMARY_API_KEY");
     }
 }
