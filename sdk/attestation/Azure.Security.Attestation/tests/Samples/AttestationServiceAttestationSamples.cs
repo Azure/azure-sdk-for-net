@@ -116,8 +116,10 @@ namespace Azure.Security.Attestation.Tests.Samples
             var client = GetAttestationClient();
 
             IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
+
+            #region Snippet:AttestSgxEnclave
             {
-                // Collect quote and enclave held data from OpenEnclave enclave.
+                // Collect quote and runtime data from OpenEnclave enclave.
 
                 var attestationResult = client.AttestSgxEnclave(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false).Value;
                 Assert.AreEqual(binaryRuntimeData, attestationResult.DeprecatedEnclaveHeldData);
@@ -125,6 +127,7 @@ namespace Azure.Security.Attestation.Tests.Samples
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
             }
+            #endregion
             return;
         }
 
@@ -178,9 +181,12 @@ namespace Azure.Security.Attestation.Tests.Samples
 
             /*TokenCredential credential = TestEnvironment.Credential;*/
 
+            //            string powerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
+
+            #region Snippet:CreateAttestationClient
             var options = new AttestationClientOptions();
-//            string powerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
             return new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options);
+            #endregion
         }
     }
 }
