@@ -18,6 +18,7 @@ New features:
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+		<RootNamespace>Microsoft.Azure.Management.DataProtection.Backup</RootNamespace>
 	</PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->

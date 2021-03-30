@@ -7,6 +7,7 @@
 namespace Microsoft.Azure.Management.DataProtection
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Models;
     using Newtonsoft.Json;

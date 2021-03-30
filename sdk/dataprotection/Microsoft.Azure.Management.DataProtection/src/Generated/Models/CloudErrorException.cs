@@ -7,6 +7,7 @@
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Exception thrown for an invalid response with CloudError information.

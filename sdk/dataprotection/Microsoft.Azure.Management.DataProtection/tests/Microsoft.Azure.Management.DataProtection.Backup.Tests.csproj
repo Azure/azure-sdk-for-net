@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <Import Project="$(RepoEngPath)/mgmt/AzSdk.test.reference.props" />
   <PropertyGroup>
     <PackageId>DataProtection.Tests</PackageId>
@@ -6,8 +6,15 @@
     <AssemblyName>DataProtection.Tests</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Version>1.0.0</Version>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.DataProtection.Backup.csproj" />
+  </ItemGroup>
   <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
