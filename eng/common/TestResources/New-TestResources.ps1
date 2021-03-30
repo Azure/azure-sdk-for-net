@@ -49,8 +49,8 @@ param (
     [string] $ProvisionerApplicationSecret,
 
     [Parameter()]
-    [ValidateRange(0, [int]::MaxValue)]
-    [int] $DeleteAfterHours,
+    [ValidateRange(1, [int]::MaxValue)]
+    [int] $DeleteAfterHours = 48,
 
     [Parameter()]
     [string] $Location = '',
@@ -166,7 +166,7 @@ try {
         Log "Generated base name '$BaseName' for CI build"
     } elseif (!$BaseName) {
         $BaseName = "$UserName$ServiceDirectory"
-        Log "BaseName was not set. Using default base name: '$BaseName'"
+        Log "BaseName was not set. Using default base name '$BaseName'"
     }
 
     # Make sure pre- and post-scripts are passed formerly required arguments.
@@ -207,11 +207,25 @@ try {
         # If no subscription was specified, try to select the Azure SDK Developer Playground subscription.
         # Ignore errors to leave the automatically selected subscription.
         if ($SubscriptionId) {
-            Log "Selecting subscription '$SubscriptionId'"
-            Select-AzSubscription -Subscription $SubscriptionId
+            $currentSubcriptionId = $context.Subscription.Id
+            if ($currentSubcriptionId -ne $SubscriptionId) {
+                Log "Selecting subscription '$SubscriptionId'"
+                $null = Select-AzSubscription -Subscription $SubscriptionId
+        
+                $exitActions += {
+                    Log "Selecting previous subscription '$currentSubcriptionId'"
+                    $null = Select-AzSubscription -Subscription $currentSubcriptionId
+                }
+        
+                # Update the context.
+                $context = Get-AzContext
+            }
         } else {
             Log "Attempting to select subscription 'Azure SDK Developer Playground (faa080af-c1d8-40ad-9cce-e1a450ca5b57)'"
-            Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore
+            $null = Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore
+
+            # Update the context.
+            $context = Get-AzContext
 
             $SubscriptionId = $context.Subscription.Id
             $PSBoundParameters['SubscriptionId'] = $SubscriptionId
@@ -223,7 +237,7 @@ try {
             'a18897a6-7e44-457d-9260-f2854c0aca42' = 'Azure SDK Engineering System'
             '2cd617ea-1866-46b1-90e3-fffb087ebf9b' = 'Azure SDK Test Resources'
         }
-        
+
         # Print which subscription is currently selected.
         $subscriptionName = $context.Subscription.Id
         if ($wellKnownSubscriptions.ContainsKey($subscriptionName)) {
@@ -246,7 +260,7 @@ try {
                 Log "TestApplicationId was not specified; loading cached service principal '$($AzureTestPrincipal.ApplicationId)'"
                 $AzureTestPrincipal
             } else {
-                Log 'TestApplicationId was not specified; creating a new service principal'
+                Log "TestApplicationId was not specified; creating a new service principal in subscription '$SubscriptionId'"
                 $global:AzureTestPrincipal = New-AzADServicePrincipal -Role Owner -Scope "/subscriptions/$SubscriptionId"
                 $global:AzureTestSubscription = $SubscriptionId
 
@@ -331,16 +345,15 @@ try {
         "rg-$BaseName"
     }
 
-    # Tag the resource group to be deleted after a certain number of hours if specified.
     $tags = @{
         Creator = $UserName
         ServiceDirectory = $ServiceDirectory
     }
 
-    if ($PSBoundParameters.ContainsKey('DeleteAfterHours')) {
-        $deleteAfter = [DateTime]::UtcNow.AddHours($DeleteAfterHours)
-        $tags.Add('DeleteAfter', $deleteAfter.ToString('o'))
-    }
+    # Tag the resource group to be deleted after a certain number of hours.
+    Write-Warning "Any clean-up scripts running against subscription '$SubscriptionId' may delete resource group '$ResourceGroupName' after $DeleteAfterHours hours."
+    $deleteAfter = [DateTime]::UtcNow.AddHours($DeleteAfterHours).ToString('o')
+    $tags['DeleteAfter'] = $deleteAfter
 
     if ($CI) {
         # Add tags for the current CI job.
@@ -642,17 +655,14 @@ If none is specified New-TestResources.ps1 uses the TestApplicationSecret.
 This value is not passed to the ARM template.
 
 .PARAMETER DeleteAfterHours
-Optional. Positive integer number of hours from the current time to set the
+Positive integer number of hours from the current time to set the
 'DeleteAfter' tag on the created resource group. The computed value is a
 timestamp of the form "2020-03-04T09:07:04.3083910Z".
-
-If this value is not specified no 'DeleteAfter' tag will be assigned to the
-created resource group.
 
 An optional cleanup process can delete resource groups whose "DeleteAfter"
 timestamp is less than the current time.
 
-This isused for CI automation.
+This is used for CI automation.
 
 .PARAMETER Location
 Optional location where resources should be created. If left empty, the default

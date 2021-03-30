@@ -16,9 +16,9 @@ Deploys live test resources defined for a service directory to Azure.
 ```
 New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-ServiceDirectory] <String>
  [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
- [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>] [-ArmTemplateParameters <Hashtable>]
- [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile] [-WhatIf]
- [-Confirm] [<CommonParameters>]
+ [-SubscriptionId <String>] [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>]
+ [-ArmTemplateParameters <Hashtable>] [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>]
+ [-CI] [-Force] [-OutFile] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Provisioner
@@ -228,7 +228,8 @@ Accept wildcard characters: False
 
 ### -SubscriptionId
 Optional subscription ID to use for new resources when logging in as a
-provisioner. You can also use Set-AzContext if not provisioning.
+provisioner.
+You can also use Set-AzContext if not provisioning.
 
 If you do not specify a SubscriptionId and are not logged in, once will be
 automatically selected for you by the Connect-AzAccount cmdlet.
@@ -238,12 +239,12 @@ will be used for subsequent operations that are specific to a subscription.
 
 ```yaml
 Type: String
-Parameter Sets: Provisioner
+Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: Named
-Default value: faa080af-c1d8-40ad-9cce-e1a450ca5b57
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -289,19 +290,15 @@ Accept wildcard characters: False
 ```
 
 ### -DeleteAfterHours
-Optional.
 Positive integer number of hours from the current time to set the
 'DeleteAfter' tag on the created resource group.
 The computed value is a
 timestamp of the form "2020-03-04T09:07:04.3083910Z".
 
-If this value is not specified no 'DeleteAfter' tag will be assigned to the
-created resource group.
-
 An optional cleanup process can delete resource groups whose "DeleteAfter"
 timestamp is less than the current time.
 
-This isused for CI automation.
+This is used for CI automation.
 
 ```yaml
 Type: Int32
@@ -310,7 +307,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: 0
+Default value: 48
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -480,7 +477,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
