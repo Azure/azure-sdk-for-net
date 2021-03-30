@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentTranslation.Tests
         [RecordedTest]
         public async Task GetTranslationsTest()
         {
-            Uri source = await CreateSourceContainerAsync(OneDocumentList);
+            Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target = await CreateTargetContainerAsync();
 
             var client = GetClient();

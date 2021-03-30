@@ -23,19 +23,16 @@ namespace Azure.AI.DocumentTranslation.Tests
             Sanitizer = new DocumentTranslationRecordedTestSanitizer();
         }
 
-        private static readonly List<TestDocument> oneTestDocuments = new()
+        protected static readonly List<TestDocument> oneTestDocuments = new()
         {
             new TestDocument("Document1.txt", "First english test document"),
         };
 
-        private static readonly List<TestDocument> twoTestDocuments = new()
+        protected static readonly List<TestDocument> twoTestDocuments = new()
         {
             new TestDocument("Document1.txt", "First english test document"),
             new TestDocument("File2.txt", "Second english test file"),
         };
-
-        protected List<TestDocument> OneDocumentList = oneTestDocuments;
-        protected List<TestDocument> TwoDocumentList = twoTestDocuments;
 
         public DocumentTranslationClient GetClient(
             AzureKeyCredential credential = default,

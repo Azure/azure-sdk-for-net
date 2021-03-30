@@ -23,7 +23,7 @@ namespace Azure.AI.DocumentTranslation.Tests
         [RecordedTest]
         public async Task SingleSourceSingleTargetTest()
         {
-            Uri source = await CreateSourceContainerAsync(OneDocumentList);
+            Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target = await CreateTargetContainerAsync();
 
             var client = GetClient();
@@ -51,7 +51,7 @@ namespace Azure.AI.DocumentTranslation.Tests
         [RecordedTest]
         public async Task SingleSourceMultipleTargetsTest()
         {
-            Uri source = await CreateSourceContainerAsync(OneDocumentList);
+            Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri targetFrench = await CreateTargetContainerAsync();
             Uri targetSpanish = await CreateTargetContainerAsync();
             Uri targetArabic = await CreateTargetContainerAsync();
@@ -83,8 +83,8 @@ namespace Azure.AI.DocumentTranslation.Tests
         [RecordedTest]
         public async Task MultipleSourcesSingleTarget()
         {
-            Uri source1 = await CreateSourceContainerAsync(OneDocumentList);
-            Uri source2 = await CreateSourceContainerAsync(OneDocumentList);
+            Uri source1 = await CreateSourceContainerAsync(oneTestDocuments);
+            Uri source2 = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target1 = await CreateTargetContainerAsync();
             Uri target2 = await CreateTargetContainerAsync();
 
@@ -118,7 +118,7 @@ namespace Azure.AI.DocumentTranslation.Tests
         [RecordedTest]
         public async Task SingleSourceSingleTargetWithPrefixTest()
         {
-            Uri sourceUri = await CreateSourceContainerAsync(TwoDocumentList);
+            Uri sourceUri = await CreateSourceContainerAsync(twoTestDocuments);
             Uri targetUri = await CreateTargetContainerAsync();
 
             var client = GetClient();
@@ -155,7 +155,7 @@ namespace Azure.AI.DocumentTranslation.Tests
         [RecordedTest]
         public async Task SingleSourceSingleTargetWithSuffixTest()
         {
-            Uri sourceUri = await CreateSourceContainerAsync(TwoDocumentList);
+            Uri sourceUri = await CreateSourceContainerAsync(twoTestDocuments);
             Uri targetUri = await CreateTargetContainerAsync();
 
             var client = GetClient();
@@ -192,7 +192,7 @@ namespace Azure.AI.DocumentTranslation.Tests
         [RecordedTest]
         public async Task SingleSourceSingleTargetListDocumentsTest()
         {
-            Uri sourceUri = await CreateSourceContainerAsync(OneDocumentList);
+            Uri sourceUri = await CreateSourceContainerAsync(oneTestDocuments);
             Uri targetUri = await CreateTargetContainerAsync();
 
             var client = GetClient();
@@ -229,7 +229,7 @@ namespace Azure.AI.DocumentTranslation.Tests
         [RecordedTest]
         public async Task GetDocumentStatusTest()
         {
-            Uri sourceUri = await CreateSourceContainerAsync(OneDocumentList);
+            Uri sourceUri = await CreateSourceContainerAsync(oneTestDocuments);
             Uri targetUri = await CreateTargetContainerAsync();
 
             var client = GetClient();
@@ -276,7 +276,7 @@ namespace Azure.AI.DocumentTranslation.Tests
         [RecordedTest]
         public async Task RightSourceWrongTarget()
         {
-            Uri source = await CreateSourceContainerAsync(OneDocumentList);
+            Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target = new("https://idont.ex.ist");
 
             var client = GetClient();

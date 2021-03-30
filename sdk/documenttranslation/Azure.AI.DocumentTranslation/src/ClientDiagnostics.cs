@@ -45,8 +45,8 @@ namespace Azure.Core.Pipeline
                     if (doc.RootElement.TryGetProperty("error", out JsonElement errorElement))
                     {
                         DocumentTranslationError error = DocumentTranslationError.DeserializeDocumentTranslationError(errorElement);
-                        message ??= error?.Message;
-                        errorCode ??= error?.ErrorCode.ToString();
+                        message = error.Message;
+                        errorCode = error.ErrorCode.ToString();
                     }
                 }
                 catch (JsonException)
