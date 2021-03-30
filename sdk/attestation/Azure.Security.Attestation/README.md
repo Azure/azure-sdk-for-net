@@ -229,7 +229,7 @@ See [CONTRIBUTING.md][contributing] for details on building, testing, and contri
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-[API_reference]: https://docs.microsoft.com/en-us/dotnet/api/azure.security.attestation?view=azure-dotnet-preview
+[API_reference]: https://docs.microsoft.com/dotnet/api/azure.security.attestation?view=azure-dotnet-preview
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/
