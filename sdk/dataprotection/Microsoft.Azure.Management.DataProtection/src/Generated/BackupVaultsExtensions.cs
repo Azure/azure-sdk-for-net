@@ -132,9 +132,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='parameters'>
             /// Request body for operation
             /// </param>
-            public static BackupVaultResource Put(this IBackupVaults operations, string vaultName, string resourceGroupName, BackupVaultResource parameters)
+            public static BackupVaultResource CreateOrUpdate(this IBackupVaults operations, string vaultName, string resourceGroupName, BackupVaultResource parameters)
             {
-                return operations.PutAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(vaultName, resourceGroupName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -155,9 +155,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BackupVaultResource> PutAsync(this IBackupVaults operations, string vaultName, string resourceGroupName, BackupVaultResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BackupVaultResource> CreateOrUpdateAsync(this IBackupVaults operations, string vaultName, string resourceGroupName, BackupVaultResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(vaultName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

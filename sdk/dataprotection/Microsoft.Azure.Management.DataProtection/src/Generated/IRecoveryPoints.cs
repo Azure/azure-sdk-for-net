@@ -30,6 +30,12 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
         /// </param>
+        /// <param name='filter'>
+        /// OData filter options.
+        /// </param>
+        /// <param name='skipToken'>
+        /// skipToken Filter.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -45,6 +51,6 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<AzureBackupRecoveryPointResourceList>> GetListWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<AzureBackupRecoveryPointResourceList>> GetListWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, string filter = default(string), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

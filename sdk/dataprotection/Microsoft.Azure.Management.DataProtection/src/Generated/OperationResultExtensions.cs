@@ -28,9 +28,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// </param>
             /// <param name='location'>
             /// </param>
-            public static void Get(this IOperationResult operations, string operationId, string location)
+            public static OperationJobExtendedInfo Get(this IOperationResult operations, string operationId, string location)
             {
-                operations.GetAsync(operationId, location).GetAwaiter().GetResult();
+                return operations.GetAsync(operationId, location).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -49,9 +49,12 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task GetAsync(this IOperationResult operations, string operationId, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationJobExtendedInfo> GetAsync(this IOperationResult operations, string operationId, string location, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.GetWithHttpMessagesAsync(operationId, location, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.GetWithHttpMessagesAsync(operationId, location, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

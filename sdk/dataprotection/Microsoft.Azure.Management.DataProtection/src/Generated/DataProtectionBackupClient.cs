@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Management.DataProtection
         public virtual IJobs Jobs { get; private set; }
 
         /// <summary>
+        /// Gets the IFindRestorableTimeRanges.
+        /// </summary>
+        public virtual IFindRestorableTimeRanges FindRestorableTimeRanges { get; private set; }
+
+        /// <summary>
         /// Gets the IJob.
         /// </summary>
         public virtual IJob Job { get; private set; }
@@ -199,6 +204,7 @@ namespace Microsoft.Azure.Management.DataProtection
             RecoveryPoints = new RecoveryPoints(this);
             RecoveryPoint = new RecoveryPoint(this);
             Jobs = new Jobs(this);
+            FindRestorableTimeRanges = new FindRestorableTimeRanges(this);
             Job = new Job(this);
             ExportJobs = new ExportJobs(this);
             ExportJobsOperationResult = new ExportJobsOperationResult(this);
@@ -255,6 +261,8 @@ namespace Microsoft.Azure.Management.DataProtection
             DeserializationSettings.Converters.Add(new  PolymorphicDeserializeJsonConverter<FeatureValidationRequestBase>("objectType"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<FeatureValidationResponseBase>("objectType"));
             DeserializationSettings.Converters.Add(new  PolymorphicDeserializeJsonConverter<FeatureValidationResponseBase>("objectType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ItemLevelRestoreCriteria>("objectType"));
+            DeserializationSettings.Converters.Add(new  PolymorphicDeserializeJsonConverter<ItemLevelRestoreCriteria>("objectType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
         }
@@ -541,7 +549,7 @@ namespace Microsoft.Azure.Management.DataProtection
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try

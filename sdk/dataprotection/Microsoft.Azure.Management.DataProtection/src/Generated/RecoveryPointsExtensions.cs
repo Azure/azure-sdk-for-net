@@ -30,9 +30,15 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
             /// </param>
-            public static AzureBackupRecoveryPointResourceList GetList(this IRecoveryPoints operations, string vaultName, string resourceGroupName, string backupInstanceName)
+            /// <param name='filter'>
+            /// OData filter options.
+            /// </param>
+            /// <param name='skipToken'>
+            /// skipToken Filter.
+            /// </param>
+            public static AzureBackupRecoveryPointResourceList GetList(this IRecoveryPoints operations, string vaultName, string resourceGroupName, string backupInstanceName, string filter = default(string), string skipToken = default(string))
             {
-                return operations.GetListAsync(vaultName, resourceGroupName, backupInstanceName).GetAwaiter().GetResult();
+                return operations.GetListAsync(vaultName, resourceGroupName, backupInstanceName, filter, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -50,12 +56,18 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='backupInstanceName'>
             /// The name of the backup instance
             /// </param>
+            /// <param name='filter'>
+            /// OData filter options.
+            /// </param>
+            /// <param name='skipToken'>
+            /// skipToken Filter.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AzureBackupRecoveryPointResourceList> GetListAsync(this IRecoveryPoints operations, string vaultName, string resourceGroupName, string backupInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AzureBackupRecoveryPointResourceList> GetListAsync(this IRecoveryPoints operations, string vaultName, string resourceGroupName, string backupInstanceName, string filter = default(string), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetListWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetListWithHttpMessagesAsync(vaultName, resourceGroupName, backupInstanceName, filter, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

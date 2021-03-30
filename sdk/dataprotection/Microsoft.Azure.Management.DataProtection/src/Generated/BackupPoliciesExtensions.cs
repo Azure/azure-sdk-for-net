@@ -122,9 +122,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='parameters'>
             /// Request body for operation
             /// </param>
-            public static BaseBackupPolicyResource Put(this IBackupPolicies operations, string vaultName, string resourceGroupName, string backupPolicyName, BaseBackupPolicyResource parameters)
+            public static BaseBackupPolicyResource CreateOrUpdate(this IBackupPolicies operations, string vaultName, string resourceGroupName, string backupPolicyName, BaseBackupPolicyResource parameters)
             {
-                return operations.PutAsync(vaultName, resourceGroupName, backupPolicyName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(vaultName, resourceGroupName, backupPolicyName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -147,9 +147,9 @@ namespace Microsoft.Azure.Management.DataProtection
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BaseBackupPolicyResource> PutAsync(this IBackupPolicies operations, string vaultName, string resourceGroupName, string backupPolicyName, BaseBackupPolicyResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BaseBackupPolicyResource> CreateOrUpdateAsync(this IBackupPolicies operations, string vaultName, string resourceGroupName, string backupPolicyName, BaseBackupPolicyResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutWithHttpMessagesAsync(vaultName, resourceGroupName, backupPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(vaultName, resourceGroupName, backupPolicyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

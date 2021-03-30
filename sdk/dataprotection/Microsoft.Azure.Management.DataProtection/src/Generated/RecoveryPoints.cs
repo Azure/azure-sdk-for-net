@@ -58,6 +58,12 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <param name='backupInstanceName'>
         /// The name of the backup instance
         /// </param>
+        /// <param name='filter'>
+        /// OData filter options.
+        /// </param>
+        /// <param name='skipToken'>
+        /// skipToken Filter.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -79,7 +85,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<AzureBackupRecoveryPointResourceList>> GetListWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<AzureBackupRecoveryPointResourceList>> GetListWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, string filter = default(string), string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -111,6 +117,8 @@ namespace Microsoft.Azure.Management.DataProtection
                 tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("backupInstanceName", backupInstanceName);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("skipToken", skipToken);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetList", tracingParameters);
             }
@@ -125,6 +133,14 @@ namespace Microsoft.Azure.Management.DataProtection
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
+            if (skipToken != null)
+            {
+                _queryParameters.Add(string.Format("$skipToken={0}", System.Uri.EscapeDataString(skipToken)));
             }
             if (_queryParameters.Count > 0)
             {

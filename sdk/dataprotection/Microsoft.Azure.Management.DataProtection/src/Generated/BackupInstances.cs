@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<BackupInstanceResourceList>> GetBackupInstancesInVaultWithHttpMessagesAsync(string vaultName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<BackupInstanceResourceList>> ListWithHttpMessagesAsync(string vaultName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 tracingParameters.Add("vaultName", vaultName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetBackupInstancesInVault", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -393,6 +393,9 @@ namespace Microsoft.Azure.Management.DataProtection
             return _result;
         }
 
+        /// <summary>
+        /// Create or update a backup instance in a backup vault
+        /// </summary>
         /// <param name='vaultName'>
         /// The name of the backup vault.
         /// </param>
@@ -426,7 +429,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<BackupInstanceResource>> PutWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, BackupInstanceResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<BackupInstanceResource>> CreateOrUpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, BackupInstanceResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -468,7 +471,7 @@ namespace Microsoft.Azure.Management.DataProtection
                 tracingParameters.Add("backupInstanceName", backupInstanceName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Put", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -604,6 +607,9 @@ namespace Microsoft.Azure.Management.DataProtection
             return _result;
         }
 
+        /// <summary>
+        /// Delete a backup instance in a backup vault
+        /// </summary>
         /// <param name='vaultName'>
         /// The name of the backup vault.
         /// </param>
@@ -795,6 +801,9 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="CloudErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -804,7 +813,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<BackupInstancesAdhocBackupHeaders>> AdhocBackupWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, TriggerBackupRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<OperationJobExtendedInfo,BackupInstancesAdhocBackupHeaders>> AdhocBackupWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, TriggerBackupRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -906,7 +915,7 @@ namespace Microsoft.Azure.Management.DataProtection
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -936,9 +945,27 @@ namespace Microsoft.Azure.Management.DataProtection
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationHeaderResponse<BackupInstancesAdhocBackupHeaders>();
+            var _result = new HttpOperationResponse<OperationJobExtendedInfo,BackupInstancesAdhocBackupHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationJobExtendedInfo>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             try
             {
                 _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<BackupInstancesAdhocBackupHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
@@ -980,6 +1007,9 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="CloudErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -989,7 +1019,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<BackupInstancesValidateForBackupHeaders>> ValidateForBackupWithHttpMessagesAsync(string vaultName, string resourceGroupName, ValidateForBackupRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForBackupHeaders>> ValidateForBackupWithHttpMessagesAsync(string vaultName, string resourceGroupName, ValidateForBackupRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1085,7 +1115,7 @@ namespace Microsoft.Azure.Management.DataProtection
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1115,9 +1145,27 @@ namespace Microsoft.Azure.Management.DataProtection
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationHeaderResponse<BackupInstancesValidateForBackupHeaders>();
+            var _result = new HttpOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateForBackupHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationJobExtendedInfo>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             try
             {
                 _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<BackupInstancesValidateForBackupHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
@@ -1349,6 +1397,9 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="CloudErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -1358,7 +1409,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<BackupInstancesTriggerRestoreHeaders>> TriggerRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<OperationJobExtendedInfo,BackupInstancesTriggerRestoreHeaders>> TriggerRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, AzureBackupRestoreRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1460,7 +1511,7 @@ namespace Microsoft.Azure.Management.DataProtection
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1490,9 +1541,27 @@ namespace Microsoft.Azure.Management.DataProtection
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationHeaderResponse<BackupInstancesTriggerRestoreHeaders>();
+            var _result = new HttpOperationResponse<OperationJobExtendedInfo,BackupInstancesTriggerRestoreHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationJobExtendedInfo>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             try
             {
                 _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<BackupInstancesTriggerRestoreHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
@@ -1537,6 +1606,9 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="CloudErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -1546,7 +1618,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<BackupInstancesValidateRestoreHeaders>> ValidateRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, ValidateRestoreRequestObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateRestoreHeaders>> ValidateRestoreWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupInstanceName, ValidateRestoreRequestObject parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1648,7 +1720,7 @@ namespace Microsoft.Azure.Management.DataProtection
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 202)
             {
                 var ex = new CloudErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1678,9 +1750,27 @@ namespace Microsoft.Azure.Management.DataProtection
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationHeaderResponse<BackupInstancesValidateRestoreHeaders>();
+            var _result = new HttpOperationResponse<OperationJobExtendedInfo,BackupInstancesValidateRestoreHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationJobExtendedInfo>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             try
             {
                 _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<BackupInstancesValidateRestoreHeaders>(JsonSerializer.Create(Client.DeserializationSettings));

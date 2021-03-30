@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.DataProtection
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<BaseBackupPolicyResource>> PutWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupPolicyName, BaseBackupPolicyResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<BaseBackupPolicyResource>> CreateOrUpdateWithHttpMessagesAsync(string vaultName, string resourceGroupName, string backupPolicyName, BaseBackupPolicyResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a backup policy belonging to a backup vault
         /// </summary>

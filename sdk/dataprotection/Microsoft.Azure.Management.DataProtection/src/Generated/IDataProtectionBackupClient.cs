@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Management.DataProtection
         IJobs Jobs { get; }
 
         /// <summary>
+        /// Gets the IFindRestorableTimeRanges.
+        /// </summary>
+        IFindRestorableTimeRanges FindRestorableTimeRanges { get; }
+
+        /// <summary>
         /// Gets the IJob.
         /// </summary>
         IJob Job { get; }
