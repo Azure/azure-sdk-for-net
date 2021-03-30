@@ -6,13 +6,14 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
 {
     public class TestHelper : IDisposable
     {
-        public string ResourceGroup = "DPPSwaggerTestRg";
-        public string VaultName = "DPPNetSDKTestBackupVault";
+        public string ResourceGroup = "SwaggerTestRg";
+        public string VaultName = "NetSDKTestRsVault";
         public string Location = "southeastasia";
 
         public DataProtectionBackupClient BackupClient { get; private set; }
@@ -25,6 +26,7 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
         public void Initialize(MockContext context)
         {
             BackupClient = context.GetServiceClient<DataProtectionBackupClient>();
+            BackupClient.ApiVersion = "2020-06-01";
             CreateResourceGroup(context);
             CreateVault(VaultName);
         }
@@ -50,13 +52,15 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.TestHelpers
 
         private void CreateVault(string vaultName)
         {
+            
             BackupVaults vault = new BackupVaults(BackupClient);
             StorageSetting storageSetting = new StorageSetting();
             List<StorageSetting> storageSettings = new List<StorageSetting>();
             storageSettings.Add(storageSetting);
             BackupVaultResource parameters = new BackupVaultResource()
             {
-                StorageSettings = storageSettings
+                StorageSettings = storageSettings,
+                Location = Location
             };
             try
             {

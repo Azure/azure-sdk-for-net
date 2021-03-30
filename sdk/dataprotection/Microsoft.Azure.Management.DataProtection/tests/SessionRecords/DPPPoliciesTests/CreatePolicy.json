@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourcegroups/DefaultPolicyTestVaultRg?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTNkMmQzNDEtNGRkYi00YzVkLTkxMjEtNjliN2U3MTk0ODVlL3Jlc291cmNlZ3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZz9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestUri": "/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourcegroups/DefaultPolicyTestVaultRg?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTNkMmQzNDEtNGRkYi00YzVkLTkxMjEtNjliN2U3MTk0ODVlL3Jlc291cmNlZ3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZz9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"southeastasia\"\r\n}",
       "RequestHeaders": {
@@ -64,6 +64,77 @@
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/DefaultPolicyTestVaultRg\",\r\n  \"name\": \"DefaultPolicyTestVaultRg\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.DataProtection/backupVaults/DefaultPolicyTestVault?api-version=2020-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTNkMmQzNDEtNGRkYi00YzVkLTkxMjEtNjliN2U3MTk0ODVlL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFQcm90ZWN0aW9uL2JhY2t1cFZhdWx0cy9EZWZhdWx0UG9saWN5VGVzdFZhdWx0P2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\"properties.provisioningState\":null,\"properties.storageSettings\":[{\"datastoreType\":null,\"type\":null}],\"eTag\":null,\"id\":null,\"identity\":null,\"location\":\"southeastasia\",\"name\":null,\"tags\":null,\"type\":null,\"systemData\":null}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cfc787f1-3f81-4ee6-8aba-9849a0caf02f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042."
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "x-ms-client-request-id": [
+          "cfc787f1-3f81-4ee6-8aba-9849a0caf02f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "209"
+        ],
+        "x-ms-correlation-request-id": [
+          "873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135053Z:873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:50:52 GMT"
+        ],
+        "Content-Length": [
+          "484"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"location\": \"southeastasia\",\r\n  \"name\": \"DefaultPolicyTestVault\",\r\n  \"etag\": \"W/\\\"datetime'2020-12-08T13%3A50%3A52.9304936Z'\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"privateEndpointStateForBackup\": \"None\",\r\n    \"privateEndpointStateForSiteRecovery\": \"None\"\r\n  },\r\n  \"id\": \"/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.RecoveryServices/vaults/DefaultPolicyTestVault\",\r\n  \"type\": \"Microsoft.RecoveryServices/vaults\",\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  }\r\n}",
       "StatusCode": 201
     }
   ],
