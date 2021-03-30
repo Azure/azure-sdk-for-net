@@ -28,7 +28,7 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="VirtualMachineContainer" /> object. </returns>
-        public static VirtualMachineContainer GetVirtualMachineContainer(this ResourceGroupOperations resourceGroup)
+        public static VirtualMachineContainer GetVirtualMachines(this ResourceGroupOperations resourceGroup)
         {
             return new VirtualMachineContainer(resourceGroup);
         }
@@ -54,7 +54,7 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> Returns an <see cref="AvailabilitySetContainer" /> object. </returns>
-        public static AvailabilitySetContainer GetAvailabilitySetContainer(this ResourceGroupOperations resourceGroup)
+        public static AvailabilitySetContainer GetAvailabilitySets(this ResourceGroupOperations resourceGroup)
         {
             return new AvailabilitySetContainer(resourceGroup);
         }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the Azure subscriptions.
         /// </summary>
         /// <returns> Subscription container. </returns>
-        public SubscriptionContainer GetSubscriptionContainer()
+        public SubscriptionContainer GetSubscriptions()
         {
             return new SubscriptionContainer(ClientOptions, Credential, BaseUri);
         }

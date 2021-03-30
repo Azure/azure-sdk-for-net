@@ -13,23 +13,23 @@ namespace Proto.Client
         public override void Execute()
         {
 
-            AzureResourceManagerClientOptions options1 = new AzureResourceManagerClientOptions();
-            AzureResourceManagerClientOptions options2 = new AzureResourceManagerClientOptions();
+            ArmClientOptions options1 = new ArmClientOptions();
+            ArmClientOptions options2 = new ArmClientOptions();
             var dummyPolicy1 = new dummyPolicy();
             var dummyPolicy2 = new dummyPolicy2();
             options1.AddPolicy(dummyPolicy1, HttpPipelinePosition.PerCall);
             options2.AddPolicy(dummyPolicy2, HttpPipelinePosition.PerCall);
-            var client1 = new AzureResourceManagerClient(new DefaultAzureCredential(), options1);
-            var client2 = new AzureResourceManagerClient(new DefaultAzureCredential(), options2);
+            var client1 = new ArmClient(new DefaultAzureCredential(), options1);
+            var client2 = new ArmClient(new DefaultAzureCredential(), options2);
 
             Console.WriteLine("-----Client 1-----");
-            foreach (var sub in client1.GetSubscriptionContainer().List())
+            foreach (var sub in client1.GetSubscriptions().List())
             {
                 Console.WriteLine($"Found {sub.Data.DisplayName}");
             }
 
             Console.WriteLine("-----Client 2-----");
-           foreach (var sub in client2.GetSubscriptionContainer().List())
+           foreach (var sub in client2.GetSubscriptions().List())
             {
                 Console.WriteLine($"Found {sub.Data.DisplayName}");
             }

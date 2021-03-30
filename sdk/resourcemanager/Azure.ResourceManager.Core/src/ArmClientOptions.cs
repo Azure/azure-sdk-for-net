@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing Azure resource manager client options.
     /// </summary>
-    public sealed class AzureResourceManagerClientOptions : ClientOptions
+    public sealed class ArmClientOptions : ClientOptions
     {
         private readonly ConcurrentDictionary<Type, object> _overrides = new ConcurrentDictionary<Type, object>();
 
@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.Core
         public ApiVersions ApiVersions { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureResourceManagerClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
         /// </summary>
-        public AzureResourceManagerClientOptions()
+        public ArmClientOptions()
             : this(LocationData.Default, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureResourceManagerClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
         /// </summary>
         /// <param name="defaultLocation"> The default location to use if can't be inherited from parent. </param>
-        public AzureResourceManagerClientOptions(LocationData defaultLocation)
+        public ArmClientOptions(LocationData defaultLocation)
             : this(defaultLocation, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureResourceManagerClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
         /// </summary>
         /// <param name="defaultLocation"> The default location to use if can't be inherited from parent. </param>
         /// <param name="other"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="LocationData"/> is null. </exception>
-        internal AzureResourceManagerClientOptions(LocationData defaultLocation, AzureResourceManagerClientOptions other = null)
+        internal ArmClientOptions(LocationData defaultLocation, ArmClientOptions other = null)
         {
             if (defaultLocation is null)
                 throw new ArgumentNullException(nameof(defaultLocation));
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Core
         }
 
         // Will be removed like AddPolicy when we move to azure core
-        private void Copy(AzureResourceManagerClientOptions other)
+        private void Copy(ArmClientOptions other)
         {
             Transport = other.Transport;
             foreach (var pol in other.PerCallPolicies)

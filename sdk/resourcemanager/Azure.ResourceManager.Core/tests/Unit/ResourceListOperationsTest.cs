@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var rgOp = new ResourceGroupOperations(
                             new SubscriptionOperations(
-                                new AzureResourceManagerClientOptions(),
+                                new ArmClientOptions(),
                                 Guid.Empty.ToString(),
                                 new DefaultAzureCredential(), //should make a fake credential creation
                                 new Uri("http://foo.com")),

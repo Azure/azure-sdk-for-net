@@ -25,7 +25,7 @@ namespace Proto.Billing
         }
         
         //TODO : dicuss ways to not pass in Subscription subscription for tenant only resources
-        internal BillingAccountOperations(AzureResourceManagerClientOptions options, string billingAccountId, TokenCredential credential, Uri baseUri)
+        internal BillingAccountOperations(ArmClientOptions options, string billingAccountId, TokenCredential credential, Uri baseUri)
             : base(options, $"/providers/{ResourceType}/{billingAccountId}", credential, baseUri)
         {
         }

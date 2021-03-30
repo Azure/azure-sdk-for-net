@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceId"> The identifier of the resource that is the target of operations. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="baseUri"> The base URI of the service. </param>
-        protected ResourceOperationsBase(AzureResourceManagerClientOptions options, ResourceIdentifier resourceId, TokenCredential credential, Uri baseUri)
+        protected ResourceOperationsBase(ArmClientOptions options, ResourceIdentifier resourceId, TokenCredential credential, Uri baseUri)
             : base(options, resourceId, credential, baseUri)
         {
         }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="resourceId"> The identifier of the resource that is the target of operations. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="baseUri"> The base URI of the service. </param>
-        protected ResourceOperationsBase(AzureResourceManagerClientOptions options, ResourceIdentifier resourceId, TokenCredential credential, Uri baseUri)
+        protected ResourceOperationsBase(ArmClientOptions options, ResourceIdentifier resourceId, TokenCredential credential, Uri baseUri)
             : base(options, resourceId, credential, baseUri)
         {
         }

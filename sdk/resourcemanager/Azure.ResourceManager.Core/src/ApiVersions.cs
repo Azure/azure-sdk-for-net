@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.Core
     public class ApiVersions
     {
         private ProvidersOperations ProviderOperations;
-        private AzureResourceManagerClientOptions _clientOptions;
+        private ArmClientOptions _clientOptions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiVersions"/> class.
         /// </summary>
-        internal ApiVersions(AzureResourceManagerClientOptions clientOptions)
+        internal ApiVersions(ArmClientOptions clientOptions)
         {
             BuildApiTable(clientOptions);
             _clientOptions = clientOptions;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Core
         private Dictionary<string, PropertyWrapper> _loadedResourceToApiVersions = new Dictionary<string, PropertyWrapper>();
         private Dictionary<string, string> _nonLoadedResourceToApiVersion = new Dictionary<string, string>();
 
-        private void BuildApiTable(AzureResourceManagerClientOptions clientOptions)
+        private void BuildApiTable(ArmClientOptions clientOptions)
         {
             var methods = GetExtensionMethods();
             foreach (var method in methods)
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Core
                         where type.IsSealed && !type.IsGenericType && !type.IsNested && type.Name.Equals("AzureResourceManagerClientOptionsExtensions", StringComparison.Ordinal)
                         from method in type.GetMethods(BindingFlags.Static | BindingFlags.Public)
                         where method.IsDefined(typeof(ExtensionAttribute), false)
-                        where method.GetParameters()[0].ParameterType == typeof(AzureResourceManagerClientOptions)
+                        where method.GetParameters()[0].ParameterType == typeof(ArmClientOptions)
                         select method;
             return results;
         }
