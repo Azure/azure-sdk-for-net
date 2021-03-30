@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (2020-04-15)
+## 1.0.0-beta.2 (2021-04-15)
 
 - Fixed bug #19708, handle JSON values that are not just simple integers.
 - Fixed bug #18183, Significant cleanup of README.md.
