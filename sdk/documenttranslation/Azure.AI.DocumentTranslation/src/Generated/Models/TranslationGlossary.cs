@@ -38,7 +38,5 @@ namespace Azure.AI.DocumentTranslation
             GlossaryUri = glossaryUri;
             Format = format;
         }
-        /// <summary> Format. </summary>
-        public string Format { get; }
     }
 }
