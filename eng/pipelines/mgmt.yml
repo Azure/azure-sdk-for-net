@@ -6,7 +6,10 @@ pr:
     - '*-preview'
   paths:
     include:
+    - Directory.Build.props
+    - Directory.Build.targets
     - mgmt.proj
+    - eng/mgmt.proj
     - eng/pipelines/mgmt.yml
     - eng/mgmt
     - sdk/mgmtcommon
