@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <!-- NU5104: Using a project reference to the client causes build warning/errors on build agents. -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU' Or '$(Configuration)|$(Platform)'=='Debug|AnyCPU'">  
-    <NoWarn>NU5104</NoWarn>
+  <PropertyGroup>  
+    <NoWarn>$(NoWarn);NU5104</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
