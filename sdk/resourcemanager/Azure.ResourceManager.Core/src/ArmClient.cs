@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// The entry point for all ARM clients.
     /// </summary>
-    public class AzureResourceManagerClient
+    public class ArmClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -26,72 +26,72 @@ namespace Azure.ResourceManager.Core
         public TenantOperations Tenant => _tenant ??= new TenantOperations(ClientOptions, Credential, BaseUri);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class for mocking.
+        /// Initializes a new instance of the <see cref="ArmClient"/> class for mocking.
         /// </summary>
-        protected AzureResourceManagerClient()
+        protected ArmClient()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class.
+        /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public AzureResourceManagerClient(TokenCredential credential, AzureResourceManagerClientOptions options = default)
+        public ArmClient(TokenCredential credential, ArmClientOptions options = default)
             : this(null, null, credential, options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class.
+        /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception> 
-        public AzureResourceManagerClient(
+        public ArmClient(
             string defaultSubscriptionId,
             TokenCredential credential,
-            AzureResourceManagerClientOptions options = default)
+            ArmClientOptions options = default)
             : this(defaultSubscriptionId, null, credential, options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class.
+        /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
         /// <param name="baseUri"> The base URI of the Azure management endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public AzureResourceManagerClient(
+        public ArmClient(
             Uri baseUri,
             TokenCredential credential,
-            AzureResourceManagerClientOptions options = default)
+            ArmClientOptions options = default)
             : this(null, baseUri, credential, options)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureResourceManagerClient"/> class.
+        /// Initializes a new instance of the <see cref="ArmClient"/> class.
         /// </summary>
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <param name="baseUri"> The base URI of the service. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The client parameters to use in these operations. </param>
-        private AzureResourceManagerClient(
+        private ArmClient(
             string defaultSubscriptionId,
             Uri baseUri,
             TokenCredential credential,
-            AzureResourceManagerClientOptions options)
+            ArmClientOptions options)
         {
             Credential = credential;
             BaseUri = baseUri;
             if (credential is null)
                 throw new ArgumentNullException(nameof(credential));
 
-            ClientOptions = options ?? new AzureResourceManagerClientOptions();
+            ClientOptions = options ?? new ArmClientOptions();
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptionOperations(defaultSubscriptionId).Get().Value;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Azure Resource Manager client options.
         /// </summary>
-        private AzureResourceManagerClientOptions ClientOptions;
+        private ArmClientOptions ClientOptions;
 
         /// <summary>
         /// Gets the Azure credential.
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Core
         /// Gets the Azure subscriptions.
         /// </summary>
         /// <returns> Subscription container. </returns>
-        public virtual SubscriptionContainer GetSubscriptionContainer()
+        public virtual SubscriptionContainer GetSubscriptions()
         {
             return new SubscriptionContainer(new ClientContext(ClientOptions, Credential, BaseUri));
         }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Core
 
         private Subscription GetDefaultSubscription()
         {
-            var sub = GetSubscriptionContainer().List().FirstOrDefault();
+            var sub = GetSubscriptions().List().FirstOrDefault();
             if (sub is null)
                 throw new Exception("No subscriptions found for the given credentials");
             return sub;

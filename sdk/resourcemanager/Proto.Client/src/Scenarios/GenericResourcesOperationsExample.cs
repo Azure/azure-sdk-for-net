@@ -11,24 +11,24 @@ namespace Proto.Client
     {
         public override void Execute()
         {
-            AzureResourceManagerClientOptions clientOptions = new AzureResourceManagerClientOptions();
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential(), clientOptions);
-            var rgOp = new AzureResourceManagerClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
-            Console.WriteLine(clientOptions.ApiVersions.TryGetApiVersion(VirtualNetwork.ResourceType));
+            ArmClientOptions clientOptions = new ArmClientOptions(); 
+            var client = new ArmClient(new DefaultAzureCredential(), clientOptions);
+            var rgOp = new ArmClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
-            var resourceGroup = subscription.GetResourceGroupContainer().Construct(Context.Loc).CreateOrUpdate(Context.RgName).Value;
-            var aset = resourceGroup.GetAvailabilitySetContainer().Construct("Aligned").CreateOrUpdate(Context.VmName + "_aSet").Value;
+            var resourceGroup = subscription.GetResourceGroups().Construct(Context.Loc).CreateOrUpdate(Context.RgName).Value;
+            var aset = resourceGroup.GetAvailabilitySets().Construct("Aligned").CreateOrUpdate(Context.VmName + "_aSet").Value;
             string vnetName = Context.VmName + "_vnet";
-            var vnet = resourceGroup.GetVirtualNetworkContainer().Construct("10.0.0.0/16").CreateOrUpdate(vnetName).Value;
-            foreach (var genericOp in rgOp.GetAvailabilitySetContainer().ListAsGenericResource(Context.VmName))
+            var vnet = resourceGroup.GetVirtualNetworks().Construct("10.0.0.0/16").CreateOrUpdate(vnetName).Value;
+            foreach (var genericOp in rgOp.GetAvailabilitySets().ListAsGenericResource(Context.VmName))
             {
                 genericOp.Get();
             }
 
-            foreach (var genericOp in rgOp.GetVirtualNetworkContainer().ListAsGenericResource(Context.VmName))
+            foreach (var genericOp in rgOp.GetVirtualNetworks().ListAsGenericResource(Context.VmName))
             {
                 genericOp.Get();
             }
+            Console.WriteLine(clientOptions.ApiVersions.TryGetApiVersion(VirtualNetwork.ResourceType));
         }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the Azure Resource Manager client options.
         /// </summary>
-        protected internal virtual AzureResourceManagerClientOptions ClientOptions { get; private set; }
+        protected internal virtual ArmClientOptions ClientOptions { get; private set; }
 
         /// <summary>
         /// Gets the Azure credential.

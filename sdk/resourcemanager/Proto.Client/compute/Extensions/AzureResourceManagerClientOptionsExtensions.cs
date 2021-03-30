@@ -3,18 +3,18 @@
 namespace Proto.Compute.Extensions
 {
     /// <summary>
-    /// A class to add extension methods to AzureResourceManagerClientOptions.
+    /// A class to add extension methods to ArmClientOptions.
     /// </summary>
-    public static class AzureResourceManagerClientOptionsExtensions
+    public static class ArmClientOptionsExtensions
     {
         /// <summary>
-        /// Adds a method to AzureResourceManagerClientOptions which returns all the versions to all resources inside the compute resource provider.
+        /// Adds a method to ArmClientOptions which returns all the versions to all resources inside the compute resource provider.
         /// </summary>
-        ///<param> The <see  cref="AzureResourceManagerClientOptions" /> instance the method will execute against. </param>
+        ///<param> The <see  cref="ArmClientOptions" /> instance the method will execute against. </param>
         /// <returns> Returns a response with the <see cref="ComputeRestApiVersions"/> operation for this resource. </returns>
-        public static ComputeRestApiVersions GetComputeRestApiVersions(this AzureResourceManagerClientOptions azureResourceManagerClientOptions)
+        public static ComputeRestApiVersions GetComputeRestApiVersions(this ArmClientOptions ArmClientOptions)
         {
-            return azureResourceManagerClientOptions.GetOverrideObject<ComputeRestApiVersions>(() => new ComputeRestApiVersions()) as ComputeRestApiVersions;
+            return ArmClientOptions.GetOverrideObject<ComputeRestApiVersions>(() => new ComputeRestApiVersions()) as ComputeRestApiVersions;
         }
     }
 }

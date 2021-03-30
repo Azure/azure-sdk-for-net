@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="clientContext"></param>
         /// <param name="subscriptionGuid"> The Guid of the subscription. </param>
         internal SubscriptionOperations(ClientContext clientContext, string subscriptionGuid)
-            : base(clientContext, $"/subscriptions/{subscriptionGuid}")
+            : base(clientContext, new SubscriptionResourceIdentifier(subscriptionGuid))
         {
         }
 
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets the resource group container under this subscription
+        /// Gets the resource group container under this subscription.
         /// </summary>
         /// <returns> The resource group container. </returns>
-        public virtual ResourceGroupContainer GetResourceGroupContainer()
+        public virtual ResourceGroupContainer GetResourceGroups()
         {
             return new ResourceGroupContainer(this);
         }
 
         /// <summary>
-        /// Gets the location group container under this subscription
+        /// Gets the location group container under this subscription.
         /// </summary>
         /// <returns> The resource group container. </returns>
-        public virtual LocationContainer GetLocationContainer()
+        public virtual LocationContainer GetLocations()
         {
             return new LocationContainer(this);
         }

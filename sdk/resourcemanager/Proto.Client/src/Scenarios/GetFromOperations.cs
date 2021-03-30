@@ -12,7 +12,7 @@ namespace Proto.Client
             var createVm = new CreateSingleVmExample(Context);
             createVm.Execute();
 
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
+            var client = new ArmClient(new DefaultAzureCredential());
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
 
             var resourceGroup = subscription.GetResourceGroupOperations(Context.RgName).Get().Value;

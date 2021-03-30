@@ -9,15 +9,15 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void VersionToString()
         {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
             Assert.AreEqual("2020-06-01", options.FakeRestApiVersions().FakeResourceVersion);
         }
 
         [TestCase]
         public void EqualsOperator()
         {
-            AzureResourceManagerClientOptions options1 = new AzureResourceManagerClientOptions();
-            AzureResourceManagerClientOptions options2 = new AzureResourceManagerClientOptions();
+            ArmClientOptions options1 = new ArmClientOptions();
+            ArmClientOptions options2 = new ArmClientOptions();
 
             Assert.IsTrue(options1.FakeRestApiVersions().FakeResourceVersion == options2.FakeRestApiVersions().FakeResourceVersion);
         }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsOperatorString()
         {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
 
             Assert.IsTrue(FakeResourceApiVersions.Default == options.FakeRestApiVersions().FakeResourceVersion);
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsOperatorStringFirstNull()
         {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
 
             Assert.IsFalse(null == options.FakeRestApiVersions().FakeResourceVersion);
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsOperatorStringSecondNull()
         {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
 
             Assert.IsFalse(options.FakeRestApiVersions().FakeResourceVersion == null);
         }
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void NotEqualsOperator()
         {
-            AzureResourceManagerClientOptions options1 = new AzureResourceManagerClientOptions();
-            AzureResourceManagerClientOptions options2 = new AzureResourceManagerClientOptions();
+            ArmClientOptions options1 = new ArmClientOptions();
+            ArmClientOptions options2 = new ArmClientOptions();
 
             Assert.IsFalse(options1.FakeRestApiVersions().FakeResourceVersion != options2.FakeRestApiVersions().FakeResourceVersion);
         }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void NotEqualsOperatorStringFirstNull()
         {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
 
             Assert.IsTrue(null != options.FakeRestApiVersions().FakeResourceVersion);
         }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void NotEqualsOperatorStringSecondNull()
         {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
 
             Assert.IsTrue(options.FakeRestApiVersions().FakeResourceVersion != null);
         }
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsMethod()
         {
-            AzureResourceManagerClientOptions options1 = new AzureResourceManagerClientOptions();
-            AzureResourceManagerClientOptions options2 = new AzureResourceManagerClientOptions();
+            ArmClientOptions options1 = new ArmClientOptions();
+            ArmClientOptions options2 = new ArmClientOptions();
 
             Assert.IsTrue(options1.FakeRestApiVersions().FakeResourceVersion.Equals(options2.FakeRestApiVersions().FakeResourceVersion));
         }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsMethodVersionNull()
         {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
             FakeResourceApiVersions version = null;
             Assert.IsFalse(options.FakeRestApiVersions().FakeResourceVersion.Equals(version));
         }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsMethodStringNull()
         {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
             string version = null;
             Assert.IsFalse(options.FakeRestApiVersions().FakeResourceVersion.Equals(version));
         }
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsMethodAsObject()
         {
-            AzureResourceManagerClientOptions options1 = new AzureResourceManagerClientOptions();
-            AzureResourceManagerClientOptions options2 = new AzureResourceManagerClientOptions();
+            ArmClientOptions options1 = new ArmClientOptions();
+            ArmClientOptions options2 = new ArmClientOptions();
 
             object obj = options2.FakeRestApiVersions().FakeResourceVersion;
             Assert.IsTrue(options1.FakeRestApiVersions().FakeResourceVersion.Equals(obj));
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsMethodAsObjectThatIsString()
         {
-            AzureResourceManagerClientOptions options1 = new AzureResourceManagerClientOptions();
-            AzureResourceManagerClientOptions options2 = new AzureResourceManagerClientOptions();
+            ArmClientOptions options1 = new ArmClientOptions();
+            ArmClientOptions options2 = new ArmClientOptions();
 
             object obj = options2.FakeRestApiVersions().FakeResourceVersion.ToString();
             Assert.IsTrue(options1.FakeRestApiVersions().FakeResourceVersion.Equals(obj));
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsMethodAsObjectThatIsInt()
         {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
 
             object obj = 1;
             Assert.IsFalse(options.FakeRestApiVersions().FakeResourceVersion.Equals(obj));
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void ImplicitToString()
         {
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
             options.FakeRestApiVersions().FakeResourceVersion = FakeResourceApiVersions.V2019_12_01;
             string version = options.FakeRestApiVersions().FakeResourceVersion;
             Assert.IsTrue(version == "2019-12-01");

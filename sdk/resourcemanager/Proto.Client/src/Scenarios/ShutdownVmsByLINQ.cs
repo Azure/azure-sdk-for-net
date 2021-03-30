@@ -13,8 +13,8 @@ namespace Proto.Client
             var createMultipleVms = new CreateMultipleVms(Context);
             createMultipleVms.Execute();
 
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
-            foreach (var sub in client.GetSubscriptionContainer().List())
+            var client = new ArmClient(new DefaultAzureCredential());
+            foreach (var sub in client.GetSubscriptions().List())
             {
                 var vmList = sub.ListVirtualMachines();
                 foreach (var vm in vmList.Where(armResource => armResource.Data.Name.Contains("-o")))
@@ -26,9 +26,9 @@ namespace Proto.Client
                 }
             }
 
-            var resourceGroup = new AzureResourceManagerClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
+            var resourceGroup = new ArmClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
 
-            resourceGroup.GetVirtualMachineContainer().List().Select(vm =>
+            resourceGroup.GetVirtualMachines().List().Select(vm =>
             {
                 var parts = vm.Id.Name.Split('-');
                 var n = Convert.ToInt32(parts[0].Last());

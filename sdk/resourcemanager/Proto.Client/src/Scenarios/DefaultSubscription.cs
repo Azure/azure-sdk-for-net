@@ -8,7 +8,7 @@ namespace Proto.Client
     {
         public override void Execute()
         {
-            var client = new AzureResourceManagerClient(Context.SubscriptionId, new DefaultAzureCredential());
+            var client = new ArmClient(Context.SubscriptionId, new DefaultAzureCredential());
 
             var sub = client.DefaultSubscription;
 
