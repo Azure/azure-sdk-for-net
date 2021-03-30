@@ -230,6 +230,12 @@ namespace Azure.Data.Tables
                 var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -251,6 +257,12 @@ namespace Azure.Data.Tables
             {
                 var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
+            }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -278,6 +290,12 @@ namespace Azure.Data.Tables
             {
                 return default;
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -304,6 +322,12 @@ namespace Azure.Data.Tables
             {
                 return default;
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -324,6 +348,12 @@ namespace Azure.Data.Tables
             {
                 return _tableOperations.Delete(table: _table, cancellationToken: cancellationToken);
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -343,6 +373,12 @@ namespace Azure.Data.Tables
             try
             {
                 return await _tableOperations.DeleteAsync(table: _table, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -377,6 +413,12 @@ namespace Azure.Data.Tables
 
                 return response.GetRawResponse();
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -408,6 +450,12 @@ namespace Azure.Data.Tables
                     cancellationToken: cancellationToken);
 
                 return response.GetRawResponse();
+            }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -448,6 +496,12 @@ namespace Azure.Data.Tables
                 var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
                 return Response.FromValue(result, response.GetRawResponse());
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -486,6 +540,12 @@ namespace Azure.Data.Tables
 
                 var result = ((Dictionary<string, object>)response.Value).ToTableEntity<T>();
                 return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -535,6 +595,12 @@ namespace Azure.Data.Tables
                     throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
                 }
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -582,6 +648,12 @@ namespace Azure.Data.Tables
                 {
                     throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
                 }
+            }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -645,6 +717,12 @@ namespace Azure.Data.Tables
                     throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
                 }
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -707,6 +785,12 @@ namespace Azure.Data.Tables
                     throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}");
                 }
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -741,6 +825,12 @@ namespace Azure.Data.Tables
             {
                 return QueryAsync<T>(Bind(filter), maxPerPage, select, cancellationToken);
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -774,6 +864,12 @@ namespace Azure.Data.Tables
             try
             {
                 return Query<T>(Bind(filter), maxPerPage, select, cancellationToken);
+            }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -821,6 +917,12 @@ namespace Azure.Data.Tables
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
                     }
+                    catch (RequestFailedException rfe)
+                    {
+                        var ex = TablesExceptionParser.Parse(rfe);
+                        scope.Failed(ex);
+                        throw ex;
+                    }
                     catch (Exception ex)
                     {
                         scope.Failed(ex);
@@ -845,6 +947,12 @@ namespace Azure.Data.Tables
                         return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
+                    }
+                    catch (RequestFailedException rfe)
+                    {
+                        var ex = TablesExceptionParser.Parse(rfe);
+                        scope.Failed(ex);
+                        throw ex;
                     }
                     catch (Exception ex)
                     {
@@ -896,6 +1004,12 @@ namespace Azure.Data.Tables
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
                     }
+                    catch (RequestFailedException rfe)
+                    {
+                        var ex = TablesExceptionParser.Parse(rfe);
+                        scope.Failed(ex);
+                        throw ex;
+                    }
                     catch (Exception ex)
                     {
                         scope.Failed(ex);
@@ -922,6 +1036,12 @@ namespace Azure.Data.Tables
                         return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
                             CreateContinuationTokenFromHeaders(response.Headers),
                             response.GetRawResponse());
+                    }
+                    catch (RequestFailedException rfe)
+                    {
+                        var ex = TablesExceptionParser.Parse(rfe);
+                        scope.Failed(ex);
+                        throw ex;
                     }
                     catch (Exception ex)
                     {
@@ -961,6 +1081,12 @@ namespace Azure.Data.Tables
                      queryOptions: _defaultQueryOptions,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -997,6 +1123,12 @@ namespace Azure.Data.Tables
                      queryOptions: _defaultQueryOptions,
                     cancellationToken: cancellationToken);
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -1015,6 +1147,12 @@ namespace Azure.Data.Tables
             {
                 var response = await _tableOperations.GetAccessPolicyAsync(_table, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value, response.GetRawResponse());
+            }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -1035,6 +1173,12 @@ namespace Azure.Data.Tables
                 var response = _tableOperations.GetAccessPolicy(_table, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value, response.GetRawResponse());
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -1054,6 +1198,12 @@ namespace Azure.Data.Tables
             {
                 return await _tableOperations.SetAccessPolicyAsync(_table, tableAcl: tableAcl, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
@@ -1072,6 +1222,12 @@ namespace Azure.Data.Tables
             try
             {
                 return _tableOperations.SetAccessPolicy(_table, tableAcl: tableAcl, cancellationToken: cancellationToken);
+            }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
             }
             catch (Exception ex)
             {

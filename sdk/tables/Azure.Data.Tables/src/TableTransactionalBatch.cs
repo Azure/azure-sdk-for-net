@@ -245,6 +245,12 @@ namespace Azure.Data.Tables
 
                 return Response.FromValue(new TableBatchResponse(_requestLookup), response.GetRawResponse());
             }
+            catch (RequestFailedException rfe)
+            {
+                var ex = TablesExceptionParser.Parse(rfe);
+                scope.Failed(ex);
+                throw ex;
+            }
             catch (Exception ex)
             {
                 scope.Failed(ex);
