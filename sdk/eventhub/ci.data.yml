@@ -10,6 +10,7 @@ trigger:
   paths:
     include:
     - sdk/eventhub/ci.data.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Microsoft.Azure.EventHubs
     - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
     - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor
@@ -25,6 +26,7 @@ pr:
   paths:
     include:
     - sdk/eventhub/ci.data.yml
+    - sdk/eventhub/service.projects
     - sdk/eventhub/Microsoft.Azure.EventHubs
     - sdk/eventhub/Microsoft.Azure.EventHubs.Processor
     - sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor

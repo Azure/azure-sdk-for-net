@@ -3,8 +3,8 @@
 
 using System;
 using System.Net;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Data.Tables;
 using Azure.Data.Tables.Sas;
 using NUnit.Framework;
 using Parms = Azure.Data.Tables.TableConstants.Sas.Parameters;
@@ -181,6 +181,61 @@ namespace Azure.Data.Tables.Tests
             Assert.That(deserializedEntity.MyNullableFoo.ToString(), Is.EqualTo(entity.MyNullableFoo.ToString()), "The entities should be equivalent");
             Assert.That(deserializedEntity.MyNullableFoo2.ToString(), Is.EqualTo(entity.MyNullableFoo2.ToString()), "The entities should be equivalent");
             Assert.That(dictEntity.TryGetValue(TableConstants.PropertyNames.Timestamp, out var _), Is.False, "Only PK, RK, and user properties should be sent");
+        }
+
+        [Test]
+        public void RoundTripContinuationTokenWithPartitionKeyAndRowKey()
+        {
+            var response = new MockResponse(200);
+            (string NextPartitionKey, string NextRowKey) expected = ("next-pk", "next-rk");
+            response.AddHeader(new HttpHeader("x-ms-continuation-NextPartitionKey", expected.NextPartitionKey));
+            response.AddHeader(new HttpHeader("x-ms-continuation-NextRowKey", expected.NextRowKey));
+            var headers = new TableQueryEntitiesHeaders(response);
+
+            var continuationToken = TableClient.CreateContinuationTokenFromHeaders(headers);
+            var actual = TableClient.ParseContinuationToken(continuationToken);
+
+            Assert.That(continuationToken, Is.EqualTo("next-pk next-rk"));
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void RoundTripContinuationTokenWithPartitionKeyAndNoRowKey()
+        {
+            var response = new MockResponse(200);
+            (string NextPartitionKey, string NextRowKey) expected = ("next-pk", null);
+            response.AddHeader(new HttpHeader("x-ms-continuation-NextPartitionKey", expected.NextPartitionKey));
+            var headers = new TableQueryEntitiesHeaders(response);
+
+            var continuationToken = TableClient.CreateContinuationTokenFromHeaders(headers);
+            var actual = TableClient.ParseContinuationToken(continuationToken);
+
+            Assert.That(continuationToken, Is.EqualTo("next-pk "));
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void NullContinuationTokenReturnsWhenWithNoPartitionKeyAndNoRowKey()
+        {
+            var response = new MockResponse(200);
+            (string NextPartitionKey, string NextRowKey) expected = (null, null);
+            var headers = new TableQueryEntitiesHeaders(response);
+
+            var continuationToken = TableClient.CreateContinuationTokenFromHeaders(headers);
+            var actual = TableClient.ParseContinuationToken(continuationToken);
+
+            Assert.That(continuationToken, Is.Null);
+            Assert.That(actual, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void HandlesEmptyStringContinuationToken()
+        {
+            (string NextPartitionKey, string NextRowKey) expected = (null, null);
+
+            var actual = TableClient.ParseContinuationToken(" ");
+
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         public class EnumEntity : ITableEntity

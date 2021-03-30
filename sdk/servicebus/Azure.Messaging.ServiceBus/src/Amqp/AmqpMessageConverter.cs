@@ -6,7 +6,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp.Framing;
@@ -320,16 +322,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     switch (key)
                     {
                         case AmqpMessageConstants.EnqueuedTimeUtcName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = (DateTime)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = pair.Value;
                             break;
                         case AmqpMessageConstants.ScheduledEnqueueTimeUtcName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = (DateTime)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = pair.Value;
                             break;
                         case AmqpMessageConstants.SequenceNumberName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.SequenceNumberName] = (long)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.SequenceNumberName] = pair.Value;
                             break;
                         case AmqpMessageConstants.EnqueueSequenceNumberName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = (long)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = pair.Value;
                             break;
                         case AmqpMessageConstants.LockedUntilName:
                             DateTimeOffset lockedUntil = (DateTime)pair.Value >= DateTimeOffset.MaxValue.UtcDateTime ?
@@ -337,16 +339,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             annotatedMessage.MessageAnnotations[AmqpMessageConstants.LockedUntilName] = lockedUntil.UtcDateTime;
                             break;
                         case AmqpMessageConstants.PartitionKeyName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = (string)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = pair.Value;
                             break;
                         case AmqpMessageConstants.PartitionIdName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.PartitionIdName] = (short)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.PartitionIdName] = pair.Value;
                             break;
                         case AmqpMessageConstants.ViaPartitionKeyName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = (string)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = pair.Value;
                             break;
                         case AmqpMessageConstants.DeadLetterSourceName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = (string)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = pair.Value;
                             break;
                         default:
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
@@ -360,9 +362,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (amqpMessage.DeliveryTag.Count == GuidSizeInBytes)
             {
-                var guidBuffer = new byte[GuidSizeInBytes];
-                Buffer.BlockCopy(amqpMessage.DeliveryTag.Array, amqpMessage.DeliveryTag.Offset, guidBuffer, 0, GuidSizeInBytes);
-                sbMessage.LockTokenGuid = new Guid(guidBuffer);
+                Span<byte> guidBytes = stackalloc byte[GuidSizeInBytes];
+                amqpMessage.DeliveryTag.AsSpan().CopyTo(guidBytes);
+                if (!MemoryMarshal.TryRead<Guid>(guidBytes, out var lockTokenGuid))
+                {
+                    lockTokenGuid = new Guid(guidBytes.ToArray());
+                }
+                sbMessage.LockTokenGuid = lockTokenGuid;
             }
 
             amqpMessage.Dispose();

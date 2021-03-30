@@ -17,15 +17,12 @@ namespace Azure.AI.DocumentTranslation
             writer.WriteStartObject();
             writer.WritePropertyName("glossaryUrl");
             writer.WriteStringValue(GlossaryUri.AbsoluteUri);
+            writer.WritePropertyName("format");
+            writer.WriteStringValue(Format);
             if (Optional.IsDefined(FormatVersion))
             {
-                writer.WritePropertyName("format");
-                writer.WriteStringValue(FormatVersion);
-            }
-            if (Optional.IsDefined(Version))
-            {
                 writer.WritePropertyName("version");
-                writer.WriteStringValue(Version);
+                writer.WriteStringValue(FormatVersion);
             }
             if (Optional.IsDefined(StorageSource))
             {

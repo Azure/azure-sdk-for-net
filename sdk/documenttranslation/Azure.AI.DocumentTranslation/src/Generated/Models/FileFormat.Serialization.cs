@@ -15,9 +15,10 @@ namespace Azure.AI.DocumentTranslation
     {
         internal static FileFormat DeserializeFileFormat(JsonElement element)
         {
-            Optional<string> format = default;
-            Optional<IReadOnlyList<string>> fileExtensions = default;
-            Optional<IReadOnlyList<string>> contentTypes = default;
+            string format = default;
+            IReadOnlyList<string> fileExtensions = default;
+            IReadOnlyList<string> contentTypes = default;
+            Optional<string> defaultVersion = default;
             Optional<IReadOnlyList<string>> versions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -28,11 +29,6 @@ namespace Azure.AI.DocumentTranslation
                 }
                 if (property.NameEquals("fileExtensions"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -43,17 +39,17 @@ namespace Azure.AI.DocumentTranslation
                 }
                 if (property.NameEquals("contentTypes"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(item.GetString());
                     }
                     contentTypes = array;
+                    continue;
+                }
+                if (property.NameEquals("defaultVersion"))
+                {
+                    defaultVersion = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("versions"))
@@ -72,7 +68,7 @@ namespace Azure.AI.DocumentTranslation
                     continue;
                 }
             }
-            return new FileFormat(format.Value, Optional.ToList(fileExtensions), Optional.ToList(contentTypes), Optional.ToList(versions));
+            return new FileFormat(format, fileExtensions, contentTypes, defaultVersion.Value, Optional.ToList(versions));
         }
     }
 }

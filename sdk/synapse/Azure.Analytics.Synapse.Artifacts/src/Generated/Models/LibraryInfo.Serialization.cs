@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(LibraryInfoConverter))]
     public partial class LibraryInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -92,6 +94,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new LibraryInfo(name.Value, path.Value, containerName.Value, Optional.ToNullable(uploadedTimestamp), type.Value, provisioningStatus.Value, creatorId.Value);
+        }
+
+        internal partial class LibraryInfoConverter : JsonConverter<LibraryInfo>
+        {
+            public override void Write(Utf8JsonWriter writer, LibraryInfo model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override LibraryInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeLibraryInfo(document.RootElement);
+            }
         }
     }
 }

@@ -1,0 +1,3028 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "43",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-c79934f9b641684c9757b2c2b9107a5c-ca421a71a2f3664d-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "73af8dafa71f41340a417b9207dad10a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "source": "Sanitized",
+        "useLabelFile": false
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "37a2e708-1291-4cc8-bf47-f6658c232e17",
+        "Content-Length": "0",
+        "Date": "Mon, 29 Mar 2021 17:41:22 GMT",
+        "Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "55"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "5daa494e0d19325f2bad5a8aa38b8dce",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "97c35f8d-dc6b-425e-943d-bafb750852a4",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:22 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "1bceb5a73dda692e376548aa79df5390",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b7d7c5c6-48ae-4d80-883b-4583ad6ae142",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:24 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "a165d47ce2d4a2e52d7c47714daa9e7e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ae31d552-0d09-480f-8576-9a81c36d4e74",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:25 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "23"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "51ebacb3b50b102f1a4025b4c5b5b84c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "133bc43f-00b9-4aee-b9c3-b7339abc0935",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:26 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "ce0dc959eb25c4fad02ced5df5bd1b8d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "935c856e-a47d-4046-82ff-21f11c7f766d",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:27 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "cdf6c9c602f3c685a4558693bc30dc78",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4f24f074-7ee4-4c34-9b71-53fb78218a3b",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:28 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "8417fbc4cf9cc858b22681dec7d21a5d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e13e1820-2d35-4947-8876-99259b0938a5",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:29 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "fbee9824ebbf5758444729d0646608a0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "93907c99-706e-437e-aa2e-80ec5a18f330",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "fa99754f97a5f7f0702d1acd80a6fed2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "48a9b2a9-ce84-4e64-b671-a2cd2885757b",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:31 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "13"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "236e293ae142d9b9a2c03f54a588634b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e22eb3b0-1a8d-4fc2-aba1-8688aa4db4e9",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:32 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "528ee11d20398db8a8f78a91d08bd79d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "62e40130-163d-4448-af4b-a42c7ae64598",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:34 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "3b965748e4f86e5dbcbf58e5589b51e8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9aa09f3f-168d-47e7-b3d4-959336b10931",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:35 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "23"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "9fafcfcaac17199870e17b4b56270916",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "147cd3d2-b0ca-4b03-a7ea-0c5cf4b7cb7c",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:36 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "14"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "4e0ca2e928f1395283209579c7d3340c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "584025fe-3bec-4224-bfea-0bbcaf5e9b1a",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:37 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "00c7a2a537dc9c85bf7cca1669121794",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "26992348-9208-40fb-99c1-e5aee992e103",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:38 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "b5fb41b6038fa2f67c761bf7161e529d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "56c26121-3fa1-46dd-99c1-bf4bf302cfd7",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:39 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "b4a56fac0860b13a1c708f755d3ccf71",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "67ca8e72-fdc1-4bb5-a5a0-6aa1660a72e8",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:40 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "85c300097fd7a27cab2483651c8e85a0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a11689d8-ff73-4182-a3b4-e4e3ea199b1d",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:41 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "f96a2d2a626dae34074a991f73814540",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "f9a8f865-0c34-496c-8dfb-f9ae9f3016e5",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:42 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "15edaaa6cc5b2dc6f202093b84d4948d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b4d8771d-fe16-4e35-997f-11d05013be12",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:45 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "23"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "2f4aefead6d2a603cc147e8ce55d2e29",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d59b89f0-2fc2-4aad-8d22-28d599e87b6f",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:46 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "71bf43df6fa05e44673c076a59f82932",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "83f51540-403c-4d18-87ed-b5d23d6c1182",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:47 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "84340cb51537d06ea64749474e394895",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "59b4a38f-dd2c-4abe-91f1-f2620e438b5d",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:48 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "415ce0d323157becabecc895cf994dd4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "bf9f2cae-efa7-4156-aedd-a2a85441c0aa",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:49 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "13"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "d9d64beaaa29caf1d5efcb5926fc102d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "156c12ac-4726-47b9-899b-e9f9056619a9",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:50 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "789771f4e89c921d1fb9d94b4cd8010d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "72625f78-cf46-4573-8f12-9ae160ec002b",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:51 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "025c75fa6e62296cee916b26579354ae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "bc914e26-3367-4363-9850-300b6f9927f7",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:53 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "5da19adcd40102372d44b96fd0a67dfc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "de3c05d8-c817-4a64-9ea8-60229fe2056c",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:54 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "b15fbded0da085cb056d890a7cf73a8c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "dd383812-0308-445b-838f-90f0a4738ade",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:55 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "b16e2b64a336250b3d59d51eb5fc5948",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "219eb652-7f8d-41c4-a64a-c0ff381acdb1",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:56 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "9a386f14a333ce0dcf1c57944a2d8535",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "aeceed45-5666-4217-92ae-47640ea35e89",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:57 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "a40b2d09cb3749c6b139734638accf09",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "dd5d3dc6-3196-42e9-a44d-65b82056b52c",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:58 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "13"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "0df54114a0bfc0581ea0e21a4c77db0f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "ca8d162e-3984-4605-b85b-88e54c7c83de",
+        "Content-Length": "170",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:41:59 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "22"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "creating",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:23Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "88159fd4b4f14810a8eee8fa30c69623",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "56448abf-3590-44ac-b46e-d3e4468f4f0e",
+        "Content-Length": "1111",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:00 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "6c750c98-210e-484c-860b-5cb082895e3f",
+          "status": "ready",
+          "createdDateTime": "2021-03-29T17:41:23Z",
+          "lastUpdatedDateTime": "2021-03-29T17:41:59Z"
+        },
+        "keys": {
+          "clusters": {
+            "0": [
+              "Contoso Ltd. Conference will be held on May 28-29, 2020 at the Elm Conference Center in",
+              "Included",
+              "Maple City, Massachusetts. The conference has sold out of its 1,500 tickets, with a 400 person",
+              "Package",
+              "Price",
+              "Rates:",
+              "Vendor #:",
+              "Vendor Registration",
+              "below, and attach a check made out to:",
+              "waitlist. Vendor applications are being accepted through Feb 28, 2020. Please fill in the form"
+            ],
+            "1": [
+              "Company Name:",
+              "Contact:",
+              "Preferred Package:",
+              "Special Requests:",
+              "Vendor #:",
+              "Vendor Details:"
+            ]
+          }
+        },
+        "trainResult": {
+          "trainingDocuments": [
+            {
+              "documentName": "multi1.pdf",
+              "pages": 2,
+              "errors": [],
+              "status": "succeeded"
+            },
+            {
+              "documentName": "multi2.pdf",
+              "pages": 2,
+              "errors": [],
+              "status": "succeeded"
+            },
+            {
+              "documentName": "multi3.pdf",
+              "pages": 2,
+              "errors": [],
+              "status": "succeeded"
+            },
+            {
+              "documentName": "multi4.pdf",
+              "pages": 2,
+              "errors": [],
+              "status": "succeeded"
+            },
+            {
+              "documentName": "multi5.pdf",
+              "pages": 2,
+              "errors": [],
+              "status": "succeeded"
+            }
+          ],
+          "errors": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyze?includeTextDetails=false\u0026pages=1%2C3",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "108935",
+        "Content-Type": "application/pdf",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-1cb461112e82f042ab741bf9fd3e0432-465d0957ad2bfe4a-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "09804d4c77376876d44a8697e9acfd3a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "17b3af4d-da36-447f-9fa8-d866591afd9f",
+        "Content-Length": "0",
+        "Date": "Mon, 29 Mar 2021 17:42:00 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeresults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "61"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "9872645e47965f1830ad64d0b75e9057",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "30206710-f227-4ef8-b546-b61d5dfcb90a",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:00 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "23"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "fecdbe09d2f75cd728acb4a62e795efc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "bc6a0d43-5940-4ab4-9f94-7cf68118f6d8",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:01 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "40"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "cb9baef0fd54058c3520d88a13a5b175",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2681077b-0542-410e-8c92-f2a0b1dc7992",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:03 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "27"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "2b8d2eb9fedf8c428c166fea937131b7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "5ec74811-5cd4-4a2f-8ddd-08aa1d38c828",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:04 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "25"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "08e0684ec4c30b0331c7c8d6f94d4983",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "c2a82165-1d62-46d8-9575-14e44714fe57",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:05 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "23"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "ffed3efa33ebf21d6b0f3f3d8da272c4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4b0ab949-aec2-4736-9936-25273a83f9d1",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:06 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "29"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "aa3b20eea9c5f4b22b82f917356b923f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e6cf2c41-d031-4e56-b4d7-5dcfdc151d97",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:07 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "54efeccd32831acb4aed9cb385c57d8f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "091c9a82-5aa2-4b32-8c03-53c7b1fd8181",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:08 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "d9e804559e1151bd8cf8d4693a06bcff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "40dbbbfa-e52c-43f2-9847-42e982832a9a",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:09 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "28"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "a170007c1db3bc4055215fd70cfe6f65",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9a526c8b-ef81-4ae8-9905-778f6c67ba59",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "23"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "31c16904b9832e2d2e9dc78a5d61e044",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "60c54f63-f45c-4eb8-b1e7-cddac2563529",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:11 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "84379c31dc5538dcc32b83f03ee6458e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "476c35ba-d8f0-4dab-b72b-047f1e81dfa9",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:13 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "d0656f898a44c37cd241721555b55ef3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "4afb0dba-1f01-48d9-9344-8d68a2a6d6d9",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:14 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "6fa61b40eac7280f8d896d58353df048",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "250ab5d3-b69f-4c0f-a2d0-0d8531100191",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:15 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "ee0139580ffca6ff2073b21369c6e20e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b62b2a08-b6e2-4aa6-b3ff-6b7112939aba",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:16 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "23af90ccd5409fc65f3d43bb1d248d95",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "969caea7-b0eb-42f0-9857-eee910477b84",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "26"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "1bbd295170b431f61bff4f5338fbbec7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "bfc1df1e-0652-4067-8cee-33a6fcac332e",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:18 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "a58b5fa6cd8d820872628fbfcc4489fc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "67618b38-55f2-4345-9029-30138726d1e7",
+        "Content-Length": "127",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:20 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "21"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:01Z",
+        "analyzeResult": null
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f/analyzeResults/010e3531-14b3-4e90-9be9-176a6fd8326c",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "40c21ce5c6085c5a997d074086736663",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a39741c9-d54b-4c4b-adfa-00f0eb945117",
+        "Content-Length": "12697",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:42:21 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "34"
+      },
+      "ResponseBody": {
+        "status": "succeeded",
+        "createdDateTime": "2021-03-29T17:42:01Z",
+        "lastUpdatedDateTime": "2021-03-29T17:42:21Z",
+        "analyzeResult": {
+          "version": "2.1.0",
+          "readResults": [
+            {
+              "page": 1,
+              "angle": 0,
+              "width": 8.5,
+              "height": 11.0,
+              "unit": "inch",
+              "lines": [],
+              "selectionMarks": null
+            },
+            {
+              "page": 3,
+              "angle": 0,
+              "width": 8.5,
+              "height": 11.0,
+              "unit": "inch",
+              "lines": [],
+              "selectionMarks": null
+            }
+          ],
+          "pageResults": [
+            {
+              "page": 1,
+              "keyValuePairs": [
+                {
+                  "key": {
+                    "text": "Subtotal:",
+                    "boundingBox": [
+                      5.4972,
+                      4.8889,
+                      6.1319,
+                      4.8889,
+                      6.1319,
+                      5.0278,
+                      5.4972,
+                      5.0278
+                    ],
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "300.00",
+                    "boundingBox": [
+                      6.1597,
+                      4.8889,
+                      6.6222,
+                      4.8889,
+                      6.6222,
+                      5.0243,
+                      6.1597,
+                      5.0243
+                    ],
+                    "elements": null
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "Tax:",
+                    "boundingBox": [
+                      5.5,
+                      5.1181,
+                      5.7889,
+                      5.1181,
+                      5.7889,
+                      5.2465,
+                      5.5,
+                      5.2465
+                    ],
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "30.00",
+                    "boundingBox": [
+                      5.8125,
+                      5.1146,
+                      6.1833,
+                      5.1146,
+                      6.1833,
+                      5.25,
+                      5.8125,
+                      5.25
+                    ],
+                    "elements": null
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "Tip:",
+                    "boundingBox": [
+                      5.5,
+                      5.3299,
+                      5.7528,
+                      5.3299,
+                      5.7528,
+                      5.4861,
+                      5.5,
+                      5.4861
+                    ],
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "100.00",
+                    "boundingBox": [
+                      5.7847,
+                      5.3299,
+                      6.2639,
+                      5.3299,
+                      6.2639,
+                      5.4826,
+                      5.7847,
+                      5.4826
+                    ],
+                    "elements": null
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "Total:",
+                    "boundingBox": [
+                      5.5,
+                      5.5486,
+                      5.8958,
+                      5.5486,
+                      5.8958,
+                      5.6875,
+                      5.5,
+                      5.6875
+                    ],
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "430.00",
+                    "boundingBox": [
+                      5.9194,
+                      5.5521,
+                      6.3861,
+                      5.5521,
+                      6.3861,
+                      5.6875,
+                      5.9194,
+                      5.6875
+                    ],
+                    "elements": null
+                  },
+                  "confidence": 1.0
+                }
+              ],
+              "tables": [
+                {
+                  "rows": 8,
+                  "columns": 3,
+                  "boundingBox": [
+                    0.9861,
+                    2.9778,
+                    5.775,
+                    2.9778,
+                    5.775,
+                    4.5917,
+                    0.9861,
+                    4.5917
+                  ],
+                  "cells": [
+                    {
+                      "text": "Item",
+                      "rowIndex": 0,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0764,
+                        2.9931,
+                        1.3167,
+                        2.9931,
+                        1.3167,
+                        3.1146,
+                        1.0764,
+                        3.1146
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": true,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Quantity",
+                      "rowIndex": 0,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2431,
+                        2.9965,
+                        3.8306,
+                        2.9965,
+                        3.8306,
+                        3.1354,
+                        3.2431,
+                        3.1354
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": true,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Price",
+                      "rowIndex": 0,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4,
+                        2.9896,
+                        5.7292,
+                        2.9896,
+                        5.7292,
+                        3.1181,
+                        5.4,
+                        3.1181
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": true,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "A",
+                      "rowIndex": 1,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0764,
+                        3.2049,
+                        1.1528,
+                        3.2049,
+                        1.1528,
+                        3.3229,
+                        1.0764,
+                        3.3229
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "1",
+                      "rowIndex": 1,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2361,
+                        3.1944,
+                        3.3083,
+                        3.1944,
+                        3.3083,
+                        3.3229,
+                        3.2361,
+                        3.3229
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "10.99",
+                      "rowIndex": 1,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4194,
+                        3.1979,
+                        5.7667,
+                        3.1979,
+                        5.7667,
+                        3.3299,
+                        5.4194,
+                        3.3299
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "B",
+                      "rowIndex": 2,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0806,
+                        3.4167,
+                        1.1528,
+                        3.4167,
+                        1.1528,
+                        3.5451,
+                        1.0806,
+                        3.5451
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "2",
+                      "rowIndex": 2,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2431,
+                        3.4097,
+                        3.3222,
+                        3.4097,
+                        3.3222,
+                        3.5451,
+                        3.2431,
+                        3.5451
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "14.67",
+                      "rowIndex": 2,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4139,
+                        3.4167,
+                        5.775,
+                        3.4167,
+                        5.775,
+                        3.5451,
+                        5.4139,
+                        3.5451
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "C",
+                      "rowIndex": 3,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0722,
+                        3.6285,
+                        1.1389,
+                        3.6285,
+                        1.1389,
+                        3.7431,
+                        1.0722,
+                        3.7431
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "4",
+                      "rowIndex": 3,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2431,
+                        3.6215,
+                        3.3125,
+                        3.6215,
+                        3.3125,
+                        3.7326,
+                        3.2431,
+                        3.7326
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "15.66",
+                      "rowIndex": 3,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4167,
+                        3.6215,
+                        5.7708,
+                        3.6215,
+                        5.7708,
+                        3.7569,
+                        5.4167,
+                        3.7569
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "D",
+                      "rowIndex": 4,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0764,
+                        3.8403,
+                        1.1528,
+                        3.8403,
+                        1.1528,
+                        3.9618,
+                        1.0764,
+                        3.9618
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "1",
+                      "rowIndex": 4,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2431,
+                        3.8438,
+                        3.3125,
+                        3.8438,
+                        3.3125,
+                        3.9722,
+                        3.2431,
+                        3.9722
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "12.00",
+                      "rowIndex": 4,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4167,
+                        3.8333,
+                        5.7708,
+                        3.8333,
+                        5.7708,
+                        3.9653,
+                        5.4167,
+                        3.9653
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "E",
+                      "rowIndex": 5,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0833,
+                        4.0486,
+                        1.1458,
+                        4.0486,
+                        1.1458,
+                        4.1597,
+                        1.0833,
+                        4.1597
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "4",
+                      "rowIndex": 5,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2431,
+                        4.0417,
+                        3.3125,
+                        4.0417,
+                        3.3125,
+                        4.1562,
+                        3.2431,
+                        4.1562
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "10.00",
+                      "rowIndex": 5,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4194,
+                        4.0417,
+                        5.7667,
+                        4.0417,
+                        5.7667,
+                        4.1701,
+                        5.4194,
+                        4.1701
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "__emptycell__",
+                      "rowIndex": 6,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        0.9861,
+                        4.2083,
+                        3.1528,
+                        4.2083,
+                        3.1528,
+                        4.4167,
+                        0.9861,
+                        4.4167
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "6",
+                      "rowIndex": 6,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2431,
+                        4.2535,
+                        3.3167,
+                        4.2535,
+                        3.3167,
+                        4.3819,
+                        3.2431,
+                        4.3819
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "12.00",
+                      "rowIndex": 6,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4167,
+                        4.2569,
+                        5.7639,
+                        4.2569,
+                        5.7639,
+                        4.3854,
+                        5.4167,
+                        4.3854
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "G",
+                      "rowIndex": 7,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0806,
+                        4.4653,
+                        1.15,
+                        4.4653,
+                        1.15,
+                        4.5903,
+                        1.0806,
+                        4.5903
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "8",
+                      "rowIndex": 7,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2389,
+                        4.4583,
+                        3.3083,
+                        4.4583,
+                        3.3083,
+                        4.5799,
+                        3.2389,
+                        4.5799
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "22.00",
+                      "rowIndex": 7,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4056,
+                        4.4549,
+                        5.775,
+                        4.4549,
+                        5.775,
+                        4.5938,
+                        5.4056,
+                        4.5938
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    }
+                  ]
+                }
+              ],
+              "clusterId": null
+            },
+            {
+              "page": 3,
+              "keyValuePairs": [
+                {
+                  "key": {
+                    "text": "Subtotal:",
+                    "boundingBox": [
+                      5.4972,
+                      4.8924,
+                      6.1319,
+                      4.8924,
+                      6.1319,
+                      5.0278,
+                      5.4972,
+                      5.0278
+                    ],
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "3000.00",
+                    "boundingBox": [
+                      6.1556,
+                      4.8889,
+                      6.7014,
+                      4.8889,
+                      6.7014,
+                      5.0243,
+                      6.1556,
+                      5.0243
+                    ],
+                    "elements": null
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "Tax:",
+                    "boundingBox": [
+                      5.5,
+                      5.1181,
+                      5.7917,
+                      5.1181,
+                      5.7917,
+                      5.25,
+                      5.5,
+                      5.25
+                    ],
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "300.00",
+                    "boundingBox": [
+                      5.8194,
+                      5.1146,
+                      6.2778,
+                      5.1146,
+                      6.2778,
+                      5.25,
+                      5.8194,
+                      5.25
+                    ],
+                    "elements": null
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "Tip:",
+                    "boundingBox": [
+                      5.4972,
+                      5.3299,
+                      5.7528,
+                      5.3299,
+                      5.7528,
+                      5.4861,
+                      5.4972,
+                      5.4861
+                    ],
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "1000.00",
+                    "boundingBox": [
+                      5.7806,
+                      5.3299,
+                      6.3403,
+                      5.3299,
+                      6.3403,
+                      5.4826,
+                      5.7806,
+                      5.4826
+                    ],
+                    "elements": null
+                  },
+                  "confidence": 1.0
+                },
+                {
+                  "key": {
+                    "text": "Total:",
+                    "boundingBox": [
+                      5.5,
+                      5.5486,
+                      5.9,
+                      5.5486,
+                      5.9,
+                      5.6875,
+                      5.5,
+                      5.6875
+                    ],
+                    "elements": null
+                  },
+                  "value": {
+                    "text": "4300.00",
+                    "boundingBox": [
+                      5.9278,
+                      5.5521,
+                      6.4792,
+                      5.5521,
+                      6.4792,
+                      5.691,
+                      5.9278,
+                      5.691
+                    ],
+                    "elements": null
+                  },
+                  "confidence": 1.0
+                }
+              ],
+              "tables": [
+                {
+                  "rows": 8,
+                  "columns": 3,
+                  "boundingBox": [
+                    0.9861,
+                    2.975,
+                    5.8611,
+                    2.975,
+                    5.8611,
+                    4.5958,
+                    0.9861,
+                    4.5958
+                  ],
+                  "cells": [
+                    {
+                      "text": "Item",
+                      "rowIndex": 0,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0764,
+                        2.9931,
+                        1.3167,
+                        2.9931,
+                        1.3167,
+                        3.1146,
+                        1.0764,
+                        3.1146
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": true,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Quantity",
+                      "rowIndex": 0,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2431,
+                        2.9965,
+                        3.8403,
+                        2.9965,
+                        3.8403,
+                        3.1389,
+                        3.2431,
+                        3.1389
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": true,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "Price",
+                      "rowIndex": 0,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4,
+                        2.9896,
+                        5.7292,
+                        2.9896,
+                        5.7292,
+                        3.1181,
+                        5.4,
+                        3.1181
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": true,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "A",
+                      "rowIndex": 1,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0764,
+                        3.2049,
+                        1.1528,
+                        3.2049,
+                        1.1528,
+                        3.3229,
+                        1.0764,
+                        3.3229
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "10",
+                      "rowIndex": 1,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2472,
+                        3.1979,
+                        3.3861,
+                        3.1979,
+                        3.3861,
+                        3.3264,
+                        3.2472,
+                        3.3264
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "100.99",
+                      "rowIndex": 1,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4194,
+                        3.1979,
+                        5.8611,
+                        3.1979,
+                        5.8611,
+                        3.3333,
+                        5.4194,
+                        3.3333
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "B",
+                      "rowIndex": 2,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0806,
+                        3.4167,
+                        1.1528,
+                        3.4167,
+                        1.1528,
+                        3.5451,
+                        1.0806,
+                        3.5451
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "20",
+                      "rowIndex": 2,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2472,
+                        3.4132,
+                        3.3889,
+                        3.4132,
+                        3.3889,
+                        3.5417,
+                        3.2472,
+                        3.5417
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "140.67",
+                      "rowIndex": 2,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4167,
+                        3.4201,
+                        5.8583,
+                        3.4201,
+                        5.8583,
+                        3.5486,
+                        5.4167,
+                        3.5486
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "C",
+                      "rowIndex": 3,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0722,
+                        3.6285,
+                        1.1389,
+                        3.6285,
+                        1.1389,
+                        3.7431,
+                        1.0722,
+                        3.7431
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "40",
+                      "rowIndex": 3,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2472,
+                        3.6215,
+                        3.3889,
+                        3.6215,
+                        3.3889,
+                        3.7465,
+                        3.2472,
+                        3.7465
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "150.66",
+                      "rowIndex": 3,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4167,
+                        3.625,
+                        5.85,
+                        3.625,
+                        5.85,
+                        3.7569,
+                        5.4167,
+                        3.7569
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "D",
+                      "rowIndex": 4,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0764,
+                        3.8403,
+                        1.1528,
+                        3.8403,
+                        1.1528,
+                        3.9618,
+                        1.0764,
+                        3.9618
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "10",
+                      "rowIndex": 4,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2389,
+                        3.8368,
+                        3.3861,
+                        3.8368,
+                        3.3861,
+                        3.9618,
+                        3.2389,
+                        3.9618
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "120.00",
+                      "rowIndex": 4,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4028,
+                        3.8333,
+                        5.8583,
+                        3.8333,
+                        5.8583,
+                        3.9688,
+                        5.4028,
+                        3.9688
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "E",
+                      "rowIndex": 5,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0833,
+                        4.0486,
+                        1.1458,
+                        4.0486,
+                        1.1458,
+                        4.1597,
+                        1.0833,
+                        4.1597
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "40",
+                      "rowIndex": 5,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2431,
+                        4.0382,
+                        3.3889,
+                        4.0382,
+                        3.3889,
+                        4.1632,
+                        3.2431,
+                        4.1632
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "100.00",
+                      "rowIndex": 5,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4097,
+                        4.0417,
+                        5.8611,
+                        4.0417,
+                        5.8611,
+                        4.1736,
+                        5.4097,
+                        4.1736
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "__emptycell__",
+                      "rowIndex": 6,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        0.9861,
+                        4.2083,
+                        3.1528,
+                        4.2083,
+                        3.1528,
+                        4.4167,
+                        0.9861,
+                        4.4167
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "60",
+                      "rowIndex": 6,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2431,
+                        4.2535,
+                        3.3917,
+                        4.2535,
+                        3.3917,
+                        4.3819,
+                        3.2431,
+                        4.3819
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "120.00",
+                      "rowIndex": 6,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4097,
+                        4.2535,
+                        5.8472,
+                        4.2535,
+                        5.8472,
+                        4.3889,
+                        5.4097,
+                        4.3889
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "G",
+                      "rowIndex": 7,
+                      "columnIndex": 0,
+                      "boundingBox": [
+                        1.0806,
+                        4.4653,
+                        1.15,
+                        4.4653,
+                        1.15,
+                        4.5903,
+                        1.0806,
+                        4.5903
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "80",
+                      "rowIndex": 7,
+                      "columnIndex": 1,
+                      "boundingBox": [
+                        3.2431,
+                        4.4583,
+                        3.3917,
+                        4.4583,
+                        3.3917,
+                        4.5938,
+                        3.2431,
+                        4.5938
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    },
+                    {
+                      "text": "220.00",
+                      "rowIndex": 7,
+                      "columnIndex": 2,
+                      "boundingBox": [
+                        5.4139,
+                        4.4618,
+                        5.8542,
+                        4.4618,
+                        5.8542,
+                        4.5972,
+                        5.4139,
+                        4.5972
+                      ],
+                      "confidence": 0.0,
+                      "rowSpan": 1,
+                      "columnSpan": 1,
+                      "elements": null,
+                      "isHeader": false,
+                      "isFooter": false
+                    }
+                  ]
+                }
+              ],
+              "clusterId": null
+            }
+          ],
+          "documentResults": [],
+          "errors": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/6c750c98-210e-484c-860b-5cb082895e3f",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-490773280ec308418e5eacfad322aa1f-dbdba9f97e34b846-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "be147b7fe8988407203ba952e03765d7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "apim-request-id": "22e671fb-f61f-4bf7-b792-e2c4441fb30a",
+        "Content-Length": "0",
+        "Date": "Mon, 29 Mar 2021 17:42:21 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "56"
+      },
+      "ResponseBody": []
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
+    "RandomSeed": "733553694"
+  }
+}

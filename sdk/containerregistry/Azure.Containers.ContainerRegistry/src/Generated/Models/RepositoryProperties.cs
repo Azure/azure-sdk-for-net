@@ -15,11 +15,12 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of RepositoryProperties. </summary>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
+        /// <param name="lastUpdatedOn"> Image last update time. </param>
         /// <param name="registryArtifactCount"> Number of the manifests. </param>
         /// <param name="tagCount"> Number of the tags. </param>
-        /// <param name="writeableProperties"> Changeable attributes. </param>
+        /// <param name="writeableProperties"> Writeable properties of the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="writeableProperties"/> is null. </exception>
-        internal RepositoryProperties(string name, DateTimeOffset createdOn, int registryArtifactCount, int tagCount, ContentProperties writeableProperties)
+        internal RepositoryProperties(string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int registryArtifactCount, int tagCount, ContentProperties writeableProperties)
         {
             if (name == null)
             {
@@ -30,22 +31,6 @@ namespace Azure.Containers.ContainerRegistry
                 throw new ArgumentNullException(nameof(writeableProperties));
             }
 
-            Name = name;
-            CreatedOn = createdOn;
-            RegistryArtifactCount = registryArtifactCount;
-            TagCount = tagCount;
-            WriteableProperties = writeableProperties;
-        }
-
-        /// <summary> Initializes a new instance of RepositoryProperties. </summary>
-        /// <param name="name"> Image name. </param>
-        /// <param name="createdOn"> Image created time. </param>
-        /// <param name="lastUpdatedOn"> Image last update time. </param>
-        /// <param name="registryArtifactCount"> Number of the manifests. </param>
-        /// <param name="tagCount"> Number of the tags. </param>
-        /// <param name="writeableProperties"> Changeable attributes. </param>
-        internal RepositoryProperties(string name, DateTimeOffset createdOn, DateTimeOffset? lastUpdatedOn, int registryArtifactCount, int tagCount, ContentProperties writeableProperties)
-        {
             Name = name;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
@@ -59,12 +44,12 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Image created time. </summary>
         public DateTimeOffset CreatedOn { get; }
         /// <summary> Image last update time. </summary>
-        public DateTimeOffset? LastUpdatedOn { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
         /// <summary> Number of the manifests. </summary>
         public int RegistryArtifactCount { get; }
         /// <summary> Number of the tags. </summary>
         public int TagCount { get; }
-        /// <summary> Changeable attributes. </summary>
+        /// <summary> Writeable properties of the resource. </summary>
         public ContentProperties WriteableProperties { get; }
     }
 }
