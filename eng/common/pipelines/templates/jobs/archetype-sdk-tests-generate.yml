@@ -1,6 +1,9 @@
 parameters:
 - name: AdditionalParameters
   type: object
+- name: DependsOn
+  type: object
+  default: null
 - name: CloudConfig
   type: object
   default: {}
@@ -37,6 +40,8 @@ jobs:
     name: ${{ parameters.Pool }}
     vmImage: ${{ parameters.OsVmImage }}
   displayName: Generate Job Matrix
+  ${{ if parameters.DependsOn }}:
+    dependsOn: ${{ parameters.DependsOn }}
   steps:
     # Skip sparse checkout for the `azure-sdk-for-<lang>-pr` private mirrored repositories
     # as we require the github service connection to be loaded.
