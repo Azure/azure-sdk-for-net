@@ -12,7 +12,11 @@ namespace Azure.Storage
     ///
     /// For more information, see
     /// <see href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations">
-    /// Setting timeouts for Blob service operations</see>.
+    /// Setting timeouts for Blob service operations</see>,
+    /// <see href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-file-service-operations">
+    /// Setting timeouts for File service operations</see>,
+    /// <see href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">
+    /// Setting timeouts for Queue service operations</see>.
     /// </summary>
     public static class StorageServerTimeout
     {
@@ -21,7 +25,11 @@ namespace Azure.Storage
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations">
-        /// Setting timeouts for Blob service operations</see>.
+        /// Setting timeouts for Blob service operations</see>,
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-file-service-operations">
+        /// Setting timeouts for File service operations</see>,
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">
+        /// Setting timeouts for Queue service operations</see>.
         /// </summary>
         /// <param name="timeoutInSeconds">The server timeout in seconds for each HTTP request.</param>
         /// <returns>The <see cref="IDisposable"/> instance that needs to be disposed when server timeout shouldn't be used anymore.</returns>
