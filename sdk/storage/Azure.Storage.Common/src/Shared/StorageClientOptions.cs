@@ -19,6 +19,8 @@ namespace Azure.Storage
         /// </summary>
         private const string StorageScope = "https://storage.azure.com/.default";
 
+        private static HttpPipelinePolicy[] PerCallPolicies = new HttpPipelinePolicy[] { StorageServerTimeoutPolicy.Shared };
+
         /// <summary>
         /// Set common ClientOptions defaults for Azure Storage.
         /// </summary>
@@ -100,7 +102,6 @@ namespace Azure.Storage
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
         {
-            HttpPipelinePolicy[] perCallPolicies = new HttpPipelinePolicy[] { StorageServerTimeoutPolicy.Shared };
             List<HttpPipelinePolicy> perRetryClientPolicies = new List<HttpPipelinePolicy>();
             StorageResponseClassifier classifier = new StorageResponseClassifier();
             if (geoRedundantSecondaryStorageUri != null)
@@ -114,7 +115,7 @@ namespace Azure.Storage
 
             return HttpPipelineBuilder.Build(
                options,
-               perCallPolicies,
+               PerCallPolicies,
                perRetryClientPolicies.ToArray(),
                classifier);
         }
