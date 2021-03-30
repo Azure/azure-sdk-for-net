@@ -22,46 +22,40 @@ namespace Microsoft.Azure.Management.DataShare
     public static partial class ConsumerInvitationsOperationsExtensions
     {
             /// <summary>
-            /// Rejects the invitation identified by invitationId
+            /// List the invitations
             /// </summary>
             /// <remarks>
-            /// Reject an invitation
+            /// Lists invitations
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='location'>
-            /// Location of the invitation
+            /// <param name='skipToken'>
+            /// The continuation token
             /// </param>
-            /// <param name='invitation'>
-            /// An invitation payload
-            /// </param>
-            public static ConsumerInvitation RejectInvitation(this IConsumerInvitationsOperations operations, string location, ConsumerInvitation invitation)
+            public static IPage<ConsumerInvitation> ListInvitations(this IConsumerInvitationsOperations operations, string skipToken = default(string))
             {
-                return operations.RejectInvitationAsync(location, invitation).GetAwaiter().GetResult();
+                return operations.ListInvitationsAsync(skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Rejects the invitation identified by invitationId
+            /// List the invitations
             /// </summary>
             /// <remarks>
-            /// Reject an invitation
+            /// Lists invitations
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='location'>
-            /// Location of the invitation
-            /// </param>
-            /// <param name='invitation'>
-            /// An invitation payload
+            /// <param name='skipToken'>
+            /// The continuation token
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ConsumerInvitation> RejectInvitationAsync(this IConsumerInvitationsOperations operations, string location, ConsumerInvitation invitation, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ConsumerInvitation>> ListInvitationsAsync(this IConsumerInvitationsOperations operations, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RejectInvitationWithHttpMessagesAsync(location, invitation, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListInvitationsWithHttpMessagesAsync(skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -114,40 +108,46 @@ namespace Microsoft.Azure.Management.DataShare
             }
 
             /// <summary>
-            /// List the invitations
+            /// Rejects the invitation identified by invitationId
             /// </summary>
             /// <remarks>
-            /// Lists invitations
+            /// Reject an invitation
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='skipToken'>
-            /// The continuation token
+            /// <param name='location'>
+            /// Location of the invitation
             /// </param>
-            public static IPage<ConsumerInvitation> ListInvitations(this IConsumerInvitationsOperations operations, string skipToken = default(string))
+            /// <param name='invitation'>
+            /// An invitation payload
+            /// </param>
+            public static ConsumerInvitation RejectInvitation(this IConsumerInvitationsOperations operations, string location, ConsumerInvitation invitation)
             {
-                return operations.ListInvitationsAsync(skipToken).GetAwaiter().GetResult();
+                return operations.RejectInvitationAsync(location, invitation).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List the invitations
+            /// Rejects the invitation identified by invitationId
             /// </summary>
             /// <remarks>
-            /// Lists invitations
+            /// Reject an invitation
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='skipToken'>
-            /// The continuation token
+            /// <param name='location'>
+            /// Location of the invitation
+            /// </param>
+            /// <param name='invitation'>
+            /// An invitation payload
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ConsumerInvitation>> ListInvitationsAsync(this IConsumerInvitationsOperations operations, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConsumerInvitation> RejectInvitationAsync(this IConsumerInvitationsOperations operations, string location, ConsumerInvitation invitation, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListInvitationsWithHttpMessagesAsync(skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RejectInvitationWithHttpMessagesAsync(location, invitation, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

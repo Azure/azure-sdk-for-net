@@ -71,6 +71,7 @@ pr:
     - sdk/frontdoor/Microsoft.Azure.Management.FrontDoor
     - sdk/guestconfiguration/Microsoft.Azure.Management.GuestConfiguration
     - sdk/hdinsight/Microsoft.Azure.Management.HDInsight
+    - sdk/healthbot/Microsoft.Azure.Management.Healthbot
     - sdk/healthcareapis/Microsoft.Azure.Management.HealthcareApis
     - sdk/hybridcompute/Microsoft.Azure.Management.HybridCompute
     - sdk/hybriddatamanager/Microsoft.Azure.Management.HybridDataManager
@@ -164,6 +165,6 @@ variables:
 - name: timeoutInMinutes
   value: 120
 jobs:
-- template: templates/jobs/archetype-sdk-mgmt.yml
+- template: /eng/pipelines/templates/jobs/ci.mgmt.yml
   parameters:
     Scope: $(Scope)

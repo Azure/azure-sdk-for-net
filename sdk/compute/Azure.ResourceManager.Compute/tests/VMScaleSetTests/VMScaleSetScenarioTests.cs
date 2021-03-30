@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 createWithManagedDisks: true,
                 createWithPublicIpAddress: false,
                 createWithHealthProbe: true);
-            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
 
             // Set Automatic Repairs to true
@@ -276,8 +276,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 createWithPublicIpAddress: false,
                 createWithHealthProbe: true,
                 automaticRepairsPolicy: automaticRepairsPolicy);
-            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
             var getInstanceViewResponse = (await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName)).Value;
 
@@ -350,8 +350,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 ppgId: ppgId,
                 enableUltraSSD: enableUltraSSD,
                 diskEncryptionSetId: diskEncryptionSetId);
-            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             if (diskEncryptionSetId != null)
             {
                 Assert.True(getResponse.VirtualMachineProfile.StorageProfile.OsDisk.ManagedDisk.DiskEncryptionSet != null, "OsDisk.ManagedDisk.DiskEncryptionSet is null");

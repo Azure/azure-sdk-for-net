@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -8,13 +8,14 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the base resource used by all azure resources.
     /// </summary>
-    public abstract class Resource : IEquatable<Resource>, IEquatable<string>, IComparable<Resource>,
-        IComparable<string>
+    [ReferenceType]
+    public abstract class Resource<TIdentifier> : IEquatable<Resource<TIdentifier>>, IEquatable<string>,
+        IComparable<Resource<TIdentifier>>, IComparable<string> where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>
         /// Gets or sets the resource identifier.
         /// </summary>
-        public abstract ResourceIdentifier Id { get; protected set; }
+        public virtual TIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets the name.
@@ -24,10 +25,10 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the resource type.
         /// </summary>
-        public virtual ResourceType Type => Id?.Type;
+        public virtual ResourceType Type => Id?.ResourceType;
 
         /// <inheritdoc/>
-        public virtual int CompareTo(Resource other)
+        public virtual int CompareTo(Resource<TIdentifier> other)
         {
             if (other == null)
                 return 1;
@@ -47,11 +48,11 @@ namespace Azure.ResourceManager.Core
         /// <inheritdoc/>
         public virtual int CompareTo(string other)
         {
-            return string.Compare(Id?.Id, other, StringComparison.InvariantCultureIgnoreCase);
+            return string.Compare(Id, other, StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <inheritdoc/>
-        public virtual bool Equals(Resource other)
+        public virtual bool Equals(Resource<TIdentifier> other)
         {
             if (Id == null)
                 return false;

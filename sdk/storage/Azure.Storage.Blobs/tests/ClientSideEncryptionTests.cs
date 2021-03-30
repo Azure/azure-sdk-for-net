@@ -324,7 +324,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test] // multiple unalligned blocks
+        [RecordedTest] // multiple unalligned blocks
         [LiveOnly] // cannot seed content encryption key
         public async Task KeyResolverKicksIn()
         {
@@ -723,7 +723,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_WithClientSideEncryptionOptions_True()
         {
             // Arrange
@@ -754,7 +754,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(blobEncrypted.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_WithClientSideEncryptionOptions_False()
         {
             // Arrange

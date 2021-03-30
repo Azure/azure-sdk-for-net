@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Azure.Iot.DeviceUpdate.csproj" />
+    <ProjectReference Include="..\..\src\Azure.IoT.DeviceUpdate.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,10 +3,10 @@
 
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Iot.DeviceUpdate.Models;
+using Azure.IoT.DeviceUpdate.Models;
 using NUnit.Framework;
 
-namespace Azure.Iot.DeviceUpdate.Tests
+namespace Azure.IoT.DeviceUpdate.Tests
 {
     /// <summary>
     /// Deployment management tests.

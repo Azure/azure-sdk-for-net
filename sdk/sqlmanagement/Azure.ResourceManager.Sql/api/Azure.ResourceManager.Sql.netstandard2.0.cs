@@ -2,7 +2,7 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class BackupLongTermRetentionPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.BackupLongTermRetentionPolicy>
     {
-        internal BackupLongTermRetentionPoliciesCreateOrUpdateOperation() { }
+        protected BackupLongTermRetentionPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class BackupShortTermRetentionPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.BackupShortTermRetentionPolicy>
     {
-        internal BackupShortTermRetentionPoliciesCreateOrUpdateOperation() { }
+        protected BackupShortTermRetentionPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class BackupShortTermRetentionPoliciesUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.BackupShortTermRetentionPolicy>
     {
-        internal BackupShortTermRetentionPoliciesUpdateOperation() { }
+        protected BackupShortTermRetentionPoliciesUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class DatabasesCreateImportOperationOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ImportExportResponse>
     {
-        internal DatabasesCreateImportOperationOperation() { }
+        protected DatabasesCreateImportOperationOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class DatabasesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.Database>
     {
-        internal DatabasesCreateOrUpdateOperation() { }
+        protected DatabasesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class DatabasesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal DatabasesDeleteOperation() { }
+        protected DatabasesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class DatabasesExportOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ImportExportResponse>
     {
-        internal DatabasesExportOperation() { }
+        protected DatabasesExportOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class DatabasesFailoverOperation : Azure.Operation<Azure.Response>
     {
-        internal DatabasesFailoverOperation() { }
+        protected DatabasesFailoverOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class DatabasesImportOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ImportExportResponse>
     {
-        internal DatabasesImportOperation() { }
+        protected DatabasesImportOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class DatabasesPauseOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.Database>
     {
-        internal DatabasesPauseOperation() { }
+        protected DatabasesPauseOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class DatabasesResumeOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.Database>
     {
-        internal DatabasesResumeOperation() { }
+        protected DatabasesResumeOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class DatabasesUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.Database>
     {
-        internal DatabasesUpdateOperation() { }
+        protected DatabasesUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class DatabasesUpgradeDataWarehouseOperation : Azure.Operation<Azure.Response>
     {
-        internal DatabasesUpgradeDataWarehouseOperation() { }
+        protected DatabasesUpgradeDataWarehouseOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class DatabaseVulnerabilityAssessmentScansInitiateScanOperation : Azure.Operation<Azure.Response>
     {
-        internal DatabaseVulnerabilityAssessmentScansInitiateScanOperation() { }
+        protected DatabaseVulnerabilityAssessmentScansInitiateScanOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ElasticPoolsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ElasticPool>
     {
-        internal ElasticPoolsCreateOrUpdateOperation() { }
+        protected ElasticPoolsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ElasticPoolsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ElasticPoolsDeleteOperation() { }
+        protected ElasticPoolsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ElasticPoolsFailoverOperation : Azure.Operation<Azure.Response>
     {
-        internal ElasticPoolsFailoverOperation() { }
+        protected ElasticPoolsFailoverOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ElasticPoolsUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ElasticPool>
     {
-        internal ElasticPoolsUpdateOperation() { }
+        protected ElasticPoolsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class EncryptionProtectorsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.EncryptionProtector>
     {
-        internal EncryptionProtectorsCreateOrUpdateOperation() { }
+        protected EncryptionProtectorsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class EncryptionProtectorsRevalidateOperation : Azure.Operation<Azure.Response>
     {
-        internal EncryptionProtectorsRevalidateOperation() { }
+        protected EncryptionProtectorsRevalidateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ExtendedServerBlobAuditingPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ExtendedServerBlobAuditingPolicy>
     {
-        internal ExtendedServerBlobAuditingPoliciesCreateOrUpdateOperation() { }
+        protected ExtendedServerBlobAuditingPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class FailoverGroupsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.FailoverGroup>
     {
-        internal FailoverGroupsCreateOrUpdateOperation() { }
+        protected FailoverGroupsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class FailoverGroupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal FailoverGroupsDeleteOperation() { }
+        protected FailoverGroupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class FailoverGroupsFailoverOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.FailoverGroup>
     {
-        internal FailoverGroupsFailoverOperation() { }
+        protected FailoverGroupsFailoverOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class FailoverGroupsForceFailoverAllowDataLossOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.FailoverGroup>
     {
-        internal FailoverGroupsForceFailoverAllowDataLossOperation() { }
+        protected FailoverGroupsForceFailoverAllowDataLossOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class FailoverGroupsUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.FailoverGroup>
     {
-        internal FailoverGroupsUpdateOperation() { }
+        protected FailoverGroupsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class InstanceFailoverGroupsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.InstanceFailoverGroup>
     {
-        internal InstanceFailoverGroupsCreateOrUpdateOperation() { }
+        protected InstanceFailoverGroupsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class InstanceFailoverGroupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal InstanceFailoverGroupsDeleteOperation() { }
+        protected InstanceFailoverGroupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class InstanceFailoverGroupsFailoverOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.InstanceFailoverGroup>
     {
-        internal InstanceFailoverGroupsFailoverOperation() { }
+        protected InstanceFailoverGroupsFailoverOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class InstanceFailoverGroupsForceFailoverAllowDataLossOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.InstanceFailoverGroup>
     {
-        internal InstanceFailoverGroupsForceFailoverAllowDataLossOperation() { }
+        protected InstanceFailoverGroupsForceFailoverAllowDataLossOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class InstancePoolsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.InstancePool>
     {
-        internal InstancePoolsCreateOrUpdateOperation() { }
+        protected InstancePoolsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class InstancePoolsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal InstancePoolsDeleteOperation() { }
+        protected InstancePoolsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class InstancePoolsUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.InstancePool>
     {
-        internal InstancePoolsUpdateOperation() { }
+        protected InstancePoolsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class JobAgentsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.JobAgent>
     {
-        internal JobAgentsCreateOrUpdateOperation() { }
+        protected JobAgentsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class JobAgentsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal JobAgentsDeleteOperation() { }
+        protected JobAgentsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class JobAgentsUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.JobAgent>
     {
-        internal JobAgentsUpdateOperation() { }
+        protected JobAgentsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class JobExecutionsCreateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.JobExecution>
     {
-        internal JobExecutionsCreateOperation() { }
+        protected JobExecutionsCreateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class JobExecutionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.JobExecution>
     {
-        internal JobExecutionsCreateOrUpdateOperation() { }
+        protected JobExecutionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class LongTermRetentionBackupsDeleteByResourceGroupOperation : Azure.Operation<Azure.Response>
     {
-        internal LongTermRetentionBackupsDeleteByResourceGroupOperation() { }
+        protected LongTermRetentionBackupsDeleteByResourceGroupOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class LongTermRetentionBackupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal LongTermRetentionBackupsDeleteOperation() { }
+        protected LongTermRetentionBackupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -952,7 +952,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class LongTermRetentionManagedInstanceBackupsDeleteByResourceGroupOperation : Azure.Operation<Azure.Response>
     {
-        internal LongTermRetentionManagedInstanceBackupsDeleteByResourceGroupOperation() { }
+        protected LongTermRetentionManagedInstanceBackupsDeleteByResourceGroupOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class LongTermRetentionManagedInstanceBackupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal LongTermRetentionManagedInstanceBackupsDeleteOperation() { }
+        protected LongTermRetentionManagedInstanceBackupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedBackupShortTermRetentionPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedBackupShortTermRetentionPolicy>
     {
-        internal ManagedBackupShortTermRetentionPoliciesCreateOrUpdateOperation() { }
+        protected ManagedBackupShortTermRetentionPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedBackupShortTermRetentionPoliciesUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedBackupShortTermRetentionPolicy>
     {
-        internal ManagedBackupShortTermRetentionPoliciesUpdateOperation() { }
+        protected ManagedBackupShortTermRetentionPoliciesUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedDatabasesCompleteRestoreOperation : Azure.Operation<Azure.Response>
     {
-        internal ManagedDatabasesCompleteRestoreOperation() { }
+        protected ManagedDatabasesCompleteRestoreOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedDatabasesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedDatabase>
     {
-        internal ManagedDatabasesCreateOrUpdateOperation() { }
+        protected ManagedDatabasesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1072,7 +1072,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedDatabasesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ManagedDatabasesDeleteOperation() { }
+        protected ManagedDatabasesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedDatabasesUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedDatabase>
     {
-        internal ManagedDatabasesUpdateOperation() { }
+        protected ManagedDatabasesUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1154,7 +1154,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedDatabaseVulnerabilityAssessmentScansInitiateScanOperation : Azure.Operation<Azure.Response>
     {
-        internal ManagedDatabaseVulnerabilityAssessmentScansInitiateScanOperation() { }
+        protected ManagedDatabaseVulnerabilityAssessmentScansInitiateScanOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1191,7 +1191,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstanceAdministratorsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedInstanceAdministrator>
     {
-        internal ManagedInstanceAdministratorsCreateOrUpdateOperation() { }
+        protected ManagedInstanceAdministratorsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstanceAdministratorsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ManagedInstanceAdministratorsDeleteOperation() { }
+        protected ManagedInstanceAdministratorsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstanceEncryptionProtectorsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedInstanceEncryptionProtector>
     {
-        internal ManagedInstanceEncryptionProtectorsCreateOrUpdateOperation() { }
+        protected ManagedInstanceEncryptionProtectorsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1254,7 +1254,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstanceEncryptionProtectorsRevalidateOperation : Azure.Operation<Azure.Response>
     {
-        internal ManagedInstanceEncryptionProtectorsRevalidateOperation() { }
+        protected ManagedInstanceEncryptionProtectorsRevalidateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1267,7 +1267,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstanceKeysCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedInstanceKey>
     {
-        internal ManagedInstanceKeysCreateOrUpdateOperation() { }
+        protected ManagedInstanceKeysCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1280,7 +1280,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstanceKeysDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ManagedInstanceKeysDeleteOperation() { }
+        protected ManagedInstanceKeysDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1305,7 +1305,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstanceLongTermRetentionPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedInstanceLongTermRetentionPolicy>
     {
-        internal ManagedInstanceLongTermRetentionPoliciesCreateOrUpdateOperation() { }
+        protected ManagedInstanceLongTermRetentionPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1338,7 +1338,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstancesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedInstance>
     {
-        internal ManagedInstancesCreateOrUpdateOperation() { }
+        protected ManagedInstancesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1351,7 +1351,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstancesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ManagedInstancesDeleteOperation() { }
+        protected ManagedInstancesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1364,7 +1364,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstancesFailoverOperation : Azure.Operation<Azure.Response>
     {
-        internal ManagedInstancesFailoverOperation() { }
+        protected ManagedInstancesFailoverOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1397,7 +1397,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstancesUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedInstance>
     {
-        internal ManagedInstancesUpdateOperation() { }
+        protected ManagedInstancesUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1410,7 +1410,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstanceTdeCertificatesCreateOperation : Azure.Operation<Azure.Response>
     {
-        internal ManagedInstanceTdeCertificatesCreateOperation() { }
+        protected ManagedInstanceTdeCertificatesCreateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1441,7 +1441,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedBackupShortTermRetentionPolicy>
     {
-        internal ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesCreateOrUpdateOperation() { }
+        protected ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1466,7 +1466,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedBackupShortTermRetentionPolicy>
     {
-        internal ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesUpdateOperation() { }
+        protected ManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1479,7 +1479,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedServerSecurityAlertPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ManagedServerSecurityAlertPolicy>
     {
-        internal ManagedServerSecurityAlertPoliciesCreateOrUpdateOperation() { }
+        protected ManagedServerSecurityAlertPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1508,7 +1508,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class PrivateEndpointConnectionsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.PrivateEndpointConnection>
     {
-        internal PrivateEndpointConnectionsCreateOrUpdateOperation() { }
+        protected PrivateEndpointConnectionsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1521,7 +1521,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class PrivateEndpointConnectionsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal PrivateEndpointConnectionsDeleteOperation() { }
+        protected PrivateEndpointConnectionsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1580,7 +1580,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ReplicationLinksFailoverAllowDataLossOperation : Azure.Operation<Azure.Response>
     {
-        internal ReplicationLinksFailoverAllowDataLossOperation() { }
+        protected ReplicationLinksFailoverAllowDataLossOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1593,7 +1593,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ReplicationLinksFailoverOperation : Azure.Operation<Azure.Response>
     {
-        internal ReplicationLinksFailoverOperation() { }
+        protected ReplicationLinksFailoverOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1622,7 +1622,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ReplicationLinksUnlinkOperation : Azure.Operation<Azure.Response>
     {
-        internal ReplicationLinksUnlinkOperation() { }
+        protected ReplicationLinksUnlinkOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1651,7 +1651,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class RestorePointsCreateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.RestorePoint>
     {
-        internal RestorePointsCreateOperation() { }
+        protected RestorePointsCreateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1702,7 +1702,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerAzureADAdministratorsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ServerAzureADAdministrator>
     {
-        internal ServerAzureADAdministratorsCreateOrUpdateOperation() { }
+        protected ServerAzureADAdministratorsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1715,7 +1715,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerAzureADAdministratorsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ServerAzureADAdministratorsDeleteOperation() { }
+        protected ServerAzureADAdministratorsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1740,7 +1740,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerAzureADOnlyAuthenticationsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ServerAzureADOnlyAuthentication>
     {
-        internal ServerAzureADOnlyAuthenticationsCreateOrUpdateOperation() { }
+        protected ServerAzureADOnlyAuthenticationsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1753,7 +1753,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerAzureADOnlyAuthenticationsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ServerAzureADOnlyAuthenticationsDeleteOperation() { }
+        protected ServerAzureADOnlyAuthenticationsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1778,7 +1778,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerBlobAuditingPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ServerBlobAuditingPolicy>
     {
-        internal ServerBlobAuditingPoliciesCreateOrUpdateOperation() { }
+        protected ServerBlobAuditingPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1801,7 +1801,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerCommunicationLinksCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ServerCommunicationLink>
     {
-        internal ServerCommunicationLinksCreateOrUpdateOperation() { }
+        protected ServerCommunicationLinksCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1834,7 +1834,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerDnsAliasesAcquireOperation : Azure.Operation<Azure.Response>
     {
-        internal ServerDnsAliasesAcquireOperation() { }
+        protected ServerDnsAliasesAcquireOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1847,7 +1847,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerDnsAliasesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ServerDnsAlias>
     {
-        internal ServerDnsAliasesCreateOrUpdateOperation() { }
+        protected ServerDnsAliasesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1860,7 +1860,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerDnsAliasesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ServerDnsAliasesDeleteOperation() { }
+        protected ServerDnsAliasesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1887,7 +1887,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerKeysCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ServerKey>
     {
-        internal ServerKeysCreateOrUpdateOperation() { }
+        protected ServerKeysCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1900,7 +1900,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerKeysDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ServerKeysDeleteOperation() { }
+        protected ServerKeysDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1925,7 +1925,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServersCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.Server>
     {
-        internal ServersCreateOrUpdateOperation() { }
+        protected ServersCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1938,7 +1938,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServersDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ServersDeleteOperation() { }
+        protected ServersDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1951,7 +1951,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServerSecurityAlertPoliciesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.ServerSecurityAlertPolicy>
     {
-        internal ServerSecurityAlertPoliciesCreateOrUpdateOperation() { }
+        protected ServerSecurityAlertPoliciesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -1992,7 +1992,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ServersUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.Server>
     {
-        internal ServersUpdateOperation() { }
+        protected ServersUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2149,7 +2149,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SyncAgentsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.SyncAgent>
     {
-        internal SyncAgentsCreateOrUpdateOperation() { }
+        protected SyncAgentsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2162,7 +2162,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SyncAgentsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal SyncAgentsDeleteOperation() { }
+        protected SyncAgentsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2191,7 +2191,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SyncGroupsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.SyncGroup>
     {
-        internal SyncGroupsCreateOrUpdateOperation() { }
+        protected SyncGroupsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2204,7 +2204,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SyncGroupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal SyncGroupsDeleteOperation() { }
+        protected SyncGroupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2243,7 +2243,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SyncGroupsRefreshHubSchemaOperation : Azure.Operation<Azure.Response>
     {
-        internal SyncGroupsRefreshHubSchemaOperation() { }
+        protected SyncGroupsRefreshHubSchemaOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2256,7 +2256,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SyncGroupsUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.SyncGroup>
     {
-        internal SyncGroupsUpdateOperation() { }
+        protected SyncGroupsUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2269,7 +2269,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SyncMembersCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.SyncMember>
     {
-        internal SyncMembersCreateOrUpdateOperation() { }
+        protected SyncMembersCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2282,7 +2282,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SyncMembersDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal SyncMembersDeleteOperation() { }
+        protected SyncMembersDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2313,7 +2313,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SyncMembersRefreshMemberSchemaOperation : Azure.Operation<Azure.Response>
     {
-        internal SyncMembersRefreshMemberSchemaOperation() { }
+        protected SyncMembersRefreshMemberSchemaOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2326,7 +2326,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SyncMembersUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.SyncMember>
     {
-        internal SyncMembersUpdateOperation() { }
+        protected SyncMembersUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2339,7 +2339,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class TdeCertificatesCreateOperation : Azure.Operation<Azure.Response>
     {
-        internal TdeCertificatesCreateOperation() { }
+        protected TdeCertificatesCreateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2378,7 +2378,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class VirtualClustersDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualClustersDeleteOperation() { }
+        protected VirtualClustersDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2405,7 +2405,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class VirtualClustersUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.VirtualCluster>
     {
-        internal VirtualClustersUpdateOperation() { }
+        protected VirtualClustersUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2418,7 +2418,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class VirtualNetworkRulesCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.VirtualNetworkRule>
     {
-        internal VirtualNetworkRulesCreateOrUpdateOperation() { }
+        protected VirtualNetworkRulesCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2431,7 +2431,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class VirtualNetworkRulesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal VirtualNetworkRulesDeleteOperation() { }
+        protected VirtualNetworkRulesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2456,7 +2456,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class WorkloadClassifiersCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.WorkloadClassifier>
     {
-        internal WorkloadClassifiersCreateOrUpdateOperation() { }
+        protected WorkloadClassifiersCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2469,7 +2469,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class WorkloadClassifiersDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal WorkloadClassifiersDeleteOperation() { }
+        protected WorkloadClassifiersDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2494,7 +2494,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class WorkloadGroupsCreateOrUpdateOperation : Azure.Operation<Azure.ResourceManager.Sql.Models.WorkloadGroup>
     {
-        internal WorkloadGroupsCreateOrUpdateOperation() { }
+        protected WorkloadGroupsCreateOrUpdateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -2507,7 +2507,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class WorkloadGroupsDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal WorkloadGroupsDeleteOperation() { }
+        protected WorkloadGroupsDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

@@ -9,7 +9,7 @@ namespace Proto.Authorization
     /// <summary>
     /// Placholder class containing Role assignment POCO properties.
     /// </summary>
-    public class RoleAssignmentData : Resource
+    public class RoleAssignmentData : Resource<TenantResourceIdentifier>
     {
         private Azure.ResourceManager.Authorization.Models.RoleAssignment _model;
 
@@ -20,7 +20,7 @@ namespace Proto.Authorization
         public RoleAssignmentData(Azure.ResourceManager.Authorization.Models.RoleAssignment assign)
         {
             _model = assign;
-            Id = assign.Id;
+            Id = new TenantResourceIdentifier(assign.Id);
             Scope = assign.Scope;
             RoleDefinitionId = assign.RoleDefinitionId;
             PrincipalId = assign.PrincipalId;
@@ -61,7 +61,7 @@ namespace Proto.Authorization
         /// <summary>
         /// Gets or sets the identifier of the RoleAssignment.
         /// </summary>
-        public override ResourceIdentifier Id { get; protected set; }
+        public override TenantResourceIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets the Track2 Management model associated with the data object.

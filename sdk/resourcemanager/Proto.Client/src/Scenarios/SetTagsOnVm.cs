@@ -32,7 +32,7 @@ namespace Proto.Client
         private async Task ExecuteAsync()
         {
             // Update Tag for a known resource
-            var rgOp = new AzureResourceManagerClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
+            var rgOp = new ArmClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
             var vmOp = rgOp.GetVirtualMachineOperations(Context.VmName);
 
             Console.WriteLine($"Adding tags to {vmOp.Id.Name}");

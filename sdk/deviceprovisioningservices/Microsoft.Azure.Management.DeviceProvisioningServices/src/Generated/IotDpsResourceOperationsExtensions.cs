@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -141,12 +143,12 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             /// <param name='provisioningServiceName'>
             /// Name of provisioning service to create or update.
             /// </param>
-            /// <param name='provisioningServiceTags'>
-            /// Updated tag information to set into the provisioning service instance.
+            /// <param name='tags'>
+            /// Resource tags
             /// </param>
-            public static ProvisioningServiceDescription Update(this IIotDpsResourceOperations operations, string resourceGroupName, string provisioningServiceName, TagsResource provisioningServiceTags)
+            public static ProvisioningServiceDescription Update(this IIotDpsResourceOperations operations, string resourceGroupName, string provisioningServiceName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.UpdateAsync(resourceGroupName, provisioningServiceName, provisioningServiceTags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, provisioningServiceName, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -165,15 +167,15 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             /// <param name='provisioningServiceName'>
             /// Name of provisioning service to create or update.
             /// </param>
-            /// <param name='provisioningServiceTags'>
-            /// Updated tag information to set into the provisioning service instance.
+            /// <param name='tags'>
+            /// Resource tags
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningServiceDescription> UpdateAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string provisioningServiceName, TagsResource provisioningServiceTags, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProvisioningServiceDescription> UpdateAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string provisioningServiceName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, provisioningServiceName, provisioningServiceTags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, provisioningServiceName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -404,13 +406,12 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='arguments'>
-            /// Set the name parameter in the OperationInputs structure to the name of the
-            /// provisioning service to check.
+            /// <param name='name'>
+            /// The name of the Provisioning Service to check.
             /// </param>
-            public static NameAvailabilityInfo CheckProvisioningServiceNameAvailability(this IIotDpsResourceOperations operations, OperationInputs arguments)
+            public static NameAvailabilityInfo CheckProvisioningServiceNameAvailability(this IIotDpsResourceOperations operations, string name)
             {
-                return operations.CheckProvisioningServiceNameAvailabilityAsync(arguments).GetAwaiter().GetResult();
+                return operations.CheckProvisioningServiceNameAvailabilityAsync(name).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -423,16 +424,15 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='arguments'>
-            /// Set the name parameter in the OperationInputs structure to the name of the
-            /// provisioning service to check.
+            /// <param name='name'>
+            /// The name of the Provisioning Service to check.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NameAvailabilityInfo> CheckProvisioningServiceNameAvailabilityAsync(this IIotDpsResourceOperations operations, OperationInputs arguments, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NameAvailabilityInfo> CheckProvisioningServiceNameAvailabilityAsync(this IIotDpsResourceOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckProvisioningServiceNameAvailabilityWithHttpMessagesAsync(arguments, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckProvisioningServiceNameAvailabilityWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -537,6 +537,314 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             }
 
             /// <summary>
+            /// List private link resources
+            /// </summary>
+            /// <remarks>
+            /// List private link resources for the given provisioning service
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            public static PrivateLinkResources ListPrivateLinkResources(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName)
+            {
+                return operations.ListPrivateLinkResourcesAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List private link resources
+            /// </summary>
+            /// <remarks>
+            /// List private link resources for the given provisioning service
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateLinkResources> ListPrivateLinkResourcesAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPrivateLinkResourcesWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the specified private link resource
+            /// </summary>
+            /// <remarks>
+            /// Get the specified private link resource for the given provisioning service
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='groupId'>
+            /// The name of the private link resource
+            /// </param>
+            public static GroupIdInformation GetPrivateLinkResources(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string groupId)
+            {
+                return operations.GetPrivateLinkResourcesAsync(resourceGroupName, resourceName, groupId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the specified private link resource
+            /// </summary>
+            /// <remarks>
+            /// Get the specified private link resource for the given provisioning service
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='groupId'>
+            /// The name of the private link resource
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GroupIdInformation> GetPrivateLinkResourcesAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string groupId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateLinkResourcesWithHttpMessagesAsync(resourceGroupName, resourceName, groupId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List private endpoint connections
+            /// </summary>
+            /// <remarks>
+            /// List private endpoint connection properties
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            public static IList<PrivateEndpointConnection> ListPrivateEndpointConnections(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName)
+            {
+                return operations.ListPrivateEndpointConnectionsAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List private endpoint connections
+            /// </summary>
+            /// <remarks>
+            /// List private endpoint connection properties
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<PrivateEndpointConnection>> ListPrivateEndpointConnectionsAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListPrivateEndpointConnectionsWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Get private endpoint connection properties
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection
+            /// </param>
+            public static PrivateEndpointConnection GetPrivateEndpointConnection(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
+            {
+                return operations.GetPrivateEndpointConnectionAsync(resourceGroupName, resourceName, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Get private endpoint connection properties
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateEndpointConnection> GetPrivateEndpointConnectionAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, resourceName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create or update private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Create or update the status of a private endpoint connection with the
+            /// specified name
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection
+            /// </param>
+            /// <param name='properties'>
+            /// The properties of a private endpoint connection
+            /// </param>
+            public static PrivateEndpointConnection CreateOrUpdatePrivateEndpointConnection(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionProperties properties)
+            {
+                return operations.CreateOrUpdatePrivateEndpointConnectionAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Create or update the status of a private endpoint connection with the
+            /// specified name
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection
+            /// </param>
+            /// <param name='properties'>
+            /// The properties of a private endpoint connection
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateEndpointConnection> CreateOrUpdatePrivateEndpointConnectionAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionProperties properties, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdatePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Delete private endpoint connection with the specified name
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection
+            /// </param>
+            public static PrivateEndpointConnection DeletePrivateEndpointConnection(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
+            {
+                return operations.DeletePrivateEndpointConnectionAsync(resourceGroupName, resourceName, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Delete private endpoint connection with the specified name
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateEndpointConnection> DeletePrivateEndpointConnectionAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, resourceName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update the metadata of the provisioning service.
             /// </summary>
             /// <remarks>
@@ -610,12 +918,12 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             /// <param name='provisioningServiceName'>
             /// Name of provisioning service to create or update.
             /// </param>
-            /// <param name='provisioningServiceTags'>
-            /// Updated tag information to set into the provisioning service instance.
+            /// <param name='tags'>
+            /// Resource tags
             /// </param>
-            public static ProvisioningServiceDescription BeginUpdate(this IIotDpsResourceOperations operations, string resourceGroupName, string provisioningServiceName, TagsResource provisioningServiceTags)
+            public static ProvisioningServiceDescription BeginUpdate(this IIotDpsResourceOperations operations, string resourceGroupName, string provisioningServiceName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.BeginUpdateAsync(resourceGroupName, provisioningServiceName, provisioningServiceTags).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, provisioningServiceName, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -634,15 +942,15 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             /// <param name='provisioningServiceName'>
             /// Name of provisioning service to create or update.
             /// </param>
-            /// <param name='provisioningServiceTags'>
-            /// Updated tag information to set into the provisioning service instance.
+            /// <param name='tags'>
+            /// Resource tags
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProvisioningServiceDescription> BeginUpdateAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string provisioningServiceName, TagsResource provisioningServiceTags, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProvisioningServiceDescription> BeginUpdateAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string provisioningServiceName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, provisioningServiceName, provisioningServiceTags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, provisioningServiceName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -689,6 +997,118 @@ namespace Microsoft.Azure.Management.DeviceProvisioningServices
             public static async Task BeginDeleteAsync(this IIotDpsResourceOperations operations, string provisioningServiceName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(provisioningServiceName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Create or update private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Create or update the status of a private endpoint connection with the
+            /// specified name
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection
+            /// </param>
+            /// <param name='properties'>
+            /// The properties of a private endpoint connection
+            /// </param>
+            public static PrivateEndpointConnection BeginCreateOrUpdatePrivateEndpointConnection(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionProperties properties)
+            {
+                return operations.BeginCreateOrUpdatePrivateEndpointConnectionAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Create or update the status of a private endpoint connection with the
+            /// specified name
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection
+            /// </param>
+            /// <param name='properties'>
+            /// The properties of a private endpoint connection
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateEndpointConnection> BeginCreateOrUpdatePrivateEndpointConnectionAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnectionProperties properties, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdatePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Delete private endpoint connection with the specified name
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection
+            /// </param>
+            public static PrivateEndpointConnection BeginDeletePrivateEndpointConnection(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
+            {
+                return operations.BeginDeletePrivateEndpointConnectionAsync(resourceGroupName, resourceName, privateEndpointConnectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete private endpoint connection
+            /// </summary>
+            /// <remarks>
+            /// Delete private endpoint connection with the specified name
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the provisioning service.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the provisioning service.
+            /// </param>
+            /// <param name='privateEndpointConnectionName'>
+            /// The name of the private endpoint connection
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<PrivateEndpointConnection> BeginDeletePrivateEndpointConnectionAsync(this IIotDpsResourceOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDeletePrivateEndpointConnectionWithHttpMessagesAsync(resourceGroupName, resourceName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

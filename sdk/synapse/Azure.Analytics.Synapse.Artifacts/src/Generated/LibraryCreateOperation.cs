@@ -18,6 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class LibraryCreateOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of LibraryCreateOperation for mocking. </summary>
+        protected LibraryCreateOperation()
+        {
+        }
+
         internal LibraryCreateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "LibraryCreateOperation");

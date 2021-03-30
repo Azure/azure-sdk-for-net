@@ -11,9 +11,9 @@ namespace Proto.Client
     {
         public async void ShutdownAsync()
         {
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
+            var client = new ArmClient(new DefaultAzureCredential());
 
-            await foreach (var subscription in client.GetSubscriptionContainer().ListAsync())
+            await foreach (var subscription in client.GetSubscriptions().ListAsync())
             {
                 await foreach (var armResource in subscription.ListVirtualMachinesByNameAsync("-e"))
                 {
@@ -41,15 +41,15 @@ namespace Proto.Client
             #endregion
 
 
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
-            foreach (var sub in client.GetSubscriptionContainer().List())
+            var client = new ArmClient(new DefaultAzureCredential());
+            foreach (var sub in client.GetSubscriptions().List())
             {
                 await foreach (var armResource in sub.ListVirtualMachinesByNameAsync("-e"))
                 {
                     var vmOperations = VirtualMachineOperations.FromGeneric(armResource);
-                    Console.WriteLine($"Stopping {vmOperations.Id.Subscription} {vmOperations.Id.ResourceGroup} {vmOperations.Id.Name}");
+                    Console.WriteLine($"Stopping {vmOperations.Id.SubscriptionId} {vmOperations.Id.ResourceGroupName} {vmOperations.Id.Name}");
                     vmOperations.PowerOff();
-                    Console.WriteLine($"Starting {vmOperations.Id.Subscription} {vmOperations.Id.ResourceGroup} {vmOperations.Id.Name}");
+                    Console.WriteLine($"Starting {vmOperations.Id.SubscriptionId} {vmOperations.Id.ResourceGroupName} {vmOperations.Id.Name}");
                     vmOperations.PowerOn();
                 }
             }

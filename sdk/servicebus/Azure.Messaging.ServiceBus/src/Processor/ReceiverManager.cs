@@ -286,8 +286,15 @@ namespace Azure.Messaging.ServiceBus
                     ServiceBusEventSource.Log.ProcessorRenewMessageLockStart(_identifier, 1, message.LockToken);
                     TimeSpan delay = CalculateRenewDelay(message.LockedUntil);
 
-                    await Task.Delay(delay, cancellationToken).ConfigureAwait(false);
-                    if (Receiver.IsClosed)
+                    // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled
+                    // by the renewLockCancellationToken. This way we prevent a TaskCanceledException.
+                    Task delayTask = await Task.Delay(delay, cancellationToken)
+                        .ContinueWith(
+                            (t, s) => t,
+                            TaskContinuationOptions.ExecuteSynchronously,
+                            TaskScheduler.Default)
+                        .ConfigureAwait(false);
+                    if (Receiver.IsClosed || delayTask.IsCanceled)
                     {
                         break;
                     }

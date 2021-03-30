@@ -12,8 +12,8 @@ namespace Proto.Client
             var createVm = new CreateSingleVmExample(Context);
             createVm.Execute();
 
-            var rgOp = new AzureResourceManagerClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
-            foreach(var entity in rgOp.GetVirtualMachineContainer().List())
+            var rgOp = new ArmClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
+            foreach(var entity in rgOp.GetVirtualMachines().List())
             {
                 Console.WriteLine($"{entity.Id.Name}");
                 entity.StartAddTag("name", "Value");

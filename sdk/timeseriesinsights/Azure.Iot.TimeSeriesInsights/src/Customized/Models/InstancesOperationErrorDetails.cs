@@ -6,13 +6,13 @@ using Azure.Core;
 namespace Azure.Iot.TimeSeriesInsights
 {
     /// <summary>
-    /// Error details for Time Series Insights instances operations.
+    /// Error details for Time Series Insights operations.
     /// </summary>
     [CodeGenModel("TsiErrorDetails")]
-    public partial class InstancesOperationErrorDetails
+    public partial class TimeSeriesOperationErrorDetails
     {
         // This class declaration changes the class name; do not remove.
         // The class name change is to make it clearer to the user that this type represents
-        // error details for an instances operation.
+        // error details for an Time Series Insights operation.
     }
 }

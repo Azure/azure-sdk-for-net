@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Tests
         {
             get
             {
-                (SearchFieldDataType dataType, string fieldName)[] primitiveSubFieldTestData = new[]
+                (SearchFieldDataType DataType, string FieldName)[] primitiveSubFieldTestData = new[]
                 {
                     (SearchFieldDataType.String, nameof(ReflectableComplexObject.Name)),
                     (SearchFieldDataType.Int32, nameof(ReflectableComplexObject.Rating)),
@@ -52,10 +52,10 @@ namespace Azure.Search.Documents.Tests
                     nameof(ReflectableModel.ComplexICollection)
                 };
 
-                IEnumerable<(SearchFieldDataType dataType, string)> allSubFieldTestData =
+                IEnumerable<(SearchFieldDataType DataType, string)> allSubFieldTestData =
                     from topLevelFieldName in complexFields
                     from typeAndField in primitiveSubFieldTestData
-                    select (typeAndField.dataType, topLevelFieldName + "/" + typeAndField.fieldName);
+                    select (typeAndField.DataType, topLevelFieldName + "/" + typeAndField.FieldName);
 
                 (SearchFieldDataType, string)[] primitiveFieldTestData = new[]
                 {
@@ -470,12 +470,12 @@ namespace Azure.Search.Documents.Tests
             }
         }
 
-        private static IEnumerable<(Type, SearchFieldDataType, string)> CombineTestData(
+        private static IEnumerable<(Type ModelType, SearchFieldDataType DataType, string FieldName)> CombineTestData(
             IEnumerable<Type> modelTypes,
-            IEnumerable<(SearchFieldDataType dataType, string fieldName)> testData) =>
+            IEnumerable<(SearchFieldDataType DataType, string FieldName)> testData) =>
             from type in modelTypes
             from tuple in testData
-            select (type, tuple.dataType, tuple.fieldName);
+            select (type, tuple.DataType, tuple.FieldName);
 
         private static IList<SearchField> BuildForType(Type modelType) => new FieldBuilder().Build(modelType);
 
