@@ -74,8 +74,11 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// settings</param>
         /// <param name="purviewConfiguration">Purview Configuration</param>
         /// <param name="adlaResourceId">The ADLA resource ID.</param>
+        /// <param name="publicNetworkAccess">Enable or Disable pubic network
+        /// access to workspace. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
         /// <param name="identity">Identity of the workspace</param>
-        public Workspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeStorageAccountDetails defaultDataLakeStorage = default(DataLakeStorageAccountDetails), string sqlAdministratorLoginPassword = default(string), string managedResourceGroupName = default(string), string provisioningState = default(string), string sqlAdministratorLogin = default(string), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IDictionary<string, string> connectivityEndpoints = default(IDictionary<string, string>), string managedVirtualNetwork = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), EncryptionDetails encryption = default(EncryptionDetails), System.Guid? workspaceUID = default(System.Guid?), IDictionary<string, object> extraProperties = default(IDictionary<string, object>), ManagedVirtualNetworkSettings managedVirtualNetworkSettings = default(ManagedVirtualNetworkSettings), WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default(WorkspaceRepositoryConfiguration), PurviewConfiguration purviewConfiguration = default(PurviewConfiguration), string adlaResourceId = default(string), ManagedIdentity identity = default(ManagedIdentity))
+        public Workspace(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeStorageAccountDetails defaultDataLakeStorage = default(DataLakeStorageAccountDetails), string sqlAdministratorLoginPassword = default(string), string managedResourceGroupName = default(string), string provisioningState = default(string), string sqlAdministratorLogin = default(string), VirtualNetworkProfile virtualNetworkProfile = default(VirtualNetworkProfile), IDictionary<string, string> connectivityEndpoints = default(IDictionary<string, string>), string managedVirtualNetwork = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), EncryptionDetails encryption = default(EncryptionDetails), System.Guid? workspaceUID = default(System.Guid?), IDictionary<string, object> extraProperties = default(IDictionary<string, object>), ManagedVirtualNetworkSettings managedVirtualNetworkSettings = default(ManagedVirtualNetworkSettings), WorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = default(WorkspaceRepositoryConfiguration), PurviewConfiguration purviewConfiguration = default(PurviewConfiguration), string adlaResourceId = default(string), string publicNetworkAccess = default(string), ManagedIdentity identity = default(ManagedIdentity))
             : base(location, id, name, type, tags)
         {
             DefaultDataLakeStorage = defaultDataLakeStorage;
@@ -94,6 +97,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
             WorkspaceRepositoryConfiguration = workspaceRepositoryConfiguration;
             PurviewConfiguration = purviewConfiguration;
             AdlaResourceId = adlaResourceId;
+            PublicNetworkAccess = publicNetworkAccess;
             Identity = identity;
             CustomInit();
         }
@@ -205,6 +209,13 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.adlaResourceId")]
         public string AdlaResourceId { get; private set; }
+
+        /// <summary>
+        /// Gets or sets enable or Disable pubic network access to workspace.
+        /// Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets or sets identity of the workspace
