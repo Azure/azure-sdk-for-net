@@ -200,45 +200,40 @@ try {
         # Make sure the user is logged in to create a service principal.
         $context = Get-AzContext;
         if (!$context) {
-
-            # Use the given subscription ID if provided.
-            $subscriptionArgs = if ($SubscriptionId) {
-                @{Subscription = $SubscriptionId}
-            } else {
-                @{}
-            }
-
-            # TODO: Should we default DeleteAfterHours for the Playground sub to 48hrs or even a week? Could really help with costs.
-            # Or should we prompt - default and ask to opt out of DeleteAfterHours?
-
-            Log 'Logging you in...'
-            $context = (Connect-AzAccount @subscriptionArgs).Context
-
-            # Warn that a "random" subscription was selected.
-            if (!$SubscriptionId) {
-                $subscriptionName = $context.Subscription.Id
-
-                # Use cache of well-known team subs without having to be authenticated.
-                $wellKnownSubscriptions = @{
-                    'faa080af-c1d8-40ad-9cce-e1a450ca5b57' = 'Azure SDK Developer Playground'
-                    'a18897a6-7e44-457d-9260-f2854c0aca42' = 'Azure SDK Engineering System'
-                    '2cd617ea-1866-46b1-90e3-fffb087ebf9b' = 'Azure SDK Test Resources'
-                }
-
-                if ($wellKnownSubscriptions.ContainsKey($subscriptionName)) {
-                    $subscriptionName = '{0} ({1})' -f $wellKnownSubscriptions[$subscriptionName], $subscriptionName
-                }
-
-                Write-Warning "No subscription was specified, so $subscriptionName was automatically selected."
-            }
+            Log 'User not logged in. Logging in now...'
+            $context = (Connect-AzAccount).Context
         }
 
-        # Make sure subscription and tenant IDs are set.
-        if (!$SubscriptionId) {
+        # If no subscription was specified, try to select the Azure SDK Developer Playground subscription.
+        # Ignore errors to leave the automatically selected subscription.
+        if ($SubscriptionId) {
+            Log "Selecting subscription '$SubscriptionId'"
+            Select-AzSubscription -Subscription $SubscriptionId
+        } else {
+            Log "Attempting to select subscription 'Azure SDK Developer Playground (faa080af-c1d8-40ad-9cce-e1a450ca5b57)'"
+            Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore
+
             $SubscriptionId = $context.Subscription.Id
             $PSBoundParameters['SubscriptionId'] = $SubscriptionId
         }
 
+        # Use cache of well-known team subs without having to be authenticated.
+        $wellKnownSubscriptions = @{
+            'faa080af-c1d8-40ad-9cce-e1a450ca5b57' = 'Azure SDK Developer Playground'
+            'a18897a6-7e44-457d-9260-f2854c0aca42' = 'Azure SDK Engineering System'
+            '2cd617ea-1866-46b1-90e3-fffb087ebf9b' = 'Azure SDK Test Resources'
+        }
+        
+        # Print which subscription is currently selected.
+        $subscriptionName = $context.Subscription.Id
+        if ($wellKnownSubscriptions.ContainsKey($subscriptionName)) {
+            $subscriptionName = '{0} ({1})' -f $wellKnownSubscriptions[$subscriptionName], $subscriptionName
+        }
+
+        Log "Selected subscription '$subscriptionName'"
+
+        # Make sure the TenantId is also updated from the current context.
+        # PSBoundParameters is not updated to avoid confusing parameter sets.
         if (!$TenantId) {
             $TenantId = $context.Subscription.TenantId
         }
