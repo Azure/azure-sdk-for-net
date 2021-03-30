@@ -14,7 +14,7 @@
     <PackageTags>management;virtual machine;compute;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public release of the Azure Compute SDK. Included with this release are
+        This is a public release of the Azure Compute SDK. Included with this release are:
         1. Added SecurityProfile, purchasePlan properties for managed Disks.
         2. Added burstingEnabled flag in managed Disks for paid bursting functionality.
         3. Added Standard SSD ZRS storage account type support for managed Disks.
