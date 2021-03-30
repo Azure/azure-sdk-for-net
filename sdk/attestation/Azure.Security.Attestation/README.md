@@ -8,7 +8,7 @@ Azure Attestation enables cutting-edge security paradigms such as Azure Confiden
 
 Azure Attestation receives evidence from compute entities, turns them into a set of claims, validates them against configurable policies, and produces cryptographic proofs for claims-based applications (for example, relying parties and auditing authorities).
 
-> NOTE: This is a preliminary SDK for the Microsoft Azure Attestation service. It provides all the essential functionality to access the Azure Attestation service, it should be considered 'as-is" and is subject to changes in the future.
+> NOTE: This is a preview SDK for the Microsoft Azure Attestation service. It provides all the essential functionality to access the Azure Attestation service, it should be considered 'as-is" and is subject to changes in the future which may break compatibility with previous versions.
 
   [Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/attestation) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Security.Attestation/1.0.0-beta.1/) | [API reference documentation](https://docs.microsoft.com/python/api/overview/azure/attestation) | [Product documentation](https://docs.microsoft.com/en-us/azure/attestation/)
 
