@@ -318,11 +318,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             var (link, receiveMessagesCompletionSource) =
                                 ((ReceivingAmqpLink, TaskCompletionSource<IEnumerable<AmqpMessage>>))asyncResult
                                     .AsyncState;
-                            bool received =
-                                link.EndReceiveMessages(asyncResult, out IEnumerable<AmqpMessage> amqpMessages);
-                            receiveMessagesCompletionSource.TrySetResult(received
-                                ? amqpMessages
-                                : Enumerable.Empty<AmqpMessage>());
+                            try
+                            {
+                                bool received =
+                                    link.EndReceiveMessages(asyncResult, out IEnumerable<AmqpMessage> amqpMessages);
+                                receiveMessagesCompletionSource.TrySetResult(received
+                                    ? amqpMessages
+                                    : Enumerable.Empty<AmqpMessage>());
+                            }
+                            catch (Exception e)
+                            {
+                                receiveMessagesCompletionSource.TrySetException(e);
+                            }
                         },
                         (link, maxMessages, maxWaitTime, timeout, receiveMessagesCompletionSource),
                         default
