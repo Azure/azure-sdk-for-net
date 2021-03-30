@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task TestClientContextPolicy()
         {
-            AzureResourceManagerClientOptions options1 = new AzureResourceManagerClientOptions();
+            ArmClientOptions options1 = new ArmClientOptions();
             var dummyPolicy1 = new dummyPolicy();
             var dummyPolicy2 = new dummyPolicy2();
             options1.AddPolicy(dummyPolicy1, HttpPipelinePosition.PerCall);
             var client1 = GetArmClient(options1);
             
             Console.WriteLine("-----Client 1-----");
-            await foreach (var sub in client1.GetSubscriptionContainer().ListAsync())
+            await foreach (var sub in client1.GetSubscriptions().ListAsync())
             {
                 Console.WriteLine($"Check 1: Found {sub.Data.DisplayName}");
             }
             Assert.AreEqual(2, dummyPolicy1.numMsgGot);
 
             options1.AddPolicy(dummyPolicy2, HttpPipelinePosition.PerCall);
-            await foreach (var sub in client1.GetSubscriptionContainer().ListAsync())
+            await foreach (var sub in client1.GetSubscriptions().ListAsync())
             {
                 Console.WriteLine($"Check 2: Found {sub.Data.DisplayName}");
             }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// client options
         /// </summary>
-        public AzureResourceManagerClientOptions ClientOptions { get; set; }
+        public ArmClientOptions ClientOptions { get; set; }
 
         /// <summary>
         /// credential
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="clientOptions"></param>
         /// <param name="credential"></param>
         /// <param name="uri"></param>
-        internal ClientContext(AzureResourceManagerClientOptions clientOptions, TokenCredential credential, Uri uri)
+        internal ClientContext(ArmClientOptions clientOptions, TokenCredential credential, Uri uri)
         {
             ClientOptions = clientOptions;
             Credential = credential;

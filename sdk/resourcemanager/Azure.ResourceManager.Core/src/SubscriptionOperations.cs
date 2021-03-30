@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public virtual T ListResources<T>(Func<Uri, TokenCredential, AzureResourceManagerClientOptions, T> func)
+        public virtual T ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, T> func)
         {
             return func(BaseUri, Credential, ClientOptions);
         }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="func"></param>
         /// <returns></returns>
-        public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, AzureResourceManagerClientOptions, AsyncPageable<T>> func)
+        public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, ArmClientOptions, AsyncPageable<T>> func)
         {
             return func(BaseUri, Credential, ClientOptions);
         }

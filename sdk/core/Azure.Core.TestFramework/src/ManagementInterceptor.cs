@@ -29,7 +29,7 @@ namespace Azure.Core.TestFramework
             }
 
             var type = result.GetType();
-            if (type.Name.StartsWith("Task")) //have to add case for container proxy
+            if (type.Name.StartsWith("Task"))
             {
                 var taskResultType = type.GetGenericArguments()[0];
                 if (taskResultType.Name.StartsWith("ArmResponse") || taskResultType.Name.StartsWith("ArmOperation"))
@@ -59,7 +59,6 @@ namespace Azure.Core.TestFramework
                 invocation.ReturnValue = _testBase.InstrumentClient(type, result, new IInterceptor[] { new ManagementInterceptor(_testBase) });
             }
             else if (type.BaseType.Name.StartsWith("AsyncPageable"))
-            //else if (type.BaseType.Name.StartsWith("AsyncPageable") || type.BaseType.Name.StartsWith("Value"))
             {
                 invocation.ReturnValue = s_proxyGenerator.CreateClassProxyWithTarget(type, result, new IInterceptor[] { new ManagementInterceptor(_testBase) });
             }

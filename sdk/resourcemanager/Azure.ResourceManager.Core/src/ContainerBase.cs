@@ -56,15 +56,19 @@ namespace Azure.ResourceManager.Core
         /// <returns> Whether or not the resource existed. </returns>
         public virtual TOperations TryGet(string resourceName)
         {
+            using var scope = Diagnostics.CreateScope("ContainerBase.TryGet");
+            scope.Start();
+
             var op = GetOperation(resourceName);
 
             try
             {
                 return op.Get().Value;
             }
-            catch (RequestFailedException e) when (e.Status == 404)
+            catch (Exception e)
             {
-                return null;
+                scope.Failed(e);
+                throw;
             }
         }
 
@@ -77,15 +81,19 @@ namespace Azure.ResourceManager.Core
         /// <returns> Whether or not the resource existed. </returns>
         public async virtual Task<TOperations> TryGetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
+            using var scope = Diagnostics.CreateScope("ContainerBase.TryGetAsync");
+            scope.Start();
+
             var op = GetOperation(resourceName);
 
             try
             {
                 return (await op.GetAsync(cancellationToken).ConfigureAwait(false)).Value;
             }
-            catch
+            catch (Exception e)
             {
-                return null;
+                scope.Failed(e);
+                throw;
             }
         }
 
