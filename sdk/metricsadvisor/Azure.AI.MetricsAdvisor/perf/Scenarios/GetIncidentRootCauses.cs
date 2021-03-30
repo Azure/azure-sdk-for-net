@@ -4,12 +4,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Test.Perf;
 
 namespace Azure.AI.MetricsAdvisor.Perf
 {
-    public sealed class GetIncidentRootCauses : MetricsAdvisorTest<MetricsAdvisorPerfOptions>
+    public sealed class GetIncidentRootCauses : MetricsAdvisorTest<CountOptions>
     {
-        public GetIncidentRootCauses(MetricsAdvisorPerfOptions options) : base(options)
+        public GetIncidentRootCauses(CountOptions options) : base(options)
         {
             ValidateOptions();
         }

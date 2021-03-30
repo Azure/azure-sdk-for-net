@@ -4,12 +4,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Test.Perf;
 
 namespace Azure.AI.MetricsAdvisor.Perf
 {
-    public sealed class GetAnomaliesForAlert : MetricsAdvisorTest<MetricsAdvisorPerfOptions>
+    public sealed class GetAnomaliesForAlert : MetricsAdvisorTest<CountOptions>
     {
-        public GetAnomaliesForAlert(MetricsAdvisorPerfOptions options) : base(options)
+        public GetAnomaliesForAlert(CountOptions options) : base(options)
         {
             ValidateOptions();
         }
