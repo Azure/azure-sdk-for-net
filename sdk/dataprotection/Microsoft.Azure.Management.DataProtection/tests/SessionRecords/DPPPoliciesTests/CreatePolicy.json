@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourcegroups/DefaultPolicyTestVaultRg?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTNkMmQzNDEtNGRkYi00YzVkLTkxMjEtNjliN2U3MTk0ODVlL3Jlc291cmNlZ3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZz9hcGktdmVyc2lvbj0yMDE3LTA1LTEw",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"southeastasia\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "8ec806f9-4440-44a5-a0f2-f5f3f194e28f"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "35"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "e1e7d851-587b-4189-830e-695f1c43b8f9"
+        ],
+        "x-ms-correlation-request-id": [
+          "e1e7d851-587b-4189-830e-695f1c43b8f9"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135050Z:e1e7d851-587b-4189-830e-695f1c43b8f9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:50:50 GMT"
+        ],
+        "Content-Length": [
+          "208"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/DefaultPolicyTestVaultRg\",\r\n  \"name\": \"DefaultPolicyTestVaultRg\",\r\n  \"location\": \"southeastasia\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "e3d2d341-4ddb-4c5d-9121-69b7e719485e"
+  }
+}

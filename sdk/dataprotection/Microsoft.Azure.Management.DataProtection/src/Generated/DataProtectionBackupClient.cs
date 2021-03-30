@@ -26,6 +26,11 @@ namespace Microsoft.Azure.Management.DataProtection
         public System.Uri BaseUri { get; set; }
 
         /// <summary>
+        /// Credentials needed for the client to connect to Azure.
+        /// </summary>
+        public ServiceClientCredentials Credentials { get; private set; }
+
+        /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
         public JsonSerializerSettings SerializationSettings { get; private set; }
@@ -127,6 +132,39 @@ namespace Microsoft.Azure.Management.DataProtection
         public DataProtectionBackupClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the RecoveryServicesBackupClient class.
+        /// </summary>
+        /// <param name='baseUri'>
+        /// Optional. The base URI of the service.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='handlers'>
+        /// Optional. The delegating handlers to add to the http client pipeline.
+        /// </param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public DataProtectionBackupClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (baseUri == null)
+            {
+                throw new System.ArgumentNullException("baseUri");
+            }
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            BaseUri = baseUri;
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
         }
 
         /// <summary>
