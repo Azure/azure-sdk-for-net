@@ -21,7 +21,7 @@ namespace Proto.Client
 
             Console.WriteLine("--------Start create Assignment--------");
             var input = new RoleAssignmentCreateParameters($"/subscriptions/{Context.SubscriptionId}/resourceGroups/{Context.RgName}/providers/Microsoft.Authorization/roleDefinitions/{Context.RoleId}", Context.PrincipalId);
-            var assign = resourceGroup.GetRoleAssignmentContainer().Create(Guid.NewGuid().ToString(), input).Value;
+            var assign = resourceGroup.GetRoleAssignments().Create(Guid.NewGuid().ToString(), input).Value;
             Console.WriteLine("--------Done create Assignment--------");
 
             assign = assign.Get().Value;
@@ -37,7 +37,7 @@ namespace Proto.Client
 
             //create subnet
             Console.WriteLine("--------Start create Subnet--------");
-            var subnet = vnet.GetSubnetContainer().Construct("10.0.0.0/24").CreateOrUpdate(Context.SubnetName).Value;
+            var subnet = vnet.GetSubnets().Construct("10.0.0.0/24").CreateOrUpdate(Context.SubnetName).Value;
 
             //create network security group
             Console.WriteLine("--------Start create NetworkSecurityGroup--------");
@@ -57,7 +57,7 @@ namespace Proto.Client
 
             Console.WriteLine("--------Start create Assignment--------");
             var input2 = new RoleAssignmentCreateParameters($"{vm.Id}/providers/Microsoft.Authorization/roleDefinitions/{Context.RoleId}", Context.PrincipalId);
-            var assign2 = vm.GetRoleAssignmentContainer().Create(Guid.NewGuid().ToString(), input2).Value;
+            var assign2 = vm.GetRoleAssignments().Create(Guid.NewGuid().ToString(), input2).Value;
             Console.WriteLine("--------Done create Assignment--------");
 
             assign2 = assign2.Get().Value;
