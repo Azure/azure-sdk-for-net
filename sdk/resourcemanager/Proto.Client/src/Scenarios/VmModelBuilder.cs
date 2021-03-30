@@ -39,7 +39,7 @@ namespace Proto.Client
             //create subnet
             Console.WriteLine("--------Start create Subnet--------");
             var nsg = resourceGroup.GetNetworkSecurityGroups().Construct(80).CreateOrUpdate(Context.NsgName).Value;
-            var subnet = vnet.GetSubnetContainer().Construct("10.0.0.0/24").CreateOrUpdate(Context.SubnetName).Value;
+            var subnet = vnet.GetSubnets().Construct("10.0.0.0/24").CreateOrUpdate(Context.SubnetName).Value;
 
             // Create Network Interface
             Console.WriteLine("--------Start create Network Interface--------");

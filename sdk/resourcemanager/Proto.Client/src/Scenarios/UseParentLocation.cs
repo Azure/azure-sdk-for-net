@@ -33,7 +33,7 @@ namespace Proto.Client
 
             //create subnet
             Console.WriteLine("--------Start create Subnet async--------");
-            var subnet = vnet.GetSubnetContainer().Construct("10.0.0.0/24").CreateOrUpdateAsync(Context.SubnetName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
+            var subnet = vnet.GetSubnets().Construct("10.0.0.0/24").CreateOrUpdateAsync(Context.SubnetName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
 
             //create network security group
             Console.WriteLine("--------Start create NetworkSecurityGroup--------");
