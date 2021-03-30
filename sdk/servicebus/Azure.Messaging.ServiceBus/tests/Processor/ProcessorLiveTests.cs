@@ -522,7 +522,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 enableSession: false))
             {
                 // very long timeout
-                await using var client = CreateClient(tryTimeout: 60);
+                await using var client = CreateClient(tryTimeout: 120);
                 var sender = client.CreateSender(scope.QueueName);
                 await sender.SendMessageAsync(GetMessage());
                 await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
@@ -541,7 +541,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 await processor.StartProcessingAsync();
                 await tcs.Task;
-                await Task.Delay(2000); // better way to do this?
+                await Task.Delay(10000); // wait long enough to be hanging in the next receive on the empty queue
 
                 using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
 
