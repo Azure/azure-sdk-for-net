@@ -53,14 +53,14 @@
                 var listResult = this.automationClient.SoftwareUpdateConfigurations.List(ResourceGroupName, AutomationAccountName);
                 Assert.NotNull(listResult);
                 Assert.NotNull(listResult.Value);
-                Assert.Equal(2, listResult.Value.Count);
+                Assert.Equal(3, listResult.Value.Count);
 
 
                 // List for specific VM
                 listResult = this.automationClient.SoftwareUpdateConfigurations.ListByAzureVirtualMachine(ResourceGroupName, AutomationAccountName, VM_01);
                 Assert.NotNull(listResult);
                 Assert.NotNull(listResult.Value);
-                Assert.Equal(2, listResult.Value.Count);
+                Assert.Equal(3, listResult.Value.Count);
                 var suc = listResult.Value.Where(v => v.Name.Equals(updateConfigurationName_01, StringComparison.OrdinalIgnoreCase)).Single();
                 Assert.Equal(updateConfigurationName_01, suc.Name);
 
