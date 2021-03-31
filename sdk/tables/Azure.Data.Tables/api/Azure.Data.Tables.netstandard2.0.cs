@@ -70,6 +70,7 @@ namespace Azure.Data.Tables
         public void Clear() { }
         public bool ContainsKey(string key) { throw null; }
         public byte[] GetBinary(string key) { throw null; }
+        public System.BinaryData GetBinaryData(string key) { throw null; }
         public bool? GetBoolean(string key) { throw null; }
         public System.DateTime? GetDateTime(string key) { throw null; }
         public System.DateTimeOffset? GetDateTimeOffset(string key) { throw null; }

@@ -39,6 +39,11 @@ namespace Azure.Data.Tables
                     case byte[] _:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
                         break;
+                    case BinaryData _:
+                        annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
+                        // Get the bytes from the BinaryData so that it serializes properly.
+                        annotatedDictionary[prop.Name] = ((BinaryData)annotatedDictionary[prop.Name]).ToArray();
+                        break;
                     case long _:
                         annotatedDictionary[prop.Name.ToOdataTypeString()] = TableConstants.Odata.EdmInt64;
                         // Int64 / long should be serialized as string.

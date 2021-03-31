@@ -38,6 +38,7 @@ namespace Azure.Data.Tables.Tests
         private static readonly Guid s_someGuid = new Guid("66cf3753-1cc9-44c4-b857-4546f744901b");
         private static readonly string s_someGuidString = "66cf3753-1cc9-44c4-b857-4546f744901b";
         private static readonly byte[] s_someBinary = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
+        private static readonly BinaryData s_someBinaryData = new BinaryData(new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 });
         private static readonly Expression<Func<ComplexEntity, bool>> s_ne = x => x.PartitionKey == Partition && x.RowKey != Row;
         private static readonly Expression<Func<TableEntity, bool>> s_neDE = x => x.PartitionKey == Partition && x.RowKey != Row;
         private static readonly Expression<Func<ComplexEntity, bool>> s_gt = x => x.PartitionKey == Partition && x.RowKey.CompareTo(Row) > 0;
@@ -68,8 +69,8 @@ namespace Azure.Data.Tables.Tests
         private static readonly Expression<Func<TableEntity, bool>> s_boolTrueExpDE = ent => ent.GetBoolean("Bool") == SomeTrueBool;
         private static readonly Expression<Func<ComplexEntity, bool>> s_boolFalseExp = ent => ent.Bool == SomeFalseBool;
         private static readonly Expression<Func<TableEntity, bool>> s_boolFalseExpDE = ent => ent.GetBoolean("Bool") == SomeFalseBool;
-        private static readonly Expression<Func<ComplexEntity, bool>> s_binaryExp = ent => ent.Binary == s_someBinary;
-        private static readonly Expression<Func<TableEntity, bool>> s_binaryExpDE = ent => ent.GetBinary("Binary") == s_someBinary;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_binaryExp = ent => ent.Binary == s_someBinaryData;
+        private static readonly Expression<Func<TableEntity, bool>> s_binaryExpDE = ent => ent.GetBinaryData("Binary") == s_someBinaryData;
         private static readonly Expression<Func<ComplexEntity, bool>> s_complexExp = ent => ent.String.CompareTo(SomeString) >= 0 && ent.Int64 >= SomeInt64 && ent.Int32 >= SomeInt && ent.DateTime >= s_someDateTime;
         private static readonly Expression<Func<TableEntity, bool>> s_complexExpDE = ent => ent.GetString("String").CompareTo(SomeString) >= 0 && ent.GetInt64("Int64") >= SomeInt64 && ent.GetInt32("Int32") >= SomeInt && ent.GetDateTime("DateTime") >= s_someDateTime;
 
@@ -91,6 +92,7 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"Bool eq true", s_boolTrueExp },
             new object[] { $"Bool eq false", s_boolFalseExp },
             new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("D2")))}'", s_binaryExp },
+            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("D2")))}'", s_binaryExp },
             new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}')", s_complexExp },
         };
 
@@ -112,6 +114,7 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"Bool eq true", s_boolTrueExpDE },
             new object[] { $"Bool eq false", s_boolFalseExpDE },
             new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("D2")))}'", s_binaryExpDE },
+            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("D2")))}'", s_binaryExpDE },
             new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}')", s_complexExpDE },
         };
 
