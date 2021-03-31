@@ -73,10 +73,7 @@ namespace Azure.Core.Pipeline
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+            catch { }
         }
 
         private static bool TryParseBatchIndex(string message, out int index)
