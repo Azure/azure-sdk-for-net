@@ -814,24 +814,14 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns>The set of bytes extracted from the <paramref name="data" />.</returns>
         ///
-        private static byte[] GetDataBytes(Data data)
+        private static ReadOnlyMemory<byte> GetDataBytes(Data data)
         {
-            switch (data.Value)
+            return data.Value switch
             {
-                case byte[] byteArray:
-                    return byteArray;
-
-                case ArraySegment<byte> segment:
-                {
-                    var byteArray = new byte[segment.Count];
-                    Array.ConstrainedCopy(segment.Array, segment.Offset, byteArray, 0, segment.Count);
-
-                    return byteArray;
-                }
-
-                default:
-                    return Array.Empty<byte>();
-            }
+                byte[] byteArray => byteArray,
+                ArraySegment<byte> segment => segment,
+                _ => ReadOnlyMemory<byte>.Empty
+            };
         }
 
         /// <summary>
