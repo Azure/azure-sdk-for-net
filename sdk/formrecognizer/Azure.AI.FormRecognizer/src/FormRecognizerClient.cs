@@ -847,6 +847,82 @@ namespace Azure.AI.FormRecognizer
             }
         }
 
+        /// <summary>
+        /// Recognizes values from one or more ID documents.
+        /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an ID document.</para>
+        /// </summary>
+        /// <param name="idDocumentUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeIdDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeIdDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdDocumentsOperation.Value"/> upon successful
+        /// completion will contain the extracted ID document.</returns>
+        public virtual async Task<RecognizeIdDocumentsOperation> StartRecognizeIdDocumentsFromUriAsync(Uri idDocumentUri, RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(idDocumentUri, nameof(idDocumentUri));
+
+            recognizeIdDocumentsOptions ??= new RecognizeIdDocumentsOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeIdDocumentsFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath sourcePath = new SourcePath() { Source = idDocumentUri.AbsoluteUri };
+                Response response = await ServiceClient.AnalyzeIdDocumentAsyncAsync(
+                    recognizeIdDocumentsOptions.IncludeFieldElements,
+                    recognizeIdDocumentsOptions.Pages.Count == 0 ? null : recognizeIdDocumentsOptions.Pages,
+                    sourcePath,
+                    cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeIdDocumentsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Recognizes values from one or more ID documents.
+        /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an ID document.</para>
+        /// </summary>
+        /// <param name="idDocumentUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeIdDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeIdDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdDocumentsOperation.Value"/> upon successful
+        /// completion will contain the extracted ID document.</returns>
+        public virtual RecognizeIdDocumentsOperation StartRecognizeIdDocumentsFromUri(Uri idDocumentUri, RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(idDocumentUri, nameof(idDocumentUri));
+
+            recognizeIdDocumentsOptions ??= new RecognizeIdDocumentsOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeIdDocumentsFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath sourcePath = new SourcePath() { Source = idDocumentUri.AbsoluteUri };
+                Response response = ServiceClient.AnalyzeIdDocumentAsync(
+                    recognizeIdDocumentsOptions.IncludeFieldElements,
+                    recognizeIdDocumentsOptions.Pages.Count == 0 ? null : recognizeIdDocumentsOptions.Pages,
+                    sourcePath,
+                    cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeIdDocumentsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Custom Forms
