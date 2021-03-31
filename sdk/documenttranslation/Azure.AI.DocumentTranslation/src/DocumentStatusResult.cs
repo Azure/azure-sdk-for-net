@@ -18,7 +18,7 @@ namespace Azure.AI.DocumentTranslation
 
         /// <summary> URI of the source document. </summary>
         [CodeGenMember("SourcePath")]
-        internal Uri SourceDocumentUri { get; }
+        public Uri SourceDocumentUri { get; }
 
         /// <summary> To language. </summary>
         [CodeGenMember("To")]
