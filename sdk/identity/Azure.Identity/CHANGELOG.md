@@ -12,6 +12,10 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 - Added `AzurePowerShellCredential` to `DefaultAzureCredential` (A community contribution, courtesy of _[olandese](https://github.com/olandese))_
 
+### Breaking Changes
+
+- `TokenCache` class is moved removed from the public API surface and has been replaced by `TokenCachePersistenceOptions` for configuration of disk based persistence of the token cache.
+
 ## 1.4.0-beta.4 (2021-03-09)
 
 ### Fixes and Improvements
@@ -38,6 +42,14 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 - Fixed issue in `HttpExtensions` causing the omission of content headers on requests ([#17448](https://github.com/Azure/azure-sdk-for-net/issues/17448))
 - Made `EnvironmentCredential` to account for both null and empty string when checking for the presense of the environment variables ([#18031](https://github.com/Azure/azure-sdk-for-net/issues/18031))
+
+## 1.4.0-beta.1 (2020-10-15)
+
+### New Features
+
+- Redesigned Application Authentication APIs
+  - Adds `TokenCache` and `TokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
+  - Adds `TokenCache` property to options for credentials supporting token cache configuration.
 
 ## 1.3.0 (2020-11-12)
 
@@ -68,14 +80,6 @@ Thank you to our developer community members who helped to make Azure Identity b
   - Removed properties `AuthenticationRecord` and `DisableAutomaticAuthentication` from `DeviceCodeCredentialOptions` and `InteractiveBrowserCredentialOptions`
   - Removed properties `AllowUnencryptedCache`and `AuthenticationRecord` from `SharedTokenCacheCredentialOptions`
   - Removed methods `Authenticate` and `AuthenticateAsync` from `DeviceCodeCredential`, `InteractiveBrowserCredential` and `UsernamePasswordCredential`
-
-## 1.4.0-beta.1 (2020-10-15)
-
-### New Features
-
-- Redesigned Application Authentication APIs
-  - Adds `TokenCache` and `TokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
-  - Adds `TokenCache` property to options for credentials supporting token cache configuration.
 
 ## 1.3.0-beta.2 (2020-10-07)
 
