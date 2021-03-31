@@ -79,7 +79,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// If version level worm is enabled on this container.
         /// </summary>
-        public bool IsVersionLevelWormEnabled { get; internal set; }
+        public bool HasVersionLevelWorm { get; internal set; }
 
         /// <summary>
         /// Creates a new BlobContainerProperties instance.

@@ -2141,7 +2141,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.DestinationConditions,
                 options?.RehydratePriority,
                 options?.ShouldSealDestination,
-                options?.ImmutabilityPolicy,
+                options?.DestinationImmutabilityPolicy,
                 options?.LegalHold,
                 async: false,
                 cancellationToken)
@@ -2229,7 +2229,7 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationConditions,
                 rehydratePriority,
                 sealBlob: default,
-                immutabilityPolicy: default,
+                destinationImmutabilityPolicy: default,
                 legalHold: default,
                 async: false,
                 cancellationToken)
@@ -2296,7 +2296,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.DestinationConditions,
                 options?.RehydratePriority,
                 options?.ShouldSealDestination,
-                options?.ImmutabilityPolicy,
+                options?.DestinationImmutabilityPolicy,
                 options?.LegalHold,
                 async: true,
                 cancellationToken)
@@ -2384,7 +2384,7 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationConditions,
                 rehydratePriority,
                 sealBlob: default,
-                immutabilityPolicy: default,
+                destinationImmutabilityPolicy: default,
                 legalHold: default,
                 async: true,
                 cancellationToken)
@@ -2448,7 +2448,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If the destination blob should be sealed.
         /// Only applicable for Append Blobs.
         /// </param>
-        /// <param name="immutabilityPolicy">
+        /// <param name="destinationImmutabilityPolicy">
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
         /// has version level worm enabled.
@@ -2482,7 +2482,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions destinationConditions,
             RehydratePriority? rehydratePriority,
             bool? sealBlob,
-            BlobImmutabilityPolicy immutabilityPolicy,
+            BlobImmutabilityPolicy destinationImmutabilityPolicy,
             bool? legalHold,
             bool async,
             CancellationToken cancellationToken)
@@ -2524,8 +2524,8 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
                             sealBlob: sealBlob,
-                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
-                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2550,8 +2550,8 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             blobTagsString: tags?.ToTagsString(),
                             sealBlob: sealBlob,
-                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
-                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken);
                     }
@@ -2784,7 +2784,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: options?.AccessTier,
                 sourceConditions: options?.SourceConditions,
                 destinationConditions: options?.DestinationConditions,
-                immutabilityPolicy: options?.ImmutabilityPolicy,
+                destinationImmutabilityPolicy: options?.DestinationImmutabilityPolicy,
                 legalHold: options?.LegalHold,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -2836,7 +2836,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: options?.AccessTier,
                 sourceConditions: options?.SourceConditions,
                 destinationConditions: options?.DestinationConditions,
-                immutabilityPolicy: options?.ImmutabilityPolicy,
+                destinationImmutabilityPolicy: options?.DestinationImmutabilityPolicy,
                 legalHold: options?.LegalHold,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -2880,7 +2880,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// the copying of data to this blob.
         /// </param>
-        /// <param name="immutabilityPolicy">
+        /// <param name="destinationImmutabilityPolicy">
         /// Optional <see cref="BlobImmutabilityPolicy"/> to set on the blob.
         /// Note that is parameter is only applicable to a blob within a container that
         /// has version level worm enabled.
@@ -2912,7 +2912,7 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier,
             BlobRequestConditions sourceConditions,
             BlobRequestConditions destinationConditions,
-            BlobImmutabilityPolicy immutabilityPolicy,
+            BlobImmutabilityPolicy destinationImmutabilityPolicy,
             bool? legalHold,
             bool async,
             CancellationToken cancellationToken)
@@ -2952,8 +2952,8 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
-                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
-                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2975,8 +2975,8 @@ namespace Azure.Storage.Blobs.Specialized
                             ifTags: destinationConditions?.TagConditions,
                             leaseId: destinationConditions?.LeaseId,
                             blobTagsString: tags?.ToTagsString(),
-                            immutabilityPolicyExpiry: immutabilityPolicy?.ExpiriesOn,
-                            immutabilityPolicyMode: immutabilityPolicy?.PolicyMode,
+                            immutabilityPolicyExpiry: destinationImmutabilityPolicy?.ExpiriesOn,
+                            immutabilityPolicyMode: destinationImmutabilityPolicy?.PolicyMode,
                             legalHold: legalHold,
                             cancellationToken: cancellationToken);
                     }
@@ -5136,7 +5136,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual Response<BlobLegalHoldInfo> SetLegalHold(
+        public virtual Response<BlobLegalHoldResult> SetLegalHold(
             bool legalHoldEnabled,
             CancellationToken cancellationToken = default)
             => SetLegalHoldInternal(
@@ -5166,7 +5166,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobLegalHoldInfo>> SetLegalHoldAsync(
+        public virtual async Task<Response<BlobLegalHoldResult>> SetLegalHoldAsync(
             bool legalHoldEnabled,
             CancellationToken cancellationToken = default)
             => await SetLegalHoldInternal(
@@ -5199,7 +5199,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobLegalHoldInfo>> SetLegalHoldInternal(
+        private async Task<Response<BlobLegalHoldResult>> SetLegalHoldInternal(
             bool legalHoldEnabled,
             bool async,
             CancellationToken cancellationToken)

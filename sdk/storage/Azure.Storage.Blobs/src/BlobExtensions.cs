@@ -1268,7 +1268,7 @@ namespace Azure.Storage.Blobs
                 RemainingRetentionDays = containerPropertiesInternal.RemainingRetentionDays,
                 ETag = new ETag(containerPropertiesInternal.Etag),
                 Metadata = metadata.ToMetadata(),
-                IsVersionLevelWormEnabled = containerPropertiesInternal.IsVersionLevelWormEnabled.GetValueOrDefault(),
+                HasVersionLevelWorm = containerPropertiesInternal.IsVersionLevelWormEnabled.GetValueOrDefault(),
             };
         }
 
@@ -1294,7 +1294,7 @@ namespace Azure.Storage.Blobs
                 // Container Get Properties does not return RemainingRetentionDays.
                 ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
                 Metadata = response.Headers.Metadata.ToMetadata(),
-                IsVersionLevelWormEnabled = response.Headers.IsVersionLevelWormEnabled.GetValueOrDefault()
+                HasVersionLevelWorm = response.Headers.IsVersionLevelWormEnabled.GetValueOrDefault()
             };
         }
 
@@ -1350,16 +1350,16 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobLegalHoldInfo
-        internal static BlobLegalHoldInfo ToBlobLegalHoldInfo(this ResponseWithHeaders<BlobSetLegalHoldHeaders> response)
+        internal static BlobLegalHoldResult ToBlobLegalHoldInfo(this ResponseWithHeaders<BlobSetLegalHoldHeaders> response)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new BlobLegalHoldInfo
+            return new BlobLegalHoldResult
             {
-                LegalHoldEnabled = response.Headers.LegalHold.GetValueOrDefault()
+                HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
             };
         }
         #endregion

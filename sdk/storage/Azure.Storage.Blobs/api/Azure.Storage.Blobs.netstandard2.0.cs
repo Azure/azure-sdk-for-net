@@ -349,7 +349,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.ETag ETag { get { throw null; } }
         public bool? HasImmutabilityPolicy { get { throw null; } }
         public bool? HasLegalHold { get { throw null; } }
-        public bool IsVersionLevelWormEnabled { get { throw null; } }
+        public bool HasVersionLevelWorm { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public Azure.Storage.Blobs.Models.LeaseDurationType? LeaseDuration { get { throw null; } }
         public Azure.Storage.Blobs.Models.LeaseState? LeaseState { get { throw null; } }
@@ -387,7 +387,7 @@ namespace Azure.Storage.Blobs.Models
         public BlobCopyFromUriOptions() { }
         public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions DestinationConditions { get { throw null; } set { } }
-        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy ImmutabilityPolicy { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicy DestinationImmutabilityPolicy { get { throw null; } set { } }
         public bool LegalHold { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.RehydratePriority? RehydratePriority { get { throw null; } set { } }
@@ -736,10 +736,10 @@ namespace Azure.Storage.Blobs.Models
         public BlobLeaseRequestConditions() { }
         public string TagConditions { get { throw null; } set { } }
     }
-    public partial class BlobLegalHoldInfo
+    public partial class BlobLegalHoldResult
     {
-        public BlobLegalHoldInfo() { }
-        public bool LegalHoldEnabled { get { throw null; } }
+        public BlobLegalHoldResult() { }
+        public bool HasLegalHold { get { throw null; } }
     }
     public partial class BlobMetrics
     {
@@ -1422,8 +1422,8 @@ namespace Azure.Storage.Blobs.Specialized
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> SetHttpHeadersAsync(Azure.Storage.Blobs.Models.BlobHttpHeaders httpHeaders = null, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobImmutabilityPolicy> SetImmutabilityPolicy(Azure.Storage.Blobs.Models.BlobImmutabilityPolicy immutabilityPolicy, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobImmutabilityPolicy>> SetImmutabilityPolicyAsync(Azure.Storage.Blobs.Models.BlobImmutabilityPolicy immutabilityPolicy, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobLegalHoldInfo> SetLegalHold(bool legalHoldEnabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobLegalHoldInfo>> SetLegalHoldAsync(bool legalHoldEnabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobLegalHoldResult> SetLegalHold(bool legalHoldEnabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobLegalHoldResult>> SetLegalHoldAsync(bool legalHoldEnabled, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Blobs.Models.BlobInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Blobs.Models.BlobInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetTags(System.Collections.Generic.IDictionary<string, string> tags, Azure.Storage.Blobs.Models.BlobRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

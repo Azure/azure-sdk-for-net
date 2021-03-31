@@ -6,11 +6,11 @@ namespace Azure.Storage.Blobs.Models
     /// <summary>
     /// Infomation about a blob's legal hold.
     /// </summary>
-    public class BlobLegalHoldInfo
+    public class BlobLegalHoldResult
     {
         /// <summary>
         /// If a legal hold is enabled on the blob.
         /// </summary>
-        public bool LegalHoldEnabled { get; internal set; }
+        public bool HasLegalHold { get; internal set; }
     }
 }
