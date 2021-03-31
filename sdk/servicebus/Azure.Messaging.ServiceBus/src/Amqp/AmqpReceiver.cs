@@ -300,10 +300,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     new TaskCompletionSource<IEnumerable<AmqpMessage>>(TaskCreationOptions
                         .RunContinuationsAsynchronously);
 
-                using var registration = cancellationToken.Register(static state =>
+                using var registration = cancellationToken.Register(state =>
                 {
                     var tcs = (TaskCompletionSource<IEnumerable<AmqpMessage>>)state;
                     tcs.TrySetCanceled();
+                    if (!_isSessionReceiver)
+                    {
+                        // Closing the link will handle resolving the pending receive call so that
+                        // subsequent receives will not have to wait for the receive initiated here to complete.
+                        // Instead, subsequent receive calls will open a new link.
+                        // For sessions, we don't close the link as this would make the receiver unusable as we do not
+                        // support reconnecting a session link currently.
+                        link.SafeClose();
+                    }
                 }, receiveMessagesCompletionSource, useSynchronizationContext: false);
 
                 // in case BeginReceiveRemoteMessages throws exception will be materialized on the synchronous path
@@ -330,7 +339,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             {
                                 bool received =
                                     link.EndReceiveMessages(asyncResult, out IEnumerable<AmqpMessage> amqpMessages);
-                                receiveMessagesCompletionSource.TrySetResult(received
+                                receiveMessagesCompletionSource.SetResult(received
                                     ? amqpMessages
                                     : Enumerable.Empty<AmqpMessage>());
                             }
