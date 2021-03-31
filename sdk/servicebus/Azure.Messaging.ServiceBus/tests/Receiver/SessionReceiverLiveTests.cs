@@ -201,6 +201,49 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public async Task ReceiveMessagesWhenQueueEmpty()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, new ServiceBusClientOptions
+                {
+                    RetryOptions =
+                    {
+                        // very high TryTimeout
+                        TryTimeout = TimeSpan.FromSeconds(120)
+                    }
+                });
+
+                var messageCount = 2;
+                var sessionId = "sessionId1";
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
+                await sender.SendMessagesAsync(batch);
+
+                ServiceBusReceiver receiver = await client.AcceptNextSessionAsync(
+                    scope.QueueName,
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        PrefetchCount = 100
+                    });
+
+                foreach (var message in await receiver.ReceiveMessagesAsync(2))
+                {
+                    await receiver.CompleteMessageAsync(message);
+                }
+
+                using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+
+                var start = DateTime.UtcNow;
+                Assert.ThrowsAsync<TaskCanceledException>(async () => await receiver.ReceiveMessagesAsync(1, cancellationToken: cancellationTokenSource.Token));
+                var stop = DateTime.UtcNow;
+
+                Assert.That(stop - start,  Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(3)));
+            }
+        }
+
+        [Test]
         public async Task ReceiveMessagesInPeekLockMode()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))

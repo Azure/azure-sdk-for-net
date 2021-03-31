@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Optional<IList<int>> minutes = default;
             Optional<IList<int>> hours = default;
-            Optional<IList<DayOfWeek>> weekDays = default;
+            Optional<IList<DaysOfWeek>> weekDays = default;
             Optional<IList<int>> monthDays = default;
             Optional<IList<RecurrenceScheduleOccurrence>> monthlyOccurrences = default;
             IDictionary<string, object> additionalProperties = default;
@@ -125,10 +125,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<DaysOfWeek> array = new List<DaysOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDayOfWeek());
+                        array.Add(item.GetString().ToDaysOfWeek());
                     }
                     weekDays = array;
                     continue;

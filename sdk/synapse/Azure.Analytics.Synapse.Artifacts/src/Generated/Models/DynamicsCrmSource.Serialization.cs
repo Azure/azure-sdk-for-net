@@ -24,6 +24,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("query");
                 writer.WriteObjectValue(Query);
             }
+            if (Optional.IsCollectionDefined(AdditionalColumns))
+            {
+                writer.WritePropertyName("additionalColumns");
+                writer.WriteStartArray();
+                foreach (var item in AdditionalColumns)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
@@ -52,6 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static DynamicsCrmSource DeserializeDynamicsCrmSource(JsonElement element)
         {
             Optional<object> query = default;
+            Optional<IList<AdditionalColumns>> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -68,6 +79,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     query = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("additionalColumns"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<AdditionalColumns> array = new List<AdditionalColumns>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.AdditionalColumns.DeserializeAdditionalColumns(item));
+                    }
+                    additionalColumns = array;
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -108,7 +134,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsCrmSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value);
+            return new DynamicsCrmSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, Optional.ToList(additionalColumns));
         }
 
         internal partial class DynamicsCrmSourceConverter : JsonConverter<DynamicsCrmSource>

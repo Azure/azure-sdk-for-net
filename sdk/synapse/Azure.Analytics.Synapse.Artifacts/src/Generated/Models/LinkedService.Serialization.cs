@@ -76,6 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AzureDataLakeAnalytics": return AzureDataLakeAnalyticsLinkedService.DeserializeAzureDataLakeAnalyticsLinkedService(element);
                     case "AzureDataLakeStore": return AzureDataLakeStoreLinkedService.DeserializeAzureDataLakeStoreLinkedService(element);
                     case "AzureDatabricks": return AzureDatabricksLinkedService.DeserializeAzureDatabricksLinkedService(element);
+                    case "AzureDatabricksDeltaLake": return AzureDatabricksDeltaLakeLinkedService.DeserializeAzureDatabricksDeltaLakeLinkedService(element);
                     case "AzureFileStorage": return AzureFileStorageLinkedService.DeserializeAzureFileStorageLinkedService(element);
                     case "AzureFunction": return AzureFunctionLinkedService.DeserializeAzureFunctionLinkedService(element);
                     case "AzureKeyVault": return AzureKeyVaultLinkedService.DeserializeAzureKeyVaultLinkedService(element);
@@ -124,6 +125,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "Marketo": return MarketoLinkedService.DeserializeMarketoLinkedService(element);
                     case "MicrosoftAccess": return MicrosoftAccessLinkedService.DeserializeMicrosoftAccessLinkedService(element);
                     case "MongoDb": return MongoDbLinkedService.DeserializeMongoDbLinkedService(element);
+                    case "MongoDbAtlas": return MongoDbAtlasLinkedService.DeserializeMongoDbAtlasLinkedService(element);
                     case "MongoDbV2": return MongoDbV2LinkedService.DeserializeMongoDbV2LinkedService(element);
                     case "MySql": return MySqlLinkedService.DeserializeMySqlLinkedService(element);
                     case "Netezza": return NetezzaLinkedService.DeserializeNetezzaLinkedService(element);
@@ -150,7 +152,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapTable": return SapTableLinkedService.DeserializeSapTableLinkedService(element);
                     case "ServiceNow": return ServiceNowLinkedService.DeserializeServiceNowLinkedService(element);
                     case "Sftp": return SftpServerLinkedService.DeserializeSftpServerLinkedService(element);
+                    case "SharePointOnlineList": return SharePointOnlineListLinkedService.DeserializeSharePointOnlineListLinkedService(element);
                     case "Shopify": return ShopifyLinkedService.DeserializeShopifyLinkedService(element);
+                    case "Snowflake": return SnowflakeLinkedService.DeserializeSnowflakeLinkedService(element);
                     case "Spark": return SparkLinkedService.DeserializeSparkLinkedService(element);
                     case "SqlServer": return SqlServerLinkedService.DeserializeSqlServerLinkedService(element);
                     case "Square": return SquareLinkedService.DeserializeSquareLinkedService(element);

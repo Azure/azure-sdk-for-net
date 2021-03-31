@@ -35,6 +35,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "BinaryReadSettings": return BinaryReadSettings.DeserializeBinaryReadSettings(element);
+                    case "JsonReadSettings": return JsonReadSettings.DeserializeJsonReadSettings(element);
+                    case "XmlReadSettings": return XmlReadSettings.DeserializeXmlReadSettings(element);
                     case "DelimitedTextReadSettings": return DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(element);
                 }
             }

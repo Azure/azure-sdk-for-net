@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -129,8 +130,8 @@ namespace Azure.Messaging.EventHubs.Authorization
                 if ((!string.Equals(signature.SharedAccessKeyName, name, StringComparison.Ordinal))
                     || (!string.Equals(signature.SharedAccessKey, key, StringComparison.Ordinal)))
                 {
-                    signature = new SharedAccessSignature(signature.Resource, name, key);
-                    Volatile.Write(ref _sharedAccessSignature, signature);
+                    var updatedSignature = new SharedAccessSignature(signature.Resource, name, key);
+                    signature = SafeUpdateSharedAccessSignature(signature, updatedSignature);
                 }
             }
 
@@ -138,8 +139,8 @@ namespace Azure.Messaging.EventHubs.Authorization
 
             if  (signature.SignatureExpiration <= DateTimeOffset.UtcNow.Add(SignatureRefreshBuffer))
             {
-                signature = signature.CloneWithNewExpiration(SignatureExtensionDuration);
-                Volatile.Write(ref _sharedAccessSignature, signature);
+                var updatedSignature = signature.CloneWithNewExpiration(SignatureExtensionDuration);
+                signature = SafeUpdateSharedAccessSignature(signature, updatedSignature);
             }
 
             return new AccessToken(signature.Value, signature.SignatureExpiration);
@@ -157,5 +158,32 @@ namespace Azure.Messaging.EventHubs.Authorization
         ///
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext,
                                                              CancellationToken cancellationToken) => new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
+
+        /// <summary>
+        ///   Attempts to update the current shared access signature reference of the credential while respecting concurrent updates.
+        /// </summary>
+        ///
+        /// <param name="cachedSignature">The cached signature that had been previously read.  If this value is not the current <c>_sharedAccessSignature</c>, the update will not be performed.</param>
+        /// <param name="updatedSignature">The signature that was locally updated and intended to replace the <paramref name="cachedSignature"/>.</param>
+        ///
+        /// <returns>The current value of the <see cref="SharedAccessSignature" /> of the credential, after the attempted update.  This will be the <paramref name="updatedSignature"/> if the update was performed.</returns>
+        ///
+        /// <remarks>
+        ///   The class field "_sharedAccessSignature" may be mutated when calling this method.
+        /// </remarks>
+        ///
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private SharedAccessSignature SafeUpdateSharedAccessSignature(SharedAccessSignature cachedSignature,
+                                                                      SharedAccessSignature updatedSignature)
+        {
+            var signature = Interlocked.CompareExchange(ref _sharedAccessSignature, updatedSignature, cachedSignature);
+
+            // If the cached signature doesn't match the active one then the signature was not replaced because it had
+            // already been updated by another caller; assume that active signature is correct and should be used.
+
+            return ReferenceEquals(signature, cachedSignature)
+                ? updatedSignature
+                : signature;
+        }
     }
 }

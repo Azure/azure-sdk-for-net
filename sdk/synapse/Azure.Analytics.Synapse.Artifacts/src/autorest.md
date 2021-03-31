@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-artifacts-2019-06-01-preview
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/85fc0666743639c4a1c864eae466ef950e7bc61b/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/ba2d430b967bc6299fbedb8dc16ff039e08e1388/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.Artifacts
 public-clients: true
 credential-types: TokenCredential
@@ -61,6 +61,7 @@ directive:
           path.endsWith("TabularTranslator") ||
           path.endsWith("TextFormat") ||
           path.endsWith("TriggerDependencyProvisioningStatus") ||
+          path.endsWith("TypeConversionSettings") ||
           path.endsWith("WorkspaceIdentity") ||
           path.endsWith("WorkspaceUpdateParameters"))
       {
