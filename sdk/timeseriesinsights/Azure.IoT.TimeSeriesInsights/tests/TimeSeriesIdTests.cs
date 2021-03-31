@@ -14,7 +14,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     public class TimeSeriesIdTests : E2eTestBase
     {
-        private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(10);
+        private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(20);
 
         // This is the GUID that TSI uses to represent the default type for a Time Series Instance.
         // TODO: replace hardcoding the Type GUID when the Types resource has been implemented.
