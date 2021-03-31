@@ -64,7 +64,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         length: arraySegment.Count);
                     return bytes;
                 default:
-                    return ReadOnlyMemory<byte>.Empty;
+                    return null;
             }
         }
 
