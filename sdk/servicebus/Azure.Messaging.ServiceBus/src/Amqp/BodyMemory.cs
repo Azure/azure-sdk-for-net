@@ -4,7 +4,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -15,17 +14,31 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         private ArrayBufferWriter<byte> _writer;
         private IList<ReadOnlyMemory<byte>> _segments;
+        private readonly IEnumerable<ReadOnlyMemory<byte>> _lazySegments;
 
-        private ReadOnlyMemory<byte> WrittenMemory => _writer?.WrittenMemory ?? ReadOnlyMemory<byte>.Empty;
-
-        public BodyMemory(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
+        private ReadOnlyMemory<byte> WrittenMemory
         {
-            foreach (var segment in dataSegments)
+            get
             {
-                Append(segment);
+                if (_lazySegments != null)
+                {
+                    foreach (var segment in _lazySegments)
+                    {
+                        Append(segment);
+                    }
+                }
+
+                return _writer?.WrittenMemory ?? ReadOnlyMemory<byte>.Empty;
             }
         }
 
+        // for the send path the combined memory for the body is not precomputed
+        public BodyMemory(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
+        {
+            _lazySegments = dataSegments;
+        }
+
+        // for the receive path the combined memory is precomputed because we need to copy the underlying AMQP data anyway
         public BodyMemory(IEnumerable<Data> dataSegments)
         {
             foreach (var segment in dataSegments)
@@ -36,7 +49,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         public IEnumerator<ReadOnlyMemory<byte>> GetEnumerator()
         {
-            return _segments.GetEnumerator();
+            return _segments?.GetEnumerator() ?? _lazySegments.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
