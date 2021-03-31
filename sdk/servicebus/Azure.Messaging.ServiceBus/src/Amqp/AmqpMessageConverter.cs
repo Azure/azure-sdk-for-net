@@ -225,7 +225,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if ((amqpMessage.BodyType & SectionFlag.Data) != 0 && amqpMessage.DataBody != null)
             {
-                annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(amqpMessage.GetDataViaDataBody()));
+                annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(new BodyMemory(amqpMessage.DataBody ?? Enumerable.Empty<Data>())));
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0 && amqpMessage.ValueBody?.Value != null)
             {

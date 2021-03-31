@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Azure.Core;
 using Azure.Core.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
@@ -46,56 +45,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     Value = segment
                 };
             }
-        }
-
-        private static ReadOnlyMemory<byte> GetByteArray(this Data data)
-        {
-            switch (data.Value)
-            {
-                case byte[] byteArray:
-                    return byteArray;
-                case ArraySegment<byte> arraySegment:
-                    var bytes = new byte[arraySegment.Count];
-                    Array.ConstrainedCopy(
-                        sourceArray: arraySegment.Array,
-                        sourceIndex: arraySegment.Offset,
-                        destinationArray: bytes,
-                        destinationIndex: 0,
-                        length: arraySegment.Count);
-                    return bytes;
-                default:
-                    return null;
-            }
-        }
-
-        public static IList<ReadOnlyMemory<byte>> GetDataViaDataBody(this AmqpMessage message)
-        {
-            IList<ReadOnlyMemory<byte>> dataList = new List<ReadOnlyMemory<byte>>();
-            foreach (Data data in (message.DataBody ?? Enumerable.Empty<Data>()))
-            {
-                dataList.Add(data.GetByteArray());
-            }
-            return dataList;
-        }
-
-        // Returns via the out parameter the flattened collection of bytes.
-        // A majority of the time, data will only contain 1 element.
-        // The method is optimized for this situation to return the pre-existing array.
-        public static BinaryData ConvertAndFlattenData(this IEnumerable<ReadOnlyMemory<byte>> dataList)
-        {
-            var writer = new ArrayBufferWriter<byte>();
-            Memory<byte> memory;
-            foreach (ReadOnlyMemory<byte> data in dataList)
-            {
-                memory = writer.GetMemory(data.Length);
-                data.CopyTo(memory);
-                writer.Advance(data.Length);
-            }
-            if (writer.WrittenCount == 0)
-            {
-                return new BinaryData(Array.Empty<byte>());
-            }
-            return BinaryData.FromBytes(writer.WrittenMemory);
         }
 
         public static string GetPartitionKey(this AmqpAnnotatedMessage message)
@@ -145,7 +94,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             if (message.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
             {
-                return dataBody.ConvertAndFlattenData();
+                return BinaryData.FromBytes((BodyMemory)dataBody);
             }
             throw new NotSupportedException($"{message.Body.BodyType} cannot be retrieved using the {nameof(ServiceBusMessage.Body)} property." +
                 $"Use {nameof(ServiceBusMessage.GetRawAmqpMessage)} to access the underlying Amqp Message object.");
