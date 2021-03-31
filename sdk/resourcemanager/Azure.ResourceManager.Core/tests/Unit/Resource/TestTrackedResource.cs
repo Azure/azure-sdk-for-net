@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class TestTrackedResource : TrackedResource
+    public class TestTrackedResource<TIdentifier> : TrackedResource<TIdentifier> where TIdentifier : TenantResourceIdentifier
     {
         public TestTrackedResource(string id)
         {
-            Id = id;
+            Id = ResourceIdentifier.Create(id) as TIdentifier;
         }
 
-        public override ResourceIdentifier Id { get; protected set; }
+        public override TIdentifier Id { get; protected set; }
     }
 }
