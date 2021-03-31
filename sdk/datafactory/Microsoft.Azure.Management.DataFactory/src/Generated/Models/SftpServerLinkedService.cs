@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// (or Expression with resultType integer), minimum: 0.</param>
         /// <param name="authenticationType">The authentication type to be used
         /// to connect to the FTP server. Possible values include: 'Basic',
-        /// 'SshPublicKey'</param>
+        /// 'SshPublicKey', 'MultiFactor'</param>
         /// <param name="userName">The username used to log on to the SFTP
         /// server. Type: string (or Expression with resultType
         /// string).</param>
@@ -118,7 +118,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the authentication type to be used to connect to the
-        /// FTP server. Possible values include: 'Basic', 'SshPublicKey'
+        /// FTP server. Possible values include: 'Basic', 'SshPublicKey',
+        /// 'MultiFactor'
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.authenticationType")]
         public string AuthenticationType { get; set; }

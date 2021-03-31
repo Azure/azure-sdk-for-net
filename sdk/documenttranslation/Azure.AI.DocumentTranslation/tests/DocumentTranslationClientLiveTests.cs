@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -23,16 +25,61 @@ namespace Azure.AI.DocumentTranslation.Tests
         {
             var client = GetClient(credential: new AzureKeyCredential("fakeKey"));
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetDocumentFormatsAsync());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetDocumentFormatsAsync());
+
+            Assert.AreEqual("401", ex.ErrorCode);
         }
 
         [RecordedTest]
-        public async Task GetDocumentFormatsTestAsync()
+        public async Task GetDocumentFormatsTest()
         {
             var client = GetClient();
 
             var documentFormats = await client.GetDocumentFormatsAsync();
             Assert.GreaterOrEqual(documentFormats.Value.Count, 0);
+        }
+
+        [RecordedTest]
+        public async Task GetGlossaryFormatsTest()
+        {
+            var client = GetClient();
+
+            var glossaryFormats = await client.GetGlossaryFormatsAsync();
+            Assert.GreaterOrEqual(glossaryFormats.Value.Count, 0);
+        }
+
+        [RecordedTest]
+        public async Task GetTranslationsTest()
+        {
+            Uri source = await CreateSourceContainerAsync(oneTestDocuments);
+            Uri target = await CreateTargetContainerAsync();
+
+            var client = GetClient();
+
+            var input = new DocumentTranslationInput(source, target, "fr");
+            await client.StartTranslationAsync(input);
+
+            List<TranslationStatusResult> translations = await client.GetTranslationsAsync().ToEnumerableAsync();
+
+            Assert.GreaterOrEqual(translations.Count, 1);
+            TranslationStatusResult oneTranslation = translations[0];
+            Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.CreatedOn);
+            Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.LastModified);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsCancelled, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsFailed, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsInProgress, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsNotStarted, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsSucceeded, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsTotal, 0);
+
+            if (oneTranslation.Error == null && oneTranslation.HasCompleted)
+            {
+                Assert.Greater(oneTranslation.TotalCharactersCharged, 0);
+            }
+            else
+            {
+                Assert.AreEqual(0, oneTranslation.TotalCharactersCharged);
+            }
         }
     }
 }

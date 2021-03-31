@@ -38,6 +38,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "BZip2": return DatasetBZip2Compression.DeserializeDatasetBZip2Compression(element);
                     case "Deflate": return DatasetDeflateCompression.DeserializeDatasetDeflateCompression(element);
                     case "GZip": return DatasetGZipCompression.DeserializeDatasetGZipCompression(element);
+                    case "Tar": return DatasetTarCompression.DeserializeDatasetTarCompression(element);
+                    case "TarGZip": return DatasetTarGZipCompression.DeserializeDatasetTarGZipCompression(element);
                     case "ZipDeflate": return DatasetZipDeflateCompression.DeserializeDatasetZipDeflateCompression(element);
                 }
             }

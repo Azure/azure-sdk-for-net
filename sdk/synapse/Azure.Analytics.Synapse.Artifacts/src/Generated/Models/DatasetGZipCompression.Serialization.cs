@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level");
-                writer.WriteStringValue(Level.Value.ToString());
+                writer.WriteObjectValue(Level);
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetGZipCompression DeserializeDatasetGZipCompression(JsonElement element)
         {
-            Optional<DatasetCompressionLevel> level = default;
+            Optional<object> level = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = new DatasetCompressionLevel(property.Value.GetString());
+                    level = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetGZipCompression(type, additionalProperties, Optional.ToNullable(level));
+            return new DatasetGZipCompression(type, additionalProperties, level.Value);
         }
 
         internal partial class DatasetGZipCompressionConverter : JsonConverter<DatasetGZipCompression>

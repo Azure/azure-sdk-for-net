@@ -189,7 +189,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature("hub-name", "keyName", "key", value, DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(2)));
             var credential = new SharedAccessCredential(signature);
 
-            var expectedExpiration = DateTimeOffset.Now.Add(GetSignatureExtensionDuration());
+            var expectedExpiration = DateTimeOffset.UtcNow.Add(GetSignatureExtensionDuration());
             Assert.That(credential.GetToken(new TokenRequestContext(), default).ExpiresOn, Is.EqualTo(expectedExpiration).Within(TimeSpan.FromMinutes(1)));
         }
 
@@ -206,7 +206,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var signature = new SharedAccessSignature("hub-name", "keyName", "key", value, tokenExpiration);
             var credential = new SharedAccessCredential(signature);
 
-            var expectedExpiration = DateTimeOffset.Now.Add(GetSignatureExtensionDuration());
+            var expectedExpiration = DateTimeOffset.UtcNow.Add(GetSignatureExtensionDuration());
             Assert.That(credential.GetToken(new TokenRequestContext(), default).ExpiresOn, Is.EqualTo(expectedExpiration).Within(TimeSpan.FromMinutes(1)));
         }
 

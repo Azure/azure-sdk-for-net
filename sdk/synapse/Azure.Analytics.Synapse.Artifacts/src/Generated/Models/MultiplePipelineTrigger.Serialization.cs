@@ -62,6 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     case "BlobEventsTrigger": return BlobEventsTrigger.DeserializeBlobEventsTrigger(element);
                     case "BlobTrigger": return BlobTrigger.DeserializeBlobTrigger(element);
+                    case "CustomEventsTrigger": return CustomEventsTrigger.DeserializeCustomEventsTrigger(element);
                     case "ScheduleTrigger": return ScheduleTrigger.DeserializeScheduleTrigger(element);
                 }
             }
