@@ -45,9 +45,9 @@ ContainerRegistryClient client = new ContainerRegistryClient(registryUri, new De
 
 ## Key concepts
 
-Short discussion of images, artifacts, repositories, manifests, and tags.
+A **registry** stores Docker images and [OCI Artifacts](https://opencontainers.org/).  An image or artifact consists of a **manifest** and **layers**.  An image's manifest describes the layers that make up the image, and is uniquely identified by its **digest**.  An image can also be "tagged" to give it a human-readable alias.  An image or artifact can have zero or more **tags** associated with it, and each tag uniquely identifies the image.  A collection of images that share the same name, but have different manifests and tags, is referred to as a **repository**.
 
-For more information, please see the 
+For more information please see [Container Registry Concepts](https://docs.microsoft.com/azure/container-registry/container-registry-concepts).
 
 ### Thread safety
 
@@ -66,9 +66,16 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
+<!-- Pending Sample Creation -->
+
 ## Troubleshooting
 
+All container registry service operations will throw a
+[RequestFailedException][RequestFailedException] on failure.
+
 ## Next steps
+
+<!-- Pending Sample Creation -->
 
 ## Contributing
 
@@ -101,7 +108,6 @@ additional questions or comments.
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity/README.md
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/core/Azure.Core/src/RequestFailedException.cs
 [samples]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/containerregistry/Azure.Containers.ContainerRegistry/samples/
-[storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
