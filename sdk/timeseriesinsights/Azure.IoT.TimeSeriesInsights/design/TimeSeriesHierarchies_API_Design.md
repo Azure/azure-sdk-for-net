@@ -41,7 +41,7 @@ Returns time series hierarchies definitions in pages.
 /// Gets time series insight hierarchies in pages asynchronously.
 /// </summary>
 /// <param name="cancellationToken">The cancellation token.</param>
-/// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesHierarchy}"/> of Time Series instances hierarchies with the http response.</returns>
+/// <returns> The pageable list <see cref="AsyncPageable{TimeSeriesHierarchy}"/> of Time Series instances hierarchies with the http response.</returns>
 public virtual AsyncPageable<TimeSeriesHierarchy> GetTimeSeriesHierarchiesAsync(
     CancellationToken cancellationToken = default)
 ```
@@ -71,7 +71,7 @@ public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> GetTim
 /// <param name="timeSeriesHierarchyNames">List of names of the Time Series hierarchies to return.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>List of hierarchy or error objects corresponding by position to the array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
-public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> GetTimeSeriesHierarchiesByNamesAsync(
+public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> GetTimeSeriesHierarchiesByNameAsync(
     IEnumerable<string> timeSeriesHierarchyNames, 
     CancellationToken cancellationToken = default)
 ```
@@ -88,7 +88,7 @@ public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> GetTim
 /// List of hierarchy or error objects corresponding by position to the array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
 /// </returns>
 public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> CreateOrReplaceTimeSeriesHierarchiesAsync(
-    IEnumerable<timeSeriesHierarchyNames> timeSeriesHierarchies,
+    IEnumerable<TimeSeriesHierarchy> timeSeriesHierarchies,
     CancellationToken cancellationToken = default)
 ```
 
@@ -117,7 +117,7 @@ public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteTimeSeries
 /// <returns>
 /// List of error objects corresponding by position to the "delete" array in the request - null when the operation is successful.
 /// </returns>
-public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteTimeSeriesHierarchiesByNamesAsync(
+public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteTimeSeriesHierarchiesByNameAsync(
     IEnumerable<string> timeSeriesHierarchyNames,
     CancellationToken cancellationToken = default)
 ```
