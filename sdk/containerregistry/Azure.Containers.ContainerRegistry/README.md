@@ -23,7 +23,7 @@ dotnet add package Azure.Containers.ContainerRegistry
 
 ### Prerequisites
 
-You need an [Azure subscription][azure_sub] and a [Container Registry][container_registry_docs] to use this package.
+You need an [Azure subscription][azure_sub] and a [Container Registry account][container_registry_docs] to use this package.
 
 To create a new Container Registry, you can use the [Azure Portal][container_registry_create_portal],
 [Azure PowerShell][container_registry_create_ps], or the [Azure CLI][container_registry_create_cli].
