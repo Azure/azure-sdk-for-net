@@ -106,7 +106,7 @@
                             },
                             Scope = new List<string>
                             {
-                                "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0",
+                                "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/SDK-tests-UM",
                                 "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d"
                             },
                             TagSettings = new TagSettingsProperties
@@ -137,12 +137,12 @@
                         new NonAzureQueryProperties
                         {
                             FunctionAlias = "SavedSearch1",
-                            WorkspaceId = "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01"
+                            WorkspaceId = "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-02/providers/microsoft.operationalinsights/workspaces/fbs-aa-01"
                         },
                         new NonAzureQueryProperties
                         {
                             FunctionAlias = "SavedSearch2",
-                            WorkspaceId = "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01"
+                            WorkspaceId = "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-02/providers/microsoft.operationalinsights/workspaces/fbs-aa-01"
                         }
                     }
                 }
@@ -151,7 +151,7 @@
             var scheduleInfo = new SUCScheduleProperties
             {
                 Frequency = ScheduleFrequency.Day,
-                StartTime = DateTime.Parse("2019-05-05T19:26:00.000"),
+                StartTime = DateTime.Parse("2021-05-05T19:26:00.000"),
                 Interval = 1,
                 TimeZone = "America/Los_Angeles"
             };
