@@ -143,7 +143,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             {
                 await using var client = CreateClient();
 
-                var messageCount = 50;
+                var messageCount = 10;
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
                 IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
@@ -152,7 +152,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     scope.QueueName,
                     new ServiceBusReceiverOptions { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete });
 
-                using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
+                using var cancellationTokenSource = new CancellationTokenSource(500);
                 var received = 0;
 
                 try
@@ -161,6 +161,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     {
                         await receiver.ReceiveMessageAsync(cancellationToken: cancellationTokenSource.Token);
                         received++;
+                        await Task.Delay(100);
                     }
                 }
                 catch (TaskCanceledException)
