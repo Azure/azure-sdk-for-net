@@ -6,11 +6,9 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer
 {
     /// <summary>
-    /// Specifies the order in which recognized text lines are returned in calls to
-    /// recognize content. This can be set in the <see cref="RecognizeContentOptions"/>.
-    /// As the sorting order depends on the detected text, it may change across images
-    /// and OCR version updates. Thus, business logic should be built upon the actual line
-    /// location instead of order.
+    /// Specifies the order in which recognized text lines are returned. As the sorting order
+    /// depends on the detected text, it may change across images and OCR version updates. Thus,
+    /// business logic should be built upon the actual line location instead of order.
     /// </summary>
     [CodeGenModel("ReadingOrder")]
     public enum ReadingOrder
