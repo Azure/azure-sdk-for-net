@@ -8,6 +8,10 @@ Thank you to our developer community members who helped to make Azure Tables bet
 
 - Joel Verhagen _([GitHub](https://github.com/joelverhagen))_
 
+### Added
+
+- Added the `TableErrorCode` type which allows comparison of the `ErrorCode` on `RequestFailedException`s thrown from client operations with a known error value.
+
 ### Key Bug Fixes
 
 - Fixed handling of paging headers when Table Storage returned a `x-ms-continuation-NextPartitionKey` but no `x-ms-continuation-NextRowKey`. This was causing an HTTP 400 on the subsequent page query (A community contribution, courtesy of _[joelverhagen](https://github.com/joelverhagen)_)
