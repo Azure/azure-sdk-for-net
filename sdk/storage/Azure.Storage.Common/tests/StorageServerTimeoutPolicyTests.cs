@@ -10,7 +10,8 @@ namespace Azure.Storage.Tests
 {
     public class StorageServerTimeoutPolicyTests : SyncAsyncPolicyTestBase
     {
-        private static TimeSpan ServerTimeout = TimeSpan.FromSeconds(15);
+        private const int ServerTimeoutSeconds = 15;
+        private static TimeSpan ServerTimeout = TimeSpan.FromSeconds(ServerTimeoutSeconds);
 
         public StorageServerTimeoutPolicyTests(bool isAsync) : base(isAsync)
         {
@@ -42,7 +43,7 @@ namespace Azure.Storage.Tests
             }
 
             // Assert
-            Assert.AreEqual($"http://foo.com/?timeout={ServerTimeout}", transport.SingleRequest.Uri.ToString());
+            Assert.AreEqual($"http://foo.com/?timeout={ServerTimeoutSeconds}", transport.SingleRequest.Uri.ToString());
         }
 
         [Test]
@@ -58,7 +59,7 @@ namespace Azure.Storage.Tests
             }
 
             // Assert
-            Assert.AreEqual($"http://foo.com/?bar=baz&timeout={ServerTimeout}", transport.SingleRequest.Uri.ToString());
+            Assert.AreEqual($"http://foo.com/?bar=baz&timeout={ServerTimeoutSeconds}", transport.SingleRequest.Uri.ToString());
         }
 
         [Test]

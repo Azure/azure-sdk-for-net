@@ -41,7 +41,7 @@ namespace Azure.Storage
         /// </remarks>
         public static IDisposable CreateServiceTimeoutScope(TimeSpan? timeout)
         {
-            return HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object> { { Constants.ServerTimeout.HttpMessagePropertyKey, timeout?.TotalSeconds } });
+            return HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object> { { Constants.ServerTimeout.HttpMessagePropertyKey, timeout } });
         }
     }
 }

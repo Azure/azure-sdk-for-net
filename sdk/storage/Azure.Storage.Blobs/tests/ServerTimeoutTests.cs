@@ -9,7 +9,8 @@ namespace Azure.Storage.Blobs.Tests
 {
     public class ServerTimeoutTests
     {
-        private static TimeSpan ServerTimeout = TimeSpan.FromSeconds(15);
+        private const int ServerTimeoutSeconds = 15;
+        private static TimeSpan ServerTimeout = TimeSpan.FromSeconds(ServerTimeoutSeconds);
         private StorageSharedKeyCredential _credentials;
         private Uri _endpoint;
         private MockTransport _transport;
@@ -42,7 +43,7 @@ namespace Azure.Storage.Blobs.Tests
             }
 
             // Assert
-            StringAssert.Contains($"timeout={ServerTimeout}", _transport.SingleRequest.Uri.ToString());
+            StringAssert.Contains($"timeout={ServerTimeoutSeconds}", _transport.SingleRequest.Uri.ToString());
         }
     }
 }
