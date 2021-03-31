@@ -134,8 +134,79 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"southeastasia\",\r\n  \"name\": \"DefaultPolicyTestVault\",\r\n  \"etag\": \"W/\\\"datetime'2020-12-08T13%3A50%3A52.9304936Z'\\\"\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"privateEndpointStateForBackup\": \"None\",\r\n    \"privateEndpointStateForSiteRecovery\": \"None\"\r\n  },\r\n  \"id\": \"/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.DataProtection/backupVaults/DefaultPolicyTestVault\",\r\n  \"type\": \"Microsoft.DataProtection/backupVaults\" \r\n}",
+      "ResponseBody": "",
       "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/e3d2d341-4ddb-4c5d-9121-69b7e719485e/resourceGroups/DefaultPolicyTestVaultRg/providers/Microsoft.DataProtection/backupVaults/DefaultPolicyTestVault/backupPolicies/MyPolicy?api-version=2020-06-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTNkMmQzNDEtNGRkYi00YzVkLTkxMjEtNjliN2U3MTk0ODVlL3Jlc291cmNlR3JvdXBzL0RlZmF1bHRQb2xpY3lUZXN0VmF1bHRSZy9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFQcm90ZWN0aW9uL2JhY2t1cFZhdWx0cy9EZWZhdWx0UG9saWN5VGVzdFZhdWx0L2JhY2t1cFBvbGljaWVzL015UG9saWN5P2FwaS12ZXJzaW9uPTIwMjAtMDYtMDE",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\"id\":null,\"name\":null,\"type\":null,\"properties\":{\"policyRules\":[{\"backupParameters\":{\"backupType\":\"Full\",\"objectType\":\"AzureBackupParams\",\"extendedParameters\":null},\"trigger\":{\"schedule\":{\"repeatingTimeIntervals\":[\"R/2019-12-26T13:08:27.8535071Z/P0Y0M0DT1H0M\"],\"timeZone\":null},\"taggingCriteria\":[{\"tagInfo\":{\"tagName\":\"Default\",\"eTag\":null,\"id\":\"Default_\"},\"taggingPriority\":99,\"isDefault\":true,\"criteria\":null},{\"tagInfo\":{\"tagName\":\"Weekly\",\"eTag\":null,\"id\":\"Weekly_\"},\"taggingPriority\":20,\"isDefault\":false,\"criteria\":[{\"absoluteCriteria\":null,\"scheduleTimes\":[\"0001-01-01T08:00:00\"],\"daysOfMonth\":null,\"weeksOfTheMonth\":null,\"daysOfTheWeek\":[\"Sunday\"],\"monthsOfYear\":null,\"objectType\":\"ScheduleBasedBackupCriteria\"}]},{\"tagInfo\":{\"tagName\":\"Monthly\",\"eTag\":null,\"id\":\"Monthly_\"},\"taggingPriority\":15,\"isDefault\":false,\"criteria\":[{\"absoluteCriteria\":null,\"scheduleTimes\":[\"0001-01-01T08:00:00\"],\"daysOfMonth\":null,\"weeksOfTheMonth\":[\"First\"],\"daysOfTheWeek\":[\"Sunday\"],\"monthsOfYear\":null,\"objectType\":\"ScheduleBasedBackupCriteria\"}]},{\"tagInfo\":{\"tagName\":\"Yearly\",\"eTag\":null,\"id\":\"Yearly_\"},\"taggingPriority\":10,\"isDefault\":false,\"criteria\":[{\"absoluteCriteria\":null,\"scheduleTimes\":[\"0001-01-01T08:00:00\"],\"daysOfMonth\":null,\"weeksOfTheMonth\":[\"First\"],\"daysOfTheWeek\":[\"Sunday\"],\"monthsOfYear\":[\"January\"],\"objectType\":\"ScheduleBasedBackupCriteria\"}]}],\"objectType\":\"ScheduleBasedTriggerContext\"},\"dataStore\":{\"dataStoreType\":\"VaultStore\",\"objectType\":\"DataStoreInfoBase\"},\"name\":\"BackupWeekly\",\"objectType\":\"AzureBackupRule\"},{\"lifecycles\":[{\"deleteAfter\":{\"objectType\":\"AbsoluteDeleteOption\",\"duration\":\"P1W\"},\"targetDataStoreCopySettings\":null,\"sourceDataStore\":{\"dataStoreType\":\"VaultStore\",\"objectType\":\"DataStoreInfoBase\"}}],\"isDefault\":true,\"name\":\"Default\",\"objectType\":\"AzureRetentionRule\"},{\"lifecycles\":[{\"deleteAfter\":{\"objectType\":\"AbsoluteDeleteOption\",\"duration\":\"P12W\"},\"targetDataStoreCopySettings\":[{\"dataStore\":{\"dataStoreType\":\"ArchiveStore\",\"objectType\":\"DataStoreInfoBase\"},\"copyAfter\":{\"objectType\":\"ImmediateCopyOption\"}}],\"sourceDataStore\":{\"dataStoreType\":\"VaultStore\",\"objectType\":\"DataStoreInfoBase\"}},{\"deleteAfter\":{\"objectType\":\"AbsoluteDeleteOption\",\"duration\":\"P30W\"},\"targetDataStoreCopySettings\":null,\"sourceDataStore\":{\"dataStoreType\":\"ArchiveStore\",\"objectType\":\"DataStoreInfoBase\"}}],\"isDefault\":false,\"name\":\"Weekly\",\"objectType\":\"AzureRetentionRule\"},{\"lifecycles\":[{\"deleteAfter\":{\"objectType\":\"AbsoluteDeleteOption\",\"duration\":\"P60M\"},\"targetDataStoreCopySettings\":[{\"dataStore\":{\"dataStoreType\":\"ArchiveStore\",\"objectType\":\"DataStoreInfoBase\"},\"copyAfter\":{\"objectType\":\"CopyOnExpiryOption\"}}],\"sourceDataStore\":{\"dataStoreType\":\"VaultStore\",\"objectType\":\"DataStoreInfoBase\"}},{\"deleteAfter\":{\"objectType\":\"AbsoluteDeleteOption\",\"duration\":\"P1Y\"},\"targetDataStoreCopySettings\":null,\"sourceDataStore\":{\"dataStoreType\":\"ArchiveStore\",\"objectType\":\"DataStoreInfoBase\"}}],\"isDefault\":false,\"name\":\"Monthly\",\"objectType\":\"AzureRetentionRule\"},{\"lifecycles\":[{\"deleteAfter\":{\"objectType\":\"AbsoluteDeleteOption\",\"duration\":\"P1Y\"},\"targetDataStoreCopySettings\":[{\"dataStore\":{\"dataStoreType\":\"ArchiveStore\",\"objectType\":\"DataStoreInfoBase\"},\"copyAfter\":{\"duration\":\"P2M\",\"objectType\":\"CustomCopyOption\"}}],\"sourceDataStore\":{\"dataStoreType\":\"VaultStore\",\"objectType\":\"DataStoreInfoBase\"}},{\"deleteAfter\":{\"objectType\":\"AbsoluteDeleteOption\",\"duration\":\"P10Y\"},\"targetDataStoreCopySettings\":null,\"sourceDataStore\":{\"dataStoreType\":\"ArchiveStore\",\"objectType\":\"DataStoreInfoBase\"}}],\"isDefault\":false,\"name\":\"Yearly\",\"objectType\":\"AzureRetentionRule\"}],\"datasourceTypes\":[\"Microsoft.DBforPostgreSQL/servers/databases\"],\"objectType\":\"BackupPolicy\"}}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1f015d8b-792c-463b-9997-32b8c464b97b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.29321.03",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042."
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "98"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "913247bd-7c1a-4ed8-bdad-d0d2a9432c86"
+        ],
+        "x-ms-client-request-id": [
+          "1f015d8b-792c-463b-9997-32b8c464b97b"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "209"
+        ],
+        "x-ms-correlation-request-id": [
+          "873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "x-ms-routing-request-id": [
+          "SOUTHINDIA:20201208T135053Z:873ce437-d705-43e0-a250-c245a146c280"
+        ],
+        "Date": [
+          "Tue, 08 Dec 2020 13:50:52 GMT"
+        ],
+        "Content-Length": [
+          "484"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
     }
   ],
   "Names": {},

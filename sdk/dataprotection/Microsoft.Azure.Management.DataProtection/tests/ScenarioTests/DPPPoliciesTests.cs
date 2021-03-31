@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.DataProtection.Backup.Tests.ScenarioTests
             using (TestHelper testHelper = new TestHelper() { VaultName = PoliciesTestVault, ResourceGroup = PoliciesTestVaultRg })
             {
                 testHelper.Initialize(context);
+                testHelper.CreatePolicy("MyPolicy");
             }
         }
         public void Dispose()

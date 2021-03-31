@@ -6,11 +6,7 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -19,7 +15,6 @@ namespace Microsoft.Azure.Management.DataProtection.Models
     /// <remarks>
     /// BaseBackupPolicy resource
     /// </remarks>
-    [Rest.Serialization.JsonTransformation]
     public partial class BaseBackupPolicyResource : DppResource
     {
         /// <summary>
@@ -33,18 +28,18 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// <summary>
         /// Initializes a new instance of the BaseBackupPolicyResource class.
         /// </summary>
-        /// <param name="datasourceTypes">Type of datasource for the backup
-        /// management</param>
         /// <param name="id">Resource Id represents the complete path to the
         /// resource.</param>
         /// <param name="name">Resource name associated with the
         /// resource.</param>
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
-        public BaseBackupPolicyResource(IList<string> datasourceTypes, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
+        /// <param name="properties">BaseBackupPolicyResource
+        /// properties</param>
+        public BaseBackupPolicyResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), BaseBackupPolicy properties = default(BaseBackupPolicy))
             : base(id, name, type, systemData)
         {
-            DatasourceTypes = datasourceTypes;
+            Properties = properties;
             CustomInit();
         }
 
@@ -54,22 +49,22 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of datasource for the backup management
+        /// Gets or sets baseBackupPolicyResource properties
         /// </summary>
-        [JsonProperty(PropertyName = "properties.datasourceTypes")]
-        public IList<string> DatasourceTypes { get; set; }
+        [JsonProperty(PropertyName = "properties")]
+        public BaseBackupPolicy Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (DatasourceTypes == null)
+            if (Properties != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DatasourceTypes");
+                Properties.Validate();
             }
         }
     }

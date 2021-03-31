@@ -6,6 +6,7 @@
 
 namespace Microsoft.Azure.Management.DataProtection.Models
 {
+    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
@@ -35,9 +36,12 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// resource.</param>
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
-        public AzureBackupRecoveryPointResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
+        /// <param name="properties">AzureBackupRecoveryPointResource
+        /// properties</param>
+        public AzureBackupRecoveryPointResource(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), AzureBackupRecoveryPoint properties = default(AzureBackupRecoveryPoint))
             : base(id, name, type, systemData)
         {
+            Properties = properties;
             CustomInit();
         }
 
@@ -45,6 +49,12 @@ namespace Microsoft.Azure.Management.DataProtection.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets azureBackupRecoveryPointResource properties
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public AzureBackupRecoveryPoint Properties { get; set; }
 
     }
 }
