@@ -11,45 +11,51 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class KeyPhraseExtractionSkill : IUtf8JsonSerializable
+    public partial class DocumentExtractionSkill : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (Optional.IsDefined(ParsingMode))
             {
-                if (DefaultLanguageCode != null)
+                if (ParsingMode != null)
                 {
-                    writer.WritePropertyName("defaultLanguageCode");
-                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                    writer.WritePropertyName("parsingMode");
+                    writer.WriteStringValue(ParsingMode);
                 }
                 else
                 {
-                    writer.WriteNull("defaultLanguageCode");
+                    writer.WriteNull("parsingMode");
                 }
             }
-            if (Optional.IsDefined(MaxKeyPhraseCount))
+            if (Optional.IsDefined(DataToExtract))
             {
-                if (MaxKeyPhraseCount != null)
+                if (DataToExtract != null)
                 {
-                    writer.WritePropertyName("maxKeyPhraseCount");
-                    writer.WriteNumberValue(MaxKeyPhraseCount.Value);
+                    writer.WritePropertyName("dataToExtract");
+                    writer.WriteStringValue(DataToExtract);
                 }
                 else
                 {
-                    writer.WriteNull("maxKeyPhraseCount");
+                    writer.WriteNull("dataToExtract");
                 }
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (Optional.IsCollectionDefined(Configuration))
             {
-                if (ModelVersion != null)
+                if (Configuration != null)
                 {
-                    writer.WritePropertyName("modelVersion");
-                    writer.WriteStringValue(ModelVersion);
+                    writer.WritePropertyName("configuration");
+                    writer.WriteStartObject();
+                    foreach (var item in Configuration)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    writer.WriteEndObject();
                 }
                 else
                 {
-                    writer.WriteNull("modelVersion");
+                    writer.WriteNull("configuration");
                 }
             }
             writer.WritePropertyName("@odata.type");
@@ -86,11 +92,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static KeyPhraseExtractionSkill DeserializeKeyPhraseExtractionSkill(JsonElement element)
+        internal static DocumentExtractionSkill DeserializeDocumentExtractionSkill(JsonElement element)
         {
-            Optional<KeyPhraseExtractionSkillLanguage?> defaultLanguageCode = default;
-            Optional<int?> maxKeyPhraseCount = default;
-            Optional<string> modelVersion = default;
+            Optional<string> parsingMode = default;
+            Optional<string> dataToExtract = default;
+            Optional<IDictionary<string, object>> configuration = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -99,34 +105,39 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultLanguageCode"))
+                if (property.NameEquals("parsingMode"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultLanguageCode = null;
+                        parsingMode = null;
                         continue;
                     }
-                    defaultLanguageCode = new KeyPhraseExtractionSkillLanguage(property.Value.GetString());
+                    parsingMode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("maxKeyPhraseCount"))
+                if (property.NameEquals("dataToExtract"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        maxKeyPhraseCount = null;
+                        dataToExtract = null;
                         continue;
                     }
-                    maxKeyPhraseCount = property.Value.GetInt32();
+                    dataToExtract = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("modelVersion"))
+                if (property.NameEquals("configuration"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        modelVersion = null;
+                        configuration = null;
                         continue;
                     }
-                    modelVersion = property.Value.GetString();
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                    }
+                    configuration = dictionary;
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
@@ -170,7 +181,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KeyPhraseExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(maxKeyPhraseCount), modelVersion.Value);
+            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, parsingMode.Value, dataToExtract.Value, Optional.ToDictionary(configuration));
         }
     }
 }
