@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the base resource used by all azure resources.
     /// </summary>
-    public abstract partial class Resource : IUtf8JsonSerializable
+    public abstract partial class Resource<TIdentifier> : IUtf8JsonSerializable
     {
         /// <summary>
         /// Serialize the input Resource object.
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
-                writer.WriteObjectValue(Id);
+                writer.WriteStringValue(Id.StringValue);
             }
             if (Optional.IsDefined(Name))
             {
@@ -40,6 +40,42 @@ namespace Azure.ResourceManager.Core
                 writer.WriteObjectValue(Type);
             }
             writer.WriteEndObject();
+        }
+
+        internal void DeserializeResource(JsonElement element)
+        {
+            Optional<TIdentifier> id = default;
+            Optional<string> name = default;
+            Optional<ResourceType> type = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("id"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = (Optional<TIdentifier>)ResourceIdentifier.Create(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = ResourceType.DeserializeResourceType(property.Value);
+                    continue;
+                }
+            }
+            Id = id;
         }
     }
 }

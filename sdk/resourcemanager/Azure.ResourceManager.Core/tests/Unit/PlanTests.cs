@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System.IO;
+using System.Text;
+using System.Text.Json;
+using Azure.Core;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
 {
@@ -228,6 +232,57 @@ namespace Azure.ResourceManager.Core.Tests
             Plan plan1 = new Plan(null, null, null, null, null);
             Plan plan2 = plan1;
             Assert.IsTrue(plan1.Equals(plan2));
+        }
+
+        [Test]
+        public void SerializationTest()
+        {
+            string expected = "{\"properties\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}}";
+            Plan plan = new("NameForPlan", "PublisherForPlan", "ProductForPlan", "PromotionCodeForPlan", "VersionForPlan");
+            var stream = new MemoryStream();
+            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteObjectValue(plan);
+            writer.WriteEndObject();
+            writer.Flush();
+            string json = Encoding.UTF8.GetString(stream.ToArray());
+            Assert.IsTrue(expected.Equals(json));
+        }
+
+        [Test]
+        public void InvalidSerializationTest()
+        {
+            Plan plan = new(null, null, null, null, null);
+            var stream = new MemoryStream();
+            Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
+            writer.WriteStartObject();
+            writer.WritePropertyName("properties");
+            writer.WriteObjectValue(plan);
+            writer.WriteEndObject();
+            writer.Flush();
+            string json = Encoding.UTF8.GetString(stream.ToArray());
+            Assert.IsTrue(json.Equals("{\"properties\":{}}"));
+        }
+
+        [Test]
+        public void DeserializationTest()
+        {
+            string json = "{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}";
+            JsonElement element = JsonDocument.Parse(json).RootElement;
+            Plan plan = Plan.DeserializePlan(element);
+            Assert.IsTrue(plan.Name.Equals("NameForPlan"));
+            Assert.IsTrue(plan.PromotionCode.Equals("PromotionCodeForPlan"));
+        }
+
+        [Test]
+        public void InvalidDeserializationTest()
+        {
+            string json = "{\"name\":\"NameForPlan\",\"notPublisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"version\":\"VersionForPlan\"}";
+            JsonElement element = JsonDocument.Parse(json).RootElement;
+            Plan plan = Plan.DeserializePlan(element);
+            Assert.IsTrue(plan.Publisher == null);
+            Assert.IsTrue(plan.PromotionCode == null);
         }
     }
 }

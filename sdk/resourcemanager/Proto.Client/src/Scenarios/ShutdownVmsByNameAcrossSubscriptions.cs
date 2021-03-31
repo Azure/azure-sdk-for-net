@@ -47,9 +47,9 @@ namespace Proto.Client
                 await foreach (var armResource in sub.ListVirtualMachinesByNameAsync("-e"))
                 {
                     var vmOperations = VirtualMachineOperations.FromGeneric(armResource);
-                    Console.WriteLine($"Stopping {vmOperations.Id.Subscription} {vmOperations.Id.ResourceGroup} {vmOperations.Id.Name}");
+                    Console.WriteLine($"Stopping {vmOperations.Id.SubscriptionId} {vmOperations.Id.ResourceGroupName} {vmOperations.Id.Name}");
                     vmOperations.PowerOff();
-                    Console.WriteLine($"Starting {vmOperations.Id.Subscription} {vmOperations.Id.ResourceGroup} {vmOperations.Id.Name}");
+                    Console.WriteLine($"Starting {vmOperations.Id.SubscriptionId} {vmOperations.Id.ResourceGroupName} {vmOperations.Id.Name}");
                     vmOperations.PowerOn();
                 }
             }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase (null, true)]
         public void CheckUserTrueConstructor(string resourceID, bool invalidParameter)
         {
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
+            var dict1 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
 
             if (invalidParameter)
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase(null, true)]
         public void CheckUserFalseConstructor(string resourceID, bool invalidParameter)
         {
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
+            var dict1 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
 
             if(invalidParameter)
             {
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsReferenceTestTrue()
         {
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
-            dict1["/subscriptions/6b085460-5vbg-477e-ba44-1035046e9101/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
+            var dict1 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
+            dict1["/subscriptions/1ab27dfb-d2ee-4283-b1e3-550deaebb8e4/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
             var system = new SystemAssignedIdentity(Guid.Empty, Guid.Empty);
             ResourceIdentity identity = new ResourceIdentity(system, dict1);
             ResourceIdentity identity1 = identity;
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsTestTrue()
         {
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
-            dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9000/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
+            var dict1 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
+            dict1["/subscriptions/1ab27dfb-d2ee-4283-b1e3-550deaebb8e4/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
             var system = new SystemAssignedIdentity(Guid.Empty, Guid.Empty);
             ResourceIdentity identity = new ResourceIdentity(system, dict1);
-            var dict2 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
-            dict2["/subscriptions/6b085460-5f21-477e-ba44-1035046e9000/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
+            var dict2 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
+            dict2["/subscriptions/1ab27dfb-d2ee-4283-b1e3-550deaebb8e4/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
             var system2 = new SystemAssignedIdentity(Guid.Empty, Guid.Empty);
             ResourceIdentity identity1 = new ResourceIdentity(system2, dict2);
             Assert.IsTrue(identity.Equals(identity1));
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsTestFalse()
         {
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
-            dict1["/subscriptions/6b085460-5f21-477e-ba44-1035nbhs9101/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
+            var dict1 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
+            dict1["/subscriptions/1ab27dfb-d2ee-4283-b1e3-550deaebb8e4/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
             var system = new SystemAssignedIdentity(Guid.Empty, Guid.Empty);
             ResourceIdentity identity = new ResourceIdentity(system, dict1);
-            var dict2 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
-            dict2["/subscriptions/6b08dfsg-5f21-475e-ba44-1035046e9101/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
+            var dict2 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
+            dict2["/subscriptions/d96407f5-db8f-4325-b582-84ad21310bd8/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
             var system2 = new SystemAssignedIdentity(Guid.Empty, Guid.Empty);
             ResourceIdentity identity1 = new ResourceIdentity(system2, dict2);
             Assert.IsFalse(identity.Equals(identity1));
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void EqualsTestFalseSameKey()
         {
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
-            dict1["/subscriptions/6b085460-5f21-477e-ba44-10ancd6e9101/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
+            var dict1 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
+            dict1["/subscriptions/1ab27dfb-d2ee-4283-b1e3-550deaebb8e4/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(Guid.Empty, Guid.Empty);
             var system = new SystemAssignedIdentity(Guid.Empty, Guid.Empty);
             ResourceIdentity identity = new ResourceIdentity(system, dict1);
-            var dict2 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
-            dict2["/subscriptions/6b085460-5f21-477e-ba44-10ancd6e9101/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), Guid.Empty);
+            var dict2 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
+            dict2["/subscriptions/1ab27dfb-d2ee-4283-b1e3-550deaebb8e4/resourceGroups/tester/providers/Microsoft.Web/sites/autotest"] = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), Guid.Empty);
             var system2 = new SystemAssignedIdentity(Guid.Empty, Guid.Empty);
             ResourceIdentity identity1 = new ResourceIdentity(system2, dict2);
             Assert.IsFalse(identity.Equals(identity1));
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Core.Tests
             var identityJsonProperty = DeserializerHelper("InvalidType.json");
             ResourceIdentity back = ResourceIdentity.Deserialize(identityJsonProperty.Value);
             var user = back.UserAssignedIdentities;
-            Assert.AreEqual("/subscriptions/db1ab6f0-4769-tgds-930e-01e2ef9c123c/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
+            Assert.AreEqual("/subscriptions/d96407f5-db8f-4325-b582-84ad21310bd8/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity", user.Keys.First().ToString());
             Assert.AreEqual("9a2eaa6a-b49c-4a63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
             Assert.AreEqual("77563a98-c9d9-4f7b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
         }
@@ -243,10 +243,10 @@ namespace Azure.ResourceManager.Core.Tests
             Assert.IsTrue("22fddec1-8b9f-49dc-bd72-ddaf8f215570".Equals(back.SystemAssignedIdentity.PrincipalId.ToString()));
             Assert.IsTrue("72f988bf-86f1-41af-91ab-2d7cd011db40".Equals(back.SystemAssignedIdentity.TenantId.ToString()));
             var user = back.UserAssignedIdentities;
-            Assert.AreEqual("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123z/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity0", user.Keys.First().ToString());
+            Assert.AreEqual("/subscriptions/1ab27dfb-d2ee-4283-b1e3-550deaebb8e4/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity0", user.Keys.First().ToString());
             Assert.AreEqual("9a2eaa6a-b49c-4c63-afb5-3b72e3e65422", user.Values.First().ClientId.ToString());
             Assert.AreEqual("77563a98-c9d9-477b-a7af-592d21fa2153", user.Values.First().PrincipalId.ToString());
-            Assert.AreEqual("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9cfrgh/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity1", user.Keys.ElementAt(1).ToString());
+            Assert.AreEqual("/subscriptions/d96407f5-db8f-4325-b582-84ad21310bd8/resourceGroups/tester/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testidentity1", user.Keys.ElementAt(1).ToString());
             Assert.AreEqual("9a2eaa6a-b49c-4c63-afb5-3b72e3c65420", user.Values.ElementAt(1).ClientId.ToString());
             Assert.AreEqual("77563a98-c9d9-477b-a7af-592d2bfa2150", user.Values.ElementAt(1).PrincipalId.ToString());
         }
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             SystemAssignedIdentity systemAssignedIdentity = new SystemAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
+            var dict1 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport"] = userAssignedIdentity;
             ResourceIdentity identity = new ResourceIdentity(systemAssignedIdentity, dict1);
             string system = "\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\",\"tenantId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\"";
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Core.Tests
             SystemAssignedIdentity systemAssignedIdentity = new SystemAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
             UserAssignedIdentity userAssignedIdentity1 = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
             UserAssignedIdentity userAssignedIdentity2 = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011cb47"), new Guid("de29bab1-49e1-4705-819b-4dfddcebaa98"));
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
+            var dict1 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport1"] = userAssignedIdentity1;
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport2"] = userAssignedIdentity2;
             ResourceIdentity identity = new ResourceIdentity(systemAssignedIdentity, dict1);
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestSerializerValidUserEmptySystem()
         {
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
+            var dict1 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport"] = userAssignedIdentity;
             ResourceIdentity identity = new ResourceIdentity(dict1, true);
             string system = "\"principalId\":\"null\",\"tenantId\":\"null\"";
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Core.Tests
         public void TestSerializerValidUserNullSystem()
         {
             UserAssignedIdentity userAssignedIdentity = new UserAssignedIdentity(new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47"), new Guid("de29bab1-49e1-4705-819b-4dfddceaaa98"));
-            var dict1 = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
+            var dict1 = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
             dict1["/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport"] = userAssignedIdentity;
             ResourceIdentity identity = new ResourceIdentity(dict1, false);
             string user = "{\"clientId\":\"72f988bf-86f1-41af-91ab-2d7cd011db47\",\"principalId\":\"de29bab1-49e1-4705-819b-4dfddceaaa98\"}";

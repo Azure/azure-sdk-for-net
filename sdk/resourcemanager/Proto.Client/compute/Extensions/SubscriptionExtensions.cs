@@ -32,7 +32,7 @@ namespace Proto.Compute
         {
             return new ComputeManagementClient(
                 subscription.BaseUri,
-                subscription.Id.Subscription,
+                subscription.Id.SubscriptionId,
                 subscription.Credential,
                 subscription.ClientOptions.Convert<ComputeManagementClientOptions>());
         }
