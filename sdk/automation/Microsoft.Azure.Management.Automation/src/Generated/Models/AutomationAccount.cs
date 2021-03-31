@@ -49,8 +49,15 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="creationTime">Gets the creation time.</param>
         /// <param name="lastModifiedTime">Gets the last modified time.</param>
         /// <param name="description">Gets or sets the description.</param>
+        /// <param name="encryption">Encryption properties for the automation
+        /// account</param>
+        /// <param name="privateEndpointConnections">List of Automation
+        /// operations supported by the Automation resource provider.</param>
+        /// <param name="publicNetworkAccess">Indicates whether traffic on the
+        /// non-ARM endpoint (Webhook/Agent) is allowed from the public
+        /// internet</param>
         /// <param name="etag">Gets or sets the etag of the resource.</param>
-        public AutomationAccount(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), Sku sku = default(Sku), string lastModifiedBy = default(string), string state = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string), string etag = default(string))
+        public AutomationAccount(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), Sku sku = default(Sku), string lastModifiedBy = default(string), string state = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string), EncryptionProperties encryption = default(EncryptionProperties), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? publicNetworkAccess = default(bool?), string etag = default(string), Identity identity = default(Identity))
             : base(id, name, type, tags, location)
         {
             Sku = sku;
@@ -59,7 +66,11 @@ namespace Microsoft.Azure.Management.Automation.Models
             CreationTime = creationTime;
             LastModifiedTime = lastModifiedTime;
             Description = description;
+            Encryption = encryption;
+            PrivateEndpointConnections = privateEndpointConnections;
+            PublicNetworkAccess = publicNetworkAccess;
             Etag = etag;
+            Identity = identity;
             CustomInit();
         }
 
@@ -106,10 +117,35 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string Description { get; set; }
 
         /// <summary>
+        /// Gets or sets encryption properties for the automation account
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryption")]
+        public EncryptionProperties Encryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of Automation operations supported by the
+        /// Automation resource provider.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.privateEndpointConnections")]
+        public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether traffic on the non-ARM endpoint
+        /// (Webhook/Agent) is allowed from the public internet
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public bool? PublicNetworkAccess { get; set; }
+
+        /// <summary>
         /// Gets or sets the etag of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public Identity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

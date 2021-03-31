@@ -16,24 +16,24 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Software update configuration run tasks model.
     /// </summary>
-    public partial class SoftareUpdateConfigurationRunTasks
+    public partial class SoftwareUpdateConfigurationRunTasks
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// SoftareUpdateConfigurationRunTasks class.
+        /// SoftwareUpdateConfigurationRunTasks class.
         /// </summary>
-        public SoftareUpdateConfigurationRunTasks()
+        public SoftwareUpdateConfigurationRunTasks()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// SoftareUpdateConfigurationRunTasks class.
+        /// SoftwareUpdateConfigurationRunTasks class.
         /// </summary>
         /// <param name="preTask">Pre task properties.</param>
         /// <param name="postTask">Post task properties.</param>
-        public SoftareUpdateConfigurationRunTasks(SoftareUpdateConfigurationRunTaskProperties preTask = default(SoftareUpdateConfigurationRunTaskProperties), SoftareUpdateConfigurationRunTaskProperties postTask = default(SoftareUpdateConfigurationRunTaskProperties))
+        public SoftwareUpdateConfigurationRunTasks(SoftwareUpdateConfigurationRunTaskProperties preTask = default(SoftwareUpdateConfigurationRunTaskProperties), SoftwareUpdateConfigurationRunTaskProperties postTask = default(SoftwareUpdateConfigurationRunTaskProperties))
         {
             PreTask = preTask;
             PostTask = postTask;
@@ -49,13 +49,13 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets pre task properties.
         /// </summary>
         [JsonProperty(PropertyName = "preTask")]
-        public SoftareUpdateConfigurationRunTaskProperties PreTask { get; set; }
+        public SoftwareUpdateConfigurationRunTaskProperties PreTask { get; set; }
 
         /// <summary>
         /// Gets or sets post task properties.
         /// </summary>
         [JsonProperty(PropertyName = "postTask")]
-        public SoftareUpdateConfigurationRunTaskProperties PostTask { get; set; }
+        public SoftwareUpdateConfigurationRunTaskProperties PostTask { get; set; }
 
     }
 }
