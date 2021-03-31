@@ -15,15 +15,13 @@ using NUnit.Framework;
 namespace Azure.IoT.TimeSeriesInsights.Tests
 {
     [LiveOnly]
-    public class TimeSeriesInsightsQueryTests : E2eTestBase
+    public class TimeSeriesInsightsQueryEventsTests : E2eTestBase
     {
-        private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(10);
+        private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(30);
 
         private const int MaxNumberOfRetries = 10;
-        private const string Humidity = "Humidity";
-        private const string Temperature = "Temperature";
 
-        public TimeSeriesInsightsQueryTests(bool isAsync)
+        public TimeSeriesInsightsQueryEventsTests(bool isAsync)
             : base(isAsync)
         {
         }
@@ -45,7 +43,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             try
             {
                 // Send some events to the IoT hub
-                await SendEventsToHubAsync(
+                await QueryTestsHelper.SendEventsToHubAsync(
                         deviceClient,
                         tsiId,
                         modelSettings.TimeSeriesIdProperties.ToArray(),
@@ -76,7 +74,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 }, MaxNumberOfRetries, s_retryDelay);
 
                 // Send more events to the hub
-                await SendEventsToHubAsync(
+                await QueryTestsHelper.SendEventsToHubAsync(
                         deviceClient,
                         tsiId,
                         modelSettings.TimeSeriesIdProperties.ToArray(),
@@ -103,9 +101,9 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 }, MaxNumberOfRetries, s_retryDelay);
 
                 // Send 2 events with a special condition that can be used later to query on
-                IDictionary<string, object> messageBase = BuildMessageBase(modelSettings.TimeSeriesIdProperties.ToArray(), tsiId);
-                messageBase[Temperature] = 1.2;
-                messageBase[Humidity] = 3.4;
+                IDictionary<string, object> messageBase = QueryTestsHelper.BuildMessageBase(modelSettings.TimeSeriesIdProperties.ToArray(), tsiId);
+                messageBase[QueryTestsHelper.Temperature] = 1.2;
+                messageBase[QueryTestsHelper.Humidity] = 3.4;
                 string messageBody = JsonSerializer.Serialize(messageBase);
                 var message = new Message(Encoding.ASCII.GetBytes(messageBody))
                 {
@@ -113,34 +111,32 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     ContentEncoding = "utf-8",
                 };
 
-                await deviceClient.SendEventAsync(message).ConfigureAwait(false);
+                Func<Task> sendEventAct = async () => await deviceClient.SendEventAsync(message).ConfigureAwait(false);
+                await sendEventAct.Should().NotThrowAsync();
 
                 // Send it again
-                await deviceClient.SendEventAsync(message).ConfigureAwait(false);
+                sendEventAct.Should().NotThrow();
 
                 // Query for the two events with a filter
 
                 // Only project Temperature and one of the Id properties
-                var projectedProperties = new List<EventProperty>
+                var queryRequestOptions = new QueryEventsRequestOptions
                 {
+                    Filter = "$event.Temperature.Double = 1.2",
+                    StoreType = StoreType.WarmStore,
+                };
+                queryRequestOptions.ProjectedProperties.Add(
                     new EventProperty
                     {
-                        Name = Temperature,
+                        Name = QueryTestsHelper.Temperature,
                         Type = "Double",
-                    },
+                    });
+                queryRequestOptions.ProjectedProperties.Add(
                     new EventProperty
                     {
                         Name = modelSettings.TimeSeriesIdProperties.First().Name,
                         Type = modelSettings.TimeSeriesIdProperties.First().Type.ToString(),
-                    }
-                };
-
-                var queryRequestOptions = new QueryEventsRequestOptions
-                {
-                    Filter = "$event.Temperature.Double = 1.2",
-                    ProjectedProperties = projectedProperties.ToArray(),
-                    StoreType = StoreType.WarmStore,
-                };
+                    });
 
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
@@ -150,7 +146,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         eventPage.Timestamps.Should().HaveCount(2);
                         eventPage.Properties.Should().HaveCount(2);
                         eventPage.Properties.First().Should().NotBeNull();
-                        eventPage.Properties.First().Name.Should().Be(Temperature);
+                        eventPage.Properties.First().Name.Should().Be(QueryTestsHelper.Temperature);
                         eventPage.Properties[1].Name.Should().Be(modelSettings.TimeSeriesIdProperties.First().Name);
                     }
 
@@ -165,7 +161,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     eventPage.Timestamps.Should().HaveCount(1);
                     eventPage.Properties.Should().HaveCount(2);
                     eventPage.Properties.First().Should().NotBeNull();
-                    eventPage.Properties.First().Name.Should().Be(Temperature);
+                    eventPage.Properties.First().Name.Should().Be(QueryTestsHelper.Temperature);
                     eventPage.Properties[1].Name.Should().Be(modelSettings.TimeSeriesIdProperties.First().Name);
                 }
 
@@ -191,45 +187,6 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             {
                 deviceClient?.Dispose();
             }
-        }
-
-        private async Task SendEventsToHubAsync(DeviceClient client, TimeSeriesId tsiId, TimeSeriesIdProperty[] timeSeriesIdProperties, int numberOfEventsToSend)
-        {
-            IDictionary<string, object> messageBase = BuildMessageBase(timeSeriesIdProperties, tsiId);
-            double minTemperature = 20;
-            double minHumidity = 60;
-            var rand = new Random();
-
-            // Build the message base that is used as the base for every event going out
-            for (int i = 0; i < numberOfEventsToSend; i++)
-            {
-                double currentTemperature = minTemperature + rand.NextDouble() * 15;
-                double currentHumidity = minHumidity + rand.NextDouble() * 20;
-                messageBase[Temperature] = currentTemperature;
-                messageBase[Humidity] = currentHumidity;
-                string messageBody = JsonSerializer.Serialize(messageBase);
-                var message = new Message(Encoding.ASCII.GetBytes(messageBody))
-                {
-                    ContentType = "application/json",
-                    ContentEncoding = "utf-8",
-                };
-
-                await client.SendEventAsync(message).ConfigureAwait(false);
-            }
-        }
-
-        private static IDictionary<string, object> BuildMessageBase(TimeSeriesIdProperty[] timeSeriesIdProperties, TimeSeriesId tsiId)
-        {
-            var messageBase = new Dictionary<string, object>();
-            string[] tsiIdArray = tsiId.ToArray();
-            for (int i = 0; i < timeSeriesIdProperties.Count(); i++)
-            {
-                TimeSeriesIdProperty idProperty = timeSeriesIdProperties[i];
-                string tsiIdValue = tsiIdArray[i];
-                messageBase[idProperty.Name] = tsiIdValue;
-            }
-
-            return messageBase;
         }
     }
 }

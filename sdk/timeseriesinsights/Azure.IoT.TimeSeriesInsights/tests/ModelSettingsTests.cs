@@ -5,14 +5,20 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.IoT.TimeSeriesInsights.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace Azure.IoT.TimeSeriesInsights.Tests
 {
+    [Parallelizable(ParallelScope.None)]
     public class ModelSettingsTests : E2eTestBase
     {
+        private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(20);
+
+        private const int MaxNumberOfRetries = 5;
+
         public ModelSettingsTests(bool isAsync)
             : base(isAsync)
         {
@@ -37,12 +43,17 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 updatedSettingsName.GetRawResponse().Status.Should().Be((int)HttpStatusCode.OK);
                 updatedSettingsName.Value.Name.Should().Be(testName);
 
-                Response<TimeSeriesModelSettings> updatedSettingsId = await client.UpdateModelSettingsDefaultTypeIdAsync(typeId).ConfigureAwait(false);
-                updatedSettingsId.Value.DefaultTypeId.Should().Be(typeId);
+                await TestRetryHelper.RetryAsync<Response<TimeSeriesModelSettings>>(async () =>
+                {
+                    Response<TimeSeriesModelSettings> updatedSettingsId = await client.UpdateModelSettingsDefaultTypeIdAsync(typeId).ConfigureAwait(false);
+                    updatedSettingsId.Value.DefaultTypeId.Should().Be(typeId);
 
-                // update it back to the default Type Id
-                updatedSettingsId = await client.UpdateModelSettingsDefaultTypeIdAsync(defaultTypeId).ConfigureAwait(false);
-                updatedSettingsId.Value.DefaultTypeId.Should().Be(defaultTypeId);
+                    // update it back to the default Type Id
+                    updatedSettingsId = await client.UpdateModelSettingsDefaultTypeIdAsync(defaultTypeId).ConfigureAwait(false);
+                    updatedSettingsId.Value.DefaultTypeId.Should().Be(defaultTypeId);
+
+                    return null;
+                }, MaxNumberOfRetries, s_retryDelay);
             }
             finally
             {

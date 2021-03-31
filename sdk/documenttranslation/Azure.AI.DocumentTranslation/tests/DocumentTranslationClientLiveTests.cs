@@ -23,7 +23,7 @@ namespace Azure.AI.DocumentTranslation.Tests
         [RecordedTest]
         public void ClientCannotAuthenticateWithFakeApiKey()
         {
-            var client = GetClient(credential: new AzureKeyCredential("fakeKey"));
+            DocumentTranslationClient client = GetClient(credential: new AzureKeyCredential("fakeKey"));
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetDocumentFormatsAsync());
 
@@ -33,19 +33,38 @@ namespace Azure.AI.DocumentTranslation.Tests
         [RecordedTest]
         public async Task GetDocumentFormatsTest()
         {
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
             var documentFormats = await client.GetDocumentFormatsAsync();
+
             Assert.GreaterOrEqual(documentFormats.Value.Count, 0);
+            foreach (FileFormat fileFormat in documentFormats.Value)
+            {
+                Assert.IsFalse(string.IsNullOrEmpty(fileFormat.Format));
+                Assert.IsNotNull(fileFormat.FileExtensions);
+                Assert.IsNotNull(fileFormat.FormatVersions);
+            }
         }
 
         [RecordedTest]
         public async Task GetGlossaryFormatsTest()
         {
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
             var glossaryFormats = await client.GetGlossaryFormatsAsync();
+
             Assert.GreaterOrEqual(glossaryFormats.Value.Count, 0);
+            foreach (FileFormat glossaryFormat in glossaryFormats.Value)
+            {
+                Assert.IsFalse(string.IsNullOrEmpty(glossaryFormat.Format));
+                Assert.IsNotNull(glossaryFormat.FileExtensions);
+                Assert.IsNotNull(glossaryFormat.FormatVersions);
+
+                if (glossaryFormat.Format == "XLIFF")
+                {
+                    Assert.IsFalse(string.IsNullOrEmpty(glossaryFormat.DefaultFormatVersion));
+                }
+            }
         }
 
         [RecordedTest]

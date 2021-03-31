@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -130,6 +131,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
         /// <param name="sessionId">An optional session Id to scope the receiver to. If not specified,
         /// the next available session returned from the service will be used.</param>
+        /// <param name="cancellationToken">The cancellation token to use when opening the receiver link.</param>
         ///
         internal ServiceBusReceiver(
             ServiceBusConnection connection,
@@ -137,10 +139,15 @@ namespace Azure.Messaging.ServiceBus
             bool isSessionEntity,
             IList<ServiceBusPlugin> plugins,
             ServiceBusReceiverOptions options,
-            string sessionId = default)
+            string sessionId = default,
+            CancellationToken cancellationToken = default)
         {
             Type type = GetType();
             Logger.ClientCreateStart(type, connection?.FullyQualifiedNamespace, entityPath);
+
+            // cancellationToken should not be passed for non-session entities
+            Debug.Assert(isSessionEntity || cancellationToken == default);
+
             try
             {
                 Argument.AssertNotNull(connection, nameof(connection));
@@ -176,7 +183,8 @@ namespace Azure.Messaging.ServiceBus
                     prefetchCount: (uint)PrefetchCount,
                     identifier: Identifier,
                     sessionId: sessionId,
-                    isSessionReceiver: IsSessionReceiver);
+                    isSessionReceiver: IsSessionReceiver,
+                    cancellationToken: cancellationToken);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
                 _plugins = plugins;
                 if (!isSessionEntity)
