@@ -440,7 +440,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.ETag ETag { get { throw null; } }
         public bool HasLegalHold { get { throw null; } }
         public System.DateTimeOffset? ImmutabilityPolicyExpiresOn { get { throw null; } }
-        public string ImmutabilityPolicyMode { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicyMode? ImmutabilityPolicyMode { get { throw null; } }
         public bool IsSealed { get { throw null; } }
         public bool IsServerEncrypted { get { throw null; } }
         public System.DateTimeOffset LastAccessed { get { throw null; } }
@@ -656,6 +656,7 @@ namespace Azure.Storage.Blobs.Models
     {
         Unlocked = 0,
         Locked = 1,
+        Mutable = 2,
     }
     public partial class BlobInfo
     {
@@ -709,7 +710,7 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public bool HasLegalHold { get { throw null; } }
         public System.DateTimeOffset? ImmutabilityPolicyExpiresOn { get { throw null; } }
-        public string ImmutabilityPolicyMode { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicyMode? ImmutabilityPolicyMode { get { throw null; } }
         public bool? IncrementalCopy { get { throw null; } }
         public bool? IsSealed { get { throw null; } }
         public System.DateTimeOffset? LastAccessedOn { get { throw null; } }
@@ -787,7 +788,7 @@ namespace Azure.Storage.Blobs.Models
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public bool HasLegalHold { get { throw null; } }
         public System.DateTimeOffset? ImmutabilityPolicyExpiresOn { get { throw null; } }
-        public string ImmutabilityPolicyMode { get { throw null; } }
+        public Azure.Storage.Blobs.Models.BlobImmutabilityPolicyMode? ImmutabilityPolicyMode { get { throw null; } }
         public bool IsIncrementalCopy { get { throw null; } }
         public bool IsLatestVersion { get { throw null; } }
         public bool IsSealed { get { throw null; } }

@@ -4949,6 +4949,11 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetImmutabilityPolicy)}");
 
+                if (immutabilityPolicy?.PolicyMode == BlobImmutabilityPolicyMode.Mutable)
+                {
+                    throw new ArgumentException($"{nameof(immutabilityPolicy.PolicyMode)} must be {BlobImmutabilityPolicyMode.Locked} or {BlobImmutabilityPolicyMode.Unlocked}");
+                }
+
                 try
                 {
                     scope.Start();

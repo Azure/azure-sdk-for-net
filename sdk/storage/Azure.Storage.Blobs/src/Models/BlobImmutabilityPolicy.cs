@@ -16,7 +16,8 @@ namespace Azure.Storage.Blobs.Models
         public DateTimeOffset? ExpiriesOn { get; set; }
 
         /// <summary>
-        /// The mode of the Immutability Policy.
+        /// The mode of the Immutability Policy.  Valid values are <see cref="BlobImmutabilityPolicyMode.Locked"/> and
+        /// <see cref="BlobImmutabilityPolicyMode.Unlocked"/>.
         /// </summary>
         public BlobImmutabilityPolicyMode? PolicyMode { get; set; }
     }

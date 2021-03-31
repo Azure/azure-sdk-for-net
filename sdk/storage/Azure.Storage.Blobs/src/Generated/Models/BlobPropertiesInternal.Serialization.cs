@@ -53,7 +53,7 @@ namespace Azure.Storage.Blobs.Models
             RehydratePriority? rehydratePriority = default;
             DateTimeOffset? lastAccessedOn = default;
             DateTimeOffset? immutabilityPolicyExpiresOn = default;
-            string immutabilityPolicyMode = default;
+            BlobImmutabilityPolicyMode? immutabilityPolicyMode = default;
             bool? legalHold = default;
             if (element.Element("Creation-Time") is XElement creationTimeElement)
             {
@@ -209,7 +209,7 @@ namespace Azure.Storage.Blobs.Models
             }
             if (element.Element("ImmutabilityPolicyMode") is XElement immutabilityPolicyModeElement)
             {
-                immutabilityPolicyMode = (string)immutabilityPolicyModeElement;
+                immutabilityPolicyMode = immutabilityPolicyModeElement.Value.ToBlobImmutabilityPolicyMode();
             }
             if (element.Element("LegalHold") is XElement legalHoldElement)
             {

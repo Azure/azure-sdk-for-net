@@ -13,6 +13,8 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Unlocked. </summary>
         Unlocked,
         /// <summary> Locked. </summary>
-        Locked
+        Locked,
+        /// <summary> Mutable. </summary>
+        Mutable
     }
 }

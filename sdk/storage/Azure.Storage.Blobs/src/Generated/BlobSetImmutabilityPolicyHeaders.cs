@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> Indicates the time the immutability policy will expire. </summary>
         public DateTimeOffset? ImmutabilityPolicyExpiry => _response.Headers.TryGetValue("x-ms-immutability-policy-until-date", out DateTimeOffset? value) ? value : null;
-        /// <summary> Indicates immutability poliy mode. </summary>
+        /// <summary> Indicates immutability policy mode. </summary>
         public BlobImmutabilityPolicyMode? ImmutabilityPolicyMode => _response.Headers.TryGetValue("x-ms-immutability-policy-mode", out string value) ? value.ToBlobImmutabilityPolicyMode() : (BlobImmutabilityPolicyMode?)null;
     }
 }
