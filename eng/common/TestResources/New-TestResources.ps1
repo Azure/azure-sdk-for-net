@@ -204,10 +204,11 @@ try {
             $context = (Connect-AzAccount).Context
         }
 
+        $currentSubcriptionId = $context.Subscription.Id
+
         # If no subscription was specified, try to select the Azure SDK Developer Playground subscription.
         # Ignore errors to leave the automatically selected subscription.
         if ($SubscriptionId) {
-            $currentSubcriptionId = $context.Subscription.Id
             if ($currentSubcriptionId -ne $SubscriptionId) {
                 Log "Selecting subscription '$SubscriptionId'"
                 $null = Select-AzSubscription -Subscription $SubscriptionId
@@ -221,11 +222,13 @@ try {
                 $context = Get-AzContext
             }
         } else {
-            Log "Attempting to select subscription 'Azure SDK Developer Playground (faa080af-c1d8-40ad-9cce-e1a450ca5b57)'"
-            $null = Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore
+            if ($currentSubcriptionId -ne 'faa080af-c1d8-40ad-9cce-e1a450ca5b57') {
+                Log "Attempting to select subscription 'Azure SDK Developer Playground (faa080af-c1d8-40ad-9cce-e1a450ca5b57)'"
+                $null = Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore
 
-            # Update the context.
-            $context = Get-AzContext
+                # Update the context.
+                $context = Get-AzContext
+            }
 
             $SubscriptionId = $context.Subscription.Id
             $PSBoundParameters['SubscriptionId'] = $SubscriptionId
@@ -244,7 +247,7 @@ try {
             $subscriptionName = '{0} ({1})' -f $wellKnownSubscriptions[$subscriptionName], $subscriptionName
         }
 
-        Log "Selected subscription '$subscriptionName'"
+        Log "Using subscription '$subscriptionName'"
 
         # Make sure the TenantId is also updated from the current context.
         # PSBoundParameters is not updated to avoid confusing parameter sets.
@@ -385,11 +388,15 @@ try {
         # New-AzResourceGroup would've written an error and stopped the pipeline by default anyway.
         Write-Verbose "Successfully created resource group '$($resourceGroup.ResourceGroupName)'"
     }
-    elseif (!$resourceGroup -and !$PSCmdlet.ShouldProcess($resourceGroupName)) {
-        # If the -WhatIf flag was passed, there will be no resource group created. Fake it.
-        $resourceGroup = [PSCustomObject]@{
-            ResourceGroupName = $resourceGroupName
-            Location = $Location
+    elseif (!$resourceGroup) {
+        if (!$PSCmdlet.ShouldProcess($resourceGroupName)) {
+            # If the -WhatIf flag was passed, there will be no resource group created. Fake it.
+            $resourceGroup = [PSCustomObject]@{
+                ResourceGroupName = $resourceGroupName
+                Location = $Location
+            }
+        } else {
+            Write-Error "Resource group '$ResourceGroupName' already exists." -Category ResourceExists -RecommendedAction "Delete resource group '$ResourceGroupName', or overwrite it when redeploying."
         }
     }
 
@@ -452,7 +459,7 @@ try {
                 if ($CI) {
                     $DebugPreference = 'Continue'
                 }
-                New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters
+                New-AzResourceGroupDeployment -Name $BaseName -ResourceGroupName $resourceGroup.ResourceGroupName -TemplateFile $templateFile -TemplateParameterObject $templateFileParameters -Mode Complete -Force:$Force
             } catch {
                 Write-Output @'
 #####################################################
