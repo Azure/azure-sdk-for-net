@@ -260,7 +260,7 @@ namespace Azure.IoT.TimeSeriesInsights
     public partial class QuerySeriesRequestOptions : Azure.IoT.TimeSeriesInsights.QueryRequestOptions
     {
         public QuerySeriesRequestOptions() { }
-        public System.Collections.Generic.IDictionary<string, Azure.IoT.TimeSeriesInsights.TimeSeriesVariable> InlineVariables { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.IoT.TimeSeriesInsights.TimeSeriesVariable> InlineVariables { get { throw null; } }
         public System.Collections.Generic.List<string> ProjectedVariables { get { throw null; } }
     }
     public partial class SearchHierarchyNodesResponse
