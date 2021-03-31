@@ -10,7 +10,7 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Security.Attestation.Models
 {
-    [JsonConverter(typeof(AttestationResultConverter))]
+    [CodeGenModel(Usage = new[] {"converter"})]
     public partial class AttestationResult
     {
         internal AttestationResult()

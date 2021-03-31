@@ -30,9 +30,7 @@ namespace Azure.Security.Attestation.Tests
             StoredAttestationPolicy policyResult = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
             var result = policyResult.AttestationPolicy;
 
-            var policyRaw = Base64Url.Decode(result);
-            var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
-            Assert.IsTrue(policy.StartsWith("version"));
+            Assert.IsTrue(result.StartsWith("version"));
         }
 
         [RecordedTest]
@@ -41,10 +39,8 @@ namespace Azure.Security.Attestation.Tests
             var adminclient = GetAadAdministrationClient();
 
             StoredAttestationPolicy policyResult = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
-            var result = policyResult.AttestationPolicy;
+            var policy = policyResult.AttestationPolicy;
 
-            var policyRaw = Base64Url.Decode(result);
-            var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
             Assert.IsTrue(policy.StartsWith("version"));
         }
 
@@ -56,10 +52,7 @@ namespace Azure.Security.Attestation.Tests
             StoredAttestationPolicy policyResult = await adminclient.GetPolicyAsync(AttestationType.SgxEnclave);
             var result = policyResult.AttestationPolicy;
 
-            var policyRaw = Base64Url.Decode(result);
-            var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
-
-            Assert.IsTrue(policy.StartsWith("version"));
+            Assert.IsTrue(result.StartsWith("version"));
         }
 
         public const string disallowDebugging = "version=1.0;" +
@@ -121,16 +114,12 @@ namespace Azure.Security.Attestation.Tests
 
             string originalPolicy;
             {
-                var policyResult = await adminclient.GetPolicyAsync(AttestationType.OpenEnclave);
-                var result = policyResult.Value.AttestationPolicy;
-
-                var policyRaw = Base64Url.Decode(result);
-                originalPolicy = System.Text.Encoding.UTF8.GetString(policyRaw);
+                originalPolicy = (await adminclient.GetPolicyAsync(AttestationType.OpenEnclave)).Value.AttestationPolicy;
             }
 
             byte[] disallowDebuggingHash;
             {
-                var policySetToken = new UnsecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(disallowDebugging) });
+                var policySetToken = new UnsecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = disallowDebugging });
 
                 var policySetResult = await adminclient.SetPolicyAsync(AttestationType.OpenEnclave, policySetToken);
 
@@ -144,12 +133,8 @@ namespace Azure.Security.Attestation.Tests
 
             {
                 var policyResult = await adminclient.GetPolicyAsync(AttestationType.OpenEnclave);
-                var result = policyResult.Value.AttestationPolicy;
 
-                var policyRaw = Base64Url.Decode(result);
-                var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
-
-                Assert.AreEqual(disallowDebugging, policy);
+                Assert.AreEqual(disallowDebugging, policyResult.Value.AttestationPolicy);
             }
             {
                 var policyResetToken = new UnsecuredAttestationToken();
@@ -161,13 +146,9 @@ namespace Azure.Security.Attestation.Tests
 
             {
                 var policyResult = await adminclient.GetPolicyAsync(AttestationType.OpenEnclave);
-                var result = policyResult.Value.AttestationPolicy;
-
-                var policyRaw = Base64Url.Decode(result);
-                var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
 
                 // And when we're done, policy should be reset to the original value.
-                Assert.AreEqual(originalPolicy, policy);
+                Assert.AreEqual(originalPolicy, policyResult.Value.AttestationPolicy);
             }
         }
 
@@ -178,7 +159,7 @@ namespace Azure.Security.Attestation.Tests
 
             byte[] disallowDebuggingHash;
             {
-                var policySetToken = new UnsecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(disallowDebugging) });
+                var policySetToken = new UnsecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = disallowDebugging });
 
                 var shaHasher = SHA256Managed.Create();
                 disallowDebuggingHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
@@ -194,14 +175,7 @@ namespace Azure.Security.Attestation.Tests
             // Reset the current attestation policy to a known state. Necessary if there were previous runs that failed.
             await ResetAttestationPolicy(adminClient, AttestationType.OpenEnclave, true, isIsolated);
 
-            string originalPolicy;
-            {
-                var policyResult = await adminClient.GetPolicyAsync(AttestationType.OpenEnclave);
-                var result = policyResult.Value.AttestationPolicy;
-
-                var policyRaw = Base64Url.Decode(result);
-                originalPolicy = System.Text.Encoding.UTF8.GetString(policyRaw);
-            }
+            string originalPolicy = (await adminClient.GetPolicyAsync(AttestationType.OpenEnclave)).Value.AttestationPolicy;
 
             X509Certificate2 x509Certificate;
             RSA rsaKey;
@@ -221,7 +195,7 @@ namespace Azure.Security.Attestation.Tests
 
             byte[] disallowDebuggingHash;
             {
-                var policySetToken = new SecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(disallowDebugging) }, rsaKey, x509Certificate);
+                var policySetToken = new SecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = disallowDebugging }, rsaKey, x509Certificate);
 
                 var policySetResult = await adminClient.SetPolicyAsync(AttestationType.OpenEnclave, policySetToken);
 
@@ -236,12 +210,8 @@ namespace Azure.Security.Attestation.Tests
 
             {
                 var policyResult = await adminClient.GetPolicyAsync(AttestationType.OpenEnclave);
-                var result = policyResult.Value.AttestationPolicy;
 
-                var policyRaw = Base64Url.Decode(result);
-                var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
-
-                Assert.AreEqual(disallowDebugging, policy);
+                Assert.AreEqual(disallowDebugging, policyResult.Value.AttestationPolicy);
             }
             {
                 var policyResetToken = new SecuredAttestationToken(rsaKey, x509Certificate);
@@ -253,13 +223,9 @@ namespace Azure.Security.Attestation.Tests
 
             {
                 var policyResult = await adminClient.GetPolicyAsync(AttestationType.OpenEnclave);
-                var result = policyResult.Value.AttestationPolicy;
-
-                var policyRaw = Base64Url.Decode(result);
-                var policy = System.Text.Encoding.UTF8.GetString(policyRaw);
 
                 // And when we're done, policy should be reset to the original value.
-                Assert.AreEqual(originalPolicy, policy);
+                Assert.AreEqual(originalPolicy, policyResult.Value.AttestationPolicy);
             }
         }
 

@@ -13,6 +13,7 @@ namespace Azure.Security.Attestation.Models
     /// <summary>
     /// Represents a Policy Get or Set or Reset result.
     /// </summary>
+    [CodeGenModel(Usage = new[] { "converter" })]
     public partial class PolicyResult
     {
         /// <summary>

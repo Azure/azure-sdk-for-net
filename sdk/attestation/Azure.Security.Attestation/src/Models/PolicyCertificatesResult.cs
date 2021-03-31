@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation.Models
 {
-    [JsonConverter(typeof(PolicyCertificatesResultConverter))]
+    [CodeGenModel(Usage = new[] { "converter" })]
     public partial class PolicyCertificatesResult
     {
         private IReadOnlyList<X509Certificate2> _certificateList;

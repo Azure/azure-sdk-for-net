@@ -26,7 +26,7 @@ dotnet add package Azure.Security.Attestation --prerelease
 ```
 
 ### Authenticate the client
-In order to interact with the Microsoft Azure Attestation service, you'll need to create an instance of the [Attestation Client][key_client_class] class. You need a **attestation instance url**, which you may see as "DNS Name" in the portal,
+In order to interact with the Microsoft Azure Attestation service, you'll need to create an instance of the [Attestation Client][attestation_client] or [Attestation Administration Client][attestation_admin_client] class. You need a **attestation instance url**, which you may see as "DNS Name" in the portal,
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
@@ -230,6 +230,8 @@ See [CONTRIBUTING.md][contributing] for details on building, testing, and contri
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [API_reference]: https://docs.microsoft.com/dotnet/api/azure.security.attestation?view=azure-dotnet-preview
+[attestation_admin_client]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationadministrationclient?view=azure-dotnet-preview
+[attestation_client]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationclient?view=azure-dotnet-preview
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/
@@ -238,7 +240,7 @@ See [CONTRIBUTING.md][contributing] for details on building, testing, and contri
 [base64url_encoding]: https://tools.ietf.org/html/rfc4648#section-5
 [nuget]: https://www.nuget.org/
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential
-[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/CONTRIBUTING.md
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fattestation%2FAzure.Security.Attestation%2FREADME.png)

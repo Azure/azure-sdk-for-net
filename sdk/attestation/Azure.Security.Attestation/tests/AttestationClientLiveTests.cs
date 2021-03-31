@@ -10,7 +10,7 @@ namespace Azure.Security.Attestation.Tests
 {
     public class AttestationClientLiveTests: RecordedTestBase<AttestationClientTestEnvironment>
     {
-        public AttestationClientLiveTests(bool isAsync) : base(isAsync)
+        public AttestationClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             //TODO: https://github.com/Azure/autorest.csharp/issues/689
             TestDiagnostics = false;

@@ -7,12 +7,190 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Security.Attestation.Models
 {
-    public partial class AttestationResult
+    [JsonConverter(typeof(AttestationResultConverter))]
+    public partial class AttestationResult : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(InternalJti))
+            {
+                writer.WritePropertyName("jti");
+                writer.WriteStringValue(InternalJti);
+            }
+            if (Optional.IsDefined(InternalIss))
+            {
+                writer.WritePropertyName("iss");
+                writer.WriteStringValue(InternalIss);
+            }
+            if (Optional.IsDefined(InternalIat))
+            {
+                writer.WritePropertyName("iat");
+                writer.WriteNumberValue(InternalIat);
+            }
+            if (Optional.IsDefined(InternalExp))
+            {
+                writer.WritePropertyName("exp");
+                writer.WriteNumberValue(InternalExp);
+            }
+            if (Optional.IsDefined(InternalNbf))
+            {
+                writer.WritePropertyName("nbf");
+                writer.WriteNumberValue(InternalNbf);
+            }
+            if (Optional.IsDefined(InternalCnf))
+            {
+                writer.WritePropertyName("cnf");
+                writer.WriteObjectValue(InternalCnf);
+            }
+            if (Optional.IsDefined(Nonce))
+            {
+                writer.WritePropertyName("nonce");
+                writer.WriteStringValue(Nonce);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("x-ms-ver");
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(RuntimeClaims))
+            {
+                writer.WritePropertyName("x-ms-runtime");
+                writer.WriteObjectValue(RuntimeClaims);
+            }
+            if (Optional.IsDefined(InittimeClaims))
+            {
+                writer.WritePropertyName("x-ms-inittime");
+                writer.WriteObjectValue(InittimeClaims);
+            }
+            if (Optional.IsDefined(PolicyClaims))
+            {
+                writer.WritePropertyName("x-ms-policy");
+                writer.WriteObjectValue(PolicyClaims);
+            }
+            if (Optional.IsDefined(VerifierType))
+            {
+                writer.WritePropertyName("x-ms-attestation-type");
+                writer.WriteStringValue(VerifierType);
+            }
+            if (Optional.IsDefined(InternalPolicySigner))
+            {
+                writer.WritePropertyName("x-ms-policy-signer");
+                writer.WriteObjectValue(InternalPolicySigner);
+            }
+            if (Optional.IsDefined(PolicyHash))
+            {
+                writer.WritePropertyName("x-ms-policy-hash");
+                writer.WriteBase64StringValue(PolicyHash, "U");
+            }
+            if (Optional.IsDefined(IsDebuggable))
+            {
+                writer.WritePropertyName("x-ms-sgx-is-debuggable");
+                writer.WriteBooleanValue(IsDebuggable.Value);
+            }
+            if (Optional.IsDefined(ProductId))
+            {
+                writer.WritePropertyName("x-ms-sgx-product-id");
+                writer.WriteNumberValue(ProductId.Value);
+            }
+            if (Optional.IsDefined(MrEnclave))
+            {
+                writer.WritePropertyName("x-ms-sgx-mrenclave");
+                writer.WriteStringValue(MrEnclave);
+            }
+            if (Optional.IsDefined(MrSigner))
+            {
+                writer.WritePropertyName("x-ms-sgx-mrsigner");
+                writer.WriteStringValue(MrSigner);
+            }
+            if (Optional.IsDefined(Svn))
+            {
+                writer.WritePropertyName("x-ms-sgx-svn");
+                writer.WriteNumberValue(Svn.Value);
+            }
+            if (Optional.IsDefined(EnclaveHeldData))
+            {
+                writer.WritePropertyName("x-ms-sgx-ehd");
+                writer.WriteBase64StringValue(EnclaveHeldData, "U");
+            }
+            if (Optional.IsDefined(SgxCollateral))
+            {
+                writer.WritePropertyName("x-ms-sgx-collateral");
+                writer.WriteObjectValue(SgxCollateral);
+            }
+            if (Optional.IsDefined(DeprecatedVersion))
+            {
+                writer.WritePropertyName("ver");
+                writer.WriteStringValue(DeprecatedVersion);
+            }
+            if (Optional.IsDefined(DeprecatedIsDebuggable))
+            {
+                writer.WritePropertyName("is-debuggable");
+                writer.WriteBooleanValue(DeprecatedIsDebuggable.Value);
+            }
+            if (Optional.IsDefined(DeprecatedSgxCollateral))
+            {
+                writer.WritePropertyName("maa-attestationcollateral");
+                writer.WriteObjectValue(DeprecatedSgxCollateral);
+            }
+            if (Optional.IsDefined(DeprecatedEnclaveHeldData))
+            {
+                writer.WritePropertyName("aas-ehd");
+                writer.WriteBase64StringValue(DeprecatedEnclaveHeldData, "U");
+            }
+            if (Optional.IsDefined(DeprecatedEnclaveHeldData2))
+            {
+                writer.WritePropertyName("maa-ehd");
+                writer.WriteBase64StringValue(DeprecatedEnclaveHeldData2, "U");
+            }
+            if (Optional.IsDefined(DeprecatedProductId))
+            {
+                writer.WritePropertyName("product-id");
+                writer.WriteNumberValue(DeprecatedProductId.Value);
+            }
+            if (Optional.IsDefined(DeprecatedMrEnclave))
+            {
+                writer.WritePropertyName("sgx-mrenclave");
+                writer.WriteStringValue(DeprecatedMrEnclave);
+            }
+            if (Optional.IsDefined(DeprecatedMrSigner))
+            {
+                writer.WritePropertyName("sgx-mrsigner");
+                writer.WriteStringValue(DeprecatedMrSigner);
+            }
+            if (Optional.IsDefined(DeprecatedSvn))
+            {
+                writer.WritePropertyName("svn");
+                writer.WriteNumberValue(DeprecatedSvn.Value);
+            }
+            if (Optional.IsDefined(DeprecatedTee))
+            {
+                writer.WritePropertyName("tee");
+                writer.WriteStringValue(DeprecatedTee);
+            }
+            if (Optional.IsDefined(InternalDeprecatedPolicySigner))
+            {
+                writer.WritePropertyName("policy_signer");
+                writer.WriteObjectValue(InternalDeprecatedPolicySigner);
+            }
+            if (Optional.IsDefined(DeprecatedPolicyHash))
+            {
+                writer.WritePropertyName("policy_hash");
+                writer.WriteBase64StringValue(DeprecatedPolicyHash, "U");
+            }
+            if (Optional.IsDefined(DeprecatedRpData))
+            {
+                writer.WritePropertyName("rp_data");
+                writer.WriteStringValue(DeprecatedRpData);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static AttestationResult DeserializeAttestationResult(JsonElement element)
         {
             Optional<string> jti = default;
@@ -333,6 +511,19 @@ namespace Azure.Security.Attestation.Models
                 }
             }
             return new AttestationResult(jti.Value, iss.Value, iat, exp, nbf, cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Optional.ToNullable(xMsSgxIsDebuggable), Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value);
+        }
+
+        internal partial class AttestationResultConverter : JsonConverter<AttestationResult>
+        {
+            public override void Write(Utf8JsonWriter writer, AttestationResult model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AttestationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAttestationResult(document.RootElement);
+            }
         }
     }
 }

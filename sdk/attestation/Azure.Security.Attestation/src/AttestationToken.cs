@@ -38,9 +38,6 @@ namespace Azure.Security.Attestation
             TokenHeaderBytes = Base64Url.Decode(decomposedToken[0]);
             TokenBodyBytes = Base64Url.Decode(decomposedToken[1]);
             TokenSignatureBytes = Base64Url.Decode(decomposedToken[2]);
-
-            _options.Converters.Add(new PolicyResultConverter());
-            _options.Converters.Add(new AttestationResultConverter());
         }
 
         /// <summary>

@@ -11,8 +11,7 @@ namespace Azure.Security.Attestation.Models
     /// <summary>
     /// Represents the body of a policy Add operation.
     /// </summary>
-    [CodeGenModel("AttestationCertificateManagementBody")]
-    [JsonConverter(typeof(PolicyCertificateModificationConverter))]
+    [CodeGenModel("AttestationCertificateManagementBody", Usage = new[] { "converter" })]
     public partial class PolicyCertificateModification
     {
         /// <summary>

@@ -161,7 +161,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             var policyTokenSigner = TestEnvironment.PolicyCertificate0;
 
             AttestationToken policySetToken = new SecuredAttestationToken(
-                new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(attestationPolicy), },
+                new StoredAttestationPolicy { AttestationPolicy = attestationPolicy, },
                 TestEnvironment.PolicySigningKey0,
                 policyTokenSigner);
 

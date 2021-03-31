@@ -86,56 +86,56 @@ namespace Azure.Security.Attestation.Models
             DeprecatedRpData = deprecatedRpData;
         }
         /// <summary> The Nonce input to the attestation request, if provided. </summary>
-        public string Nonce { get; }
+        public string Nonce { get; set; }
         /// <summary> The Schema version of this structure. Current Value: 1.0. </summary>
-        public string Version { get; }
+        public string Version { get; set; }
         /// <summary> Runtime Claims. </summary>
-        public object RuntimeClaims { get; }
+        public object RuntimeClaims { get; set; }
         /// <summary> Inittime Claims. </summary>
-        public object InittimeClaims { get; }
+        public object InittimeClaims { get; set; }
         /// <summary> Policy Generated Claims. </summary>
-        public object PolicyClaims { get; }
+        public object PolicyClaims { get; set; }
         /// <summary> The Attestation type being attested. </summary>
-        public string VerifierType { get; }
+        public string VerifierType { get; set; }
         /// <summary> The SHA256 hash of the BASE64URL encoded policy text used for attestation. </summary>
-        public byte[] PolicyHash { get; }
+        public byte[] PolicyHash { get; set; }
         /// <summary> True if the enclave is debuggable, false otherwise. </summary>
-        public bool? IsDebuggable { get; }
+        public bool? IsDebuggable { get; set; }
         /// <summary> The SGX Product ID for the enclave. </summary>
-        public float? ProductId { get; }
+        public float? ProductId { get; set; }
         /// <summary> The HEX encoded SGX MRENCLAVE value for the enclave. </summary>
-        public string MrEnclave { get; }
+        public string MrEnclave { get; set; }
         /// <summary> The HEX encoded SGX MRSIGNER value for the enclave. </summary>
-        public string MrSigner { get; }
+        public string MrSigner { get; set; }
         /// <summary> The SGX SVN value for the enclave. </summary>
-        public float? Svn { get; }
+        public float? Svn { get; set; }
         /// <summary> A copy of the RuntimeData specified as an input to the attest call. </summary>
-        public byte[] EnclaveHeldData { get; }
+        public byte[] EnclaveHeldData { get; set; }
         /// <summary> The SGX SVN value for the enclave. </summary>
-        public object SgxCollateral { get; }
+        public object SgxCollateral { get; set; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-ver claim. </summary>
-        public string DeprecatedVersion { get; }
+        public string DeprecatedVersion { get; set; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-is-debuggable claim. </summary>
-        public bool? DeprecatedIsDebuggable { get; }
+        public bool? DeprecatedIsDebuggable { get; set; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-collateral claim. </summary>
-        public object DeprecatedSgxCollateral { get; }
+        public object DeprecatedSgxCollateral { get; set; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-ehd claim. </summary>
-        public byte[] DeprecatedEnclaveHeldData { get; }
+        public byte[] DeprecatedEnclaveHeldData { get; set; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-ehd claim. </summary>
-        public byte[] DeprecatedEnclaveHeldData2 { get; }
+        public byte[] DeprecatedEnclaveHeldData2 { get; set; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-product-id. </summary>
-        public float? DeprecatedProductId { get; }
+        public float? DeprecatedProductId { get; set; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-mrenclave. </summary>
-        public string DeprecatedMrEnclave { get; }
+        public string DeprecatedMrEnclave { get; set; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-mrsigner. </summary>
-        public string DeprecatedMrSigner { get; }
+        public string DeprecatedMrSigner { get; set; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-sgx-svn. </summary>
-        public float? DeprecatedSvn { get; }
+        public float? DeprecatedSvn { get; set; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-tee. </summary>
-        public string DeprecatedTee { get; }
+        public string DeprecatedTee { get; set; }
         /// <summary> DEPRECATED: Private Preview version of x-ms-policy-hash. </summary>
-        public byte[] DeprecatedPolicyHash { get; }
+        public byte[] DeprecatedPolicyHash { get; set; }
         /// <summary> DEPRECATED: Private Preview version of nonce. </summary>
-        public string DeprecatedRpData { get; }
+        public string DeprecatedRpData { get; set; }
     }
 }

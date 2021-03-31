@@ -11,8 +11,92 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation.Models
 {
-    internal partial class JsonWebKey
+    internal partial class JsonWebKey : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("alg");
+            writer.WriteStringValue(Alg);
+            if (Optional.IsDefined(Crv))
+            {
+                writer.WritePropertyName("crv");
+                writer.WriteStringValue(Crv);
+            }
+            if (Optional.IsDefined(D))
+            {
+                writer.WritePropertyName("d");
+                writer.WriteStringValue(D);
+            }
+            if (Optional.IsDefined(Dp))
+            {
+                writer.WritePropertyName("dp");
+                writer.WriteStringValue(Dp);
+            }
+            if (Optional.IsDefined(Dq))
+            {
+                writer.WritePropertyName("dq");
+                writer.WriteStringValue(Dq);
+            }
+            if (Optional.IsDefined(E))
+            {
+                writer.WritePropertyName("e");
+                writer.WriteStringValue(E);
+            }
+            if (Optional.IsDefined(K))
+            {
+                writer.WritePropertyName("k");
+                writer.WriteStringValue(K);
+            }
+            writer.WritePropertyName("kid");
+            writer.WriteStringValue(Kid);
+            writer.WritePropertyName("kty");
+            writer.WriteStringValue(Kty);
+            if (Optional.IsDefined(N))
+            {
+                writer.WritePropertyName("n");
+                writer.WriteStringValue(N);
+            }
+            if (Optional.IsDefined(P))
+            {
+                writer.WritePropertyName("p");
+                writer.WriteStringValue(P);
+            }
+            if (Optional.IsDefined(Q))
+            {
+                writer.WritePropertyName("q");
+                writer.WriteStringValue(Q);
+            }
+            if (Optional.IsDefined(Qi))
+            {
+                writer.WritePropertyName("qi");
+                writer.WriteStringValue(Qi);
+            }
+            writer.WritePropertyName("use");
+            writer.WriteStringValue(Use);
+            if (Optional.IsDefined(X))
+            {
+                writer.WritePropertyName("x");
+                writer.WriteStringValue(X);
+            }
+            if (Optional.IsCollectionDefined(X5C))
+            {
+                writer.WritePropertyName("x5c");
+                writer.WriteStartArray();
+                foreach (var item in X5C)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Y))
+            {
+                writer.WritePropertyName("y");
+                writer.WriteStringValue(Y);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static JsonWebKey DeserializeJsonWebKey(JsonElement element)
         {
             string alg = default;
@@ -30,7 +114,7 @@ namespace Azure.Security.Attestation.Models
             Optional<string> qi = default;
             string use = default;
             Optional<string> x = default;
-            Optional<IReadOnlyList<string>> x5c = default;
+            Optional<IList<string>> x5c = default;
             Optional<string> y = default;
             foreach (var property in element.EnumerateObject())
             {
