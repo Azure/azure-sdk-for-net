@@ -7,9 +7,12 @@ Run `dotnet build /t:GenerateCode` in src directory to re-generate.
 
 ``` yaml
 title: Azure.Security.Attestation
-input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f0356ad28dd559e4d52b2aa679242a42fa3dc176/specification/attestation/data-plane/Microsoft.Attestation/stable/2020-10-01/attestation.json
+require:
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/45c7ae94a46920c94b5e03e6a7d128d6cb7a364e/specification/attestation/data-plane/readme.md
 namespace: Azure.Security.Attestation
+tag: package-2020-10-01
+azure-arm: false
+
 
 directive:
 - from: swagger-document

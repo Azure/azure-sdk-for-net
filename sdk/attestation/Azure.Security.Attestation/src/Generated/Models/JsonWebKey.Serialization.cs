@@ -16,8 +16,11 @@ namespace Azure.Security.Attestation.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("alg");
-            writer.WriteStringValue(Alg);
+            if (Optional.IsDefined(Alg))
+            {
+                writer.WritePropertyName("alg");
+                writer.WriteStringValue(Alg);
+            }
             if (Optional.IsDefined(Crv))
             {
                 writer.WritePropertyName("crv");
@@ -48,8 +51,11 @@ namespace Azure.Security.Attestation.Models
                 writer.WritePropertyName("k");
                 writer.WriteStringValue(K);
             }
-            writer.WritePropertyName("kid");
-            writer.WriteStringValue(Kid);
+            if (Optional.IsDefined(Kid))
+            {
+                writer.WritePropertyName("kid");
+                writer.WriteStringValue(Kid);
+            }
             writer.WritePropertyName("kty");
             writer.WriteStringValue(Kty);
             if (Optional.IsDefined(N))
@@ -72,8 +78,11 @@ namespace Azure.Security.Attestation.Models
                 writer.WritePropertyName("qi");
                 writer.WriteStringValue(Qi);
             }
-            writer.WritePropertyName("use");
-            writer.WriteStringValue(Use);
+            if (Optional.IsDefined(Use))
+            {
+                writer.WritePropertyName("use");
+                writer.WriteStringValue(Use);
+            }
             if (Optional.IsDefined(X))
             {
                 writer.WritePropertyName("x");
@@ -99,20 +108,20 @@ namespace Azure.Security.Attestation.Models
 
         internal static JsonWebKey DeserializeJsonWebKey(JsonElement element)
         {
-            string alg = default;
+            Optional<string> alg = default;
             Optional<string> crv = default;
             Optional<string> d = default;
             Optional<string> dp = default;
             Optional<string> dq = default;
             Optional<string> e = default;
             Optional<string> k = default;
-            string kid = default;
+            Optional<string> kid = default;
             string kty = default;
             Optional<string> n = default;
             Optional<string> p = default;
             Optional<string> q = default;
             Optional<string> qi = default;
-            string use = default;
+            Optional<string> use = default;
             Optional<string> x = default;
             Optional<IList<string>> x5c = default;
             Optional<string> y = default;
@@ -214,7 +223,7 @@ namespace Azure.Security.Attestation.Models
                     continue;
                 }
             }
-            return new JsonWebKey(alg, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid, kty, n.Value, p.Value, q.Value, qi.Value, use, x.Value, Optional.ToList(x5c), y.Value);
+            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, Optional.ToList(x5c), y.Value);
         }
     }
 }
