@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Core
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
-                writer.WriteObjectValue(Id);
+                writer.WriteStringValue(Id.StringValue);
             }
             if (Optional.IsDefined(Name))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ResourceIdentifier.DeserializeResourceIdentifier(id.Value, property.Value);
+                    id = (Optional<TIdentifier>)ResourceIdentifier.Create(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))

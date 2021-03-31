@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// An Azure Resource Manager resource identifier.
     /// </summary>
-    public abstract partial class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
+    public abstract class ResourceIdentifier : IEquatable<ResourceIdentifier>, IComparable<ResourceIdentifier>
     {
         internal const string ProvidersKey = "providers", SubscriptionsKey = "subscriptions",
             ResourceGroupsKey = "resourceGroups", LocationsKey = "locations";
