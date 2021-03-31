@@ -13,29 +13,30 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema
     {
         /// <summary> Initializes a new instance of Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema. </summary>
-        /// <param name="grantType"> Can take a value of access_token_refresh_token, or access_token, or refresh_token. </param>
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="service"/> is null. </exception>
-        internal Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema(PostContentSchemaGrantType grantType, string service)
+        /// <param name="aadAccesstoken"> AAD access token, mandatory when grant_type is access_token_refresh_token or access_token. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/> or <paramref name="aadAccesstoken"/> is null. </exception>
+        internal Paths108HwamOauth2ExchangePostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string aadAccesstoken)
         {
             if (service == null)
             {
                 throw new ArgumentNullException(nameof(service));
             }
+            if (aadAccesstoken == null)
+            {
+                throw new ArgumentNullException(nameof(aadAccesstoken));
+            }
 
-            GrantType = grantType;
+            GrantType = "access_token";
             Service = service;
+            AadAccesstoken = aadAccesstoken;
         }
 
-        /// <summary> Can take a value of access_token_refresh_token, or access_token, or refresh_token. </summary>
-        public PostContentSchemaGrantType GrantType { get; }
+        /// <summary> Can take a value of access_token. </summary>
+        public string GrantType { get; }
         /// <summary> Indicates the name of your Azure container registry. </summary>
         public string Service { get; }
-        /// <summary> AAD tenant associated to the AAD credentials. </summary>
-        public string Tenant { get; }
-        /// <summary> AAD refresh token, mandatory when grant_type is access_token_refresh_token or refresh_token. </summary>
-        public string RefreshToken { get; }
         /// <summary> AAD access token, mandatory when grant_type is access_token_refresh_token or access_token. </summary>
-        public string AccessToken { get; }
+        public string AadAccesstoken { get; }
     }
 }

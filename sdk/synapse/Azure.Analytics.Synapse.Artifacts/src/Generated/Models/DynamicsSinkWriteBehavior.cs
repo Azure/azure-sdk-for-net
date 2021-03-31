@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The write behavior for the operation. </summary>
+    /// <summary> Defines values for DynamicsSinkWriteBehavior. </summary>
     public readonly partial struct DynamicsSinkWriteBehavior : IEquatable<DynamicsSinkWriteBehavior>
     {
         private readonly string _value;

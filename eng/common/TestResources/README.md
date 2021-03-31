@@ -28,7 +28,7 @@ is a member of multiple subscriptions.
 
 ```powershell
 Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
-eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory 'search'
+eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory 'search' -SubscriptionId 'YOUR SUBSCRIPTION ID'
 ```
 
 The `OutFile` switch will be set by default if you are running this for a .NET project on Windows. This will save test environment settings

@@ -260,6 +260,19 @@ namespace Azure.Core.Pipeline
                 }
             }
 
+            protected internal override void SetHeader(string name, string value)
+            {
+                // Authorization is special cased because it is in the hot path for auth polices that set this header on each request and retry.
+                if (name.Equals(HttpHeader.Names.Authorization) && AuthenticationHeaderValue.TryParse(value, out var authHeader))
+                {
+                    _requestMessage.Headers.Authorization = authHeader;
+                }
+                else
+                {
+                    base.SetHeader(name, value);
+                }
+            }
+
             protected internal override void AddHeader(string name, string value)
             {
                 if (_requestMessage.Headers.TryAddWithoutValidation(name, value))

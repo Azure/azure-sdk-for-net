@@ -51,7 +51,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
 
             Uri uploadedInputAssetUri = uploadUriResult.UploadUri;
 
-            BlobClient uploadBlobClient = InstrumentClient(new BlobClient(uploadedInputAssetUri, InstrumentClientOptions(new BlobClientOptions())));
+            BlobClient uploadBlobClient = InstrumentClient(new BlobClient(uploadedInputAssetUri, InstrumentClientOptions(new BlobClientOptions(BlobClientOptions.ServiceVersion.V2019_12_12))));
 
             using (FileStream fs = File.OpenRead(localFilePath))
             {
@@ -73,7 +73,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
 
             string localFileDownloadPath = modelDownloadLocalFilePath;
 
-            BlobClient downloadBlobClient = InstrumentClient(new BlobClient(operation.Value.OutputModelUri, InstrumentClientOptions(new BlobClientOptions())));
+            BlobClient downloadBlobClient = InstrumentClient(new BlobClient(operation.Value.OutputModelUri, InstrumentClientOptions(new BlobClientOptions(BlobClientOptions.ServiceVersion.V2019_12_12))));
 
             BlobDownloadInfo downloadInfo = await downloadBlobClient.DownloadAsync();
 
@@ -101,7 +101,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
 
             Uri uploadedInputAssetUri = uploadUriResult.UploadUri;
 
-            BlobClient uploadBlobClient = InstrumentClient(new BlobClient(uploadedInputAssetUri, InstrumentClientOptions(new BlobClientOptions())));
+            BlobClient uploadBlobClient = InstrumentClient(new BlobClient(uploadedInputAssetUri, InstrumentClientOptions(new BlobClientOptions(BlobClientOptions.ServiceVersion.V2019_12_12))));
 
             using (FileStream fs = File.OpenRead(localFilePath))
             {
@@ -125,7 +125,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
 
             string localFileDownloadPath = modelDownloadLocalFilePath;
 
-            BlobClient downloadBlobClient = InstrumentClient(new BlobClient(operation.Value.OutputModelUri, InstrumentClientOptions(new BlobClientOptions())));
+            BlobClient downloadBlobClient = InstrumentClient(new BlobClient(operation.Value.OutputModelUri, InstrumentClientOptions(new BlobClientOptions(BlobClientOptions.ServiceVersion.V2019_12_12))));
 
             BlobDownloadInfo downloadInfo = await downloadBlobClient.DownloadAsync();
 

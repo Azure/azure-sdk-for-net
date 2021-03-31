@@ -12,15 +12,23 @@ namespace Azure.AI.DocumentTranslation
         [CodeGenMember("StorageSource")]
         internal string StorageSource { get; set; }
 
-        /// <summary> Location of the folder / container with your documents. </summary>
+        /// <summary>
+        /// Location of the container with your documents.
+        /// This should be a SAS Uri.
+        /// </summary>
         [CodeGenMember("TargetUrl")]
         public Uri TargetUri { get; }
 
-        /// <summary> Target Language. </summary>
+        /// <summary>
+        /// Language code to translate documents to. For supported languages see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.
+        /// </summary>
         [CodeGenMember("Language")]
         public string LanguageCode { get; }
 
-        /// <summary> Category / custom system for translation request. </summary>
+        /// <summary>
+        /// Category / custom model ID for using custom translation.
+        /// </summary>
         [CodeGenMember("Category")]
         public string CategoryId { get; set; }
     }

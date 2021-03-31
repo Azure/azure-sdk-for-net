@@ -823,7 +823,7 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            service.AddSyncToken("syncToken1=val1;sn=1");
+            service.UpdateSyncToken("syncToken1=val1;sn=1");
             await service.GetConfigurationSettingAsync(s_testSetting.Key, s_testSetting.Label);
 
             var request = mockTransport.Requests[0];
@@ -842,9 +842,9 @@ namespace Azure.Data.AppConfiguration.Tests
             var mockTransport = new MockTransport(response);
             ConfigurationClient service = CreateTestService(mockTransport);
 
-            service.AddSyncToken("syncToken1=val1;sn=1");
-            service.AddSyncToken("syncToken1=val2;sn=2,syncToken2=val3;sn=2");
-            service.AddSyncToken("syncToken2=val1;sn=1");
+            service.UpdateSyncToken("syncToken1=val1;sn=1");
+            service.UpdateSyncToken("syncToken1=val2;sn=2,syncToken2=val3;sn=2");
+            service.UpdateSyncToken("syncToken2=val1;sn=1");
             await service.GetConfigurationSettingAsync(s_testSetting.Key, s_testSetting.Label);
 
             var request = mockTransport.Requests[0];
