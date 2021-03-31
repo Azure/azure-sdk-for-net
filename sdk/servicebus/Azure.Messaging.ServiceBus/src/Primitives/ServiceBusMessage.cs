@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp;
@@ -21,6 +22,8 @@ namespace Azure.Messaging.ServiceBus
     /// </remarks>
     public class ServiceBusMessage
     {
+        private Lazy<BinaryData> body;
+
         /// <summary>
         /// Creates a new message.
         /// </summary>
@@ -46,6 +49,8 @@ namespace Azure.Messaging.ServiceBus
         {
             AmqpMessageBody amqpBody = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body });
             AmqpMessage = new AmqpAnnotatedMessage(amqpBody);
+
+            this.body = new Lazy<BinaryData>(() => AmqpMessage.GetBody(), LazyThreadSafetyMode.ExecutionAndPublication);
         }
 
         /// <summary>
@@ -137,10 +142,11 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         public BinaryData Body
         {
-            get => AmqpMessage.GetBody();
+            get => body.Value;
             set
             {
                 AmqpMessage.Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { value });
+                this.body = new Lazy<BinaryData>(() => AmqpMessage.GetBody(), LazyThreadSafetyMode.ExecutionAndPublication);
             }
         }
 
