@@ -16,25 +16,25 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Task properties of the software update configuration.
     /// </summary>
-    public partial class SoftareUpdateConfigurationRunTaskProperties
+    public partial class SoftwareUpdateConfigurationRunTaskProperties
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// SoftareUpdateConfigurationRunTaskProperties class.
+        /// SoftwareUpdateConfigurationRunTaskProperties class.
         /// </summary>
-        public SoftareUpdateConfigurationRunTaskProperties()
+        public SoftwareUpdateConfigurationRunTaskProperties()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// SoftareUpdateConfigurationRunTaskProperties class.
+        /// SoftwareUpdateConfigurationRunTaskProperties class.
         /// </summary>
         /// <param name="status">The status of the task.</param>
         /// <param name="source">The name of the source of the task.</param>
         /// <param name="jobId">The job id of the task.</param>
-        public SoftareUpdateConfigurationRunTaskProperties(string status = default(string), string source = default(string), string jobId = default(string))
+        public SoftwareUpdateConfigurationRunTaskProperties(string status = default(string), string source = default(string), string jobId = default(string))
         {
             Status = status;
             Source = source;

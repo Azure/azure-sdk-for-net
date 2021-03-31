@@ -26,22 +26,22 @@ namespace Azure.AI.DocumentTranslation
         private readonly ClientDiagnostics _diagnostics;
 
         /// <summary>
-        /// Operation created time.
+        /// The date time when the translation operation was created.
         /// </summary>
         public DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
-        /// Time at which the operation's status has been updated.
+        /// The date time when the translation operation's status was last updated.
         /// </summary>
         public DateTimeOffset LastModified => _lastModified;
 
         /// <summary>
-        /// The current status of the operation.
+        /// The current status of the translation operation.
         /// </summary>
         public TranslationStatus Status => _status;
 
         /// <summary>
-        /// Total number of documents.
+        /// Total number of expected translated documents.
         /// </summary>
         public int DocumentsTotal => _documentsTotal;
 
@@ -81,7 +81,7 @@ namespace Azure.AI.DocumentTranslation
         private TranslationStatus _status;
 
         /// <summary>
-        /// Gets an ID representing the operation that can be used to poll for the status
+        /// Gets an ID representing the translation operation that can be used to poll for the status
         /// of the long-running operation.
         /// </summary>
         public override string Id { get; }
@@ -300,7 +300,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get the status of a specific document in the operation.
+        /// Get the status of a specific document in the translation operation.
         /// </summary>
         /// <param name="documentId">ID of the document.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
@@ -321,7 +321,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get the status of a specific document in the operation.
+        /// Get the status of a specific document in the translation operation.
         /// </summary>
         /// <param name="documentId">ID of the document.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
@@ -342,7 +342,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get the status of a all documents in the operation.
+        /// Get the status of all documents in the translation operation.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
         public virtual Pageable<DocumentStatusResult> GetAllDocumentStatuses(CancellationToken cancellationToken = default)
@@ -385,7 +385,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get the status of a all documents in the operation.
+        /// Get the status of all documents in the translation operation.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the service call.</param>
         public virtual AsyncPageable<DocumentStatusResult> GetAllDocumentStatusesAsync(CancellationToken cancellationToken = default)
