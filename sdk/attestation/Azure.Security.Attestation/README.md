@@ -91,7 +91,7 @@ a trusted execution environment to ensure that it meets both the Azure baseline 
 ### Attestation token signing certificate discovery and validation
 Most responses from the MAA service are expressed in the form of a JSON Web Token. This token will be signed by a signing certificate
 issued by the MAA service for the specified instance. If the MAA service instance is running in a region where the service runs in an SGX enclave, then
-the certificate issued by the server can be verified using the [oe_verify_attestation_certificate() API](https://openenclave.github.io/openenclave/api/enclave_8h_a3b75c5638360adca181a0d945b45ad86.html). 
+the certificate issued by the server can be verified using the [oe_verify_attestation_certificate API](https://openenclave.github.io/openenclave/api/enclave_8h_a3b75c5638360adca181a0d945b45ad86.html). 
 
 ### Policy Management
 Each attestation service instance has a policy applied to it which defines additional criteria which the customer has defined.
@@ -116,7 +116,9 @@ Currently, MAA supports the following Trusted Execution environments:
 ### Runtime Data and Inittime Data
 RuntimeData refers to data which is presented to the Intel SGX Quote generation logic or the `oe_get_report`/`oe_get_evidence` APIs. The Azure Attestation service will validate that the first 32 bytes of the `report_data` field in the SGX Quote/OE Report/OE Evidence matches the SHA256 hash of the RuntimeData.
 
-InitTime data refers to data which is used to configure the SGX enclave being attested.
+InitTime data refers to data which is used to configure the SGX enclave being attested. 
+
+> Note that InitTime data is not supported on Azure [DCsv2-Series](https://docs.microsoft.com/en-us/azure/virtual-machines/dcv2-series) virtual machines.
 
 
 ### Thread safety
