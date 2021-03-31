@@ -41,7 +41,7 @@ namespace Azure.Storage.Samples
             // Create our client and make a simple request
             #region Snippet:Sample_StorageServerTimeout
             BlobServiceClient client = new BlobServiceClient(connectionString, options);
-            using (StorageExtensions.CreateServiceTimeoutScope(10))
+            using (StorageExtensions.CreateServiceTimeoutScope(TimeSpan.FromSeconds(10)))
             {
                 client.GetProperties();
             }

@@ -14,7 +14,7 @@ namespace Azure.Storage
     }
     public static partial class StorageExtensions
     {
-        public static System.IDisposable CreateServiceTimeoutScope(int? timeoutInSeconds) { throw null; }
+        public static System.IDisposable CreateServiceTimeoutScope(System.TimeSpan? timeout) { throw null; }
     }
     public partial class StorageSharedKeyCredential
     {

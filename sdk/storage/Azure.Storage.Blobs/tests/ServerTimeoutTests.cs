@@ -9,7 +9,7 @@ namespace Azure.Storage.Blobs.Tests
 {
     public class ServerTimeoutTests
     {
-        private const int ServerTimeout = 15;
+        private static TimeSpan ServerTimeout = TimeSpan.FromSeconds(15);
         private StorageSharedKeyCredential _credentials;
         private Uri _endpoint;
         private MockTransport _transport;

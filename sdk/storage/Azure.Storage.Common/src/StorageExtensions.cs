@@ -23,13 +23,13 @@ namespace Azure.Storage
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">
         /// Setting timeouts for Queue service operations</see>.
         /// </summary>
-        /// <param name="timeoutInSeconds">The server timeout in seconds for each HTTP request.</param>
+        /// <param name="timeout">The server timeout for each HTTP request.</param>
         /// <returns>The <see cref="IDisposable"/> instance that needs to be disposed when server timeout shouldn't be used anymore.</returns>
         /// <example>
         /// Sample usage:
         /// <code snippet="Snippet:Sample_StorageServerTimeout">
         /// BlobServiceClient client = new BlobServiceClient(connectionString, options);
-        /// using (StorageServerTimeout.CreateScope(10))
+        /// using (StorageExtensions.CreateServiceTimeoutScope(TimeSpan.FromSeconds(10)))
         /// {
         ///     client.GetProperties();
         /// }
@@ -39,9 +39,9 @@ namespace Azure.Storage
         /// The server timeout is sent to the Azure Storage service for each REST request made within the scope.
         /// This value is not tracked or validated on the client, it is only passed to the Storage service.
         /// </remarks>
-        public static IDisposable CreateServiceTimeoutScope(int? timeoutInSeconds)
+        public static IDisposable CreateServiceTimeoutScope(TimeSpan? timeout)
         {
-            return HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object> { { Constants.ServerTimeout.HttpMessagePropertyKey, timeoutInSeconds } });
+            return HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object> { { Constants.ServerTimeout.HttpMessagePropertyKey, timeout?.TotalSeconds } });
         }
     }
 }

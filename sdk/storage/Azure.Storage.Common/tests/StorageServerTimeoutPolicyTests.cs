@@ -10,7 +10,7 @@ namespace Azure.Storage.Tests
 {
     public class StorageServerTimeoutPolicyTests : SyncAsyncPolicyTestBase
     {
-        private const int ServerTimeout = 15;
+        private static TimeSpan ServerTimeout = TimeSpan.FromSeconds(15);
 
         public StorageServerTimeoutPolicyTests(bool isAsync) : base(isAsync)
         {
@@ -86,14 +86,14 @@ namespace Azure.Storage.Tests
             // Act
             using (StorageExtensions.CreateServiceTimeoutScope(ServerTimeout))
             {
-                using (StorageExtensions.CreateServiceTimeoutScope(ServerTimeout + 1))
+                using (StorageExtensions.CreateServiceTimeoutScope(ServerTimeout.Add(TimeSpan.FromSeconds(1))))
                 {
                     await SendGetRequest(transport, StorageServerTimeoutPolicy.Shared, uri: new Uri("http://foo.com/"));
                 }
             }
 
             // Assert
-            Assert.AreEqual($"http://foo.com/?timeout={ServerTimeout + 1}", transport.SingleRequest.Uri.ToString());
+            Assert.AreEqual($"http://foo.com/?timeout={ServerTimeout.TotalSeconds + 1}", transport.SingleRequest.Uri.ToString());
         }
 
         [Test]
