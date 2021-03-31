@@ -29,10 +29,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("baseRequestId");
                 writer.WriteObjectValue(BaseRequestId);
             }
+            if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
+            {
+                writer.WritePropertyName("customRfcReadTableFunctionModule");
+                writer.WriteObjectValue(CustomRfcReadTableFunctionModule);
+            }
+            if (Optional.IsDefined(SapDataColumnDelimiter))
+            {
+                writer.WritePropertyName("sapDataColumnDelimiter");
+                writer.WriteObjectValue(SapDataColumnDelimiter);
+            }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout");
                 writer.WriteObjectValue(QueryTimeout);
+            }
+            if (Optional.IsCollectionDefined(AdditionalColumns))
+            {
+                writer.WritePropertyName("additionalColumns");
+                writer.WriteStartArray();
+                foreach (var item in AdditionalColumns)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
@@ -63,7 +83,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             Optional<object> excludeLastRequest = default;
             Optional<object> baseRequestId = default;
+            Optional<object> customRfcReadTableFunctionModule = default;
+            Optional<object> sapDataColumnDelimiter = default;
             Optional<object> queryTimeout = default;
+            Optional<IList<AdditionalColumns>> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -92,6 +115,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     baseRequestId = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("customRfcReadTableFunctionModule"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    customRfcReadTableFunctionModule = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("sapDataColumnDelimiter"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    sapDataColumnDelimiter = property.Value.GetObject();
+                    continue;
+                }
                 if (property.NameEquals("queryTimeout"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -100,6 +143,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     queryTimeout = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("additionalColumns"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<AdditionalColumns> array = new List<AdditionalColumns>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.AdditionalColumns.DeserializeAdditionalColumns(item));
+                    }
+                    additionalColumns = array;
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -140,7 +198,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOpenHubSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, excludeLastRequest.Value, baseRequestId.Value);
+            return new SapOpenHubSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, Optional.ToList(additionalColumns), excludeLastRequest.Value, baseRequestId.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value);
         }
 
         internal partial class SapOpenHubSourceConverter : JsonConverter<SapOpenHubSource>

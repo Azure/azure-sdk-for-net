@@ -24,6 +24,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("storeSettings");
                 writer.WriteObjectValue(StoreSettings);
             }
+            if (Optional.IsDefined(FormatSettings))
+            {
+                writer.WritePropertyName("formatSettings");
+                writer.WriteObjectValue(FormatSettings);
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
@@ -52,6 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static BinarySource DeserializeBinarySource(JsonElement element)
         {
             Optional<StoreReadSettings> storeSettings = default;
+            Optional<BinaryReadSettings> formatSettings = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -68,6 +74,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("formatSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    formatSettings = BinaryReadSettings.DeserializeBinaryReadSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -108,7 +124,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BinarySource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, storeSettings.Value);
+            return new BinarySource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, storeSettings.Value, formatSettings.Value);
         }
 
         internal partial class BinarySourceConverter : JsonConverter<BinarySource>

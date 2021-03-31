@@ -26,6 +26,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("path");
                 writer.WriteObjectValue(Path);
             }
+            if (Optional.IsDefined(LogLevel))
+            {
+                writer.WritePropertyName("logLevel");
+                writer.WriteObjectValue(LogLevel);
+            }
+            if (Optional.IsDefined(EnableReliableLogging))
+            {
+                writer.WritePropertyName("enableReliableLogging");
+                writer.WriteObjectValue(EnableReliableLogging);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -38,6 +48,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             LinkedServiceReference linkedServiceName = default;
             Optional<object> path = default;
+            Optional<object> logLevel = default;
+            Optional<object> enableReliableLogging = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -57,10 +69,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     path = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("logLevel"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    logLevel = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("enableReliableLogging"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    enableReliableLogging = property.Value.GetObject();
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new LogStorageSettings(linkedServiceName, path.Value, additionalProperties);
+            return new LogStorageSettings(linkedServiceName, path.Value, logLevel.Value, enableReliableLogging.Value, additionalProperties);
         }
 
         internal partial class LogStorageSettingsConverter : JsonConverter<LogStorageSettings>

@@ -34,6 +34,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("queryTimeout");
                 writer.WriteObjectValue(QueryTimeout);
             }
+            if (Optional.IsCollectionDefined(AdditionalColumns))
+            {
+                writer.WritePropertyName("additionalColumns");
+                writer.WriteStartArray();
+                foreach (var item in AdditionalColumns)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
@@ -64,6 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> query = default;
             Optional<RedshiftUnloadSettings> redshiftUnloadSettings = default;
             Optional<object> queryTimeout = default;
+            Optional<IList<AdditionalColumns>> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
             Optional<object> sourceRetryWait = default;
@@ -100,6 +111,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         continue;
                     }
                     queryTimeout = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("additionalColumns"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<AdditionalColumns> array = new List<AdditionalColumns>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(Models.AdditionalColumns.DeserializeAdditionalColumns(item));
+                    }
+                    additionalColumns = array;
                     continue;
                 }
                 if (property.NameEquals("type"))
@@ -140,7 +166,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonRedshiftSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, query.Value, redshiftUnloadSettings.Value);
+            return new AmazonRedshiftSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, Optional.ToList(additionalColumns), query.Value, redshiftUnloadSettings.Value);
         }
 
         internal partial class AmazonRedshiftSourceConverter : JsonConverter<AmazonRedshiftSource>

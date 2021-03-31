@@ -23,6 +23,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("dataset");
                 writer.WriteObjectValue(Dataset);
             }
+            if (Optional.IsDefined(LinkedService))
+            {
+                writer.WritePropertyName("linkedService");
+                writer.WriteObjectValue(LinkedService);
+            }
+            if (Optional.IsDefined(SchemaLinkedService))
+            {
+                writer.WritePropertyName("schemaLinkedService");
+                writer.WriteObjectValue(SchemaLinkedService);
+            }
             writer.WritePropertyName("name");
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
@@ -36,6 +46,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         internal static DataFlowSink DeserializeDataFlowSink(JsonElement element)
         {
             Optional<DatasetReference> dataset = default;
+            Optional<LinkedServiceReference> linkedService = default;
+            Optional<LinkedServiceReference> schemaLinkedService = default;
             string name = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -50,6 +62,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     dataset = DatasetReference.DeserializeDatasetReference(property.Value);
                     continue;
                 }
+                if (property.NameEquals("linkedService"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    linkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("schemaLinkedService"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    schemaLinkedService = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("name"))
                 {
                     name = property.Value.GetString();
@@ -61,7 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowSink(name, description.Value, dataset.Value);
+            return new DataFlowSink(name, description.Value, dataset.Value, linkedService.Value, schemaLinkedService.Value);
         }
 
         internal partial class DataFlowSinkConverter : JsonConverter<DataFlowSink>

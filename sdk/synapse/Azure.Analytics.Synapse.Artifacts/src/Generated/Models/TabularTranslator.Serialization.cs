@@ -44,6 +44,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("mappings");
                 writer.WriteObjectValue(Mappings);
             }
+            if (Optional.IsDefined(TypeConversion))
+            {
+                writer.WritePropertyName("typeConversion");
+                writer.WriteObjectValue(TypeConversion);
+            }
+            if (Optional.IsDefined(TypeConversionSettings))
+            {
+                writer.WritePropertyName("typeConversionSettings");
+                writer.WriteObjectValue(TypeConversionSettings);
+            }
             writer.WritePropertyName("type");
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
@@ -61,6 +71,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> collectionReference = default;
             Optional<object> mapComplexValuesToString = default;
             Optional<object> mappings = default;
+            Optional<object> typeConversion = default;
+            Optional<TypeConversionSettings> typeConversionSettings = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -116,6 +128,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     mappings = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("typeConversion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    typeConversion = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("typeConversionSettings"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    typeConversionSettings = TypeConversionSettings.DeserializeTypeConversionSettings(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("type"))
                 {
                     type = property.Value.GetString();
@@ -124,7 +156,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TabularTranslator(type, additionalProperties, columnMappings.Value, schemaMapping.Value, collectionReference.Value, mapComplexValuesToString.Value, mappings.Value);
+            return new TabularTranslator(type, additionalProperties, columnMappings.Value, schemaMapping.Value, collectionReference.Value, mapComplexValuesToString.Value, mappings.Value, typeConversion.Value, typeConversionSettings.Value);
         }
 
         internal partial class TabularTranslatorConverter : JsonConverter<TabularTranslator>
