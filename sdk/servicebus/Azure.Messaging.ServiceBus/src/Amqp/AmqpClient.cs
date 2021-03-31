@@ -137,12 +137,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="retryPolicy">The policy which governs retry behavior and try timeouts.</param>
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="prefetchCount">Controls the number of events received and queued locally without regard to whether an operation was requested.  If <c>null</c> a default will be used.</param>
-        /// <param name="identifier"></param>
-        /// <param name="sessionId"></param>
-        /// <param name="isSessionReceiver"></param>
+        /// <param name="identifier">The identifier for the sender.</param>
+        /// <param name="sessionId">The session ID to receive messages for.</param>
+        /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver link.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the
+        /// open link operation. Only applicable for session receivers.</param>
         ///
         /// <returns>A <see cref="TransportReceiver" /> configured in the requested manner.</returns>
-        ///
         public override TransportReceiver CreateReceiver(
             string entityPath,
             ServiceBusRetryPolicy retryPolicy,
@@ -150,7 +151,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             uint prefetchCount,
             string identifier,
             string sessionId,
-            bool isSessionReceiver)
+            bool isSessionReceiver,
+            CancellationToken cancellationToken)
         {
             Argument.AssertNotDisposed(_closed, nameof(AmqpClient));
 
@@ -163,7 +165,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 retryPolicy,
                 identifier,
                 sessionId,
-                isSessionReceiver
+                isSessionReceiver,
+                cancellationToken
             );
         }
 

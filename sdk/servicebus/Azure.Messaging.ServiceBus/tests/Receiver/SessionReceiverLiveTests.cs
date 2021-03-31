@@ -228,9 +228,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         PrefetchCount = 100
                     });
 
-                foreach (var message in await receiver.ReceiveMessagesAsync(2))
+                var remainingMessages = messageCount;
+                while (remainingMessages > 0)
                 {
-                    await receiver.CompleteMessageAsync(message);
+                    foreach (var message in await receiver.ReceiveMessagesAsync(remainingMessages))
+                    {
+                        await receiver.CompleteMessageAsync(message);
+                        remainingMessages--;
+                    }
                 }
 
                 using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
@@ -935,6 +940,50 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     }
                 }
                 await Task.WhenAll(tasks);
+            }
+        }
+
+        [Test]
+        public async Task CancellingDoesNotLoseSessionMessages()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+
+                var messageCount = 50;
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, "sessionId").AsEnumerable<ServiceBusMessage>();
+                await sender.SendMessagesAsync(batch);
+                var receiver = await client.AcceptSessionAsync(
+                    scope.QueueName,
+                    "sessionId",
+                    new ServiceBusSessionReceiverOptions { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete });
+
+                using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
+                var received = 0;
+
+                try
+                {
+                    for (int i = 0; i < messageCount; i++)
+                    {
+                        await receiver.ReceiveMessageAsync(cancellationToken: cancellationTokenSource.Token);
+                        received++;
+                    }
+                }
+                catch (TaskCanceledException)
+                {
+                }
+
+                Assert.Less(received, messageCount);
+
+                var remaining = messageCount - received;
+                for (int i = 0; i < remaining; i++)
+                {
+                    await receiver.ReceiveMessageAsync();
+                    received++;
+                }
+                Assert.AreEqual(messageCount, received);
             }
         }
     }
