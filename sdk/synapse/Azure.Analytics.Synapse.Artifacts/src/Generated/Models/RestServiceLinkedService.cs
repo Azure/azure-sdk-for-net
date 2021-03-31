@@ -44,9 +44,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="servicePrincipalId"> The application&apos;s client ID used in AadServicePrincipal authentication type. </param>
         /// <param name="servicePrincipalKey"> The application&apos;s key used in AadServicePrincipal authentication type. </param>
         /// <param name="tenant"> The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides. </param>
+        /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> The resource you are requesting authorization to use. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal RestServiceLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, object userName, SecretBase password, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object aadResourceId, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal RestServiceLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, object userName, SecretBase password, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object aadResourceId, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
             EnableServerCertificateValidation = enableServerCertificateValidation;
@@ -56,6 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
+            AzureCloudType = azureCloudType;
             AadResourceId = aadResourceId;
             EncryptedCredential = encryptedCredential;
             Type = type ?? "RestService";
@@ -77,6 +79,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides. </summary>
         public object Tenant { get; set; }
+        /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
+        public object AzureCloudType { get; set; }
         /// <summary> The resource you are requesting authorization to use. </summary>
         public object AadResourceId { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The response of the List Event Hubs Clusters operation. </summary>
-    public partial class ClusterListResult
+    internal partial class ClusterListResult
     {
         /// <summary> Initializes a new instance of ClusterListResult. </summary>
         internal ClusterListResult()

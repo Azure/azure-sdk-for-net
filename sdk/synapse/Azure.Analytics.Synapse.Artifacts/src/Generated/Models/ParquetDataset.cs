@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> . </param>
         /// <param name="location"> The location of the parquet storage. </param>
-        /// <param name="compressionCodec"> . </param>
-        internal ParquetDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, DatasetLocation location, ParquetCompressionCodec? compressionCodec) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="compressionCodec"> A string from ParquetCompressionCodecEnum or an expression. </param>
+        internal ParquetDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, DatasetLocation location, object compressionCodec) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Location = location;
             CompressionCodec = compressionCodec;
@@ -47,6 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> The location of the parquet storage. </summary>
         public DatasetLocation Location { get; set; }
-        public ParquetCompressionCodec? CompressionCodec { get; set; }
+        /// <summary> A string from ParquetCompressionCodecEnum or an expression. </summary>
+        public object CompressionCodec { get; set; }
     }
 }

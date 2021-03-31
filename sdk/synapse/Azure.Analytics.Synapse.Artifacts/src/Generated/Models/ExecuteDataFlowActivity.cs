@@ -15,20 +15,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of ExecuteDataFlowActivity. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <param name="dataFlow"> Data flow reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataFlow"/> is null. </exception>
-        public ExecuteDataFlowActivity(string name, DataFlowReference dataFlow) : base(name)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ExecuteDataFlowActivity(string name) : base(name)
         {
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
-            if (dataFlow == null)
-            {
-                throw new ArgumentNullException(nameof(dataFlow));
-            }
 
-            DataFlow = dataFlow;
             Type = "ExecuteDataFlow";
         }
 
@@ -41,26 +35,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> . </param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="dataFlow"> Data flow reference. </param>
+        /// <param name="dataflow"> Data flow reference. </param>
         /// <param name="staging"> Staging info for execute data flow activity. </param>
         /// <param name="integrationRuntime"> The integration runtime reference. </param>
         /// <param name="compute"> Compute properties for data flow activity. </param>
-        internal ExecuteDataFlowActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFlowReference dataFlow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ExecuteDataFlowActivityTypePropertiesCompute compute) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="traceLevel"> Trace level setting used for data flow monitoring output. Supported values are: &apos;coarse&apos;, &apos;fine&apos;, and &apos;none&apos;. Type: string (or Expression with resultType string). </param>
+        /// <param name="continueOnError"> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="runConcurrently"> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </param>
+        internal ExecuteDataFlowActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, DataFlowReference dataflow, DataFlowStagingInfo staging, IntegrationRuntimeReference integrationRuntime, ExecuteDataFlowActivityTypePropertiesCompute compute, object traceLevel, object continueOnError, object runConcurrently) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
-            DataFlow = dataFlow;
+            Dataflow = dataflow;
             Staging = staging;
             IntegrationRuntime = integrationRuntime;
             Compute = compute;
+            TraceLevel = traceLevel;
+            ContinueOnError = continueOnError;
+            RunConcurrently = runConcurrently;
             Type = type ?? "ExecuteDataFlow";
         }
 
         /// <summary> Data flow reference. </summary>
-        public DataFlowReference DataFlow { get; set; }
+        public DataFlowReference Dataflow { get; set; }
         /// <summary> Staging info for execute data flow activity. </summary>
         public DataFlowStagingInfo Staging { get; set; }
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference IntegrationRuntime { get; set; }
         /// <summary> Compute properties for data flow activity. </summary>
         public ExecuteDataFlowActivityTypePropertiesCompute Compute { get; set; }
+        /// <summary> Trace level setting used for data flow monitoring output. Supported values are: &apos;coarse&apos;, &apos;fine&apos;, and &apos;none&apos;. Type: string (or Expression with resultType string). </summary>
+        public object TraceLevel { get; set; }
+        /// <summary> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </summary>
+        public object ContinueOnError { get; set; }
+        /// <summary> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </summary>
+        public object RunConcurrently { get; set; }
     }
 }

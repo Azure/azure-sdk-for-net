@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 tag: package-access-control-2020-08-01-preview
 require:
-    - https://github.com/Azure/azure-rest-api-specs/blob/aa19725fe79aea2a9dc580f3c66f77f89cc34563/specification/synapse/data-plane/readme.md
+    - https://github.com/Azure/azure-rest-api-specs/blob/ba2d430b967bc6299fbedb8dc16ff039e08e1388/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.AccessControl
 public-clients: true
 credential-types: TokenCredential

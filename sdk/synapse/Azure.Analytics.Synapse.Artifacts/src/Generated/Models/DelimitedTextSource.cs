@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,6 +16,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DelimitedTextSource. </summary>
         public DelimitedTextSource()
         {
+            AdditionalColumns = new ChangeTrackingList<AdditionalColumns>();
             Type = "DelimitedTextSource";
         }
 
@@ -26,10 +28,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> . </param>
         /// <param name="storeSettings"> DelimitedText store settings. </param>
         /// <param name="formatSettings"> DelimitedText format settings. </param>
-        internal DelimitedTextSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, StoreReadSettings storeSettings, DelimitedTextReadSettings formatSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </param>
+        internal DelimitedTextSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, StoreReadSettings storeSettings, DelimitedTextReadSettings formatSettings, IList<AdditionalColumns> additionalColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             StoreSettings = storeSettings;
             FormatSettings = formatSettings;
+            AdditionalColumns = additionalColumns;
             Type = type ?? "DelimitedTextSource";
         }
 
@@ -37,5 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public StoreReadSettings StoreSettings { get; set; }
         /// <summary> DelimitedText format settings. </summary>
         public DelimitedTextReadSettings FormatSettings { get; set; }
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects (or Expression with resultType array of objects). </summary>
+        public IList<AdditionalColumns> AdditionalColumns { get; }
     }
 }

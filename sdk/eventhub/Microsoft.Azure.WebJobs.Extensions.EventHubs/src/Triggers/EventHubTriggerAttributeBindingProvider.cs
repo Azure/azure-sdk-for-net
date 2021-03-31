@@ -54,9 +54,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             Func<ListenerFactoryContext, bool, Task<IListener>> createListener =
              (factoryContext, singleDispatch) =>
              {
+                 var options = _options.Value;
+                 if (singleDispatch && !options.IsSingleDispatchEnabled)
+                 {
+                     throw new NotSupportedException("Binding to individual events is not supported. Please use batch processing by binding to an array instead.");
+                 }
+
                  var checkpointStore = new BlobsCheckpointStore(
                      _clientFactory.GetCheckpointStoreClient(),
-                     _options.Value.EventProcessorOptions.RetryOptions.ToRetryPolicy(),
+                     options.EventProcessorOptions.RetryOptions.ToRetryPolicy(),
                      factoryContext.Descriptor.Id,
                      _logger);
 
@@ -67,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                                                 singleDispatch,
                                                 _clientFactory.GetEventHubConsumerClient(attribute.EventHubName, attribute.Connection, attribute.ConsumerGroup),
                                                 checkpointStore,
-                                                _options.Value,
+                                                options,
                                                 _logger);
                  return Task.FromResult(listener);
              };

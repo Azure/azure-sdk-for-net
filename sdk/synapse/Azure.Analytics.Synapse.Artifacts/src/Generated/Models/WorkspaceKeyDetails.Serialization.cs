@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(WorkspaceKeyDetailsConverter))]
     public partial class WorkspaceKeyDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -46,6 +49,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new WorkspaceKeyDetails(name.Value, keyVaultUrl.Value);
+        }
+
+        internal partial class WorkspaceKeyDetailsConverter : JsonConverter<WorkspaceKeyDetails>
+        {
+            public override void Write(Utf8JsonWriter writer, WorkspaceKeyDetails model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override WorkspaceKeyDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWorkspaceKeyDetails(document.RootElement);
+            }
         }
     }
 }

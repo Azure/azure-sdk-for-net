@@ -11,7 +11,7 @@ If any of the new objects needs to be overwritten, add the required changes to t
 
 ``` yaml
 input-file:
-    -  communicationserviceschat.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/0d832037c324f08da297bb292b5ad91c47f5fa23/specification/communication/data-plane/Microsoft.CommunicationServicesChat/stable/2021-03-07/communicationserviceschat.json
 payload-flattening-threshold: 10
 directive:
   from: swagger-document

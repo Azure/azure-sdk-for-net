@@ -84,7 +84,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
         /// <param name="diskAccessId">ARM id of the DiskAccess resource for
         /// using private endpoints on disks.</param>
-        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string diskState = default(string), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string))
+        /// <param name="supportsHibernation">Indicates the OS on a snapshot
+        /// supports hibernation.</param>
+        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string diskState = default(string), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), bool? supportsHibernation = default(bool?))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -105,6 +107,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Encryption = encryption;
             NetworkAccessPolicy = networkAccessPolicy;
             DiskAccessId = diskAccessId;
+            SupportsHibernation = supportsHibernation;
             CustomInit();
         }
 
@@ -237,6 +240,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskAccessId")]
         public string DiskAccessId { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the OS on a snapshot supports hibernation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportsHibernation")]
+        public bool? SupportsHibernation { get; set; }
 
         /// <summary>
         /// Validate the object.

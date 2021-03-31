@@ -19,6 +19,12 @@ namespace Azure.Core.TestFramework
 
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
+            // Work around https://github.com/dotnet/corefx/issues/42600
+            if (eventData.EventId == -1)
+            {
+                return;
+            }
+
             if (!_disposed)
             {
                 // Make sure we can format the event
