@@ -6,7 +6,7 @@ Use the client library for Azure Container Registry to:
 
 - List images or artifacts in a registry
 - Obtain metadata for images and artifacts, repositories and tags
-- Set read/write/delete attributes on registry items
+- Set read/write/delete properties on registry items
 - Delete images and artifacts, repositories and tags
 
 [Source code][source] | [Package (NuGet)][package] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
@@ -93,7 +93,7 @@ additional questions or comments.
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/containerregistry/Azure.Containers.ContainerRegistry/src
-[package]: https://www.nuget.org/packages/Azure.Container.ContainerRegistry/
+[package]: https://www.nuget.org/packages/Azure.Containers.ContainerRegistry/
 [docs]: https://docs.microsoft.com/dotnet/api/azure.containers.containerregistry
 [rest_docs]: https://docs.microsoft.com/rest/api/containerregistry/
 [product_docs]:  https://docs.microsoft.com/azure/container-registry
