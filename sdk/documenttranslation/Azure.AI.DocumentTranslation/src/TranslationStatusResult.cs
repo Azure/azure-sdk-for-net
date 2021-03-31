@@ -32,7 +32,7 @@ namespace Azure.AI.DocumentTranslation
         public DateTimeOffset LastModified { get; }
 
         /// <summary>
-        /// Total number of documents.
+        /// Total number of expected translated documents.
         /// </summary>
         public int DocumentsTotal => Summary.Total;
 

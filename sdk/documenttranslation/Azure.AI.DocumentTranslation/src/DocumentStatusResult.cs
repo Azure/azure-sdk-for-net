@@ -25,7 +25,7 @@ namespace Azure.AI.DocumentTranslation
         public Uri TranslatedDocumentUri { get; }
 
         /// <summary>
-        /// Location of the translated document in the source container.
+        /// Location of the original document in the source container.
         /// </summary>
         [CodeGenMember("SourcePath")]
         internal Uri SourceDocumentUri { get; }
@@ -50,7 +50,7 @@ namespace Azure.AI.DocumentTranslation
         public DateTimeOffset LastModified { get; }
 
         /// <summary>
-        /// Character charged for the document by the Document Translation service.
+        /// Characters charged for the document by the Document Translation service.
         /// </summary>
         [CodeGenMember("CharacterCharged")]
         public long CharactersCharged { get; }

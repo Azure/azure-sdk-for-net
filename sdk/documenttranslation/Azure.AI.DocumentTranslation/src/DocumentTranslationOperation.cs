@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentTranslation
         public TranslationStatus Status => _status;
 
         /// <summary>
-        /// Total number of documents.
+        /// Total number of expected translated documents.
         /// </summary>
         public int DocumentsTotal => _documentsTotal;
 
