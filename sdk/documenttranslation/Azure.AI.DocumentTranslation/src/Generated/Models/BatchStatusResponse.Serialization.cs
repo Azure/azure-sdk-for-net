@@ -16,16 +16,16 @@ namespace Azure.AI.DocumentTranslation.Models
     {
         internal static BatchStatusResponse DeserializeBatchStatusResponse(JsonElement element)
         {
-            IReadOnlyList<TranslationStatusDetail> value = default;
+            IReadOnlyList<TranslationStatusResult> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<TranslationStatusDetail> array = new List<TranslationStatusDetail>();
+                    List<TranslationStatusResult> array = new List<TranslationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TranslationStatusDetail.DeserializeTranslationStatusDetail(item));
+                        array.Add(TranslationStatusResult.DeserializeTranslationStatusResult(item));
                     }
                     value = array;
                     continue;

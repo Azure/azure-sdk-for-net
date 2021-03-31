@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
+    <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
     <IsClientLibrary>true</IsClientLibrary>
   </PropertyGroup>
 
@@ -13,7 +14,7 @@
       $(NoWarn);
       AZC0001
     </NoWarn>
-    <IsShippingDataPlaneLibrary>false</IsShippingDataPlaneLibrary>
+    <IsShippingLibrary>false</IsShippingLibrary>
   </PropertyGroup>
 
   <!-- If building within the Azure/azure-sdk-for-net repo -->

@@ -5,13 +5,13 @@ using System;
 using Azure.Data.Tables;
 using NUnit.Framework;
 
-namespace Azure.Tables.Tests
+namespace Azure.Data.Tables.Tests
 {
     public class TableEntityTests
     {
         private TableEntity emptyEntity = new TableEntity { { "My value was nulled!", null } };
         private TableEntity fullEntity = new TableEntity("partition", "row") {
-            { TableConstants.PropertyNames.TimeStamp, default(DateTimeOffset) },
+            { TableConstants.PropertyNames.Timestamp, default(DateTimeOffset) },
             { "binary", new byte[] { 1, 2 }},
             { "boolean", true },
             { "datetime", new DateTime() },

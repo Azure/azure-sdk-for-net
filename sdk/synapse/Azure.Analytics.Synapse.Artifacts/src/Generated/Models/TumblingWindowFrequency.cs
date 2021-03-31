@@ -24,11 +24,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         private const string MinuteValue = "Minute";
         private const string HourValue = "Hour";
+        private const string MonthValue = "Month";
 
         /// <summary> Minute. </summary>
         public static TumblingWindowFrequency Minute { get; } = new TumblingWindowFrequency(MinuteValue);
         /// <summary> Hour. </summary>
         public static TumblingWindowFrequency Hour { get; } = new TumblingWindowFrequency(HourValue);
+        /// <summary> Month. </summary>
+        public static TumblingWindowFrequency Month { get; } = new TumblingWindowFrequency(MonthValue);
         /// <summary> Determines if two <see cref="TumblingWindowFrequency"/> values are the same. </summary>
         public static bool operator ==(TumblingWindowFrequency left, TumblingWindowFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TumblingWindowFrequency"/> values are not the same. </summary>

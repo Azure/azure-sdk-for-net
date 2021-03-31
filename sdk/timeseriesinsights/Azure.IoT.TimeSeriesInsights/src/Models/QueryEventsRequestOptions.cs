@@ -15,5 +15,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// in the events; otherwise, they are not returned.
         /// </summary>
         public List<EventProperty> ProjectedProperties { get; }
+
+        /// <summary>
+        /// Creates a new instance of QueryEventsRequestOptions.
+        /// </summary>
+        public QueryEventsRequestOptions()
+        {
+            ProjectedProperties = new List<EventProperty>();
+        }
     }
 }

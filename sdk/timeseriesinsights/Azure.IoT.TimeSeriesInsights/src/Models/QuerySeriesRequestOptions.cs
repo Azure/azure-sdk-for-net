@@ -20,8 +20,15 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Optional inline variables apart from the ones already defined in the Time Series type in the model.
         /// When the inline variable name is the same name as in the model, the inline variable definition takes precedence.
         /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, TimeSeriesVariable> InlineVariables { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
+        public IDictionary<string, TimeSeriesVariable> InlineVariables { get; }
+
+        /// <summary>
+        /// Creates a new instance of QuerySeriesRequestOptions.
+        /// </summary>
+        public QuerySeriesRequestOptions()
+        {
+            ProjectedVariables = new List<string>();
+            InlineVariables = new Dictionary<string, TimeSeriesVariable>();
+        }
     }
 }

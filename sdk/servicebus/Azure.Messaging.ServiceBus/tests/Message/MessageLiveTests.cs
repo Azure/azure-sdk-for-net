@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
 using Azure.Core.Serialization;
 using Azure.Messaging.ServiceBus.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Message
@@ -246,6 +248,78 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                         Assert.AreEqual(bytes, received.Body.ToMemory().Slice(100, 100).ToArray());
                     }
                 }
+            }
+        }
+
+        private static readonly object[] s_amqpValues =
+        {
+            "string",
+            5,
+            long.MaxValue,
+            (byte) 1,
+            3.1415926,
+            new decimal(3.1415926),
+            DateTimeOffset.Parse("3/24/21").UtcDateTime,
+            'c',
+            new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554"),
+            new List<string>{"first", "second"},
+            new int[] {1, 2, 3},
+            new AmqpSymbol("symbol"),
+        };
+
+        [Test]
+        [TestCaseSource(nameof(s_amqpValues))]
+        public async Task CanSendValueSection(object value)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+
+                var msg = new ServiceBusMessage();
+                msg.GetRawAmqpMessage().Body = new AmqpMessageBody(value);
+
+                await sender.SendMessageAsync(msg);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var received = await receiver.ReceiveMessageAsync();
+                received.GetRawAmqpMessage().Body.TryGetValue(out var receivedData);
+                Assert.AreEqual(value, receivedData);
+
+                Assert.That(
+                    () => received.Body,
+                    Throws.InstanceOf<NotSupportedException>());
+            }
+        }
+
+        [Test]
+        public async Task CanSendSequenceSection()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+
+                var msg = new ServiceBusMessage();
+                var sequence = new List<IList<object>>();
+                sequence.Add(new List<object> { "first", 1 });
+                sequence.Add(new List<object> { "second", 2 });
+                msg.GetRawAmqpMessage().Body = new AmqpMessageBody(sequence);
+
+                await sender.SendMessageAsync(msg);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var received = await receiver.ReceiveMessageAsync();
+                received.GetRawAmqpMessage().Body.TryGetSequence(out IEnumerable<IList<object>> receivedData);
+                var receivedSequence = receivedData.ToList();
+                Assert.AreEqual("first", receivedSequence[0][0]);
+                Assert.AreEqual(1, receivedSequence[0][1]);
+                Assert.AreEqual("second", receivedSequence[1][0]);
+                Assert.AreEqual(2, receivedSequence[1][1]);
+
+                Assert.That(
+                    () => received.Body,
+                    Throws.InstanceOf<NotSupportedException>());
             }
         }
 

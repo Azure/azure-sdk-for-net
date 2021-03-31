@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(AzureMySqlSinkConverter))]
     public partial class AzureMySqlSink : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -138,6 +141,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new AzureMySqlSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, preCopyScript.Value);
+        }
+
+        internal partial class AzureMySqlSinkConverter : JsonConverter<AzureMySqlSink>
+        {
+            public override void Write(Utf8JsonWriter writer, AzureMySqlSink model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AzureMySqlSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAzureMySqlSink(document.RootElement);
+            }
         }
     }
 }

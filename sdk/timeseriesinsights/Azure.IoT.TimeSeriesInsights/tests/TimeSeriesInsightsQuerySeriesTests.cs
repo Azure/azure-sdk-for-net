@@ -65,16 +65,10 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     new TimeSeriesExpression($"$event.{QueryTestsHelper.Temperature} * 2"),
                     new TimeSeriesExpression("avg($value)"));
                 var temperatureTimesTwoVariableName = $"{QueryTestsHelper.Temperature}TimesTwo";
-                var inlineVariables = new Dictionary<string, TimeSeriesVariable>
-                {
-                    [QueryTestsHelper.Temperature] = temperatureNumericVariable,
-                    [temperatureTimesTwoVariableName] = temperatureNumericVariableTimesTwo,
-                };
 
-                var querySeriesRequestOptions = new QuerySeriesRequestOptions
-                {
-                    InlineVariables = inlineVariables,
-                };
+                var querySeriesRequestOptions = new QuerySeriesRequestOptions();
+                querySeriesRequestOptions.InlineVariables[QueryTestsHelper.Temperature] = temperatureNumericVariable;
+                querySeriesRequestOptions.InlineVariables[temperatureTimesTwoVariableName] = temperatureNumericVariableTimesTwo;
 
                 // This retry logic was added as the TSI instance are not immediately available after creation
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
@@ -124,7 +118,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 var humidityNumericVariable = new NumericVariable(
                     new TimeSeriesExpression("$event.Humidity"),
                     new TimeSeriesExpression("avg($value)"));
-                inlineVariables[QueryTestsHelper.Humidity] = humidityNumericVariable;
+                querySeriesRequestOptions.InlineVariables[QueryTestsHelper.Humidity] = humidityNumericVariable;
                 querySeriesRequestOptions.ProjectedVariables.Add(QueryTestsHelper.Temperature);
                 querySeriesRequestOptions.ProjectedVariables.Add(QueryTestsHelper.Humidity);
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>

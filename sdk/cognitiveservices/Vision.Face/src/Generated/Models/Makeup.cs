@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     using System.Linq;
 
     /// <summary>
-    /// Properties describing present makeups on a given face.
+    /// Properties describing the presence of makeup on a given face.
     /// </summary>
     public partial class Makeup
     {

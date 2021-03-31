@@ -601,6 +601,15 @@ namespace Azure.Messaging.ServiceBus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The credential provided is not a supported type..
+        /// </summary>
+        internal static string UnsupportedCredential {
+            get {
+                return ResourceManager.GetString("UnsupportedCredential", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The requested transport event type, &apos;{0}&apos;, is not supported by the active transport client..
         /// </summary>
         internal static string UnsupportedTransportEventType {
