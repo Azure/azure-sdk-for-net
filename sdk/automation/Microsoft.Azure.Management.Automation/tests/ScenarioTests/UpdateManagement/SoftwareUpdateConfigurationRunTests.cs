@@ -81,7 +81,7 @@
         [Fact]
         public void CanGetAllRunsByStartTime()
         {
-            var startTime = DateTime.Parse("2021-03-31T11:40:39").ToUniversalTime();
+            var startTime = DateTime.Parse("2021-03-31T17:10:39+05:30").ToUniversalTime();
             using (var context = MockContext.Start(this.GetType()))
             {
                 this.CreateAutomationClient(context);
