@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.Tests
             var client = new BlobServiceClient(_endpoint, _credentials, _clientOptions);
 
             // Act
-            using (StorageServerTimeout.CreateScope(ServerTimeout))
+            using (StorageExtensions.CreateServiceTimeoutScope(ServerTimeout))
             {
                 Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetPropertiesAsync());
             }

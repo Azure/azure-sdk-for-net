@@ -36,7 +36,7 @@ namespace Azure.Storage.Tests
             var transport = new MockTransport(r => new MockResponse(200));
 
             // Act
-            using (StorageServerTimeout.CreateScope(ServerTimeout))
+            using (StorageExtensions.CreateServiceTimeoutScope(ServerTimeout))
             {
                 await SendGetRequest(transport, StorageServerTimeoutPolicy.Shared, uri: new Uri("http://foo.com/"));
             }
@@ -52,7 +52,7 @@ namespace Azure.Storage.Tests
             var transport = new MockTransport(r => new MockResponse(200));
 
             // Act
-            using (StorageServerTimeout.CreateScope(ServerTimeout))
+            using (StorageExtensions.CreateServiceTimeoutScope(ServerTimeout))
             {
                 await SendGetRequest(transport, StorageServerTimeoutPolicy.Shared, uri: new Uri("http://foo.com/?bar=baz"));
             }
@@ -68,7 +68,7 @@ namespace Azure.Storage.Tests
             var transport = new MockTransport(r => new MockResponse(200));
 
             // Act
-            using (StorageServerTimeout.CreateScope(ServerTimeout))
+            using (StorageExtensions.CreateServiceTimeoutScope(ServerTimeout))
             {
                 await SendGetRequest(transport, StorageServerTimeoutPolicy.Shared, uri: new Uri("http://foo.com/?timeout=25"));
             }
@@ -84,9 +84,9 @@ namespace Azure.Storage.Tests
             var transport = new MockTransport(r => new MockResponse(200));
 
             // Act
-            using (StorageServerTimeout.CreateScope(ServerTimeout))
+            using (StorageExtensions.CreateServiceTimeoutScope(ServerTimeout))
             {
-                using (StorageServerTimeout.CreateScope(ServerTimeout + 1))
+                using (StorageExtensions.CreateServiceTimeoutScope(ServerTimeout + 1))
                 {
                     await SendGetRequest(transport, StorageServerTimeoutPolicy.Shared, uri: new Uri("http://foo.com/"));
                 }
@@ -103,9 +103,9 @@ namespace Azure.Storage.Tests
             var transport = new MockTransport(r => new MockResponse(200));
 
             // Act
-            using (StorageServerTimeout.CreateScope(ServerTimeout))
+            using (StorageExtensions.CreateServiceTimeoutScope(ServerTimeout))
             {
-                using (StorageServerTimeout.CreateScope(null))
+                using (StorageExtensions.CreateServiceTimeoutScope(null))
                 {
                     await SendGetRequest(transport, StorageServerTimeoutPolicy.Shared, uri: new Uri("http://foo.com/"));
                 }

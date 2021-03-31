@@ -8,17 +8,9 @@ using Azure.Core.Pipeline;
 namespace Azure.Storage
 {
     /// <summary>
-    /// Factory for scopes that apply server timeout to Azure Storage calls.
-    ///
-    /// For more information, see
-    /// <see href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations">
-    /// Setting timeouts for Blob service operations</see>,
-    /// <see href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-file-service-operations">
-    /// Setting timeouts for File service operations</see>,
-    /// <see href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations">
-    /// Setting timeouts for Queue service operations</see>.
+    /// Extensions and utilities for Azure Storage clients.
     /// </summary>
-    public static class StorageServerTimeout
+    public static class StorageExtensions
     {
         /// <summary>
         /// Creates a scope in which all REST requests to Azure Storage would have provided a server timeout.
@@ -47,7 +39,7 @@ namespace Azure.Storage
         /// The server timeout is sent to the Azure Storage service for each REST request made within the scope.
         /// This value is not tracked or validated on the client, it is only passed to the Storage service.
         /// </remarks>
-        public static IDisposable CreateScope(int? timeoutInSeconds)
+        public static IDisposable CreateServiceTimeoutScope(int? timeoutInSeconds)
         {
             return HttpPipeline.CreateHttpMessagePropertiesScope(new Dictionary<string, object> { { Constants.ServerTimeout.HttpMessagePropertyKey, timeoutInSeconds } });
         }
