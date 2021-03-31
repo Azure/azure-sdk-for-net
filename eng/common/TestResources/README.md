@@ -138,9 +138,9 @@ After the markdown files are generated, please make sure all "http" URIs use "ht
 
 PowerShell markdown documentation created with [platyPS][].
 
-  [New-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/New-TestResources.ps1.md
-  [Update-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/Update-TestResources.ps1.md
-  [Remove-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/Remove-TestResources.ps1.md
+  [New-TestResources.ps1]: https://aka.ms/azsdk/tools/New-TestResources
+  [Update-TestResources.ps1]: https://aka.ms/azsdk/tools/Update-TestResources
+  [Remove-TestResources.ps1]: https://aka.ms/azsdk/tools/Remove-TestResources
   [PowerShell]: https://github.com/PowerShell/PowerShell
   [PowerShellAz]: https://docs.microsoft.com/powershell/azure/install-az-ps
   [platyPS]: https://github.com/PowerShell/platyPS
