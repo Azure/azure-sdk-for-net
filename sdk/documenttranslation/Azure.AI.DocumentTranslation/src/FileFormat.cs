@@ -6,6 +6,9 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation
 {
+    /// <summary>
+    /// Possible file formats supported by the Document Translation service.
+    /// </summary>
     [CodeGenModel("FileFormat")]
     public partial class FileFormat
     {

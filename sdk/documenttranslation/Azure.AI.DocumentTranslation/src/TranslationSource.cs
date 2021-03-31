@@ -12,17 +12,23 @@ namespace Azure.AI.DocumentTranslation
         [CodeGenMember("StorageSource")]
         internal string StorageSource { get; set; }
 
-        /// <summary> Location of the folder / container or single file with your documents. </summary>
+        /// <summary>
+        /// Location of the folder / container or single file with your documents.
+        /// This should be a SAS Uri.
+        /// </summary>
         [CodeGenMember("SourceUrl")]
         public Uri SourceUri { get; }
 
-        /// <summary> filter documents in the source path for translation by prefix or suffix. </summary>
+        /// <summary>
+        /// The set of options that can be specified to filter the documents by name
+        /// using prefix and suffix.
+        /// </summary>
         [CodeGenMember("Filter")]
         public DocumentFilter Filter { get; set; }
 
         /// <summary>
-        /// Language code
-        /// If none is specified, we will perform auto detect on the document.
+        /// Language code for the source documents.
+        /// If none is specified, the source language will be auto-detected for each document.
         /// </summary>
         [CodeGenMember("Language")]
         public string LanguageCode { get; set; }

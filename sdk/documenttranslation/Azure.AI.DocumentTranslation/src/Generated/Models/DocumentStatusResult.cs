@@ -69,9 +69,5 @@ namespace Azure.AI.DocumentTranslation
             DocumentId = documentId;
             CharactersCharged = charactersCharged;
         }
-        /// <summary> List of possible statuses for job or document. </summary>
-        public TranslationStatus Status { get; }
-        /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
-        public DocumentTranslationError Error { get; }
     }
 }

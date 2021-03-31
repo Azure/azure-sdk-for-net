@@ -7,7 +7,12 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation
 {
-    /// <summary> Definition for the input batch translation request. </summary>
+    /// <summary>
+    /// Input for a translation operation. This requires that you have your source document or
+    /// documents in an Azure Blob Storage container.
+    /// The source document(s) are translated and written to the location provided
+    /// in the <see cref="TranslationTarget"/>.
+    /// </summary>
     [CodeGenModel("BatchRequest")]
     public partial class DocumentTranslationInput
     {
@@ -32,7 +37,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Add Translation Target to the translation input.
+        /// Add a <see cref="TranslationTarget"/> to the translation input.
         /// </summary>
         /// <param name="targetUri">The SAS URI for the target container to which the translated documents will be written.</param>
         /// <param name="languageCode">Language code to translate documents to. For supported languages see
