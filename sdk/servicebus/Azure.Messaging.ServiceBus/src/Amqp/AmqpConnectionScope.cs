@@ -992,34 +992,19 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     tcs.TrySetCanceled();
                 }, openObjectCompletionSource, useSynchronizationContext: false);
 
-                _ = Task.Factory
-                    .FromAsync<(AmqpObject, TimeSpan, TaskCompletionSource<object>)>
-                    (
-                        static (arguments, callback, state) =>
-                        {
-                            var (target, timeout, openObjectCompletionSource) = arguments;
-                            return target.BeginOpen(
-                                timeout,
-                                callback,
-                                (target, openObjectCompletionSource));
-                        },
-                        static asyncResult =>
-                        {
-                            var (target, openObjectCompletionSource) = ((AmqpObject, TaskCompletionSource<object>))asyncResult.AsyncState;
-                            try
-                            {
-                                target.EndOpen(asyncResult);
-                                openObjectCompletionSource.TrySetResult(null);
-                            }
-                            catch (Exception e)
-                            {
-                                openObjectCompletionSource.TrySetException(e);
-                            }
-                        },
-                        (target, timeout, openObjectCompletionSource),
-                        default
-                    ).ConfigureAwait(false);
-
+                async Task Open()
+                {
+                    try
+                    {
+                        await target.OpenAsync(timeout).ConfigureAwait(false);
+                        openObjectCompletionSource.TrySetResult(null);
+                    }
+                    catch (Exception ex)
+                    {
+                        openObjectCompletionSource.TrySetException(ex);
+                    }
+                }
+                _ = Open();
                 await openObjectCompletionSource.Task.ConfigureAwait(false);
             }
             catch
