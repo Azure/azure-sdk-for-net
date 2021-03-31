@@ -18,8 +18,9 @@ var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCreden
 To Start a translation operation for a single document or documents in a single blob container, call `StartTranslationAsync`. The result is a Long Running operation of type `DocumentTranslationOperation` which polls for the status of the translation operation from the API.
 
 To call `StartTranslationAsync` you need to initialize an object of type `DocumentTranslationInput` which contains the information needed to translate the documents.
-The `sourceUri` is a SAS URI with read access for the document to be translated or read and list access for the blob container holding the documents to be translated.
-The `targetUri` is a SAS URI with write access for the blob container to which the translated documents will be written.
+
+- The `sourceUri` is a SAS URI with read access for the document to be translated or read and list access for the blob container holding the documents to be translated.
+- The `targetUri` is a SAS URI with read and write access for the blob container to which the translated documents will be written.
 
 More on generating SAS Tokens [here](https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#create-sas-access-tokens-for-document-translation)
 

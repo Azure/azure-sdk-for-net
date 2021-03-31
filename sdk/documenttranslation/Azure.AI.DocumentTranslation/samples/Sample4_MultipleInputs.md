@@ -19,8 +19,8 @@ To Start a translation operation for documents in multiple blob containers, call
 
 To call `StartTranslationAsync` you need to initialize a list of `DocumentTranslationInput` which contains the information needed to translate the documents. Each `DocumentTranslationInput` contains a source container and a list of target containers. The `AddTarget` method is used to add targets to the input.
 
-The `sourceUri` is a SAS URI with read access for the blob container holding the documents to be translated.
-The `targetUri` is a SAS URI with write access for the blob container to which the translated documents will be written.
+- The `sourceUri` is a SAS URI with read access for the document to be translated or read and list access for the blob container holding the documents to be translated.
+- The `targetUri` is a SAS URI with read and write access for the blob container to which the translated documents will be written.
 
 More on generating SAS Tokens [here](https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#create-sas-access-tokens-for-document-translation)
 

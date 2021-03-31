@@ -57,26 +57,36 @@ namespace Azure.AI.DocumentTranslation.Tests
             var containerClient = GetBlobContainerClient(containerName);
             await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
-            for (int i = 0; i < documents.Count; i++)
-            {
-                byte[] byteArray = Encoding.ASCII.GetBytes(documents[i].Content);
-                MemoryStream stream = new MemoryStream(byteArray);
-                await containerClient.UploadBlobAsync(documents[i].Name, stream);
-            }
+            await UploadDocumentsAsync(containerClient, documents);
 
             var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
             return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Read, expiresOn);
         }
 
-        public async Task<Uri> CreateTargetContainerAsync()
+        public async Task<Uri> CreateTargetContainerAsync(List<TestDocument> documents = default)
         {
             Recording.DisableIdReuse();
             string containerName = "target" + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
             await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
 
+            if (documents != default)
+            {
+                await UploadDocumentsAsync(containerClient, documents);
+            }
+
             var expiresOn = DateTimeOffset.UtcNow.AddHours(1);
-            return containerClient.GenerateSasUri(BlobContainerSasPermissions.List | BlobContainerSasPermissions.Write, expiresOn);
+            return containerClient.GenerateSasUri(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write, expiresOn);
+        }
+
+        private async Task UploadDocumentsAsync(BlobContainerClient containerClient, List<TestDocument> documents)
+        {
+            for (int i = 0; i < documents.Count; i++)
+            {
+                byte[] byteArray = Encoding.ASCII.GetBytes(documents[i].Content);
+                MemoryStream stream = new MemoryStream(byteArray);
+                await containerClient.UploadBlobAsync(documents[i].Name, stream);
+            }
         }
     }
 }

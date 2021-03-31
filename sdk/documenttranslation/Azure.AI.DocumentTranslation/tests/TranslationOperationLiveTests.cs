@@ -354,6 +354,36 @@ namespace Azure.AI.DocumentTranslation.Tests
             Assert.AreEqual(new DocumentTranslationErrorCode("WrongDocumentEncoding"), documentsList[0].Error.ErrorCode);
         }
 
+        [RecordedTest]
+        public async Task ExistingFileInTargetContainer()
+        {
+            Uri source = await CreateSourceContainerAsync(oneTestDocuments);
+            Uri target = await CreateTargetContainerAsync(oneTestDocuments);
+
+            DocumentTranslationClient client = GetClient();
+
+            var input = new DocumentTranslationInput(source, target, "fr");
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+
+            AsyncPageable<DocumentStatusResult> documents = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(TranslationStatus.Failed, operation.Status);
+
+            Assert.AreEqual(1, operation.DocumentsTotal);
+            Assert.AreEqual(0, operation.DocumentsSucceeded);
+            Assert.AreEqual(1, operation.DocumentsFailed);
+            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsInProgress);
+            Assert.AreEqual(0, operation.DocumentsNotStarted);
+
+            List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
+            Assert.AreEqual(1, documentsList.Count);
+            Assert.AreEqual(TranslationStatus.Failed, documentsList[0].Status);
+            Assert.AreEqual(new DocumentTranslationErrorCode("TargetFileAlreadyExists"), documentsList[0].Error.ErrorCode);
+        }
+
         private async Task PrintNotSucceededDocumentsAsync(DocumentTranslationOperation operation)
         {
             await foreach (var document in operation.GetValuesAsync())
