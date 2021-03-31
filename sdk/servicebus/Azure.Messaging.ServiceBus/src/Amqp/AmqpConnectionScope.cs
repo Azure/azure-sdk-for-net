@@ -992,7 +992,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     tcs.TrySetCanceled();
                 }, openObjectCompletionSource, useSynchronizationContext: false);
 
-                async Task Open()
+                static async Task Open(AmqpObject target, TimeSpan timeout, TaskCompletionSource<object> openObjectCompletionSource)
                 {
                     try
                     {
@@ -1004,7 +1004,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         openObjectCompletionSource.TrySetException(ex);
                     }
                 }
-                _ = Open();
+                _ = Open(target, timeout, openObjectCompletionSource);
                 await openObjectCompletionSource.Task.ConfigureAwait(false);
             }
             catch
