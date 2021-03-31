@@ -52,25 +52,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
             var memory = _writer.GetMemory(segment.Length);
             segment.CopyTo(memory);
             _writer.Advance(segment.Length);
-            _segments.Add(memory);
+            _segments.Add(memory.Slice(0, segment.Length));
         }
 
         private void Append(DescribedType segment)
         {
-            ReadOnlyMemory<byte> dataToAppend;
-            switch (segment.Value)
+            ReadOnlyMemory<byte> dataToAppend = segment.Value switch
             {
-                case byte[] byteArray:
-                    dataToAppend = byteArray;
-                    break;
-                case ArraySegment<byte> arraySegment:
-                    dataToAppend = arraySegment;
-                    dataToAppend = dataToAppend.Slice(arraySegment.Offset, arraySegment.Count);
-                    break;
-                default:
-                    dataToAppend = ReadOnlyMemory<byte>.Empty;
-                    break;
-            }
+                byte[] byteArray => byteArray,
+                ArraySegment<byte> arraySegment => arraySegment,
+                _ => ReadOnlyMemory<byte>.Empty
+            };
 
             Append(dataToAppend);
         }
