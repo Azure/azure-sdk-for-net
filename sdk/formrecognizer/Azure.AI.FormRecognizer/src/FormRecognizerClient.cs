@@ -768,7 +768,8 @@ namespace Azure.AI.FormRecognizer
         #region ID Documents
 
         /// <summary>
-        /// Recognizes values from one or more ID documents.
+        /// Analyze ID documents using optical character recognition (OCR) and a prebuilt model trained on ID documents
+        /// to extract key information from passports and US driver licenses.
         /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an ID document.</para>
         /// </summary>
         /// <param name="idDocument">The stream containing the one or more ID documents to recognize values from.</param>
@@ -808,7 +809,8 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Recognizes values from one or more ID documents.
+        /// Analyze ID documents using optical character recognition (OCR) and a prebuilt model trained on ID documents
+        /// to extract key information from passports and US driver licenses.
         /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an ID document.</para>
         /// </summary>
         /// <param name="idDocument">The stream containing the one or more ID documents to recognize values from.</param>
@@ -816,7 +818,7 @@ namespace Azure.AI.FormRecognizer
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeIdDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdDocumentsOperation.Value"/> upon successful
-        /// completion will contain the extracted ID document.</returns>
+        /// completion will contain the extracted ID document information.</returns>
         public virtual RecognizeIdDocumentsOperation StartRecognizeIdDocuments(Stream idDocument, RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(idDocument, nameof(idDocument));
@@ -848,7 +850,8 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Recognizes values from one or more ID documents.
+        /// Analyze ID documents using optical character recognition (OCR) and a prebuilt model trained on ID documents
+        /// to extract key information from passports and US driver licenses.
         /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an ID document.</para>
         /// </summary>
         /// <param name="idDocumentUri">The absolute URI of the remote file to recognize values from.</param>
@@ -856,7 +859,7 @@ namespace Azure.AI.FormRecognizer
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeIdDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdDocumentsOperation.Value"/> upon successful
-        /// completion will contain the extracted ID document.</returns>
+        /// completion will contain the extracted ID document information.</returns>
         public virtual async Task<RecognizeIdDocumentsOperation> StartRecognizeIdDocumentsFromUriAsync(Uri idDocumentUri, RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(idDocumentUri, nameof(idDocumentUri));
@@ -886,7 +889,8 @@ namespace Azure.AI.FormRecognizer
         }
 
         /// <summary>
-        /// Recognizes values from one or more ID documents.
+        /// Analyze ID documents using optical character recognition (OCR) and a prebuilt model trained on ID documents
+        /// to extract key information from passports and US driver licenses.
         /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an ID document.</para>
         /// </summary>
         /// <param name="idDocumentUri">The absolute URI of the remote file to recognize values from.</param>
@@ -894,7 +898,7 @@ namespace Azure.AI.FormRecognizer
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeIdDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdDocumentsOperation.Value"/> upon successful
-        /// completion will contain the extracted ID document.</returns>
+        /// completion will contain the extracted ID document information.</returns>
         public virtual RecognizeIdDocumentsOperation StartRecognizeIdDocumentsFromUri(Uri idDocumentUri, RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(idDocumentUri, nameof(idDocumentUri));

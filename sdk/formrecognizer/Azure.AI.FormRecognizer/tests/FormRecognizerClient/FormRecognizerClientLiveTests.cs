@@ -2231,7 +2231,9 @@ namespace Azure.AI.FormRecognizer.Tests
             // If this assertion is failing after a recent update in the generated models, please remember
             // to update the manually added FieldValue_internal constructor in src/FieldValue_internal.cs if
             // necessary. The service originally returns "selected" and "unselected" as lowercase strings,
-            // but we overwrite these values there.
+            // but we overwrite these values there. Consider removing this comment when:
+            // https://github.com/Azure/azure-sdk-for-net/issues/17814 is fixed and the manually added constructor
+            // is not needed anymore.
             Assert.AreEqual("Selected", form.Fields[name].ValueData.Text);
         }
 

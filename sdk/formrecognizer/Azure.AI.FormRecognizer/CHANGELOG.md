@@ -3,6 +3,7 @@
 ## 3.1.0-beta.4 (Unreleased)
 
 ### New Features
+- Added support for pre-built passports and US driver licenses recognition with the `StartRecognizeIdDocuments` API.
 - Expanded the set of document languages that can be provided to the `StartRecognizeContent` API.
 - Added property `Pages` to `RecognizeBusinessCardsOptions`, `RecognizeCustomFormsOptions`, `RecognizeInvoicesOptions`, and `RecognizeReceiptsOptions` to specify the page numbers to recognize.
 
