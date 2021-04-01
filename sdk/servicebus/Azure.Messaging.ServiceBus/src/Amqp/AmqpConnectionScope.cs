@@ -986,14 +986,17 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 var openObjectCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                using var registration = cancellationToken.Register(state =>
+                // use a static delegate with tuple state to avoid allocating a closure
+                using var registration = cancellationToken.Register(static state =>
                 {
-                    var tcs = (TaskCompletionSource<object>)state;
+                    var tuple = ((TaskCompletionSource<object>, AmqpObject))state;
+                    TaskCompletionSource<object> tcs = tuple.Item1;
+                    AmqpObject target = tuple.Item2;
                     if (tcs.TrySetCanceled())
                     {
                         target.SafeClose();
                     }
-                }, openObjectCompletionSource, useSynchronizationContext: false);
+                }, (openObjectCompletionSource, target), useSynchronizationContext: false);
 
                 static async Task Open(AmqpObject target, TimeSpan timeout, TaskCompletionSource<object> openObjectCompletionSource)
                 {
