@@ -183,7 +183,7 @@ The `GetPolicy` method retrieves an attestation policy from the service. The `at
 var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
 
 var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
-var result = policyResult.Value.AttestationPolicy;
+var result = policyResult.Value;
 ```
 
 ### Set an attestation policy for a specified attestation type.
@@ -192,12 +192,7 @@ string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issua
 
 var policyTokenSigner = TestEnvironment.PolicyCertificate0;
 
-AttestationToken policySetToken = new SecuredAttestationToken(
-    new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(attestationPolicy), },
-    TestEnvironment.PolicySigningKey0,
-    policyTokenSigner);
-
-var setResult = client.SetPolicy(AttestationType.SgxEnclave, policySetToken);
+var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, TestEnvironment.PolicySigningKey0, policyTokenSigner);
 ```Python
 things = client.list_things()
 ```
