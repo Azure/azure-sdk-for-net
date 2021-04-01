@@ -10,6 +10,29 @@ namespace Azure.Core.Amqp.Tests
 {
     public class AmqpMessageBodyTests
     {
+        private static readonly object[] s_amqpValues =
+        {
+            "string",
+            new List<string> {"first", "second"},
+            'c',
+            5,
+            new int[] { 5 },
+            long.MaxValue,
+            new long[] { long.MaxValue },
+            (byte) 1,
+            (sbyte) 1,
+            (short) 1,
+            (ushort) 1,
+            3.1415926,
+            new double[] { 3.1415926 },
+            new decimal(3.1415926),
+            new decimal[] { new decimal(3.1415926) },
+            DateTimeOffset.Parse("3/24/21").UtcDateTime,
+            new DateTime[] {DateTimeOffset.Parse("3/24/21").UtcDateTime },
+            new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554"),
+            new Guid[] { new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554"), new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554") },
+        };
+
         [Test]
         public void CanCreateDataBody()
         {
@@ -26,12 +49,28 @@ namespace Azure.Core.Amqp.Tests
         }
 
         [Test]
-        public void CanCreateValueBody()
+        public void CanCreateDataBodyFactory()
         {
-            var body = new AmqpMessageBody("value");
+            var body = AmqpMessageBody.FromData(Array.Empty<ReadOnlyMemory<byte>>());
+            Assert.AreEqual(AmqpMessageBodyType.Data, body.BodyType);
+            Assert.IsTrue(body.TryGetData(out var data));
+            Assert.NotNull(data);
+
+            Assert.IsFalse(body.TryGetValue(out var value));
+            Assert.IsNull(value);
+
+            Assert.IsFalse(body.TryGetSequence(out var sequence));
+            Assert.IsNull(sequence);
+        }
+
+        [Test]
+        [TestCaseSource(nameof(s_amqpValues))]
+        public void CanCreateValueBody(object input)
+        {
+            var body = AmqpMessageBody.FromValue(input);
             Assert.AreEqual(AmqpMessageBodyType.Value, body.BodyType);
-            Assert.IsTrue(body.TryGetValue(out var value));
-            Assert.AreEqual("value", value);
+            Assert.IsTrue(body.TryGetValue(out var output));
+            Assert.AreEqual(input, output);
 
             Assert.IsFalse(body.TryGetData(out var data));
             Assert.IsNull(data);
@@ -44,7 +83,7 @@ namespace Azure.Core.Amqp.Tests
         public void CanCreateSequenceBody()
         {
             var sequence = new List<object>[] { new List<object> { 1, "two" }, new List<object> { 3, "four" } };
-            var body = new AmqpMessageBody(sequence);
+            var body = AmqpMessageBody.FromSequence(sequence);
             Assert.AreEqual(AmqpMessageBodyType.Sequence, body.BodyType);
             Assert.IsTrue(body.TryGetSequence(out var outSequence));
             var outList = outSequence.ToList();
@@ -64,16 +103,32 @@ namespace Azure.Core.Amqp.Tests
         public void CannotCreateFromNullBody()
         {
             Assert.That(
-                () => new AmqpMessageBody(data: null),
+                () => AmqpMessageBody.FromData(data: null),
                 Throws.InstanceOf<ArgumentNullException>());
 
             Assert.That(
-                () => new AmqpMessageBody(value: null),
+                () => AmqpMessageBody.FromValue(value: null),
                 Throws.InstanceOf<ArgumentNullException>());
 
             Assert.That(
-                () => new AmqpMessageBody(sequence: null),
+                () => AmqpMessageBody.FromSequence(sequence: null),
                 Throws.InstanceOf<ArgumentNullException>());
+        }
+
+        [Test]
+        public void CannotUseCustomType()
+        {
+            Assert.That(
+                () => AmqpMessageBody.FromValue(new Test()),
+                Throws.InstanceOf<NotSupportedException>());
+
+            Assert.That(
+                () => AmqpMessageBody.FromSequence(Enumerable.Repeat(new Test[] { new Test() }, 1)),
+                Throws.InstanceOf<NotSupportedException>());
+        }
+
+        private class Test
+        {
         }
     }
 }
