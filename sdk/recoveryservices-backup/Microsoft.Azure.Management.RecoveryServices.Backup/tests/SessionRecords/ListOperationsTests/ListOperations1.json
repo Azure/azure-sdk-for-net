@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.RecoveryServices/operations?api-version=2021-02-01",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMjEtMDItMDE=",
+      "RequestUri": "/providers/Microsoft.RecoveryServices/operations?api-version=2016-08-10",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTYtMDgtMTA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
