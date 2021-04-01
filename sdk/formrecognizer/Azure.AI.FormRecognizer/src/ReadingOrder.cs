@@ -20,8 +20,7 @@ namespace Azure.AI.FormRecognizer
         Basic,
 
         /// <summary>
-        /// The lines are returned in a more human-friendly reading order. Related text lines
-        /// are likely to be in sequence.
+        /// The algorithm uses positional information to keep nearby lines together.
         /// </summary>
         Natural
     }
