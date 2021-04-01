@@ -182,8 +182,8 @@ namespace Azure.Core.Amqp
                     break;
                 default:
                     throw new NotSupportedException($"Values of type {value.GetType()} are not supported. " +
-                        $"Only the following types are supported: byte, char, short, int, long, float, double, decimal, bool, " +
-                        $"Guid, string, Uri, DateTime.");
+                        $"Only the following types are supported: string, byte, char, short, int, long, float, double, decimal, bool, " +
+                        $"Guid, DateTime.");
             }
         }
     }
