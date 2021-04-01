@@ -12,6 +12,11 @@ Thank you to our developer community members who helped to make Azure Identity b
 
 - Added `AzurePowerShellCredential` to `DefaultAzureCredential` (A community contribution, courtesy of _[olandese](https://github.com/olandese))_
 
+### Fixes and improvements
+
+- When logging is enabled, the log output from MSAL is also logged.
+- Fixed an issue where an account credential fails to load from the cache when EnableGuestTenantAuthentication is true and the account found in the cache has multiple matching tenantIds.
+
 ### Breaking Changes
 
 - `TokenCache` class is moved removed from the public API surface and has been replaced by `TokenCachePersistenceOptions` for configuration of disk based persistence of the token cache.
