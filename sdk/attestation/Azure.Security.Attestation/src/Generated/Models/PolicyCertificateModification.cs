@@ -11,7 +11,7 @@ namespace Azure.Security.Attestation.Models
     public partial class PolicyCertificateModification
     {
         /// <summary> Initializes a new instance of PolicyCertificateModification. </summary>
-        internal PolicyCertificateModification()
+        public PolicyCertificateModification()
         {
         }
 
