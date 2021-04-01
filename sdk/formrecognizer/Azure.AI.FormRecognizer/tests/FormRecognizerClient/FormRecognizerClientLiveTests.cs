@@ -1519,7 +1519,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateFormRecognizerClient(useTokenCredential: true);
             RecognizeInvoicesOperation operation;
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoicePdf);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceJpg);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeInvoicesAsync(stream);
@@ -1541,15 +1541,15 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false)]
-        public async Task StartRecognizeInvoicesPopulatesExtractedPdf(bool useStream)
+        [TestCase(false, Ignore ="File not avialable on GitHub")]
+        public async Task StartRecognizeInvoicesPopulatesExtractedJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
             RecognizeInvoicesOperation operation;
 
             if (useStream)
             {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoicePdf);
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceJpg);
                 using (Recording.DisableRequestBodyRecording())
                 {
                     operation = await client.StartRecognizeInvoicesAsync(stream);
@@ -1557,7 +1557,7 @@ namespace Azure.AI.FormRecognizer.Tests
             }
             else
             {
-                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoicePdf);
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceJpg);
                 operation = await client.StartRecognizeInvoicesFromUriAsync(uri);
             }
 
@@ -1578,107 +1578,124 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.NotNull(form.Fields);
 
-            Assert.True(form.Fields.ContainsKey("VendorName"));
-            Assert.True(form.Fields.ContainsKey("CustomerAddressRecipient"));
-            Assert.True(form.Fields.ContainsKey("VendorAddress"));
+            Assert.True(form.Fields.ContainsKey("AmountDue"));
+            Assert.True(form.Fields.ContainsKey("BillingAddress"));
+            Assert.True(form.Fields.ContainsKey("BillingAddressRecipient"));
             Assert.True(form.Fields.ContainsKey("CustomerAddress"));
-            Assert.True(form.Fields.ContainsKey("InvoiceId"));
-            Assert.True(form.Fields.ContainsKey("InvoiceDate"));
+            Assert.True(form.Fields.ContainsKey("CustomerAddressRecipient"));
+            Assert.True(form.Fields.ContainsKey("CustomerId"));
+            Assert.True(form.Fields.ContainsKey("CustomerName"));
             Assert.True(form.Fields.ContainsKey("DueDate"));
+            Assert.True(form.Fields.ContainsKey("InvoiceDate"));
+            Assert.True(form.Fields.ContainsKey("InvoiceId"));
             Assert.True(form.Fields.ContainsKey("InvoiceTotal"));
-            Assert.True(form.Fields.ContainsKey("CustomerName"));
-
-            Assert.AreEqual("Contoso", form.Fields["VendorName"].Value.AsString());
-            Assert.AreEqual("Microsoft", form.Fields["CustomerAddressRecipient"].Value.AsString());
-            Assert.AreEqual("1 Redmond way Suite 6000 Redmond, WA 99243", form.Fields["VendorAddress"].Value.AsString());
-            Assert.AreEqual("1020 Enterprise Way Sunnayvale, CA 87659", form.Fields["CustomerAddress"].Value.AsString());
-            Assert.AreEqual("Microsoft", form.Fields["CustomerName"].Value.AsString());
-
-            Assert.That(form.Fields["InvoiceTotal"].Value.AsFloat(), Is.EqualTo(56651.49f).Within(0.0001));
-
-            var invoiceDate = form.Fields["InvoiceDate"].Value.AsDate();
-            Assert.AreEqual(18, invoiceDate.Day);
-            Assert.AreEqual(6, invoiceDate.Month);
-            Assert.AreEqual(2017, invoiceDate.Year);
-
-            var dueDate = form.Fields["DueDate"].Value.AsDate();
-            Assert.AreEqual(24, dueDate.Day);
-            Assert.AreEqual(6, dueDate.Month);
-            Assert.AreEqual(2017, dueDate.Year);
-        }
-
-        [RecordedTest]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task StartRecognizeInvoicesPopulatesExtractedTiff(bool useStream)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeInvoicesOperation operation;
-
-            if (useStream)
-            {
-                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
-                using (Recording.DisableRequestBodyRecording())
-                {
-                    operation = await client.StartRecognizeInvoicesAsync(stream);
-                }
-            }
-            else
-            {
-                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.InvoiceLeTiff);
-                operation = await client.StartRecognizeInvoicesFromUriAsync(uri);
-            }
-
-            await operation.WaitForCompletionAsync(PollingInterval);
-
-            Assert.IsTrue(operation.HasValue);
-
-            var form = operation.Value.Single();
-
-            Assert.NotNull(form);
-
-            ValidatePrebuiltForm(
-                form,
-                includeFieldElements: false,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1);
-
-            // The expected values are based on the values returned by the service, and not the actual
-            // values present in the invoice. We are not testing the service here, but the SDK.
-
-            Assert.AreEqual("prebuilt:invoice", form.FormType);
-            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
-            Assert.AreEqual(1, form.PageRange.LastPageNumber);
-
-            Assert.NotNull(form.Fields);
-
-            Assert.True(form.Fields.ContainsKey("VendorName"));
-            Assert.True(form.Fields.ContainsKey("CustomerAddressRecipient"));
+            Assert.True(form.Fields.ContainsKey("Items"));
+            Assert.True(form.Fields.ContainsKey("PreviousUnpaidBalance"));
+            Assert.True(form.Fields.ContainsKey("PurchaseOrder"));
+            Assert.True(form.Fields.ContainsKey("RemittanceAddress"));
+            Assert.True(form.Fields.ContainsKey("RemittanceAddressRecipient"));
+            Assert.True(form.Fields.ContainsKey("ServiceAddress"));
+            Assert.True(form.Fields.ContainsKey("ServiceAddressRecipient"));
+            Assert.True(form.Fields.ContainsKey("ServiceEndDate"));
+            Assert.True(form.Fields.ContainsKey("ShippingAddress"));
+            Assert.True(form.Fields.ContainsKey("ShippingAddressRecipient"));
+            Assert.True(form.Fields.ContainsKey("SubTotal"));
+            Assert.True(form.Fields.ContainsKey("TotalTax"));
             Assert.True(form.Fields.ContainsKey("VendorAddress"));
-            Assert.True(form.Fields.ContainsKey("CustomerAddress"));
-            Assert.True(form.Fields.ContainsKey("InvoiceId"));
-            Assert.True(form.Fields.ContainsKey("InvoiceDate"));
-            Assert.True(form.Fields.ContainsKey("DueDate"));
-            // Assert.True(form.Fields.ContainsKey("InvoiceTotal"));
-            Assert.True(form.Fields.ContainsKey("CustomerName"));
+            Assert.True(form.Fields.ContainsKey("VendorAddressRecipient"));
+            Assert.True(form.Fields.ContainsKey("VendorName"));
 
-            Assert.AreEqual("Contoso", form.Fields["VendorName"].Value.AsString());
-            Assert.AreEqual("Microsoft", form.Fields["CustomerAddressRecipient"].Value.AsString());
-            Assert.AreEqual("1 Redmond way Suite 6000 Redmond, WA 99243", form.Fields["VendorAddress"].Value.AsString());
-            Assert.AreEqual("1020 Enterprise Way Sunnayvale, CA 87659", form.Fields["CustomerAddress"].Value.AsString());
-            Assert.AreEqual("Microsoft", form.Fields["CustomerName"].Value.AsString());
-
-            // Assert.That(form.Fields["InvoiceTotal"].Value.AsFloat(), Is.EqualTo(56651.49f).Within(0.0001));
-
-            var invoiceDate = form.Fields["InvoiceDate"].Value.AsDate();
-            Assert.AreEqual(18, invoiceDate.Day);
-            Assert.AreEqual(6, invoiceDate.Month);
-            Assert.AreEqual(2017, invoiceDate.Year);
+            Assert.That(form.Fields["AmountDue"].Value.AsFloat(), Is.EqualTo(610.00).Within(0.0001));
+            Assert.AreEqual("123 Bill St, Redmond WA, 98052", form.Fields["BillingAddress"].Value.AsString());
+            Assert.AreEqual("Microsoft Finance", form.Fields["BillingAddressRecipient"].Value.AsString());
+            Assert.AreEqual("123 Other St, Redmond WA, 98052", form.Fields["CustomerAddress"].Value.AsString());
+            Assert.AreEqual("Microsoft Corp", form.Fields["CustomerAddressRecipient"].Value.AsString());
+            Assert.AreEqual("CID-12345", form.Fields["CustomerId"].Value.AsString());
+            Assert.AreEqual("MICROSOFT CORPORATION", form.Fields["CustomerName"].Value.AsString());
 
             var dueDate = form.Fields["DueDate"].Value.AsDate();
-            Assert.AreEqual(24, dueDate.Day);
-            Assert.AreEqual(6, dueDate.Month);
-            Assert.AreEqual(2017, dueDate.Year);
+            Assert.AreEqual(15, dueDate.Day);
+            Assert.AreEqual(12, dueDate.Month);
+            Assert.AreEqual(2019, dueDate.Year);
+
+            var invoiceDate = form.Fields["InvoiceDate"].Value.AsDate();
+            Assert.AreEqual(15, invoiceDate.Day);
+            Assert.AreEqual(11, invoiceDate.Month);
+            Assert.AreEqual(2019, invoiceDate.Year);
+
+            Assert.AreEqual("INV-100", form.Fields["InvoiceId"].Value.AsString());
+            Assert.That(form.Fields["InvoiceTotal"].Value.AsFloat(), Is.EqualTo(110.00).Within(0.0001));
+            Assert.That(form.Fields["PreviousUnpaidBalance"].Value.AsFloat(), Is.EqualTo(500.00).Within(0.0001));
+            Assert.AreEqual("PO-3333", form.Fields["PurchaseOrder"].Value.AsString());
+            Assert.AreEqual("123 Remit St New York, NY, 10001", form.Fields["RemittanceAddress"].Value.AsString());
+            Assert.AreEqual("Contoso Billing", form.Fields["RemittanceAddressRecipient"].Value.AsString());
+            Assert.AreEqual("123 Service St, Redmond WA, 98052", form.Fields["ServiceAddress"].Value.AsString());
+            Assert.AreEqual("Microsoft Services", form.Fields["ServiceAddressRecipient"].Value.AsString());
+
+            var serviceEndDate = form.Fields["ServiceEndDate"].Value.AsDate();
+            Assert.AreEqual(14, serviceEndDate.Day);
+            Assert.AreEqual(11, serviceEndDate.Month);
+            Assert.AreEqual(2019, serviceEndDate.Year);
+
+            var serviceStartDate = form.Fields["ServiceStartDate"].Value.AsDate();
+            Assert.AreEqual(14, serviceStartDate.Day);
+            Assert.AreEqual(10, serviceStartDate.Month);
+            Assert.AreEqual(2019, serviceStartDate.Year);
+
+            Assert.AreEqual("123 Ship St, Redmond WA, 98052", form.Fields["ShippingAddress"].Value.AsString());
+            Assert.AreEqual("Microsoft Delivery", form.Fields["ShippingAddressRecipient"].Value.AsString());
+            Assert.That(form.Fields["SubTotal"].Value.AsFloat(), Is.EqualTo(100.00).Within(0.0001));
+            Assert.That(form.Fields["TotalTax"].Value.AsFloat(), Is.EqualTo(10.00).Within(0.0001));
+            Assert.AreEqual("123 456th St New York, NY, 10001", form.Fields["VendorAddress"].Value.AsString());
+            Assert.AreEqual("Contoso Headquarters", form.Fields["VendorAddressRecipient"].Value.AsString());
+            Assert.AreEqual("CONTOSO LTD.", form.Fields["VendorName"].Value.AsString());
+
+            // TODO: add validation for Tax which currently don't have `valuenumber` properties.
+            // Issue: https://github.com/Azure/azure-sdk-for-net/issues/20014
+            // TODO: add validation for Unit which currently is set as type `number` but should be `string`.
+            // Issue: https://github.com/Azure/azure-sdk-for-net/issues/20015
+            var expectedItems = new List<(float? Amount, DateTime Date, string Description, string ProductCode, float? Quantity, float? UnitPrice)>()
+            {
+                (60f, DateTime.Parse("2021-03-04 00:00:00"), "Consulting Services", "A123", 2f, 30f),
+                (30f, DateTime.Parse("2021-03-05 00:00:00"), "Document Fee", "B456", 3f, 10f),
+                (10f, DateTime.Parse("2021-03-06 00:00:00"), "Printing Fee", "C789", 10f, 1f)
+            };
+
+            // Include a bit of tolerance when comparing float types.
+
+            var items = form.Fields["Items"].Value.AsList();
+
+            Assert.AreEqual(expectedItems.Count, items.Count);
+
+            for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
+            {
+                var receiptItemInfo = items[itemIndex].Value.AsDictionary();
+
+                receiptItemInfo.TryGetValue("Amount", out var amountField);
+                receiptItemInfo.TryGetValue("Date", out var dateField);
+                receiptItemInfo.TryGetValue("Description", out var descriptionField);
+                receiptItemInfo.TryGetValue("ProductCode", out var productCodeField);
+                receiptItemInfo.TryGetValue("Quantity", out var quantityField);
+                receiptItemInfo.TryGetValue("UnitPrice", out var unitPricefield);
+
+                float? amount = amountField == null ? null : amountField.Value.AsFloat();
+                string description = descriptionField == null ? null : descriptionField.Value.AsString();
+                string productCode = productCodeField == null ? null : productCodeField.Value.AsString();
+                float? quantity = quantityField == null ? null : quantityField.Value.AsFloat();
+                var unitPrice = unitPricefield == null ? null : (float?)unitPricefield.Value.AsFloat();
+
+                Assert.IsNotNull(dateField);
+                DateTime date = dateField.Value.AsDate();
+
+                var expectedItem = expectedItems[itemIndex];
+
+                Assert.That(amount, Is.EqualTo(expectedItem.Amount).Within(0.0001), $"Amount mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Date, date, $"Date mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.Description, description, $"Description mismatch in item with index {itemIndex}.");
+                Assert.AreEqual(expectedItem.ProductCode, productCode, $"ProductCode mismatch in item with index {itemIndex}.");
+                Assert.That(quantity, Is.EqualTo(expectedItem.Quantity).Within(0.0001), $"Quantity mismatch in item with index {itemIndex}.");
+                Assert.That(unitPrice, Is.EqualTo(expectedItem.UnitPrice).Within(0.0001), $"UnitPrice price mismatch in item with index {itemIndex}.");
+            }
         }
 
         [RecordedTest]
@@ -1688,7 +1705,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var options = new RecognizeInvoicesOptions() { IncludeFieldElements = true };
             RecognizeInvoicesOperation operation;
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceJpg);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeInvoicesAsync(stream, options);
@@ -1836,7 +1853,7 @@ namespace Azure.AI.FormRecognizer.Tests
             };
             RecognizeInvoicesOperation operation;
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceJpg);
             using (Recording.DisableRequestBodyRecording())
             {
                 operation = await client.StartRecognizeInvoicesAsync(stream, options);
@@ -1858,7 +1875,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             Assert.Greater(receiptPage.Lines.Count, 0);
             Assert.AreEqual(0, receiptPage.SelectionMarks.Count);
-            Assert.AreEqual(1, receiptPage.Tables.Count);
+            Assert.AreEqual(2, receiptPage.Tables.Count);
         }
 
         [RecordedTest]
@@ -1866,7 +1883,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateFormRecognizerClient();
 
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoicePdf);
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceJpg);
             RequestFailedException ex;
 
             using (Recording.DisableRequestBodyRecording())
