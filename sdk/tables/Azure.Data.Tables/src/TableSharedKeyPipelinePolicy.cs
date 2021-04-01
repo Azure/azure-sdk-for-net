@@ -105,32 +105,6 @@ namespace Azure.Data.Tables
 
             return cr.ToString();
         }
-        public static IDictionary<string, string> GetQueryParameters(Uri uri)
-        {
-            var parameters = new Dictionary<string, string>();
-            var query = uri.Query ?? "";
-            if (!string.IsNullOrEmpty(query))
-            {
-                if (query.StartsWith("?", true, CultureInfo.InvariantCulture))
-                {
-                    query = query.Substring(1);
-                }
-                foreach (var param in query.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    var parts = param.Split(new[] { '=' }, 2);
-                    var name = WebUtility.UrlDecode(parts[0]);
-                    if (parts.Length == 1)
-                    {
-                        parameters.Add(name, default);
-                    }
-                    else
-                    {
-                        parameters.Add(name, WebUtility.UrlDecode(parts[1]));
-                    }
-                }
-            }
-            return parameters;
-        }
 
         public static bool TryGetCompQueryParameterValue(Uri uri, out string value)
         {
