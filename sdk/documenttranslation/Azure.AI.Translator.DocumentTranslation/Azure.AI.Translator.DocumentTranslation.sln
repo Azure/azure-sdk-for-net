@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Translator.DocumentTranslation", "src\Azure.AI.Translator.DocumentTranslation.csproj", "{6BE1651C-C3F6-4363-8717-FFF1D95A3643}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{439F1494-8E96-4931-AB0A-5BBA7EBA15D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Translator.DocumentTranslation.Tests", "tests\Azure.AI.Translator.DocumentTranslation.Tests.csproj", "{764BFCBB-D8FD-401A-8075-B8F5F10B4991}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BE1651C-C3F6-4363-8717-FFF1D95A3643}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BE1651C-C3F6-4363-8717-FFF1D95A3643}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BE1651C-C3F6-4363-8717-FFF1D95A3643}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BE1651C-C3F6-4363-8717-FFF1D95A3643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{439F1494-8E96-4931-AB0A-5BBA7EBA15D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{439F1494-8E96-4931-AB0A-5BBA7EBA15D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{439F1494-8E96-4931-AB0A-5BBA7EBA15D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{439F1494-8E96-4931-AB0A-5BBA7EBA15D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{764BFCBB-D8FD-401A-8075-B8F5F10B4991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{764BFCBB-D8FD-401A-8075-B8F5F10B4991}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{764BFCBB-D8FD-401A-8075-B8F5F10B4991}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{764BFCBB-D8FD-401A-8075-B8F5F10B4991}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D666E36-4E75-45B1-A13C-7402F1D66074}
+	EndGlobalSection
+EndGlobal
