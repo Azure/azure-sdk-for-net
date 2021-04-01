@@ -2935,6 +2935,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         [TestCase(Constants.KB)]
         [TestCase(10 * Constants.KB)]
         [TestCase(Constants.MB)]
+        [TestCase(10000000)] // test for scientific notation.
         [TestCase(10 * Constants.MB)]
         [TestCase(100 * Constants.MB)]
         [LiveOnly]
