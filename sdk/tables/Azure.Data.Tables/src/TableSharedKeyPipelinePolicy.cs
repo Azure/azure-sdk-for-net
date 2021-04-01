@@ -98,9 +98,7 @@ namespace Azure.Data.Tables
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key#shared-key-lite-and-table-service-format-for-2009-09-19-and-later
             if (TryGetCompQueryParameterValue(resource, out string compValue))
             {
-#pragma warning disable CA1308 // Normalize strings to uppercase
                 cr.Append("?=").Append(compValue);
-#pragma warning restore CA1308 // Normalize strings to uppercase
             }
 
             return cr.ToString();
