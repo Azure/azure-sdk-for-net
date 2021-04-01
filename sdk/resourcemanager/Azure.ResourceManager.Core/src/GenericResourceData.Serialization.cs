@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Core
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
-                writer.WriteObjectValue(Id);
+                writer.WriteStringValue(Id.StringValue);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -45,11 +45,6 @@ namespace Azure.ResourceManager.Core
             {
                 writer.WritePropertyName("managedBy");
                 writer.WriteStringValue(ManagedBy);
-            }
-            if (Optional.IsDefined(Model))
-            {
-                writer.WritePropertyName("model");
-                writer.WriteObjectValue(Model);
             }
             if (Optional.IsDefined(Name))
             {
@@ -83,7 +78,7 @@ namespace Azure.ResourceManager.Core
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteObjectValue(Type);
+                writer.WriteStringValue(Type.ToString());
             }
             writer.WriteEndObject();
         }
@@ -98,7 +93,7 @@ namespace Azure.ResourceManager.Core
             Optional<string> kind = default;
             Optional<string> managedBy = default;
             Optional<Sku> sku = default;
-            Optional<ResourceIdentifier> id = default;
+            Optional<TenantResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<LocationData> location = default;
@@ -142,7 +137,7 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    id = ResourceIdentifier.DeserializeResourceIdentifier(property.Value);
+                    id = (Optional<TenantResourceIdentifier>)ResourceIdentifier.Create(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -157,7 +152,7 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = ResourceType.DeserializeResourceType(property.Value);
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"))
@@ -172,7 +167,7 @@ namespace Azure.ResourceManager.Core
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    Dictionary<string, string> dictionary = new();
                     foreach (JsonProperty property0 in property.Value.EnumerateObject())
                     {
                         dictionary.Add(property0.Name, property0.Value.GetString());
@@ -196,7 +191,7 @@ namespace Azure.ResourceManager.Core
                 data.Tags.Clear();
                 foreach (KeyValuePair<string, string> item in tags.Value)
                 {
-                    data.Tags.Add(item.Key, item.Value);
+                    data.Tags.Add(item);
                 }
             }
             return data;

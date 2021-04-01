@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
-using System.Text;
-using System.Text.Json;
-using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Core.Tests
