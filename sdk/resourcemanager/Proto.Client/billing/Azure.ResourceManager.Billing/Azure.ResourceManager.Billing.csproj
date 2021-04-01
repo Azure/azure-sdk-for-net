@@ -6,6 +6,7 @@
     <PackageTags>azure;management;arm;resource manager;billing</PackageTags>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>

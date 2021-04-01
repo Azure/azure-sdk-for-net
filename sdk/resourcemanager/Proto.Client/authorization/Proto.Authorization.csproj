@@ -5,6 +5,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Proto.Authorization</RootNamespace>
     <LangVersion>latest</LangVersion>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
