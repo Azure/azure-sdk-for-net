@@ -989,8 +989,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 using var registration = cancellationToken.Register(state =>
                 {
                     var tcs = (TaskCompletionSource<object>)state;
-                    tcs.TrySetCanceled();
-                    target.SafeClose();
+                    if (tcs.TrySetCanceled())
+                    {
+                        target.SafeClose();
+                    }
                 }, openObjectCompletionSource, useSynchronizationContext: false);
 
                 static async Task Open(AmqpObject target, TimeSpan timeout, TaskCompletionSource<object> openObjectCompletionSource)
