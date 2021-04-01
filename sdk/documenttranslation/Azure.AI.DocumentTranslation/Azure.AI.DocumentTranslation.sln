@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Translator.Documen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{439F1494-8E96-4931-AB0A-5BBA7EBA15D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.DocumentTranslation.Tests", "tests\Azure.AI.DocumentTranslation.Tests.csproj", "{764BFCBB-D8FD-401A-8075-B8F5F10B4991}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Translator.DocumentTranslation.Tests", "tests\Azure.AI.Translator.DocumentTranslation.Tests.csproj", "{764BFCBB-D8FD-401A-8075-B8F5F10B4991}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
