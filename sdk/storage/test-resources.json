@@ -18,9 +18,9 @@
                 "description": "The principal to assign the role to. This is application object id."
             }
         },
-        "testEndpointSuffix": {
+        "storageEndpointSuffix": {
             "type": "string",
-            "defaultValue": "storage.azure.net"
+            "defaultValue": "core.windows.net"
         }
     },
     "variables": {
@@ -370,6 +370,25 @@
             }
         }
     ],
+    "functions": [
+      {
+        "namespace": "url",
+        "members": {
+          "zoneWithPeriod":{
+             "parameters": [
+               {
+                 "name": "endpoint",
+                 "type": "string"
+               }
+             ],
+             "output": {
+               "type": "string",
+               "value": "[concat('.',first(skip(split(parameters('endpoint'), '.'),1)))]"
+             }
+          }
+        }
+      }
+    ],
     "outputs": {
         "PRIMARY_STORAGE_ACCOUNT_NAME": {
             "type": "string",
@@ -379,9 +398,9 @@
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).keys[0].value]"
         },
-        "PRIMARY_STORAGE_ACCOUNT_ZONE": {
+        "PRIMARY_STORAGE_ACCOUNT_ZONE_WITH_PERIOD": {
             "type": "string",
-            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob, '.'),1))]"
+            "value": "[url.zoneWithPeriod(reference(resourceId('Microsoft.Storage/storageAccounts', variables('primaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob)]"
         },
         "SECONDARY_STORAGE_ACCOUNT_NAME": {
             "type": "string",
@@ -391,9 +410,9 @@
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('secondaryAccountName')), variables('mgmtApiVersion')).keys[0].value]"
         },
-        "SECONDARY_STORAGE_ACCOUNT_ZONE": {
+        "SECONDARY_STORAGE_ACCOUNT_ZONE_WITH_PERIOD": {
             "type": "string",
-            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('secondaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob, '.'),1))]"
+            "value": "[url.zoneWithPeriod(reference(resourceId('Microsoft.Storage/storageAccounts', variables('secondaryAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob)]"
         },
         "BLOB_STORAGE_ACCOUNT_NAME": {
             "type": "string",
@@ -415,9 +434,9 @@
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('premiumAccountName')), variables('mgmtApiVersion')).keys[0].value]"
         },
-        "PREMIUM_STORAGE_ACCOUNT_ZONE": {
+        "PREMIUM_STORAGE_ACCOUNT_ZONE_WITH_PERIOD": {
             "type": "string",
-            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('premiumAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob, '.'),1))]"
+            "value": "[url.zoneWithPeriod(reference(resourceId('Microsoft.Storage/storageAccounts', variables('premiumAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob)]"
         },
         "DATALAKE_STORAGE_ACCOUNT_NAME": {
             "type": "string",
@@ -427,9 +446,9 @@
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('dataLakeAccountName')), variables('mgmtApiVersion')).keys[0].value]"
         },
-        "DATALAKE_STORAGE_ACCOUNT_ZONE": {
+        "DATALAKE_STORAGE_ACCOUNT_ZONE_WITH_PERIOD": {
             "type": "string",
-            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('dataLakeAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob, '.'),1))]"
+            "value": "[url.zoneWithPeriod(reference(resourceId('Microsoft.Storage/storageAccounts', variables('dataLakeAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob)]"
         },
         "SOFT_DELETE_ACCOUNT_NAME": {
             "type": "string",
@@ -439,9 +458,9 @@
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('softDeleteAccountName')), variables('mgmtApiVersion')).keys[0].value]"
         },
-        "SOFT_DELETE_STORAGE_ACCOUNT_ZONE": {
+        "SOFT_DELETE_STORAGE_ACCOUNT_ZONE_WITH_PERIOD": {
             "type": "string",
-            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('softDeleteAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob, '.'),1))]"
+            "value": "[url.zoneWithPeriod(reference(resourceId('Microsoft.Storage/storageAccounts', variables('softDeleteAccountName')), variables('mgmtApiVersion')).primaryEndpoints.blob)]"
         },
         "PREMIUM_FILE_STORAGE_ACCOUNT_NAME": {
             "type": "string",
@@ -451,9 +470,9 @@
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('premiumFileAccountName')), variables('mgmtApiVersion')).keys[0].value]"
         },
-        "PREMIUM_FILE_STORAGE_ACCOUNT_ZONE": {
+        "PREMIUM_FILE_STORAGE_ACCOUNT_ZONE_WITH_PERIOD": {
             "type": "string",
-            "value": "[first(skip(split(reference(resourceId('Microsoft.Storage/storageAccounts', variables('premiumFileAccountName')), variables('mgmtApiVersion')).primaryEndpoints.file, '.'),1))]"
+            "value": "[url.zoneWithPeriod(reference(resourceId('Microsoft.Storage/storageAccounts', variables('premiumFileAccountName')), variables('mgmtApiVersion')).primaryEndpoints.file)]"
         },
         "AZUREWEBJOBSSTORAGE": {
             "type": "string",
@@ -465,7 +484,7 @@
         },
         "ENDPOINT_SUFFIX": {
             "type": "string",
-            "value": "[parameters('testEndpointSuffix')]"
+            "value": "[parameters('storageEndpointSuffix')]"
         },
         "KEYVAULT_URI": {
             "type": "string",
