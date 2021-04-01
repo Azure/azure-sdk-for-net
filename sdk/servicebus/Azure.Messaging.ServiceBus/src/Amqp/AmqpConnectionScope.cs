@@ -998,7 +998,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     try
                     {
                         await target.OpenAsync(timeout).ConfigureAwait(false);
-                        openObjectCompletionSource.SetResult(null);
+                        openObjectCompletionSource.TrySetResult(null);
                     }
                     catch (Exception ex)
                     {
