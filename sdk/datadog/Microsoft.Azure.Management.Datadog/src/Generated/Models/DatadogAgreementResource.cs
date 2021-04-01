@@ -15,25 +15,25 @@ namespace Microsoft.Azure.Management.Datadog.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class DatadogSingleSignOnResource : IResource
+    public partial class DatadogAgreementResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the DatadogSingleSignOnResource
-        /// class.
+        /// Initializes a new instance of the DatadogAgreementResource class.
         /// </summary>
-        public DatadogSingleSignOnResource()
+        public DatadogAgreementResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DatadogSingleSignOnResource
-        /// class.
+        /// Initializes a new instance of the DatadogAgreementResource class.
         /// </summary>
         /// <param name="id">ARM id of the resource.</param>
-        /// <param name="name">Name of the configuration.</param>
+        /// <param name="name">Name of the agreement.</param>
         /// <param name="type">The type of the resource.</param>
-        public DatadogSingleSignOnResource(string id = default(string), string name = default(string), string type = default(string), DatadogSingleSignOnProperties properties = default(DatadogSingleSignOnProperties), SystemData systemData = default(SystemData))
+        /// <param name="properties">Represents the properties of the
+        /// resource.</param>
+        public DatadogAgreementResource(string id = default(string), string name = default(string), string type = default(string), DatadogAgreementProperties properties = default(DatadogAgreementProperties), SystemData systemData = default(SystemData))
         {
             Id = id;
             Name = name;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Datadog.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets name of the configuration.
+        /// Gets name of the agreement.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
@@ -67,9 +67,10 @@ namespace Microsoft.Azure.Management.Datadog.Models
         public string Type { get; private set; }
 
         /// <summary>
+        /// Gets or sets represents the properties of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public DatadogSingleSignOnProperties Properties { get; set; }
+        public DatadogAgreementProperties Properties { get; set; }
 
         /// <summary>
         /// </summary>

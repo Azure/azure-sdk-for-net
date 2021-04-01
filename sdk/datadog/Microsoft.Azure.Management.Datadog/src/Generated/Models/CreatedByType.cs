@@ -12,13 +12,13 @@ namespace Microsoft.Azure.Management.Datadog.Models
 {
 
     /// <summary>
-    /// Defines values for MarketplaceSubscriptionStatus.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class MarketplaceSubscriptionStatus
+    public static class CreatedByType
     {
-        public const string Provisioning = "Provisioning";
-        public const string Active = "Active";
-        public const string Suspended = "Suspended";
-        public const string Unsubscribed = "Unsubscribed";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }

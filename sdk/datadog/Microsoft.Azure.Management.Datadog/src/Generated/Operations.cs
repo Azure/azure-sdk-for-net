@@ -51,8 +51,8 @@ namespace Microsoft.Azure.Management.Datadog
         public MicrosoftDatadogClient Client { get; private set; }
 
         /// <summary>
-        /// List all operations provided by Microsoft.Datadog for the
-        /// 2020-02-01-preview api version.
+        /// List all operations provided by Microsoft.Datadog for the 2021-03-01 api
+        /// version.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ResourceProviderDefaultErrorResponseException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -166,11 +166,11 @@ namespace Microsoft.Azure.Management.Datadog
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ResourceProviderDefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ResourceProviderDefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ResourceProviderDefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -227,8 +227,8 @@ namespace Microsoft.Azure.Management.Datadog
         }
 
         /// <summary>
-        /// List all operations provided by Microsoft.Datadog for the
-        /// 2020-02-01-preview api version.
+        /// List all operations provided by Microsoft.Datadog for the 2021-03-01 api
+        /// version.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.Datadog
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ResourceProviderDefaultErrorResponseException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -335,11 +335,11 @@ namespace Microsoft.Azure.Management.Datadog
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ResourceProviderDefaultErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ResourceProviderDefaultErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ResourceProviderDefaultErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;

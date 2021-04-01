@@ -13,22 +13,29 @@ namespace Microsoft.Azure.Management.Datadog.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class ResourceProviderDefaultErrorResponse
+    /// <summary>
+    /// Error response
+    /// </summary>
+    /// <remarks>
+    /// Common error response for all Azure Resource Manager APIs to return
+    /// error details for failed operations. (This also follows the OData error
+    /// response format.).
+    /// </remarks>
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ResourceProviderDefaultErrorResponse class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public ResourceProviderDefaultErrorResponse()
+        public ErrorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ResourceProviderDefaultErrorResponse class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public ResourceProviderDefaultErrorResponse(ErrorResponseBody error = default(ErrorResponseBody))
+        /// <param name="error">The error object.</param>
+        public ErrorResponse(ErrorDetail error = default(ErrorDetail))
         {
             Error = error;
             CustomInit();
@@ -40,9 +47,10 @@ namespace Microsoft.Azure.Management.Datadog.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the error object.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
-        public ErrorResponseBody Error { get; set; }
+        public ErrorDetail Error { get; set; }
 
     }
 }

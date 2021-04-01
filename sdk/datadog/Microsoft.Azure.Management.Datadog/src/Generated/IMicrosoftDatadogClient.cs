@@ -40,14 +40,14 @@ namespace Microsoft.Azure.Management.Datadog
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The Microsoft Azure subscription ID.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
         /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
+
+        /// <summary>
+        /// The ID of the target subscription.
+        /// </summary>
+        string SubscriptionId { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -69,29 +69,9 @@ namespace Microsoft.Azure.Management.Datadog
 
 
         /// <summary>
-        /// Gets the IApiKeysOperations.
+        /// Gets the IMarketplaceAgreementsOperations.
         /// </summary>
-        IApiKeysOperations ApiKeys { get; }
-
-        /// <summary>
-        /// Gets the IHostsOperations.
-        /// </summary>
-        IHostsOperations Hosts { get; }
-
-        /// <summary>
-        /// Gets the ILinkedResourcesOperations.
-        /// </summary>
-        ILinkedResourcesOperations LinkedResources { get; }
-
-        /// <summary>
-        /// Gets the IMonitoredResourcesOperations.
-        /// </summary>
-        IMonitoredResourcesOperations MonitoredResources { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
+        IMarketplaceAgreementsOperations MarketplaceAgreements { get; }
 
         /// <summary>
         /// Gets the IMonitorsOperations.
@@ -99,9 +79,9 @@ namespace Microsoft.Azure.Management.Datadog
         IMonitorsOperations Monitors { get; }
 
         /// <summary>
-        /// Gets the IRefreshSetPasswordOperations.
+        /// Gets the IOperations.
         /// </summary>
-        IRefreshSetPasswordOperations RefreshSetPassword { get; }
+        IOperations Operations { get; }
 
         /// <summary>
         /// Gets the ITagRulesOperations.

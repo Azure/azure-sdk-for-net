@@ -13,10 +13,10 @@ namespace Microsoft.Azure.Management.Datadog.Models
     using Microsoft.Rest;
 
     /// <summary>
-    /// Exception thrown for an invalid response with
-    /// ResourceProviderDefaultErrorResponse information.
+    /// Exception thrown for an invalid response with ErrorResponse
+    /// information.
     /// </summary>
-    public partial class ResourceProviderDefaultErrorResponseException : RestException
+    public partial class ErrorResponseException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.
@@ -31,30 +31,30 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// <summary>
         /// Gets or sets the body object.
         /// </summary>
-        public ResourceProviderDefaultErrorResponse Body { get; set; }
+        public ErrorResponse Body { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceProviderDefaultErrorResponseException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
-        public ResourceProviderDefaultErrorResponseException()
+        public ErrorResponseException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceProviderDefaultErrorResponseException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
-        public ResourceProviderDefaultErrorResponseException(string message)
+        public ErrorResponseException(string message)
             : this(message, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceProviderDefaultErrorResponseException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
         /// <param name="innerException">Inner exception.</param>
-        public ResourceProviderDefaultErrorResponseException(string message, System.Exception innerException)
+        public ErrorResponseException(string message, System.Exception innerException)
             : base(message, innerException)
         {
         }
