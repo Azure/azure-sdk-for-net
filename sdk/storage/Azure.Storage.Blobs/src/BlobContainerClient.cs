@@ -193,7 +193,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -252,7 +252,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authPolicy),
                 sharedKeyCredential: credential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -340,7 +340,7 @@ namespace Azure.Storage.Blobs
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: null,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
                 encryptionScope: options.EncryptionScope);
@@ -409,7 +409,7 @@ namespace Azure.Storage.Blobs
                 new BlobClientConfiguration(
                     pipeline: pipeline,
                     sharedKeyCredential: null,
-                    clientDiagnostics: new ClientDiagnostics(options),
+                    clientDiagnostics: new StorageClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,
                     encryptionScope: null),

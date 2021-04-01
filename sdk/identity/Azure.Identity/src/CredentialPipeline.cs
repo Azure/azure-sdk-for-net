@@ -21,7 +21,7 @@ namespace Azure.Identity
 
             HttpPipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new CredentialResponseClassifier());
 
-            Diagnostics = new ClientDiagnostics(options);
+            Diagnostics = new StorageClientDiagnostics(options);
         }
 
         public CredentialPipeline(Uri authorityHost, HttpPipeline httpPipeline, ClientDiagnostics diagnostics)

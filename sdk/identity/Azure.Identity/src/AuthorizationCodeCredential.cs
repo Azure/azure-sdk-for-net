@@ -70,7 +70,7 @@ namespace Azure.Identity
 
             _confidentialClient = ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(_pipeline.HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
 
-            _clientDiagnostics = new ClientDiagnostics(options);
+            _clientDiagnostics = new StorageClientDiagnostics(options);
         }
 
         /// <summary>

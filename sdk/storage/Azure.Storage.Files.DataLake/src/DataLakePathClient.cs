@@ -288,7 +288,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: sharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _blockBlobClient = BlockBlobClientInternals.Create(
@@ -475,7 +475,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);
@@ -526,7 +526,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: pipeline,
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _blockBlobClient = BlockBlobClientInternals.Create(_blobUri, _clientConfiguration);

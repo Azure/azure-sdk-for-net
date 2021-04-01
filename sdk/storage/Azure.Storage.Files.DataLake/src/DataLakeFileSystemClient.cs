@@ -224,7 +224,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: sharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _containerClient = BlobContainerClientInternals.Create(
@@ -392,7 +392,7 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
+                clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version);
 
             _containerClient = BlobContainerClientInternals.Create(

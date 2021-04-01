@@ -10,8 +10,12 @@ using Azure.Core;
 
 namespace Azure.Core.Pipeline
 {
-    internal partial class ClientDiagnostics
+    internal class CommunicationClientDiagnostics: ClientDiagnostics
     {
+        public CommunicationClientDiagnostics(ClientOptions options) : base(options)
+        {
+        }
+
         /// <summary>
         /// Partial method that can optionally be defined to extract the error
         /// message, code, and details in a service specific manner.
@@ -21,16 +25,12 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The error message.</param>
         /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
-#pragma warning disable CA1822 // Mark members as static
-        partial void ExtractFailureContent(
-#pragma warning restore CA1822 // Mark members as static
+        protected override void ExtractFailureContent(
             string content,
-#pragma warning disable CA1801 // Review unused parameters
             ResponseHeaders responseHeaders,
             ref string message,
             ref string errorCode,
             ref IDictionary<string, string> additionalInfo
-#pragma warning restore CA1801 // Review unused parameters
             )
         {
             if (string.IsNullOrEmpty(content))
