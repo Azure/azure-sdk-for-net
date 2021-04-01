@@ -37,45 +37,9 @@ namespace Azure.ResourceManager.Core
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type");
-                writer.WriteObjectValue(Type);
+                writer.WriteStringValue(Type.ToString());
             }
             writer.WriteEndObject();
-        }
-
-        internal void DeserializeResource(JsonElement element)
-        {
-            Optional<TIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("id"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    id = (Optional<TIdentifier>)ResourceIdentifier.Create(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    type = ResourceType.DeserializeResourceType(property.Value);
-                    continue;
-                }
-            }
-            Id = id;
         }
     }
 }

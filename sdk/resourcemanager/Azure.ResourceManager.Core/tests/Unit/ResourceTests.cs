@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Core.Tests
         [Test]
         public void SerializationTest()
         {
-            string expected = "{\"properties\":{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"name\":\"account1\",\"type\":{\"namespace\":\"Microsoft.ClassicStorage\",\"rootResourceType\":{},\"type\":\"storageAccounts\",\"types\":[\"storageAccounts\"]}}}";
+            string expected = "{\"properties\":{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"name\":\"account1\",\"type\":\"Microsoft.ClassicStorage/storageAccounts\"}}";
             TestResource<ResourceGroupResourceIdentifier> data = new("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1");
             var stream = new MemoryStream();
             Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
@@ -94,29 +94,7 @@ namespace Azure.ResourceManager.Core.Tests
             writer.WriteEndObject();
             writer.Flush();
             string json = Encoding.UTF8.GetString(stream.ToArray());
-            Assert.IsTrue(json.Equals("{\"properties\":{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/foo\",\"name\":\"foo\",\"type\":{\"namespace\":\"Microsoft.Resources\",\"rootResourceType\":{},\"type\":\"subscriptions/resourceGroups\",\"types\":[\"subscriptions\",\"resourceGroups\"]}}}"));
-        }
-
-        [Test]
-        public void DeserializationTest()
-        {
-            string json = "{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"name\":\"account1\",\"type\":{\"namespace\":\"Microsoft.ClassicStorage\",\"rootResourceType\":{},\"type\":\"storageAccounts\",\"types\":[\"storageAccounts\"]}}";
-            JsonElement element = JsonDocument.Parse(json).RootElement;
-            TestResource<ResourceGroupResourceIdentifier> data = new("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/fooRg/providers/Microsoft.ClassicStorage/storageAccounts/fooAccount");
-            data.DeserializeResource(element);
-            Assert.IsTrue(data.Name.Equals("account1"));
-            Assert.IsTrue(data.Type.Type.Equals("storageAccounts"));
-        }
-
-        [Test]
-        public void InvalidDeserializationTest()
-        {
-            string json = "{\"notName\":\"account1\",\"type\":{\"namespace\":\"Microsoft.ClassicStorage\",\"rootResourceType\":{},\"type\":\"storageAccounts\"}}";
-            JsonElement element = JsonDocument.Parse(json).RootElement;
-            TestResource<ResourceGroupResourceIdentifier> data = new("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/fooRg/providers/Microsoft.ClassicStorage/storageAccounts/fooAccount");
-            data.DeserializeResource(element);
-            Assert.IsNull(data.Name);
-            Assert.IsNull(data.Type);
+            Assert.IsTrue(json.Equals("{\"properties\":{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/foo\",\"name\":\"foo\",\"type\":\"Microsoft.Resources/subscriptions/resourceGroups\"}}"));
         }
     }
 }
