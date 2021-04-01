@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -188,6 +188,36 @@ namespace Azure.Security.Attestation
         /// attestation service will be unsigned. Unsigned attestation policies are only allowed when the attestation instance is running in AAD mode - if the
         /// attestation instance is running in Isolated mode, then a signing key and signing certificate MUST be provided to ensure that the caller of the API is authorized to change policy.
         /// The <paramref name="signingCertificate"/> parameter MUST be one of the certificates returned by the <see cref="GetPolicyManagementCertificates(CancellationToken)"/> API.
+        /// <para/>
+        /// Clients need to be able to verify that the attestation policy document was not modified before the policy document was received by the attestation service's enclave.
+        /// There are two properties provided in the [PolicyResult][attestation_policy_result] that can be used to verify that the service received the policy document:
+        /// <list type="bullet">
+        /// <item>
+        /// <description><see cref="PolicyResult.PolicySigner"/> - if the <see cref="SetPolicy(AttestationType, string, AsymmetricAlgorithm, X509Certificate2, CancellationToken)"/> call included a signing certificate, this will be the certificate provided at the time of the `SetPolicy` call. If no policy signer was set, this will be null. </description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="PolicyResult.PolicyTokenHash"/> - this is the hash of the [JSON Web Token][json_web_token] sent to the service</description>
+        /// </item>
+        /// </list>
+        /// To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
+        /// <code snippet="Snippet:VerifySigningHash">
+        /// // The SetPolicyAsync API will create a SecuredAttestationToken to transmit the policy.
+        /// var policySetToken = new SecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }, TestEnvironment.PolicySigningKey0, policyTokenSigner);
+        ///
+        /// var shaHasher = SHA256Managed.Create();
+        /// var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
+        ///
+        /// CollectionAssert.AreEqual(attestationPolicyHash, setResult.Value.PolicyTokenHash);
+        /// </code>
+        ///
+        /// If the signing key and certificate are not provided, then the SetPolicyAsync API will create an unsecured attestation token
+        /// wrapping the attestation policy. To validate the <see cref="PolicyResult.PolicyTokenHash"/> return value, a developer
+        /// can create their own <see cref="UnsecuredAttestationToken"/> and create the hash of that.
+        /// <code>
+        /// var shaHasher = SHA256Managed.Create();
+        /// var policySetToken = new UnsecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = disallowDebugging });
+        /// disallowDebuggingHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
+        /// </code>
         /// </remarks>
         public virtual AttestationResponse<PolicyResult> SetPolicy(
             AttestationType attestationType,
@@ -248,6 +278,27 @@ namespace Azure.Security.Attestation
         /// attestation instance is running in Isolated mode, then a signing key and signing certificate MUST be provided to ensure that the caller of the API is authorized to change policy.
         /// The <paramref name="signingCertificate"/> parameter MUST be one of the certificates returned by the <see cref="GetPolicyManagementCertificates(CancellationToken)"/> API.
         /// <para/>
+        /// <para/>
+        /// Clients need to be able to verify that the attestation policy document was not modified before the policy document was received by the attestation service's enclave.
+        /// There are two properties provided in the [PolicyResult][attestation_policy_result] that can be used to verify that the service received the policy document:
+        /// <list type="bullet">
+        /// <item>
+        /// <description><see cref="PolicyResult.PolicySigner"/> - if the <see cref="SetPolicy(AttestationType, string, AsymmetricAlgorithm, X509Certificate2, CancellationToken)"/> call included a signing certificate, this will be the certificate provided at the time of the `SetPolicy` call. If no policy signer was set, this will be null. </description>
+        /// </item>
+        /// <item>
+        /// <description><see cref="PolicyResult.PolicyTokenHash"/> - this is the hash of the [JSON Web Token][json_web_token] sent to the service</description>
+        /// </item>
+        /// </list>
+        /// To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
+        /// <code snippet="Snippet:VerifySigningHash">
+        /// // The SetPolicyAsync API will create a SecuredAttestationToken to transmit the policy.
+        /// var policySetToken = new SecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }, TestEnvironment.PolicySigningKey0, policyTokenSigner);
+        ///
+        /// var shaHasher = SHA256Managed.Create();
+        /// var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
+        ///
+        /// CollectionAssert.AreEqual(attestationPolicyHash, setResult.Value.PolicyTokenHash);
+        /// </code>
         ///
         /// If the signing key and certificate are not provided, then the SetPolicyAsync API will create an unsecured attestation token
         /// wrapping the attestation policy. To validate the <see cref="PolicyResult.PolicyTokenHash"/> return value, a developer
