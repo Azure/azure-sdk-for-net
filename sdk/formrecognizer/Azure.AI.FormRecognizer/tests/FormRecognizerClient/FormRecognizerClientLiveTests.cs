@@ -2227,6 +2227,11 @@ namespace Azure.AI.FormRecognizer.Tests
             var name = "AMEX_SELECTION_MARK";
             Assert.IsNotNull(form.Fields[name]);
             Assert.AreEqual(FieldValueType.SelectionMark, form.Fields[name].Value.ValueType);
+
+            // If this assertion is failing after a recent update in the generated models, please remember
+            // to update the manually added FieldValue_internal constructor in src/FieldValue_internal.cs if
+            // necessary. The service originally returns "selected" and "unselected" as lowercase strings,
+            // but we overwrite these values there.
             Assert.AreEqual("Selected", form.Fields[name].ValueData.Text);
         }
 
