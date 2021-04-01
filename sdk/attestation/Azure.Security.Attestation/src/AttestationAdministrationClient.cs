@@ -99,8 +99,8 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
-        /// <param name="attestationType">Attestation Type to retrive.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="attestationType"><see cref="AttestationType"/> to retrive.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{String}"/> with the policy for the specified attestation type.</returns>
         /// <remarks>
         /// This API returns the underlying attestation policy object stored in the attestation service for this <paramref name="attestationType"/>.
@@ -139,7 +139,7 @@ namespace Azure.Security.Attestation
         /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
         /// <param name="attestationType">Attestation Type to retrive.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{String}"/> with the policy for the specified attestation type.</returns>
         /// <remarks>
         /// This API returns the underlying attestation policy object stored in the attestation service for this <paramref name="attestationType"/>.
@@ -179,7 +179,7 @@ namespace Azure.Security.Attestation
         /// <param name="policyToSet">Specifies the attestation policy to set.</param>
         /// <param name="signingKey">If provided, specifies the signing key used to sign the request to the attestation service.</param>
         /// <param name="signingCertificate">If provided, specifies the X.509 certificate which will be used to validate the request with the attestation service.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{PolicyResult}"/> with the policy for the specified attestation type.</returns>
         /// <remarks>
         /// The <paramref name="signingKey"/> and <paramref name="signingCertificate"/> parameters are optional, but if one is provided the other must also be provided.
@@ -196,10 +196,7 @@ namespace Azure.Security.Attestation
             X509Certificate2 signingCertificate = default,
             CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(policyToSet))
-            {
-                throw new ArgumentException($"'{nameof(policyToSet)}' cannot be null or empty.", nameof(policyToSet));
-            }
+            Argument.AssertNotNullOrWhiteSpace(policyToSet, nameof(policyToSet));
 
             if (signingKey is null && signingCertificate is not null || signingCertificate is null && signingKey is not null)
             {
@@ -241,7 +238,7 @@ namespace Azure.Security.Attestation
         /// <param name="policyToSet">Specifies the attestation policy to set.</param>
         /// <param name="signingKey">If provided, specifies the signing key used to sign the request to the attestation service.</param>
         /// <param name="signingCertificate">If provided, specifies the X.509 certificate which will be used to validate the request with the attestation service.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{PolicyResult}"/> with the policy for the specified attestation type.</returns>
         /// <remarks>
         /// The <paramref name="signingKey"/> and <paramref name="signingCertificate"/> parameters are optional, but if one is provided the other must also be provided.
@@ -313,7 +310,7 @@ namespace Azure.Security.Attestation
         /// <param name="attestationType"><see cref="AttestationType"/> whose policy should be reset.</param>
         /// <param name="signingKey">If provided, specifies the signing key used to sign the request to the attestation service.</param>
         /// <param name="signingCertificate">If provided, specifies the X.509 certificate which will be used to validate the request with the attestation service.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{PolicyResult}"/> with the policy for the specified attestation type.</returns>
         /// <remarks>
         /// The <paramref name="signingKey"/> and <paramref name="signingCertificate"/> parameters are optional, but if one is provided the other must also be provided.
@@ -371,7 +368,7 @@ namespace Azure.Security.Attestation
         /// <param name="attestationType"><see cref="AttestationType"/> whose policy should be reset.</param>
         /// <param name="signingKey">If provided, specifies the signing key used to sign the request to the attestation service.</param>
         /// <param name="signingCertificate">If provided, specifies the X.509 certificate which will be used to validate the request with the attestation service.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{PolicyResult}"/> with the policy for the specified attestation type.</returns>
         /// <remarks>
         /// The <paramref name="signingKey"/> and <paramref name="signingCertificate"/> parameters are optional, but if one is provided the other must also be provided.
@@ -484,7 +481,7 @@ namespace Azure.Security.Attestation
         /// <param name="newSigningCertificate">The new certificate to add.</param>
         /// <param name="existingSigningKey">An existing key corresponding to the existing certificate.</param>
         /// <param name="existingSigningCertificate">One of the existing policy management certificates.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{PolicyCertificatesModificationResult}"/> with the policy for the specified attestation type.</returns>
         /// <remarks>
         /// </remarks>
@@ -538,7 +535,7 @@ namespace Azure.Security.Attestation
         /// <param name="newSigningCertificate">The new certificate to add.</param>
         /// <param name="existingSigningKey">An existing key corresponding to the existing certificate.</param>
         /// <param name="existingSigningCertificate">One of the existing policy management certificates.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{PolicyCertificatesModificationResult}"/> with the policy for the specified attestation type.</returns>
         public virtual async Task<AttestationResponse<PolicyCertificatesModificationResult>> AddPolicyManagementCertificateAsync(
             X509Certificate2 newSigningCertificate,
@@ -590,7 +587,7 @@ namespace Azure.Security.Attestation
         /// <param name="certificateToRemove">The certificate to remove.</param>
         /// <param name="existingSigningKey">An existing key corresponding to the existing certificate.</param>
         /// <param name="existingSigningCertificate">An existing policy management certificates.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{PolicyCertificatesModificationResult}"/> with the policy for the specified attestation type.</returns>
         public virtual AttestationResponse<PolicyCertificatesModificationResult> RemovePolicyManagementCertificate(
             X509Certificate2 certificateToRemove,
@@ -628,7 +625,7 @@ namespace Azure.Security.Attestation
         /// <param name="certificateToRemove">The certificate to remove.</param>
         /// <param name="existingSigningKey">An existing key corresponding to the existing certificate.</param>
         /// <param name="existingSigningCertificate">One of the existing policy management certificates.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>An <see cref="AttestationResponse{PolicyCertificatesModificationResult}"/> with the policy for the specified attestation type.</returns>
         public virtual async Task<AttestationResponse<PolicyCertificatesModificationResult>> RemovePolicyManagementCertificateAsync(
             X509Certificate2 certificateToRemove,

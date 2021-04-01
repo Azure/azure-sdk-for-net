@@ -12,7 +12,6 @@ This dramatically simplifies the user experience for interacting with the saved 
 - The `SecuredAttestationToken` and `UnsecuredAttestationToken` parameters have been removed from the APIs which took them. Instead those APIs directly take the underlying type.
 
 Before:
-
 ``` C#
     string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
 
@@ -25,6 +24,7 @@ Before:
 
     var setResult = client.SetPolicy(AttestationType.SgxEnclave, policySetToken);
 ```
+
 After:
 ``` C#
     string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
@@ -43,8 +43,11 @@ Before:
 ```
 
 After:
-``` C#
-    string policy = await client.GetPolicyAsync(AttestationType.SgxEnclave);
+```C# Snippet:GetPolicy
+var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
+
+var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
+var result = policyResult.Value;
 ```
 
 The net result of these changes is a significant reduction in the complexity of interacting with the attestation administration APIs.

@@ -308,9 +308,6 @@ namespace Azure.Security.Attestation.Tests
             }
 
             {
-                PolicyCertificateModification modification = new Models.PolicyCertificateModification(TestEnvironment.PolicyCertificate2);
-                var policySetToken = new SecuredAttestationToken(modification, rsaKey, x509Certificate);
-
                 var modificationResult = await adminClient.RemovePolicyManagementCertificateAsync(
                     TestEnvironment.PolicyCertificate2,
                     rsaKey,

@@ -193,8 +193,6 @@ string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issua
 var policyTokenSigner = TestEnvironment.PolicyCertificate0;
 
 var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, TestEnvironment.PolicySigningKey0, policyTokenSigner);
-```Python
-things = client.list_things()
 ```
 
 ### Retrieve Token Certificates
