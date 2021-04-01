@@ -75,6 +75,21 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
+        public async Task RecognizeIdDocumentsOperationCanPollFromNewObject()
+        {
+            var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
+
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Blank);
+            var operation = await client.StartRecognizeIdDocumentsFromUriAsync(uri);
+
+            var sameOperation = new RecognizeIdDocumentsOperation(operation.Id, nonInstrumentedClient);
+            await sameOperation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(sameOperation.HasValue);
+            Assert.AreEqual(0, sameOperation.Value.Count);
+        }
+
+        [RecordedTest]
         public async Task RecognizeCustomFormsOperationCanPollFromNewObject()
         {
             var client = CreateFormRecognizerClient(out var nonInstrumentedClient);

@@ -13,6 +13,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>A single-page blank form.</summary>
         public const string Blank = "blank.pdf";
 
+        /// <summary>A driver's license.</summary>
+        public const string DriverLicenseJpg = "license.jpg";
+
         /// <summary>One of the purchase orders used for model training.</summary>
         public const string Form1 = "Form_1.jpg";
 

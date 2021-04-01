@@ -1936,6 +1936,174 @@ namespace Azure.AI.FormRecognizer.Tests
 
         #endregion
 
+        #region StartRecognizeIdDocuments
+
+        [RecordedTest]
+        public async Task StartRecognizeIdDocumentsCanAuthenticateWithTokenCredential()
+        {
+            var client = CreateFormRecognizerClient(useTokenCredential: true);
+            RecognizeIdDocumentsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.DriverLicenseJpg);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeIdDocumentsAsync(stream);
+            }
+
+            // Sanity check to make sure we got an actual response back from the service.
+
+            RecognizedFormCollection formCollection = await operation.WaitForCompletionAsync(PollingInterval);
+
+            RecognizedForm form = formCollection.Single();
+            Assert.NotNull(form);
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false, Ignore = "Test file not uploaded to GitHub yet.")]
+        public async Task StartRecognizeIdDocumentsPopulatesExtractedIdDocumentJpg(bool useStream)
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeIdDocumentsOperation operation;
+
+            if (useStream)
+            {
+                using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.DriverLicenseJpg);
+                using (Recording.DisableRequestBodyRecording())
+                {
+                    operation = await client.StartRecognizeIdDocumentsAsync(stream);
+                }
+            }
+            else
+            {
+                var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.DriverLicenseJpg);
+                operation = await client.StartRecognizeIdDocumentsFromUriAsync(uri);
+            }
+
+            await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasValue);
+
+            var form = operation.Value.Single();
+
+            Assert.NotNull(form);
+
+            // The expected values are based on the values returned by the service, and not the actual
+            // values present in the ID document. We are not testing the service here, but the SDK.
+
+            Assert.AreEqual("prebuilt:idDocument:driverLicense", form.FormType);
+            Assert.AreEqual(1, form.PageRange.FirstPageNumber);
+            Assert.AreEqual(1, form.PageRange.LastPageNumber);
+
+            Assert.NotNull(form.Fields);
+
+            Assert.True(form.Fields.ContainsKey("Address"));
+            Assert.True(form.Fields.ContainsKey("Country"));
+            Assert.True(form.Fields.ContainsKey("DateOfBirth"));
+            Assert.True(form.Fields.ContainsKey("DateOfExpiration"));
+            Assert.True(form.Fields.ContainsKey("DocumentNumber"));
+            Assert.True(form.Fields.ContainsKey("FirstName"));
+            Assert.True(form.Fields.ContainsKey("LastName"));
+            Assert.True(form.Fields.ContainsKey("Region"));
+            Assert.True(form.Fields.ContainsKey("Sex"));
+
+            Assert.AreEqual("123 STREET ADDRESS YOUR CITY WA 99999-1234", form.Fields["Address"].Value.AsString());
+            Assert.AreEqual("LICWDLACD5DG", form.Fields["DocumentNumber"].Value.AsString());
+            Assert.AreEqual("LIAM R.", form.Fields["FirstName"].Value.AsString());
+            Assert.AreEqual("TALBOT", form.Fields["LastName"].Value.AsString());
+            Assert.AreEqual("Washington", form.Fields["Region"].Value.AsString());
+
+            Assert.That(form.Fields["Country"].Value.AsCountryCode(), Is.EqualTo("USA"));
+            Assert.That(form.Fields["Sex"].Value.AsGender(), Is.EqualTo(FieldValueGender.M));
+
+            var dateOfBirth = form.Fields["DateOfBirth"].Value.AsDate();
+            Assert.AreEqual(6, dateOfBirth.Day);
+            Assert.AreEqual(1, dateOfBirth.Month);
+            Assert.AreEqual(1958, dateOfBirth.Year);
+
+            var dateOfExpiration = form.Fields["DateOfExpiration"].Value.AsDate();
+            Assert.AreEqual(12, dateOfExpiration.Day);
+            Assert.AreEqual(8, dateOfExpiration.Month);
+            Assert.AreEqual(2020, dateOfExpiration.Year);
+        }
+
+        [RecordedTest]
+        public async Task StartRecognizeIdDocumentsIncludeFieldElements()
+        {
+            var client = CreateFormRecognizerClient();
+            var options = new RecognizeIdDocumentsOptions() { IncludeFieldElements = true };
+            RecognizeIdDocumentsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.DriverLicenseJpg);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeIdDocumentsAsync(stream, options);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            var form = recognizedForms.Single();
+
+            ValidatePrebuiltForm(
+                form,
+                includeFieldElements: true,
+                expectedFirstPageNumber: 1,
+                expectedLastPageNumber: 1);
+        }
+
+        [RecordedTest]
+        public async Task StartRecognizeIdDocumentsCanParseBlankPage()
+        {
+            var client = CreateFormRecognizerClient();
+            RecognizeIdDocumentsOperation operation;
+
+            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.Blank);
+            using (Recording.DisableRequestBodyRecording())
+            {
+                operation = await client.StartRecognizeIdDocumentsAsync(stream);
+            }
+
+            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsEmpty(recognizedForms);
+        }
+
+        [RecordedTest]
+        public void StartRecognizeIdDocumentsThrowsForDamagedFile()
+        {
+            var client = CreateFormRecognizerClient();
+
+            // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
+
+            var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
+            using var stream = new MemoryStream(damagedFile);
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeIdDocumentsAsync(stream));
+            Assert.AreEqual("BadArgument", ex.ErrorCode);
+        }
+
+        /// <summary>
+        /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
+        /// Recognizer cognitive service and handle returned errors.
+        /// </summary>
+        [RecordedTest]
+        public void StartRecognizeIdDocumentsFromUriThrowsForNonExistingContent()
+        {
+            var client = CreateFormRecognizerClient();
+            var invalidUri = new Uri("https://idont.ex.ist");
+
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeIdDocumentsFromUriAsync(invalidUri));
+            Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
+        }
+
+        #endregion
+
         #region StartRecognizeCustomForms
 
         [RecordedTest]
@@ -2077,6 +2245,13 @@ namespace Azure.AI.FormRecognizer.Tests
             var name = "AMEX_SELECTION_MARK";
             Assert.IsNotNull(form.Fields[name]);
             Assert.AreEqual(FieldValueType.SelectionMark, form.Fields[name].Value.ValueType);
+
+            // If this assertion is failing after a recent update in the generated models, please remember
+            // to update the manually added FieldValue_internal constructor in src/FieldValue_internal.cs if
+            // necessary. The service originally returns "selected" and "unselected" as lowercase strings,
+            // but we overwrite these values there. Consider removing this comment when:
+            // https://github.com/Azure/azure-sdk-for-net/issues/17814 is fixed and the manually added constructor
+            // is not needed anymore.
             Assert.AreEqual("Selected", form.Fields[name].ValueData.Text);
         }
 
@@ -2670,7 +2845,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             Assert.NotNull(recognizedForm.FormType);
             Assert.IsTrue(recognizedForm.FormTypeConfidence.HasValue);
-            Assert.AreEqual(1.0f, recognizedForm.FormTypeConfidence.Value);
+            Assert.That(recognizedForm.FormTypeConfidence.Value, Is.LessThanOrEqualTo(1.0).Within(0.005));
             Assert.IsNull(recognizedForm.ModelId);
 
             ValidateRecognizedForm(recognizedForm, includeFieldElements, expectedFirstPageNumber, expectedLastPageNumber);
