@@ -74,25 +74,30 @@ namespace Azure.Identity
         public virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
-            if (async)
+
+#pragma warning disable AZC0109 // Misuse of 'async' parameter.
+            if (!async && !IdentityCompatSwitches.DisableInteractiveBrowserThreadpoolExecution)
+#pragma warning restore AZC0109 // Misuse of 'async' parameter.
             {
-                return await client.AcquireTokenInteractive(scopes)
+                // In the synchronous case we need to use Task.Run to execute on the call to MSAL on the threadpool.
+                // On certain platforms MSAL will use the embedded browser instead of launching the browser as a separate
+                // process. Executing with Task.Run prevents possibly deadlocking the UI thread in these cases.
+                // This workaround can be disabled by using the "Azure.Identity.DisableInteractiveBrowserThreadpoolExecution" app switch
+                // or setting the AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION environment variable to true or 1
+                return Task.Run(async () => await client.AcquireTokenInteractive(scopes)
                     .WithPrompt(prompt)
                     .WithClaims(claims)
                     .ExecuteAsync(cancellationToken)
-                    .ConfigureAwait(false);
-            }
-
-            // In the synchronous case we need to use Task.Run to execute on the call to MSAL on the threadpool.
-            // On certain platforms MSAL will use the embedded browser instead of launching the browser as a separate
-            // process. Executing with Task.Run prevents possibly deadlocking the UI thread in these cases.
-            return Task.Run(async () => await client.AcquireTokenInteractive(scopes)
-                .WithPrompt(prompt)
-                .WithClaims(claims)
-                .ExecuteAsync(cancellationToken)
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 .ConfigureAwait(false)).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+            }
+
+            return await client.AcquireTokenInteractive(scopes)
+                .WithPrompt(prompt)
+                .WithClaims(claims)
+                .ExecuteAsync(async, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenByUsernamePasswordAsync(string[] scopes, string claims, string username, SecureString password, bool async, CancellationToken cancellationToken)
