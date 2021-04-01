@@ -10,7 +10,7 @@
     <PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
     <PackageReleaseNotes>
   <![CDATA[
-- Fixed FactoryIdentity constructor Type has a default value when Type did not assigne value
+- Fixed potential MI type missing issue by using system assigned MI as default
   ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

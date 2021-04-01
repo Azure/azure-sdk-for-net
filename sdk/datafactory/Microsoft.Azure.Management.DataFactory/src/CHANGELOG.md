@@ -2,7 +2,7 @@
 
 ## Version 4.17.1
 ###  Feature Additions
-- Fixed FactoryIdentity constructor Type has a default value when Type did not assigne value
+- Fixed potential MI type missing issue by using system assigned MI as default
 
 ## Version 4.17.0
 ###  Feature Additions
