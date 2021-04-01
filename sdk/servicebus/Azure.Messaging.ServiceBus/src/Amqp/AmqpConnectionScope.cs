@@ -986,10 +986,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 var openObjectCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-                using var registration = cancellationToken.Register(static state =>
+                using var registration = cancellationToken.Register(state =>
                 {
                     var tcs = (TaskCompletionSource<object>)state;
                     tcs.TrySetCanceled();
+                    target.SafeClose();
                 }, openObjectCompletionSource, useSynchronizationContext: false);
 
                 static async Task Open(AmqpObject target, TimeSpan timeout, TaskCompletionSource<object> openObjectCompletionSource)
@@ -997,7 +998,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     try
                     {
                         await target.OpenAsync(timeout).ConfigureAwait(false);
-                        openObjectCompletionSource.TrySetResult(null);
+                        openObjectCompletionSource.SetResult(null);
                     }
                     catch (Exception ex)
                     {

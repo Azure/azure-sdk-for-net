@@ -330,7 +330,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             {
                                 bool received =
                                     link.EndReceiveMessages(asyncResult, out IEnumerable<AmqpMessage> amqpMessages);
-                                receiveMessagesCompletionSource.TrySetResult(received
+                                receiveMessagesCompletionSource.SetResult(received
                                     ? amqpMessages
                                     : Enumerable.Empty<AmqpMessage>());
                             }
