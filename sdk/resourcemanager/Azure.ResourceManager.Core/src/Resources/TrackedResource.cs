@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.Core
     [ReferenceType]
     public abstract partial class TrackedResource<TIdentifier> : Resource<TIdentifier> where TIdentifier : TenantResourceIdentifier
     {
+        private IDictionary<string, string> _tag = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
         /// <summary>
         /// Gets the tags.
         /// </summary>
-        public virtual IDictionary<string, string> Tags =>
-            new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+        public virtual IDictionary<string, string> Tags => _tag;
 
         /// <summary>
         /// Gets or sets the location the resource is in.
