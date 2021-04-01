@@ -3,11 +3,11 @@
 
 using System;
 using System.Threading;
-using Azure.AI.DocumentTranslation.Models;
+using Azure.AI.DocumentTranslation.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.DocumentTranslation.Tests.Samples
+namespace Azure.AI.DocumentTranslation.Samples
 {
     [LiveOnly]
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>
@@ -56,11 +56,13 @@ namespace Azure.AI.DocumentTranslation.Tests.Samples
                 Console.WriteLine($"  Status:{document.Status}");
                 if (document.Status == TranslationStatus.Succeeded)
                 {
-                    Console.WriteLine($"  URI: {document.TranslatedDocumentUri}");
+                    Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
                     Console.WriteLine($"  Translated to language: {document.TranslateTo}.");
+                    Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                 }
                 else
                 {
+                    Console.WriteLine($"  Document source Uri: {document.SourceDocumentUri}");
                     Console.WriteLine($"  Error Code: {document.Error.ErrorCode}");
                     Console.WriteLine($"  Message: {document.Error.Message}");
                 }

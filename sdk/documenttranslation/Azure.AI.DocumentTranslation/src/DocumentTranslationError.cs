@@ -6,10 +6,15 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation
 {
+    /// <summary>
+    /// Represents an error that occurred during a translation operation.
+    /// </summary>
     [CodeGenModel("ErrorV2")]
     public partial class DocumentTranslationError
     {
-        /// <summary> Enums containing high level error codes. </summary>
+        /// <summary>
+        /// Error code that serves as an indicator of the HTTP error code.
+        /// </summary>
         [CodeGenMember("Code")]
         public DocumentTranslationErrorCode ErrorCode { get; }
 

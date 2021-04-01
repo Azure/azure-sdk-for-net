@@ -28,10 +28,10 @@ namespace Azure.AI.DocumentTranslation
         { }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="DocumentTranslationClient"/>
+        /// Initializes a new instance of <see cref="DocumentTranslationClient"/> class for the specified service instance.
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
-        /// sends requests to.  Endpoint can be found in the Azure portal.</param>
+        /// sends requests to.</param>
         /// <param name="credential">The API key used to access
         /// the service. This will allow you to update the API key
         /// without creating a new client.</param>
@@ -51,10 +51,10 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="DocumentTranslationClient"/>
+        /// Initializes a new instance of <see cref="DocumentTranslationClient"/> class for the specified service instance.
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
-        /// sends requests to.  Endpoint can be found in the Azure portal.</param>
+        /// sends requests to.</param>
         /// <param name="credential">The API key used to access
         /// the service. This will allow you to update the API key
         /// without creating a new client.</param>
@@ -64,9 +64,10 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Starts a translation operation.
-        /// For document length limits, maximum batch size, and supported document formats, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
         /// </summary>
         /// <param name="inputs">Sets the inputs for the translation operation
         /// including source and target containers for documents to be translated. </param>
@@ -91,9 +92,10 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Starts a translation operation
-        /// For document length limits, maximum batch size, and supported document formats, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
         /// </summary>
         /// <param name="inputs">Sets the inputs for the translation operation
         /// including source and target containers for documents to be translated. </param>
@@ -118,9 +120,10 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Starts a translation operation.
-        /// For document length limits, maximum batch size, and supported document formats, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
         /// </summary>
         /// <param name="input">Sets the input for the translation operation
         /// including source and target containers for documents to be translated. </param>
@@ -146,9 +149,10 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Starts a translation operation
-        /// For document length limits, maximum batch size, and supported document formats, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
         /// </summary>
         /// <param name="input">Sets the input for the translation operation
         /// including source and target containers for documents to be translated. </param>
@@ -262,7 +266,7 @@ namespace Azure.AI.DocumentTranslation
         #region supported formats functions
 
         /// <summary>
-        /// Get a list of supported Glossary File Formats.
+        /// Get the list of the glossary formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<IReadOnlyList<FileFormat>> GetGlossaryFormats(CancellationToken cancellationToken = default)
@@ -283,7 +287,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get a list of supported Glossary File Formats.
+        /// Get the list of the glossary formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetGlossaryFormatsAsync(CancellationToken cancellationToken = default)
@@ -304,7 +308,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get a list of supported Document Formats.
+        /// Get the list of the document formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<IReadOnlyList<FileFormat>> GetDocumentFormats(CancellationToken cancellationToken = default)
@@ -325,7 +329,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get a list of supported Document Formats.
+        /// Get the list of the document formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetDocumentFormatsAsync(CancellationToken cancellationToken = default)

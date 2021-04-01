@@ -48,14 +48,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        private static byte[] GetByteArray(this Data data)
+        private static ReadOnlyMemory<byte> GetByteArray(this Data data)
         {
             switch (data.Value)
             {
                 case byte[] byteArray:
                     return byteArray;
-                case ArraySegment<byte> arraySegment when arraySegment.Count == arraySegment.Array?.Length:
-                    return arraySegment.Array;
                 case ArraySegment<byte> arraySegment:
                     var bytes = new byte[arraySegment.Count];
                     Array.ConstrainedCopy(

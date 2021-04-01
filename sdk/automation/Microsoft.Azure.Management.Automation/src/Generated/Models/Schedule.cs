@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="lastModifiedTime">Gets or sets the last modified
         /// time.</param>
         /// <param name="description">Gets or sets the description.</param>
-        public Schedule(string id = default(string), string name = default(string), string type = default(string), System.DateTimeOffset startTime = default(System.DateTimeOffset), double startTimeOffsetMinutes = default(double), System.DateTimeOffset? expiryTime = default(System.DateTimeOffset?), double expiryTimeOffsetMinutes = default(double), bool? isEnabled = default(bool?), System.DateTimeOffset? nextRun = default(System.DateTimeOffset?), double nextRunOffsetMinutes = default(double), int? interval = default(int?), string frequency = default(string), string timeZone = default(string), AdvancedSchedule advancedSchedule = default(AdvancedSchedule), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string))
+        public Schedule(string id = default(string), string name = default(string), string type = default(string), System.DateTimeOffset startTime = default(System.DateTimeOffset), double startTimeOffsetMinutes = default(double), System.DateTimeOffset? expiryTime = default(System.DateTimeOffset?), double expiryTimeOffsetMinutes = default(double), bool? isEnabled = default(bool?), System.DateTimeOffset? nextRun = default(System.DateTimeOffset?), double nextRunOffsetMinutes = default(double), object interval = default(object), string frequency = default(string), string timeZone = default(string), AdvancedSchedule advancedSchedule = default(AdvancedSchedule), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string))
             : base(id, name, type)
         {
             StartTime = startTime;
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the interval of the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.interval")]
-        public int? Interval { get; set; }
+        public object Interval { get; set; }
 
         /// <summary>
         /// Gets or sets the frequency of the schedule. Possible values
