@@ -2,6 +2,9 @@
 
 ## 5.0.0-beta.4 (2021-04-06)
 
+### Changes
+
+- Single dispatch triggers were disabled.
 
 ## 5.0.0-beta.3 (2021-03-11)
 
