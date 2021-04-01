@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.12.0 (2021-04-06)
 
 ### Added
 
@@ -37,13 +37,13 @@
 - Avoid `ObjectDisposedException` when the request is cancelled during content upload over HTTPS.
 - Fix exception while setting `If-Modified-Since` header on .NET Framework.
 
-## 1.8.1 (2020-01-11)
+## 1.8.1 (2021-01-11)
 
 ### Key Bug Fixes
 
 - Include `Microsoft.Bcl.AsyncInterfaces` dependency on .NET 5 to avoid build issues in applications targeting .NET 5.
 
-## 1.8.0 (2020-01-06)
+## 1.8.0 (2021-01-06)
 
 ### Added
 - `AzureSasCredential` and its respective policy.

@@ -7,15 +7,20 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation
 {
-    /// <summary> Definition for the input batch translation request. </summary>
+    /// <summary>
+    /// Input for a translation operation. This requires that you have your source document or
+    /// documents in an Azure Blob Storage container.
+    /// The source document(s) are translated and written to the location provided
+    /// in the <see cref="TranslationTarget"/>.
+    /// </summary>
     [CodeGenModel("BatchRequest")]
     public partial class DocumentTranslationInput
     {
         /// <summary>
         /// Initializes a new instance of <see cref="DocumentTranslationInput"/>.
         /// </summary>
-        /// <param name="sourceUri">The SAS URI for the source container containing documents to be translated.</param>
-        /// <param name="targetUri">The SAS URI for the target container to which the translated documents will be written.</param>
+        /// <param name="sourceUri">The SAS URI for the source container containing documents to be translated. Read and List permissions are needed.</param>
+        /// <param name="targetUri">The SAS URI for the target container to which the translated documents will be written. Read and Write permissions are needed.</param>
         /// <param name="targetLanguageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types see
@@ -32,9 +37,9 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Add Translation Target to the translation input.
+        /// Add a <see cref="TranslationTarget"/> to the translation input.
         /// </summary>
-        /// <param name="targetUri">The SAS URI for the target container to which the translated documents will be written.</param>
+        /// <param name="targetUri">The SAS URI for the target container to which the translated documents will be written. Read and Write permissions are needed.</param>
         /// <param name="languageCode">Language code to translate documents to. For supported languages see
         /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/language-support#translate"/>.</param>
         /// <param name="glossary">Custom <see cref="TranslationGlossary"/> to be used in the translation operation. For supported file types see

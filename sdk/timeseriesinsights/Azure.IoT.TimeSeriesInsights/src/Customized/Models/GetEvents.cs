@@ -36,7 +36,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// Initializes a new instance of GetEvents.
         /// </summary>
         /// <param name="timeSeriesId">
-        /// Time Series Id that uniquely identifies the instance.It matches Time Series Id properties in
+        /// Time Series Id that uniquely identifies the instance. It matches Time Series Id properties in
         /// an environment. Immutable, never null.
         /// </param>
         /// <param name="searchSpan">

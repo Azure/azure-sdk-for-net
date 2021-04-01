@@ -272,14 +272,14 @@
         "Content-Length": "356",
         "Content-Type": "application/json",
         "Date": "Tue, 23 Mar 2021 01:01:06 GMT",
-        "Retry-After": "7",
+        "Retry-After": "1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff"
       },
       "ResponseBody": {
         "error": {
           "code": "429",
-          "message": "Requests to the Custom Form Model Management - Copy Custom Model Operation under Form Recognizer API (v2.1-preview.3) have exceeded rate limit of your current FormRecognizer S0 pricing tier. Please retry after 7 seconds. Please contact Azure support service if you would like to further increase the default rate limit."
+          "message": "Requests to the Custom Form Model Management - Copy Custom Model Operation under Form Recognizer API (v2.1-preview.3) have exceeded rate limit of your current FormRecognizer S0 pricing tier. Please retry after 1 seconds. Please contact Azure support service if you would like to further increase the default rate limit."
         }
       }
     },

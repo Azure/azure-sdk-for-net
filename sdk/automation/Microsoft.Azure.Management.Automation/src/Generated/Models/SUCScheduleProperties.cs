@@ -16,18 +16,18 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// <summary>
     /// Definition of schedule parameters.
     /// </summary>
-    public partial class ScheduleProperties
+    public partial class SUCScheduleProperties
     {
         /// <summary>
-        /// Initializes a new instance of the ScheduleProperties class.
+        /// Initializes a new instance of the SUCScheduleProperties class.
         /// </summary>
-        public ScheduleProperties()
+        public SUCScheduleProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ScheduleProperties class.
+        /// Initializes a new instance of the SUCScheduleProperties class.
         /// </summary>
         /// <param name="startTime">Gets or sets the start time of the
         /// schedule.</param>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="lastModifiedTime">Gets or sets the last modified
         /// time.</param>
         /// <param name="description">Gets or sets the description.</param>
-        public ScheduleProperties(System.DateTimeOffset startTime = default(System.DateTimeOffset), double startTimeOffsetMinutes = default(double), System.DateTimeOffset? expiryTime = default(System.DateTimeOffset?), double expiryTimeOffsetMinutes = default(double), bool? isEnabled = default(bool?), System.DateTimeOffset? nextRun = default(System.DateTimeOffset?), double nextRunOffsetMinutes = default(double), int? interval = default(int?), string frequency = default(string), string timeZone = default(string), AdvancedSchedule advancedSchedule = default(AdvancedSchedule), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string))
+        public SUCScheduleProperties(System.DateTimeOffset startTime = default(System.DateTimeOffset), double startTimeOffsetMinutes = default(double), System.DateTimeOffset? expiryTime = default(System.DateTimeOffset?), double expiryTimeOffsetMinutes = default(double), bool? isEnabled = default(bool?), System.DateTimeOffset? nextRun = default(System.DateTimeOffset?), double nextRunOffsetMinutes = default(double), long? interval = default(long?), string frequency = default(string), string timeZone = default(string), AdvancedSchedule advancedSchedule = default(AdvancedSchedule), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string description = default(string))
         {
             StartTime = startTime;
             StartTimeOffsetMinutes = startTimeOffsetMinutes;
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Gets or sets the interval of the schedule.
         /// </summary>
         [JsonProperty(PropertyName = "interval")]
-        public int? Interval { get; set; }
+        public long? Interval { get; set; }
 
         /// <summary>
         /// Gets or sets the frequency of the schedule. Possible values

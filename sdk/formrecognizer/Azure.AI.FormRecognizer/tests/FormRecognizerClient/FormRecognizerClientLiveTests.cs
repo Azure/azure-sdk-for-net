@@ -551,7 +551,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
+        [TestCase(false)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -662,7 +662,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
+        [TestCase(false)]
         public async Task StartRecognizeReceiptsPopulatesExtractedReceiptPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -776,7 +776,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
+        [TestCase(false)]
         public async Task StartRecognizeReceiptsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -932,7 +932,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
-        [Ignore("Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public void StartRecognizeReceiptsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -1063,7 +1062,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
+        [TestCase(false)]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1170,7 +1169,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
+        [TestCase(false)]
         public async Task StartRecognizeBusinessCardsPopulatesExtractedPng(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1350,7 +1349,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
-        [Ignore("Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public void StartRecognizeBusinessCardsFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -1362,7 +1360,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
+        [TestCase(false)]
         public async Task StartRecognizeBusinessCardsCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1543,7 +1541,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
+        [TestCase(false)]
         public async Task StartRecognizeInvoicesPopulatesExtractedPdf(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1611,7 +1609,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
+        [TestCase(false)]
         public async Task StartRecognizeInvoicesPopulatesExtractedTiff(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1740,7 +1738,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
+        [TestCase(false)]
         public async Task StartRecognizeInvoicesCanParseMultipageForm(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1818,7 +1816,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
-        [Ignore("Flaky behavior. Issue https://github.com/Azure/azure-sdk-for-net/issues/18813")]
         public void StartRecognizeInvoicesFromUriThrowsForNonExistingContent()
         {
             var client = CreateFormRecognizerClient();
@@ -2484,7 +2481,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Recognizer cognitive service and handle returned errors.
         /// </summary>
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/19375")]
         [TestCase(true)]
         [TestCase(false)]
         public async Task StartRecognizeCustomFormsFromUriThrowsForNonExistingContent(bool useTrainingLabels)
@@ -2574,8 +2570,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 if (line.Appearance != null)
                 {
                     Assert.IsNotNull(line.Appearance.Style);
-                    // TODO: Enable once service bug is fixed => https://github.com/Azure/azure-sdk-for-net/issues/18216
-                   // Assert.IsTrue(line.Appearance.Style.Name == StyleName.Handwriting || line.Appearance.Style.Name == StyleName.Other);
+                    Assert.IsTrue(line.Appearance.Style.Name == TextStyleName.Handwriting || line.Appearance.Style.Name == TextStyleName.Other);
                     Assert.Greater(line.Appearance.Style.Confidence, 0f);
                 }
 
@@ -2601,8 +2596,7 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.AreEqual(expectedPageNumber, table.PageNumber);
                 Assert.Greater(table.ColumnCount, 0);
                 Assert.Greater(table.RowCount, 0);
-                // Currently not true for CustomForms. Issue https://github.com/Azure/azure-sdk-for-net/issues/16827
-                // Assert.AreEqual(4, table.BoundingBox.Points.Count());
+                Assert.AreEqual(4, table.BoundingBox.Points.Count());
 
                 Assert.NotNull(table.Cells);
 

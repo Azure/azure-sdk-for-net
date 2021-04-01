@@ -260,7 +260,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [Ignore("Current bug on the service side returns null for model name.")]
         public async Task StartTrainingWithNoLabelsModelName()
         {
             var client = CreateFormTrainingClient();
@@ -276,7 +275,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/19375")]
         public async Task StartTrainingError()
         {
             var client = CreateFormTrainingClient();
@@ -470,7 +468,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [Ignore("Current bug on the service side returns null for model name.")]
         public async Task CopyModelWithoutLabelsAndModelName()
         {
             var sourceClient = CreateFormTrainingClient();

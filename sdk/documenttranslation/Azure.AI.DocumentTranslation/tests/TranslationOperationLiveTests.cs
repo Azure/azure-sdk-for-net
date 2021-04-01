@@ -26,10 +26,10 @@ namespace Azure.AI.DocumentTranslation.Tests
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target = await CreateTargetContainerAsync();
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            var operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -56,12 +56,12 @@ namespace Azure.AI.DocumentTranslation.Tests
             Uri targetSpanish = await CreateTargetContainerAsync();
             Uri targetArabic = await CreateTargetContainerAsync();
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, targetFrench, "fr");
             input.AddTarget(targetSpanish, "es");
             input.AddTarget(targetArabic, "ar");
-            var operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -88,7 +88,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             Uri target1 = await CreateTargetContainerAsync();
             Uri target2 = await CreateTargetContainerAsync();
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
             var inputs = new List<DocumentTranslationInput>
             {
@@ -96,7 +96,7 @@ namespace Azure.AI.DocumentTranslation.Tests
                 new DocumentTranslationInput(source2, target2, "es")
             };
 
-            var operation = await client.StartTranslationAsync(inputs);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(inputs);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -121,7 +121,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             Uri sourceUri = await CreateSourceContainerAsync(twoTestDocuments);
             Uri targetUri = await CreateTargetContainerAsync();
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
             var filter = new DocumentFilter
             {
@@ -133,7 +133,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             };
             var targets = new List<TranslationTarget> { new TranslationTarget(targetUri, "fr") };
             var input = new DocumentTranslationInput(source, targets);
-            var operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -158,7 +158,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             Uri sourceUri = await CreateSourceContainerAsync(twoTestDocuments);
             Uri targetUri = await CreateTargetContainerAsync();
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
             var filter = new DocumentFilter
             {
@@ -170,7 +170,7 @@ namespace Azure.AI.DocumentTranslation.Tests
             };
             var targets = new List<TranslationTarget> { new TranslationTarget(targetUri, "fr") };
             var input = new DocumentTranslationInput(source, targets);
-            var operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -194,36 +194,31 @@ namespace Azure.AI.DocumentTranslation.Tests
         {
             Uri sourceUri = await CreateSourceContainerAsync(oneTestDocuments);
             Uri targetUri = await CreateTargetContainerAsync();
+            string translateTo = "fr";
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
-            var filter = new DocumentFilter
-            {
-                Suffix = "1.txt"
-            };
-            var source = new TranslationSource(sourceUri)
-            {
-                Filter = filter
-            };
-            var targets = new List<TranslationTarget> { new TranslationTarget(targetUri, "fr") };
-            var input = new DocumentTranslationInput(source, targets);
-            var operation = await client.StartTranslationAsync(input);
+            var input = new DocumentTranslationInput(sourceUri, targetUri, translateTo);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
-            var documents = operation.GetAllDocumentStatusesAsync();
+            AsyncPageable<DocumentStatusResult> documentsFromOperation = await operation.WaitForCompletionAsync(PollingInterval);
+            List<DocumentStatusResult> documentsFromOperationList = await documentsFromOperation.ToEnumerableAsync();
 
-            List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
+            Assert.AreEqual(1, documentsFromOperationList.Count);
+            CheckDocumentStatusResult(documentsFromOperationList[0], translateTo);
 
-            Assert.AreEqual(1, documentsList.Count);
+            AsyncPageable<DocumentStatusResult> documentsFromGetAll = operation.GetAllDocumentStatusesAsync();
+            List<DocumentStatusResult> documentsFromGetAllList = await documentsFromGetAll.ToEnumerableAsync();
 
-            foreach (var document in documentsList)
-            {
-                Assert.AreEqual(TranslationStatus.Succeeded, document.Status);
-                Assert.IsTrue(document.HasCompleted);
-                Assert.AreEqual(100f, document.TranslationProgressPercentage);
-                Assert.AreEqual("fr", document.TranslateTo);
-                Assert.NotNull(document.TranslatedDocumentUri);
-            }
+            Assert.AreEqual(documentsFromOperationList[0].Status, documentsFromGetAllList[0].Status);
+            Assert.AreEqual(documentsFromOperationList[0].HasCompleted, documentsFromGetAllList[0].HasCompleted);
+            Assert.AreEqual(documentsFromOperationList[0].DocumentId, documentsFromGetAllList[0].DocumentId);
+            Assert.AreEqual(documentsFromOperationList[0].SourceDocumentUri, documentsFromGetAllList[0].SourceDocumentUri);
+            Assert.AreEqual(documentsFromOperationList[0].TranslatedDocumentUri, documentsFromGetAllList[0].TranslatedDocumentUri);
+            Assert.AreEqual(documentsFromOperationList[0].TranslationProgressPercentage, documentsFromGetAllList[0].TranslationProgressPercentage);
+            Assert.AreEqual(documentsFromOperationList[0].TranslateTo, documentsFromGetAllList[0].TranslateTo);
+            Assert.AreEqual(documentsFromOperationList[0].CreatedOn, documentsFromGetAllList[0].CreatedOn);
+            Assert.AreEqual(documentsFromOperationList[0].LastModified, documentsFromGetAllList[0].LastModified);
         }
 
         [RecordedTest]
@@ -231,14 +226,15 @@ namespace Azure.AI.DocumentTranslation.Tests
         {
             Uri sourceUri = await CreateSourceContainerAsync(oneTestDocuments);
             Uri targetUri = await CreateTargetContainerAsync();
+            string translateTo = "fr";
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
-            var input = new DocumentTranslationInput(sourceUri, targetUri, "fr");
-            var operation = await client.StartTranslationAsync(input);
+            var input = new DocumentTranslationInput(sourceUri, targetUri, translateTo);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             await operation.WaitForCompletionAsync(PollingInterval);
-            var documents = operation.GetAllDocumentStatusesAsync();
+            AsyncPageable<DocumentStatusResult> documents = operation.GetAllDocumentStatusesAsync();
 
             List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
 
@@ -246,11 +242,7 @@ namespace Azure.AI.DocumentTranslation.Tests
 
             DocumentStatusResult document = await operation.GetDocumentStatusAsync(documentsList[0].DocumentId);
 
-            Assert.AreEqual(TranslationStatus.Succeeded, document.Status);
-            Assert.IsTrue(document.HasCompleted);
-            Assert.AreEqual(100f, document.TranslationProgressPercentage);
-            Assert.AreEqual("fr", document.TranslateTo);
-            Assert.NotNull(document.TranslatedDocumentUri);
+            CheckDocumentStatusResult(document, translateTo);
         }
 
         [RecordedTest]
@@ -259,10 +251,10 @@ namespace Azure.AI.DocumentTranslation.Tests
             Uri source = new("https://idont.ex.ist");
             Uri target = await CreateTargetContainerAsync();
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            var operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
 
@@ -279,10 +271,10 @@ namespace Azure.AI.DocumentTranslation.Tests
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);
             Uri target = new("https://idont.ex.ist");
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            var operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
 
@@ -305,10 +297,10 @@ namespace Azure.AI.DocumentTranslation.Tests
             Uri source = await CreateSourceContainerAsync(documentsList);
             Uri target = await CreateTargetContainerAsync();
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            var operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -338,10 +330,10 @@ namespace Azure.AI.DocumentTranslation.Tests
             Uri source = await CreateSourceContainerAsync(document);
             Uri target = await CreateTargetContainerAsync();
 
-            var client = GetClient();
+            DocumentTranslationClient client = GetClient();
 
             var input = new DocumentTranslationInput(source, target, "fr");
-            var operation = await client.StartTranslationAsync(input);
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
             AsyncPageable<DocumentStatusResult> documents = await operation.WaitForCompletionAsync(PollingInterval);
 
@@ -362,6 +354,36 @@ namespace Azure.AI.DocumentTranslation.Tests
             Assert.AreEqual(new DocumentTranslationErrorCode("WrongDocumentEncoding"), documentsList[0].Error.ErrorCode);
         }
 
+        [RecordedTest]
+        public async Task ExistingFileInTargetContainer()
+        {
+            Uri source = await CreateSourceContainerAsync(oneTestDocuments);
+            Uri target = await CreateTargetContainerAsync(oneTestDocuments);
+
+            DocumentTranslationClient client = GetClient();
+
+            var input = new DocumentTranslationInput(source, target, "fr");
+            DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
+
+            AsyncPageable<DocumentStatusResult> documents = await operation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual(TranslationStatus.Failed, operation.Status);
+
+            Assert.AreEqual(1, operation.DocumentsTotal);
+            Assert.AreEqual(0, operation.DocumentsSucceeded);
+            Assert.AreEqual(1, operation.DocumentsFailed);
+            Assert.AreEqual(0, operation.DocumentsCancelled);
+            Assert.AreEqual(0, operation.DocumentsInProgress);
+            Assert.AreEqual(0, operation.DocumentsNotStarted);
+
+            List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
+            Assert.AreEqual(1, documentsList.Count);
+            Assert.AreEqual(TranslationStatus.Failed, documentsList[0].Status);
+            Assert.AreEqual(new DocumentTranslationErrorCode("TargetFileAlreadyExists"), documentsList[0].Error.ErrorCode);
+        }
+
         private async Task PrintNotSucceededDocumentsAsync(DocumentTranslationOperation operation)
         {
             await foreach (var document in operation.GetValuesAsync())
@@ -374,6 +396,19 @@ namespace Azure.AI.DocumentTranslation.Tests
                     Console.WriteLine($"    Message: {document.Error.Message}");
                 }
             }
+        }
+
+        private void CheckDocumentStatusResult(DocumentStatusResult document, string translateTo)
+        {
+            Assert.AreEqual(TranslationStatus.Succeeded, document.Status);
+            Assert.IsTrue(document.HasCompleted);
+            Assert.IsFalse(string.IsNullOrEmpty(document.DocumentId));
+            Assert.IsNotNull(document.SourceDocumentUri);
+            Assert.IsNotNull(document.TranslatedDocumentUri);
+            Assert.AreEqual(100f, document.TranslationProgressPercentage);
+            Assert.AreEqual(translateTo, document.TranslateTo);
+            Assert.AreNotEqual(new DateTimeOffset(), document.CreatedOn);
+            Assert.AreNotEqual(new DateTimeOffset(), document.LastModified);
         }
     }
 }

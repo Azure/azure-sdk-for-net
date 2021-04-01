@@ -302,14 +302,14 @@
         "Content-Length": "85",
         "Content-Type": "application/json",
         "Date": "Tue, 23 Mar 2021 01:00:37 GMT",
-        "Retry-After": "11",
+        "Retry-After": "1",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff"
       },
       "ResponseBody": {
         "error": {
           "code": "429",
-          "message": "Rate limit is exceeded. Try again in 11 seconds."
+          "message": "Rate limit is exceeded. Try again in 1 seconds."
         }
       }
     },

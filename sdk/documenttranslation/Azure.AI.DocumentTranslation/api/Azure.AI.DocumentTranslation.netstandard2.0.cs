@@ -15,6 +15,7 @@ namespace Azure.AI.DocumentTranslation
         public Azure.AI.DocumentTranslation.DocumentTranslationError Error { get { throw null; } }
         public bool HasCompleted { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
+        public System.Uri SourceDocumentUri { get { throw null; } }
         public Azure.AI.DocumentTranslation.TranslationStatus Status { get { throw null; } }
         public System.Uri TranslatedDocumentUri { get { throw null; } }
         public string TranslateTo { get { throw null; } }
@@ -125,6 +126,7 @@ namespace Azure.AI.DocumentTranslation
     {
         internal FileFormat() { }
         public System.Collections.Generic.IReadOnlyList<string> ContentTypes { get { throw null; } }
+        public string DefaultFormatVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> FileExtensions { get { throw null; } }
         public string Format { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> FormatVersions { get { throw null; } }
