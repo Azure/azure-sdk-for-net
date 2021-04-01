@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(LinkedIntegrationRuntimeKeyAuthorizationConverter))]
     public partial class LinkedIntegrationRuntimeKeyAuthorization : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -40,6 +43,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new LinkedIntegrationRuntimeKeyAuthorization(authorizationType, key);
+        }
+
+        internal partial class LinkedIntegrationRuntimeKeyAuthorizationConverter : JsonConverter<LinkedIntegrationRuntimeKeyAuthorization>
+        {
+            public override void Write(Utf8JsonWriter writer, LinkedIntegrationRuntimeKeyAuthorization model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override LinkedIntegrationRuntimeKeyAuthorization Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeLinkedIntegrationRuntimeKeyAuthorization(document.RootElement);
+            }
         }
     }
 }

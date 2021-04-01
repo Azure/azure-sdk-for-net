@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Core.Tests
     public class ResourceGroupOperationsTests : ResourceManagerTestBase
     {
         public ResourceGroupOperationsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task DeleteRg()
         {
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             await rg.DeleteAsync();
         }
 
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task StartDeleteRg()
         {
-            var rgOp = await Client.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            var rgOp = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).StartCreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             ResourceGroup rg = await rgOp.WaitForCompletionAsync();
             var deleteOp = await rg.StartDeleteAsync();
             await deleteOp.WaitForCompletionAsync();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task Get()
         {
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             await rg.GetAsync();
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task ListAvailableLocations()
         {
-            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroupContainer().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
             var locations = await rg.ListAvailableLocationsAsync();
             int count = 0;
             foreach(var location in locations)

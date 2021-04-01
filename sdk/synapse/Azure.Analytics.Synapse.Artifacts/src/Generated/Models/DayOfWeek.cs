@@ -7,7 +7,7 @@
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The DayOfWeek. </summary>
+    /// <summary> The days of the week. </summary>
     public enum DayOfWeek
     {
         /// <summary> Sunday. </summary>

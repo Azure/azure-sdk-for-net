@@ -25,9 +25,6 @@ namespace Azure.Messaging.ServiceBus
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private int _threadCount;
-        private readonly Func<ProcessSessionEventArgs, Task> _sessionInitHandler;
-        private readonly Func<ProcessSessionEventArgs, Task> _sessionCloseHandler;
-        private readonly Func<ProcessSessionMessageEventArgs, Task> _messageHandler;
         private readonly SemaphoreSlim _concurrentAcceptSessionsSemaphore;
         private readonly int _maxCallsPerSession;
         private readonly ServiceBusSessionReceiverOptions _sessionReceiverOptions;
@@ -44,33 +41,21 @@ namespace Azure.Messaging.ServiceBus
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
         public SessionReceiverManager(
-            ServiceBusConnection connection,
-            string fullyQualifiedNamespace,
-            string entityPath,
-            string identifier,
+            ServiceBusProcessor processor,
             string sessionId,
-            ServiceBusProcessorOptions processorOptions,
-            Func<ProcessSessionEventArgs, Task> sessionInitHandler,
-            Func<ProcessSessionEventArgs, Task> sessionCloseHandler,
-            Func<ProcessSessionMessageEventArgs, Task> messageHandler,
-            Func<ProcessErrorEventArgs, Task> errorHandler,
             SemaphoreSlim concurrentAcceptSessionsSemaphore,
             EntityScopeFactory scopeFactory,
             IList<ServiceBusPlugin> plugins,
             int maxCallsPerSession,
             bool keepOpenOnReceiveTimeout)
-            : base(connection, fullyQualifiedNamespace, entityPath, identifier, processorOptions, default, errorHandler,
-                  scopeFactory, plugins)
+            : base(processor, scopeFactory, plugins)
         {
-            _sessionInitHandler = sessionInitHandler;
-            _sessionCloseHandler = sessionCloseHandler;
-            _messageHandler = messageHandler;
             _concurrentAcceptSessionsSemaphore = concurrentAcceptSessionsSemaphore;
             _maxCallsPerSession = maxCallsPerSession;
             _sessionReceiverOptions = new ServiceBusSessionReceiverOptions
             {
-                ReceiveMode = _processorOptions.ReceiveMode,
-                PrefetchCount = _processorOptions.PrefetchCount,
+                ReceiveMode = processor.Options.ReceiveMode,
+                PrefetchCount = processor.Options.PrefetchCount,
             };
             _sessionId = sessionId;
             _keepOpenOnReceiveTimeout = keepOpenOnReceiveTimeout;
@@ -134,10 +119,10 @@ namespace Azure.Messaging.ServiceBus
                 _sessionLockRenewalTask = RenewSessionLock();
             }
 
-            if (_sessionInitHandler != null)
+            if (Processor._sessionInitializingAsync != null)
             {
                 var args = new ProcessSessionEventArgs(_receiver, processorCancellationToken);
-                await _sessionInitHandler(args).ConfigureAwait(false);
+                await Processor.OnSessionInitializingAsync(args).ConfigureAwait(false);
             }
         }
 
@@ -151,8 +136,8 @@ namespace Azure.Messaging.ServiceBus
                 // otherwise SemaphoreFullException can occur.
                 releaseSemaphore = true;
                 _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
-                    entityPath: _entityPath,
-                    connection: _connection,
+                    entityPath: Processor.EntityPath,
+                    connection: Processor.Connection,
                     plugins: _plugins,
                     options: _sessionReceiverOptions,
                     sessionId: _sessionId,
@@ -220,10 +205,10 @@ namespace Azure.Messaging.ServiceBus
             }
             try
             {
-                if (_sessionCloseHandler != null)
+                if (Processor._sessionClosingAsync != null)
                 {
                     var args = new ProcessSessionEventArgs(_receiver, cancellationToken);
-                    await _sessionCloseHandler(args).ConfigureAwait(false);
+                    await Processor.OnSessionClosingAsync(args).ConfigureAwait(false);
                 }
             }
             catch (Exception exception)
@@ -232,8 +217,8 @@ namespace Azure.Messaging.ServiceBus
                     new ProcessErrorEventArgs(
                         exception,
                         ServiceBusErrorSource.CloseSession,
-                        _fullyQualifiedNamespace,
-                        _entityPath,
+                        Processor.FullyQualifiedNamespace,
+                        Processor.EntityPath,
                         cancellationToken))
                     .ConfigureAwait(false);
             }
@@ -316,8 +301,8 @@ namespace Azure.Messaging.ServiceBus
                     new ProcessErrorEventArgs(
                         ex,
                         errorSource,
-                        _fullyQualifiedNamespace,
-                        _entityPath,
+                        Processor.FullyQualifiedNamespace,
+                        Processor.EntityPath,
                         processorCancellationToken))
                     .ConfigureAwait(false);
             }
@@ -331,21 +316,17 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
         private async Task RenewSessionLock()
         {
             _sessionLockRenewalCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(
                 _sessionCancellationSource.Token);
-            _sessionLockRenewalCancellationSource.CancelAfter(_processorOptions.MaxAutoLockRenewalDuration);
+            _sessionLockRenewalCancellationSource.CancelAfter(ProcessorOptions.MaxAutoLockRenewalDuration);
             CancellationToken sessionLockRenewalCancellationToken = _sessionLockRenewalCancellationSource.Token;
             while (!sessionLockRenewalCancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    ServiceBusEventSource.Log.ProcessorRenewSessionLockStart(_identifier, _receiver.SessionId);
+                    ServiceBusEventSource.Log.ProcessorRenewSessionLockStart(Processor.Identifier, _receiver.SessionId);
                     TimeSpan delay = CalculateRenewDelay(_receiver.SessionLockedUntil);
 
                     // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled
@@ -361,12 +342,12 @@ namespace Azure.Messaging.ServiceBus
                         break;
                     }
                     await _receiver.RenewSessionLockAsync(sessionLockRenewalCancellationToken).ConfigureAwait(false);
-                    ServiceBusEventSource.Log.ProcessorRenewSessionLockComplete(_identifier);
+                    ServiceBusEventSource.Log.ProcessorRenewSessionLockComplete(Processor.Identifier);
                 }
 
                 catch (Exception ex) when (!(ex is TaskCanceledException))
                 {
-                    ServiceBusEventSource.Log.ProcessorRenewSessionLockException(_identifier, ex.ToString());
+                    ServiceBusEventSource.Log.ProcessorRenewSessionLockException(Processor.Identifier, ex.ToString());
                     await HandleRenewLockException(ex, sessionLockRenewalCancellationToken).ConfigureAwait(false);
 
                     // if the error was not transient, break out of the loop
@@ -386,7 +367,7 @@ namespace Azure.Messaging.ServiceBus
                 message,
                 _receiver,
                 cancellationToken);
-            await _messageHandler(args).ConfigureAwait(false);
+            await Processor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
         }
     }
 }

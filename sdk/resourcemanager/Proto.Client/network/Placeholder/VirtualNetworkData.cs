@@ -8,7 +8,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing the virtual nerwork data model.
     /// </summary>
-    public class VirtualNetworkData : TrackedResource<Azure.ResourceManager.Network.Models.VirtualNetwork>
+    public class VirtualNetworkData : TrackedResource<ResourceGroupResourceIdentifier, Azure.ResourceManager.Network.Models.VirtualNetwork>
     {
         /// <summary>
         /// Gets the resource type definition for a virtual nerwork.

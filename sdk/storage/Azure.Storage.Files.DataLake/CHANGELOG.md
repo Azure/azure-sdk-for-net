@@ -1,7 +1,13 @@
 # Release History
 
 ## 12.7.0-beta.3 (Unreleased)
+- Added support for service version 2020-08-04.
+- Added support for Soft Delete for Hierarchical-Namespace enabled accounts.
+- Added support for File Query Parquet input format.
 - Aligned storage URL parsing with other platforms.
+
+## 12.6.1 (2021-03-29)
+- Fixed bug where ClientDiagnostics's DiagnosticListener was leaking resources.
 
 ## 12.7.0-beta.2 (2021-03-09)
 - Changed error codes from numerical (404) to descriptive (PathNotFound).

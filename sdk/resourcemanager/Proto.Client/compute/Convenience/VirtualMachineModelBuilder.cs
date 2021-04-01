@@ -25,7 +25,7 @@ namespace Proto.Compute.Convenience
         /// </summary>
         /// <param name="azureEntity"> The disk to attach. </param>
         /// <returns> An instance of <see cref="VirtualMachineModelBuilder"/> </returns>
-        public VirtualMachineModelBuilderBase AttachDataDisk(TrackedResource azureEntity)
+        public VirtualMachineModelBuilderBase AttachDataDisk(TrackedResource<ResourceGroupResourceIdentifier> azureEntity)
         {
             throw new NotImplementedException();
         }

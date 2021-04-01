@@ -8,15 +8,14 @@ using System.Linq;
 namespace Azure.ResourceManager.Core
 {
     /// <summary>
-    /// Structure representing a resource type
+    /// Structure representing a resource type.
     /// </summary>
-    public sealed class ResourceType : IEquatable<ResourceType>, IEquatable<string>, IComparable<ResourceType>,
-        IComparable<string>
+    public sealed class ResourceType : IEquatable<ResourceType>, IComparable<ResourceType>
     {
         /// <summary>
-        /// The "none" resource type
+        /// The resource type for the root of the resource hierarchy.
         /// </summary>
-        public static readonly ResourceType None = new ResourceType { Namespace = string.Empty, Type = string.Empty };
+        public static ResourceType RootResourceType => new ResourceType(string.Empty, string.Empty);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourceType"/> class.
@@ -28,6 +27,29 @@ namespace Azure.ResourceManager.Core
                 throw new ArgumentException($"{nameof(resourceIdOrType)} cannot be null or whitespace", nameof(resourceIdOrType));
 
             Parse(resourceIdOrType);
+            Types = Type.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        /// <summary>
+        /// Create a resource type given the namespace and typename components.
+        /// </summary>
+        /// <param name="providerNamespace"></param>
+        /// <param name="name"></param>
+        internal ResourceType(string providerNamespace, string name)
+        {
+            Namespace = providerNamespace;
+            Type = name;
+            Types = Type.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        /// <summary>
+        /// Create child resource type using parent resource type
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="childType"></param>
+        internal ResourceType(ResourceType parent, string childType) 
+            : this(parent.Namespace, $"{parent.Type}/{childType}")
+        {
         }
 
         private ResourceType()
@@ -44,63 +66,40 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         public string Type { get; private set; }
 
+        internal IList<string> Types { get; } = new List<string>();
+
         /// <summary>
-        /// Gets the resource type Parent.
+        /// Determines if this resource type is the parent of the given resource.
         /// </summary>
-        public ResourceType Parent
+        /// <param name="child"></param>
+        /// <returns></returns>
+        public bool IsParentOf(ResourceType child)
         {
-            get
+            if (!string.Equals(Namespace, child.Namespace, StringComparison.InvariantCultureIgnoreCase))
+                return false;
+            var types = Type.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            var childTypes = child.Type.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            if (types.Length >= childTypes.Length)
+                return false;
+            for (int i = 0; i < types.Length; ++i)
             {
-                var parts = Type.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-
-                if (parts.Length < 2)
-                    return None;
-
-                var list = new List<string>(parts);
-                list.RemoveAt(list.Count - 1);
-
-                return new ResourceType($"{Namespace}/{string.Join("/", list.ToArray())}");
+                if (!string.Equals(types[i], childTypes[i], StringComparison.InvariantCultureIgnoreCase))
+                    return false;
             }
+
+            return true;
         }
 
         /// <summary>
         /// Implicit operator for initializing a <see cref="ResourceType"/> instance from a string.
         /// </summary>
-        /// <param name="other"> String to be conferted into a <see cref="ResourceType"/> object. </param>
+        /// <param name="other"> String to be converted into a <see cref="ResourceType"/> object. </param>
         public static implicit operator ResourceType(string other)
         {
             if (other is null)
                 return null;
 
             return new ResourceType(other);
-        }
-
-        /// <summary>
-        /// Compares a <see cref="ResourceType"/> object with a <see cref="string"/>.
-        /// </summary>
-        /// <param name="source"> <see cref="ResourceType"/> object. </param>
-        /// <param name="target"> String. </param>
-        /// <returns> True if they are equal, otherwise False. </returns>
-        public static bool operator ==(ResourceType source, string target)
-        {
-            if (source is null)
-                return target is null;
-
-            return source.Equals(target);
-        }
-
-        /// <summary>
-        /// Compares a <see cref="string"/> with a <see cref="ResourceType"/> object.
-        /// </summary>
-        /// <param name="source"> String representation of a ResourceType. </param>
-        /// <param name="target"> <see cref="ResourceType"/> object. </param>
-        /// <returns> True if they are equal, otherwise False. </returns>
-        public static bool operator ==(string source, ResourceType target)
-        {
-            if (target is null)
-                return source is null;
-
-            return target.Equals(source);
         }
 
         /// <summary>
@@ -115,34 +114,6 @@ namespace Azure.ResourceManager.Core
                 return target is null;
 
             return source.Equals(target);
-        }
-
-        /// <summary>
-        /// Compares a <see cref="ResourceType"/> object with a <see cref="string"/>.
-        /// </summary>
-        /// <param name="source"> <see cref="ResourceType"/> object. </param>
-        /// <param name="target"> String representation of a ResourceType. </param>
-        /// <returns> False if they are equal, otherwise True. </returns>
-        public static bool operator !=(ResourceType source, string target)
-        {
-            if (source is null)
-                return !(target is null);
-
-            return !source.Equals(target);
-        }
-
-        /// <summary>
-        /// Compares a <see cref="string"/> with a <see cref="ResourceType"/> object.
-        /// </summary>
-        /// <param name="source"> String. </param>
-        /// <param name="target"> <see cref="ResourceType"/> object. </param>
-        /// <returns> False if they are equal, otherwise True. </returns>
-        public static bool operator !=(string source, ResourceType target)
-        {
-            if (target is null)
-                return !(source is null);
-
-            return !target.Equals(source);
         }
 
         /// <summary>
@@ -172,28 +143,13 @@ namespace Azure.ResourceManager.Core
             if (ReferenceEquals(this, other))
                 return 0;
 
-            int compareResult = 0;
-            if ((compareResult = string.Compare(Namespace, other.Namespace, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (compareResult = string.Compare(Type, other.Type, StringComparison.InvariantCultureIgnoreCase)) == 0 &&
-                (other.Parent != null))
+            int compareResult = string.Compare(Namespace, other.Namespace, StringComparison.InvariantCultureIgnoreCase);
+            if (compareResult == 0)
             {
-                return Parent.CompareTo(other.Parent);
+                compareResult = string.Compare(Type, other.Type, StringComparison.InvariantCultureIgnoreCase);
             }
-
+            
             return compareResult;
-        }
-
-        /// <summary>
-        /// Compares this <see cref="ResourceType"/> with a resource type representation as a string.
-        /// </summary>
-        /// <param name="other"> String to compare. </param>
-        /// <returns> -1 for less than, 0 for equals, 1 for greater than. </returns>
-        public int CompareTo(string other)
-        {
-            if (other is null)
-                return 1;
-
-            return CompareTo(new ResourceType(other));
         }
 
         /// <summary>
@@ -207,19 +163,6 @@ namespace Azure.ResourceManager.Core
                 return false;
 
             return string.Equals(ToString(), other.ToString(), StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        /// <summary>
-        /// Compares this <see cref="ResourceType"/> instance with a string and determines if they are equals.
-        /// </summary>
-        /// <param name="other"> String to compare. </param>
-        /// <returns> True if they are equals, otherwise false. </returns>
-        public bool Equals(string other)
-        {
-            if (other is null)
-                return false;
-
-            return string.Equals(ToString(), other, StringComparison.InvariantCultureIgnoreCase);
         }
 
         /// <inheritdoc/>
@@ -236,7 +179,7 @@ namespace Azure.ResourceManager.Core
 
             var resourceObj = obj as ResourceType;
 
-            if (resourceObj != null)
+            if (!(resourceObj is null))
                 return Equals(resourceObj);
 
             var stringObj = obj as string;
@@ -311,7 +254,7 @@ namespace Azure.ResourceManager.Core
                     throw new ArgumentOutOfRangeException(nameof(resourceIdOrType));
                 }
                 Namespace = parts[1];
-                
+
                 Type = string.Join("/", parts.Skip(2).Take(parts.Count - 3));
             }
             // Handle resource types (Micsrsoft.Compute/virtualMachines, Microsoft.Network/virtualNetworks/subnets)

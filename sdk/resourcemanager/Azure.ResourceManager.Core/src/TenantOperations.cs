@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// The resource type for subscription
         /// </summary>
-        public static readonly ResourceType ResourceType = "/tenants"; // placeholder pending on the outcome of ADO #5199
+        public static readonly ResourceType ResourceType = ResourceType.RootResourceType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.
@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Core
         /// <param name="options"> The client parameters to use in these operations. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="baseUri"> The base URI of the service. </param>
-        internal TenantOperations(AzureResourceManagerClientOptions options, TokenCredential credential, Uri baseUri)
-            : base(options, "/tenants", credential, baseUri)
+        internal TenantOperations(ArmClientOptions options, TokenCredential credential, Uri baseUri)
+            : base(new ClientContext(options, credential, baseUri), ResourceIdentifier.RootResourceIdentifier)
         {
         }
 
@@ -35,5 +35,16 @@ namespace Azure.ResourceManager.Core
         /// Gets the valid resource type for this operation class
         /// </summary>
         protected override ResourceType ValidResourceType => ResourceType;
+
+        /// <summary>
+        /// ListResources of type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public virtual T ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, T> func)
+        {
+            return func(BaseUri, Credential, ClientOptions);
+        }
     }
 }

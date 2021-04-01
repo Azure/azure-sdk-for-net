@@ -565,7 +565,7 @@ namespace Azure.Core.Tests
             var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
             cts.Cancel();
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await firstRequestTask);
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
             responseMre.Set();
 
             var response = await secondRequestTask;
@@ -593,17 +593,17 @@ namespace Azure.Core.Tests
                 return new MockResponse(200);
             });
 
-            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts1.Token);
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example1.com"), cancellationToken: cts1.Token);
             requestMre.Wait();
 
-            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts2.Token);
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example2.com"), cancellationToken: cts2.Token);
             cts1.Cancel();
             cts2.Cancel();
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await firstRequestTask);
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
             responseMre.Set();
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await secondRequestTask);
+            Assert.CatchAsync<OperationCanceledException>(async () => await secondRequestTask);
         }
 
         private class TokenCredentialStub : TokenCredential

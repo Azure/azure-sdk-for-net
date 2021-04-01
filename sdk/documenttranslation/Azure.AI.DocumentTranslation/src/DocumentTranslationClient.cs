@@ -28,10 +28,10 @@ namespace Azure.AI.DocumentTranslation
         { }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="DocumentTranslationClient"/>
+        /// Initializes a new instance of <see cref="DocumentTranslationClient"/> class for the specified service instance.
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
-        /// sends requests to.  Endpoint can be found in the Azure portal.</param>
+        /// sends requests to.</param>
         /// <param name="credential">The API key used to access
         /// the service. This will allow you to update the API key
         /// without creating a new client.</param>
@@ -51,10 +51,10 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="DocumentTranslationClient"/>
+        /// Initializes a new instance of <see cref="DocumentTranslationClient"/> class for the specified service instance.
         /// </summary>
         /// <param name="endpoint">A <see cref="Uri"/> to the service the client
-        /// sends requests to.  Endpoint can be found in the Azure portal.</param>
+        /// sends requests to.</param>
         /// <param name="credential">The API key used to access
         /// the service. This will allow you to update the API key
         /// without creating a new client.</param>
@@ -64,17 +64,18 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Starts a translation operation.
-        /// For document length limits, maximum batch size, and supported document formats, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
         /// </summary>
-        /// <param name="configurations">Sets the configurations for the translation operation
+        /// <param name="inputs">Sets the inputs for the translation operation
         /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
-        public virtual DocumentTranslationOperation StartTranslation(IEnumerable<TranslationConfiguration> configurations, CancellationToken cancellationToken = default)
+        public virtual DocumentTranslationOperation StartTranslation(IEnumerable<DocumentTranslationInput> inputs, CancellationToken cancellationToken = default)
         {
-            var request = new BatchSubmissionRequest(configurations);
+            var request = new BatchSubmissionRequest(inputs);
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
@@ -91,18 +92,19 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Starts a translation operation
-        /// For document length limits, maximum batch size, and supported document formats, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
         /// </summary>
-        /// <param name="configurations">Sets the configurations for the translation operation
+        /// <param name="inputs">Sets the inputs for the translation operation
         /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
-        public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(IEnumerable<TranslationConfiguration> configurations, CancellationToken cancellationToken = default)
+        public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(IEnumerable<DocumentTranslationInput> inputs, CancellationToken cancellationToken = default)
         {
-            var request = new BatchSubmissionRequest(configurations);
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslationAsync)}");
+            var request = new BatchSubmissionRequest(inputs);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
@@ -118,18 +120,19 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Starts a translation operation.
-        /// For document length limits, maximum batch size, and supported document formats, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
         /// </summary>
-        /// <param name="configuration">Sets the configurations for the translation operation
+        /// <param name="input">Sets the input for the translation operation
         /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
-        public virtual DocumentTranslationOperation StartTranslation(TranslationConfiguration configuration, CancellationToken cancellationToken = default)
+        public virtual DocumentTranslationOperation StartTranslation(DocumentTranslationInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(configuration, nameof(configuration));
-            var request = new BatchSubmissionRequest(new List<TranslationConfiguration> { configuration });
+            Argument.AssertNotNull(input, nameof(input));
+            var request = new BatchSubmissionRequest(new List<DocumentTranslationInput> { input });
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
@@ -146,19 +149,20 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Starts a translation operation
-        /// For document length limits, maximum batch size, and supported document formats, see
-        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.
+        /// Starts a translation operation which translates the document(s) in your source container
+        /// to your <see cref="TranslationTarget"/>(s) in the given language.
+        /// <para>For document length limits, maximum batch size, and supported document formats, see
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview"/>.</para>
         /// </summary>
-        /// <param name="configuration">Sets the configurations for the translation operation
+        /// <param name="input">Sets the input for the translation operation
         /// including source and target containers for documents to be translated. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="RequestFailedException">Service returned a non-success status code. </exception>
-        public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(TranslationConfiguration configuration, CancellationToken cancellationToken = default)
+        public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(DocumentTranslationInput input, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(configuration, nameof(configuration));
-            var request = new BatchSubmissionRequest(new List<TranslationConfiguration> { configuration });
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslationAsync)}");
+            Argument.AssertNotNull(input, nameof(input));
+            var request = new BatchSubmissionRequest(new List<DocumentTranslationInput> { input });
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
@@ -174,12 +178,12 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get the status details for all submitted translation operations.
+        /// Get the status results for all submitted translation operations.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Pageable<TranslationStatusDetail> GetTranslations(CancellationToken cancellationToken = default)
+        public virtual Pageable<TranslationStatusResult> GetTranslations(CancellationToken cancellationToken = default)
         {
-            Page<TranslationStatusDetail> FirstPageFunc(int? pageSizeHint)
+            Page<TranslationStatusResult> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslations)}");
                 scope.Start();
@@ -196,7 +200,7 @@ namespace Azure.AI.DocumentTranslation
                 }
             }
 
-            Page<TranslationStatusDetail> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<TranslationStatusResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslations)}");
                 scope.Start();
@@ -217,14 +221,14 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get the status details for all submitted translation operations.
+        /// Get the status results for all submitted translation operations.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual AsyncPageable<TranslationStatusDetail> GetTranslationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TranslationStatusResult> GetTranslationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<TranslationStatusDetail>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<TranslationStatusResult>> FirstPageFunc(int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationsAsync)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslations)}");
                 scope.Start();
 
                 try
@@ -239,9 +243,9 @@ namespace Azure.AI.DocumentTranslation
                 }
             }
 
-            async Task<Page<TranslationStatusDetail>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<TranslationStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslationsAsync)}");
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetTranslations)}");
                 scope.Start();
 
                 try
@@ -262,7 +266,7 @@ namespace Azure.AI.DocumentTranslation
         #region supported formats functions
 
         /// <summary>
-        /// Get a list of supported Glossary File Formats.
+        /// Get the list of the glossary formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<IReadOnlyList<FileFormat>> GetGlossaryFormats(CancellationToken cancellationToken = default)
@@ -283,12 +287,12 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get a list of supported Glossary File Formats.
+        /// Get the list of the glossary formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetGlossaryFormatsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetGlossaryFormatsAsync)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetGlossaryFormats)}");
             scope.Start();
 
             try
@@ -304,7 +308,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get a list of supported Document Formats.
+        /// Get the list of the document formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<IReadOnlyList<FileFormat>> GetDocumentFormats(CancellationToken cancellationToken = default)
@@ -325,7 +329,7 @@ namespace Azure.AI.DocumentTranslation
         }
 
         /// <summary>
-        /// Get a list of supported Document Formats.
+        /// Get the list of the document formats supported by the Document Translation service.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<IReadOnlyList<FileFormat>>> GetDocumentFormatsAsync(CancellationToken cancellationToken = default)

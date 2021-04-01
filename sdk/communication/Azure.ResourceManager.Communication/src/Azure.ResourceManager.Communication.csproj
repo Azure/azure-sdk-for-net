@@ -11,5 +11,10 @@
     AZC0001 - Azure.ResourceManager.Communication namespace needs to be registered in the analyzer
     -->
     <NoWarn>$(NoWarn);AZC0001</NoWarn>
+    <ExcludeMgmtCoreShared>true</ExcludeMgmtCoreShared>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
+  </ItemGroup>
 </Project>

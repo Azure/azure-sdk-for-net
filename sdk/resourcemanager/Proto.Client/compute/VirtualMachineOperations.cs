@@ -12,14 +12,14 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing the operations that can be performed over a specific VirtualMachine.
     /// </summary>
-    public class VirtualMachineOperations : ResourceOperationsBase<VirtualMachine>, ITaggableResource<VirtualMachine>, IDeletableResource
+    public class VirtualMachineOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, VirtualMachine>, ITaggableResource<ResourceGroupResourceIdentifier, VirtualMachine>, IDeletableResource
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineOperations"/> class.
         /// </summary>
         /// <param name="genericOperations"> An instance of <see cref="GenericResourceOperations"/> that has an id for a virtual machine. </param>
         internal VirtualMachineOperations(GenericResourceOperations genericOperations)
-            : base(genericOperations)
+            : base(genericOperations, genericOperations.Id)
         {
         }
 
@@ -29,7 +29,7 @@ namespace Proto.Compute
         /// <param name="resourceGroup"> The client parameters to use in these operations. </param>
         /// <param name="vmName"> The identifier of the resource that is the target of operations. </param>
         internal VirtualMachineOperations(ResourceGroupOperations resourceGroup, string vmName)
-            : base(resourceGroup, $"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}")
+            : base(resourceGroup, resourceGroup.Id.AppendProviderResource(ResourceType.Namespace, ResourceType.Type, vmName))
         {
         }
 
@@ -38,7 +38,7 @@ namespace Proto.Compute
         /// </summary>
         /// <param name="operation"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        protected VirtualMachineOperations(ResourceOperationsBase operation, ResourceIdentifier id)
+        protected VirtualMachineOperations(ResourceOperationsBase operation, ResourceGroupResourceIdentifier id)
             : base(operation, id)
         {
         }
@@ -55,7 +55,7 @@ namespace Proto.Compute
 
         private VirtualMachinesOperations Operations => new ComputeManagementClient(
             BaseUri,
-            Id.Subscription,
+            Id.SubscriptionId,
             Credential,
             ClientOptions.Convert<ComputeManagementClientOptions>()).VirtualMachines;
 
@@ -72,25 +72,25 @@ namespace Proto.Compute
         /// <inheritdoc/>
         public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDelete(Id.ResourceGroup, Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return new ArmResponse(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
         /// <inheritdoc/>
         public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
+            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken)).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
         /// <inheritdoc/>
         public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartDelete(Id.ResourceGroup, Id.Name, cancellationToken));
+            return new ArmVoidOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc/>
         public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken));
+            return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         #region PowerOn
@@ -101,7 +101,7 @@ namespace Proto.Compute
         /// <returns> A response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
         public ArmResponse<Response> PowerOn(CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartStart(Id.ResourceGroup, Id.Name, cancellationToken);
+            var operation = Operations.StartStart(Id.ResourceGroupName, Id.Name, cancellationToken);
             return new ArmResponse(operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
@@ -112,7 +112,7 @@ namespace Proto.Compute
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
         public async Task<ArmResponse<Response>> PowerOnAsync(CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartStartAsync(Id.ResourceGroup, Id.Name, cancellationToken).ConfigureAwait(false);
+            var operation = await Operations.StartStartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
             return new ArmResponse(await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
         }
 
@@ -123,7 +123,7 @@ namespace Proto.Compute
         /// <returns> An <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
         public ArmOperation<Response> StartPowerOn(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartStart(Id.ResourceGroup, Id.Name, cancellationToken));
+            return new ArmVoidOperation(Operations.StartStart(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Proto.Compute
         /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
         public async Task<ArmOperation<Response>> StartPowerOnAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartStartAsync(Id.ResourceGroup, Id.Name, cancellationToken).ConfigureAwait(false));
+            return new ArmVoidOperation(await Operations.StartStartAsync(Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false));
         }
         #endregion
 
@@ -146,7 +146,7 @@ namespace Proto.Compute
         /// <returns> A response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
         public ArmResponse<Response> PowerOff(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartPowerOff(Id.ResourceGroup, Id.Name, skipShutdown, cancellationToken);
+            var operation = Operations.StartPowerOff(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken);
             return new ArmResponse(operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
@@ -158,7 +158,7 @@ namespace Proto.Compute
         /// <returns> A <see cref="Task"/> that on completion returns a response with the <see cref="ArmResponse{Response}"/> operation for this resource. </returns>
         public async Task<ArmResponse<Response>> PowerOffAsync(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartPowerOffAsync(Id.ResourceGroup, Id.Name, skipShutdown, cancellationToken).ConfigureAwait(false);
+            var operation = await Operations.StartPowerOffAsync(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken).ConfigureAwait(false);
             return new ArmResponse(await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false));
         }
 
@@ -170,7 +170,7 @@ namespace Proto.Compute
         /// <returns> An <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
         public ArmOperation<Response> StartPowerOff(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartPowerOff(Id.ResourceGroup, Id.Name, skipShutdown, cancellationToken));
+            return new ArmVoidOperation(Operations.StartPowerOff(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken));
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Proto.Compute
         /// <returns> A <see cref="Task"/> that on completion returns an <see cref="ArmOperation{Response}"/> that allows polling for completion of the operation. </returns>
         public async Task<ArmOperation<Response>> StartPowerOffAsync(bool? skipShutdown = null, CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartPowerOffAsync(Id.ResourceGroup, Id.Name, skipShutdown, cancellationToken).ConfigureAwait(false));
+            return new ArmVoidOperation(await Operations.StartPowerOffAsync(Id.ResourceGroupName, Id.Name, skipShutdown, cancellationToken).ConfigureAwait(false));
         }
         #endregion
 
@@ -189,7 +189,7 @@ namespace Proto.Compute
         public override ArmResponse<VirtualMachine> Get(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                Operations.Get(Id.ResourceGroup, Id.Name, cancellationToken),
+                Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -197,7 +197,7 @@ namespace Proto.Compute
         public override async Task<ArmResponse<VirtualMachine>> GetAsync(CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await Operations.GetAsync(Id.ResourceGroup, Id.Name, cancellationToken),
+                await Operations.GetAsync(Id.ResourceGroupName, Id.Name, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -209,7 +209,7 @@ namespace Proto.Compute
         public ArmOperation<VirtualMachine> StartUpdate(VirtualMachineUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                Operations.StartUpdate(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -222,7 +222,7 @@ namespace Proto.Compute
         public async Task<ArmOperation<VirtualMachine>> StartUpdateAsync(VirtualMachineUpdate patchable, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await Operations.StartUpdateAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -235,7 +235,7 @@ namespace Proto.Compute
             patchable.Tags[key] = value;
 
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                Operations.StartUpdate(Id.ResourceGroup, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
+                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -248,7 +248,7 @@ namespace Proto.Compute
             patchable.Tags[key] = value;
 
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await Operations.StartUpdateAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(),
+                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -261,7 +261,7 @@ namespace Proto.Compute
             patchable.Tags[key] = value;
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                Operations.StartUpdate(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -274,7 +274,7 @@ namespace Proto.Compute
             patchable.Tags[key] = value;
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await Operations.StartUpdateAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -285,7 +285,7 @@ namespace Proto.Compute
             patchable.Tags.ReplaceWith(tags);
 
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                Operations.StartUpdate(Id.ResourceGroup, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
+                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -296,7 +296,7 @@ namespace Proto.Compute
             patchable.Tags.ReplaceWith(tags);
 
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await Operations.StartUpdateAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
+                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -307,7 +307,7 @@ namespace Proto.Compute
             patchable.Tags.ReplaceWith(tags);
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                Operations.StartUpdate(Id.ResourceGroup, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
+                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -318,7 +318,7 @@ namespace Proto.Compute
             patchable.Tags.ReplaceWith(tags);
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await Operations.StartUpdateAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
+                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -331,7 +331,7 @@ namespace Proto.Compute
             patchable.Tags.Remove(key);
 
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                Operations.StartUpdate(Id.ResourceGroup, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
+                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -344,7 +344,7 @@ namespace Proto.Compute
             patchable.Tags.Remove(key);
 
             return new PhArmResponse<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await Operations.StartUpdateAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
+                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -357,7 +357,7 @@ namespace Proto.Compute
             patchable.Tags.Remove(key);
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                Operations.StartUpdate(Id.ResourceGroup, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
+                Operations.StartUpdate(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 
@@ -370,7 +370,7 @@ namespace Proto.Compute
             patchable.Tags.Remove(key);
 
             return new PhArmOperation<VirtualMachine, Azure.ResourceManager.Compute.Models.VirtualMachine>(
-                await Operations.StartUpdateAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
+                await Operations.StartUpdateAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken).Result.WaitForCompletionAsync(cancellationToken),
                 v => new VirtualMachine(this, new VirtualMachineData(v)));
         }
 

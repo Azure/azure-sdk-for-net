@@ -827,6 +827,10 @@ namespace Azure.Storage.Blobs.Models
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public event System.Action<Azure.Storage.Blobs.Models.BlobQueryError> ErrorHandler { add { } remove { } }
     }
+    public partial class BlobQueryParquetTextOptions : Azure.Storage.Blobs.Models.BlobQueryTextOptions
+    {
+        public BlobQueryParquetTextOptions() { }
+    }
     public abstract partial class BlobQueryTextOptions
     {
         protected BlobQueryTextOptions() { }

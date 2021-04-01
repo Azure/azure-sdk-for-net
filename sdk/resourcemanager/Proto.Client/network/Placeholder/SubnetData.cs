@@ -7,7 +7,7 @@ namespace Proto.Network
     /// <summary> 
     /// A class representing the subnet data model.
     /// </summary>
-    public class SubnetData : ProxyResource<Azure.ResourceManager.Network.Models.Subnet>
+    public class SubnetData : ProxyResource<ResourceGroupResourceIdentifier, Azure.ResourceManager.Network.Models.Subnet>
     {
         /// <summary> 
         /// Initializes a new instance of the <see cref="SubnetData"/> class. 

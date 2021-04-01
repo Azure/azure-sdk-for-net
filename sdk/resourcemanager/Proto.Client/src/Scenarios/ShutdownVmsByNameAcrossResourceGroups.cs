@@ -20,16 +20,16 @@ namespace Proto.Client
                 context = new ScenarioContext();
             }
 
-            var subscription = new AzureResourceManagerClient(new DefaultAzureCredential()).GetSubscriptionOperations(Context.SubscriptionId);
+            var subscription = new ArmClient(new DefaultAzureCredential()).GetSubscriptionOperations(Context.SubscriptionId);
 
             Regex reg = new Regex($"{Context.VmName}.*-e");
             Parallel.ForEach(subscription.ListVirtualMachines(), vm =>
             {
                 if (reg.IsMatch(vm.Id.Name))
                 {
-                    Console.WriteLine($"Stopping {vm.Id.ResourceGroup} {vm.Id.Name}");
+                    Console.WriteLine($"Stopping {vm.Id.ResourceGroupName} {vm.Id.Name}");
                     vm.PowerOff();
-                    Console.WriteLine($"Starting {vm.Id.ResourceGroup} {vm.Id.Name}");
+                    Console.WriteLine($"Starting {vm.Id.ResourceGroupName} {vm.Id.Name}");
                     vm.PowerOn();
                 }
             });

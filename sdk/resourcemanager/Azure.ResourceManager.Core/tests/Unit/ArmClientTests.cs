@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase]
         public void TestArmClientParamCheck()
         {
-            Assert.Throws<ArgumentNullException>(() => { new AzureResourceManagerClient(null, null); });
-            Assert.Throws<ArgumentNullException>(() => { new AzureResourceManagerClient(baseUri:null, null, null); });
-            Assert.Throws<ArgumentNullException>(() => { new AzureResourceManagerClient(defaultSubscriptionId: null, null, null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(null, null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(baseUri:null, null, null); });
+            Assert.Throws<ArgumentNullException>(() => { new ArmClient(defaultSubscriptionId: null, null, null); });
         }
     }
 }

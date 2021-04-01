@@ -2,6 +2,9 @@
 
 ## 1.1.0-beta.2 (Unreleased)
 
+### Breaking changes
+
+- The `AddSyncToken` method renamed to `UpdateSyncToken`.
 
 ## 1.1.0-beta.1 (2021-03-09)
 

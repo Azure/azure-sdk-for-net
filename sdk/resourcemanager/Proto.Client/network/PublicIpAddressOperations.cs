@@ -15,14 +15,14 @@ namespace Proto.Network
     /// <summary>
     /// A class representing the operations that can be performed over a specific NetworkSecurityGroup.
     /// </summary>
-    public class PublicIpAddressOperations : ResourceOperationsBase<PublicIpAddress>, ITaggableResource<PublicIpAddress>, IDeletableResource
+    public class PublicIpAddressOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, PublicIpAddress>, ITaggableResource<ResourceGroupResourceIdentifier, PublicIpAddress>, IDeletableResource
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PublicIpAddressOperations"/> class.
         /// </summary>
         /// <param name="genericOperations"> An instance of <see cref="GenericResourceOperations"/> that has an id for a virtual machine. </param>
         internal PublicIpAddressOperations(GenericResourceOperations genericOperations)
-            : base(genericOperations)
+            : base(genericOperations, genericOperations.Id)
         {
         }
 
@@ -32,7 +32,7 @@ namespace Proto.Network
         /// <param name="resourceGroup"> The client parameters to use in these operations. </param>
         /// <param name="publicIpName"> The public ip address name. </param>
         internal PublicIpAddressOperations(ResourceGroupOperations resourceGroup, string publicIpName)
-            : base(resourceGroup, $"{resourceGroup.Id}/providers/Microsoft.Network/publicIpAddresses/{publicIpName}")
+            : base(resourceGroup, resourceGroup.Id.AppendProviderResource(ResourceType.Namespace, ResourceType.Type, publicIpName))
         {
         }
 
@@ -55,48 +55,48 @@ namespace Proto.Network
         protected override ResourceType ValidResourceType => ResourceType;
 
         private PublicIPAddressesOperations Operations => new NetworkManagementClient(
-            Id.Subscription,
-            BaseUri, 
+            Id.SubscriptionId,
+            BaseUri,
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).PublicIPAddresses;
 
         /// <inheritdoc />
         public ArmResponse<Response> Delete(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse(Operations.StartDelete(Id.ResourceGroup, Id.Name, cancellationToken)
+            return new ArmResponse(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken)
                 .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
         /// <inheritdoc />
         public async Task<ArmResponse<Response>> DeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken))
+            return new ArmResponse((await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken))
                 .WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult());
         }
 
         /// <inheritdoc />
         public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(Operations.StartDelete(Id.ResourceGroup, Id.Name, cancellationToken));
+            return new ArmVoidOperation(Operations.StartDelete(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc />
         public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
-            return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.ResourceGroup, Id.Name, cancellationToken));
+            return new ArmVoidOperation(await Operations.StartDeleteAsync(Id.ResourceGroupName, Id.Name, cancellationToken));
         }
 
         /// <inheritdoc />
         public override ArmResponse<PublicIpAddress> Get(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.Get(Id.ResourceGroup, Id.Name, cancellationToken: cancellationToken),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.Get(Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
         /// <inheritdoc />
         public override async Task<ArmResponse<PublicIpAddress>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroup, Id.Name, null, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.GetAsync(Id.ResourceGroupName, Id.Name, null, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -107,7 +107,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -118,7 +118,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -129,7 +129,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -140,7 +140,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags[key] = value;
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -149,7 +149,7 @@ namespace Proto.Network
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -158,7 +158,7 @@ namespace Proto.Network
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -167,7 +167,7 @@ namespace Proto.Network
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -176,7 +176,7 @@ namespace Proto.Network
         {
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(tags);
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -187,7 +187,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -198,7 +198,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmResponse<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -209,7 +209,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(Operations.UpdateTags(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 
@@ -220,7 +220,7 @@ namespace Proto.Network
             var patchable = new TagsObject();
             patchable.Tags.ReplaceWith(resource.Data.Tags);
             patchable.Tags.Remove(key);
-            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroup, Id.Name, patchable, cancellationToken),
+            return new PhArmOperation<PublicIpAddress, PublicIPAddress>(await Operations.UpdateTagsAsync(Id.ResourceGroupName, Id.Name, patchable, cancellationToken),
                 n => new PublicIpAddress(this, new PublicIPAddressData(n)));
         }
 

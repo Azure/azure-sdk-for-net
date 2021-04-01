@@ -14,38 +14,38 @@ namespace Proto.Client
 
         public override void Execute()
         {
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
-            var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
+            var client = new ArmClient(new DefaultAzureCredential());
+            var subscription = client.DefaultSubscription;
 
             // Create Resource Group
             Console.WriteLine($"--------Start create group {Context.RgName}--------");
-            var resourceGroup = subscription.GetResourceGroupContainer().Construct(Context.Loc).CreateOrUpdate(Context.RgName).Value;
+            var resourceGroup = subscription.GetResourceGroups().Construct(Context.Loc).CreateOrUpdate(Context.RgName).Value;
             CleanUp.Add(resourceGroup.Id);
 
             // Create AvailabilitySet
             Console.WriteLine("--------Start create AvailabilitySet--------");
-            var aset = resourceGroup.GetAvailabilitySetContainer().Construct("Aligned").CreateOrUpdate(Context.VmName + "_aSet").Value;
+            var aset = resourceGroup.GetAvailabilitySets().Construct("Aligned").CreateOrUpdate(Context.VmName + "_aSet").Value;
 
             // Create VNet
             Console.WriteLine("--------Start create VNet--------");
             string vnetName = Context.VmName + "_vnet";
-            var vnet = resourceGroup.GetVirtualNetworkContainer().Construct("10.0.0.0/16").CreateOrUpdate(vnetName).Value;
+            var vnet = resourceGroup.GetVirtualNetworks().Construct("10.0.0.0/16").CreateOrUpdate(vnetName).Value;
 
             //create subnet
             Console.WriteLine("--------Start create Subnet async--------");
-            var subnet = vnet.GetSubnetContainer().Construct("10.0.0.0/24").CreateOrUpdateAsync(Context.SubnetName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
+            var subnet = vnet.GetSubnets().Construct("10.0.0.0/24").CreateOrUpdate(Context.SubnetName).Value;
 
             //create network security group
             Console.WriteLine("--------Start create NetworkSecurityGroup--------");
-            _ = resourceGroup.GetNetworkSecurityGroupContainer().Construct(80).CreateOrUpdate(Context.NsgName).Value;
+            _ = resourceGroup.GetNetworkSecurityGroups().Construct(80).CreateOrUpdate(Context.NsgName).Value;
 
             // Create Network Interface
             Console.WriteLine("--------Start create Network Interface--------");
-            var nic = resourceGroup.GetNetworkInterfaceContainer().Construct(subnet.Id).CreateOrUpdate($"{Context.VmName}_nic").Value;
+            var nic = resourceGroup.GetNetworkInterfaces().Construct(subnet.Id).CreateOrUpdate($"{Context.VmName}_nic").Value;
 
             // Create VM
             Console.WriteLine("--------Start create VM--------");
-            var vm = resourceGroup.GetVirtualMachineContainer().Construct(Context.Hostname, "admin-user", "!@#$%asdfA", nic.Id, aset.Id).CreateOrUpdate(Context.VmName).Value;
+            var vm = resourceGroup.GetVirtualMachines().Construct(Context.Hostname, "admin-user", "!@#$%asdfA", nic.Id, aset.Id).CreateOrUpdate(Context.VmName).Value;
 
             Console.WriteLine("VM ID: " + vm.Id);
             Console.WriteLine("--------Done create VM--------");

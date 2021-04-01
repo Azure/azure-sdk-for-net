@@ -4,13 +4,13 @@ using System.Text;
 
 namespace Azure.ResourceManager.Core.Tests
 {
-    public class TestResource : Resource
+    public class TestResource<TIdentifier> : Resource<TIdentifier> where TIdentifier : TenantResourceIdentifier
     {
         public TestResource(string id)
         {
-            Id = id;
+            Id = ResourceIdentifier.Create(id) as TIdentifier;
         }
 
-        public override ResourceIdentifier Id { get; protected set; }
+        public override TIdentifier Id { get; protected set; }
     }
 }

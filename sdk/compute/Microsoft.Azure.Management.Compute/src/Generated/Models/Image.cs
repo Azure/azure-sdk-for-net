@@ -46,9 +46,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="storageProfile">Specifies the storage settings for the
         /// virtual machine disks.</param>
         /// <param name="provisioningState">The provisioning state.</param>
-        /// <param name="hyperVGeneration">Gets the HyperVGenerationType of the
-        /// VirtualMachine created from the image. Possible values include:
-        /// 'V1', 'V2'</param>
+        /// <param name="hyperVGeneration">Specifies the HyperVGenerationType
+        /// of the VirtualMachine created from the image. From API Version
+        /// 2019-03-01 if the image source is a blob, then we need the user to
+        /// specify the value, if the source is managed resource like disk or
+        /// snapshot, we may require the user to specify the property if we
+        /// cannot deduce it from the source managed resource. Possible values
+        /// include: 'V1', 'V2'</param>
         /// <param name="extendedLocation">The extended location of the
         /// Image.</param>
         public Image(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource sourceVirtualMachine = default(SubResource), ImageStorageProfile storageProfile = default(ImageStorageProfile), string provisioningState = default(string), string hyperVGeneration = default(string), ExtendedLocation extendedLocation = default(ExtendedLocation))
@@ -88,8 +92,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets the HyperVGenerationType of the VirtualMachine created from
-        /// the image. Possible values include: 'V1', 'V2'
+        /// Gets or sets specifies the HyperVGenerationType of the
+        /// VirtualMachine created from the image. From API Version 2019-03-01
+        /// if the image source is a blob, then we need the user to specify the
+        /// value, if the source is managed resource like disk or snapshot, we
+        /// may require the user to specify the property if we cannot deduce it
+        /// from the source managed resource. Possible values include: 'V1',
+        /// 'V2'
         /// </summary>
         [JsonProperty(PropertyName = "properties.hyperVGeneration")]
         public string HyperVGeneration { get; set; }

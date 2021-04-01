@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Represents a phone number search request to find phone numbers. Found phone numbers are temporarily held for a following purchase. </summary>
     internal partial class PhoneNumberSearchRequest

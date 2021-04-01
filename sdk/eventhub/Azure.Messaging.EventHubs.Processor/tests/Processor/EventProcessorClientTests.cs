@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
@@ -38,9 +39,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyConnection", new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate the consumer group.");
             Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The token credential constructor should validate the consumer group.");
-
-            // TODO: Update the credential type and uncomment.
-            //Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", new EventHubsSharedAccessKeyCredential("key", "value"), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate the consumer group.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", new AzureNamedKeyCredential("key", "value"), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The shared key credential constructor should validate the consumer group.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), consumerGroup, "dummyNamespace", "dummyEventHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The SAS constructor should validate the consumer group.");
         }
 
         /// <summary>
@@ -55,9 +55,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(() => new EventProcessorClient(null, "consumerGroup", fakeConnection, new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The connection string constructor should validate the blob container client.");
             Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", Mock.Of<TokenCredential>(), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The token credential constructor should validate the blob container client.");
-
-            // TODO: Update the credential type and uncomment.
-            //Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", new EventHubsSharedAccessKeyCredential("key", "value"), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The shared key credential constructor should validate the blob container client.");
+            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", new AzureNamedKeyCredential("key", "value"), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The shared key credential constructor should validate the blob container client.");
+            Assert.That(() => new EventProcessorClient(null, "consumerGroup", "dummyNamespace", "dummyEventHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentNullException>(), "The SAS credential constructor should validate the blob container client.");
         }
 
         /// <summary>
@@ -84,9 +83,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
             Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential should validate.");
-
-            // TODO: Update the credential type and uncomment.
-            //Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", new EventHubsSharedAccessKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, constructorArgument, "dummy", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), new EventProcessorClientOptions()), Throws.InstanceOf<ArgumentException>(), "The SAS credential should validate.");
         }
 
         /// <summary>
@@ -99,9 +97,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheEventHub(string constructorArgument)
         {
             Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, Mock.Of<TokenCredential>()), Throws.InstanceOf<ArgumentException>(), "The token credential should validate.");
-
-            // TODO: Update the credential type and uncomment.
-            //Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, new EventHubsSharedAccessKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, new AzureNamedKeyCredential("key", "value")), Throws.InstanceOf<ArgumentException>(), "The shared key credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", constructorArgument, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value)), Throws.InstanceOf<ArgumentException>(), "The SAS credential should validate.");
         }
 
         /// <summary>
@@ -112,9 +109,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ConstructorValidatesTheCredential()
         {
             Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(TokenCredential)), Throws.ArgumentNullException, "The token credential should validate.");
-
-            // TODO: Update the credential type and uncomment.
-            //Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(EventHubsSharedAccessKeyCredential)), Throws.ArgumentNullException, "The shared key credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(AzureNamedKeyCredential)), Throws.ArgumentNullException, "The shared key credential should validate.");
+            Assert.That(() => new EventProcessorClient(Mock.Of<BlobContainerClient>(), EventHubConsumerClient.DefaultConsumerGroupName, "namespace", "hubName", default(AzureSasCredential)), Throws.ArgumentNullException, "The SAS credential should validate.");
         }
 
         /// <summary>
@@ -181,11 +177,27 @@ namespace Azure.Messaging.EventHubs.Tests
             actualOptions = GetBaseOptions(processorClient);
             assertOptionsMatch(expectedOptions, actualOptions, description);
 
-            // Internal testing constructor
+            // Internal testing constructor (Token)
 
-            description = "{{ internal testing constructor }}";
+            description = "{{ internal testing constructor (Token) }}";
             expectedOptions = new EventProcessorOptions();
             processorClient = new EventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "theHub", 100, Mock.Of<TokenCredential>(), expectedOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
+            // Internal testing constructor (Shared Key)
+
+            description = "{{ internal testing constructor (Shared Key) }}";
+            expectedOptions = new EventProcessorOptions();
+            processorClient = new EventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "theHub", 100, new AzureNamedKeyCredential("key", "value"), expectedOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
+            // Internal testing constructor (SAS)
+
+            description = "{{ internal testing constructor (SAS) }}";
+            expectedOptions = new EventProcessorOptions();
+            processorClient = new EventProcessorClient(Mock.Of<StorageManager>(), "consumerGroup", "namespace", "theHub", 100, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), expectedOptions);
             actualOptions = GetBaseOptions(processorClient);
             assertOptionsMatch(expectedOptions, actualOptions, description);
         }

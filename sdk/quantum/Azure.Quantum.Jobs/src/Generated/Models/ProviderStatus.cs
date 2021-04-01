@@ -22,14 +22,19 @@ namespace Azure.Quantum.Jobs.Models
         /// <summary> Initializes a new instance of ProviderStatus. </summary>
         /// <param name="id"> Provider id. </param>
         /// <param name="currentAvailability"> Provider availability. </param>
-        /// <param name="targets"> . </param>
+        /// <param name="targets"> Job target. </param>
         internal ProviderStatus(string id, ProviderAvailability? currentAvailability, IReadOnlyList<TargetStatus> targets)
         {
             Id = id;
             CurrentAvailability = currentAvailability;
             Targets = targets;
         }
+
+        /// <summary> Provider id. </summary>
+        public string Id { get; }
         /// <summary> Provider availability. </summary>
         public ProviderAvailability? CurrentAvailability { get; }
+        /// <summary> Job target. </summary>
+        public IReadOnlyList<TargetStatus> Targets { get; }
     }
 }
