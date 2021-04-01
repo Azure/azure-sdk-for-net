@@ -1,5 +1,9 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.17.1
+###  Feature Additions
+- Fixed FactoryIdentity constructor Type has a default value when Type did not assigne value
+
 ## Version 4.17.0
 ###  Feature Additions
 - Fixed FactoryIdentity property Type can not be null issue
