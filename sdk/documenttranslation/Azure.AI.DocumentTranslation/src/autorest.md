@@ -1,4 +1,4 @@
-# Azure.AI.DocumentTranslation
+# Azure.AI.Translator.DocumentTranslation
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
