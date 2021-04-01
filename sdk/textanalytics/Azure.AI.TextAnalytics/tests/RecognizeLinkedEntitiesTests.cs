@@ -149,6 +149,21 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [Test]
+        public async Task RecognizeLinkedEntitiesBatchConvenienceWithRecognizeLinkedEntitiesOptionsStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new RecognizeLinkedEntitiesOptions { IncludeStatistics = true });
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+        }
+
+        [Test]
         public async Task RecognizeLinkedEntitiesBatchTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -168,6 +183,21 @@ namespace Azure.AI.TextAnalytics.Tests
         {
             TextAnalyticsClient client = GetClient();
             RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedOutput },
+                { "3", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+        }
+
+        [Test]
+        public async Task RecognizeLinkedEntitiesBatchWithRecognizeLinkedEntitiesOptionsStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, new RecognizeLinkedEntitiesOptions { IncludeStatistics = true });
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
