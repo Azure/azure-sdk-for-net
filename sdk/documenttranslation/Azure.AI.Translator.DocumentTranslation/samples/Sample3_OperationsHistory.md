@@ -50,7 +50,7 @@ Console.WriteLine($"Cancelled Documents: {docsCancelled}");
 
 To see the full example source files, see:
 
-* [Synchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/tests/samples/Sample_OperationsHistory.cs)
-* [Asynchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/tests/samples/Sample_OperationsHistoryAsync.cs)
+* [Synchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/tests/samples/Sample_OperationsHistory.cs)
+* [Asynchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/tests/samples/Sample_OperationsHistoryAsync.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/README.md

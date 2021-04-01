@@ -514,18 +514,18 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fdocumenttranslation%2FAzure.AI.DocumentTranslation%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fdocumenttranslation%2FAzure.AI.Translator.DocumentTranslation%2FREADME.png)
 
 
 <!-- LINKS -->
-[documenttranslation_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/src
+[documenttranslation_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/src
 <!--TODO: remove /overview -->
 [documenttranslation_docs]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/overview
 <!-- TODO: Add correct link when available -->
 [documenttranslation_refdocs]: https://aka.ms/azsdk/net/documenttranslation/docs
 <!-- TODO: Add correct link when available -->
 [documenttranslation_nuget_package]: https://www.nuget.org/
-[documenttranslation_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/README.md
+[documenttranslation_samples]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/samples/README.md
 <!-- TODO: Add correct link when available -->
 [documenttranslation_rest_api]: https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/TranslatorText/preview/v1.0-preview.1/TranslatorBatch.json
 [custom_domain_endpoint]: https://docs.microsoft.com/azure/cognitive-services/translator/document-translation/get-started-with-document-translation?tabs=csharp#what-is-the-custom-domain-endpoint
@@ -534,17 +534,17 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
-[documenttranslation_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/src/DocumentTranslationClient.cs
+[documenttranslation_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/src/DocumentTranslationClient.cs
 [cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md
 <!-- TODO: Add correct link when available -->
 [data_limits]: https://docs.microsoft.com/azure/cognitive-services/document-translation/overview
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md
 
-[start_translation_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample1_StartTranslation.md
-[documents_status_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample2_PollIndividualDocuments.md
-[operations_history_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample3_OperationsHistory.md
-[multiple_inputs_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample4_MultipleInputs.md
+[start_translation_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/samples/Sample1_StartTranslation.md
+[documents_status_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/samples/Sample2_PollIndividualDocuments.md
+[operations_history_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/samples/Sample3_OperationsHistory.md
+[multiple_inputs_sample]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/samples/Sample4_MultipleInputs.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/

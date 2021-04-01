@@ -63,7 +63,7 @@ await foreach (DocumentStatusResult document in operationResult.Value)
 
 To see the full example source files, see:
 
-* [Synchronously StartTranslation ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/tests/samples/Sample_StartTranslation.cs)
-* [Asynchronously StartTranslation ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/tests/samples/Sample_StartTranslationAsync.cs)
+* [Synchronously StartTranslation ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/tests/samples/Sample_StartTranslation.cs)
+* [Asynchronously StartTranslation ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/tests/samples/Sample_StartTranslationAsync.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/README.md

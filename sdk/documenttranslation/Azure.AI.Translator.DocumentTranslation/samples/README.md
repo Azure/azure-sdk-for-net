@@ -18,11 +18,11 @@ Azure Cognitive Services Document Translation is a cloud service that translates
 * Apply a custom translation model or glossaries to tailor translation to your specific case.
 
 ## Common scenarios samples
-- [Start Translation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample1_StartTranslation.md)
-- [Poll Documents Status](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample2_PollIndividualDocuments.md)
-- [Operations History](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample3_OperationsHistory.md)
+- [Start Translation](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/samples/Sample1_StartTranslation.md)
+- [Poll Documents Status](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/samples/Sample2_PollIndividualDocuments.md)
+- [Operations History](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/samples/Sample3_OperationsHistory.md)
 
 ## Advanced samples
-- [Multiple Inputs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/samples/Sample4_MultipleInputs.md)
+- [Multiple Inputs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/samples/Sample4_MultipleInputs.md)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/textanalytics/Azure.AI.TextAnalytics/README.md

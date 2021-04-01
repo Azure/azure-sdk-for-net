@@ -85,7 +85,7 @@ await foreach (DocumentStatusResult document in operation.GetValuesAsync())
 
 To see the full example source files, see:
 
-* [Synchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/tests/samples/Sample_MultipleInputs.cs)
-* [Asynchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/tests/samples/Sample_MultipleInputsAsync.cs)
+* [Synchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/tests/samples/Sample_MultipleInputs.cs)
+* [Asynchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/tests/samples/Sample_MultipleInputsAsync.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.DocumentTranslation/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translator.DocumentTranslation/README.md
