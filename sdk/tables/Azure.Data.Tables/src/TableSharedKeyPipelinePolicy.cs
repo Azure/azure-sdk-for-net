@@ -113,13 +113,13 @@ namespace Azure.Data.Tables
                 return false;
             }
             var query = uri.Query.AsSpan();
-            int iComp = query.IndexOf(compQueryParam.AsSpan(), StringComparison.OrdinalIgnoreCase) + compQueryParam.Length;
+            int iComp = query.IndexOf(compQueryParam.AsSpan(), StringComparison.OrdinalIgnoreCase);
             if (iComp < 0)
             {
                 return false;
             }
 
-            query = query.Slice(iComp);
+            query = query.Slice(iComp + compQueryParam.Length);
 
             int iEndOfValue = query.IndexOf('&');
 
