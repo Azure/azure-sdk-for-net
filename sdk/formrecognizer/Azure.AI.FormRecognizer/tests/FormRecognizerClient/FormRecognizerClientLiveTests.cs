@@ -1541,7 +1541,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore ="File not avialable on GitHub")]
+        [TestCase(false, Ignore ="File not available on GitHub")]
         public async Task StartRecognizeInvoicesPopulatesExtractedJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
@@ -1597,6 +1597,7 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.True(form.Fields.ContainsKey("ServiceAddress"));
             Assert.True(form.Fields.ContainsKey("ServiceAddressRecipient"));
             Assert.True(form.Fields.ContainsKey("ServiceEndDate"));
+            Assert.True(form.Fields.ContainsKey("ServiceStartDate"));
             Assert.True(form.Fields.ContainsKey("ShippingAddress"));
             Assert.True(form.Fields.ContainsKey("ShippingAddressRecipient"));
             Assert.True(form.Fields.ContainsKey("SubTotal"));
@@ -1678,11 +1679,11 @@ namespace Azure.AI.FormRecognizer.Tests
                 receiptItemInfo.TryGetValue("Quantity", out var quantityField);
                 receiptItemInfo.TryGetValue("UnitPrice", out var unitPricefield);
 
-                float? amount = amountField == null ? null : amountField.Value.AsFloat();
-                string description = descriptionField == null ? null : descriptionField.Value.AsString();
-                string productCode = productCodeField == null ? null : productCodeField.Value.AsString();
-                float? quantity = quantityField == null ? null : quantityField.Value.AsFloat();
-                var unitPrice = unitPricefield == null ? null : (float?)unitPricefield.Value.AsFloat();
+                float? amount = amountField.Value.AsFloat();
+                string description = descriptionField.Value.AsString();
+                string productCode = productCodeField.Value.AsString();
+                float? quantity = quantityField?.Value.AsFloat();
+                float? unitPrice = unitPricefield.Value.AsFloat();
 
                 Assert.IsNotNull(dateField);
                 DateTime date = dateField.Value.AsDate();

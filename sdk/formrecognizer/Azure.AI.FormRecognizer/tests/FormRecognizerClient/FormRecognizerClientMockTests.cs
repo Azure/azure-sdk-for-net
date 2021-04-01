@@ -311,8 +311,8 @@ namespace Azure.AI.FormRecognizer.Tests
             var client = CreateInstrumentedClient(options);
 
             using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
-            var recognizeOptions = new RecognizeReceiptsOptions { Locale = locale };
-            await client.StartRecognizeReceiptsAsync(stream, recognizeOptions);
+            var recognizeOptions = new RecognizeBusinessCardsOptions { Locale = locale };
+            await client.StartRecognizeBusinessCardsAsync(stream, recognizeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
 

@@ -20,7 +20,7 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 ## Recognize invoices from a URI
 
 To recognize invoices from a URI, use the `StartRecognizeInvoicesFromUriAsync` method.
-For simplicity, we are not showing al the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: https://aka.ms/formrecognizer/invoicefields
+For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: https://aka.ms/formrecognizer/invoicefields
 
 ```C# Snippet:FormRecognizerSampleRecognizeInvoicesUri
     Uri invoiceUri = <invoiceUri>;
@@ -121,7 +121,7 @@ For simplicity, we are not showing al the fields that the service returns. To se
 ## Recognize invoices from a given file
 
 To recognize invoices from a given file, use the `StartRecognizeInvoicesAsync` method.
-For simplicity, we are not showing al the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: https://aka.ms/formrecognizer/invoicefields
+For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: https://aka.ms/formrecognizer/invoicefields
 
 ```C# Snippet:FormRecognizerSampleRecognizeInvoicesFileStream
 string invoicePath = "<invoicePath>";
