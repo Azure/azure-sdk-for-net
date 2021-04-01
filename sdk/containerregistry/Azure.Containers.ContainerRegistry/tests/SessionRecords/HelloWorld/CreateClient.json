@@ -1,0 +1,6 @@
+{
+  "Entries": [],
+  "Variables": {
+    "CONTAINERREGISTRY_ENDPOINT": "https://annelocontainerregistry.azurecr.io"
+  }
+}

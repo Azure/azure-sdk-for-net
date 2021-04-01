@@ -66,6 +66,9 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
+* [Viewing images](#repositories)
+*
+
 <!-- Pending Sample Creation -->
 
 ## Troubleshooting
