@@ -8,7 +8,7 @@
 namespace Azure.Security.Attestation.Models
 {
     /// <summary> The body of the JWT used for the PolicyCertificates APIs. </summary>
-    public partial class PolicyCertificateModification
+    internal partial class PolicyCertificateModification
     {
         /// <summary> Initializes a new instance of PolicyCertificateModification. </summary>
         public PolicyCertificateModification()
