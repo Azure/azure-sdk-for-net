@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Storage
@@ -13,7 +15,7 @@ namespace Azure.Storage
     public static class StorageExtensions
     {
         /// <summary>
-        /// Creates a scope in which all REST requests to Azure Storage would have provided a server timeout.
+        /// Allows you to specify a server timeout for any Storage operations executing on this thread for the duration of the scope.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations">
@@ -38,6 +40,10 @@ namespace Azure.Storage
         /// <remarks>
         /// The server timeout is sent to the Azure Storage service for each REST request made within the scope.
         /// This value is not tracked or validated on the client, it is only passed to the Storage service.
+        ///
+        /// Consider passing a <see cref="CancellationToken"/> to client methods
+        /// and properly sizing <see cref="RetryOptions.NetworkTimeout"/> when configuring storage clients
+        /// as prefered way of enforcing upper boundary of execution time.
         /// </remarks>
         public static IDisposable CreateServiceTimeoutScope(TimeSpan? timeout)
         {
