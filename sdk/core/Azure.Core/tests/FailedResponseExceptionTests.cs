@@ -227,6 +227,27 @@ namespace Azure.Core.Tests
             Assert.AreEqual(formattedResponse, exception.Message);
         }
 
+        [Test]
+        public async Task IgnoresNonStandardJson()
+        {
+            var formattedResponse =
+                "Service request failed." + s_nl +
+                "Status: 210 (Reason)" + s_nl +
+                s_nl +
+                "Content:" + s_nl +
+                "{ \"code\":\"StatusCode\" }" + s_nl +
+                s_nl +
+                "Headers:" + s_nl +
+                "Content-Type: text/json" + s_nl;
+
+            var response = new MockResponse(210, "Reason");
+            response.SetContent("{ \"code\":\"StatusCode\" }");
+            response.AddHeader(new HttpHeader("Content-Type", "text/json"));
+
+            RequestFailedException exception = await ClientDiagnostics.CreateRequestFailedExceptionAsync(response);
+            Assert.AreEqual(formattedResponse, exception.Message);
+        }
+
         private class TestClientOption : ClientOptions
         {
             public TestClientOption()

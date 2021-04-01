@@ -143,7 +143,7 @@ namespace Azure.Data.Tables
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
 
             _version = options.VersionString;
-            _diagnostics = new ClientDiagnostics(options);
+            _diagnostics = new TablesClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
@@ -164,7 +164,7 @@ namespace Azure.Data.Tables
             };
 
             _version = options.VersionString;
-            _diagnostics = new ClientDiagnostics(options);
+            _diagnostics = new TablesClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);

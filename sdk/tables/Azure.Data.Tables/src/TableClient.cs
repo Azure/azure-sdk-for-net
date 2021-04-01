@@ -145,7 +145,7 @@ namespace Azure.Data.Tables
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
 
             _version = options.VersionString;
-            _diagnostics = new ClientDiagnostics(options);
+            _diagnostics = new TablesClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
             _table = tableName;
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
@@ -164,7 +164,7 @@ namespace Azure.Data.Tables
             };
 
             _version = options.VersionString;
-            _diagnostics = new ClientDiagnostics(options);
+            _diagnostics = new TablesClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpoint.ToString(), _version);
             _table = tableName;
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(endpoint);
