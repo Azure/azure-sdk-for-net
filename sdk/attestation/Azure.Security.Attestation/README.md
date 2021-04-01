@@ -118,7 +118,7 @@ RuntimeData refers to data which is presented to the Intel SGX Quote generation 
 
 InitTime data refers to data which is used to configure the SGX enclave being attested. 
 
-> Note that InitTime data is not supported on Azure [DCsv2-Series](https://docs.microsoft.com/en-us/azure/virtual-machines/dcv2-series) virtual machines.
+> Note that InitTime data is not supported on Azure [DCsv2-Series](https://docs.microsoft.com/azure/virtual-machines/dcv2-series) virtual machines.
 
 
 ### Thread safety

@@ -11,8 +11,9 @@
 This dramatically simplifies the user experience for interacting with the saved attestation policies - developers can treat attestation policies as string values.
 - The `SecuredAttestationToken` and `UnsecuredAttestationToken` parameters have been removed from the APIs which took them. Instead those APIs directly take the underlying type.
 
-  Before:
-```
+Before:
+
+``` C#
     string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
 
     var policyTokenSigner = TestEnvironment.PolicyCertificate0;
@@ -24,22 +25,25 @@ This dramatically simplifies the user experience for interacting with the saved 
 
     var setResult = client.SetPolicy(AttestationType.SgxEnclave, policySetToken);
 ```
-  After:
-```
+After:
+``` C#
     string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
-    var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, TestEnvironment.PolicySigningKey0, policyTokenSigner);
+    var setResult = client.SetPolicy(AttestationType.SgxEnclave,
+        attestationPolicy,
+        TestEnvironment.PolicySigningKey0, policyTokenSigner);
 ```
 
 
 - The `GetPolicy` API has been changed to directly return the policy requested instead of a `StoredAttestationPolicy` object.
   
-  Before:
-```
+Before:
+``` C#
     var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
     var result = policyResult.Value.AttestationPolicy;
 ```
-    After:
-```
+
+After:
+``` C#
     string policy = await client.GetPolicyAsync(AttestationType.SgxEnclave);
 ```
 
