@@ -175,7 +175,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             if (!_hasCompleted)
             {
-                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(RecognizeReceiptsOperation)}.{nameof(UpdateStatus)}");
+                using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(RecognizeIdDocumentsOperation)}.{nameof(UpdateStatus)}");
                 scope.Start();
 
                 try
