@@ -4,6 +4,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Core
 {
@@ -17,7 +18,8 @@ namespace Azure.ResourceManager.Core
         where TModel : class
     {
         private readonly Func<TModel, TOperations> _converter;
-        private readonly ArmOperation<TModel> _wrapped;
+        private readonly Operation<TModel> _wrappedOperation;
+        private readonly ArmOperation<TModel> _wrappedResponseOperation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhArmOperation{TOperations, TModel}"/> class for mocking.
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="converter"> The function used to convert from existing type to new type. </param>
         public PhArmOperation(Operation<TModel> wrapped, Func<TModel, TOperations> converter)
         {
-            _wrapped = new ValueArmOperation<TModel>(wrapped);
+            _wrappedOperation = wrapped;
             _converter = converter;
         }
 
@@ -44,63 +46,80 @@ namespace Azure.ResourceManager.Core
         /// <param name="converter"> The function used to convert from existing type to new type. </param>
         public PhArmOperation(Response<TModel> wrapped, Func<TModel, TOperations> converter)
         {
-            _wrapped = new ValueArmOperation<TModel>(wrapped);
+            _wrappedResponseOperation = new ValueArmOperation<TModel>(wrapped);
             _converter = converter;
         }
 
-        /// <inheritdoc/>
-        public override string Id => _wrapped.Id;
+        private bool _doesWrapOperation => _wrappedResponseOperation is null;
 
         /// <inheritdoc/>
-        public override TOperations Value => _converter(_wrapped.Value);
+        public override string Id => _wrappedOperation?.Id;
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _wrapped.HasCompleted;
+        public override TOperations Value => _converter(_doesWrapOperation ? _wrappedOperation.Value : _wrappedResponseOperation.Value);
 
         /// <inheritdoc/>
-        public override bool HasValue => _wrapped.HasValue;
+        public override bool HasCompleted => _doesWrapOperation ? _wrappedOperation.HasCompleted : _wrappedResponseOperation.HasCompleted;
+
+        /// <inheritdoc/>
+        public override bool HasValue => _doesWrapOperation ? _wrappedOperation.HasValue : _wrappedResponseOperation.HasValue;
 
         /// <inheritdoc/>
         public override Response GetRawResponse()
         {
-            return CompletedSynchronously ? _syncWrapped.GetRawResponse() : _wrapped.GetRawResponse();
+            return _doesWrapOperation ? _wrappedOperation.GetRawResponse() : _wrappedResponseOperation.GetRawResponse();
         }
 
         /// <inheritdoc/>
         public override Response UpdateStatus(CancellationToken cancellationToken = default)
         {
-            return CompletedSynchronously ? _syncWrapped.GetRawResponse() : _wrapped.UpdateStatus(cancellationToken);
+            return _doesWrapOperation ? _wrappedOperation.UpdateStatus(cancellationToken) : _wrappedResponseOperation.UpdateStatus(cancellationToken);
         }
 
         /// <inheritdoc/>
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
         {
-            return CompletedSynchronously
-                ? new ValueTask<Response>(_syncWrapped.GetRawResponse())
-                : _wrapped.UpdateStatusAsync(cancellationToken);
+            return _doesWrapOperation
+                ? _wrappedOperation.UpdateStatusAsync(cancellationToken)
+                : _wrappedResponseOperation.UpdateStatusAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
-        public override async ValueTask<Response<TOperations>> WaitForCompletionAsync(
-            CancellationToken cancellationToken = default)
+        public override async ValueTask<Response<TOperations>> WaitForCompletionAsync(CancellationToken cancellationToken = default)
         {
-            return CompletedSynchronously
-                ? new PhArmResponse<TOperations, TModel>(_syncWrapped, _converter)
-                : new PhArmResponse<TOperations, TModel>(
-                    await _wrapped.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
-                    _converter);
+            var task = WaitForCompletionAsync(ArmOperationHelpers<TOperations>.DefaultPollingInterval, cancellationToken);
+            return await task.ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
-        public override async ValueTask<Response<TOperations>> WaitForCompletionAsync(
-            TimeSpan pollingInterval,
-            CancellationToken cancellationToken)
+        public override async ValueTask<Response<TOperations>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
         {
-            return CompletedSynchronously
-                ? new PhArmResponse<TOperations, TModel>(_syncWrapped, _converter)
-                : new PhArmResponse<TOperations, TModel>(
-                    await _wrapped.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false),
-                    _converter);
+            var task = _doesWrapOperation 
+                ? _wrappedOperation.WaitForCompletionAsync(pollingInterval, cancellationToken) 
+                : _wrappedResponseOperation.WaitForCompletionAsync(pollingInterval, cancellationToken);
+            var value = await task.ConfigureAwait(false);
+            return Response.FromValue(_converter(value), GetRawResponse());
+        }
+
+        /// <inheritdoc/>
+        public override Response<TOperations> WaitForCompletion(CancellationToken cancellationToken = default)
+        {
+            return WaitForCompletion(ArmOperationHelpers<TOperations>.DefaultPollingInterval.Seconds, cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public override Response<TOperations> WaitForCompletion(int pollingInterval, CancellationToken cancellationToken = default)
+        {
+            while (true)
+            {
+                UpdateStatus(cancellationToken);
+                if (HasCompleted)
+                {
+                    return Response.FromValue(Value, GetRawResponse()) as ArmResponse<TOperations>;
+                }
+
+                Task.Delay(pollingInterval, cancellationToken).Wait(cancellationToken);
+            }
         }
     }
 }

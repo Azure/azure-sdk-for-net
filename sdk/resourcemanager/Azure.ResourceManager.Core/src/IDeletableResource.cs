@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default);
+        ArmOperation StartDelete(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete the resource.  This call returns a Task that blocks until the delete operation is accepted on the service.
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default);
+        Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default);
     }
 }

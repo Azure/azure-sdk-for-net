@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public virtual ArmOperation StartDelete(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
 
             try
             {
-                return new VoidArmOperation(Operations.StartDelete(Id.Name, cancellationToken));
+                return new PhVoidArmOperation(Operations.StartDelete(Id.Name, cancellationToken));
             }
             catch (Exception e)
             {
@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public virtual async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             using var scope = Diagnostics.CreateScope("ResourceGroupOperations.StartDelete");
             scope.Start();
 
             try
             {
-                return new VoidArmOperation(await Operations.StartDeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
+                return new PhVoidArmOperation(await Operations.StartDeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception e)
             {

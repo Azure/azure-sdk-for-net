@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public ArmOperation<Response> StartDelete(CancellationToken cancellationToken = default)
+        public ArmOperation StartDelete(CancellationToken cancellationToken = default)
         {
-            return new VoidArmOperation(Operations.StartDeleteById(Id, GetApiVersion(cancellationToken), cancellationToken));
+            return new PhVoidArmOperation(Operations.StartDeleteById(Id, GetApiVersion(cancellationToken), cancellationToken));
         }
 
         /// <summary>
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Core
         /// <remarks>
         /// <see href="https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning">Details on long running operation object.</see>
         /// </remarks>
-        public async Task<ArmOperation<Response>> StartDeleteAsync(CancellationToken cancellationToken = default)
+        public async Task<ArmOperation> StartDeleteAsync(CancellationToken cancellationToken = default)
         {
             var operation = await Operations.StartDeleteByIdAsync(Id, await GetApiVersionAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
-            return new VoidArmOperation(operation);
+            return new PhVoidArmOperation(operation);
         }
 
         /// <inheritdoc/>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Core
             GenericResource resource = GetResource();
             resource.Data.Tags[key] = value;
             return new PhArmOperation<GenericResource, ResourceManager.Resources.Models.GenericResource>(
-                Operations.StartUpdateById(Id, GetApiVersion(cancellationToken), resource.Data, cancellationToken).WaitForCompletionAsync(cancellationToken).EnsureCompleted(),
+                Operations.StartUpdateById(Id, GetApiVersion(cancellationToken), resource.Data, cancellationToken),
                 v => new GenericResource(this, new GenericResourceData(v)));
         }
 

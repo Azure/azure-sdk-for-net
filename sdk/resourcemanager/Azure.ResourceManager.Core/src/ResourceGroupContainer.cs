@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Core
             try
             {
                 return new PhArmOperation<ResourceGroup, ResourceManager.Resources.Models.ResourceGroup>(
-                Operations.CreateOrUpdate(name, resourceDetails, cancellationToken),
-                g => new ResourceGroup(Parent, new ResourceGroupData(g)));
+                    Operations.CreateOrUpdate(name, resourceDetails, cancellationToken),
+                    g => new ResourceGroup(Parent, new ResourceGroupData(g)));
             }
             catch (Exception e)
             {
