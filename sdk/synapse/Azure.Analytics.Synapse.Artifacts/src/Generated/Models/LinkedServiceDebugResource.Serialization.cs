@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(LinkedServiceDebugResourceConverter))]
     public partial class LinkedServiceDebugResource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -23,6 +26,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Name);
             }
             writer.WriteEndObject();
+        }
+
+        internal partial class LinkedServiceDebugResourceConverter : JsonConverter<LinkedServiceDebugResource>
+        {
+            public override void Write(Utf8JsonWriter writer, LinkedServiceDebugResource model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override LinkedServiceDebugResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     }
     public partial class AssetConversionOperation : Azure.Operation<Azure.MixedReality.ObjectAnchors.Conversion.AssetConversionProperties>
     {
+        protected AssetConversionOperation() { }
         public AssetConversionOperation(System.Guid jobId, Azure.MixedReality.ObjectAnchors.Conversion.ObjectAnchorsConversionClient objectAnchorsConversionClient) { }
         public override bool HasCompleted { get { throw null; } }
         public bool HasCompletedSuccessfully { get { throw null; } }

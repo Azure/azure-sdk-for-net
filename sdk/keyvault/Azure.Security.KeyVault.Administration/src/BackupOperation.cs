@@ -73,6 +73,9 @@ namespace Azure.Security.KeyVault.Administration
             _client = client;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BackupOperation" /> for mocking. </summary>
+        protected BackupOperation() {}
+
         /// <summary>
         /// The start time of the backup operation.
         /// </summary>

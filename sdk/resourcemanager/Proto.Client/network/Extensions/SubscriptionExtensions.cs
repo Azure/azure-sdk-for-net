@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Adapters;
 using Azure.ResourceManager.Network;
+using System;
 
 namespace Proto.Network
 {
@@ -15,13 +16,13 @@ namespace Proto.Network
     {
         #region Virtual Network Operations
 
-        private static NetworkManagementClient GetNetworkClient(SubscriptionOperations subscription)
+        private static NetworkManagementClient GetNetworkClient(Uri baseUri, string subscriptionGuid, TokenCredential credential, ArmClientOptions clientOptions)
         {
             return new NetworkManagementClient(
-                subscription.Id.Subscription,
-                subscription.BaseUri,
-                subscription.Credential,
-                subscription.ClientOptions.Convert<NetworkManagementClientOptions>());
+                subscriptionGuid,
+                baseUri,
+                credential,
+                clientOptions.Convert<NetworkManagementClientOptions>());
         }
 
         /// <summary>
@@ -31,12 +32,17 @@ namespace Proto.Network
         /// <returns> A collection of <see cref="VirtualNetwork" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualNetwork> ListVnets(this SubscriptionOperations subscription)
         {
-            NetworkManagementClient networkClient = GetNetworkClient(subscription);
-            var vmOperations = networkClient.VirtualNetworks;
-            var result = vmOperations.ListAll();
-            return new PhWrappingPageable<Azure.ResourceManager.Network.Models.VirtualNetwork, VirtualNetwork>(
-                result,
-                s => new VirtualNetwork(subscription, new VirtualNetworkData(s)));
+            return subscription.ListResources(
+                (baseUri, credential, options) =>
+                {
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                    var vmOperations = networkClient.VirtualNetworks;
+                    var result = vmOperations.ListAll();
+                    return new PhWrappingPageable<Azure.ResourceManager.Network.Models.VirtualNetwork, VirtualNetwork>(
+                        result,
+                        s => new VirtualNetwork(subscription, new VirtualNetworkData(s)));
+                }
+            );
         }
 
         /// <summary>
@@ -46,12 +52,17 @@ namespace Proto.Network
         /// <returns> An async collection of <see cref="VirtualNetwork" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualNetwork> ListVnetsAsync(this SubscriptionOperations subscription)
         {
-            NetworkManagementClient networkClient = GetNetworkClient(subscription);
-            var vmOperations = networkClient.VirtualNetworks;
-            var result = vmOperations.ListAllAsync();
-            return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.VirtualNetwork, VirtualNetwork>(
-                result,
-                s => new VirtualNetwork(subscription, new VirtualNetworkData(s)));
+            return subscription.ListResourcesAsync(
+                (baseUri, credential, options) =>
+                {
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                    var vmOperations = networkClient.VirtualNetworks;
+                    var result = vmOperations.ListAllAsync();
+                    return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.VirtualNetwork, VirtualNetwork>(
+                        result,
+                        s => new VirtualNetwork(subscription, new VirtualNetworkData(s)));
+                }
+            );
         }
 
         #endregion
@@ -65,12 +76,17 @@ namespace Proto.Network
         /// <returns> A collection of <see cref="PublicIpAddress" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<PublicIpAddress> ListPublicIps(this SubscriptionOperations subscription)
         {
-            NetworkManagementClient networkClient = GetNetworkClient(subscription);
-            var publicIPAddressesOperations = networkClient.PublicIPAddresses;
-            var result = publicIPAddressesOperations.ListAll();
-            return new PhWrappingPageable<Azure.ResourceManager.Network.Models.PublicIPAddress, PublicIpAddress>(
-                result,
-                s => new PublicIpAddress(subscription, new PublicIPAddressData(s)));
+            return subscription.ListResources(
+                (baseUri, credential, options) =>
+                {
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                    var publicIPAddressesOperations = networkClient.PublicIPAddresses;
+                    var result = publicIPAddressesOperations.ListAll();
+                    return new PhWrappingPageable<Azure.ResourceManager.Network.Models.PublicIPAddress, PublicIpAddress>(
+                        result,
+                        s => new PublicIpAddress(subscription, new PublicIPAddressData(s)));
+                }
+            );
         }
 
         /// <summary>
@@ -80,12 +96,17 @@ namespace Proto.Network
         /// <returns> An async collection of <see cref="PublicIpAddress" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PublicIpAddress> ListPublicIpsAsync(this SubscriptionOperations subscription)
         {
-            NetworkManagementClient networkClient = GetNetworkClient(subscription);
-            var publicIPAddressesOperations = networkClient.PublicIPAddresses;
-            var result = publicIPAddressesOperations.ListAllAsync();
-            return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.PublicIPAddress, PublicIpAddress>(
-                result,
-                s => new PublicIpAddress(subscription, new PublicIPAddressData(s)));
+            return subscription.ListResourcesAsync(
+                (baseUri, credential, options) =>
+                {
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                    var publicIPAddressesOperations = networkClient.PublicIPAddresses;
+                    var result = publicIPAddressesOperations.ListAllAsync();
+                    return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.PublicIPAddress, PublicIpAddress>(
+                        result,
+                        s => new PublicIpAddress(subscription, new PublicIPAddressData(s)));
+                }
+            );
         }
 
         #endregion
@@ -99,12 +120,17 @@ namespace Proto.Network
         /// <returns> A collection of <see cref="NetworkInterface"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkInterface> ListNics(this SubscriptionOperations subscription)
         {
-            NetworkManagementClient networkClient = GetNetworkClient(subscription);
-            var networkInterfacesOperations = networkClient.NetworkInterfaces;
-            var result = networkInterfacesOperations.ListAll();
-            return new PhWrappingPageable<Azure.ResourceManager.Network.Models.NetworkInterface, NetworkInterface>(
-                result,
-                s => new NetworkInterface(subscription, new NetworkInterfaceData(s)));
+            return subscription.ListResources(
+                (baseUri, credential, options) =>
+                {
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                    var networkInterfacesOperations = networkClient.NetworkInterfaces;
+                    var result = networkInterfacesOperations.ListAll();
+                    return new PhWrappingPageable<Azure.ResourceManager.Network.Models.NetworkInterface, NetworkInterface>(
+                        result,
+                        s => new NetworkInterface(subscription, new NetworkInterfaceData(s)));
+                }
+            );
         }
 
         /// <summary>
@@ -114,12 +140,17 @@ namespace Proto.Network
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkInterface> ListNicsAsync(this SubscriptionOperations subscription)
         {
-            NetworkManagementClient networkClient = GetNetworkClient(subscription);
-            var networkInterfacesOperations = networkClient.NetworkInterfaces;
-            var result = networkInterfacesOperations.ListAllAsync();
-            return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.NetworkInterface, NetworkInterface>(
-                result,
-                s => new NetworkInterface(subscription, new NetworkInterfaceData(s)));
+            return subscription.ListResourcesAsync(
+                (baseUri, credential, options) =>
+                {
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                    var networkInterfacesOperations = networkClient.NetworkInterfaces;
+                    var result = networkInterfacesOperations.ListAllAsync();
+                    return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.NetworkInterface, NetworkInterface>(
+                        result,
+                        s => new NetworkInterface(subscription, new NetworkInterfaceData(s)));
+                }
+            );
         }
 
         #endregion
@@ -133,12 +164,17 @@ namespace Proto.Network
         /// <returns> A collection of <see cref="NetworkSecurityGroup" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkSecurityGroup> ListNsgs(this SubscriptionOperations subscription)
         {
-            NetworkManagementClient networkClient = GetNetworkClient(subscription);
-            var networkSecurityGroupsOperations = networkClient.NetworkSecurityGroups;
-            var result = networkSecurityGroupsOperations.ListAll();
-            return new PhWrappingPageable<Azure.ResourceManager.Network.Models.NetworkSecurityGroup, NetworkSecurityGroup>(
-                result,
-                s => new NetworkSecurityGroup(subscription, new NetworkSecurityGroupData(s)));
+            return subscription.ListResources(
+                (baseUri, credential, options) =>
+                {
+                    NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                    var networkSecurityGroupsOperations = networkClient.NetworkSecurityGroups;
+                    var result = networkSecurityGroupsOperations.ListAll();
+                    return new PhWrappingPageable<Azure.ResourceManager.Network.Models.NetworkSecurityGroup, NetworkSecurityGroup>(
+                        result,
+                        s => new NetworkSecurityGroup(subscription, new NetworkSecurityGroupData(s)));
+                }
+            );
         }
 
         /// <summary>
@@ -148,12 +184,17 @@ namespace Proto.Network
         /// <returns> An async collection of <see cref="NetworkSecurityGroup" /> resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkSecurityGroup> ListNsgsAsync(this SubscriptionOperations subscription)
         {
-            NetworkManagementClient networkClient = GetNetworkClient(subscription);
-            var networkSecurityGroupsOperations = networkClient.NetworkSecurityGroups;
-            var result = networkSecurityGroupsOperations.ListAllAsync();
-            return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.NetworkSecurityGroup, NetworkSecurityGroup>(
-                result,
-                s => new NetworkSecurityGroup(subscription, new NetworkSecurityGroupData(s)));
+            return subscription.ListResourcesAsync(
+               (baseUri, credential, options) =>
+               {
+                   NetworkManagementClient networkClient = GetNetworkClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                   var networkSecurityGroupsOperations = networkClient.NetworkSecurityGroups;
+                   var result = networkSecurityGroupsOperations.ListAllAsync();
+                   return new PhWrappingAsyncPageable<Azure.ResourceManager.Network.Models.NetworkSecurityGroup, NetworkSecurityGroup>(
+                       result,
+                       s => new NetworkSecurityGroup(subscription, new NetworkSecurityGroupData(s)));
+               }
+           );
         }
 
         #endregion

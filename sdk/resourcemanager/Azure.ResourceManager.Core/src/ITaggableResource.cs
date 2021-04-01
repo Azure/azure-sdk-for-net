@@ -10,9 +10,11 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// Interface for operations that allow manipulating resource tags.
     /// </summary>
+    /// <typeparam name="TIdentifier"> The identifier type for this resource. </typeparam>
     /// <typeparam name="TOperations"> The typed operations for a specific resource. </typeparam>
-    public interface ITaggableResource<TOperations>
-        where TOperations : ResourceOperationsBase<TOperations>
+    public interface ITaggableResource<TIdentifier, TOperations> 
+        where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
+        where TIdentifier : TenantResourceIdentifier
     {
         /// <summary>
         /// Add a tag to the resource.

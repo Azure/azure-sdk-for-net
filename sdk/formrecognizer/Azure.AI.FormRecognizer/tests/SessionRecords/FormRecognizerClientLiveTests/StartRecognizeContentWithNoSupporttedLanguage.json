@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-canada-central.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/layout/analyze?language=not%20language",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/layout/analyze?language=not%20language",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "22",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c7e4d126b3e7854bb641021d92162314-c097d4134e20694a-00",
-        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210128.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-449783f8def9b04996307389d85279a7-b970596c45e5f741-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "5d75de53dbce7591367619a456191216",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,13 +18,13 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "b5fb0d24-3551-43da-b71c-c40424e6c3d2",
+        "apim-request-id": "1273e717-538d-47e4-9cd6-c5a663de310c",
         "Content-Length": "121",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 28 Jan 2021 22:19:58 GMT",
+        "Date": "Tue, 23 Mar 2021 00:44:03 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "4"
+        "x-envoy-upstream-service-time": "20"
       },
       "ResponseBody": {
         "error": {
@@ -36,7 +36,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-canada-central.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
     "RandomSeed": "1060328887"
   }
 }

@@ -10,19 +10,32 @@ namespace Azure.AI.DocumentTranslation
     public partial class TranslationGlossary
     {
         /// <summary>
-        /// Location of the glossary.
-        /// We will use the file extension to extract the formatting if the format parameter is not supplied.
-        /// If the translation language pair is not present in the glossary, it will not be applied.
+        /// Location of the glossary file. This should be a SAS URL to
+        /// the glossary file in the storage blob container. If the translation language pair is
+        /// not present in the glossary, it will not be applied.
         /// </summary>
         [CodeGenMember("GlossaryUrl")]
         public Uri GlossaryUri { get; }
 
-        /// <summary> Storage Source. </summary>
+        /// <summary>
+        /// Storage Source. Default value: "AzureBlob".
+        /// Currently only "AzureBlob" is supported.
+        /// </summary>
         [CodeGenMember("StorageSource")]
         internal string StorageSource { get; set; }
 
-        /// <summary> Format. </summary>
-        [CodeGenMember("Format")]
+        /// <summary>
+        /// Optional file format version. If not specified, the service will
+        /// use the <see cref="FileFormat.DefaultFormatVersion"/> for the file format returned from the
+        /// <see cref="DocumentTranslationClient.GetGlossaryFormatsAsync(System.Threading.CancellationToken)"/> client method.
+        /// </summary>
+        [CodeGenMember("Version")]
         public string FormatVersion { get; set; }
+
+        /// <summary>
+        /// Format of the glossary file. To see supported formats,
+        /// use the <see cref="DocumentTranslationClient.GetGlossaryFormatsAsync(System.Threading.CancellationToken)"/> client method.
+        /// </summary>
+        public string Format { get; }
     }
 }

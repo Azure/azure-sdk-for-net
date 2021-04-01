@@ -14,16 +14,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsChatEventInThreadBaseProperties DeserializeAcsChatEventInThreadBaseProperties(JsonElement element)
         {
+            Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("transactionId"))
+                {
+                    transactionId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("threadId"))
                 {
                     threadId = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsChatEventInThreadBaseProperties(threadId.Value);
+            return new AcsChatEventInThreadBaseProperties(transactionId.Value, threadId.Value);
         }
     }
 }

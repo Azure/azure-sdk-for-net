@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Version>1.0.0-beta.1</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Proto.Billing</RootNamespace>
     <LangVersion>latest</LangVersion>
+    <ExcludeMgmtCoreShared>false</ExcludeMgmtCoreShared>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Azure.ResourceManager.Billing\**" />

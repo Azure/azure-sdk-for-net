@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Amqp
     internal sealed class CbsTokenProvider : ICbsTokenProvider
     {
         /// <summary>The type to consider a token if it is based on an Event Hubs shared access signature.</summary>
-        private const string SharedAccessSignatureTokenType = "servicebus.windows.net:sastoken";
+        private const string SharedAccessTokenType = "servicebus.windows.net:sastoken";
 
         /// <summary>The type to consider a token if not based on a shared access signature.</summary>
         private const string JsonWebTokenType = "jwt";
@@ -49,8 +49,8 @@ namespace Azure.Messaging.EventHubs.Amqp
             Credential = credential;
             CancellationToken = cancellationToken;
 
-            TokenType = (credential.IsSharedAccessSignatureCredential)
-                ? SharedAccessSignatureTokenType
+            TokenType = (credential.IsSharedAccessCredential)
+                ? SharedAccessTokenType
                 : JsonWebTokenType;
         }
 

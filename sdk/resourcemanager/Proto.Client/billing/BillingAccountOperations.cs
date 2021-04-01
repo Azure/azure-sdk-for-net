@@ -13,20 +13,20 @@ namespace Proto.Billing
     /// <summary>
     /// A class representing the operations that can be performed over a specific availability set.
     /// </summary>
-    public class BillingAccountOperations : ResourceOperationsBase<BillingAccount>
+    public class BillingAccountOperations : ResourceOperationsBase<TenantResourceIdentifier, BillingAccount>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceOperations"/> class.
         /// </summary>
         /// <param name="genericOperations"> An instance of <see cref="GenericResourceOperations"/> that has an id for an availability set. </param>
         internal BillingAccountOperations(GenericResourceOperations genericOperations)
-            : base(genericOperations)
+            : base(genericOperations, genericOperations.Id)
         {
         }
-        
+
         //TODO : dicuss ways to not pass in Subscription subscription for tenant only resources
-        internal BillingAccountOperations(AzureResourceManagerClientOptions options, string billingAccountId, TokenCredential credential, Uri baseUri)
-            : base(options, $"/providers/{ResourceType}/{billingAccountId}", credential, baseUri)
+        internal BillingAccountOperations(TenantOperations tenant, string billingAccountId)
+            : base(tenant, $"/providers/{ResourceType}/{billingAccountId}")
         {
         }
 

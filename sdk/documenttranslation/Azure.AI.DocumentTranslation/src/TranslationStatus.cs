@@ -5,6 +5,10 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentTranslation
 {
+    /// <summary>
+    /// List of possible statuses for a translation operation
+    /// or for a document.
+    /// </summary>
     [CodeGenModel("Status")]
     public partial struct TranslationStatus
     {
