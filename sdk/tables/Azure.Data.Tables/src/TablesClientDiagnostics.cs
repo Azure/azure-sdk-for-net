@@ -1,17 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Data.Tables;
 
 namespace Azure.Core.Pipeline
 {
-    internal partial class TablesClientDiagnostics : ClientDiagnostics
+    internal class TablesClientDiagnostics : ClientDiagnostics
     {
         public TablesClientDiagnostics(ClientOptions options) : base(options)
         {
