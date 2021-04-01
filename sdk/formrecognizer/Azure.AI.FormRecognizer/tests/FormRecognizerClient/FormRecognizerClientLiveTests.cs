@@ -1995,7 +1995,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore = "Test file not uploaded to GitHub yet.")]
+        [TestCase(false)]
         public async Task StartRecognizeIdDocumentsPopulatesExtractedIdDocumentJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
