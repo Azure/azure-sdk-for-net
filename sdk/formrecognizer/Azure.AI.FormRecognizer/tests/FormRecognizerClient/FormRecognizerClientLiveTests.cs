@@ -1541,7 +1541,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
         [RecordedTest]
         [TestCase(true)]
-        [TestCase(false, Ignore ="File not available on GitHub")]
+        [TestCase(false)]
         public async Task StartRecognizeInvoicesPopulatesExtractedJpg(bool useStream)
         {
             var client = CreateFormRecognizerClient();
