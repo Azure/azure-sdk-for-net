@@ -776,7 +776,7 @@ namespace Azure.AI.FormRecognizer
         /// form, or whether or not to include form elements.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="RecognizeIdDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdDocumentsOperation.Value"/> upon successful
-        /// completion will contain the extracted ID document.</returns>
+        /// completion will contain the extracted ID document information.</returns>
         public virtual async Task<RecognizeIdDocumentsOperation> StartRecognizeIdDocumentsAsync(Stream idDocument, RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(idDocument, nameof(idDocument));
