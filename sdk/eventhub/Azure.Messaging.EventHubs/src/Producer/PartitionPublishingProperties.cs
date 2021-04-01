@@ -105,10 +105,10 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="ownerLevel">The owner level associated with the partition.</param>
         /// <param name="lastPublishedSequenceNumber">The sequence number assigned to the event that was last successfully published to the partition.</param>
         ///
-        protected internal PartitionPublishingProperties(bool isIdempotentPublishingEnabled,
-                                                         long? producerGroupId,
-                                                         short? ownerLevel,
-                                                         int? lastPublishedSequenceNumber) =>
+        internal PartitionPublishingProperties(bool isIdempotentPublishingEnabled,
+                                               long? producerGroupId,
+                                               short? ownerLevel,
+                                               int? lastPublishedSequenceNumber) =>
             (IsIdempotentPublishingEnabled, ProducerGroupId, OwnerLevel, LastPublishedSequenceNumber) = (isIdempotentPublishingEnabled, producerGroupId, ownerLevel, lastPublishedSequenceNumber);
     }
 }

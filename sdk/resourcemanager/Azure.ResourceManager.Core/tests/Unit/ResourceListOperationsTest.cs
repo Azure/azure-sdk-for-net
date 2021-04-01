@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var rgOp = new ResourceGroupOperations(
                             new SubscriptionOperations(
-                                new AzureResourceManagerClientOptions(),
+                                new ArmClientOptions(),
                                 Guid.Empty.ToString(),
                                 new DefaultAzureCredential(), //should make a fake credential creation
                                 new Uri("http://foo.com")),
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Core.Tests
 
         private static GenericResourceExpanded GetGenericResource()
         {
-            return GetGenereicResource(
+            return GetGenericResource(
                 new Dictionary<string, string> { { "tag1", "value1" } },
                 GetSku(),
                 GetPlan(),
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Core.Tests
                 "Japan East");
         }
 
-        private static GenericResourceExpanded GetGenereicResource(
+        private static GenericResourceExpanded GetGenericResource(
             Dictionary<string, string> tags,
             ResourceManager.Resources.Models.Sku sku,
             ResourceManager.Resources.Models.Plan plan,
@@ -126,14 +126,16 @@ namespace Azure.ResourceManager.Core.Tests
         {
             var resource = new GenericResourceExpanded();
 
+            // See TODO in GenericResourceOperations.Valide().
+            //resource.Id = "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup";
+            var field = typeof(Resource).GetField("<Id>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic);
+            field.SetValue(resource, $"/subscriptions/{Guid.NewGuid().ToString()}/resourceGroups/myResourceGroup/providers/Microsoft.Widgets/widgets/myWidget");
             resource.Location = location;
             resource.Tags.ReplaceWith(tags ?? new Dictionary<string, string>());
             resource.Sku = sku;
             resource.Plan = plan;
             resource.Kind = kind;
             resource.ManagedBy = managedBy;
-            var field = typeof(GenericResourceExpanded).BaseType.BaseType.GetField("<Id>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic);
-            field.SetValue(resource, "/subscriptions/{subscription-id}/resourceGroups/myResourceGroup");
             return resource;
         }
     }

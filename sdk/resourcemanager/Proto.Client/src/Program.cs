@@ -18,8 +18,8 @@ namespace Proto.Client
             {
                 foreach (var rgId in Scenario.CleanUp)
                 {
-                    ResourceIdentifier id = new ResourceIdentifier(rgId);
-                    var rg = new AzureResourceManagerClient(new DefaultAzureCredential()).GetSubscriptionOperations(id.Subscription).GetResourceGroupOperations(id.ResourceGroup);
+                    var id = new ResourceGroupResourceIdentifier(rgId);
+                    var rg = new ArmClient(new DefaultAzureCredential()).GetSubscriptionOperations(id.SubscriptionId).GetResourceGroupOperations(id.ResourceGroupName);
                     Console.WriteLine($"--------Deleting {rg.Id.Name}--------");
                     try
                     {

@@ -8,7 +8,7 @@ namespace Proto.Network
     /// <summary>
     /// A network interface in a resource group.
     /// </summary>
-    public class NetworkInterfaceData : TrackedResource<Azure.ResourceManager.Network.Models.NetworkInterface>
+    public class NetworkInterfaceData : TrackedResource<ResourceGroupResourceIdentifier, Azure.ResourceManager.Network.Models.NetworkInterface>
     {
         /// <summary>
         /// The ARM resource type for this <see cref="NetworkInterface"/>.

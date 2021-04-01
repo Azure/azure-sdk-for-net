@@ -22,17 +22,21 @@ namespace Azure.AI.DocumentTranslation
         /// 
         /// If the translation language pair is not present in the glossary, it will not be applied.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryUri"/> is null. </exception>
-        public TranslationGlossary(Uri glossaryUri)
+        /// <param name="format"> Format. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="glossaryUri"/> or <paramref name="format"/> is null. </exception>
+        public TranslationGlossary(Uri glossaryUri, string format)
         {
             if (glossaryUri == null)
             {
                 throw new ArgumentNullException(nameof(glossaryUri));
             }
+            if (format == null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
 
             GlossaryUri = glossaryUri;
+            Format = format;
         }
-        /// <summary> Version. </summary>
-        public string Version { get; set; }
     }
 }

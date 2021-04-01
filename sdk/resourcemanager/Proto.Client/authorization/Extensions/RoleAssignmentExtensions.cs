@@ -16,7 +16,7 @@ namespace Proto.Authorization
         /// </summary>
         /// <param name="resource">The resource that is the target of the roel assignemnt</param>
         /// <returns>A <see cref="RoleAssignmentContainer"/> that allows creating and listing RoleAssignments</returns>
-        public static RoleAssignmentContainer GetRoleAssignmentContainer(this ResourceOperationsBase resource)
+        public static RoleAssignmentContainer GetRoleAssignments(this ResourceOperationsBase resource)
         {
             return new RoleAssignmentContainer(resource);
         }
@@ -27,7 +27,7 @@ namespace Proto.Authorization
         /// </summary>
         /// <param name="resource">The subscription that is the target of the role assignemnt</param>
         /// <returns>A <see cref="RoleAssignmentContainer"/> that allows creating and listing RoleAssignments</returns>
-        public static RoleAssignmentContainer GetRoleAssignmentContainer(this SubscriptionOperations resource)
+        public static RoleAssignmentContainer GetRoleAssignments(this SubscriptionOperations resource)
         {
             return new RoleAssignmentContainer(resource);
         }
@@ -39,7 +39,7 @@ namespace Proto.Authorization
         /// <param name="subscription">The subscription containign the role assignment</param>
         /// <param name="scope">The target of the role assignment</param>
         /// <returns>A <see cref="RoleAssignmentContainer"/> that allows creating and listing RoleAssignments</returns>
-        public static RoleAssignmentContainer GetRoleAssigmentContainerAtScope(this SubscriptionOperations subscription, ResourceIdentifier scope)
+        public static RoleAssignmentContainer GetRoleAssigmentsAtScope(this SubscriptionOperations subscription, ResourceIdentifier scope)
         {
             return new RoleAssignmentContainer(subscription, scope);
         }
@@ -51,7 +51,7 @@ namespace Proto.Authorization
         /// <param name="subscription">The subscription containign the role assignment</param>
         /// <param name="scope">The target of the role assignment</param>
         /// <returns>A <see cref="RoleAssignmentContainer"/> that allows creating and listing RoleAssignments</returns>
-        public static RoleAssignmentContainer GetRoleAssigmentContainerAtScope(this SubscriptionOperations subscription, Resource scope)
+        public static RoleAssignmentContainer GetRoleAssigmentsAtScope(this SubscriptionOperations subscription, Resource<TenantResourceIdentifier> scope)
         {
             return new RoleAssignmentContainer(subscription, scope.Id);
         }

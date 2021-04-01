@@ -16,7 +16,7 @@ namespace Proto.Network
     /// <summary>
     /// A class representing collection of <see cref="NetworkInterface"/> and their operations over a <see cref="ResourceGroup"/>.
     /// </summary>
-    public class NetworkInterfaceContainer : ResourceContainerBase<NetworkInterface, NetworkInterfaceData>
+    public class NetworkInterfaceContainer : ResourceContainerBase<ResourceGroupResourceIdentifier, NetworkInterface, NetworkInterfaceData>
     {
         internal NetworkInterfaceContainer(ResourceGroupOperations resourceGroup)
             : base(resourceGroup)
@@ -24,18 +24,23 @@ namespace Proto.Network
         }
 
         internal NetworkInterfacesOperations Operations => new NetworkManagementClient(
-            Id.Subscription,
+            Id.SubscriptionId,
             BaseUri,
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).NetworkInterfaces;
 
         /// <inheritdoc/>
+        /// <summary>
+        /// Typed Resource Identifier for the container.
+        /// </summary>
+        public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
+
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
         /// <inheritdoc/>
         public override ArmResponse<NetworkInterface> CreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails, cancellationToken);
+            var operation = Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken);
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false).GetAwaiter().GetResult(),
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
@@ -44,7 +49,7 @@ namespace Proto.Network
         /// <inheritdoc/>
         public async override Task<ArmResponse<NetworkInterface>> CreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
-            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroup, name, resourceDetails, cancellationToken).ConfigureAwait(false);
+            var operation = await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false);
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
                 await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false),
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
@@ -54,7 +59,7 @@ namespace Proto.Network
         public override ArmOperation<NetworkInterface> StartCreateOrUpdate(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                Operations.StartCreateOrUpdate(Id.ResourceGroup, name, resourceDetails, cancellationToken),
+                Operations.StartCreateOrUpdate(Id.ResourceGroupName, name, resourceDetails, cancellationToken),
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
         }
 
@@ -62,7 +67,7 @@ namespace Proto.Network
         public async override Task<ArmOperation<NetworkInterface>> StartCreateOrUpdateAsync(string name, NetworkInterfaceData resourceDetails, CancellationToken cancellationToken = default)
         {
             return new PhArmOperation<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                await Operations.StartCreateOrUpdateAsync(Id.ResourceGroup, name, resourceDetails, cancellationToken).ConfigureAwait(false),
+                await Operations.StartCreateOrUpdateAsync(Id.ResourceGroupName, name, resourceDetails, cancellationToken).ConfigureAwait(false),
                 n => new NetworkInterface(Parent, new NetworkInterfaceData(n)));
         }
 
@@ -73,9 +78,9 @@ namespace Proto.Network
         /// <param name="subnetId"> The resource identifier of the subnet attached to this <see cref="NetworkInterface"/>. </param>
         /// <param name="location"> The <see cref="LocationData"/> that will contain the <see cref="NetworkInterface"/>. </param>
         /// <returns>An object used to create a <see cref="NetworkInterface"/>. </returns>
-        public ArmBuilder<NetworkInterface, NetworkInterfaceData> Construct(string subnetId, PublicIPAddressData ip = default, LocationData location = null)
+        public ArmBuilder<ResourceGroupResourceIdentifier, NetworkInterface, NetworkInterfaceData> Construct(string subnetId, PublicIPAddressData ip = default, LocationData location = null)
         {
-            var parent = GetParentResource<ResourceGroup, ResourceGroupOperations>();
+            var parent = GetParentResource<ResourceGroup, ResourceGroupResourceIdentifier, ResourceGroupOperations>();
             var nic = new Azure.ResourceManager.Network.Models.NetworkInterface()
             {
                 Location = location ?? parent.Data.Location,
@@ -92,7 +97,7 @@ namespace Proto.Network
             if (ip != null)
                 nic.IpConfigurations[0].PublicIPAddress = new PublicIPAddress() { Id = ip.Id };
 
-            return new ArmBuilder<NetworkInterface, NetworkInterfaceData>(this, new NetworkInterfaceData(nic));
+            return new ArmBuilder<ResourceGroupResourceIdentifier, NetworkInterface, NetworkInterfaceData>(this, new NetworkInterfaceData(nic));
         }
 
         /// <summary>
@@ -191,7 +196,7 @@ namespace Proto.Network
         public override ArmResponse<NetworkInterface> Get(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                Operations.Get(Id.ResourceGroup, networkInterfaceName, cancellationToken: cancellationToken),
+                Operations.Get(Id.ResourceGroupName, networkInterfaceName, cancellationToken: cancellationToken),
                 g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
         }
 
@@ -199,7 +204,7 @@ namespace Proto.Network
         public override async Task<ArmResponse<NetworkInterface>> GetAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
             return new PhArmResponse<NetworkInterface, Azure.ResourceManager.Network.Models.NetworkInterface>(
-                await Operations.GetAsync(Id.ResourceGroup, networkInterfaceName, null, cancellationToken),
+                await Operations.GetAsync(Id.ResourceGroupName, networkInterfaceName, null, cancellationToken),
                     g => new NetworkInterface(Parent, new NetworkInterfaceData(g)));
         }
     }

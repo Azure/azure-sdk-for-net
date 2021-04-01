@@ -1,0 +1,198 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Setup project type properties -->
+  <PropertyGroup>
+    <IsMgmtLibrary Condition="'$(IsMgmtLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.ResourceManager.'))">true</IsMgmtLibrary>
+    <MgmtAutorestVersion>3.0.0-beta.20210319.1</MgmtAutorestVersion>
+
+    <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
+    <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
+
+    <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
+    <IsSamplesProject Condition="'$(IsSamplesProject)' == '' and $(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
+    <IsPerfProject Condition="'$(IsPerfProject)' == '' and $(MSBuildProjectName.EndsWith('.Perf'))">true</IsPerfProject>
+    <IsStressProject Condition="'$(IsStressProject)' == '' and $(MSBuildProjectName.EndsWith('.Stress'))">true</IsStressProject>
+    <IsTestSupportProject Condition="'$(IsTestSupportProject)' == '' and '$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
+    <IsShippingLibrary Condition="'$(IsShippingLibrary)' == '' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsPerfProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsStressProject)' != 'true'">true</IsShippingLibrary>
+    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'">true</IsShippingClientLibrary>
+  </PropertyGroup>
+
+  <!-- Setup default project properties -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <!--
+      Disable NU5105 NuGet Pack warning that the version is SemVer 2.0.
+      SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
+    -->
+    <NoWarn>$(NoWarn);NU5105</NoWarn>
+    <!--
+      Disable some FxCop rules
+     -->
+    <NoWarn>
+      $(NoWarn);
+      CA1716; <!-- avoid using method names that are reserved in other languages -->
+      CA1308; <!-- prefer ToUpperInvariant  -->
+      CA1819; <!-- Properties should not return arrays -->
+      CA1710; <!-- Use Collection sufix -->
+      CA1028; <!-- Enum backing type should be int -->
+      CA1032; <!-- Add default exception ctors -->
+      CA1063; <!-- Dispose implementation -->
+      CA1066; <!-- Implement IEquatable -->
+      CA1815; <!-- Equality members on structs -->
+      CA2007; <!-- Do not directly await a Task without calling ConfigureAwait (replaced by AZC0012) -->
+      CA2231; <!-- Override Equality operators -->
+      CA2225; <!-- Provide alternative to implicit operators -->
+      CA1714; <!-- Flags should have plural names -->
+      CA1062; <!-- Public parameter should be checked for null -->
+      CA1031; <!-- Don't catch generic exceptions -->
+      CA2000; <!-- Call dispose on IDisposable objects -->
+      CA2012; <!-- ValueTask should only be awaited once - conflicts with EnsureCompleted check -->
+    </NoWarn>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>symbols.nupkg</SymbolPackageFormat>
+    <!-- Avoid implicitly added preview feeds -->
+    <AddDotnetfeedProjectSource>false</AddDotnetfeedProjectSource>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <EnableClientSdkAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableClientSdkAnalyzers>
+    <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
+    <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
+    <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
+    <UpdateSourceOnBuild Condition="'$(UpdateSourceOnBuild)' == ''">$(AZURE_DEV_UPDATESOURCESONBUILD)</UpdateSourceOnBuild>
+    <PowerShellExe Condition="'$(PowerShellExe)' == ''">pwsh</PowerShellExe>
+    <InheritDocEnabled Condition="'$(InheritDocEnabled)'=='' and '$(DesignTimeBuild)'!='true' and '$(BuildingForLiveUnitTesting)'!='true' and '$(IsShippingClientLibrary)' == true">true</InheritDocEnabled>
+    <InheritDocTrimLevel>private</InheritDocTrimLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsShippingClientLibrary)' == 'true' and '$(TF_BUILD)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <!-- TODO. REVIEW -->
+  <PropertyGroup Condition="'$(IsMgmtLibrary)' == 'true'">
+    <NoWarn>
+      $(NoWarn);
+      CA1812;  <!-- Avoid uninstantiated internal classes. (Result from below including the Azure.Core source) -->
+      AZC0012; <!-- Single word class names -->
+      AZC0008;
+    </NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
+    <NoWarn>
+      $(NoWarn);IDT001<!-- InheritDoc related to malformed XML in netstandard.xml -->
+    </NoWarn>
+  </PropertyGroup>
+
+  <!-- CodeAnalysis RuleSet -->
+  <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
+    <CodeAnalysisRuleSet>$(RepoEngPath)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <!-- TargetFramework default properties -->
+  <PropertyGroup>
+    <!-- Client libraries are moving forward to NS 2.0 and Net 4.6.1 as the min supported versions -->
+    <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == '' and '$(IsClientLibrary)' == 'true'">true</SupportsNetStandard20>
+    <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == ''">false</SupportsNetStandard20>
+
+    <RequiredTargetFrameworks>net452;netstandard1.4;net461;netstandard2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true'">
+    <IsPackable>false</IsPackable>
+    <RequiredTargetFrameworks>netcoreapp2.1;net5.0</RequiredTargetFrameworks>
+    <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp2.1 (the "primary"). -->
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp2.1;net5.0</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
+    <IsPackable>false</IsPackable>
+    <RequiredTargetFrameworks>netcoreapp2.1;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
+    <!-- Also test net461 on Windows; it's listed first so that coverage reports are for netcoreapp2.1 (the "primary"). -->
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">net461;netcoreapp2.1;netcoreapp3.1;net5.0</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <Import Project="$(RepoRoot)/sdk/core/Azure.Core/src/Azure.Core.props" Condition="'$(IsMgmtLibrary)' == 'true'"/>
+  <Import Project="TestFramework.props" Condition="'$(IsTestProject)' == 'true'"/>
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+
+    <IsTargetingNetFx Condition="$(TargetFramework.StartsWith('net4'))">true</IsTargetingNetFx>
+    <IsTargetingNetStandard Condition="$(TargetFramework.StartsWith('netstandard'))">true</IsTargetingNetStandard>
+    <IsTargetingNetCoreApp Condition="$(TargetFramework.StartsWith('netcoreapp'))">true</IsTargetingNetCoreApp>
+
+    <DefineConstants Condition="'$(IsTargetingNetFx)' == 'true'">$(DefineConstants);FullNetFx</DefineConstants>
+  </PropertyGroup>
+
+  <!-- Common library and package properties -->
+  <PropertyGroup>
+    <Company>Microsoft Corporation</Company>
+    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+    <Authors>Microsoft</Authors>
+    <Product>Azure .NET SDK</Product>
+    <PackageIcon>pkgicon.png</PackageIcon>
+    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
+    <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+
+  <!-- Signing properties -->
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+
+    <!--
+      In order to be able to run our tests on .NET Framework we should use public signing by default so
+      we don't have to disable strong name validation for things that are delay signed.
+    -->
+    <PublicSign Condition="'$(PublicSign)' == ''">true</PublicSign>
+    <DelaySign Condition="'$(PublicSign)' == 'true'">false</DelaySign>
+    <DelaySign Condition="'$(PublicSign)' != 'true'">true</DelaySign>
+
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
+    <!-- Use a full key for the new client libraries and disable delay signing -->
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <PublicSign>false</PublicSign>
+    <ImportDefaultReferences>false</ImportDefaultReferences>
+    <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
+
+    <!-- The set of tags that should be added to the packages -->
+    <PackageCommonTags>windowsazureofficial;azureofficial</PackageCommonTags>
+    <AzureCoreSharedSources>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core/src/Shared/</AzureCoreSharedSources>
+    <AzureCoreTestFramework>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Azure.Core.TestFramework.csproj</AzureCoreTestFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true' or '$(IsSamplesProject)' == 'true' or '$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
+    <!-- Always fully sign test assemblies since we have a full public/private key -->
+    <PublicSign>false</PublicSign>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
+    <!-- Disable doc comments for test projects -->
+    <DocumentationFile></DocumentationFile>
+    <RunSettingsFilePath>$(RepoEngPath)\nunit.runsettings</RunSettingsFilePath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+  </PropertyGroup>
+
+  <!-- Code generation settings -->
+  <PropertyGroup>
+    <!-- Don't use code generator bundled Azure.Core shared source for code generation -->
+    <AzureCoreSharedCodeDirectory>$(AzureCoreSharedSources)</AzureCoreSharedCodeDirectory>
+    <!-- Don't use code generator bundled Azure.Core shared source when building, projects in this repo include individual sources when needed  -->
+    <IncludeAzureCoreSharedCode>false</IncludeAzureCoreSharedCode>
+  </PropertyGroup>
+</Project>

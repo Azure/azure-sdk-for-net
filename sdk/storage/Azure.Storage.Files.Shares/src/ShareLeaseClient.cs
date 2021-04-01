@@ -103,7 +103,7 @@ namespace Azure.Storage.Files.Shares.Specialized
         /// An optional lease ID.  If no lease ID is provided, a random lease
         /// ID will be created.
         /// </param>
-        internal ShareLeaseClient(ShareClient client, string leaseId = null)
+        public ShareLeaseClient(ShareClient client, string leaseId = null)
         {
             _share = client ?? throw Errors.ArgumentNull(nameof(client));
             LeaseId = leaseId ?? CreateUniqueLeaseId();

@@ -18,7 +18,7 @@ namespace Proto.Network
         private static NetworkManagementClient GetNetworkClient(SubscriptionOperations subscription)
         {
             return new NetworkManagementClient(
-                subscription.Id.Subscription,
+                subscription.Id.SubscriptionId,
                 subscription.BaseUri,
                 subscription.Credential,
                 subscription.ClientOptions.Convert<NetworkManagementClientOptions>());

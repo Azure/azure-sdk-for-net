@@ -19,38 +19,38 @@ namespace Proto.Client
 
         private async System.Threading.Tasks.Task ExcuteAsync()
         {
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
+            var client = new ArmClient(new DefaultAzureCredential());
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
 
             // Create Resource Group
             Console.WriteLine($"--------Start StartCreate group {Context.RgName}--------");
-            var resourceGroup = (await(subscription.GetResourceGroupContainer().Construct(Context.Loc).StartCreateOrUpdate(Context.RgName)).WaitForCompletionAsync()).Value;
+            var resourceGroup = (await(subscription.GetResourceGroups().Construct(Context.Loc).StartCreateOrUpdate(Context.RgName)).WaitForCompletionAsync()).Value;
             CleanUp.Add(resourceGroup.Id);
 
             // Create AvailabilitySet
             Console.WriteLine("--------Start StartCreate AvailabilitySet async--------");
-            var aset = (await(resourceGroup.GetAvailabilitySetContainer().Construct("Aligned").StartCreateOrUpdate(Context.VmName + "_aSet")).WaitForCompletionAsync()).Value;
+            var aset = (await(resourceGroup.GetAvailabilitySets().Construct("Aligned").StartCreateOrUpdate(Context.VmName + "_aSet")).WaitForCompletionAsync()).Value;
 
             // Create VNet
             Console.WriteLine("--------Start StartCreate VNet--------");
             string vnetName = Context.VmName + "_vnet";
-            var vnet = (await(resourceGroup.GetVirtualNetworkContainer().Construct("10.0.0.0/16").StartCreateOrUpdate(vnetName)).WaitForCompletionAsync()).Value;
+            var vnet = (await(resourceGroup.GetVirtualNetworks().Construct("10.0.0.0/16").StartCreateOrUpdate(vnetName)).WaitForCompletionAsync()).Value;
 
             //create subnet
             Console.WriteLine("--------Start StartCreate Subnet--------");
-            var subnet = (await(vnet.GetSubnetContainer().Construct("10.0.0.0/24").StartCreateOrUpdate(Context.SubnetName)).WaitForCompletionAsync()).Value;
+            var subnet = (await(vnet.GetSubnets().Construct("10.0.0.0/24").StartCreateOrUpdate(Context.SubnetName)).WaitForCompletionAsync()).Value;
 
             //create network security group
             Console.WriteLine("--------Start StartCreate NetworkSecurityGroup--------");
-            _ = (await(resourceGroup.GetNetworkSecurityGroupContainer().Construct(80).StartCreateOrUpdate(Context.NsgName)).WaitForCompletionAsync()).Value;
+            _ = (await(resourceGroup.GetNetworkSecurityGroups().Construct(80).StartCreateOrUpdate(Context.NsgName)).WaitForCompletionAsync()).Value;
 
             // Create Network Interface
             Console.WriteLine("--------Start StartCreate Network Interface--------");
-            var nic = (await(resourceGroup.GetNetworkInterfaceContainer().Construct(subnet.Id).StartCreateOrUpdate($"{Context.VmName}_nic")).WaitForCompletionAsync()).Value;
+            var nic = (await(resourceGroup.GetNetworkInterfaces().Construct(subnet.Id).StartCreateOrUpdate($"{Context.VmName}_nic")).WaitForCompletionAsync()).Value;
 
             // Create VM
             Console.WriteLine("--------Start StartCreate VM --------");
-            var vm = (await(resourceGroup.GetVirtualMachineContainer().Construct(Context.Hostname, "admin-user", "!@#$%asdfA", nic.Id, aset.Id).StartCreateOrUpdate(Context.VmName)).WaitForCompletionAsync()).Value;
+            var vm = (await(resourceGroup.GetVirtualMachines().Construct(Context.Hostname, "admin-user", "!@#$%asdfA", nic.Id, aset.Id).StartCreateOrUpdate(Context.VmName)).WaitForCompletionAsync()).Value;
 
             Console.WriteLine("VM ID: " + vm.Id);
             Console.WriteLine("--------Done StartCreate VM--------");

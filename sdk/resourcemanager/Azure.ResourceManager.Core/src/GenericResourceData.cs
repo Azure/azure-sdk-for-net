@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing the generic azure resource data model.
     /// </summary>
-    public partial class GenericResourceData : TrackedResource<ResourceManager.Resources.Models.GenericResource>
+    public partial class GenericResourceData : TrackedResource<TenantResourceIdentifier, ResourceManager.Resources.Models.GenericResource>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResourceData"/> class.
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="GenericResourceData"/> class.
         /// </summary>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        public GenericResourceData(ResourceIdentifier id)
+        public GenericResourceData(TenantResourceIdentifier id)
             : base(id, LocationData.Default, null)
         {
         }
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.Core
         /// </summary>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location of the resource. </param>
-        public GenericResourceData(ResourceIdentifier id, LocationData location)
+        public GenericResourceData(TenantResourceIdentifier id, LocationData location)
             : base(id, location, null)
         {
         }
 
         /// <inheritdoc/>
-        public override ResourceIdentifier Id { get; protected set; }
+        public override TenantResourceIdentifier Id { get; protected set; }
 
         /// <summary>
         /// Gets or sets who this resource is managed by.

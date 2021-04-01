@@ -251,7 +251,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }
         }
 
-        protected Task WaitForDeletedKey(string name)
+        protected Task WaitForDeletedKey(string name, TimeSpan? delay = null)
         {
             if (Mode == RecordedTestMode.Playback)
             {
@@ -260,7 +260,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             using (Recording.DisableRecording())
             {
-                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: PollingInterval);
+                delay ??= PollingInterval;
+                return TestRetryHelper.RetryAsync(async () => await Client.GetDeletedKeyAsync(name), delay: delay.Value);
             }
         }
 

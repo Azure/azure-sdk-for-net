@@ -10,18 +10,20 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing a builder object used to create Azure resources.
     /// </summary>
+    /// <typeparam name="TIdentifier"> The type of the Identifier class for a specific resource. </typeparam>
     /// <typeparam name="TOperations"> The type of the operations class for a specific resource. </typeparam>
     /// <typeparam name="TResource"> The type of the class containing properties for the underlying resource. </typeparam>
-    public class ArmBuilder<TOperations, TResource>
-        where TResource : Resource
-        where TOperations : ResourceOperationsBase<TOperations>
+    public class ArmBuilder<TIdentifier, TOperations, TResource>
+        where TIdentifier: TenantResourceIdentifier
+        where TResource : Resource<TIdentifier>
+        where TOperations : ResourceOperationsBase<TIdentifier, TOperations>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ArmBuilder{TOperations, TResource}"/> class.
+        /// Initializes a new instance of the <see cref="ArmBuilder{TIdentifier, TOperations, TResource}"/> class.
         /// </summary>
         /// <param name="container"> The container object to create the resource in. </param>
         /// <param name="resource"> The resource to create. </param>
-        public ArmBuilder(ResourceContainerBase<TOperations, TResource> container, TResource resource)
+        public ArmBuilder(ResourceContainerBase<TIdentifier, TOperations, TResource> container, TResource resource)
         {
             Resource = resource;
             UnTypedContainer = container;
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the container object to create the resource in.
         /// </summary>
-        protected ResourceContainerBase<TOperations, TResource> UnTypedContainer { get; private set; }
+        protected ResourceContainerBase<TIdentifier, TOperations, TResource> UnTypedContainer { get; private set; }
 
         /// <summary>
         /// Creates the resource object to send to the Azure API.

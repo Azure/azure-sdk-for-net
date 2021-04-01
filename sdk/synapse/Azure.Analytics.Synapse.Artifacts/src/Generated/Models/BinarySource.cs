@@ -25,13 +25,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> . </param>
         /// <param name="storeSettings"> Binary store settings. </param>
-        internal BinarySource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, StoreReadSettings storeSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
+        /// <param name="formatSettings"> Binary format settings. </param>
+        internal BinarySource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, StoreReadSettings storeSettings, BinaryReadSettings formatSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             StoreSettings = storeSettings;
+            FormatSettings = formatSettings;
             Type = type ?? "BinarySource";
         }
 
         /// <summary> Binary store settings. </summary>
         public StoreReadSettings StoreSettings { get; set; }
+        /// <summary> Binary format settings. </summary>
+        public BinaryReadSettings FormatSettings { get; set; }
     }
 }

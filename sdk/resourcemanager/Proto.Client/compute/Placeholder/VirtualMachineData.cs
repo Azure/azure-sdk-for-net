@@ -8,7 +8,7 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing the VirtualMachine data model.
     /// </summary>
-    public class VirtualMachineData : TrackedResource<Azure.ResourceManager.Compute.Models.VirtualMachine>
+    public class VirtualMachineData : TrackedResource<ResourceGroupResourceIdentifier, Azure.ResourceManager.Compute.Models.VirtualMachine>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualMachineData"/> class.
@@ -136,12 +136,12 @@ namespace Proto.Compute
         private ResourceIdentity VmIdentityToIdentity(VirtualMachineIdentity vmIdentity)
         {
             SystemAssignedIdentity systemAssignedIdentity = new SystemAssignedIdentity(new Guid(vmIdentity.TenantId), new Guid(vmIdentity.PrincipalId));
-            var userAssignedIdentities = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
+            var userAssignedIdentities = new Dictionary<ResourceGroupResourceIdentifier, UserAssignedIdentity>();
             if (vmIdentity.UserAssignedIdentities != null)
             {
                 foreach (var entry in vmIdentity.UserAssignedIdentities)
                 {
-                    ResourceIdentifier resourceId = new ResourceIdentifier(entry.Key);
+                    var resourceId = new ResourceGroupResourceIdentifier(entry.Key);
                     var userAssignedIdentity = new UserAssignedIdentity(new Guid(entry.Value.ClientId), new Guid(entry.Value.PrincipalId));
                     userAssignedIdentities[resourceId] = userAssignedIdentity;
                 }

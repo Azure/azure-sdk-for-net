@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             _rgName = SessionRecording.GenerateAssetName("testRg-");
             var subscriptionOperations = GlobalClient.GetSubscriptionOperations(SessionEnvironment.SubscriptionId);
-            _ = subscriptionOperations.GetResourceGroupContainer().Construct(_location).StartCreateOrUpdateAsync(_rgName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
+            _ = subscriptionOperations.GetResourceGroups().Construct(_location).StartCreateOrUpdateAsync(_rgName).ConfigureAwait(false).GetAwaiter().GetResult().Value;
             StopSessionRecording();
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task GetGenericsConfirmException()
         {
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}/providers/Microsoft.Compute/availabilitySets/testavset";
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
             _ = GetArmClient(options); // setup providers client
             var subOp = Client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, asetid);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Core.Tests
         public async Task GetGenericsBadNameSpace()
         {
             var asetid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}/providers/Microsoft.NotAValidNameSpace123/availabilitySets/testavset";
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ArmClientOptions options = new ArmClientOptions();
             _ = GetArmClient(options); // setup providers client
             var subOp = Client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, asetid);
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task GetGenericsBadApiVersion()
         {
-            ResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
-            options.ApiVersions.SetApiVersion(rgid.Type, "1500-10-10");
+            ResourceGroupResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
+            ArmClientOptions options = new ArmClientOptions();
+            options.ApiVersions.SetApiVersion(rgid.ResourceType, "1500-10-10");
             var client = GetArmClient(options);
             var subOp = client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, rgid);
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Core.Tests
         [RecordedTest]
         public async Task GetGenericsGoodApiVersion()
         {
-            ResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
-            AzureResourceManagerClientOptions options = new AzureResourceManagerClientOptions();
+            ResourceGroupResourceIdentifier rgid = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{_rgName}";
+            ArmClientOptions options = new ArmClientOptions();
             var client = GetArmClient(options);
             var subOp = client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
             var genericResourceOperations = new GenericResourceOperations(subOp, rgid);

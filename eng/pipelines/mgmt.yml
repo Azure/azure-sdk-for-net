@@ -6,7 +6,13 @@ pr:
     - '*-preview'
   paths:
     include:
+    - Directory.Build.props
+    - Directory.Build.targets
+    - mgmt.proj
+    - eng/mgmt.proj
     - eng/pipelines/mgmt.yml
+    - eng/mgmt
+    - sdk/mgmtcommon
     - sdk/advisor/Microsoft.Azure.Management.Advisor
     - sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement
     - sdk/analysisservices/Microsoft.Azure.Management.AnalysisServices
@@ -38,6 +44,7 @@ pr:
     - sdk/blueprint/Microsoft.Azure.Management.Blueprint
     - sdk/botservice/Microsoft.Azure.Management.BotService
     - sdk/cdn/Microsoft.Azure.Management.Cdn
+    - sdk/changeanalysis/Microsoft.Azure.Management.ChangeAnalysis
     - sdk/cognitiveservices/Microsoft.Azure.Management.CognitiveServices
     - sdk/compute/Microsoft.Azure.Management.Compute
     - sdk/confluent/Microsoft.Azure.Management.Confluent
@@ -68,6 +75,7 @@ pr:
     - sdk/eng/mgmt
     - sdk/eventgrid/Microsoft.Azure.Management.EventGrid
     - sdk/eventhub/Microsoft.Azure.Management.EventHub
+    - sdk/extendedlocation/Microsoft.Azure.Management.ExtendedLocation
     - sdk/frontdoor/Microsoft.Azure.Management.FrontDoor
     - sdk/guestconfiguration/Microsoft.Azure.Management.GuestConfiguration
     - sdk/hdinsight/Microsoft.Azure.Management.HDInsight

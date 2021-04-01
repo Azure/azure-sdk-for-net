@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Core
         internal LocationContainer(SubscriptionOperations subscriptionOperations)
             : base(subscriptionOperations.ClientOptions, subscriptionOperations.Id, subscriptionOperations.Credential, subscriptionOperations.BaseUri)
         {
+            Id = subscriptionOperations.Id;
         }
 
         /// <inheritdoc/>
@@ -31,10 +32,15 @@ namespace Azure.ResourceManager.Core
         private SubscriptionsOperations SubscriptionsClient => ResourcesClient.Subscriptions;
 
         /// <summary>
+        /// The resource id
+        /// </summary>
+        public new SubscriptionResourceIdentifier Id { get; }
+
+        /// <summary>
         /// Gets the Azure subscriptions.
         /// </summary>
         /// <returns> Subscription container. </returns>
-        public SubscriptionContainer GetSubscriptionContainer()
+        public SubscriptionContainer GetSubscriptions()
         {
             return new SubscriptionContainer(ClientOptions, Credential, BaseUri);
         }
@@ -45,7 +51,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> A collection of location data that may take multiple service requests to iterate over. </returns>
         public Pageable<LocationData> List()
         {
-            return new PhWrappingPageable<Azure.ResourceManager.Resources.Models.Location, LocationData>(SubscriptionsClient.ListLocations(Id.Subscription), s => s.DisplayName);
+            return new PhWrappingPageable<Azure.ResourceManager.Resources.Models.Location, LocationData>(SubscriptionsClient.ListLocations(Id.SubscriptionId), s => s.DisplayName);
         }
 
         /// <summary>
@@ -55,7 +61,7 @@ namespace Azure.ResourceManager.Core
         /// <returns> An async collection of location data that may take multiple service requests to iterate over. </returns>
         public AsyncPageable<LocationData> ListAsync(CancellationToken token = default(CancellationToken))
         {
-            return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.Location, LocationData>(SubscriptionsClient.ListLocationsAsync(Id.Subscription, token), s => s.DisplayName);
+            return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.Location, LocationData>(SubscriptionsClient.ListLocationsAsync(Id.SubscriptionId, token), s => s.DisplayName);
         }
     }
 }
