@@ -1,6 +1,7 @@
 # Release History
 
 ## 12.8.0-beta.3 (Unreleased)
+- Added ability to specify server timeout.
 
 ## 12.7.1 (2021-03-29)
 - This release contains bug fixes to improve quality.
