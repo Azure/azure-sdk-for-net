@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.DocumentTranslation;
+using Azure.AI.Translator.DocumentTranslation;
 
 #nullable enable
 

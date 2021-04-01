@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.DocumentTranslation.Models;
+using Azure.AI.Translator.DocumentTranslation.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     /// <summary>
     /// The client to use for interacting with the Azure Document Translation Service.

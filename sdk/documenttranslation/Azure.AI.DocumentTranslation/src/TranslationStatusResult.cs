@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.DocumentTranslation.Models;
+using Azure.AI.Translator.DocumentTranslation.Models;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     /// <summary>
     /// Status information about the translation operation.

@@ -3,11 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.DocumentTranslation.Tests;
+using Azure.AI.Translator.DocumentTranslation.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.DocumentTranslation.Samples
+namespace Azure.AI.Translator.DocumentTranslation.Samples
 {
     /// <summary>
     /// Samples that are used in the associated README.md file.

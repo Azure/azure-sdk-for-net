@@ -7,11 +7,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.DocumentTranslation.Models;
+using Azure.AI.Translator.DocumentTranslation.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     /// <summary> Tracks the status of a long-running operation for translating documents. </summary>
     public class DocumentTranslationOperation : PageableOperation<DocumentStatusResult>

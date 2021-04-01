@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.DocumentTranslation;
+using Azure.AI.Translator.DocumentTranslation;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.Translator.DocumentTranslation.Models
 {
     /// <summary> Base type for List return in our api. </summary>
     internal partial class FileFormatListResult

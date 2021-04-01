@@ -3,7 +3,7 @@
 
 #nullable enable
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     /// <summary>
     /// Represents a pageable long-running operation that exposes the results

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     /// <summary> The DocumentStatusDetail. </summary>
     public partial class DocumentStatusResult

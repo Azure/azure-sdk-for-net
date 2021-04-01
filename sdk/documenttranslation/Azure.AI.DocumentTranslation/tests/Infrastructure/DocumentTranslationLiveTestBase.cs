@@ -11,7 +11,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Sas;
 
-namespace Azure.AI.DocumentTranslation.Tests
+namespace Azure.AI.Translator.DocumentTranslation.Tests
 {
     public class DocumentTranslationLiveTestBase : RecordedTestBase<DocumentTranslationTestEnvironment>
     {

@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     [CodeGenModel("StorageInputType")]
     public readonly partial struct StorageInputType

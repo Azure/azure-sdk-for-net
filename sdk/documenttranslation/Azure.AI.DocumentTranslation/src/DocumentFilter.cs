@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     /// <summary>
     /// The set of options that can be specified to filter the documents by name in the

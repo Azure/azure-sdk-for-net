@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.Translator.DocumentTranslation.Models
 {
     internal partial class StorageSourceListResult
     {

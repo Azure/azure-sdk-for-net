@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     /// <summary>
     /// Status information about a particular document within a translation operation.

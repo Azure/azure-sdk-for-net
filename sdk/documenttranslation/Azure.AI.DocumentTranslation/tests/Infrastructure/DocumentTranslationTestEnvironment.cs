@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.AI.DocumentTranslation.Tests
+namespace Azure.AI.Translator.DocumentTranslation.Tests
 {
     public class DocumentTranslationTestEnvironment : TestEnvironment
     {

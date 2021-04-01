@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     /// <summary> Source of the input documents. </summary>
     public partial class TranslationSource

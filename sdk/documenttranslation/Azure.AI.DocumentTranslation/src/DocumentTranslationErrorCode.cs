@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     [CodeGenModel("ErrorCodeV2")]
     public readonly partial struct DocumentTranslationErrorCode

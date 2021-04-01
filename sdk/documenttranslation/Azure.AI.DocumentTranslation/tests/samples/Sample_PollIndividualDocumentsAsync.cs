@@ -3,11 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.AI.DocumentTranslation.Tests;
+using Azure.AI.Translator.DocumentTranslation.Tests;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.DocumentTranslation.Samples
+namespace Azure.AI.Translator.DocumentTranslation.Samples
 {
     [LiveOnly]
     public partial class DocumentTranslationSamples : SamplesBase<DocumentTranslationTestEnvironment>

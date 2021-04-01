@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     [CodeGenModel("SourceInput")]
     public partial class TranslationSource

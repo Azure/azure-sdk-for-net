@@ -4,7 +4,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     /// <summary>
     /// Options that allow to configure the management of the request sent to the service.

@@ -11,11 +11,11 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.AI.DocumentTranslation.Models;
+using Azure.AI.Translator.DocumentTranslation.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     internal partial class DocumentTranslationRestClient
     {

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.Translator.DocumentTranslation.Models
 {
     /// <summary> The StatusSummary. </summary>
     internal partial class StatusSummary

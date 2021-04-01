@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
-using Azure.AI.DocumentTranslation.Models;
+using Azure.AI.Translator.DocumentTranslation.Models;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     /// <summary> Job status response. </summary>
     public partial class TranslationStatusResult

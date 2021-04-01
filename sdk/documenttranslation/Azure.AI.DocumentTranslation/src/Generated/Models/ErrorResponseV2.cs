@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using Azure.AI.DocumentTranslation;
+using Azure.AI.Translator.DocumentTranslation;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.Translator.DocumentTranslation.Models
 {
     /// <summary>
     /// Contains unified error information used for HTTP responses across any Cognitive Service. Instances

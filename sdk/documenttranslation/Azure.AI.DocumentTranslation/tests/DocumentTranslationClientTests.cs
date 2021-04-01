@@ -5,7 +5,7 @@ using System;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.AI.DocumentTranslation.Tests
+namespace Azure.AI.Translator.DocumentTranslation.Tests
 {
     public class DocumentTranslationClientTests : ClientTestBase
     {

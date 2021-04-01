@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
-using Azure.AI.DocumentTranslation.Models;
+using Azure.AI.Translator.DocumentTranslation.Models;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     /// <summary> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </summary>
     public partial class DocumentTranslationError

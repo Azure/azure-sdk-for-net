@@ -8,7 +8,7 @@
 using Azure;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation
+namespace Azure.AI.Translator.DocumentTranslation
 {
     internal partial class DocumentTranslationGetDocumentStatusHeaders
     {

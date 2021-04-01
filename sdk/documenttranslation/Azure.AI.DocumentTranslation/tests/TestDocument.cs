@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.AI.DocumentTranslation.Tests
+namespace Azure.AI.Translator.DocumentTranslation.Tests
 {
     public class TestDocument
     {

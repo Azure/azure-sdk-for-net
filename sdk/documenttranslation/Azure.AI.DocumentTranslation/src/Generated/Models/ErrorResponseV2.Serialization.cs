@@ -6,10 +6,10 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.DocumentTranslation;
+using Azure.AI.Translator.DocumentTranslation;
 using Azure.Core;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.Translator.DocumentTranslation.Models
 {
     internal partial class ErrorResponseV2
     {

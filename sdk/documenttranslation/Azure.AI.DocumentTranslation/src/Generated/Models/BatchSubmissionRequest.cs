@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.DocumentTranslation;
+using Azure.AI.Translator.DocumentTranslation;
 
-namespace Azure.AI.DocumentTranslation.Models
+namespace Azure.AI.Translator.DocumentTranslation.Models
 {
     /// <summary> Job submission batch request. </summary>
     internal partial class BatchSubmissionRequest
