@@ -16,33 +16,22 @@ namespace Azure.ResourceManager.Core.Tests
         private string _rgName;
 
         public ContainerTryGetTest(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
         [SetUp]
-        public void SetUp()
+        public async Task SetUp()
         {
             _rgName = Recording.GenerateAssetName("CoreRg");
             _client = GetArmClient();
             _container = _client.DefaultSubscription.GetResourceGroups();
-            _resourceGroup = _container.Construct(LocationData.WestUS2).CreateOrUpdate(_rgName);
+            _resourceGroup = await _container.Construct(LocationData.WestUS2).CreateOrUpdateAsync(_rgName);
         }
 
         [TestCase]
         [RecordedTest]
-        public void TryGetTest() 
-        {
-            ResourceGroup result = _container.TryGet(_rgName);
-            Assert.NotNull(result);
-            Assert.IsTrue(result.Data.Name == _rgName);
-            result = _container.TryGet("FakeName");
-            Assert.IsNull(result);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task TryGetAsyncTest()
+        public async Task TryGetTest()
         {
             ResourceGroup result = await _container.TryGetAsync(_rgName);
             Assert.NotNull(result);
@@ -52,6 +41,8 @@ namespace Azure.ResourceManager.Core.Tests
         }
 
         [TestCase]
+        [RecordedTest]
+        [SyncOnly]
         public void DoesExistTest()
         {
             Assert.IsTrue(_container.DoesExist(_rgName));

@@ -3,7 +3,7 @@ using Proto.Compute;
 using Proto.Network;
 using System;
 using Azure.Identity;
-
+using Azure.Core;
 
 namespace Proto.Client
 {
@@ -11,7 +11,8 @@ namespace Proto.Client
     {
         public override void Execute()
         {
-            var client = new ArmClient(new DefaultAzureCredential());
+            ArmClientOptions clientOptions = new ArmClientOptions(); 
+            var client = new ArmClient(new DefaultAzureCredential(), clientOptions);
             var rgOp = new ArmClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName);
             var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
             var resourceGroup = subscription.GetResourceGroups().Construct(Context.Loc).CreateOrUpdate(Context.RgName).Value;
@@ -27,7 +28,7 @@ namespace Proto.Client
             {
                 genericOp.Get();
             }
-            Console.WriteLine(subscription.ClientOptions.ApiVersions.TryGetApiVersion(VirtualNetwork.ResourceType));
+            Console.WriteLine(clientOptions.ApiVersions.TryGetApiVersion(VirtualNetwork.ResourceType));
         }
     }
 }

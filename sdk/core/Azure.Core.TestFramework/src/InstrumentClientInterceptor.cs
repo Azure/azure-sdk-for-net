@@ -37,7 +37,7 @@ namespace Azure.Core.TestFramework
 
             if (
                 // Generated ARM clients will have a property containing the sub-client that ends with Operations.
-                (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")) ||
+                (invocation.Method.Name.StartsWith("get_") && (type.Name.EndsWith("Operations") || type.BaseType.Name.EndsWith("Operations"))) ||
                 // Instrument the container construction methods inside Operations objects
                 (invocation.Method.Name.StartsWith("Get") && type.Name.EndsWith("Container")) ||
                 // Instrument the operations construction methods inside Operations objects

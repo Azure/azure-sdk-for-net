@@ -20,13 +20,13 @@ namespace Proto.Billing
         /// </summary>
         /// <param name="genericOperations"> An instance of <see cref="GenericResourceOperations"/> that has an id for an availability set. </param>
         internal BillingAccountOperations(GenericResourceOperations genericOperations)
-            : base(genericOperations)
+            : base(genericOperations, genericOperations.Id)
         {
         }
-        
+
         //TODO : dicuss ways to not pass in Subscription subscription for tenant only resources
-        internal BillingAccountOperations(ArmClientOptions options, string billingAccountId, TokenCredential credential, Uri baseUri)
-            : base(options, $"/providers/{ResourceType}/{billingAccountId}", credential, baseUri)
+        internal BillingAccountOperations(TenantOperations tenant, string billingAccountId)
+            : base(tenant, $"/providers/{ResourceType}/{billingAccountId}")
         {
         }
 

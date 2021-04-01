@@ -15,18 +15,18 @@ namespace Azure.ResourceManager.Core
         /// Initializes a new instance of the <see cref="ExtensionResourceOperationsBase"/> class.
         /// </summary>
         /// <param name="genericOperations"> The operations to copy the client options from. </param>
-        protected ExtensionResourceOperationsBase(OperationsBase genericOperations)
-            : base(genericOperations.ClientOptions, genericOperations.Id, genericOperations.Credential, genericOperations.BaseUri)
+        internal ExtensionResourceOperationsBase(OperationsBase genericOperations)
+            : this(new ClientContext(genericOperations.ClientOptions, genericOperations.Credential, genericOperations.BaseUri), genericOperations.Id)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExtensionResourceOperationsBase"/> class.
         /// </summary>
-        /// <param name="genericOperations"> The operations to copy the client options from. </param>
+        /// <param name="clientContext"></param>
         /// <param name="id"> The identifier of the extension resource. </param>
-        protected ExtensionResourceOperationsBase(OperationsBase genericOperations, ResourceIdentifier id)
-            : base(genericOperations.ClientOptions, id, genericOperations.Credential, genericOperations.BaseUri)
+        internal ExtensionResourceOperationsBase(ClientContext clientContext, ResourceIdentifier id)
+            : base(clientContext, id)
         {
         }
     }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Core
         /// <param name="genericOperations"> The operations to copy the client options from. </param>
         /// <param name="id"> The identifier of the extension resource. </param>
         protected ExtensionResourceOperationsBase(OperationsBase genericOperations, ResourceIdentifier id)
-            : base(genericOperations, id)
+            : base(new ClientContext(genericOperations.ClientOptions, genericOperations.Credential, genericOperations.BaseUri), id)
         {
         }
 

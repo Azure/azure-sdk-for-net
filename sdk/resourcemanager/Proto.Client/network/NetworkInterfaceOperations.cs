@@ -15,7 +15,7 @@ namespace Proto.Network
     public class NetworkInterfaceOperations : ResourceOperationsBase<ResourceGroupResourceIdentifier, NetworkInterface>, ITaggableResource<ResourceGroupResourceIdentifier,NetworkInterface>, IDeletableResource
     {
         internal NetworkInterfaceOperations(GenericResourceOperations genericOperations)
-            : base(genericOperations)
+            : base(genericOperations, genericOperations.Id)
         {
         }
 
