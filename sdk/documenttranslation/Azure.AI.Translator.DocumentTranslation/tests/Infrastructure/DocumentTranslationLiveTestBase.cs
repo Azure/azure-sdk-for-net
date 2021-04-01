@@ -39,7 +39,14 @@ namespace Azure.AI.Translator.DocumentTranslation.Tests
             DocumentTranslationClientOptions options = default)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
-            options ??= new DocumentTranslationClientOptions();
+            options ??= new DocumentTranslationClientOptions()
+            {
+                Diagnostics =
+                {
+                    LoggedHeaderNames = { "x-ms-request-id", "X-RequestId" },
+                    IsLoggingContentEnabled = true
+                }
+            };
 
             credential ??= new AzureKeyCredential(TestEnvironment.ApiKey);
             return InstrumentClient(new DocumentTranslationClient(endpoint, credential, InstrumentClientOptions(options)));
