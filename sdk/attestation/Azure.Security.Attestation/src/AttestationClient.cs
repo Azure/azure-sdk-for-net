@@ -289,7 +289,7 @@ namespace Azure.Security.Attestation
         /// See https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol for more information.
         /// </summary>
         /// <param name="request"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>A <see cref="TpmAttestationResponse"/>.</returns>
         public virtual Response<BinaryData> AttestTpm(BinaryData request, CancellationToken cancellationToken = default)
         {
@@ -316,7 +316,7 @@ namespace Azure.Security.Attestation
         /// See https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol for more information.
         /// </summary>
         /// <param name="request">Incoming request to send to the TPM attestation service.</param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>A <see cref="BinaryData"/> structure containing the value of <see cref="TpmAttestationResponse.Data"/>.</returns>
         public virtual async Task<Response<BinaryData>> AttestTpmAsync(BinaryData request, CancellationToken cancellationToken = default)
         {
@@ -342,7 +342,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Retrieves the signing certificates used to sign attestation requests.
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns></returns>
         public virtual Response<IReadOnlyList<AttestationSigner>> GetSigningCertificates(CancellationToken cancellationToken = default)
         {
@@ -364,7 +364,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Retrieves the signing certificates used to sign attestation requests.
         /// </summary>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns></returns>
         public virtual Task<Response<IReadOnlyList<AttestationSigner>>> GetSigningCertificatesAsync(CancellationToken cancellationToken = default)
         {
