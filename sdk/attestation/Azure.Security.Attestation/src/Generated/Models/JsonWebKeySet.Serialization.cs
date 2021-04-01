@@ -11,27 +11,11 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation.Models
 {
-    internal partial class JsonWebKeySet : IUtf8JsonSerializable
+    internal partial class JsonWebKeySet
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Keys))
-            {
-                writer.WritePropertyName("keys");
-                writer.WriteStartArray();
-                foreach (var item in Keys)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
         internal static JsonWebKeySet DeserializeJsonWebKeySet(JsonElement element)
         {
-            Optional<IList<JsonWebKey>> keys = default;
+            Optional<IReadOnlyList<JsonWebKey>> keys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keys"))

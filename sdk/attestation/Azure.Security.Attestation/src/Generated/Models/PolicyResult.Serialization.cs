@@ -13,34 +13,8 @@ using Azure.Core;
 namespace Azure.Security.Attestation.Models
 {
     [JsonConverter(typeof(PolicyResultConverter))]
-    public partial class PolicyResult : IUtf8JsonSerializable
+    public partial class PolicyResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyResolution))
-            {
-                writer.WritePropertyName("x-ms-policy-result");
-                writer.WriteStringValue(PolicyResolution.ToString());
-            }
-            if (Optional.IsDefined(BasePolicyTokenHash))
-            {
-                writer.WritePropertyName("x-ms-policy-token-hash");
-                writer.WriteStringValue(BasePolicyTokenHash);
-            }
-            if (Optional.IsDefined(BasePolicySigner))
-            {
-                writer.WritePropertyName("x-ms-policy-signer");
-                writer.WriteObjectValue(BasePolicySigner);
-            }
-            if (Optional.IsDefined(BasePolicy))
-            {
-                writer.WritePropertyName("x-ms-policy");
-                writer.WriteStringValue(BasePolicy);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static PolicyResult DeserializePolicyResult(JsonElement element)
         {
             Optional<PolicyModification> xMsPolicyResult = default;
@@ -87,7 +61,7 @@ namespace Azure.Security.Attestation.Models
         {
             public override void Write(Utf8JsonWriter writer, PolicyResult model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                throw new NotImplementedException();
             }
             public override PolicyResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

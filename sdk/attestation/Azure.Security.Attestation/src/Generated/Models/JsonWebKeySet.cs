@@ -14,7 +14,7 @@ namespace Azure.Security.Attestation.Models
     internal partial class JsonWebKeySet
     {
         /// <summary> Initializes a new instance of JsonWebKeySet. </summary>
-        public JsonWebKeySet()
+        internal JsonWebKeySet()
         {
             Keys = new ChangeTrackingList<JsonWebKey>();
         }
@@ -27,7 +27,7 @@ namespace Azure.Security.Attestation.Models
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
         /// </param>
-        internal JsonWebKeySet(IList<JsonWebKey> keys)
+        internal JsonWebKeySet(IReadOnlyList<JsonWebKey> keys)
         {
             Keys = keys;
         }
@@ -39,6 +39,6 @@ namespace Azure.Security.Attestation.Models
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
         /// </summary>
-        public IList<JsonWebKey> Keys { get; }
+        public IReadOnlyList<JsonWebKey> Keys { get; }
     }
 }

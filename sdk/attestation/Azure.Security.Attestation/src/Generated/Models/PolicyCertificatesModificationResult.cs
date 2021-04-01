@@ -11,7 +11,7 @@ namespace Azure.Security.Attestation.Models
     public partial class PolicyCertificatesModificationResult
     {
         /// <summary> Initializes a new instance of PolicyCertificatesModificationResult. </summary>
-        public PolicyCertificatesModificationResult()
+        internal PolicyCertificatesModificationResult()
         {
         }
 
@@ -25,8 +25,8 @@ namespace Azure.Security.Attestation.Models
         }
 
         /// <summary> Hex encoded SHA1 Hash of the binary representation certificate which was added or removed. </summary>
-        public string CertificateThumbprint { get; set; }
+        public string CertificateThumbprint { get; }
         /// <summary> The result of the operation. </summary>
-        public CertificateModification? CertificateResolution { get; set; }
+        public CertificateModification? CertificateResolution { get; }
     }
 }

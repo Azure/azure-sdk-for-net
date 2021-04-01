@@ -24,8 +24,12 @@ directive:
         path.endsWith("AttestationResult") ||
         path.endsWith("PolicyCertificatesResult") ||
         path.endsWith("AttestationCertificateManagementBody") ||
-        path.endsWith("PolicyCertificatesModificationResult") ||
-        path.endsWith("PolicyCertificatesModification"))
+        path.endsWith("PolicyCertificatesModificationResult"))
+      {
+        $[path]["x-csharp-usage"] = "model,output,converter";
+        $[path]["x-csharp-formats"] = "json";
+      }
+      else if (path.endsWith("PolicyCertificateModification"))
       {
         $[path]["x-csharp-usage"] = "model,input,output,converter";
         $[path]["x-csharp-formats"] = "json";

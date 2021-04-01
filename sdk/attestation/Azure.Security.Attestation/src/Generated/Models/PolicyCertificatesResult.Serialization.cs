@@ -13,19 +13,8 @@ using Azure.Core;
 namespace Azure.Security.Attestation.Models
 {
     [JsonConverter(typeof(PolicyCertificatesResultConverter))]
-    public partial class PolicyCertificatesResult : IUtf8JsonSerializable
+    public partial class PolicyCertificatesResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(InternalPolicyCertificates))
-            {
-                writer.WritePropertyName("x-ms-policy-certificates");
-                writer.WriteObjectValue(InternalPolicyCertificates);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element)
         {
             Optional<JsonWebKeySet> xMsPolicyCertificates = default;
@@ -49,7 +38,7 @@ namespace Azure.Security.Attestation.Models
         {
             public override void Write(Utf8JsonWriter writer, PolicyCertificatesResult model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                throw new NotImplementedException();
             }
             public override PolicyCertificatesResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
