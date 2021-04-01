@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Security.Attestation.Models
 {
     [JsonConverter(typeof(PolicyCertificateModificationConverter))]
-    public partial class PolicyCertificateModification : IUtf8JsonSerializable
+    internal partial class PolicyCertificateModification : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
