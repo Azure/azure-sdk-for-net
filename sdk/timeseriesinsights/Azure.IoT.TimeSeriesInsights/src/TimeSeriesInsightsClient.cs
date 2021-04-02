@@ -1737,8 +1737,6 @@ namespace Azure.IoT.TimeSeriesInsights
                     .ExecuteBatchAsync(batchRequest, _clientSessionId, cancellationToken)
                     .ConfigureAwait(false);
 
-                // Extract the errors array from the response. If there was an error with creating or replacing one of the types,
-                // it will be placed at the same index location that corresponds to its place in the input array.
                 IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
 
                 return Response.FromValue(executeBatchResponse.Value.Put.ToArray(), executeBatchResponse.GetRawResponse());
@@ -1789,8 +1787,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 Response<TypesBatchResponse> executeBatchResponse = _timeSeriesTypesRestClient
                     .ExecuteBatch(batchRequest, _clientSessionId, cancellationToken);
 
-                // Extract the errors array from the response. If there was an error with creating or replacing one of the types,
-                // it will be placed at the same index location that corresponds to its place in the input array.
                 IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
 
                 return Response.FromValue(executeBatchResponse.Value.Put.ToArray(), executeBatchResponse.GetRawResponse());
@@ -1808,7 +1804,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="timeSeriesTypeNames">List of names of the Time Series types to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of error objects corresponding by position to the request array in the request - null when the operation is successful.
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
@@ -1859,7 +1855,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="timeSeriesTypeNames">List of names of the Time Series types to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of error objects corresponding by position to the request array in the request - null when the operation is successful.
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <seealso cref="DeleteTimeSeriesTypesByNamesAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
@@ -1909,7 +1905,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="timeSeriesTypeIds">List of Time Series type Ids of the Time Series types to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of error objects corresponding by position to the request array in the request - null when the operation is successful.
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
@@ -1960,7 +1956,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="timeSeriesTypeIds">List of Ids of the Time Series instances to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of error objects corresponding by position to the request array in the request - null when the operation is successful.
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <seealso cref="DeleteInstancesAsync(IEnumerable{TimeSeriesId}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
