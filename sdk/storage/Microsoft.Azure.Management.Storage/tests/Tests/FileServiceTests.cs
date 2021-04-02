@@ -126,7 +126,7 @@ namespace Storage.Tests
                     Location = "eastus2euap",
                     Kind = Kind.StorageV2,
                     Sku = new Sku { Name = SkuName.StandardLRS },
-                    //LargeFileSharesState = LargeFileSharesState.Enabled
+                    LargeFileSharesState = LargeFileSharesState.Enabled
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, createParameters);
                 var updateParameters = new StorageAccountUpdateParameters

@@ -4,6 +4,7 @@
 namespace Azure.Core.Tests
 {
     public class PhArmOperationTest<T> : ArmOperationTest<T>
+        where T : class
     {
         protected PhArmOperationTest()
         {

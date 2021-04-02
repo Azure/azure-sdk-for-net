@@ -100,6 +100,87 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public async Task ReceiveMessagesWhenQueueEmpty()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, new ServiceBusClientOptions
+                {
+                    RetryOptions =
+                    {
+                        // very high TryTimeout
+                        TryTimeout = TimeSpan.FromSeconds(120)
+                    }
+                });
+
+                var messageCount = 2;
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                await sender.SendMessagesAsync(batch);
+
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                foreach (var message in await receiver.ReceiveMessagesAsync(2))
+                {
+                    await receiver.CompleteMessageAsync(message);
+                }
+
+                using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+
+                var start = DateTime.UtcNow;
+                Assert.ThrowsAsync<TaskCanceledException>(async () => await receiver.ReceiveMessagesAsync(1, cancellationToken: cancellationTokenSource.Token));
+                var stop = DateTime.UtcNow;
+
+                Assert.That(stop - start,  Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(3)));
+            }
+        }
+
+        [Test]
+        public async Task CancellingDoesNotLoseMessages()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = CreateClient();
+
+                var messageCount = 10;
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount).AsEnumerable<ServiceBusMessage>();
+                await sender.SendMessagesAsync(batch);
+                var receiver = client.CreateReceiver(
+                    scope.QueueName,
+                    new ServiceBusReceiverOptions { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete });
+
+                using var cancellationTokenSource = new CancellationTokenSource(500);
+                var received = 0;
+
+                try
+                {
+                    for (int i = 0; i < messageCount; i++)
+                    {
+                        await receiver.ReceiveMessageAsync(cancellationToken: cancellationTokenSource.Token);
+                        received++;
+                        await Task.Delay(100);
+                    }
+                }
+                catch (TaskCanceledException)
+                {
+                }
+
+                Assert.Less(received, messageCount);
+
+                var remaining = messageCount - received;
+                for (int i = 0; i < remaining; i++)
+                {
+                    await receiver.ReceiveMessageAsync();
+                    received++;
+                }
+                Assert.AreEqual(messageCount, received);
+            }
+        }
+
+        [Test]
         public async Task ReceiveMessagesInPeekLockMode()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))

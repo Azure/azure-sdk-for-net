@@ -29,12 +29,10 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionOperations"/> class.
         /// </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="subscriptionId"> The Id of the subscription. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="baseUri"> The base URI of the service. </param>
-        internal SubscriptionOperations(AzureResourceManagerClientOptions options, string subscriptionId, TokenCredential credential, Uri baseUri)
-            : base(options, new SubscriptionResourceIdentifier(subscriptionId), credential, baseUri)
+        /// <param name="clientContext"></param>
+        /// <param name="subscriptionGuid"> The Guid of the subscription. </param>
+        internal SubscriptionOperations(ClientContext clientContext, string subscriptionGuid)
+            : base(clientContext, new SubscriptionResourceIdentifier(subscriptionGuid))
         {
         }
 
@@ -44,8 +42,30 @@ namespace Azure.ResourceManager.Core
         /// <param name="subscription"> The subscription operations to copy client options from. </param>
         /// <param name="id"> The identifier of the subscription. </param>
         protected SubscriptionOperations(SubscriptionOperations subscription, SubscriptionResourceIdentifier id)
-            : base(subscription.ClientOptions, id, subscription.Credential, subscription.BaseUri)
+            : base(subscription, id)
         {
+        }
+
+        /// <summary>
+        /// ListResources of type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public virtual T ListResources<T>(Func<Uri, TokenCredential, ArmClientOptions, T> func)
+        {
+            return func(BaseUri, Credential, ClientOptions);
+        }
+
+        /// <summary>
+        /// ListResourcesAsync of type T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public virtual AsyncPageable<T> ListResourcesAsync<T>(Func<Uri, TokenCredential, ArmClientOptions, AsyncPageable<T>> func)
+        {
+            return func(BaseUri, Credential, ClientOptions);
         }
 
         /// <summary>
@@ -72,19 +92,19 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
-        /// Gets the resource group container under this subscription
+        /// Gets the resource group container under this subscription.
         /// </summary>
         /// <returns> The resource group container. </returns>
-        public virtual ResourceGroupContainer GetResourceGroupContainer()
+        public virtual ResourceGroupContainer GetResourceGroups()
         {
             return new ResourceGroupContainer(this);
         }
 
         /// <summary>
-        /// Gets the location group container under this subscription
+        /// Gets the location group container under this subscription.
         /// </summary>
         /// <returns> The resource group container. </returns>
-        public virtual LocationContainer GetLocationContainer()
+        public virtual LocationContainer GetLocations()
         {
             return new LocationContainer(this);
         }

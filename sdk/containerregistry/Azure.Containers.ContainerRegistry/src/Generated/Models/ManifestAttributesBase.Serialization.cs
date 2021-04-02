@@ -16,14 +16,13 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ManifestAttributesBase DeserializeManifestAttributesBase(JsonElement element)
         {
-            Optional<string> digest = default;
+            string digest = default;
             Optional<long> imageSize = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<DateTimeOffset> lastUpdateTime = default;
             Optional<string> architecture = default;
             Optional<string> os = default;
-            Optional<string> mediaType = default;
-            Optional<string> configMediaType = default;
+            Optional<IReadOnlyList<ManifestAttributesManifestReferences>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<ContentProperties> changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
@@ -73,14 +72,19 @@ namespace Azure.Containers.ContainerRegistry
                     os = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mediaType"))
+                if (property.NameEquals("references"))
                 {
-                    mediaType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("configMediaType"))
-                {
-                    configMediaType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<ManifestAttributesManifestReferences> array = new List<ManifestAttributesManifestReferences>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ManifestAttributesManifestReferences.DeserializeManifestAttributesManifestReferences(item));
+                    }
+                    references = array;
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -109,7 +113,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest.Value, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture.Value, os.Value, mediaType.Value, configMediaType.Value, Optional.ToList(tags), changeableAttributes.Value);
+            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdateTime), architecture.Value, os.Value, Optional.ToList(references), Optional.ToList(tags), changeableAttributes.Value);
         }
     }
 }

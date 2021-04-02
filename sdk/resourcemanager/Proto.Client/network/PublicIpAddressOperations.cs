@@ -22,7 +22,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="genericOperations"> An instance of <see cref="GenericResourceOperations"/> that has an id for a virtual machine. </param>
         internal PublicIpAddressOperations(GenericResourceOperations genericOperations)
-            : base(genericOperations)
+            : base(genericOperations, genericOperations.Id)
         {
         }
 
@@ -56,7 +56,7 @@ namespace Proto.Network
 
         private PublicIPAddressesOperations Operations => new NetworkManagementClient(
             Id.SubscriptionId,
-            BaseUri, 
+            BaseUri,
             Credential,
             ClientOptions.Convert<NetworkManagementClientOptions>()).PublicIPAddresses;
 

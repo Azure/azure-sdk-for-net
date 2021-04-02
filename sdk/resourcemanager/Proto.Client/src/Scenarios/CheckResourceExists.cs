@@ -9,9 +9,9 @@ namespace Proto.Client
     {
         public override void Execute()
         {
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
+            var client = new ArmClient(new DefaultAzureCredential());
             var subOp = client.DefaultSubscription;
-            var rgContainer = subOp.GetResourceGroupContainer();
+            var rgContainer = subOp.GetResourceGroups();
 
             Console.WriteLine($"Making sure {Context.RgName} doesn't exist yet.");
             if (rgContainer.DoesExist(Context.RgName))
@@ -29,7 +29,7 @@ namespace Proto.Client
             if(rgOutput == null)
                 throw new Exception($"The resource group {Context.RgName} should have existed.");
 
-            var asetContainer = rgOutput.GetAvailabilitySetContainer();
+            var asetContainer = rgOutput.GetAvailabilitySets();
             var asetName = Context.VmName + "_aSet";
 
             Console.WriteLine($"Making sure {asetName} doesn't exist yet.");

@@ -43,6 +43,9 @@ namespace Proto.Network
         /// </summary>
         public new ResourceGroupResourceIdentifier Id => base.Id as ResourceGroupResourceIdentifier;
 
+        /// <summary>
+        /// ResourceType for the container.
+        /// </summary>
         protected override ResourceType ValidResourceType => ResourceGroupOperations.ResourceType;
 
         private NetworkSecurityGroupsOperations Operations => new NetworkManagementClient(
