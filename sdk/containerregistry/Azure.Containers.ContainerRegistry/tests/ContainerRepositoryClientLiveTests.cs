@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -359,7 +359,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }
 
                 // Act
-                AsyncPageable<RegistryArtifactProperties> artifacts = client.GetRegistryArtifactsAsync(new GetRegistryArtifactOptions(RegistryArtifactOrderBy.LastUpdatedOnDescending));
+                AsyncPageable<RegistryArtifactProperties> artifacts = client.GetRegistryArtifactsAsync(new GetRegistryArtifactsOptions(RegistryArtifactOrderBy.LastUpdatedOnDescending));
 
                 // Assert
                 string digest = null;
@@ -484,7 +484,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             }
 
             // Act
-            AsyncPageable<TagProperties> tags = client.GetTagsAsync(new GetTagOptions(TagOrderBy.LastUpdatedOnDescending));
+            AsyncPageable<TagProperties> tags = client.GetTagsAsync(new GetTagsOptions(TagOrderBy.LastUpdatedOnDescending));
 
             // Assert
             await foreach (TagProperties tag in tags)

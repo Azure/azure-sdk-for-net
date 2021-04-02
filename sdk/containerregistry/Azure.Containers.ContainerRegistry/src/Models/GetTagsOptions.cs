@@ -6,13 +6,13 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary>
     /// Options to override default GetTag() behavior.
     /// </summary>
-    public class GetTagOptions
+    public class GetTagsOptions
     {
         /// <summary>
         /// Construct an instance of GetTagOptions.
         /// </summary>
         /// <param name="orderBy"> Requested ordering for tags in the returned collection. </param>
-        public GetTagOptions(TagOrderBy orderBy)
+        public GetTagsOptions(TagOrderBy orderBy)
         {
             this.OrderBy = orderBy;
         }
