@@ -173,6 +173,10 @@ namespace Azure.Core.Amqp
                 case bool:
                 case Guid:
                 case DateTime:
+                case DateTimeOffset:
+                case TimeSpan:
+                case Uri:
+                case IEnumerable<string>:
                 case IEnumerable<byte>:
                 case IEnumerable<sbyte>:
                 case IEnumerable<char>:
@@ -188,6 +192,9 @@ namespace Azure.Core.Amqp
                 case IEnumerable<bool>:
                 case IEnumerable<Guid>:
                 case IEnumerable<DateTime>:
+                case IEnumerable<DateTimeOffset>:
+                case IEnumerable<TimeSpan>:
+                case IEnumerable<Uri>:
                 case IEnumerable<KeyValuePair<string, string>>:
                 case IEnumerable<KeyValuePair<string, byte>>:
                 case IEnumerable<KeyValuePair<string, sbyte>>:
@@ -204,6 +211,9 @@ namespace Azure.Core.Amqp
                 case IEnumerable<KeyValuePair<string, bool>>:
                 case IEnumerable<KeyValuePair<string, Guid>>:
                 case IEnumerable<KeyValuePair<string, DateTime>>:
+                case IEnumerable<KeyValuePair<string, DateTimeOffset>>:
+                case IEnumerable<KeyValuePair<string, TimeSpan>>:
+                case IEnumerable<KeyValuePair<string, Uri>>:
                     return;
                 case KeyValuePair<string, object> kvp:
                     ValidateAmqpPrimitive(kvp.Value, paramName);

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Azure.Core;
 using Azure.Core.Amqp;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -24,38 +25,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             if (message.AmqpMessage.Body.TryGetValue(out object value))
             {
-                return CreateValueMessage(value);
+                if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(value, MappingType.MessageBody, out object amqpObject))
+                {
+                    return AmqpMessage.Create(new AmqpValue { Value = amqpObject });
+                }
+                else
+                {
+                    throw new NotSupportedException(Resources.InvalidAmqpMessageValueBody.FormatForUser(amqpObject?.GetType()));
+                }
             }
             if (message.AmqpMessage.Body.TryGetSequence(out IEnumerable<IList<object>> sequence))
             {
                 return AmqpMessage.Create(sequence.Select(s => new AmqpSequence((IList)s)).ToList());
             }
-            throw new NotSupportedException($"{message.AmqpMessage.Body.GetType()} is not a supported message body type.");
-        }
 
-        private static AmqpMessage CreateValueMessage(object value)
-        {
-            return value switch
-            {
-                IEnumerable<KeyValuePair<string, string>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, object>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, byte>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, sbyte>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, char>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, short>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, ushort>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, int>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, uint>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, long>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, ulong>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, float>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, double>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, decimal>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, bool>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, Guid>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                IEnumerable<KeyValuePair<string, DateTime>> enumerable => AmqpMessage.Create(new AmqpValue { Value = CreateAmqpMap(enumerable) }),
-                _ => AmqpMessage.Create(new AmqpValue { Value = value }),
-            };
+            throw new NotSupportedException($"{message.AmqpMessage.Body.GetType()} is not a supported message body type.");
         }
 
         private static AmqpMap CreateAmqpMap<K,V>(IEnumerable<KeyValuePair<K,V>> enumerable)

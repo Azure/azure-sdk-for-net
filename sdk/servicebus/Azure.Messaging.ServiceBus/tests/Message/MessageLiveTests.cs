@@ -271,6 +271,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             new decimal[] { new decimal(3.1415926) },
             DateTimeOffset.Parse("3/24/21").UtcDateTime,
             new DateTime[] {DateTimeOffset.Parse("3/24/21").UtcDateTime },
+            DateTimeOffset.Parse("3/24/21"),
+            new DateTimeOffset[] {DateTimeOffset.Parse("3/24/21") },
+            TimeSpan.FromSeconds(5),
+            new TimeSpan[] {TimeSpan.FromSeconds(5)},
+            new Uri("http://localHost"),
+            new Uri[] { new Uri("http://localHost") },
             new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554"),
             new Guid[] { new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554"), new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554") },
             new Dictionary<string, string> { { "key", "value" } },
@@ -282,8 +288,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             new Dictionary<string, double> {{ "key", 3.1415926 } },
             new Dictionary<string, decimal> {{ "key", new decimal(3.1415926) } },
             new Dictionary<string, DateTime> {{ "key", DateTimeOffset.Parse("3/24/21").UtcDateTime } },
+            // for some reason dictionaries with DateTimeOffset, Timespan, or Uri values are not supported in AMQP lib
+            // new Dictionary<string, DateTimeOffset> {{ "key", DateTimeOffset.Parse("3/24/21") } },
+            // new Dictionary<string, TimeSpan> {{ "key", TimeSpan.FromSeconds(5) } },
+            // new Dictionary<string, Uri> {{ "key", new Uri("http://localHost") } },
             new Dictionary<string, Guid> {{ "key", new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554") } },
-            new Dictionary<string, object> { { "key1", "value" }, { "key2", 2 } }
+            new Dictionary<string, object> { { "key1", "value" }, { "key2", 2 } },
         };
 
         [Test]
@@ -311,8 +321,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             }
         }
 
+        private static readonly object[] s_amqpSequences =
+{
+            Enumerable.Repeat(new List<object> {"first", "second"}, 2),
+            Enumerable.Repeat(new object[] {'c' }, 1),
+            Enumerable.Repeat(new object[] { long.MaxValue }, 2),
+            Enumerable.Repeat(new object[] { 1 }, 2),
+            Enumerable.Repeat(new object[] { 3.1415926, true }, 2),
+            Enumerable.Repeat(new object[] { DateTimeOffset.Parse("3/24/21").UtcDateTime, true }, 2),
+            new List<IList<object>> { new List<object> { "first", 1}, new List<object> { "second", 2 } }
+        };
+
         [Test]
-        public async Task CanSendSequenceSection()
+        [TestCaseSource(nameof(s_amqpSequences))]
+        public async Task CanSendSequenceSection(IEnumerable<IList<object>> sequence)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
@@ -320,9 +342,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var sender = client.CreateSender(scope.QueueName);
 
                 var msg = new ServiceBusMessage();
-                var sequence = new List<IList<object>>();
-                sequence.Add(new List<object> { "first", 1 });
-                sequence.Add(new List<object> { "second", 2 });
                 msg.GetRawAmqpMessage().Body = AmqpMessageBody.FromSequence(sequence);
 
                 await sender.SendMessageAsync(msg);
@@ -330,11 +349,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var receiver = client.CreateReceiver(scope.QueueName);
                 var received = await receiver.ReceiveMessageAsync();
                 received.GetRawAmqpMessage().Body.TryGetSequence(out IEnumerable<IList<object>> receivedData);
-                var receivedSequence = receivedData.ToList();
-                Assert.AreEqual("first", receivedSequence[0][0]);
-                Assert.AreEqual(1, receivedSequence[0][1]);
-                Assert.AreEqual("second", receivedSequence[1][0]);
-                Assert.AreEqual(2, receivedSequence[1][1]);
+                var outerEnum = receivedData.GetEnumerator();
+                foreach (IList<object> seq in sequence)
+                {
+                    outerEnum.MoveNext();
+                    var innerEnum = outerEnum.Current.GetEnumerator();
+                    foreach (object elem in seq)
+                    {
+                        innerEnum.MoveNext();
+                        Assert.AreEqual(elem, innerEnum.Current);
+                    }
+                }
 
                 Assert.That(
                     () => received.Body,

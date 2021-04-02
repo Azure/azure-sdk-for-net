@@ -145,11 +145,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 case BufferListStream bufferListStream:
                     return bufferListStream.ReadBytes((int)stream.Length);
                 default:
-                {
-                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStream.ToArray());
-                }
+                    {
+                        using var memStream = new MemoryStream(StreamBufferSizeInBytes);
+                        stream.CopyTo(memStream, StreamBufferSizeInBytes);
+                        return new ArraySegment<byte>(memStream.ToArray());
+                    }
             }
         }
 
@@ -229,22 +229,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0 && amqpMessage.ValueBody?.Value != null)
             {
-                var val = amqpMessage.ValueBody.Value;
-
-                // Special case Dictionary<MapKey, object> as this is the format used when receiving a dictionary valued message.
-                // Transform it into a neutral Dictionary<string, object> that can be used with the AmqpAnnotatedMessage.
-                if (val is IEnumerable<KeyValuePair<MapKey, object>> enumerable)
+                if (TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out object netObject))
                 {
-                    Dictionary<string, object> transformed = new();
-                    foreach (KeyValuePair<MapKey, object> kvp in enumerable)
-                    {
-                        transformed.Add(kvp.Key.ToString(), kvp.Value);
-                    }
-                    annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(transformed));
+                    annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(netObject));
                 }
                 else
                 {
-                    annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(amqpMessage.ValueBody.Value));
+                    throw new NotSupportedException(Resources.InvalidAmqpMessageValueBody.FormatForUser(amqpMessage.ValueBody.Value.GetType()));
                 }
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpSequence) != 0)
