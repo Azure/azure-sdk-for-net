@@ -111,7 +111,7 @@ namespace Azure.Core.Tests
             public override ValueTask<Response<int>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken)
             {
                 WaitForCompletionCalls.Add(pollingInterval);
-                return default;
+                return new(Response.FromValue(0, new MockResponse(200)));
             }
         }
     }
