@@ -54,8 +54,21 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsErrorResponse(HttpMessage message)
         {
-            var statusKind = message.Response.Status / 100;
-            return statusKind == 4 || statusKind == 5;
+            var status = message.Response.Status;
+            switch (status)
+            {
+                case 409:
+                    var header = message.Request.Headers;
+                    // Don't treat 409 responses to conditional requests as errors
+                    var isConditional =
+                            header.Contains(HttpHeader.Names.IfMatch) ||
+                            header.Contains(HttpHeader.Names.IfNoneMatch) ||
+                            header.Contains(HttpHeader.Names.IfModifiedSince) ||
+                            header.Contains(HttpHeader.Names.IfUnmodifiedSince);
+                    return !isConditional;
+                case >= 400 and <= 599: return true;
+                default: return false;
+            }
         }
     }
 }

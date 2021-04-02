@@ -48,16 +48,19 @@ namespace Azure.Core.Tests
             Assert.True(httpMessage.ResponseClassifier.IsRetriable(httpMessage, new OperationCanceledException()));
         }
 
-        [Test]
-        public void TreatsAll4xAnd5xAsErrors()
+        [TestCase("If-Match")]
+        [TestCase("If-None-Match")]
+        [TestCase("If-Unmodified-Since")]
+        [TestCase("If-Modified-Since")]
+        public void ConditionalRequestsWith409ResponseNotErrors(string header)
         {
             var classifier = new ResponseClassifier();
-            var httpMessage = new HttpMessage(new MockRequest(), new ResponseClassifier());
-            for (int i = 400; i < 600; i++)
-            {
-                httpMessage.Response = new MockResponse(i);
-                Assert.True(classifier.IsErrorResponse(httpMessage));
-            }
+            var mockRequest = new MockRequest();
+            mockRequest.AddHeader(header, "value");
+            var httpMessage = new HttpMessage(mockRequest, new ResponseClassifier());
+
+            httpMessage.Response = new MockResponse(409);
+            Assert.False(classifier.IsErrorResponse(httpMessage));
         }
     }
 }
