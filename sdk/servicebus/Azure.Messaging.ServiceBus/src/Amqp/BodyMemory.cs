@@ -15,7 +15,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
     {
         private ArrayBufferWriter<byte> _writer;
         private IList<ReadOnlyMemory<byte>> _segments;
-        private readonly IEnumerable<ReadOnlyMemory<byte>> _lazySegments;
+        private IEnumerable<ReadOnlyMemory<byte>> _lazySegments;
 
         private ReadOnlyMemory<byte> WrittenMemory
         {
@@ -27,6 +27,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     {
                         Append(segment);
                     }
+
+                    _lazySegments = null;
                 }
 
                 return _writer?.WrittenMemory ?? ReadOnlyMemory<byte>.Empty;
