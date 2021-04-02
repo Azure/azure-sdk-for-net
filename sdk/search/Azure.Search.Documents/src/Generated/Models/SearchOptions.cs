@@ -44,7 +44,7 @@ namespace Azure.Search.Documents
         /// <param name="selectRaw"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
         /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
         /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, Speller? speller, Answers? answers, string selectRaw, int? skip, int? size)
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpeller? speller, QueryAnswer? answers, string selectRaw, int? skip, int? size)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -88,9 +88,9 @@ namespace Azure.Search.Documents
         /// <summary> A value that specifies the language of the search query. </summary>
         public QueryLanguage? QueryLanguage { get; set; }
         /// <summary> A value that specified the type of the speller to use to spell-correct individual search query terms. </summary>
-        public Speller? Speller { get; set; }
+        public QuerySpeller? Speller { get; set; }
         /// <summary> A value that specifies whether answers should be returned as part of the search response. </summary>
-        public Answers? Answers { get; set; }
+        public QueryAnswer? Answers { get; set; }
         /// <summary> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </summary>
         public int? Skip { get; set; }
     }
