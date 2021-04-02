@@ -42,17 +42,6 @@ namespace Azure.Core.TestFramework
                 invocation.ReturnValue = _testBase.InstrumentClient(type, result, Array.Empty<IInterceptor>());
                 return;
             }
-
-            if (type is {IsGenericType: true} genericType &&
-                genericType.GetGenericTypeDefinition() == typeof(AsyncPageable<>))
-            {
-                invocation.ReturnValue = Activator.CreateInstance(
-                    typeof(DiagnosticScopeValidatingAsyncEnumerable<>).MakeGenericType(genericType.GenericTypeArguments[0]),
-                    invocation.ReturnValue,
-                    invocation.Method);
-                return;
-            }
-
             if (type is {IsGenericType: true, GenericTypeArguments: {} arguments } &&
                 type.GetGenericTypeDefinition() == typeof(Task<>) &&
                 typeof(Operation).IsAssignableFrom(arguments[0]))
@@ -65,52 +54,6 @@ namespace Azure.Core.TestFramework
         internal async ValueTask<T> InstrumentOperationInterceptor<T>(IInvocation invocation, Func<ValueTask<T>> innerTask)
         {
             return (T) _testBase.InstrumentOperation(typeof(T), await innerTask());
-        }
-
-        internal class DiagnosticScopeValidatingAsyncEnumerable<T> : AsyncPageable<T>
-        {
-            private readonly AsyncPageable<T> _pageable;
-            private readonly MethodInfo _methodInfo;
-            private readonly bool _overridesGetAsyncEnumerator;
-
-            public DiagnosticScopeValidatingAsyncEnumerable(AsyncPageable<T> pageable, MethodInfo methodInfo)
-            {
-                if (pageable == null) throw new ArgumentNullException(nameof(pageable), "Operations returning [Async]Pageable should never return null.");
-
-                // If AsyncPageable overrides GetAsyncEnumerator we have to pass the call through to it
-                // this would effectively disable the validation so avoid doing it as much as possible
-                var getAsyncEnumeratorMethod = pageable.GetType().GetMethod("GetAsyncEnumerator", BindingFlags.Public | BindingFlags.Instance);
-                _overridesGetAsyncEnumerator = getAsyncEnumeratorMethod.DeclaringType is {IsGenericType: true} genericType &&
-                    genericType.GetGenericTypeDefinition() != typeof(AsyncPageable<>);
-
-                _pageable = pageable;
-                _methodInfo = methodInfo;
-            }
-
-            public override IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
-            {
-                if (_overridesGetAsyncEnumerator)
-                {
-                    return _pageable.GetAsyncEnumerator(cancellationToken);
-                }
-
-                return base.GetAsyncEnumerator(cancellationToken);
-            }
-
-            public override async IAsyncEnumerable<Page<T>> AsPages(string continuationToken = null, int? pageSizeHint = null)
-            {
-                await using var enumerator = _pageable.AsPages(continuationToken, pageSizeHint).GetAsyncEnumerator();
-
-                while (await DiagnosticScopeValidatingInterceptor.ValidateDiagnosticScope(async () =>
-                {
-                    bool movedNext = await enumerator.MoveNextAsync();
-                    // Don't expect the MoveNextAsync call that returns false to create scope
-                    return (movedNext, !movedNext);
-                }, _methodInfo, $"AsPages() implementation returned from {_methodInfo.Name}"))
-                {
-                    yield return enumerator.Current;
-                }
-            }
         }
     }
 }

@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
 using Castle.DynamicProxy;
@@ -20,15 +22,36 @@ namespace Azure.Core.TestFramework
 
         public void Intercept(IInvocation invocation)
         {
+            var type = invocation.Method.ReturnType;
+
+            var isAsyncEnumerable = false;
+            foreach (var iface in type.GetInterfaces())
+            {
+                if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(IAsyncEnumerable<>))
+                {
+                    isAsyncEnumerable = true;
+                }
+            }
+
             if (invocation.Method.Name.EndsWith("Async") &&
-                !invocation.Method.ReturnType.Name.Contains("IAsyncEnumerable"))
+                !isAsyncEnumerable)
             {
                 WrapAsyncResult(invocation, this, ValidateDiagnosticScopeMethodInfo);
+                return;
             }
-            else
+
+            if (type is {IsGenericType: true} genericType &&
+                genericType.GetGenericTypeDefinition() == typeof(AsyncPageable<>))
             {
                 invocation.Proceed();
+                invocation.ReturnValue = Activator.CreateInstance(
+                    typeof(DiagnosticScopeValidatingAsyncEnumerable<>).MakeGenericType(genericType.GenericTypeArguments[0]),
+                    invocation.ReturnValue,
+                    invocation.Method);
+                return;
             }
+
+            invocation.Proceed();
         }
 
         internal static void WrapAsyncResult(IInvocation invocation, object target, MethodInfo interceptorMethod)
@@ -188,6 +211,52 @@ namespace Azure.Core.TestFramework
             }
 
             return result;
+        }
+
+        internal class DiagnosticScopeValidatingAsyncEnumerable<T> : AsyncPageable<T>
+        {
+            private readonly AsyncPageable<T> _pageable;
+            private readonly MethodInfo _methodInfo;
+            private readonly bool _overridesGetAsyncEnumerator;
+
+            public DiagnosticScopeValidatingAsyncEnumerable(AsyncPageable<T> pageable, MethodInfo methodInfo)
+            {
+                if (pageable == null) throw new ArgumentNullException(nameof(pageable), "Operations returning [Async]Pageable should never return null.");
+
+                // If AsyncPageable overrides GetAsyncEnumerator we have to pass the call through to it
+                // this would effectively disable the validation so avoid doing it as much as possible
+                var getAsyncEnumeratorMethod = pageable.GetType().GetMethod("GetAsyncEnumerator", BindingFlags.Public | BindingFlags.Instance);
+                _overridesGetAsyncEnumerator = getAsyncEnumeratorMethod.DeclaringType is {IsGenericType: true} genericType &&
+                    genericType.GetGenericTypeDefinition() != typeof(AsyncPageable<>);
+
+                _pageable = pageable;
+                _methodInfo = methodInfo;
+            }
+
+            public override IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+            {
+                if (_overridesGetAsyncEnumerator)
+                {
+                    return _pageable.GetAsyncEnumerator(cancellationToken);
+                }
+
+                return base.GetAsyncEnumerator(cancellationToken);
+            }
+
+            public override async IAsyncEnumerable<Page<T>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                await using var enumerator = _pageable.AsPages(continuationToken, pageSizeHint).GetAsyncEnumerator();
+
+                while (await ValidateDiagnosticScope(async () =>
+                {
+                    bool movedNext = await enumerator.MoveNextAsync();
+                    // Don't expect the MoveNextAsync call that returns false to create scope
+                    return (movedNext, !movedNext);
+                }, _methodInfo, $"AsPages() implementation returned from {_methodInfo.Name}"))
+                {
+                    yield return enumerator.Current;
+                }
+            }
         }
     }
 }

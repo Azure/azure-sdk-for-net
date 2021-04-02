@@ -83,7 +83,6 @@ namespace Azure.Core.TestFramework
             }
 
             interceptors.Add(new GetOriginalInterceptor(client));
-            interceptors.Add(new InstrumentResultInterceptor(this));
 
             if (TestDiagnostics)
             {
@@ -98,6 +97,8 @@ namespace Azure.Core.TestFramework
             {
                 interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
             }
+
+            interceptors.Add(new InstrumentResultInterceptor(this));
 
             return ProxyGenerator.CreateClassProxyWithTarget(
                 clientType,
