@@ -187,9 +187,11 @@ namespace Azure.Containers.ContainerRegistry
 
         /// <summary>
         /// Create a new <see cref="ContainerRepositoryClient"/> object for the specified repository.
+        /// The new <see cref="ContainerRepositoryClient"/> uses the same request
+        /// pipeline as the <see cref="ContainerRegistryClient"/>.
         /// </summary>
         /// <param name="repository"> The repository to reference. </param>
-        /// <returns></returns>
+        /// <returns> A new <see cref="ContainerRepositoryClient"/> for the desired repository. </returns>
         public virtual ContainerRepositoryClient GetRepositoryClient(string repository)
         {
             return new ContainerRepositoryClient(_endpoint,
