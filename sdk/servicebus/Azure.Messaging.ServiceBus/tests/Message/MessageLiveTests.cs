@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
 using Azure.Core.Serialization;
@@ -272,6 +273,17 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             new DateTime[] {DateTimeOffset.Parse("3/24/21").UtcDateTime },
             new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554"),
             new Guid[] { new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554"), new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554") },
+            new Dictionary<string, string> { { "key", "value" } },
+            new Dictionary<string, char> {{ "key", 'c' }},
+            new Dictionary<string, int> {{ "key", 5 }},
+            new Dictionary<string, byte> {{ "key", 1 } },
+            new Dictionary<string, sbyte> {{ "key", 1 } },
+            new Dictionary<string, short> {{ "key", 1 } },
+            new Dictionary<string, double> {{ "key", 3.1415926 } },
+            new Dictionary<string, decimal> {{ "key", new decimal(3.1415926) } },
+            new Dictionary<string, DateTime> {{ "key", DateTimeOffset.Parse("3/24/21").UtcDateTime } },
+            new Dictionary<string, Guid> {{ "key", new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554") } },
+            new Dictionary<string, object> { { "key1", "value" }, { "key2", 2 } }
         };
 
         [Test]

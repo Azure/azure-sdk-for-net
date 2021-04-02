@@ -229,7 +229,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0 && amqpMessage.ValueBody?.Value != null)
             {
-                annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(amqpMessage.ValueBody.Value));
+                var val = amqpMessage.ValueBody.Value;
+
+                // Special case Dictionary<MapKey, object> as this is the format used when receiving a dictionary valued message.
+                // Transform it into a neutral Dictionary<string, object> that can be used with the AmqpAnnotatedMessage.
+                if (val is IEnumerable<KeyValuePair<MapKey, object>> enumerable)
+                {
+                    Dictionary<string, object> transformed = new();
+                    foreach (KeyValuePair<MapKey, object> kvp in enumerable)
+                    {
+                        transformed.Add(kvp.Key.ToString(), kvp.Value);
+                    }
+                    annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(transformed));
+                }
+                else
+                {
+                    annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(amqpMessage.ValueBody.Value));
+                }
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpSequence) != 0)
             {

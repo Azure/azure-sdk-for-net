@@ -173,7 +173,26 @@ namespace Azure.Core.Amqp
                 case bool:
                 case Guid:
                 case DateTime:
+                case KeyValuePair<string, string>:
+                case KeyValuePair<string, byte>:
+                case KeyValuePair<string, sbyte>:
+                case KeyValuePair<string, char>:
+                case KeyValuePair<string, short>:
+                case KeyValuePair<string, ushort>:
+                case KeyValuePair<string, int>:
+                case KeyValuePair<string, uint>:
+                case KeyValuePair<string, long>:
+                case KeyValuePair<string, ulong>:
+                case KeyValuePair<string, float>:
+                case KeyValuePair<string, double>:
+                case KeyValuePair<string, decimal>:
+                case KeyValuePair<string, bool>:
+                case KeyValuePair<string, Guid>:
+                case KeyValuePair<string, DateTime>:
                     return;
+                case KeyValuePair<string, object> kvp:
+                    ValidateAmqpPrimitive(kvp.Value, paramName);
+                    break;
                 case IEnumerable enumerable:
                     foreach (object val in enumerable)
                     {
