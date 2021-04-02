@@ -25,6 +25,7 @@ namespace Azure.Communication.Identity
         {
             ApiVersion = version switch
             {
+                ServiceVersion.V2021_02_22_preview1 => "2021-02-22-preview1",
                 ServiceVersion.V2021_03_07 => "2021-03-07",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
             };
@@ -35,10 +36,14 @@ namespace Azure.Communication.Identity
         /// </summary>
         public enum ServiceVersion
         {
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+            /// <summary>
+            /// The V2021_02_22_preview1 of the identity service.
+            /// </summary>
+            V2021_02_22_preview1 = 0,
             /// <summary>
             /// The V2021_03_07 of the identity service.
             /// </summary>
-#pragma warning disable CA1707 // Identifiers should not contain underscores
             V2021_03_07 = 1,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
