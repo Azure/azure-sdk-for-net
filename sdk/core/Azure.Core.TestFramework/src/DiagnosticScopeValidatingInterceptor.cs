@@ -173,6 +173,11 @@ namespace Azure.Core.TestFramework
             private readonly bool _strict;
             private readonly bool _overridesGetAsyncEnumerator;
 
+            //for mocking
+            protected DiagnosticScopeValidatingAsyncEnumerable()
+            {
+            }
+
             public DiagnosticScopeValidatingAsyncEnumerable(AsyncPageable<T> pageable, string expectedName, string methodName, bool strict)
             {
                 if (pageable == null) throw new ArgumentNullException(nameof(pageable), "Operations returning [Async]Pageable should never return null.");

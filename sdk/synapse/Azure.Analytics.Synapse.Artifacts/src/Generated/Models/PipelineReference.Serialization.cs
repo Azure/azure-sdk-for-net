@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(PipelineReferenceConverter))]
     public partial class PipelineReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -51,6 +54,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new PipelineReference(type, referenceName, name.Value);
+        }
+
+        internal partial class PipelineReferenceConverter : JsonConverter<PipelineReference>
+        {
+            public override void Write(Utf8JsonWriter writer, PipelineReference model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override PipelineReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializePipelineReference(document.RootElement);
+            }
         }
     }
 }

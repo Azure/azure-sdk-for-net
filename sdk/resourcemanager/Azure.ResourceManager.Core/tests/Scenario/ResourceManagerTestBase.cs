@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Core.Tests
     [Parallelizable]
     public class ResourceManagerTestBase : ManagementRecordedTestBase<ResourceManagerTestEnvironment>
     {
-        protected AzureResourceManagerClient Client { get; private set; }
+        protected ArmClient Client { get; private set; }
 
         protected ResourceManagerTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)

@@ -1,5 +1,16 @@
 # Release History
 
+## 4.2.0-beta.1 (Unreleased)
+
+
+## 4.1.0 (2021-03-23)
+
+### New Features
+- Added new Azure Communication Services system events.
+
+### Fixed
+- Fixed system mapping for `AcsChatParticipantAddedToThread` and `AcsChatParticipantRemovedFromThread`.
+
 ## 4.0.0 (2021-03-09)
 
 ### New Features

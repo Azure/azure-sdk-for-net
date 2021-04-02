@@ -11,7 +11,7 @@ namespace Proto.Client
         {
             var createVm = new CreateSingleVmExample(Context);
             createVm.Execute();
-            var client = new AzureResourceManagerClient(new DefaultAzureCredential());
+            var client = new ArmClient(new DefaultAzureCredential());
 
             //retrieve from lowest level, doesn't give ability to walk up and down the container structure
             var vmOp = client.GetResourceOperations<VirtualMachineOperations>(Context.SubscriptionId, Context.RgName, Context.VmName);

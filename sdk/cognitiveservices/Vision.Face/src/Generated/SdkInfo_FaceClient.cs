@@ -19,9 +19,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
           {
               return new Tuple<string, string, string>[]
               {
-
+                new Tuple<string, string, string>("FaceClient", "Face", "1.0"),
+                new Tuple<string, string, string>("FaceClient", "FaceList", "1.0"),
+                new Tuple<string, string, string>("FaceClient", "LargeFaceList", "1.0"),
+                new Tuple<string, string, string>("FaceClient", "LargePersonGroup", "1.0"),
+                new Tuple<string, string, string>("FaceClient", "LargePersonGroupPerson", "1.0"),
+                new Tuple<string, string, string>("FaceClient", "PersonGroup", "1.0"),
+                new Tuple<string, string, string>("FaceClient", "PersonGroupPerson", "1.0"),
+                new Tuple<string, string, string>("FaceClient", "Snapshot", "1.0"),
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "previous";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/Face/readme.md --csharp --version=previous --reflect-api-versions --csharp-sdks-folder=D:\\code\\azure-sdk-for-net\\sdk";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "0d832037c324f08da297bb292b5ad91c47f5fa23";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

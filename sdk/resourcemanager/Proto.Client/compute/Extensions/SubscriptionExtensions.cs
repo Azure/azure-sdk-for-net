@@ -1,9 +1,11 @@
 ﻿using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Core;
-using Azure.ResourceManager.Core.Adapters;
 using Azure.ResourceManager.Core.Resources;
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Proto.Compute
 {
@@ -12,6 +14,15 @@ namespace Proto.Compute
     /// </summary>
     public static class SubscriptionExtensions
     {
+        private static ComputeManagementClient GetComputeClient(Uri baseUri, string subscriptionGuid, TokenCredential credential, ArmClientOptions clientOptions)
+        {
+            return new ComputeManagementClient(
+                baseUri,
+                subscriptionGuid,
+                credential,
+                clientOptions.Convert<ComputeManagementClientOptions>());
+        }
+
         #region Virtual Machine List Operations
         /// <summary>
         /// Lists the VirtualMachines for this SubscriptionOperations.
@@ -20,21 +31,17 @@ namespace Proto.Compute
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachine> ListVirtualMachines(this SubscriptionOperations subscription)
         {
-            ComputeManagementClient computeClient = GetComputeClient(subscription);
-            var vmOperations = computeClient.VirtualMachines;
-            var result = vmOperations.ListAll();
-            return new PhWrappingPageable<Azure.ResourceManager.Compute.Models.VirtualMachine, VirtualMachine>(
-                result,
-                s => new VirtualMachine(subscription, new VirtualMachineData(s)));
-        }
-
-        private static ComputeManagementClient GetComputeClient(SubscriptionOperations subscription)
-        {
-            return new ComputeManagementClient(
-                subscription.BaseUri,
-                subscription.Id.SubscriptionId,
-                subscription.Credential,
-                subscription.ClientOptions.Convert<ComputeManagementClientOptions>());
+            return subscription.ListResources(
+                (baseUri, credential, options) =>
+                {
+                    ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                    var vmOperations = computeClient.VirtualMachines;
+                    var result = vmOperations.ListAll();
+                    return new PhWrappingPageable<Azure.ResourceManager.Compute.Models.VirtualMachine, VirtualMachine>(
+                        result,
+                        s => new VirtualMachine(subscription, new VirtualMachineData(s)));
+                }
+            );
         }
 
         /// <summary>
@@ -44,11 +51,17 @@ namespace Proto.Compute
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachine> ListVirtualMachinesAsync(this SubscriptionOperations subscription)
         {
-            var vmOperations = GetComputeClient(subscription).VirtualMachines;
-            var result = vmOperations.ListAllAsync();
-            return new PhWrappingAsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachine, VirtualMachine>(
-                result,
-                s => new VirtualMachine(subscription, new VirtualMachineData(s)));
+            return subscription.ListResourcesAsync(
+                (baseUri, credential, options) =>
+                {
+                    ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                    var vmOperations = computeClient.VirtualMachines;
+                    var result = vmOperations.ListAllAsync();
+                    return new PhWrappingAsyncPageable<Azure.ResourceManager.Compute.Models.VirtualMachine, VirtualMachine>(
+                        result,
+                        s => new VirtualMachine(subscription, new VirtualMachineData(s)));
+                }
+            );
         }
 
         /// <summary>
@@ -90,12 +103,17 @@ namespace Proto.Compute
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailabilitySet> ListAvailabilitySets(this SubscriptionOperations subscription)
         {
-            ComputeManagementClient computeClient = GetComputeClient(subscription);
-            var availabilitySetOperations = computeClient.AvailabilitySets;
-            var result = availabilitySetOperations.ListBySubscription();
-            return new PhWrappingPageable<Azure.ResourceManager.Compute.Models.AvailabilitySet, AvailabilitySet>(
-                result,
-                s => new AvailabilitySet(subscription, new AvailabilitySetData(s)));
+            return subscription.ListResources(
+                (baseUri, credential, options) =>
+                {
+                    ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                    var availabilitySetOperations = computeClient.AvailabilitySets;
+                    var result = availabilitySetOperations.ListBySubscription();
+                    return new PhWrappingPageable<Azure.ResourceManager.Compute.Models.AvailabilitySet, AvailabilitySet>(
+                        result,
+                        s => new AvailabilitySet(subscription, new AvailabilitySetData(s)));
+                }
+            );
         }
 
         /// <summary>
@@ -105,12 +123,17 @@ namespace Proto.Compute
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailabilitySet> ListAvailabilitySetsAsync(this SubscriptionOperations subscription)
         {
-            ComputeManagementClient computeClient = GetComputeClient(subscription);
-            var availabilitySetOperations = computeClient.AvailabilitySets;
-            var result = availabilitySetOperations.ListBySubscriptionAsync();
-            return new PhWrappingAsyncPageable<Azure.ResourceManager.Compute.Models.AvailabilitySet, AvailabilitySet>(
-                result,
-                s => new AvailabilitySet(subscription, new AvailabilitySetData(s)));
+            return subscription.ListResourcesAsync(
+                (baseUri, credential, options) =>
+                {
+                    ComputeManagementClient computeClient = GetComputeClient(baseUri, subscription.Id.SubscriptionId, credential, options);
+                    var availabilitySetOperations = computeClient.AvailabilitySets;
+                    var result = availabilitySetOperations.ListBySubscriptionAsync();
+                    return new PhWrappingAsyncPageable<Azure.ResourceManager.Compute.Models.AvailabilitySet, AvailabilitySet>(
+                        result,
+                        s => new AvailabilitySet(subscription, new AvailabilitySetData(s)));
+                }
+            );
         }
         #endregion
     }

@@ -57,6 +57,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// a length no greater than 128 characters and a value with a length
         /// no greater than 256 characters.</param>
         /// <param name="identity">The identity of the resource.</param>
+        /// <param name="sasPolicy">SasPolicy assigned to the storage
+        /// account.</param>
+        /// <param name="keyPolicy">KeyPolicy assigned to the storage
+        /// account.</param>
         /// <param name="customDomain">User domain assigned to the storage
         /// account. Name is the CNAME source. Only one custom domain is
         /// supported per storage account at this time. To clear the existing
@@ -95,7 +99,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// true.</param>
         /// <param name="enableNfsV3">NFS 3.0 protocol support enabled if set
         /// to true.</param>
-        public StorageAccountCreateParameters(Sku sku, string kind, string location, ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?))
+        public StorageAccountCreateParameters(Sku sku, string kind, string location, ExtendedLocation extendedLocation = default(ExtendedLocation), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?), string largeFileSharesState = default(string), RoutingPreference routingPreference = default(RoutingPreference), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?))
         {
             Sku = sku;
             Kind = kind;
@@ -103,6 +107,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             ExtendedLocation = extendedLocation;
             Tags = tags;
             Identity = identity;
+            SasPolicy = sasPolicy;
+            KeyPolicy = keyPolicy;
             CustomDomain = customDomain;
             Encryption = encryption;
             NetworkRuleSet = networkRuleSet;
@@ -173,6 +179,18 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public Identity Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets sasPolicy assigned to the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sasPolicy")]
+        public SasPolicy SasPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets keyPolicy assigned to the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyPolicy")]
+        public KeyPolicy KeyPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets user domain assigned to the storage account. Name is
@@ -298,6 +316,14 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (Identity != null)
             {
                 Identity.Validate();
+            }
+            if (SasPolicy != null)
+            {
+                SasPolicy.Validate();
+            }
+            if (KeyPolicy != null)
+            {
+                KeyPolicy.Validate();
             }
             if (CustomDomain != null)
             {

@@ -31,7 +31,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> An instance of <see cref="VirtualNetworkContainer" />. </returns>
-        public static VirtualNetworkContainer GetVirtualNetworkContainer(this ResourceGroupOperations resourceGroup)
+        public static VirtualNetworkContainer GetVirtualNetworks(this ResourceGroupOperations resourceGroup)
         {
             return new VirtualNetworkContainer(resourceGroup);
         }
@@ -57,7 +57,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> An instance of <see cref="PublicIpAddressContainer" />. </returns>
-        public static PublicIpAddressContainer GetPublicIpAddressContainer(this ResourceGroupOperations resourceGroup)
+        public static PublicIpAddressContainer GetPublicIpAddresss(this ResourceGroupOperations resourceGroup)
         {
             return new PublicIpAddressContainer(resourceGroup);
         }
@@ -83,11 +83,13 @@ namespace Proto.Network
         /// </summary>
         /// <param name="resourceGroup"> The operations over a specific resource group. </param>
         /// <returns> A <see cref="NetworkInterfaceContainer"/> representing the collection of <see cref="NetworkInterface"/> </returns>
-        public static NetworkInterfaceContainer GetNetworkInterfaceContainer(this ResourceGroupOperations resourceGroup)
+        public static NetworkInterfaceContainer GetNetworkInterfaces(this ResourceGroupOperations resourceGroup)
         {
             return new NetworkInterfaceContainer(resourceGroup);
         }
+        #endregion
 
+        #region NetworkSecurityGroups
         /// <summary>
         /// Gets the operations over the collection of <see cref="NetworkInterface"/> contained in the resource group.
         /// </summary>
@@ -107,7 +109,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="resourceGroup"> The <see cref="ResourceGroupOperations" /> instance the method will execute against. </param>
         /// <returns> An instance of <see cref="NetworkSecurityGroupContainer" />. </returns>
-        public static NetworkSecurityGroupContainer GetNetworkSecurityGroupContainer(this ResourceGroupOperations resourceGroup)
+        public static NetworkSecurityGroupContainer GetNetworkSecurityGroups(this ResourceGroupOperations resourceGroup)
         {
             return new NetworkSecurityGroupContainer(resourceGroup);
         }

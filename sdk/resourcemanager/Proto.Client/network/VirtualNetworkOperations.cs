@@ -19,7 +19,7 @@ namespace Proto.Network
         /// </summary>
         /// <param name="genericOperations"> An instance of <see cref="GenericResourceOperations"/> that has an id for a virtual nerwork. </param>
         internal VirtualNetworkOperations(GenericResourceOperations genericOperations)
-            : base(genericOperations)
+            : base(genericOperations, genericOperations.Id)
         {
         }
 
@@ -161,7 +161,7 @@ namespace Proto.Network
         /// Gets a list of subnet in the virtual nerwork.
         /// </summary>
         /// <returns> An object representing collection of subnets and their operations over a virtual network. </returns>
-        public SubnetContainer GetSubnetContainer()
+        public SubnetContainer GetSubnets()
         {
             return new SubnetContainer(this);
         }
