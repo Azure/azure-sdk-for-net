@@ -24,47 +24,47 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Total actions failed in the operation
         /// </summary>
-        public int ActionsFailed => _actionsFailed;
+        public virtual int ActionsFailed => _actionsFailed;
 
         /// <summary>
         /// Total actions in progress in the operation
         /// </summary>
-        public int ActionsInProgress => _actionsInProgress;
+        public virtual int ActionsInProgress => _actionsInProgress;
 
         /// <summary>
         /// Total actions succeeded in the operation
         /// </summary>
-        public int ActionsSucceeded => _actionSucceeded;
+        public virtual int ActionsSucceeded => _actionSucceeded;
 
         /// <summary>
         /// Time when the operation was created on.
         /// </summary>
-        public DateTimeOffset CreatedOn => _createdOn;
+        public virtual DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
         /// Display Name of the operation
         /// </summary>
-        public string DisplayName => _displayName;
+        public virtual string DisplayName => _displayName;
 
         /// <summary>
         /// Time when the operation will expire.
         /// </summary>
-        public DateTimeOffset? ExpiresOn => _expiresOn;
+        public virtual DateTimeOffset? ExpiresOn => _expiresOn;
 
         /// <summary>
         /// Time when the operation was last modified on.
         /// </summary>
-        public DateTimeOffset LastModified => _lastModified;
+        public virtual DateTimeOffset LastModified => _lastModified;
 
         /// <summary>
         /// The current status of the operation.
         /// </summary>
-        public TextAnalyticsOperationStatus Status => _status;
+        public virtual TextAnalyticsOperationStatus Status => _status;
 
         /// <summary>
         /// Total actions executed in the operation
         /// </summary>
-        public int TotalActions => _totalActions;
+        public virtual int TotalActions => _totalActions;
 
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
@@ -158,6 +158,14 @@ namespace Azure.AI.TextAnalytics
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
             Id = operationLocation.Split('/').Last();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnalyzeBatchActionsOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        protected AnalyzeBatchActionsOperation()
+        {
         }
 
         /// <summary>
