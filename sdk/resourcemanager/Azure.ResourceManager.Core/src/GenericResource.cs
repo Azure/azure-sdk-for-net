@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing a generic azure resource along with the instance operations that can be performed on it.
     /// </summary>
-    public partial class GenericResource : GenericResourceOperations
+    public class GenericResource : GenericResourceOperations
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericResource"/> class.

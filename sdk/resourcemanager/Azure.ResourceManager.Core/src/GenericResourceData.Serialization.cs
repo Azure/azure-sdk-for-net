@@ -26,11 +26,6 @@ namespace Azure.ResourceManager.Core
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id.StringValue);
-            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind");
@@ -74,11 +69,6 @@ namespace Azure.ResourceManager.Core
                     }
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(Type.ToString());
             }
             writer.WriteEndObject();
         }

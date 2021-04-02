@@ -18,7 +18,12 @@ namespace Azure.ResourceManager.Core.Tests
         [Test]
         public void SerializationTestType1()
         {
-            string expected = "{\"properties\":{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"kind\":\"KindForResource\",\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\",\"name\":\"account1\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{},\"type\":\"Microsoft.ClassicStorage/storageAccounts\"}}";
+            string expected = "{\"properties\":{\"kind\":\"KindForResource\"," +
+                "\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\"," +
+                "\"name\":\"account1\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\"," +
+                "\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\"," +
+                "\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\"," +
+                "\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{}}}";
             GenericResourceData data = new(new ResourceGroupResourceIdentifier(Id), LocationData.EastUS)
             {
                 Kind = "KindForResource",
@@ -42,7 +47,13 @@ namespace Azure.ResourceManager.Core.Tests
         [Test]
         public void SerializationTestType2()
         {
-            string expected = "{\"properties\":{\"kind\":\"KindForResource\",\"managedBy\":\"ManagedByForResource\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{\"key1\":\"value1\",\"key2\":\"value2\"}}}";
+            string expected = "{\"properties\":{\"kind\":\"KindForResource\"," +
+                "\"managedBy\":\"ManagedByForResource\",\"plan\":{\"name\":\"NameForPlan\"," +
+                "\"publisher\":\"PublisherForPlan\",\"product\":\"ProductForPlan\"," +
+                "\"promotionCode\":\"PromotionCodeForPlan\",\"version\":\"VersionForPlan\"}," +
+                "\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\",\"size\":\"SizeForSku\"," +
+                "\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{\"key1\":\"value1\"," +
+                "\"key2\":\"value2\"}}}";
             ResourceManager.Resources.Models.GenericResource genericResource = new()
             {
                 Plan = new ResourceManager.Resources.Models.Plan() 
@@ -82,7 +93,7 @@ namespace Azure.ResourceManager.Core.Tests
         [Test]
         public void InvalidSerializationTest()
         {
-            string expected = "{\"properties\":{\"id\":\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testRg/providers/Microsoft.ClassicStorage/storageAccounts/account1\",\"location\":\"eastus\",\"name\":\"account1\",\"tags\":{},\"type\":\"Microsoft.ClassicStorage/storageAccounts\"}}";
+            string expected = "{\"properties\":{\"location\":\"eastus\",\"name\":\"account1\",\"tags\":{}}}";
             GenericResourceData data = new(new ResourceGroupResourceIdentifier(Id), LocationData.EastUS);
             var stream = new MemoryStream();
             Utf8JsonWriter writer = new(stream, new JsonWriterOptions());
