@@ -29,7 +29,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Samples
             int docsSucceeded = 0;
             int docsFailed = 0;
 
-            TimeSpan pollingInterval = new TimeSpan(1000);
+            TimeSpan pollingInterval = new(1000);
 
             foreach (TranslationStatusResult translationStatus in client.GetTranslations())
             {
@@ -39,6 +39,11 @@ namespace Azure.AI.Translator.DocumentTranslation.Samples
 
                     while (!operation.HasCompleted)
                     {
+                        if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
+                        {
+                            pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
+                        }
+
                         Thread.Sleep(pollingInterval);
                         operation.UpdateStatus();
                     }
