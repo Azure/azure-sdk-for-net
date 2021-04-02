@@ -130,7 +130,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             Assert.IsTrue(body.TryGetValue(out object val));
             Assert.AreEqual("value", ((Dictionary<string, string>)val)["key"]);
 
-            amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new Dictionary<MapKey, object> { { new MapKey("key"), "value" } } });
+            amqpMessage = AmqpMessage.Create(new AmqpValue { Value = new AmqpMap { { new MapKey("key"), "value" } } });
             sbMessage = AmqpMessageConverter.AmqpMessageToSBMessage(amqpMessage);
             body = sbMessage.GetRawAmqpMessage().Body;
             Assert.IsTrue(body.TryGetValue(out val));
