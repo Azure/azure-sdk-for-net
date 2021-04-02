@@ -12,14 +12,8 @@ using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
-#pragma warning disable SA1649 // File name should match first type name
-    public class HelloWorld : ContainerRegistryRecordedTestBase
-#pragma warning restore SA1649
+    public partial class HelloWorld : SamplesBase<ContainerRegistryTestEnvironment>
     {
-        public HelloWorld(bool isAsync) : base(isAsync)
-        {
-        }
-
         [Test]
         [SyncOnly]
         public void CreateClient()
