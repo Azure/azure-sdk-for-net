@@ -152,6 +152,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        [LiveOnly]
         public void Ctor_With_Sas_Does_Not_Reorder_Services()
         {
             // Arrange
