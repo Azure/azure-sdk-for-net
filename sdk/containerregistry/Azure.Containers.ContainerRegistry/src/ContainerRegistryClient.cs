@@ -184,5 +184,19 @@ namespace Azure.Containers.ContainerRegistry
                 throw;
             }
         }
+
+        /// <summary>
+        /// Create a new <see cref="ContainerRepositoryClient"/> object for the specified repository.
+        /// </summary>
+        /// <param name="repository"> The repository to reference. </param>
+        /// <returns></returns>
+        public virtual ContainerRepositoryClient GetRepositoryClient(string repository)
+        {
+            return new ContainerRepositoryClient(_endpoint,
+                repository,
+                _clientDiagnostics,
+                _pipeline,
+                _acrAuthPipeline);
+        }
     }
 }

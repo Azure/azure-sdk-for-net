@@ -11,14 +11,6 @@ model-namespace: false
 ``` yaml
 directive:
   from: swagger-document
-  where: $.definitions.DeletedRepository
-  transform: >
-    $["x-accessibility"] = "internal"
-```
-
-``` yaml
-directive:
-  from: swagger-document
   where: $.definitions.ManifestAttributes_manifest_references
   transform: >
     $["x-accessibility"] = "internal"

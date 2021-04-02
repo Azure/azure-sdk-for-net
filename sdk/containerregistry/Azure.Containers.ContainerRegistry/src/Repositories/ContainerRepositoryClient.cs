@@ -60,6 +60,21 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
+        internal ContainerRepositoryClient(Uri endpoint, string repository, ClientDiagnostics diagnostics, HttpPipeline pipeline, HttpPipeline authPipeline)
+        {
+            Endpoint = endpoint;
+            _repository = repository;
+
+            _clientDiagnostics = diagnostics;
+
+            _acrAuthPipeline = authPipeline;
+            _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
+
+            _pipeline = pipeline;
+            _restClient = new ContainerRegistryRepositoryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
+            _registryRestClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
+        }
+
         #region Repository methods
         /// <summary> Get repository properties. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
