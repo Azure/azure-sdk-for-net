@@ -31,7 +31,7 @@ namespace Azure.IoT.TimeSeriesInsights
         private readonly QueryRestClient _queryRestClient;
 
         /// <summary>
-        /// Client to get model settings.
+        /// Client to get and update model settings.
         /// </summary>
         public virtual ModelSettingsClient ModelSettings { get; private set; }
 
