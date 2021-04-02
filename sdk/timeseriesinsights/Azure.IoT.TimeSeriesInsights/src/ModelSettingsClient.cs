@@ -41,13 +41,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The model settings which includes model display name, Time Series Id properties and default type Id with the
         /// http response <see cref="Response{TimeSeriesModelSettings}"/>.
         /// </returns>
-        public virtual async Task<Response<TimeSeriesModelSettings>> GetModelSettingsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TimeSeriesModelSettings>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
             scope.Start();
             try
             {
-                // To do: Generate client session Id
                 Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.GetAsync(null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
             }
@@ -66,13 +65,12 @@ namespace Azure.IoT.TimeSeriesInsights
         /// The model settings which includes model display name, Time Series Id properties and default type Id with the
         /// http response <see cref="Response{TimeSeriesModelSettings}"/>.
         /// </returns>
-        public virtual Response<TimeSeriesModelSettings> GetModelSettings(CancellationToken cancellationToken = default)
+        public virtual Response<TimeSeriesModelSettings> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
             scope.Start();
             try
             {
-                // To do: Generate client session Id
                 Response<ModelSettingsResponse> modelSettings = _modelSettingsRestClient.Get(null, cancellationToken);
                 return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
             }
@@ -89,38 +87,13 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="name">Model display name which is mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
-        public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsNameAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TimeSeriesModelSettings>> UpdateNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsName)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateName)}");
             scope.Start();
             try
             {
-                // To do: Generate client session Id
                 var options = new UpdateModelSettingsRequest { Name = name };
-                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.UpdateAsync(options, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates model default type Id on Time Series model settings asynchronously.
-        /// </summary>
-        /// <param name="defaultTypeId">Default type Id of the model that new instances will automatically belong to.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
-        public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsDefaultTypeIdAsync(string defaultTypeId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsDefaultTypeId)}");
-            scope.Start();
-            try
-            {
-                // To do: Generate client session Id
-                var options = new UpdateModelSettingsRequest { DefaultTypeId = defaultTypeId };
                 Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.UpdateAsync(options, null, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
             }
@@ -137,9 +110,9 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="name">Model display name which is mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
-        public virtual Response<TimeSeriesModelSettings> UpdateModelSettingsName(string name, CancellationToken cancellationToken = default)
+        public virtual Response<TimeSeriesModelSettings> UpdateName(string name, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsName)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateName)}");
             scope.Start();
             try
             {
@@ -156,18 +129,40 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
+        /// Updates model default type Id on Time Series model settings asynchronously.
+        /// </summary>
+        /// <param name="defaultTypeId">Default type Id of the model that new instances will automatically belong to.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
+        public virtual async Task<Response<TimeSeriesModelSettings>> UpdateDefaultTypeIdAsync(string defaultTypeId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateDefaultTypeId)}");
+            scope.Start();
+            try
+            {
+                var options = new UpdateModelSettingsRequest { DefaultTypeId = defaultTypeId };
+                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.UpdateAsync(options, null, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Updates default type Id on Time Series model settings synchronously.
         /// </summary>
         /// <param name="defaultTypeId">Default type Id of the model that new instances will automatically belong to.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
-        public virtual Response<TimeSeriesModelSettings> UpdateModelSettingsDefaultTypeId(string defaultTypeId, CancellationToken cancellationToken = default)
+        public virtual Response<TimeSeriesModelSettings> UpdateDefaultTypeId(string defaultTypeId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsDefaultTypeId)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateDefaultTypeId)}");
             scope.Start();
             try
             {
-                // To do: Generate client session Id
                 var options = new UpdateModelSettingsRequest { DefaultTypeId = defaultTypeId };
                 Response<ModelSettingsResponse> modelSettings = _modelSettingsRestClient.Update(options, null, cancellationToken);
                 return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
