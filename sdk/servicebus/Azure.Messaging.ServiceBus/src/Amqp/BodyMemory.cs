@@ -50,12 +50,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        public static BodyMemory From(IEnumerable<ReadOnlyMemory<byte>> segments)
+        public static BodyMemory FromReadOnlyMemory(IEnumerable<ReadOnlyMemory<byte>> segments)
         {
             return segments as BodyMemory ?? new BodyMemory(segments);
         }
 
-        public static BodyMemory From(IEnumerable<Data> segments)
+        public static BodyMemory FromAmqpData(IEnumerable<Data> segments)
         {
             return new BodyMemory(segments ?? Enumerable.Empty<Data>());
         }
