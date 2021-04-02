@@ -58,8 +58,9 @@ namespace Azure.Core
             switch (status)
             {
                 case 409:
+                case 412:
                     var header = message.Request.Headers;
-                    // Don't treat 409 responses to conditional requests as errors
+                    // Don't treat 409/412 responses to conditional requests as errors
                     var isConditional =
                             header.Contains(HttpHeader.Names.IfMatch) ||
                             header.Contains(HttpHeader.Names.IfNoneMatch) ||
