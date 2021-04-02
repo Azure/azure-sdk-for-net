@@ -84,6 +84,8 @@ namespace Azure.Core.TestFramework
                 interceptors.AddRange(preInterceptors);
             }
 
+            interceptors.Add(new InstrumentResultInterceptor(this));
+
             if (TestDiagnostics)
             {
                 interceptors.Add(s_diagnosticScopeValidatingInterceptor);
@@ -97,8 +99,6 @@ namespace Azure.Core.TestFramework
             {
                 interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
             }
-
-            interceptors.Add(new InstrumentClientInterceptor(this));
 
             return s_proxyGenerator.CreateClassProxyWithTarget(clientType, client, interceptors.ToArray());
         }
