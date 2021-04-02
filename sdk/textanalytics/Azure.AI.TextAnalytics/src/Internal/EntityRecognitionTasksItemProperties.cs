@@ -6,7 +6,5 @@ using Azure.Core;
 namespace Azure.AI.TextAnalytics.Models
 {
     [CodeGenModel("Components15Gvwi3SchemasTasksstatePropertiesTasksPropertiesEntityrecognitiontasksItemsAllof1")]
-    internal partial class EntityRecognitionTasksItemProperties
-    {
-    }
+    internal partial class EntityRecognitionTasksItemProperties { }
 }

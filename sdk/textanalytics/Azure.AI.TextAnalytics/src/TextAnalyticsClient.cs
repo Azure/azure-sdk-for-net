@@ -2831,7 +2831,7 @@ namespace Azure.AI.TextAnalytics
                 tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
             }
 
-            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, actions.DisplayName);
+            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks) { DisplayName = actions.DisplayName };
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeBatchActions)}");
             scope.Start();
@@ -2875,7 +2875,7 @@ namespace Azure.AI.TextAnalytics
                 tasks.EntityLinkingTasks = Transforms.ConvertFromEntityLinkingOptionsToTasks(actions.RecognizeLinkedEntitiesOptions);
             }
 
-            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks, actions.DisplayName);
+            AnalyzeBatchInput analyzeDocumentInputs = new AnalyzeBatchInput(batchInput, tasks) { DisplayName = actions.DisplayName };
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TextAnalyticsClient)}.{nameof(StartAnalyzeBatchActions)}");
             scope.Start();

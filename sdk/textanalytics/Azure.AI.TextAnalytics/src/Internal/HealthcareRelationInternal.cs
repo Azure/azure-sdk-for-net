@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     [CodeGenModel("HealthcareRelation")]
     internal partial class HealthcareRelationInternal
