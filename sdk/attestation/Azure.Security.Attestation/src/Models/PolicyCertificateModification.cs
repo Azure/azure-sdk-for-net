@@ -6,12 +6,12 @@ using System.Text.Json.Serialization;
 using System.Security.Cryptography.X509Certificates;
 using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary>
     /// Represents the body of a policy Add operation.
     /// </summary>
-    [CodeGenModel("AttestationCertificateManagementBody", Usage = new[] { "converter" })]
+    [CodeGenModel("AttestationCertificateManagementBody")]
     internal partial class PolicyCertificateModification
     {
         /// <summary>

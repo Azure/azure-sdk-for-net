@@ -8,12 +8,12 @@ using System.Text.Json.Serialization;
 using Azure.Core;
 using System.Runtime.CompilerServices;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary>
     /// Represents a Policy Get or Set or Reset result.
     /// </summary>
-    [CodeGenModel(Usage = new[] { "converter" })]
+    [CodeGenModel("PolicyResult")]
     public partial class PolicyResult
     {
         /// <summary>

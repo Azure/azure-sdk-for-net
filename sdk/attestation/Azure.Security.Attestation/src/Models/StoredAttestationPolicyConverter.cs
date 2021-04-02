@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     internal class StoredAttestationPolicyConverter : JsonConverter<StoredAttestationPolicy>
     {

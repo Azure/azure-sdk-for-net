@@ -2,17 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers.Text;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Security.Attestation.Models;
 
 namespace Azure.Security.Attestation
 {

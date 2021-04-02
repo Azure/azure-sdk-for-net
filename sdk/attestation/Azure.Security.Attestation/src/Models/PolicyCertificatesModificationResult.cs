@@ -7,9 +7,9 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
-    [CodeGenModel(Usage = new[] { "converter" })]
+    [CodeGenModel("PolicyCertificatesModificationResult")]
     public partial class PolicyCertificatesModificationResult
     {
     }
