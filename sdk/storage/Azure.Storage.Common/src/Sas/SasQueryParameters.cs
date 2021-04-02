@@ -32,7 +32,7 @@ namespace Azure.Storage.Sas
         private string _version;
 
         // ss
-        private AccountSasServices? _services;
+        private string _services;
 
         // srt
         private AccountSasResourceTypes? _resourceTypes;
@@ -105,7 +105,12 @@ namespace Azure.Storage.Sas
         /// Gets the signed services accessible with an account level shared
         /// access signature.
         /// </summary>
-        public AccountSasServices? Services => _services;
+        public AccountSasServices? Services
+        {
+            get {
+                return _services != null ? SasExtensions.ParseAccountServices(_services) : null;
+            }
+        }
 
         /// <summary>
         /// Gets which resources are accessible via the shared access signature.
@@ -271,7 +276,7 @@ namespace Azure.Storage.Sas
                         _version = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ServicesUpper:
-                        _services = SasExtensions.ParseAccountServices(kv.Value);
+                        _services = kv.Value;
                         break;
                     case Constants.Sas.Parameters.ResourceTypesUpper:
                         _resourceTypes = SasExtensions.ParseResourceTypes(kv.Value);
@@ -366,7 +371,7 @@ namespace Azure.Storage.Sas
             string contentType = default)
         {
             _version = version;
-            _services = services;
+            _services = services?.ToPermissionsString();
             _resourceTypes = resourceTypes;
             _protocol = protocol;
             _startTime = startsOn;
@@ -415,7 +420,7 @@ namespace Azure.Storage.Sas
             int? directoryDepth = default)
         {
             _version = version;
-            _services = services;
+            _services = services?.ToPermissionsString();
             _resourceTypes = resourceTypes;
             _protocol = protocol;
             _startTime = startsOn;
@@ -561,7 +566,7 @@ namespace Azure.Storage.Sas
 
             if (Services != null)
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Services, Services.Value.ToPermissionsString());
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Services, _services);
             }
 
             if (ResourceTypes != null)
