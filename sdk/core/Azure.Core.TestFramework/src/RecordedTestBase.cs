@@ -176,5 +176,15 @@ namespace Azure.Core.TestFramework
             ValidateClientInstrumentation = false;
             return base.InstrumentClient(clientType, client, preInterceptors);
         }
+
+        protected internal override object InstrumentOperation(Type operationType, object operation)
+        {
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                operationType,
+                new[] {typeof(IInstrumented)},
+                operation,
+                new GetOriginalInterceptor(operation),
+                new OperationInterceptor(Mode == RecordedTestMode.Playback));
+        }
     }
 }

@@ -5,12 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
 namespace Azure.Core.TestFramework
 {
     internal class InstrumentResultInterceptor : IInterceptor
     {
+        private static readonly MethodInfo InstrumentOperationInterceptorMethodInfo = typeof(InstrumentResultInterceptor).
+            GetMethod(nameof(InstrumentOperationInterceptor), BindingFlags.NonPublic | BindingFlags.Instance);
+
         private readonly ClientTestBase _testBase;
 
         public InstrumentResultInterceptor(ClientTestBase testBase)
@@ -42,7 +46,6 @@ namespace Azure.Core.TestFramework
             if (type is {IsGenericType: true} genericType &&
                 genericType.GetGenericTypeDefinition() == typeof(AsyncPageable<>))
             {
-                invocation.Proceed();
                 invocation.ReturnValue = Activator.CreateInstance(
                     typeof(DiagnosticScopeValidatingAsyncEnumerable<>).MakeGenericType(genericType.GenericTypeArguments[0]),
                     invocation.ReturnValue,
@@ -50,12 +53,19 @@ namespace Azure.Core.TestFramework
                 return;
             }
 
-            if (typeof(Operation).IsAssignableFrom(type))
+            if (type is {IsGenericType: true, GenericTypeArguments: {} arguments } &&
+                type.GetGenericTypeDefinition() == typeof(Task<>) &&
+                typeof(Operation).IsAssignableFrom(arguments[0]))
             {
-
+                DiagnosticScopeValidatingInterceptor.WrapAsyncResult(invocation, this, InstrumentOperationInterceptorMethodInfo);
+                return;
             }
         }
 
+        internal async ValueTask<T> InstrumentOperationInterceptor<T>(IInvocation invocation, Func<ValueTask<T>> innerTask)
+        {
+            return (T) _testBase.InstrumentOperation(typeof(T), await innerTask());
+        }
 
         internal class DiagnosticScopeValidatingAsyncEnumerable<T> : AsyncPageable<T>
         {

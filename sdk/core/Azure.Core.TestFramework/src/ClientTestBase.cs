@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
@@ -14,7 +12,7 @@ namespace Azure.Core.TestFramework
     [ClientTestFixture]
     public abstract class ClientTestBase
     {
-        private static readonly ProxyGenerator s_proxyGenerator = new ProxyGenerator();
+        protected static readonly ProxyGenerator ProxyGenerator = new ProxyGenerator();
 
         private static readonly IInterceptor s_useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
         private static readonly IInterceptor s_avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
@@ -84,6 +82,7 @@ namespace Azure.Core.TestFramework
                 interceptors.AddRange(preInterceptors);
             }
 
+            interceptors.Add(new GetOriginalInterceptor(client));
             interceptors.Add(new InstrumentResultInterceptor(this));
 
             if (TestDiagnostics)
@@ -100,7 +99,23 @@ namespace Azure.Core.TestFramework
                 interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
             }
 
-            return s_proxyGenerator.CreateClassProxyWithTarget(clientType, client, interceptors.ToArray());
+            return ProxyGenerator.CreateClassProxyWithTarget(
+                clientType,
+                new[] {typeof(IInstrumented)},
+                client,
+                interceptors.ToArray());
+        }
+
+        protected internal virtual object InstrumentOperation(Type operationType, object operation)
+        {
+            return operation;
+        }
+
+        protected T GetOriginal<T>(T instrumented)
+        {
+            if (instrumented == null) throw new ArgumentNullException(nameof(instrumented));
+            var i = instrumented as IInstrumented ?? throw new InvalidOperationException($"{instrumented.GetType()} is not an instrumented type");
+            return (T) i.Original;
         }
     }
 }
