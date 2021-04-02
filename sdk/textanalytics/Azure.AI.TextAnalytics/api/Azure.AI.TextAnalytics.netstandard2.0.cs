@@ -6,6 +6,7 @@ namespace Azure.AI.TextAnalytics
         public int ActionsFailed { get { throw null; } }
         public int ActionsInProgress { get { throw null; } }
         public int ActionsSucceeded { get { throw null; } }
+        public int ActionsTotal { get { throw null; } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
@@ -14,7 +15,6 @@ namespace Azure.AI.TextAnalytics
         public override string Id { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public Azure.AI.TextAnalytics.TextAnalyticsOperationStatus Status { get { throw null; } }
-        public int TotalActions { get { throw null; } }
         public override Azure.AsyncPageable<Azure.AI.TextAnalytics.AnalyzeBatchActionsResult> Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
         public override Azure.Pageable<Azure.AI.TextAnalytics.AnalyzeBatchActionsResult> GetValues() { throw null; }
