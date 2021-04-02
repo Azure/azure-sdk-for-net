@@ -122,7 +122,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Update the attribute identified by `name` where `reference` is the name of the repository. </summary>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SetPropertiesAsync(ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RepositoryProperties>> SetPropertiesAsync(ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetProperties)}");
             scope.Start();
@@ -140,7 +140,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>Update the repository properties.</summary>
         /// <param name="value"> Repository properties to set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SetProperties(ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<RepositoryProperties> SetProperties(ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetProperties)}");
             scope.Start();
@@ -325,7 +325,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="value"> Manifest properties value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SetManifestPropertiesAsync(string digest, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RegistryArtifactProperties>> SetManifestPropertiesAsync(string digest, ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetManifestProperties)}");
             scope.Start();
@@ -344,7 +344,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="value"> Manifest properties value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SetManifestProperties(string digest, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<RegistryArtifactProperties> SetManifestProperties(string digest, ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetManifestProperties)}");
             scope.Start();
@@ -520,7 +520,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tag"> Tag name. </param>
         /// <param name="value"> Tag property value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SetTagPropertiesAsync(string tag, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TagProperties>> SetTagPropertiesAsync(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetTagProperties)}");
             scope.Start();
@@ -539,7 +539,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tag"> Tag name. </param>
         /// <param name="value"> Tag property value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SetTagProperties(string tag, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<TagProperties> SetTagProperties(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetTagProperties)}");
             scope.Start();

@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -54,7 +54,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ContentProperties originalContentProperties = repositoryProperties.WriteableProperties;
 
             // Act
-            await client.SetPropertiesAsync(
+            RepositoryProperties properties = await client.SetPropertiesAsync(
                 new ContentProperties()
                 {
                     CanList = false,
@@ -64,12 +64,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 });
 
             // Assert
-            RepositoryProperties properties = await client.GetPropertiesAsync();
-
             Assert.IsFalse(properties.WriteableProperties.CanList);
             Assert.IsFalse(properties.WriteableProperties.CanRead);
             Assert.IsFalse(properties.WriteableProperties.CanWrite);
             Assert.IsFalse(properties.WriteableProperties.CanDelete);
+
+            RepositoryProperties updatedProperties = await client.GetPropertiesAsync();
+
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanList);
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanRead);
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanWrite);
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanDelete);
 
             // Cleanup
             await client.SetPropertiesAsync(originalContentProperties);
@@ -182,7 +187,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ContentProperties originalContentProperties = artifactProperties.WriteableProperties;
 
             // Act
-            await client.SetManifestPropertiesAsync(
+            RegistryArtifactProperties properties = await client.SetManifestPropertiesAsync(
                 digest,
                 new ContentProperties()
                 {
@@ -193,12 +198,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 });
 
             // Assert
-            RegistryArtifactProperties properties = await client.GetRegistryArtifactPropertiesAsync(digest);
-
             Assert.IsFalse(properties.WriteableProperties.CanList);
             Assert.IsFalse(properties.WriteableProperties.CanRead);
             Assert.IsFalse(properties.WriteableProperties.CanWrite);
             Assert.IsFalse(properties.WriteableProperties.CanDelete);
+
+            RegistryArtifactProperties updatedProperties = await client.GetRegistryArtifactPropertiesAsync(digest);
+
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanList);
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanRead);
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanWrite);
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanDelete);
 
             // Cleanup
             await client.SetManifestPropertiesAsync(digest, originalContentProperties);
@@ -494,7 +504,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
             ContentProperties originalContentProperties = tagProperties.WriteableProperties;
 
             // Act
-            await client.SetTagPropertiesAsync(
+            TagProperties properties = await client.SetTagPropertiesAsync(
                 tag,
                 new ContentProperties()
                 {
@@ -505,12 +515,17 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 });
 
             // Assert
-            TagProperties properties = await client.GetTagPropertiesAsync(tag);
-
             Assert.IsFalse(properties.WriteableProperties.CanList);
             Assert.IsFalse(properties.WriteableProperties.CanRead);
             Assert.IsFalse(properties.WriteableProperties.CanWrite);
             Assert.IsFalse(properties.WriteableProperties.CanDelete);
+
+            TagProperties updatedProperties = await client.GetTagPropertiesAsync(tag);
+
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanList);
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanRead);
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanWrite);
+            Assert.IsFalse(updatedProperties.WriteableProperties.CanDelete);
 
             // Cleanup
             await client.SetTagPropertiesAsync(tag, originalContentProperties);
