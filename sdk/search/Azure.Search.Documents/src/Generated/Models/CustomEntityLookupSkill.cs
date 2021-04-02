@@ -61,8 +61,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public CustomEntityLookupSkillLanguage? DefaultLanguageCode { get; set; }
         /// <summary> Path to a JSON or CSV file containing all the target text to match against. This entity definition is read at the beginning of an indexer run. Any updates to this file during an indexer run will not take effect until subsequent runs. This config must be accessible over HTTPS. </summary>
         public string EntitiesDefinitionUri { get; set; }
-        /// <summary> The inline CustomEntity definition. </summary>
-        public IList<CustomEntity> InlineEntitiesDefinition { get; set; }
         /// <summary> A global flag for CaseSensitive. If CaseSensitive is not set in CustomEntity, this value will be the default value. </summary>
         public bool? GlobalDefaultCaseSensitive { get; set; }
         /// <summary> A global flag for AccentSensitive. If AccentSensitive is not set in CustomEntity, this value will be the default value. </summary>

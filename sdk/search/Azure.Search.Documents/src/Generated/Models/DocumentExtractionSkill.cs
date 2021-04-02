@@ -55,7 +55,5 @@ namespace Azure.Search.Documents.Indexes.Models
         public string ParsingMode { get; set; }
         /// <summary> The type of data to be extracted for the skill. Will be set to &apos;contentAndMetadata&apos; if not defined. </summary>
         public string DataToExtract { get; set; }
-        /// <summary> A dictionary of configurations for the skill. </summary>
-        public IDictionary<string, object> Configuration { get; set; }
     }
 }

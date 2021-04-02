@@ -79,7 +79,5 @@ namespace Azure.Search.Documents.Indexes.Models
         public bool? DefaultAccentSensitive { get; set; }
         /// <summary> Changes the default fuzzy edit distance value for this entity. It can be used to change the default value of all aliases fuzzyEditDistance values. </summary>
         public int? DefaultFuzzyEditDistance { get; set; }
-        /// <summary> An array of complex objects that can be used to specify alternative spellings or synonyms to the root entity name. </summary>
-        public IList<CustomEntityAlias> Aliases { get; set; }
     }
 }
