@@ -28,6 +28,7 @@ namespace Azure.Core.TestFramework
             {
                 if (invocation.Method.Name == WaitForCompletionMethodName)
                 {
+                    CheckArguments(invocation.Arguments);
                     var cancellationToken = invocation.Arguments.Last();
                     var waitForCompletionMethod = invocation.TargetType.GetMethod(WaitForCompletionMethodName, new[]{typeof(TimeSpan), typeof(CancellationToken)});
                     invocation.ReturnValue = waitForCompletionMethod.Invoke(invocation.InvocationTarget, new[] {NoWaitDelay, cancellationToken});
@@ -36,6 +37,7 @@ namespace Azure.Core.TestFramework
 
                 if (invocation.Method.Name == WaitForCompletionResponseAsync.Name)
                 {
+                    CheckArguments(invocation.Arguments);
                     var cancellationToken = invocation.Arguments.Last();
                     invocation.ReturnValue = WaitForCompletionResponseAsync.Invoke(invocation.InvocationTarget, new[] {NoWaitDelay, cancellationToken});
                     return;
@@ -43,6 +45,20 @@ namespace Azure.Core.TestFramework
             }
 
             invocation.Proceed();
+        }
+
+        private void CheckArguments(object[] invocationArguments)
+        {
+            if (invocationArguments.Length == 2)
+            {
+                var interval = (TimeSpan) invocationArguments[0];
+                if (interval < TimeSpan.FromSeconds(1))
+                {
+                    throw new InvalidOperationException($"Fast polling interval of {interval} detected in playback mode." +
+                                                        $"Please use the default WaitForCompletion()." +
+                                                        $"The test framework would automatically reduce the interval in playback.");
+                }
+            }
         }
     }
 }

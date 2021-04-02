@@ -34,10 +34,15 @@ namespace Azure.Core.Tests
             await operation.WaitForCompletionAsync();
             await operation.WaitForCompletionAsync(TimeSpan.FromSeconds(10), default);
 
+            await operation.WaitForCompletionResponseAsync();
+            await operation.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(10), default);
+
             var original = GetOriginal(operation);
 
             Assert.AreEqual(TimeSpan.FromMilliseconds(1), original.WaitForCompletionCalls[0]);
             Assert.AreEqual(TimeSpan.FromMilliseconds(1), original.WaitForCompletionCalls[1]);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(1), original.WaitForCompletionCalls[2]);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(1), original.WaitForCompletionCalls[3]);
         }
 
         [Test]
@@ -51,10 +56,16 @@ namespace Azure.Core.Tests
             await operation.WaitForCompletionAsync();
             await operation.WaitForCompletionAsync(TimeSpan.FromSeconds(10), default);
 
+            await operation.WaitForCompletionResponseAsync();
+            await operation.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(10), default);
+
             var original = GetOriginal(operation);
 
             Assert.AreEqual(TimeSpan.MaxValue, original.WaitForCompletionCalls[0]);
             Assert.AreEqual(TimeSpan.FromSeconds(10), original.WaitForCompletionCalls[1]);
+
+            Assert.AreEqual(TimeSpan.MaxValue, original.WaitForCompletionCalls[2]);
+            Assert.AreEqual(TimeSpan.FromSeconds(10), original.WaitForCompletionCalls[3]);
         }
 
         public class RecordedClient

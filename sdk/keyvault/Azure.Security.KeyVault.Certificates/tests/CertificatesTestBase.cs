@@ -204,12 +204,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation, TimeSpan? pollingInterval = null)
         {
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-            pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : pollingInterval ?? TimeSpan.FromSeconds(1);
-
-            await operation.WaitForCompletionAsync(pollingInterval.Value, cts.Token);
-
-            return operation.Value;
+            pollingInterval ??= TimeSpan.FromSeconds(1);
+            return await operation.WaitForCompletionAsync(pollingInterval.Value, default).TimeoutAfter(TimeSpan.FromMinutes(1));
         }
 
         protected Task WaitForDeletedCertificate(string name)
