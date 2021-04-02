@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.StorageCache
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storagecache/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.StorageCache --csharp.output-folder=C:\\swaggersdk\\azure-sdk-for-net\\sdk\\storagecache\\Microsoft.Azure.Management.StorageCache\\src\\Generated";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "f953424dd168e71373bc52edb9713d2d86a14ada";
+      public static readonly String GithubCommidId = "1b0ed8edd58bb7c9ade9a27430759527bd4eec8e";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
