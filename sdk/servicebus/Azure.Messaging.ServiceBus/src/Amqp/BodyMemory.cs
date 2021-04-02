@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
@@ -33,18 +34,28 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         // for the send path the combined memory for the body is not precomputed
-        public BodyMemory(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
+        private BodyMemory(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
         {
             _lazySegments = dataSegments;
         }
 
         // for the receive path the combined memory is precomputed because we need to copy the underlying AMQP data anyway
-        public BodyMemory(IEnumerable<Data> dataSegments)
+        private BodyMemory(IEnumerable<Data> dataSegments)
         {
             foreach (var segment in dataSegments)
             {
                 Append(segment);
             }
+        }
+
+        public static BodyMemory From(IEnumerable<ReadOnlyMemory<byte>> segments)
+        {
+            return segments as BodyMemory ?? new BodyMemory(segments);
+        }
+
+        public static BodyMemory From(IEnumerable<Data> segments)
+        {
+            return new BodyMemory(segments ?? Enumerable.Empty<Data>());
         }
 
         public IEnumerator<ReadOnlyMemory<byte>> GetEnumerator()
@@ -68,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _segments.Add(memory.Slice(0, segment.Length));
         }
 
-        private void Append(DescribedType segment)
+        private void Append(Data segment)
         {
             ReadOnlyMemory<byte> dataToAppend = segment.Value switch
             {
