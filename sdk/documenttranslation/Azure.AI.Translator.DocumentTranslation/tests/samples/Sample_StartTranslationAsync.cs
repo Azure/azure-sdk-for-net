@@ -33,7 +33,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Samples
 
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            Response<AsyncPageable<DocumentStatusResult>> operationResult = await operation.WaitForCompletionAsync();
+            await operation.WaitForCompletionAsync();
 
             Console.WriteLine($"  Status: {operation.Status}");
             Console.WriteLine($"  Created on: {operation.CreatedOn}");
@@ -44,7 +44,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Samples
             Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
             Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
 
-            await foreach (DocumentStatusResult document in operationResult.Value)
+            await foreach (DocumentStatusResult document in operation.Value)
             {
                 Console.WriteLine($"Document with Id: {document.DocumentId}");
                 Console.WriteLine($"  Status:{document.Status}");
