@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AADPropertiesResource>> GetWithHttpMessagesAsync(string azureRegion, ODataQuery<BMSAADPropertiesQueryObject> odataQuery = default(ODataQuery<BMSAADPropertiesQueryObject>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AADPropertiesResource>> GetWithHttpMessagesAsync(string azureRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), ODataQuery<BMSAADPropertiesQueryObject> odataQuery = default(ODataQuery<BMSAADPropertiesQueryObject>))
         {
             if (azureRegion == null)
             {

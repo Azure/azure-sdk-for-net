@@ -48,6 +48,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AADPropertiesResource>> GetWithHttpMessagesAsync(string azureRegion, ODataQuery<BMSAADPropertiesQueryObject> odataQuery = default(ODataQuery<BMSAADPropertiesQueryObject>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AADPropertiesResource>> GetWithHttpMessagesAsync(string azureRegion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken), ODataQuery<BMSAADPropertiesQueryObject> odataQuery = default(ODataQuery<BMSAADPropertiesQueryObject>));
     }
 }

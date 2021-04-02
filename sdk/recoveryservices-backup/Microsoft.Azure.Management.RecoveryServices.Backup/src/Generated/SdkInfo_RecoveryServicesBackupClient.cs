@@ -7,18 +7,18 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
 
-    internal static partial class SdkInfo
-    {
-        public static IEnumerable<Tuple<string, string, string>> ApiInfo_RecoveryServicesBackupClient
-        {
-            get
-            {
-                return new Tuple<string, string, string>[]
-                {
+  internal static partial class SdkInfo
+  {
+      public static IEnumerable<Tuple<string, string, string>> ApiInfo_RecoveryServicesBackupClient
+      {
+          get
+          {
+              return new Tuple<string, string, string>[]
+              {
                 new Tuple<string, string, string>("RecoveryServices", "AadProperties", "2018-12-20"),
                 new Tuple<string, string, string>("RecoveryServices", "BMSPrepareDataMove", "2021-01-01"),
                 new Tuple<string, string, string>("RecoveryServices", "BMSPrepareDataMoveOperationResult", "2021-01-01"),
@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 new Tuple<string, string, string>("RecoveryServices", "RecoveryPointsRecommendedForMove", "2021-01-01"),
                 new Tuple<string, string, string>("RecoveryServices", "Restores", "2021-01-01"),
                 new Tuple<string, string, string>("RecoveryServices", "SecurityPINs", "2021-01-01"),
-                }.AsEnumerable();
-            }
-        }
-    }
+              }.AsEnumerable();
+          }
+      }
+  }
 }

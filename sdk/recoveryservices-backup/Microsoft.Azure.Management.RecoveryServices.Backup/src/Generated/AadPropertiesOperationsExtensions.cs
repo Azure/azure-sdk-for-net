@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AADPropertiesResource> GetAsync(this IAadPropertiesOperations operations, string azureRegion, ODataQuery<BMSAADPropertiesQueryObject> odataQuery = default(ODataQuery<BMSAADPropertiesQueryObject>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AADPropertiesResource> GetAsync(this IAadPropertiesOperations operations, string azureRegion, CancellationToken cancellationToken = default(CancellationToken), ODataQuery<BMSAADPropertiesQueryObject> odataQuery = default(ODataQuery<BMSAADPropertiesQueryObject>))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(azureRegion, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
