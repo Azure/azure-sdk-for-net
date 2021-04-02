@@ -177,6 +177,11 @@ namespace Azure.Core.TestFramework
             return base.InstrumentClient(clientType, client, preInterceptors);
         }
 
+        protected internal T InstrumentOperation<T>(T operation) where T: Operation
+        {
+            return (T) InstrumentOperation(typeof(T), operation);
+        }
+
         protected internal override object InstrumentOperation(Type operationType, object operation)
         {
             return ProxyGenerator.CreateClassProxyWithTarget(

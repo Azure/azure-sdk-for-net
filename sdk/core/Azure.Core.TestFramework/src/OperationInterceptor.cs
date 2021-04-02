@@ -11,7 +11,7 @@ namespace Azure.Core.TestFramework
 {
     internal class OperationInterceptor : IInterceptor
     {
-        private static readonly object NoWaitDelay = TimeSpan.FromMilliseconds(1);
+        private static readonly object NoWaitDelay = TimeSpan.Zero;
         private static readonly string WaitForCompletionMethodName = nameof(Operation<object>.WaitForCompletionAsync);
         private static readonly MethodInfo WaitForCompletionResponseAsync = typeof(Operation).GetMethod(nameof(Operation.WaitForCompletionResponseAsync), new[]{typeof(TimeSpan), typeof(CancellationToken)});
 
