@@ -21,12 +21,12 @@ namespace Azure.Containers.ContainerRegistry.Tests
         #region Setup methods
         protected ContainerRepositoryClient CreateClient(string repository = null)
         {
-            return InstrumentClient(new ContainerRepositoryClient(
+            ContainerRegistryClient registryClient = new ContainerRegistryClient(
                 new Uri(TestEnvironment.Endpoint),
-                repository ?? _repositoryName,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new ContainerRegistryClientOptions())
-            ));
+                InstrumentClientOptions(new ContainerRegistryClientOptions()));
+
+            return InstrumentClient(registryClient.GetRepositoryClient(repository ?? _repositoryName));
         }
 
         #endregion
