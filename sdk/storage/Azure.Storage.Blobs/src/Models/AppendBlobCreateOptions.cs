@@ -43,7 +43,7 @@ namespace Azure.Storage.Blobs.Models
         /// Note that is parameter is only applicable to a blob within a container that
         /// has version level worm enabled.
         /// </summary>
-        public bool LegalHold { get; set; }
+        public bool? LegalHold { get; set; }
 
         /// <summary>
         /// Optional <see cref="AppendBlobRequestConditions"/> to add

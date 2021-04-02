@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.Test
         private static readonly BlobRequestConditions s_conditions = new BlobRequestConditions() { LeaseId = "MyImportantLease" };
         private static readonly AccessTier s_accessTier = AccessTier.Cool;
         private static readonly BlobImmutabilityPolicy s_immutabilityPolicy = new BlobImmutabilityPolicy();
-        private static readonly bool s_legalHold = false;
+        private static readonly bool? s_legalHold = null;
         private static readonly Progress<long> s_progress = new Progress<long>();
         private static readonly Response<BlobContentInfo> s_response = Response.FromValue(new BlobContentInfo(), new MockResponse(200));
 
@@ -321,6 +321,8 @@ namespace Azure.Storage.Blobs.Test
                     Tags = s_tags,
                     Conditions = s_conditions,
                     AccessTier = s_accessTier,
+                    ImmutabilityPolicy = s_immutabilityPolicy,
+                    LegalHold = s_legalHold
                 },
                 s_progress,
                 _async,
@@ -348,11 +350,11 @@ namespace Azure.Storage.Blobs.Test
                     s_tags,
                     s_conditions,
                     s_accessTier,
-                    default,
-                    default,
+                    s_immutabilityPolicy,
+                    s_legalHold,
                     _async,
                     s_cancellationToken
-                )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, Dictionary<string, string>, BlobRequestConditions, AccessTier?, bool, CancellationToken>(sink.CommitInternal);
+                )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, Dictionary<string, string>, BlobRequestConditions, AccessTier?, BlobImmutabilityPolicy, bool?, bool, CancellationToken>(sink.CommitInternal);
         }
 
         private static void AssertStaged(StagingSink sink, TestStream stream)
@@ -384,6 +386,8 @@ namespace Azure.Storage.Blobs.Test
                 Dictionary<string, string> tags,
                 BlobRequestConditions accessConditions,
                 AccessTier? accessTier,
+                BlobImmutabilityPolicy immutabilityPolicy,
+                bool? legalHold,
                 bool async,
                 CancellationToken cancellationToken)
             {

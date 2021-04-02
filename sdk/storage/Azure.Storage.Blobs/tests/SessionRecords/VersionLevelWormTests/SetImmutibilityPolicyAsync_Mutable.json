@@ -14,7 +14,7 @@
         "x-ms-client-request-id": "a974c34b-764b-8464-44c6-b64bf408b0d5",
         "x-ms-date": "Wed, 31 Mar 2021 18:56:52 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -28,7 +28,7 @@
         "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "a974c34b-764b-8464-44c6-b64bf408b0d5",
         "x-ms-request-id": "987208e2-901e-0015-745f-260902000000",
-        "x-ms-version": "2020-06-12"
+        "x-ms-version": "2020-08-04"
       },
       "ResponseBody": "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CEnumerationResults ServiceEndpoint=\u0022https://seanoauthstage.blob.core.windows.net/\u0022 ContainerName=\u0022test-container-5bf8b7cb-4034-9fc1-e172-da497100c5d9\u0022\u003E\u003CBlobs /\u003E\u003CNextMarker /\u003E\u003C/EnumerationResults\u003E"
     }
