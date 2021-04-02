@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary>
     /// Represents the standard claims in the body of an RFC 7515 Json Web Token.
     /// </summary>
+    [CodeGenModel("JsonWebTokenBody")]
     internal partial class JsonWebTokenBody
     {
         /// <summary>

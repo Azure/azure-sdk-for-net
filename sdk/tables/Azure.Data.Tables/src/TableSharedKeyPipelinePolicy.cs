@@ -75,7 +75,7 @@ namespace Azure.Data.Tables
             return stringToSign;
         }
 
-        private string BuildCanonicalizedResource(Uri resource)
+        internal string BuildCanonicalizedResource(Uri resource)
         {
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authentication-for-the-azure-storage-services
             StringBuilder cr = new StringBuilder("/").Append(_credentials.AccountName);
@@ -98,7 +98,7 @@ namespace Azure.Data.Tables
             // https://docs.microsoft.com/en-us/rest/api/storageservices/authorize-with-shared-key#shared-key-lite-and-table-service-format-for-2009-09-19-and-later
             if (TryGetCompQueryParameterValue(resource, out string compValue))
             {
-                cr.Append("?=").Append(compValue);
+                cr.Append("?comp=").Append(compValue);
             }
 
             return cr.ToString();

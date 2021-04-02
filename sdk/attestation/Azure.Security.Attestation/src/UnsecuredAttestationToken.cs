@@ -1,13 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Core;
-using Azure.Security.Attestation.Models;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using static System.Net.WebRequestMethods;
-using System.Text.Json.Serialization;
 using System.Text.Json;
 
 namespace Azure.Security.Attestation

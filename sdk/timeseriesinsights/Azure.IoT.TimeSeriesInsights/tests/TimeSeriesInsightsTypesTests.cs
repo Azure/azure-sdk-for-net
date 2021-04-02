@@ -117,12 +117,12 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 }
 
                 // Create Time Series types
-                Response<TimeSeriesOperationError[]> createTypesResult = await client
+                Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
                     .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
                     .ConfigureAwait(false);
 
                 // Assert that the result error array does not contain any object that is set
-                createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
+                createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
                 Response<TimeSeriesTypeOperationResult[]> getTypesByNamesResult;
 
                 // This retry logic was added as the TSI types are not immediately available after creation
@@ -152,11 +152,11 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     type.Description = "Description";
                 }
 
-                Response<TimeSeriesOperationError[]> updateTypesResult = await client
+                Response<TimeSeriesTypeOperationResult[]> updateTypesResult = await client
                     .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
                     .ConfigureAwait(false);
 
-                updateTypesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
+                updateTypesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
                 updateTypesResult.Value.Length.Should().Be(timeSeriesTypes.Count);
 
                 // This retry logic was added as the TSI types are not immediately available after creation
@@ -202,12 +202,12 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         private static async Task TestTimeSeriesTypeWhereErrorIsExpected(TimeSeriesInsightsClient client, List<TimeSeriesType> timeSeriesTypes, string timeSeriesTypesName)
         {
             // create numeric type and expect failure due to invalid input expression
-            Response<TimeSeriesOperationError[]> createTypesResult = await client
+            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
                 .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
                 .ConfigureAwait(false);
 
             // Assert that the result error array does not contain an error
-            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult != null);
+            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error != null);
 
             // Get the type by name and expect error
             var getTypesByNamesResult = await client

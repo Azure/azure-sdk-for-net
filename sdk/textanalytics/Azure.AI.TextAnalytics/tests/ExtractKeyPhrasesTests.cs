@@ -125,14 +125,39 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task ExtractKeyPhrasesBatchConvenienceWithStatisticsTest()
         {
+            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             TextAnalyticsClient client = GetClient();
             var documents = batchConvenienceDocuments;
 
-            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents, "en", options);
 
             ValidateBatchDocumentsResult(results, 3, includeStatistics: true);
 
             Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesBatchConvenienceWithExtractKeyPhrasesOptionsStatisticsTest()
+        {
+            var options = new ExtractKeyPhrasesOptions { IncludeStatistics = true };
+            TextAnalyticsClient client = GetClient();
+            var documents = batchConvenienceDocuments;
+
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents, "en", options);
+
+            ValidateBatchDocumentsResult(results, 3, includeStatistics: true);
+
+            Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [Test]
@@ -149,14 +174,39 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task ExtractKeyPhrasesBatchWithSatisticsTest()
         {
+            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             TextAnalyticsClient client = GetClient();
             List<TextDocumentInput> documents = batchDocuments;
 
-            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents, options);
 
             ValidateBatchDocumentsResult(results, 3, includeStatistics: true);
 
             Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
+        }
+
+        [Test]
+        public async Task ExtractKeyPhrasesBatchWithExtractKeyPhrasesOptionsSatisticsTest()
+        {
+            var options = new ExtractKeyPhrasesOptions { IncludeStatistics = true };
+            TextAnalyticsClient client = GetClient();
+            List<TextDocumentInput> documents = batchDocuments;
+
+            ExtractKeyPhrasesResultCollection results = await client.ExtractKeyPhrasesBatchAsync(documents, options);
+
+            ValidateBatchDocumentsResult(results, 3, includeStatistics: true);
+
+            Assert.AreEqual(documents.Count, results.Statistics.DocumentCount);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [Test]
