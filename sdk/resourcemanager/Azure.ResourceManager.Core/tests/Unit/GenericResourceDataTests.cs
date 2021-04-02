@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Core.Tests
         {
             string expected = "{\"properties\":{\"kind\":\"KindForResource\"," +
                 "\"location\":\"eastus\",\"managedBy\":\"ManagedByForResource\"," +
-                "\"name\":\"account1\",\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\"," +
+                "\"plan\":{\"name\":\"NameForPlan\",\"publisher\":\"PublisherForPlan\"," +
                 "\"product\":\"ProductForPlan\",\"promotionCode\":\"PromotionCodeForPlan\"," +
                 "\"version\":\"VersionForPlan\"},\"sku\":{\"name\":\"NameForSku\",\"tier\":\"TierForSku\"," +
                 "\"size\":\"SizeForSku\",\"family\":\"FamilyForSku\",\"capacity\":15464547},\"tags\":{}}}";
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Core.Tests
         [Test]
         public void InvalidSerializationTest()
         {
-            string expected = "{\"properties\":{\"location\":\"eastus\",\"name\":\"account1\",\"tags\":{}}}";
+            string expected = "{\"properties\":{\"location\":\"eastus\",\"tags\":{}}}";
             GenericResourceData data = new(new ResourceGroupResourceIdentifier(Id), LocationData.EastUS);
             var stream = new MemoryStream();
             Utf8JsonWriter writer = new(stream, new JsonWriterOptions());

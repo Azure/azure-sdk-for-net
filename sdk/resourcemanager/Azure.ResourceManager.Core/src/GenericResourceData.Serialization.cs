@@ -41,11 +41,6 @@ namespace Azure.ResourceManager.Core
                 writer.WritePropertyName("managedBy");
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(Name);
-            }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan");
