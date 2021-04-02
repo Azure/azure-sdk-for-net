@@ -18,56 +18,55 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes a virtual machine scale set network profile's network
-    /// configurations.
+    /// Describes a virtual machine network interface configurations.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetNetworkConfiguration : SubResource
+    public partial class VirtualMachineNetworkInterfaceConfiguration
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualMachineScaleSetNetworkConfiguration class.
+        /// VirtualMachineNetworkInterfaceConfiguration class.
         /// </summary>
-        public VirtualMachineScaleSetNetworkConfiguration()
+        public VirtualMachineNetworkInterfaceConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualMachineScaleSetNetworkConfiguration class.
+        /// VirtualMachineNetworkInterfaceConfiguration class.
         /// </summary>
-        /// <param name="name">The network configuration name.</param>
+        /// <param name="name">The network interface configuration
+        /// name.</param>
         /// <param name="ipConfigurations">Specifies the IP configurations of
         /// the network interface.</param>
-        /// <param name="id">Resource Id</param>
         /// <param name="primary">Specifies the primary network interface in
         /// case the virtual machine has more than 1 network interface.</param>
+        /// <param name="deleteOption">Specify what happens to the network
+        /// interface when the VM is deleted. Possible values include:
+        /// 'Delete', 'Detach'</param>
         /// <param name="enableAcceleratedNetworking">Specifies whether the
         /// network interface is accelerated networking-enabled.</param>
         /// <param name="enableFpga">Specifies whether the network interface is
         /// FPGA networking-enabled.</param>
+        /// <param name="enableIPForwarding">Whether IP forwarding enabled on
+        /// this NIC.</param>
         /// <param name="networkSecurityGroup">The network security
         /// group.</param>
         /// <param name="dnsSettings">The dns settings to be applied on the
         /// network interfaces.</param>
-        /// <param name="enableIPForwarding">Whether IP forwarding enabled on
-        /// this NIC.</param>
-        /// <param name="deleteOption">Specify what happens to the network
-        /// interface when the VM is deleted. Possible values include:
-        /// 'Delete', 'Detach'</param>
-        public VirtualMachineScaleSetNetworkConfiguration(string name, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, string id = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableFpga = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), bool? enableIPForwarding = default(bool?), string deleteOption = default(string))
-            : base(id)
+        public VirtualMachineNetworkInterfaceConfiguration(string name, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, bool? primary = default(bool?), string deleteOption = default(string), bool? enableAcceleratedNetworking = default(bool?), bool? enableFpga = default(bool?), bool? enableIPForwarding = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default(VirtualMachineNetworkInterfaceDnsSettingsConfiguration), SubResource dscpConfiguration = default(SubResource))
         {
             Name = name;
             Primary = primary;
+            DeleteOption = deleteOption;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
             EnableFpga = enableFpga;
+            EnableIPForwarding = enableIPForwarding;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
             IpConfigurations = ipConfigurations;
-            EnableIPForwarding = enableIPForwarding;
-            DeleteOption = deleteOption;
+            DscpConfiguration = dscpConfiguration;
             CustomInit();
         }
 
@@ -77,7 +76,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the network configuration name.
+        /// Gets or sets the network interface configuration name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -88,6 +87,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
+
+        /// <summary>
+        /// Gets or sets specify what happens to the network interface when the
+        /// VM is deleted. Possible values include: 'Delete', 'Detach'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deleteOption")]
+        public string DeleteOption { get; set; }
 
         /// <summary>
         /// Gets or sets specifies whether the network interface is accelerated
@@ -104,6 +110,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? EnableFpga { get; set; }
 
         /// <summary>
+        /// Gets or sets whether IP forwarding enabled on this NIC.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableIPForwarding")]
+        public bool? EnableIPForwarding { get; set; }
+
+        /// <summary>
         /// Gets or sets the network security group.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
@@ -114,27 +126,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// interfaces.
         /// </summary>
         [JsonProperty(PropertyName = "properties.dnsSettings")]
-        public VirtualMachineScaleSetNetworkConfigurationDnsSettings DnsSettings { get; set; }
+        public VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the IP configurations of the network
         /// interface.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
-        public IList<VirtualMachineScaleSetIPConfiguration> IpConfigurations { get; set; }
+        public IList<VirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets whether IP forwarding enabled on this NIC.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enableIPForwarding")]
-        public bool? EnableIPForwarding { get; set; }
-
-        /// <summary>
-        /// Gets or sets specify what happens to the network interface when the
-        /// VM is deleted. Possible values include: 'Delete', 'Detach'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.deleteOption")]
-        public string DeleteOption { get; set; }
+        [JsonProperty(PropertyName = "properties.dscpConfiguration")]
+        public SubResource DscpConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.

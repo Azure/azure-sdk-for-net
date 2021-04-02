@@ -18,28 +18,31 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Describes a virtual machines scale set IP Configuration's
-    /// PublicIPAddress configuration
+    /// Describes a virtual machines IP Configuration's PublicIPAddress
+    /// configuration
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetPublicIPAddressConfiguration
+    public partial class VirtualMachinePublicIPAddressConfiguration
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualMachineScaleSetPublicIPAddressConfiguration class.
+        /// VirtualMachinePublicIPAddressConfiguration class.
         /// </summary>
-        public VirtualMachineScaleSetPublicIPAddressConfiguration()
+        public VirtualMachinePublicIPAddressConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualMachineScaleSetPublicIPAddressConfiguration class.
+        /// VirtualMachinePublicIPAddressConfiguration class.
         /// </summary>
         /// <param name="name">The publicIP address configuration name.</param>
         /// <param name="idleTimeoutInMinutes">The idle timeout of the public
         /// IP address.</param>
+        /// <param name="deleteOption">Specify what happens to the public IP
+        /// address when the VM is deleted. Possible values include: 'Delete',
+        /// 'Detach'</param>
         /// <param name="dnsSettings">The dns settings to be applied on the
         /// publicIP addresses .</param>
         /// <param name="ipTags">The list of IP tags associated with the public
@@ -51,18 +54,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible
         /// values are: 'IPv4' and 'IPv6'. Possible values include: 'IPv4',
         /// 'IPv6'</param>
-        /// <param name="deleteOption">Specify what happens to the public IP
-        /// when the VM is deleted. Possible values include: 'Delete',
-        /// 'Detach'</param>
-        public VirtualMachineScaleSetPublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes = default(int?), VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings), IList<VirtualMachineScaleSetIpTag> ipTags = default(IList<VirtualMachineScaleSetIpTag>), SubResource publicIPPrefix = default(SubResource), string publicIPAddressVersion = default(string), string deleteOption = default(string), PublicIPAddressSku sku = default(PublicIPAddressSku))
+        /// <param name="publicIPAllocationMethod">Specify the public IP
+        /// allocation type. Possible values include: 'Dynamic',
+        /// 'Static'</param>
+        public VirtualMachinePublicIPAddressConfiguration(string name, int? idleTimeoutInMinutes = default(int?), string deleteOption = default(string), VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default(VirtualMachinePublicIPAddressDnsSettingsConfiguration), IList<VirtualMachineIpTag> ipTags = default(IList<VirtualMachineIpTag>), SubResource publicIPPrefix = default(SubResource), string publicIPAddressVersion = default(string), string publicIPAllocationMethod = default(string), PublicIPAddressSku sku = default(PublicIPAddressSku))
         {
             Name = name;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
+            DeleteOption = deleteOption;
             DnsSettings = dnsSettings;
             IpTags = ipTags;
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
-            DeleteOption = deleteOption;
+            PublicIPAllocationMethod = publicIPAllocationMethod;
             Sku = sku;
             CustomInit();
         }
@@ -85,18 +89,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int? IdleTimeoutInMinutes { get; set; }
 
         /// <summary>
+        /// Gets or sets specify what happens to the public IP address when the
+        /// VM is deleted. Possible values include: 'Delete', 'Detach'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deleteOption")]
+        public string DeleteOption { get; set; }
+
+        /// <summary>
         /// Gets or sets the dns settings to be applied on the publicIP
         /// addresses .
         /// </summary>
         [JsonProperty(PropertyName = "properties.dnsSettings")]
-        public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
+        public VirtualMachinePublicIPAddressDnsSettingsConfiguration DnsSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the list of IP tags associated with the public IP
         /// address.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipTags")]
-        public IList<VirtualMachineScaleSetIpTag> IpTags { get; set; }
+        public IList<VirtualMachineIpTag> IpTags { get; set; }
 
         /// <summary>
         /// Gets or sets the PublicIPPrefix from which to allocate publicIP
@@ -115,11 +126,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string PublicIPAddressVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets specify what happens to the public IP when the VM is
-        /// deleted. Possible values include: 'Delete', 'Detach'
+        /// Gets or sets specify the public IP allocation type. Possible values
+        /// include: 'Dynamic', 'Static'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.deleteOption")]
-        public string DeleteOption { get; set; }
+        [JsonProperty(PropertyName = "properties.publicIPAllocationMethod")]
+        public string PublicIPAllocationMethod { get; set; }
 
         /// <summary>
         /// </summary>
