@@ -89,6 +89,17 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// </return>
         public async Task<AzureOperationResponse<CustomDomainResource>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -390,6 +401,17 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// </return>
         public async Task<AzureOperationResponse<IPage<CustomDomainResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -598,6 +620,17 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// </return>
         public async Task<AzureOperationResponse<CustomDomainResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string domainName, CustomDomainResource domainResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -853,6 +886,17 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// </return>
         public async Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -1049,6 +1093,17 @@ namespace Microsoft.Azure.Management.AppPlatform
         /// </return>
         public async Task<AzureOperationResponse<CustomDomainResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string appName, string domainName, CustomDomainResource domainResource, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (Client.ApiVersion != null)
+            {
+                if (Client.ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Client.ApiVersion", 1);
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");

@@ -127,12 +127,13 @@ namespace Microsoft.Azure.ServiceBus
 
                     await this.maxPendingAcceptSessionsSemaphoreSlim.WaitAsync(this.pumpCancellationToken).ConfigureAwait(false);
                     var session = await this.client.AcceptMessageSessionAsync().ConfigureAwait(false);
+
                     if (session == null)
                     {
                         await Task.Delay(Constants.NoMessageBackoffTimeSpan, this.pumpCancellationToken).ConfigureAwait(false);
                         continue;
                     }
-
+                    
                     // `session` needs to be copied to another local variable before passing to Schedule
                     // because of the way variables are captured. (Refer 'Captured variables')
                     var messageSession = session;

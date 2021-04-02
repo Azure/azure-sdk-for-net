@@ -38,7 +38,7 @@ BackupOperation backupOperation = await Client.StartBackupAsync(builder.Uri, sas
 // Wait for completion of the BackupOperation.
 Response<BackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
 
-// Get the Uri for the location of you backup blob.
+// Get the Uri for the location of your backup blob.
 Uri folderUri = backupResult.Value.FolderUri;
 ```
 

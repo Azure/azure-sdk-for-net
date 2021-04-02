@@ -36,6 +36,16 @@ foreach (FormPage page in formPages)
         FormLine line = page.Lines[i];
         Console.WriteLine($"  Line {i} has {line.Words.Count} {(line.Words.Count == 1 ? "word" : "words")}, and text: '{line.Text}'.");
 
+        if (line.Appearance != null)
+        {
+            // Check the style and style confidence to see if text is handwritten.
+            // Note that value '0.8' is used as an example.
+            if (line.Appearance.Style.Name == TextStyleName.Handwriting && line.Appearance.Style.Confidence > 0.8)
+            {
+                Console.WriteLine("The text is handwritten");
+            }
+        }
+
         Console.WriteLine("    Its bounding box is:");
         Console.WriteLine($"    Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
         Console.WriteLine($"    Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
@@ -85,6 +95,16 @@ foreach (FormPage page in formPages)
     {
         FormLine line = page.Lines[i];
         Console.WriteLine($"  Line {i} has {line.Words.Count} {(line.Words.Count == 1 ? "word" : "words")}, and text: '{line.Text}'.");
+
+        if (line.Appearance != null)
+        {
+            // Check the style and style confidence to see if text is handwritten.
+            // Note that value '0.8' is used as an example.
+            if (line.Appearance.Style.Name == TextStyleName.Handwriting && line.Appearance.Style.Confidence > 0.8)
+            {
+                Console.WriteLine("The text is handwritten");
+            }
+        }
 
         Console.WriteLine("    Its bounding box is:");
         Console.WriteLine($"    Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");

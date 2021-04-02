@@ -45,11 +45,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// request body, default behavior is to set it to true.  This will
         /// ensure that VM Agent is installed on the VM so that extensions can
         /// be added to the VM later.</param>
-        public LinuxConfiguration(bool? disablePasswordAuthentication = default(bool?), SshConfiguration ssh = default(SshConfiguration), bool? provisionVMAgent = default(bool?))
+        /// <param name="patchSettings">[Preview Feature] Specifies settings
+        /// related to VM Guest Patching on Linux.</param>
+        public LinuxConfiguration(bool? disablePasswordAuthentication = default(bool?), SshConfiguration ssh = default(SshConfiguration), bool? provisionVMAgent = default(bool?), LinuxPatchSettings patchSettings = default(LinuxPatchSettings))
         {
             DisablePasswordAuthentication = disablePasswordAuthentication;
             Ssh = ssh;
             ProvisionVMAgent = provisionVMAgent;
+            PatchSettings = patchSettings;
             CustomInit();
         }
 
@@ -81,6 +84,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "provisionVMAgent")]
         public bool? ProvisionVMAgent { get; set; }
+
+        /// <summary>
+        /// Gets or sets [Preview Feature] Specifies settings related to VM
+        /// Guest Patching on Linux.
+        /// </summary>
+        [JsonProperty(PropertyName = "patchSettings")]
+        public LinuxPatchSettings PatchSettings { get; set; }
 
     }
 }

@@ -264,7 +264,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         var activeEx = ex.TranslateServiceException(EventHubName);
                         var retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
-                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
+                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!_closed) && (!cancellationToken.IsCancellationRequested))
                         {
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
@@ -478,7 +478,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         ++failedAttemptCount;
                         retryDelay = RetryPolicy.CalculateRetryDelay(activeEx, failedAttemptCount);
 
-                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!cancellationToken.IsCancellationRequested))
+                        if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!_closed) && (!cancellationToken.IsCancellationRequested))
                         {
                             EventHubsEventSource.Log.EventPublishError(EventHubName, logPartition, operationId, activeEx.Message);
                             await Task.Delay(retryDelay.Value, cancellationToken).ConfigureAwait(false);
@@ -578,7 +578,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             catch (Exception ex)
             {
-               ExceptionDispatchInfo.Capture(ex.TranslateConnectionCloseDuringLinkCreationException(EventHubName)).Throw();
+                ExceptionDispatchInfo.Capture(ex.TranslateConnectionCloseDuringLinkCreationException(EventHubName)).Throw();
             }
 
             return link;

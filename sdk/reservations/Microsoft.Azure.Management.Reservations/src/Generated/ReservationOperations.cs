@@ -71,10 +71,10 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Properties>> AvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, SubscriptionScopeProperties body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AvailableScopeProperties>> AvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, AvailableScopeRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<Properties> _response = await BeginAvailableScopesWithHttpMessagesAsync(reservationOrderId, reservationId, body, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<AvailableScopeProperties> _response = await BeginAvailableScopesWithHttpMessagesAsync(reservationOrderId, reservationId, body, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservationOrderId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservationOrderId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -574,7 +574,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservationOrderId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -754,7 +754,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Properties>> BeginAvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, SubscriptionScopeProperties body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AvailableScopeProperties>> BeginAvailableScopesWithHttpMessagesAsync(string reservationOrderId, string reservationId, AvailableScopeRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (reservationOrderId == null)
             {
@@ -768,7 +768,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -887,7 +887,7 @@ namespace Microsoft.Azure.Management.Reservations
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Properties>();
+            var _result = new AzureOperationResponse<AvailableScopeProperties>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -900,7 +900,7 @@ namespace Microsoft.Azure.Management.Reservations
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Properties>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AvailableScopeProperties>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -963,7 +963,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1156,7 +1156,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1355,7 +1355,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

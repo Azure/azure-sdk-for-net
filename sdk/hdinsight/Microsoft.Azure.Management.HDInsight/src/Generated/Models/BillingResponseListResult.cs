@@ -34,15 +34,20 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         /// <param name="vmSizes">The virtual machine sizes to include or
         /// exclude.</param>
+        /// <param name="vmSizesWithEncryptionAtHost">The vm sizes which enable
+        /// encryption at host.</param>
         /// <param name="vmSizeFilters">The virtual machine filtering mode.
         /// Effectively this can enabling or disabling the virtual machine
         /// sizes in a particular set.</param>
+        /// <param name="vmSizeProperties">The vm size properties.</param>
         /// <param name="billingResources">The billing and managed disk billing
         /// resources for a region.</param>
-        public BillingResponseListResult(IList<string> vmSizes = default(IList<string>), IList<VmSizeCompatibilityFilterV2> vmSizeFilters = default(IList<VmSizeCompatibilityFilterV2>), IList<BillingResources> billingResources = default(IList<BillingResources>))
+        public BillingResponseListResult(IList<string> vmSizes = default(IList<string>), IList<string> vmSizesWithEncryptionAtHost = default(IList<string>), IList<VmSizeCompatibilityFilterV2> vmSizeFilters = default(IList<VmSizeCompatibilityFilterV2>), IList<VmSizeProperty> vmSizeProperties = default(IList<VmSizeProperty>), IList<BillingResources> billingResources = default(IList<BillingResources>))
         {
             VmSizes = vmSizes;
+            VmSizesWithEncryptionAtHost = vmSizesWithEncryptionAtHost;
             VmSizeFilters = vmSizeFilters;
+            VmSizeProperties = vmSizeProperties;
             BillingResources = billingResources;
             CustomInit();
         }
@@ -59,12 +64,24 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public IList<string> VmSizes { get; set; }
 
         /// <summary>
+        /// Gets or sets the vm sizes which enable encryption at host.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmSizesWithEncryptionAtHost")]
+        public IList<string> VmSizesWithEncryptionAtHost { get; set; }
+
+        /// <summary>
         /// Gets or sets the virtual machine filtering mode. Effectively this
         /// can enabling or disabling the virtual machine sizes in a particular
         /// set.
         /// </summary>
         [JsonProperty(PropertyName = "vmSizeFilters")]
         public IList<VmSizeCompatibilityFilterV2> VmSizeFilters { get; set; }
+
+        /// <summary>
+        /// Gets the vm size properties.
+        /// </summary>
+        [JsonProperty(PropertyName = "vmSizeProperties")]
+        public IList<VmSizeProperty> VmSizeProperties { get; private set; }
 
         /// <summary>
         /// Gets or sets the billing and managed disk billing resources for a

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
-    public partial class SasDefinitionListResult
+    internal partial class SasDefinitionListResult
     {
         internal static SasDefinitionListResult DeserializeSasDefinitionListResult(JsonElement element)
         {

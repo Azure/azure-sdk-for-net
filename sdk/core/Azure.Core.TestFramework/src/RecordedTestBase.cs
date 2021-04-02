@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -144,6 +143,13 @@ namespace Azure.Core.TestFramework
             {
                 throw new IgnoreException((string) test.Properties.Get("SkipRecordings"));
             }
+
+            if (Mode == RecordedTestMode.Live &&
+                test.Properties.ContainsKey("SkipLive"))
+            {
+                throw new IgnoreException((string) test.Properties.Get("SkipLive"));
+            }
+
             Recording = new TestRecording(Mode, GetSessionFilePath(), Sanitizer, Matcher);
             ValidateClientInstrumentation = Recording.HasRequests;
         }

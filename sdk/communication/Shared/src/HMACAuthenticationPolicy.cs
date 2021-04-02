@@ -14,12 +14,10 @@ namespace Azure.Communication.Pipeline
 {
     internal class HMACAuthenticationPolicy : HttpPipelinePolicy
     {
-        private readonly byte[] _secret;
+        private readonly AzureKeyCredential _keyCredential;
 
-        public HMACAuthenticationPolicy(string accessKey)
-        {
-            _secret = Convert.FromBase64String(accessKey);
-        }
+		public HMACAuthenticationPolicy(AzureKeyCredential keyCredential)
+			=> _keyCredential = keyCredential;
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -86,7 +84,7 @@ namespace Azure.Communication.Pipeline
 
         private string ComputeHMAC(string value)
         {
-            using (var hmac = new HMACSHA256(_secret))
+            using (var hmac = new HMACSHA256(Convert.FromBase64String(_keyCredential.Key)))
             {
                 var hash = hmac.ComputeHash(Encoding.ASCII.GetBytes(value));
                 return Convert.ToBase64String(hash);

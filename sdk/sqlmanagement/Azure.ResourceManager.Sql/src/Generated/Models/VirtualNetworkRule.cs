@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A virtual network rule. </summary>
-    public partial class VirtualNetworkRule : Resource
+    public partial class VirtualNetworkRule : ProxyResource
     {
         /// <summary> Initializes a new instance of VirtualNetworkRule. </summary>
         public VirtualNetworkRule()

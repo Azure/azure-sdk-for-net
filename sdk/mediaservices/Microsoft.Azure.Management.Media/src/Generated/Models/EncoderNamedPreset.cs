@@ -115,6 +115,49 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         public static readonly EncoderNamedPreset H264MultipleBitrateSD = "H264MultipleBitrateSD";
 
+        /// <summary>
+        /// Produces a set of GOP-aligned MP4s by using content-aware encoding.
+        /// Given any input content, the service performs an initial
+        /// lightweight analysis of the input content, and uses the results to
+        /// determine the optimal number of layers, appropriate bitrate and
+        /// resolution settings for delivery by adaptive streaming. This preset
+        /// is particularly effective for low and medium complexity videos,
+        /// where the output files will be at lower bitrates but at a quality
+        /// that still delivers a good experience to viewers. The output will
+        /// contain MP4 files with video and audio interleaved.
+        /// </summary>
+        public static readonly EncoderNamedPreset H265ContentAwareEncoding = "H265ContentAwareEncoding";
+
+        /// <summary>
+        /// Produces a set of GOP aligned MP4 files with H.265 video and stereo
+        /// AAC audio. Auto-generates a bitrate ladder based on the input
+        /// resolution, bitrate and frame rate. The auto-generated preset will
+        /// never exceed the input resolution. For example, if the input is
+        /// 720p, output will remain 720p at best.
+        /// </summary>
+        public static readonly EncoderNamedPreset H265AdaptiveStreaming = "H265AdaptiveStreaming";
+
+        /// <summary>
+        /// Produces an MP4 file where the video is encoded with H.265 codec at
+        /// 1800 kbps and a picture height of 720 pixels, and the stereo audio
+        /// is encoded with AAC-LC codec at 128 kbps.
+        /// </summary>
+        public static readonly EncoderNamedPreset H265SingleBitrate720p = "H265SingleBitrate720p";
+
+        /// <summary>
+        /// Produces an MP4 file where the video is encoded with H.265 codec at
+        /// 3500 kbps and a picture height of 1080 pixels, and the stereo audio
+        /// is encoded with AAC-LC codec at 128 kbps.
+        /// </summary>
+        public static readonly EncoderNamedPreset H265SingleBitrate1080p = "H265SingleBitrate1080p";
+
+        /// <summary>
+        /// Produces an MP4 file where the video is encoded with H.265 codec at
+        /// 9500 kbps and a picture height of 2160 pixels, and the stereo audio
+        /// is encoded with AAC-LC codec at 128 kbps.
+        /// </summary>
+        public static readonly EncoderNamedPreset H265SingleBitrate4K = "H265SingleBitrate4K";
+
 
         /// <summary>
         /// Underlying value of enum EncoderNamedPreset

@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>An OpenTelemetry .NET exporter that exports to Azure Monitor</Description>
+    <AssemblyTitle>AzureMonitor OpenTelemetry Exporter</AssemblyTitle>
+    <Version>1.0.0-beta.3</Version>
+    <PackageTags>Azure Monitor OpenTelemetry Exporter</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="OpenTelemetry" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+
+  <PropertyGroup>
+    <!-- TODO: As part of release process, this PropertyGroup can be removed once RP is approved for namespace
+      https://github.com/Azure/azure-sdk-for-net/issues/17155 -->
+    <NoWarn>$(NoWarn);AZC0001;CS0108;CS1591</NoWarn>
+  </PropertyGroup>
+
+</Project>

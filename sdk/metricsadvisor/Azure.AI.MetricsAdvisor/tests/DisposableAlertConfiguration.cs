@@ -47,11 +47,12 @@ namespace Azure.AI.MetricsAdvisor.Tests
         /// <returns>A <see cref="DisposableAlertConfiguration"/> instance from which the ID of the created configuration can be obtained.</returns>
         public static async Task<DisposableAlertConfiguration> CreateAlertConfigurationAsync(MetricsAdvisorAdministrationClient adminClient, AnomalyAlertConfiguration alertConfiguration)
         {
-            string configId = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
+            AnomalyAlertConfiguration createdConfig = await adminClient.CreateAlertConfigurationAsync(alertConfiguration);
 
-            Assert.That(configId, Is.Not.Null.And.Not.Empty);
+            Assert.That(createdConfig, Is.Not.Null);
+            Assert.That(createdConfig.Id, Is.Not.Null.And.Not.Empty);
 
-            return new DisposableAlertConfiguration(adminClient, configId);
+            return new DisposableAlertConfiguration(adminClient, createdConfig.Id);
         }
 
         /// <summary>

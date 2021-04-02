@@ -185,7 +185,7 @@ namespace Azure.Identity
             try
             {
                 AuthenticationResult result = await _client
-                    .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, _username, _password, async, cancellationToken)
+                    .AcquireTokenByUsernamePasswordAsync(requestContext.Scopes, requestContext.Claims, _username, _password, async, cancellationToken)
                     .ConfigureAwait(false);
 
                 _record = new AuthenticationRecord(result, _clientId);

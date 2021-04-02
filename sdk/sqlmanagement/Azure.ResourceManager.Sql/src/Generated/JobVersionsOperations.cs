@@ -21,10 +21,12 @@ namespace Azure.ResourceManager.Sql
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal JobVersionsRestOperations RestClient { get; }
+
         /// <summary> Initializes a new instance of JobVersionsOperations for mocking. </summary>
         protected JobVersionsOperations()
         {
         }
+
         /// <summary> Initializes a new instance of JobVersionsOperations. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job. </param>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Resource>> GetAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JobVersion>> GetAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("JobVersionsOperations.Get");
             scope.Start();
@@ -66,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job. </param>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Resource> Get(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
+        public virtual Response<JobVersion> Get(string resourceGroupName, string serverName, string jobAgentName, string jobName, int jobVersion, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("JobVersionsOperations.Get");
             scope.Start();
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public virtual AsyncPageable<Resource> ListByJobAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<JobVersion> ListByJobAsync(string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -107,7 +109,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            async Task<Page<Resource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<JobVersion>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("JobVersionsOperations.ListByJob");
                 scope.Start();
@@ -122,7 +124,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<Resource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<JobVersion>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("JobVersionsOperations.ListByJob");
                 scope.Start();
@@ -147,7 +149,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="jobAgentName"/>, or <paramref name="jobName"/> is null. </exception>
-        public virtual Pageable<Resource> ListByJob(string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
+        public virtual Pageable<JobVersion> ListByJob(string resourceGroupName, string serverName, string jobAgentName, string jobName, CancellationToken cancellationToken = default)
         {
             if (resourceGroupName == null)
             {
@@ -166,7 +168,7 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentNullException(nameof(jobName));
             }
 
-            Page<Resource> FirstPageFunc(int? pageSizeHint)
+            Page<JobVersion> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("JobVersionsOperations.ListByJob");
                 scope.Start();
@@ -181,7 +183,7 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<Resource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<JobVersion> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("JobVersionsOperations.ListByJob");
                 scope.Start();

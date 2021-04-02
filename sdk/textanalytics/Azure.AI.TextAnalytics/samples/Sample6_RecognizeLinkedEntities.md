@@ -41,6 +41,7 @@ try
         {
             Console.WriteLine($"    Match Text: {match.Text}");
             Console.WriteLine($"    Offset: {match.Offset}");
+            Console.WriteLine($"    Length: {match.Length}");
             Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
         }
         Console.WriteLine("");
@@ -110,6 +111,7 @@ foreach (RecognizeLinkedEntitiesResult entitiesInDocument in entitiesInDocuments
             {
                 Console.WriteLine($"    Match Text: {match.Text}");
                 Console.WriteLine($"    Offset: {match.Offset}");
+                Console.WriteLine($"    Length: {match.Length}");
                 Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
             }
             Console.WriteLine("");
@@ -153,7 +155,7 @@ var documents = new List<TextDocumentInput>
     new TextDocumentInput("4", string.Empty)
 };
 
-var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
+var options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
 Response<RecognizeLinkedEntitiesResultCollection> response = client.RecognizeLinkedEntitiesBatch(documents, options);
 RecognizeLinkedEntitiesResultCollection entitiesPerDocuments = response.Value;
 
@@ -187,6 +189,7 @@ foreach (RecognizeLinkedEntitiesResult entitiesInDocument in entitiesPerDocument
             {
                 Console.WriteLine($"    Match Text: {match.Text}");
                 Console.WriteLine($"    Offset: {match.Offset}");
+                Console.WriteLine($"    Length: {match.Length}");
                 Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
             }
             Console.WriteLine("");

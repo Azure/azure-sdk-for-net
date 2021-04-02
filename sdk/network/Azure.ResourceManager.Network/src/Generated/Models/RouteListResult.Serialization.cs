@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RouteListResult
+    internal partial class RouteListResult
     {
         internal static RouteListResult DeserializeRouteListResult(JsonElement element)
         {

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListNetworkVirtualAppliances API service call. </summary>
-    public partial class NetworkVirtualApplianceListResult
+    internal partial class NetworkVirtualApplianceListResult
     {
         /// <summary> Initializes a new instance of NetworkVirtualApplianceListResult. </summary>
         internal NetworkVirtualApplianceListResult()

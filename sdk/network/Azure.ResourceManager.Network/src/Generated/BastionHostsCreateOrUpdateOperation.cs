@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class BastionHostsCreateOrUpdateOperation : Operation<BastionHost>, IOperationSource<BastionHost>
     {
         private readonly ArmOperationHelpers<BastionHost> _operation;
+
+        /// <summary> Initializes a new instance of BastionHostsCreateOrUpdateOperation for mocking. </summary>
+        protected BastionHostsCreateOrUpdateOperation()
+        {
+        }
+
         internal BastionHostsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<BastionHost>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "BastionHostsCreateOrUpdateOperation");

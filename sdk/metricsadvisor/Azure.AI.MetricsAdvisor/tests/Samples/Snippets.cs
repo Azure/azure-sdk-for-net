@@ -7,6 +7,8 @@ using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.AI.MetricsAdvisor.Tests;
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.AI.MetricsAdvisor.Samples
 {
@@ -16,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
     [LiveOnly]
     public class Snippets : MetricsAdvisorTestEnvironment
     {
-        [RecordedTest]
+        [Test]
         public void CreateMetricsAdvisorClient()
         {
             string endpoint = MetricsAdvisorUri;
@@ -32,7 +34,18 @@ namespace Azure.AI.MetricsAdvisor.Samples
             #endregion
         }
 
-        [RecordedTest]
+        [Test]
+        public void CreateMetricsAdvisorClientWithAad()
+        {
+            string endpoint = MetricsAdvisorUri;
+
+            #region Snippet:CreateMetricsAdvisorClientWithAad
+            //@@ string endpoint = "<endpoint>";
+            var client = new MetricsAdvisorClient(new Uri(endpoint), new DefaultAzureCredential());
+            #endregion
+        }
+
+        [Test]
         public void CreateMetricsAdvisorAdministrationClient()
         {
             string endpoint = MetricsAdvisorUri;
@@ -48,7 +61,18 @@ namespace Azure.AI.MetricsAdvisor.Samples
             #endregion
         }
 
-        [RecordedTest]
+        [Test]
+        public void CreateMetricsAdvisorAdministrationClientWithAad()
+        {
+            string endpoint = MetricsAdvisorUri;
+
+            #region Snippet:CreateMetricsAdvisorAdministrationClientWithAad
+            //@@ string endpoint = "<endpoint>";
+            var adminClient = new MetricsAdvisorAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
+            #endregion
+        }
+
+        [Test]
         public async Task MetricsAdvisorNotFound()
         {
             string endpoint = MetricsAdvisorUri;

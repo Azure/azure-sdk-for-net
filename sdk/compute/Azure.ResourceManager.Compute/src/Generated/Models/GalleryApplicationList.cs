@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Gallery Applications operation response. </summary>
-    public partial class GalleryApplicationList
+    internal partial class GalleryApplicationList
     {
         /// <summary> Initializes a new instance of GalleryApplicationList. </summary>
         /// <param name="value"> A list of Gallery Applications. </param>

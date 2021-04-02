@@ -12,7 +12,7 @@ namespace Azure.Data.Tables
         protected TableClient() { }
         public TableClient(string connectionString, string tableName) { }
         public TableClient(string connectionString, string tableName, Azure.Data.Tables.TableClientOptions options = null) { }
-        public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableClient(System.Uri endpoint, string tableName, Azure.AzureSasCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential) { }
         public TableClient(System.Uri endpoint, string tableName, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddEntityAsync<T>(T entity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, Azure.Data.Tables.ITableEntity, new() { throw null; }
@@ -92,8 +92,8 @@ namespace Azure.Data.Tables
         protected TableServiceClient() { }
         public TableServiceClient(string connectionString) { }
         public TableServiceClient(string connectionString, Azure.Data.Tables.TableClientOptions options = null) { }
-        public TableServiceClient(System.Uri endpoint) { }
-        public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableClientOptions options = null) { }
+        public TableServiceClient(System.Uri endpoint, Azure.AzureSasCredential credential) { }
+        public TableServiceClient(System.Uri endpoint, Azure.AzureSasCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential) { }
         public TableServiceClient(System.Uri endpoint, Azure.Data.Tables.TableSharedKeyCredential credential, Azure.Data.Tables.TableClientOptions options = null) { }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableItem> CreateTable(string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -129,7 +129,7 @@ namespace Azure.Data.Tables
         protected TableTransactionalBatch() { }
         public virtual void AddEntities<T>(System.Collections.Generic.IEnumerable<T> entities) where T : class, Azure.Data.Tables.ITableEntity, new() { }
         public virtual void AddEntity<T>(T entity) where T : class, Azure.Data.Tables.ITableEntity, new() { }
-        public virtual void DeleteEntity(string partitionKey, string rowKey, Azure.ETag ifMatch = default(Azure.ETag)) { }
+        public virtual void DeleteEntity(string rowKey, Azure.ETag ifMatch = default(Azure.ETag)) { }
         public virtual Azure.Response<Azure.Data.Tables.Models.TableBatchResponse> SubmitBatch(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.Tables.Models.TableBatchResponse>> SubmitBatchAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual bool TryGetFailedEntityFromException(Azure.RequestFailedException exception, out Azure.Data.Tables.ITableEntity failedEntity) { throw null; }
@@ -186,6 +186,70 @@ namespace Azure.Data.Tables.Models
         public string AllowedOrigins { get { throw null; } set { } }
         public string ExposedHeaders { get { throw null; } set { } }
         public int MaxAgeInSeconds { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TableErrorCode : System.IEquatable<Azure.Data.Tables.Models.TableErrorCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TableErrorCode(string value) { throw null; }
+        public static Azure.Data.Tables.Models.TableErrorCode AccountIOPSLimitExceeded { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode AtomFormatNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode AuthorizationPermissionMismatch { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode AuthorizationResourceTypeMismatch { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode CannotCreateTableWithIOPSGreaterThanMaxAllowedPerTable { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode CommandsInBatchActOnDifferentPartitions { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode ContentLengthExceeded { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode DuplicateKeyPropertySpecified { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode DuplicatePropertiesSpecified { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode EntityAlreadyExists { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode EntityNotFound { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode EntityTooLarge { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode Forbidden { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode InvalidDuplicateRow { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode InvalidInput { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode InvalidValueType { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode JsonFormatNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode JsonVerboseFormatNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode KeyValueTooLarge { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode MediaTypeNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode MethodNotAllowed { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode NotImplemented { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode OperationTimedOut { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode OperatorInvalid { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode OutOfRangeInput { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeyEqualityComparisonExpected { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeyNotSpecified { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeyPropertyCannotBeUpdated { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeySpecifiedMoreThanOnce { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PerTableIOPSDecrementLimitReached { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PerTableIOPSIncrementLimitReached { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PrimaryKeyPropertyIsInvalidType { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertiesNeedValue { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertyNameInvalid { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertyNameTooLong { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertyValueTooLarge { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode ResourceNotFound { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode SettingIOPSForATableInProvisioningNotAllowed { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableAlreadyExists { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableBeingDeleted { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableHasNoProperties { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableHasNoSuchProperty { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableNotFound { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TooManyProperties { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode UpdateConditionNotSatisfied { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode XMethodIncorrectCount { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode XMethodIncorrectValue { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode XMethodNotUsingPost { get { throw null; } }
+        public bool Equals(Azure.Data.Tables.Models.TableErrorCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Data.Tables.Models.TableErrorCode left, Azure.Data.Tables.Models.TableErrorCode right) { throw null; }
+        public static implicit operator Azure.Data.Tables.Models.TableErrorCode (string value) { throw null; }
+        public static bool operator !=(Azure.Data.Tables.Models.TableErrorCode left, Azure.Data.Tables.Models.TableErrorCode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TableGeoReplicationInfo
     {

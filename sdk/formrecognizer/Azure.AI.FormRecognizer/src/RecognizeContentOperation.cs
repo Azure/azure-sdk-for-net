@@ -101,6 +101,14 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="RecognizeContentOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        protected RecognizeContentOperation()
+        {
+        }
+
+        /// <summary>
         /// The last HTTP response received from the server.
         /// </summary>
         /// <remarks>

@@ -4,13 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
+using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary>
     /// Represents a certificate/key ID pair, used to validate a <see cref="AttestationToken"/>.
     /// </summary>
+    [CodeGenModel("AttestationSigner")]
     public class AttestationSigner
     {
         /// <summary>

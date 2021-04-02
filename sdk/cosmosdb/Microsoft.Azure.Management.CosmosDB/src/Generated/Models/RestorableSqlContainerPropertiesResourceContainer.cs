@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Cosmos DB SQL container resource object
+    /// </summary>
     public partial class RestorableSqlContainerPropertiesResourceContainer
     {
         /// <summary>
@@ -41,6 +44,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// collection in the Azure Cosmos DB service.</param>
         /// <param name="conflictResolutionPolicy">The conflict resolution
         /// policy for the container.</param>
+        /// <param name="analyticalStorageTtl">Analytical TTL.</param>
         /// <param name="_rid">A system generated property. A unique
         /// identifier.</param>
         /// <param name="_ts">A system generated property that denotes the last
@@ -49,7 +53,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// resource etag required for optimistic concurrency control.</param>
         /// <param name="_self">A system generated property that specifies the
         /// addressable path of the container resource.</param>
-        public RestorableSqlContainerPropertiesResourceContainer(string id, IndexingPolicy indexingPolicy = default(IndexingPolicy), ContainerPartitionKey partitionKey = default(ContainerPartitionKey), int? defaultTtl = default(int?), UniqueKeyPolicy uniqueKeyPolicy = default(UniqueKeyPolicy), ConflictResolutionPolicy conflictResolutionPolicy = default(ConflictResolutionPolicy), string _rid = default(string), object _ts = default(object), string _etag = default(string), string _self = default(string))
+        public RestorableSqlContainerPropertiesResourceContainer(string id, IndexingPolicy indexingPolicy = default(IndexingPolicy), ContainerPartitionKey partitionKey = default(ContainerPartitionKey), int? defaultTtl = default(int?), UniqueKeyPolicy uniqueKeyPolicy = default(UniqueKeyPolicy), ConflictResolutionPolicy conflictResolutionPolicy = default(ConflictResolutionPolicy), long? analyticalStorageTtl = default(long?), string _rid = default(string), double? _ts = default(double?), string _etag = default(string), string _self = default(string))
         {
             Id = id;
             IndexingPolicy = indexingPolicy;
@@ -57,6 +61,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
             DefaultTtl = defaultTtl;
             UniqueKeyPolicy = uniqueKeyPolicy;
             ConflictResolutionPolicy = conflictResolutionPolicy;
+            AnalyticalStorageTtl = analyticalStorageTtl;
             this._rid = _rid;
             this._ts = _ts;
             this._etag = _etag;
@@ -111,6 +116,12 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public ConflictResolutionPolicy ConflictResolutionPolicy { get; set; }
 
         /// <summary>
+        /// Gets or sets analytical TTL.
+        /// </summary>
+        [JsonProperty(PropertyName = "analyticalStorageTtl")]
+        public long? AnalyticalStorageTtl { get; set; }
+
+        /// <summary>
         /// Gets a system generated property. A unique identifier.
         /// </summary>
         [JsonProperty(PropertyName = "_rid")]
@@ -121,7 +132,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// timestamp of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "_ts")]
-        public object _ts { get; private set; }
+        public double? _ts { get; private set; }
 
         /// <summary>
         /// Gets a system generated property representing the resource etag

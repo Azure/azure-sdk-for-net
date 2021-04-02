@@ -2,7 +2,7 @@
 . "${PSScriptRoot}\logging.ps1"
 . "${PSScriptRoot}\SemVer.ps1"
 
-$RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+.*(?<version>\b\d+\.\d+\.\d+([^0-9\s][^\s:]+)?)(\s+(?<releaseStatus>\(Unreleased\)|\(\d{4}-\d{2}-\d{2}\)))?)"
+$RELEASE_TITLE_REGEX = "(?<releaseNoteTitle>^\#+.*(?<version>\b\d+\.\d+\.\d+([^0-9\s][^\s:]+)?)(\s+(?<releaseStatus>\(.*\)))?)"
 $CHANGELOG_UNRELEASED_STATUS = "(Unreleased)"
 $CHANGELOG_DATE_FORMAT = "yyyy-MM-dd"
 
@@ -13,7 +13,7 @@ function Get-ChangeLogEntries {
     [String]$ChangeLogLocation
   )
 
-  $changeLogEntries = @{}
+  $changeLogEntries = [Ordered]@{}
   if (!(Test-Path $ChangeLogLocation)) {
     LogError "ChangeLog[${ChangeLogLocation}] does not exist"
     return $null
@@ -57,7 +57,7 @@ function Get-ChangeLogEntry {
   )
   $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $ChangeLogLocation
 
-  if ($changeLogEntries -and $changeLogEntries.ContainsKey($VersionString)) {
+  if ($changeLogEntries -and $changeLogEntries.Contains($VersionString)) {
     return $changeLogEntries[$VersionString]
   }
   return $null
@@ -193,15 +193,15 @@ function Set-ChangeLogContent {
 
   try
   {
-    $VersionsSorted = [AzureEngSemanticVersion]::SortVersionStrings($ChangeLogEntries.Keys)
+    $ChangeLogEntries = $ChangeLogEntries.Values | Sort-Object -Descending -Property ReleaseStatus, `
+      @{e = {[AzureEngSemanticVersion]::new($_.ReleaseVersion)}}
   }
   catch {
     LogError "Problem sorting version in ChangeLogEntries"
     return
   }
 
-  foreach ($version in $VersionsSorted) {
-    $changeLogEntry = $ChangeLogEntries[$version]
+  foreach ($changeLogEntry in $ChangeLogEntries) {
     $changeLogContent += $changeLogEntry.ReleaseTitle
     if ($changeLogEntry.ReleaseContent.Count -eq 0) {
       $changeLogContent += @("","")

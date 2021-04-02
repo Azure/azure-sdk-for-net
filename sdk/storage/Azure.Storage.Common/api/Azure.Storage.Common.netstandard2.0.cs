@@ -12,6 +12,10 @@ namespace Azure.Storage
     {
         V1_0 = 1,
     }
+    public static partial class StorageExtensions
+    {
+        public static System.IDisposable CreateServiceTimeoutScope(System.TimeSpan? timeout) { throw null; }
+    }
     public partial class StorageSharedKeyCredential
     {
         public StorageSharedKeyCredential(string accountName, string accountKey) { }
@@ -125,7 +129,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2020-04-08";
+        public const string DefaultSasVersion = "2020-06-12";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         protected SasQueryParameters(string version, Azure.Storage.Sas.AccountSasServices? services, Azure.Storage.Sas.AccountSasResourceTypes? resourceTypes, Azure.Storage.Sas.SasProtocol protocol, System.DateTimeOffset startsOn, System.DateTimeOffset expiresOn, Azure.Storage.Sas.SasIPRange ipRange, string identifier, string resource, string permissions, string signature, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null) { }

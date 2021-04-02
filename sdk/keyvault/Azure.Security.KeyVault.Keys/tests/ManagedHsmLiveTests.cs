@@ -3,13 +3,13 @@
 
 using System;
 using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
+    [ClientTestFixture(KeyClientOptions.ServiceVersion.V7_2)]
     public class ManagedHsmLiveTests : KeyClientLiveTests
     {
         public ManagedHsmLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
@@ -22,10 +22,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 ? uri
                 // If the AZURE_MANAGEDHSM_URL variable is not defined, we didn't provision one
                 // due to limitations: https://github.com/Azure/azure-sdk-for-net/issues/16531
+                // To provision Managed HSM: New-TestResources.ps1 -AdditionalParameters @{enableHsm=$true}
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
         [Test]
-        [Ignore("Service issue: https://github.com/Azure/azure-sdk-for-net/issues/16789")]
         public async Task CreateRsaWithPublicExponent()
         {
             CreateRsaKeyOptions options = new CreateRsaKeyOptions(Recording.GenerateId())
@@ -46,50 +46,31 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [Test]
-        [Ignore("Not implemented: https://github.com/Azure/azure-sdk-for-net/issues/16792")]
-        public async Task ExportCreatedKey()
+        public async Task CreateOctHsmKey()
         {
-            SaveDebugRecordingsOnFailure = true;
+            string keyName = Recording.GenerateId();
 
-            string jsonPolicy = @"{
-  ""anyOf"": [
-    {
-      ""allOf"": [
-        {
-          ""claim"": ""MyClaim"",
-          ""condition"": ""equals"",
-          ""value"": ""abc123""
-        }
-      ],
-      ""authority"": ""my.attestation.com""
-    }
-  ],
-  ""version"": ""0.2""
-}";
-            byte[] encodedPolicy = Encoding.UTF8.GetBytes(jsonPolicy);
+            CreateOctKeyOptions options = new CreateOctKeyOptions(keyName, hardwareProtected: true);
+            KeyVaultKey ecHsmkey = await Client.CreateOctKeyAsync(options);
+            RegisterForCleanup(keyName);
 
-            CreateRsaKeyOptions options = new CreateRsaKeyOptions(Recording.GenerateId())
-            {
-                Exportable = true,
-                KeyOperations =
-                {
-                    KeyOperation.UnwrapKey,
-                    KeyOperation.WrapKey,
-                },
-                KeySize = 2048,
-                ReleasePolicy = new KeyReleasePolicy(encodedPolicy),
-            };
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
 
-            // Not currently implemented:
-            KeyVaultKey createdKey = await Client.CreateRsaKeyAsync(options);
-
-            // This requires provisioning of an application in the enclave, which is coming soon:
-            KeyVaultKey exportedKey = await Client.ExportKeyAsync(createdKey.Name, "test");
-            CollectionAssert.AreEqual(createdKey.Key.N, exportedKey.Key.N);
+            AssertKeyVaultKeysEqual(ecHsmkey, keyReturned);
         }
 
         [Test]
-        [Ignore("Not implemented: https://github.com/Azure/azure-sdk-for-net/issues/16792")]
-        public Task ExportImportedKey() => Task.CompletedTask;
+        public async Task CreateOctKey()
+        {
+            string keyName = Recording.GenerateId();
+
+            CreateOctKeyOptions ecKey = new CreateOctKeyOptions(keyName, hardwareProtected: false);
+            KeyVaultKey keyNoHsm = await Client.CreateOctKeyAsync(ecKey);
+            RegisterForCleanup(keyNoHsm.Name);
+
+            KeyVaultKey keyReturned = await Client.GetKeyAsync(keyNoHsm.Name);
+
+            AssertKeyVaultKeysEqual(keyNoHsm, keyReturned);
+        }
     }
 }

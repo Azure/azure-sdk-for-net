@@ -88,7 +88,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 Assert.That(
                     async () =>
-                    await GetNoRetryClient().AcceptSessionAsync(
+                    await CreateNoRetryClient().AcceptSessionAsync(
                         scope.QueueName,
                         sessionId),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason)).EqualTo(ServiceBusFailureReason.SessionCannotBeLocked));
@@ -197,6 +197,54 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     // Close the receiver client when we are done with it. Since the sessionClient doesn't own the underlying connection, the connection remains open, but the session link will be closed.
                     await receiver.DisposeAsync();
                 }
+            }
+        }
+
+        [Test]
+        public async Task ReceiveMessagesWhenQueueEmpty()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString, new ServiceBusClientOptions
+                {
+                    RetryOptions =
+                    {
+                        // very high TryTimeout
+                        TryTimeout = TimeSpan.FromSeconds(120)
+                    }
+                });
+
+                var messageCount = 2;
+                var sessionId = "sessionId1";
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, sessionId).AsEnumerable<ServiceBusMessage>();
+                await sender.SendMessagesAsync(batch);
+
+                ServiceBusReceiver receiver = await client.AcceptNextSessionAsync(
+                    scope.QueueName,
+                    new ServiceBusSessionReceiverOptions
+                    {
+                        PrefetchCount = 100
+                    });
+
+                var remainingMessages = messageCount;
+                while (remainingMessages > 0)
+                {
+                    foreach (var message in await receiver.ReceiveMessagesAsync(remainingMessages))
+                    {
+                        await receiver.CompleteMessageAsync(message);
+                        remainingMessages--;
+                    }
+                }
+
+                using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+
+                var start = DateTime.UtcNow;
+                Assert.ThrowsAsync<TaskCanceledException>(async () => await receiver.ReceiveMessagesAsync(1, cancellationToken: cancellationTokenSource.Token));
+                var stop = DateTime.UtcNow;
+
+                Assert.That(stop - start,  Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(3)));
             }
         }
 
@@ -607,7 +655,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await receiver.RenewSessionLockAsync();
 
-                Assert.True(receiver.SessionLockedUntil >= firstLockedUntilUtcTime + TimeSpan.FromSeconds(10));
+                Assert.Greater(receiver.SessionLockedUntil, firstLockedUntilUtcTime);
 
                 // Complete Messages
                 await receiver.CompleteMessageAsync(receivedMessage.LockToken);
@@ -685,7 +733,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                await using var client = GetClient();
+                await using var client = CreateClient();
                 ServiceBusSender sender = client.CreateSender(scope.QueueName);
                 var sessionId = "sessionId";
                 var receiver = await client.AcceptSessionAsync(scope.QueueName, sessionId);
@@ -892,6 +940,82 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     }
                 }
                 await Task.WhenAll(tasks);
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CancellingDoesNotLoseSessionMessages(bool prefetch)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+
+                var messageCount = 10;
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                IEnumerable<ServiceBusMessage> messages = AddMessages(batch, messageCount, "sessionId").AsEnumerable<ServiceBusMessage>();
+                await sender.SendMessagesAsync(batch);
+                var receiver = await client.AcceptSessionAsync(
+                    scope.QueueName,
+                    "sessionId",
+                    new ServiceBusSessionReceiverOptions { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete, PrefetchCount = prefetch ? 10 : 0 });
+
+                using var cancellationTokenSource = new CancellationTokenSource(500);
+                var received = 0;
+
+                try
+                {
+                    for (int i = 0; i < messageCount; i++)
+                    {
+                        await receiver.ReceiveMessageAsync(cancellationToken: cancellationTokenSource.Token);
+                        received++;
+                        await Task.Delay(100);
+                    }
+                }
+                catch (TaskCanceledException)
+                {
+                }
+
+                Assert.Less(received, messageCount);
+
+                var remaining = messageCount - received;
+                for (int i = 0; i < remaining; i++)
+                {
+                    await receiver.ReceiveMessageAsync();
+                    received++;
+                }
+                Assert.AreEqual(messageCount, received);
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("Not yet implemented")]
+        public async Task CancellingDoesNotBlockSubsequentReceives(bool prefetch)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = CreateClient();
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                var receiver = await client.AcceptSessionAsync(scope.QueueName, "sessionId", new ServiceBusSessionReceiverOptions { PrefetchCount = prefetch ? 10 : 0 });
+
+                using var cancellationTokenSource = new CancellationTokenSource(500);
+                var start = DateTime.UtcNow;
+
+                Assert.That(
+                    async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(60), cancellationToken: cancellationTokenSource.Token),
+                    Throws.InstanceOf<TaskCanceledException>());
+
+                await sender.SendMessageAsync(GetMessage("sessionId"));
+                var msg = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual(1, msg.DeliveryCount);
+                var end = DateTime.UtcNow;
+                Assert.NotNull(msg);
+                Assert.Less(end - start, TimeSpan.FromSeconds(5));
             }
         }
     }

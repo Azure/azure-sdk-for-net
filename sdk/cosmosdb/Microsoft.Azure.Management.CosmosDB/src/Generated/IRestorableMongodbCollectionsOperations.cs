@@ -24,8 +24,12 @@ namespace Microsoft.Azure.Management.CosmosDB
     public partial interface IRestorableMongodbCollectionsOperations
     {
         /// <summary>
-        /// Lists all the restorable Azure Cosmos DB MongoDB collection
-        /// available for a specific database.
+        /// Show the event feed of all mutations done on all the Azure Cosmos
+        /// DB MongoDB collections under a specific database.  This helps in
+        /// scenario where container was accidentally deleted.  This API
+        /// requires
+        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/.../read'
+        /// permission
         /// </summary>
         /// <param name='location'>
         /// Cosmos DB region, with spaces between words and each word
@@ -35,7 +39,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// The instanceId GUID of a restorable database account.
         /// </param>
         /// <param name='restorableMongodbDatabaseRid'>
-        /// The resource id of the restorable Mongo database.
+        /// The resource ID of the MongoDB database.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -43,7 +47,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="DefaultErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

@@ -14,6 +14,16 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Name { get; internal set; }
 
         /// <summary>
+        /// Deleted.
+        /// </summary>
+        public bool? IsDeleted { get; internal set; }
+
+        /// <summary>
+        /// Version.
+        /// </summary>
+        public string VersionId { get; internal set; }
+
+        /// <summary>
         /// <see cref="FileSystemProperties"/> of the file system.
         /// </summary>
         public FileSystemProperties Properties { get; internal set; }

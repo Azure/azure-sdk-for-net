@@ -8,7 +8,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary>
     /// The current status of a detected <see cref="AnomalyIncident"/>.
     /// </summary>
-    [CodeGenModel("IncidentPropertyIncidentStatus")]
+    [CodeGenModel("IncidentStatus")]
     public readonly partial struct AnomalyIncidentStatus
     {
         /// <summary>

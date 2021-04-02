@@ -45,6 +45,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         public virtual int AppendBlobMaxBlocks => Constants.Blob.Append.MaxBlocks;
 
+        /// <summary>
+        /// AppendBlobRestClient.
+        /// </summary>
+        private readonly AppendBlobRestClient _appendBlobRestClient;
+
+        /// <summary>
+        /// AppendBlobRestClient.
+        /// </summary>
+        internal virtual AppendBlobRestClient AppendBlobRestClient => _appendBlobRestClient;
+
         #region ctors
         /// <summary>
         /// Initializes a new instance of the <see cref="AppendBlobClient"/>
@@ -74,6 +84,10 @@ namespace Azure.Storage.Blobs.Specialized
         public AppendBlobClient(string connectionString, string blobContainerName, string blobName)
             : base(connectionString, blobContainerName, blobName)
         {
+            _appendBlobRestClient = BuildAppendBlobRestClient(
+                connectionString,
+                blobContainerName,
+                blobName);
         }
 
         /// <summary>
@@ -101,6 +115,10 @@ namespace Azure.Storage.Blobs.Specialized
         public AppendBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
+            _appendBlobRestClient = BuildAppendBlobRestClient(
+                connectionString,
+                blobContainerName,
+                blobName);
             AssertNoClientSideEncryption(options);
         }
 
@@ -123,6 +141,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, options)
         {
             AssertNoClientSideEncryption(options);
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -147,6 +166,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, credential, options)
         {
             AssertNoClientSideEncryption(options);
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -175,6 +195,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, credential, options)
         {
             AssertNoClientSideEncryption(options);
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -199,6 +220,7 @@ namespace Azure.Storage.Blobs.Specialized
             : base(blobUri, credential, options)
         {
             AssertNoClientSideEncryption(options);
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -211,36 +233,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// the blob.
         /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
+        /// <param name="clientConfiguration">
+        /// <see cref="BlobClientConfiguration"/>.
         /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        /// <param name="clientDiagnostics">Client diagnostics.</param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        /// <param name="encryptionScope">Encryption scope.</param>
         internal AppendBlobClient(
             Uri blobUri,
-            HttpPipeline pipeline,
-            StorageSharedKeyCredential storageSharedKeyCredential,
-            BlobClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics,
-            CustomerProvidedKey? customerProvidedKey,
-            string encryptionScope)
+            BlobClientConfiguration clientConfiguration)
             : base(
                   blobUri,
-                  pipeline,
-                  storageSharedKeyCredential,
-                  version,
-                  clientDiagnostics,
-                  customerProvidedKey,
-                  clientSideEncryption: default,
-                  encryptionScope)
+                  clientConfiguration,
+                  clientSideEncryption: default)
         {
+            _appendBlobRestClient = BuildAppendBlobRestClient(blobUri);
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
@@ -249,6 +253,38 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(AppendBlobClient));
             }
+        }
+
+        private AppendBlobRestClient BuildAppendBlobRestClient(Uri uri)
+            => BuildAppendBlobRestClient(new BlobUriBuilder(uri));
+
+        private AppendBlobRestClient BuildAppendBlobRestClient(
+            string connectionString,
+            string blobContainerName,
+            string blobName)
+        {
+            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(conn.BlobEndpoint)
+            {
+                BlobContainerName = blobContainerName,
+                BlobName = blobName
+            };
+            return BuildAppendBlobRestClient(uriBuilder);
+        }
+
+        private AppendBlobRestClient BuildAppendBlobRestClient(BlobUriBuilder uriBuilder)
+        {
+            string containerName = uriBuilder.BlobContainerName;
+            string blobName = uriBuilder.BlobName;
+            uriBuilder.BlobContainerName = null;
+            uriBuilder.BlobName = null;
+            return new AppendBlobRestClient(
+                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
+                pipeline: _clientConfiguration.Pipeline,
+                url: uriBuilder.ToUri().ToString(),
+                containerName: containerName,
+                blob: blobName.EscapePath(),
+                version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
 
@@ -276,12 +312,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new AppendBlobClient(
                 blobUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                EncryptionScope);
+                ClientConfiguration);
         }
 
         /// <summary>
@@ -305,12 +336,7 @@ namespace Azure.Storage.Blobs.Specialized
 
             return new AppendBlobClient(
                 blobUriBuilder.ToUri(),
-                Pipeline,
-                SharedKeyCredential,
-                Version,
-                ClientDiagnostics,
-                CustomerProvidedKey,
-                EncryptionScope);
+                ClientConfiguration);
         }
 
         #region Create
@@ -674,16 +700,23 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}");
-                var conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+
+                string operationName = $"{nameof(AppendBlobClient)}.{nameof(CreateIfNotExists)}";
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
+                AppendBlobRequestConditions conditions = new AppendBlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) };
+
                 try
                 {
+                    scope.Start();
+
                     Response<BlobContentInfo> response = await CreateInternal(
                         httpHeaders,
                         metadata,
@@ -691,7 +724,7 @@ namespace Azure.Storage.Blobs.Specialized
                         conditions,
                         async,
                         cancellationToken,
-                        $"{nameof(AppendBlobClient)}.{nameof(CreateIfNotExists)}")
+                        operationName)
                         .ConfigureAwait(false);
 
                     return response;
@@ -703,12 +736,14 @@ namespace Azure.Storage.Blobs.Specialized
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -762,55 +797,90 @@ namespace Azure.Storage.Blobs.Specialized
             AppendBlobRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
+#pragma warning disable CA1801 // Review unused parameters
             string operationName = null)
+#pragma warning restore CA1801 // Review unused parameters
         {
-            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(httpHeaders)}: {httpHeaders}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Create)}");
+
                 try
                 {
-                    return await BlobRestClient.AppendBlob.CreateAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        contentLength: default,
-                        version: Version.ToVersionString(),
-                        blobContentType: httpHeaders?.ContentType,
-                        blobContentEncoding: httpHeaders?.ContentEncoding,
-                        blobContentLanguage: httpHeaders?.ContentLanguage,
-                        blobContentHash: httpHeaders?.ContentHash,
-                        blobCacheControl: httpHeaders?.CacheControl,
-                        metadata: metadata,
-                        leaseId: conditions?.LeaseId,
-                        blobContentDisposition: httpHeaders?.ContentDisposition,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        blobTagsString: tags?.ToTagsString(),
-                        async: async,
-                        operationName: operationName ?? $"{nameof(AppendBlobClient)}.{nameof(Create)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<AppendBlobCreateHeaders> response;
+
+                    if (async)
+                    {
+                        response = await AppendBlobRestClient.CreateAsync(
+                            contentLength: 0,
+                            blobContentType: httpHeaders?.ContentType,
+                            blobContentEncoding: httpHeaders?.ContentEncoding,
+                            blobContentLanguage: httpHeaders?.ContentLanguage,
+                            blobContentMD5: httpHeaders?.ContentHash,
+                            blobCacheControl: httpHeaders?.CacheControl,
+                            metadata: metadata,
+                            leaseId: conditions?.LeaseId,
+                            blobContentDisposition: httpHeaders?.ContentDisposition,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            blobTagsString: tags?.ToTagsString(),
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = AppendBlobRestClient.Create(
+                            contentLength: 0,
+                            blobContentType: httpHeaders?.ContentType,
+                            blobContentEncoding: httpHeaders?.ContentEncoding,
+                            blobContentLanguage: httpHeaders?.ContentLanguage,
+                            blobContentMD5: httpHeaders?.ContentHash,
+                            blobCacheControl: httpHeaders?.CacheControl,
+                            metadata: metadata,
+                            leaseId: conditions?.LeaseId,
+                            blobContentDisposition: httpHeaders?.ContentDisposition,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            blobTagsString: tags?.ToTagsString(),
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobContentInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -987,51 +1057,82 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlock)}");
+
                 try
                 {
-                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, CustomerProvidedKey);
+                    scope.Start();
+                    BlobErrors.VerifyHttpsCustomerProvidedKey(Uri, ClientConfiguration.CustomerProvidedKey);
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     content = content?.WithNoDispose().WithProgress(progressHandler);
-                    return await BlobRestClient.AppendBlob.AppendBlockAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        body: content,
-                        contentLength: (content?.Length - content?.Position) ?? 0,
-                        version: Version.ToVersionString(),
-                        transactionalContentHash: transactionalContentHash,
-                        leaseId: conditions?.LeaseId,
-                        maxSize: conditions?.IfMaxSizeLessThanOrEqual,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        appendPosition: conditions?.IfAppendPositionEqual,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: "AppendBlobClient.AppendBlock",
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                    ResponseWithHeaders<AppendBlobAppendBlockHeaders> response;
+
+                    if (async)
+                    {
+                        response = await AppendBlobRestClient.AppendBlockAsync(
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            body: content,
+                            transactionalContentMD5: transactionalContentHash,
+                            leaseId: conditions?.LeaseId,
+                            maxSize: conditions?.IfMaxSizeLessThanOrEqual,
+                            appendPosition: conditions?.IfAppendPositionEqual,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = AppendBlobRestClient.AppendBlock(
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            body: content,
+                            transactionalContentMD5: transactionalContentHash,
+                            leaseId: conditions?.LeaseId,
+                            maxSize: conditions?.IfMaxSizeLessThanOrEqual,
+                            appendPosition: conditions?.IfAppendPositionEqual,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobAppendInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1246,54 +1347,88 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken = default)
         {
-            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(AppendBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(AppendBlockFromUri)}");
+
                 try
                 {
-                    return await BlobRestClient.AppendBlob.AppendBlockFromUriAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        sourceUri: sourceUri,
-                        sourceRange: sourceRange.ToString(),
-                        sourceContentHash: sourceContentHash,
-                        contentLength: default,
-                        version: Version.ToVersionString(),
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        leaseId: conditions?.LeaseId,
-                        maxSize: conditions?.IfMaxSizeLessThanOrEqual,
-                        appendPosition: conditions?.IfAppendPositionEqual,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
-                        sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                        sourceIfMatch: sourceConditions?.IfMatch,
-                        sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
-                        async: async,
-                        operationName: "AppendBlobClient.AppendBlockFromUri",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> response;
+
+                    if (async)
+                    {
+                        response = await AppendBlobRestClient.AppendBlockFromUrlAsync(
+                            sourceUrl: sourceUri.AbsoluteUri,
+                            contentLength: 0,
+                            sourceRange: sourceRange.ToString(),
+                            sourceContentMD5: sourceContentHash,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            leaseId: conditions?.LeaseId,
+                            maxSize: conditions?.IfMaxSizeLessThanOrEqual,
+                            appendPosition: conditions?.IfAppendPositionEqual,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = AppendBlobRestClient.AppendBlockFromUrl(
+                            sourceUrl: sourceUri.AbsoluteUri,
+                            contentLength: 0,
+                            sourceRange: sourceRange.ToString(),
+                            sourceContentMD5: sourceContentHash,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            leaseId: conditions?.LeaseId,
+                            maxSize: conditions?.IfMaxSizeLessThanOrEqual,
+                            appendPosition: conditions?.IfAppendPositionEqual,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobAppendInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1386,42 +1521,53 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(AppendBlobClient)))
             {
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(Seal)}");
+
                 try
                 {
-                    Response<AppendBlobSealInternal> response = await BlobRestClient.AppendBlob.SealAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        Version.ToVersionString(),
-                        leaseId: conditions?.LeaseId,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        appendPosition: conditions?.IfAppendPositionEqual,
-                        async: async,
-                        operationName: $"{nameof(AppendBlobClient)}.{nameof(Seal)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<AppendBlobSealHeaders> response;
+
+                    if (async)
+                    {
+                        response = await AppendBlobRestClient.SealAsync(
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            appendPosition: conditions?.IfAppendPositionEqual,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = AppendBlobRestClient.Seal(
+                            leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            appendPosition: conditions?.IfAppendPositionEqual,
+                            cancellationToken: cancellationToken);
+                    }
 
                     return Response.FromValue(
-                        new BlobInfo
-                        {
-                            ETag = response.Value.ETag,
-                            LastModified = response.Value.LastModified
-                        },
+                        response.ToBlobInfo(),
                         response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(AppendBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1523,7 +1669,7 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(OpenWrite)}");
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(AppendBlobClient)}.{nameof(OpenWrite)}");
 
             try
             {

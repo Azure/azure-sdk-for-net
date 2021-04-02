@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation : Operation<ExpressRouteCircuitAuthorization>, IOperationSource<ExpressRouteCircuitAuthorization>
     {
         private readonly ArmOperationHelpers<ExpressRouteCircuitAuthorization> _operation;
+
+        /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation for mocking. </summary>
+        protected ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation()
+        {
+        }
+
         internal ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<ExpressRouteCircuitAuthorization>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "ExpressRouteCircuitAuthorizationsCreateOrUpdateOperation");

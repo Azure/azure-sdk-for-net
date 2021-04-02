@@ -20,7 +20,7 @@ namespace CosmosDB.Tests.ScenarioTests
         const string resourceGroupName = "pitr-stage-rg";
         const string sourceDatabaseAccountName = "pitr-sql-stage-source";
         const string sourceDatabaseAccountInstanceId = "9a4b63c3-49d1-4c87-b28e-92e92aeaa0ea";
-        const string restoreTimestamp = "2020-12-16T00:00:00+0000";
+        const string restoreTimestamp = "2021-03-01T00:00:00+0000";
 
         [Fact]
         public async Task RestorableSqlTests()
@@ -38,7 +38,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.Equal(databaseAccount.InstanceId, restorableDatabaseAccount.Name);
                 Assert.Equal(databaseAccount.Name, restorableDatabaseAccount.AccountName);
                 Assert.Equal(ApiType.Sql, restorableDatabaseAccount.ApiType);
-                Assert.Equal(3, restorableDatabaseAccount.RestorableLocations.Count);
+                Assert.Equal(2, restorableDatabaseAccount.RestorableLocations.Count);
 
                 foreach (var location in restorableDatabaseAccount.RestorableLocations)
                 {

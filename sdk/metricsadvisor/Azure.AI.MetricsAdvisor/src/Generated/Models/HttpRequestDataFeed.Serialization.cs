@@ -17,8 +17,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("dataSourceParameter");
-            writer.WriteObjectValue(DataSourceParameter);
+            if (Optional.IsDefined(DataSourceParameter))
+            {
+                writer.WritePropertyName("dataSourceParameter");
+                writer.WriteObjectValue(DataSourceParameter);
+            }
             writer.WritePropertyName("dataSourceType");
             writer.WriteStringValue(DataSourceType.ToString());
             writer.WritePropertyName("dataFeedName");
@@ -156,7 +159,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static HttpRequestDataFeed DeserializeHttpRequestDataFeed(JsonElement element)
         {
-            HttpRequestParameter dataSourceParameter = default;
+            Optional<HttpRequestParameter> dataSourceParameter = default;
             DataFeedSourceType dataSourceType = default;
             Optional<string> dataFeedId = default;
             string dataFeedName = default;
@@ -189,6 +192,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 if (property.NameEquals("dataSourceParameter"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     dataSourceParameter = HttpRequestParameter.DeserializeHttpRequestParameter(property.Value);
                     continue;
                 }
@@ -443,7 +451,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new HttpRequestDataFeed(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, dataSourceParameter);
+            return new HttpRequestDataFeed(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, Optional.ToList(dimension), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), Optional.ToList(rollUpColumns), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), Optional.ToList(admins), Optional.ToList(viewers), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, dataSourceParameter.Value);
         }
     }
 }

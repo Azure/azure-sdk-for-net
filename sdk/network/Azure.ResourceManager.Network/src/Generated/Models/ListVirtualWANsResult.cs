@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Result of the request to list VirtualWANs. It contains a list of VirtualWANs and a URL nextLink to get the next set of results. </summary>
-    public partial class ListVirtualWANsResult
+    internal partial class ListVirtualWANsResult
     {
         /// <summary> Initializes a new instance of ListVirtualWANsResult. </summary>
         internal ListVirtualWANsResult()

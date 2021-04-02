@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.MixedReality.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,12 +31,11 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// Initializes a new instance of the CheckNameAvailabilityResponse
         /// class.
         /// </summary>
-        /// <param name="nameAvailable">if name Available. Possible values
-        /// include: 'true', 'false'</param>
+        /// <param name="nameAvailable">if name Available</param>
         /// <param name="reason">Resource Name To Verify. Possible values
         /// include: 'Invalid', 'AlreadyExists'</param>
         /// <param name="message">detail message</param>
-        public CheckNameAvailabilityResponse(string nameAvailable, string reason = default(string), string message = default(string))
+        public CheckNameAvailabilityResponse(bool nameAvailable, string reason = default(string), string message = default(string))
         {
             NameAvailable = nameAvailable;
             Reason = reason;
@@ -51,11 +49,10 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets if name Available. Possible values include: 'true',
-        /// 'false'
+        /// Gets or sets if name Available
         /// </summary>
         [JsonProperty(PropertyName = "nameAvailable")]
-        public string NameAvailable { get; set; }
+        public bool NameAvailable { get; set; }
 
         /// <summary>
         /// Gets or sets resource Name To Verify. Possible values include:
@@ -73,15 +70,11 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (NameAvailable == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NameAvailable");
-            }
         }
     }
 }

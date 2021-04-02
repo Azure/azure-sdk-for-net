@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A server key. </summary>
-    public partial class ServerKey : Resource
+    public partial class ServerKey : ProxyResource
     {
         /// <summary> Initializes a new instance of ServerKey. </summary>
         public ServerKey()

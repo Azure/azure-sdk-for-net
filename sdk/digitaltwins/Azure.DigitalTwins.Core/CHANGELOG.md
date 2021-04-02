@@ -3,6 +3,12 @@
 ## 1.3.0-beta.1 (Unreleased)
 
 
+## 1.2.1 (2021-02-03)
+
+### Fixes and improvements
+
+- Fixed an issue with Query APIs when `DigitalTwinsClient` has been initialized with a non-default `ObjectSerializer`.
+
 ## 1.2.0 (2020-11-16)
 
 ### New Features
@@ -65,7 +71,7 @@ Note that these breaking changes are only breaking changes from the **preview** 
 - Type definitions in Azure.DigitalTwins.Core.Models namespace moved to Azure.DigitalTwins.Core.
 - `CreateModelsAsync` and `CreateModels` APIs now return `Response<ModelData[]>` instead of `Response<IReadOnlyList<ModelData>>`.
 
-## 1.0.0-preview.2
+## 1.0.0-preview.2 
 
 ### New features
 

@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="relations"> Healthcare entity relations. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="entities"/>, <paramref name="relations"/>, or <paramref name="warnings"/> is null. </exception>
-        internal DocumentHealthcareEntitiesInternal(string id, IEnumerable<HealthcareEntity> entities, IEnumerable<HealthcareRelationInternal> relations, IEnumerable<TextAnalyticsWarningInternal> warnings)
+        internal DocumentHealthcareEntitiesInternal(string id, IEnumerable<HealthcareEntityInternal> entities, IEnumerable<HealthcareRelationInternal> relations, IEnumerable<TextAnalyticsWarningInternal> warnings)
         {
             if (id == null)
             {
@@ -52,7 +52,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="relations"> Healthcare entity relations. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>
-        internal DocumentHealthcareEntitiesInternal(string id, IReadOnlyList<HealthcareEntity> entities, IReadOnlyList<HealthcareRelationInternal> relations, IReadOnlyList<TextAnalyticsWarningInternal> warnings, TextDocumentStatistics? statistics)
+        internal DocumentHealthcareEntitiesInternal(string id, IReadOnlyList<HealthcareEntityInternal> entities, IReadOnlyList<HealthcareRelationInternal> relations, IReadOnlyList<TextAnalyticsWarningInternal> warnings, TextDocumentStatistics? statistics)
         {
             Id = id;
             Entities = entities;

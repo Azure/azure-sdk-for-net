@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class UserGetMemberGroupsResult
+    internal partial class UserGetMemberGroupsResult
     {
         internal static UserGetMemberGroupsResult DeserializeUserGetMemberGroupsResult(JsonElement element)
         {

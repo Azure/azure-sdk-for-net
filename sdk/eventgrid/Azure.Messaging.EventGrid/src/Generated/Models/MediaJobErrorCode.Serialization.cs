@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    internal static class MediaJobErrorCodeExtensions
+    internal static partial class MediaJobErrorCodeExtensions
     {
         public static string ToSerialString(this MediaJobErrorCode value) => value switch
         {

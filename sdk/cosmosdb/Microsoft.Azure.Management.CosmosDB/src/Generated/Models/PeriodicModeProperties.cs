@@ -35,10 +35,14 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// <param name="backupRetentionIntervalInHours">An integer
         /// representing the time (in hours) that each backup is
         /// retained</param>
-        public PeriodicModeProperties(int? backupIntervalInMinutes = default(int?), int? backupRetentionIntervalInHours = default(int?))
+        /// <param name="backupStorageRedundancy">Enum to indicate type of
+        /// backup residency. Possible values include: 'Geo', 'Local',
+        /// 'Zone'</param>
+        public PeriodicModeProperties(int? backupIntervalInMinutes = default(int?), int? backupRetentionIntervalInHours = default(int?), string backupStorageRedundancy = default(string))
         {
             BackupIntervalInMinutes = backupIntervalInMinutes;
             BackupRetentionIntervalInHours = backupRetentionIntervalInHours;
+            BackupStorageRedundancy = backupStorageRedundancy;
             CustomInit();
         }
 
@@ -60,6 +64,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         [JsonProperty(PropertyName = "backupRetentionIntervalInHours")]
         public int? BackupRetentionIntervalInHours { get; set; }
+
+        /// <summary>
+        /// Gets or sets enum to indicate type of backup residency. Possible
+        /// values include: 'Geo', 'Local', 'Zone'
+        /// </summary>
+        [JsonProperty(PropertyName = "backupStorageRedundancy")]
+        public string BackupStorageRedundancy { get; set; }
 
         /// <summary>
         /// Validate the object.

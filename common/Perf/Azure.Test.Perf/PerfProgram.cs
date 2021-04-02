@@ -24,6 +24,11 @@ namespace Azure.Test.Perf
         private static List<TimeSpan>[] _correctedLatencies;
         private static Channel<(TimeSpan, Stopwatch)> _pendingOperations;
 
+        private static int CompletedOperations => _completedOperations.Sum();
+        private static double OperationsPerSecond => _completedOperations.Zip(_lastCompletionTimes,
+            (operations, time) => operations > 0 ? (operations / time.TotalSeconds) : 0)
+            .Sum();
+
         public static async Task Main(Assembly assembly, string[] args)
         {
             var testTypes = assembly.ExportedTypes
@@ -62,18 +67,6 @@ namespace Azure.Test.Perf
             {
                 Console.WriteLine("Application started.");
             }
-
-            Console.WriteLine("=== Versions ===");
-            Console.WriteLine($"Runtime: {Environment.Version}");
-            var azureAssemblies = testType.Assembly.GetReferencedAssemblies()
-                .Where(a => a.Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) || a.Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
-                .Where(a => !a.Name.Equals("Azure.Test.Perf", StringComparison.OrdinalIgnoreCase))
-                .OrderBy(a => a.Name);
-            foreach (var a in azureAssemblies)
-            {
-                Console.WriteLine($"{a.Name}: {a.Version}");
-            }
-            Console.WriteLine();
 
             Console.WriteLine("=== Options ===");
             Console.WriteLine(JsonSerializer.Serialize(options, options.GetType(), new JsonSerializerOptions()
@@ -175,6 +168,46 @@ namespace Azure.Test.Perf
             {
                 cleanupStatusThread.Join();
             }
+
+            // I would prefer to print assembly versions at the start of testing, but they cannot be determined until
+            // code in each assembly has been executed, so this must wait until after testing is complete.
+            PrintAssemblyVersions(testType);
+        }
+
+        private static void PrintAssemblyVersions(Type testType)
+        {
+            Console.WriteLine("=== Versions ===");
+
+            Console.WriteLine($"Runtime:         {Environment.Version}");
+
+            var referencedAssemblies = testType.Assembly.GetReferencedAssemblies();
+
+            var azureLoadedAssemblies = AppDomain.CurrentDomain.GetAssemblies()
+                // Include all Track1 and Track2 assemblies
+                .Where(a => a.GetName().Name.StartsWith("Azure", StringComparison.OrdinalIgnoreCase) ||
+                            a.GetName().Name.StartsWith("Microsoft.Azure", StringComparison.OrdinalIgnoreCase))
+                // Exclude this perf framework
+                .Where(a => a != Assembly.GetExecutingAssembly())
+                // Exclude assembly containing the perf test itself
+                .Where(a => a != testType.Assembly)
+                // Exclude Azure.Core.TestFramework since it is only used to setup environment and should not impact results
+                .Where(a => !a.GetName().Name.Equals("Azure.Core.TestFramework", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(a => a.GetName().Name);
+
+            foreach (var a in azureLoadedAssemblies)
+            {
+                var name = a.GetName().Name;
+                var referencedVersion = referencedAssemblies.Where(r => r.Name == name).SingleOrDefault()?.Version;
+                var loadedVersion = a.GetName().Version;
+                var informationalVersion = FileVersionInfo.GetVersionInfo(a.Location).ProductVersion;
+
+                Console.WriteLine($"{name}:");
+                Console.WriteLine($"  Referenced:    {referencedVersion}");
+                Console.WriteLine($"  Loaded:        {loadedVersion}");
+                Console.WriteLine($"  Informational: {informationalVersion}");
+            }
+
+            Console.WriteLine();
         }
 
         private static async Task RunTestsAsync(IPerfTest[] tests, PerfOptions options, string title, bool warmup = false)
@@ -215,13 +248,15 @@ namespace Azure.Test.Perf
             using var progressStatusCts = new CancellationTokenSource();
             var progressStatusThread = PerfStressUtilities.PrintStatus(
                 $"=== {title} ===" + Environment.NewLine +
-                "Current\t\tTotal",
+                "Current\t\tTotal\t\tAverage",
                 () =>
                 {
-                    var totalCompleted = _completedOperations.Sum();
+                    var totalCompleted = CompletedOperations;
                     var currentCompleted = totalCompleted - lastCompleted;
+                    var averageCompleted = OperationsPerSecond;
+
                     lastCompleted = totalCompleted;
-                    return currentCompleted + "\t\t" + totalCompleted;
+                    return $"{currentCompleted}\t\t{totalCompleted}\t\t{averageCompleted:F2}";
                 },
                 newLine: true,
                 progressStatusCts.Token,
@@ -273,12 +308,12 @@ namespace Azure.Test.Perf
 
             Console.WriteLine("=== Results ===");
 
-            var totalOperations = _completedOperations.Sum();
-            var operationsPerSecond = _completedOperations.Zip(_lastCompletionTimes, (operations, time) => (operations / time.TotalSeconds)).Sum();
+            var totalOperations = CompletedOperations;
+            var operationsPerSecond = OperationsPerSecond;
             var secondsPerOperation = 1 / operationsPerSecond;
             var weightedAverageSeconds = totalOperations / operationsPerSecond;
 
-            Console.WriteLine($"Completed {totalOperations} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
+            Console.WriteLine($"Completed {totalOperations:N0} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
                 $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op)");
             Console.WriteLine();
 
@@ -418,7 +453,7 @@ namespace Azure.Test.Perf
                 {
                     while (writtenOperations < (rate * sw.Elapsed.TotalSeconds))
                     {
-                        _pendingOperations.Writer.TryWrite(ValueTuple.Create(sw.Elapsed, sw));
+                        _pendingOperations.Writer.TryWrite((sw.Elapsed, sw));
                         writtenOperations++;
                     }
 

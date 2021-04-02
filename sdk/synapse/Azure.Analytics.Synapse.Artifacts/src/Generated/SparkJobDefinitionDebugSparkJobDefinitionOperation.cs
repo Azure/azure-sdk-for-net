@@ -20,6 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class SparkJobDefinitionDebugSparkJobDefinitionOperation : Operation<SparkBatchJob>, IOperationSource<SparkBatchJob>
     {
         private readonly ArmOperationHelpers<SparkBatchJob> _operation;
+
+        /// <summary> Initializes a new instance of SparkJobDefinitionDebugSparkJobDefinitionOperation for mocking. </summary>
+        protected SparkJobDefinitionDebugSparkJobDefinitionOperation()
+        {
+        }
+
         internal SparkJobDefinitionDebugSparkJobDefinitionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<SparkBatchJob>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SparkJobDefinitionDebugSparkJobDefinitionOperation");

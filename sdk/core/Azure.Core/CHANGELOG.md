@@ -1,15 +1,49 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.12.0 (2021-04-06)
 
+### Added
 
-## 1.8.1 (2020-01-11)
+- Added `HttpPipeline.CreateHttpMessagePropertiesScope` that can be used to inject scoped properties into `HttpMessage`.
+
+## 1.11.0 (2021-03-22)
+
+### Added
+
+- `Operation` base class for operations that do not return a value.
+- Added `Content` property to `Response` which returns the body of the response as a `BinaryData` if the body is buffered.
+- `AzureNamedKeyCredential` has been implemented to cover scenarios where services require that a shared key name and the key value be used as a component of the algorithm to form the authorization token.
+
+### Key Bug Fixes
+
+- Check the `JsonIgnoreAttribute.Condition` property added in .NET 5 when discovering members with `JsonObjectSerializer`.
+- `ETag` now returns `string.Empty` if it is constructed with a null value.
+- Keep-Alive connections are recycled every 300 seconds to observe DNS changes.
+
+## 1.10.0 (2021-03-09)
+
+## Added
+
+- Added `CloudEvent` type based on the [CloudEvent spec](https://github.com/cloudevents/spec/blob/master/spec.md).
+
+## 1.9.0 (2021-02-09)
+
+## Added
+- Added Serialize overloads on `ObjectSerializer` that serialize to `BinaryData`.
+- Added AzureCoreExtensions containing extensions methods for `BinaryData` that allow deserializing with an `ObjectSerializer`.
+
+### Key Bug Fixes
+
+- Avoid `ObjectDisposedException` when the request is cancelled during content upload over HTTPS.
+- Fix exception while setting `If-Modified-Since` header on .NET Framework.
+
+## 1.8.1 (2021-01-11)
 
 ### Key Bug Fixes
 
 - Include `Microsoft.Bcl.AsyncInterfaces` dependency on .NET 5 to avoid build issues in applications targeting .NET 5.
 
-## 1.8.0 (2020-01-06)
+## 1.8.0 (2021-01-06)
 
 ### Added
 - `AzureSasCredential` and its respective policy.

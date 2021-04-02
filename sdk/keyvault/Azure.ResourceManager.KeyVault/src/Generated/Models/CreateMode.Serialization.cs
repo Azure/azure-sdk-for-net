@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    internal static class CreateModeExtensions
+    internal static partial class CreateModeExtensions
     {
         public static string ToSerialString(this CreateMode value) => value switch
         {

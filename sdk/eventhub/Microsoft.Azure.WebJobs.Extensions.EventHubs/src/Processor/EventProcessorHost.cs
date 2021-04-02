@@ -15,7 +15,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
     internal class EventProcessorHost : EventProcessor<EventProcessorHostPartition>
     {
-        private readonly bool _invokeProcessorAfterReceiveTimeout;
         private readonly Action<ExceptionReceivedEventArgs> _exceptionHandler;
         private IEventProcessorFactory _processorFactory;
         private BlobsCheckpointStore _checkpointStore;
@@ -32,10 +31,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             string eventHubName,
             EventProcessorOptions options,
             int eventBatchMaximumCount,
-            bool invokeProcessorAfterReceiveTimeout,
             Action<ExceptionReceivedEventArgs> exceptionHandler) : base(eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options)
         {
-            _invokeProcessorAfterReceiveTimeout = invokeProcessorAfterReceiveTimeout;
             _exceptionHandler = exceptionHandler;
         }
 
@@ -45,10 +42,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             string eventHubName,
             EventProcessorOptions options,
             int eventBatchMaximumCount,
-            bool invokeProcessorAfterReceiveTimeout,
             Action<ExceptionReceivedEventArgs> exceptionHandler) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
         {
-            _invokeProcessorAfterReceiveTimeout = invokeProcessorAfterReceiveTimeout;
             _exceptionHandler = exceptionHandler;
         }
 
@@ -65,6 +60,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         protected override async Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken)
         {
             return await _checkpointStore.ListOwnershipAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override async Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, CancellationToken cancellationToken)
+        {
+            return await _checkpointStore.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, cancellationToken).ConfigureAwait(false);
         }
 
         internal virtual async Task CheckpointAsync(string partitionId, EventData checkpointEvent, CancellationToken cancellationToken = default)
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorHostPartition partition, CancellationToken cancellationToken)
         {
-            if ((events == null || !events.Any()) && !_invokeProcessorAfterReceiveTimeout)
+            if (events == null || !events.Any())
             {
                 return Task.CompletedTask;
             }
@@ -107,16 +107,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             return partition.EventProcessor.ProcessEventsAsync(partition, events);
         }
 
-        protected override Task OnInitializingPartitionAsync(EventProcessorHostPartition partition, CancellationToken cancellationToken)
+        protected override async Task OnInitializingPartitionAsync(EventProcessorHostPartition partition, CancellationToken cancellationToken)
         {
             partition.ProcessorHost = this;
             partition.EventProcessor = _processorFactory.CreateEventProcessor();
-            partition.ReadLastEnqueuedEventPropertiesFunc = ReadLastEnqueuedEventProperties;
 
             // Since we are re-initializing this partition, any cached information we have about the partition will be incorrect.
             // Clear it out now, if there is any, we'll refresh it in ListCheckpointsAsync, which EventProcessor will call before starting to pump messages.
             partition.Checkpoint = null;
-            return partition.EventProcessor.OpenAsync(partition);
+            await partition.EventProcessor.OpenAsync(partition).ConfigureAwait(false);
+
+            // No ReadLastEnqueuedEventProperties information is available at this moment set the ReadLastEnqueuedEventPropertiesFunc last
+            // to avoid an exception in OpenAsync
+            partition.ReadLastEnqueuedEventPropertiesFunc = ReadLastEnqueuedEventProperties;
         }
 
         protected override Task OnPartitionProcessingStoppedAsync(EventProcessorHostPartition partition, ProcessingStoppedReason reason, CancellationToken cancellationToken)

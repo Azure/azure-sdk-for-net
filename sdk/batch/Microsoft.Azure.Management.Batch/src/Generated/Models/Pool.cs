@@ -89,7 +89,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// current or last completed resize operation.</param>
         /// <param name="mountConfiguration">A list of file systems to mount on
         /// each node in the pool.</param>
-        public Pool(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolProvisioningState? provisioningState = default(PoolProvisioningState?), System.DateTime? provisioningStateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), DeploymentConfiguration deploymentConfiguration = default(DeploymentConfiguration), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), ScaleSettings scaleSettings = default(ScaleSettings), AutoScaleRun autoScaleRun = default(AutoScaleRun), InterNodeCommunicationState? interNodeCommunication = default(InterNodeCommunicationState?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), StartTask startTask = default(StartTask), IList<CertificateReference> certificates = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackages = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), ResizeOperationStatus resizeOperationStatus = default(ResizeOperationStatus), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>))
+        /// <param name="identity">The type of identity used for the Batch
+        /// Pool.</param>
+        public Pool(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), string displayName = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolProvisioningState? provisioningState = default(PoolProvisioningState?), System.DateTime? provisioningStateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), DeploymentConfiguration deploymentConfiguration = default(DeploymentConfiguration), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), ScaleSettings scaleSettings = default(ScaleSettings), AutoScaleRun autoScaleRun = default(AutoScaleRun), InterNodeCommunicationState? interNodeCommunication = default(InterNodeCommunicationState?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), StartTask startTask = default(StartTask), IList<CertificateReference> certificates = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackages = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), ResizeOperationStatus resizeOperationStatus = default(ResizeOperationStatus), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), BatchPoolIdentity identity = default(BatchPoolIdentity))
             : base(id, name, type, etag)
         {
             DisplayName = displayName;
@@ -117,6 +119,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             ApplicationLicenses = applicationLicenses;
             ResizeOperationStatus = resizeOperationStatus;
             MountConfiguration = mountConfiguration;
+            Identity = identity;
             CustomInit();
         }
 
@@ -380,6 +383,15 @@ namespace Microsoft.Azure.Management.Batch.Models
         public IList<MountConfiguration> MountConfiguration { get; set; }
 
         /// <summary>
+        /// Gets or sets the type of identity used for the Batch Pool.
+        /// </summary>
+        /// <remarks>
+        /// The type of identity used for the Batch Pool.
+        /// </remarks>
+        [JsonProperty(PropertyName = "identity")]
+        public BatchPoolIdentity Identity { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -460,6 +472,10 @@ namespace Microsoft.Azure.Management.Batch.Models
                         element4.Validate();
                     }
                 }
+            }
+            if (Identity != null)
+            {
+                Identity.Validate();
             }
         }
     }

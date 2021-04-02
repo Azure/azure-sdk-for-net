@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dns
     }
     public partial class ZonesDeleteOperation : Azure.Operation<Azure.Response>
     {
-        internal ZonesDeleteOperation() { }
+        protected ZonesDeleteOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -146,12 +146,6 @@ namespace Azure.ResourceManager.Dns.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.TxtRecord> TxtRecords { get { throw null; } }
         public string Type { get { throw null; } }
     }
-    public partial class RecordSetListResult
-    {
-        internal RecordSetListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Dns.Models.RecordSet> Value { get { throw null; } }
-    }
     public enum RecordType
     {
         A = 0,
@@ -216,12 +210,6 @@ namespace Azure.ResourceManager.Dns.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.SubResource> ResolutionVirtualNetworks { get { throw null; } }
         [System.ObsoleteAttribute("Private DNS is not allowed in this API anymore, use the privatedns API")]
         public Azure.ResourceManager.Dns.Models.ZoneType? ZoneType { get { throw null; } }
-    }
-    public partial class ZoneListResult
-    {
-        internal ZoneListResult() { }
-        public string NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Dns.Models.Zone> Value { get { throw null; } }
     }
     [System.ObsoleteAttribute("Enum is no longer support since privat dns is no longer supported (public only); please use the privatedns API")]
     public enum ZoneType

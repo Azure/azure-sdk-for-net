@@ -1,0 +1,270 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyze?includeTextDetails=false\u0026pages=1-2",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "108935",
+        "Content-Type": "application/pdf",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b07d4b3012b3a744ad9b16ad8838d6c6-9e5ac41155ed4449-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "9de156aba15c2d67733ebeaa778f875b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "f72be703-e246-47ae-8b18-24b026008e45",
+        "Content-Length": "0",
+        "Date": "Mon, 29 Mar 2021 17:20:04 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/f72be703-e246-47ae-8b18-24b026008e45",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "105"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/f72be703-e246-47ae-8b18-24b026008e45",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "75c89e7964ce398b2a32ed21df881d2c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b6dd9683-55c9-4dca-8bf6-e4727c742550",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:20:05 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-03-29T17:20:05Z",
+        "lastUpdatedDateTime": "2021-03-29T17:20:05Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/f72be703-e246-47ae-8b18-24b026008e45",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "9ba0e33d4bee791b7b5a4500a1a2347a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9f8e87ea-6e55-440d-ad4f-6f878731683d",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:20:06 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:20:05Z",
+        "lastUpdatedDateTime": "2021-03-29T17:20:05Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/businessCard/analyzeResults/f72be703-e246-47ae-8b18-24b026008e45",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "8e8b7bf03ace465ccba87229b4464dea",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6826364f-8a26-4e1c-a9b6-5761fb0a7545",
+        "Content-Length": "1632",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:20:07 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
+      },
+      "ResponseBody": {
+        "status": "succeeded",
+        "createdDateTime": "2021-03-29T17:20:05Z",
+        "lastUpdatedDateTime": "2021-03-29T17:20:07Z",
+        "analyzeResult": {
+          "version": "2.1.0",
+          "readResults": [
+            {
+              "page": 1,
+              "angle": 0,
+              "width": 8.5,
+              "height": 11,
+              "unit": "inch"
+            },
+            {
+              "page": 2,
+              "angle": 0,
+              "width": 8.5,
+              "height": 11,
+              "unit": "inch"
+            }
+          ],
+          "documentResults": [
+            {
+              "docType": "prebuilt:businesscard",
+              "pageRange": [
+                1,
+                1
+              ],
+              "fields": {
+                "Addresses": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "123 Hobbit Lane Redmond, WA 555-555-5555",
+                      "text": "123 Hobbit Lane Redmond, WA 555-555-5555",
+                      "boundingBox": [
+                        6.0105,
+                        1.6707,
+                        7.1006,
+                        1.6707,
+                        7.1006,
+                        2.2254,
+                        6.0105,
+                        2.2254
+                      ],
+                      "page": 1,
+                      "confidence": 0.213
+                    },
+                    {
+                      "type": "string",
+                      "valueString": "567 Main St. Redmond, WA 555-555-5555",
+                      "text": "567 Main St. Redmond, WA 555-555-5555",
+                      "boundingBox": [
+                        0.8852,
+                        1.846,
+                        1.8537,
+                        1.846,
+                        1.8537,
+                        2.3954,
+                        0.8852,
+                        2.3954
+                      ],
+                      "page": 1,
+                      "confidence": 0.987
+                    }
+                  ]
+                },
+                "CompanyNames": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "string",
+                      "valueString": "Invoice For:",
+                      "text": "Invoice For:",
+                      "boundingBox": [
+                        6.0211,
+                        1.0656,
+                        7.0357,
+                        1.0656,
+                        7.0357,
+                        1.2121,
+                        6.0211,
+                        1.2121
+                      ],
+                      "page": 1,
+                      "confidence": 0.239
+                    }
+                  ]
+                },
+                "ContactNames": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "FirstName": {
+                          "type": "string",
+                          "valueString": "Bilbo",
+                          "text": "Bilbo",
+                          "boundingBox": [
+                            6.0164,
+                            1.4503,
+                            6.3392,
+                            1.4503,
+                            6.3392,
+                            1.5649,
+                            6.0164,
+                            1.5649
+                          ],
+                          "page": 1
+                        },
+                        "LastName": {
+                          "type": "string",
+                          "valueString": "Baggins",
+                          "text": "Baggins",
+                          "boundingBox": [
+                            6.396,
+                            1.4556,
+                            6.8967,
+                            1.4556,
+                            6.8967,
+                            1.5931,
+                            6.396,
+                            1.5931
+                          ],
+                          "page": 1
+                        }
+                      },
+                      "text": "Bilbo Baggins",
+                      "boundingBox": [
+                        6.0164,
+                        1.4503,
+                        6.8967,
+                        1.4503,
+                        6.8967,
+                        1.5931,
+                        6.0164,
+                        1.5931
+                      ],
+                      "page": 1,
+                      "confidence": 0.278
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "docType": "prebuilt:businesscard",
+              "pageRange": [
+                2,
+                2
+              ],
+              "fields": {}
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "RandomSeed": "2078262155"
+  }
+}

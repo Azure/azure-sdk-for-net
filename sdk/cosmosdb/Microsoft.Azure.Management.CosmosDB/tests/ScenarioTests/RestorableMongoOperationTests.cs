@@ -21,7 +21,7 @@ namespace CosmosDB.Tests.ScenarioTests
         const string sourceDatabaseAccountName36 = "pitr-mongo36-stage-source";
         const string sourceDatabaseAccountInstanceId32 = "eadac7e2-61f0-4e07-aaa1-9dbb495ec5a8";
         const string sourceDatabaseAccountInstanceId36 = "25a04cf0-89d4-4546-9c30-14d1dc8899df";
-        const string restoreTimestamp = "2020-12-16T00:00:00+0000";
+        const string restoreTimestamp = "2021-03-01T00:00:00+0000";
 
         [Fact]
         public async Task RestorableMongodb32Tests()
@@ -86,8 +86,8 @@ namespace CosmosDB.Tests.ScenarioTests
         }
 
         private async Task RestorableMongodbTestHelper(
-            CosmosDBManagementClient cosmosDBManagementClient, 
-            string sourceAccountInstanceId, 
+            CosmosDBManagementClient cosmosDBManagementClient,
+            string sourceAccountInstanceId,
             List<DatabaseRestoreResource> resources = null)
         {
             List<RestorableMongodbDatabaseGetResult> restorableMongodbDatabases =

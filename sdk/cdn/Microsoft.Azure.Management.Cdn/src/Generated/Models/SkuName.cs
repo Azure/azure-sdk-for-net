@@ -23,5 +23,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public const string StandardChinaCdn = "Standard_ChinaCdn";
         public const string StandardMicrosoft = "Standard_Microsoft";
         public const string PremiumChinaCdn = "Premium_ChinaCdn";
+        public const string StandardAzureFrontDoor = "Standard_AzureFrontDoor";
+        public const string PremiumAzureFrontDoor = "Premium_AzureFrontDoor";
+        public const string Standard955BandWidthChinaCdn = "Standard_955BandWidth_ChinaCdn";
+        public const string StandardAvgBandWidthChinaCdn = "Standard_AvgBandWidth_ChinaCdn";
+        public const string StandardPlusChinaCdn = "StandardPlus_ChinaCdn";
+        public const string StandardPlus955BandWidthChinaCdn = "StandardPlus_955BandWidth_ChinaCdn";
+        public const string StandardPlusAvgBandWidthChinaCdn = "StandardPlus_AvgBandWidth_ChinaCdn";
     }
 }

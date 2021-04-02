@@ -35,14 +35,17 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="ruleSetType">Defines the rule set type to use.</param>
         /// <param name="ruleSetVersion">Defines the version of the rule set to
         /// use.</param>
+        /// <param name="ruleSetAction">Possible values include: 'Block',
+        /// 'Log', 'Redirect'</param>
         /// <param name="exclusions">Describes the exclusions that are applied
         /// to all rules in the set.</param>
         /// <param name="ruleGroupOverrides">Defines the rule group overrides
         /// to apply to the rule set.</param>
-        public ManagedRuleSet(string ruleSetType, string ruleSetVersion, IList<ManagedRuleExclusion> exclusions = default(IList<ManagedRuleExclusion>), IList<ManagedRuleGroupOverride> ruleGroupOverrides = default(IList<ManagedRuleGroupOverride>))
+        public ManagedRuleSet(string ruleSetType, string ruleSetVersion, string ruleSetAction = default(string), IList<ManagedRuleExclusion> exclusions = default(IList<ManagedRuleExclusion>), IList<ManagedRuleGroupOverride> ruleGroupOverrides = default(IList<ManagedRuleGroupOverride>))
         {
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
+            RuleSetAction = ruleSetAction;
             Exclusions = exclusions;
             RuleGroupOverrides = ruleGroupOverrides;
             CustomInit();
@@ -64,6 +67,12 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "ruleSetVersion")]
         public string RuleSetVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Block', 'Log', 'Redirect'
+        /// </summary>
+        [JsonProperty(PropertyName = "ruleSetAction")]
+        public string RuleSetAction { get; set; }
 
         /// <summary>
         /// Gets or sets describes the exclusions that are applied to all rules

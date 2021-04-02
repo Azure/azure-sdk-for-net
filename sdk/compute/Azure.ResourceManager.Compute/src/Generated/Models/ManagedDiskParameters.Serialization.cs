@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static ManagedDiskParameters DeserializeManagedDiskParameters(JsonElement element)
         {
             Optional<StorageAccountTypes> storageAccountType = default;
-            Optional<SubResource> diskEncryptionSet = default;
+            Optional<DiskEncryptionSetParameters> diskEncryptionSet = default;
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskEncryptionSet = DeserializeSubResource(property.Value);
+                    diskEncryptionSet = DiskEncryptionSetParameters.DeserializeDiskEncryptionSetParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class RouteFilterRulesCreateOrUpdateOperation : Operation<RouteFilterRule>, IOperationSource<RouteFilterRule>
     {
         private readonly ArmOperationHelpers<RouteFilterRule> _operation;
+
+        /// <summary> Initializes a new instance of RouteFilterRulesCreateOrUpdateOperation for mocking. </summary>
+        protected RouteFilterRulesCreateOrUpdateOperation()
+        {
+        }
+
         internal RouteFilterRulesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<RouteFilterRule>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "RouteFilterRulesCreateOrUpdateOperation");

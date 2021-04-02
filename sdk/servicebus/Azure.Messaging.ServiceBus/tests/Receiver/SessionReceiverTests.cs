@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Azure.Messaging.ServiceBus.Plugins;
 using Moq;
 using NUnit.Framework;
@@ -18,7 +19,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 GetMockedConnection(),
                 "fakeQueue",
                 options: new ServiceBusSessionReceiverOptions(),
-                plugins: new ServiceBusPlugin[] { });
+                plugins: new ServiceBusPlugin[] { },
+                cancellationToken: CancellationToken.None);
 
             Assert.That(async () => await receiver.RenewMessageLockAsync(
                 new ServiceBusReceivedMessage()),

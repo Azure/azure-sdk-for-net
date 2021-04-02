@@ -1,0 +1,1457 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs?stringIndexType=Utf16CodeUnit",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "223",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-466b64b64fed834fb9d3ac1fb2813746-39a64ff4ea860445-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "d518e71fb8bbde791a4a8e2d519abd2d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "1",
+            "text": "Subject is taking 100mg of ibuprofen twice daily",
+            "language": "en"
+          },
+          {
+            "id": "2",
+            "text": "Can cause rapid or irregular heartbeat, delirium, panic, psychosis, and heart failure.",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "cf0afc83-3f63-4fce-86df-680d904bec58",
+        "Date": "Wed, 24 Feb 2021 16:56:14 GMT",
+        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "97"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "15392559dddf00be7c02b37db1655d5f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "cab840df-2645-4c1f-b832-495e7f18c318",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:14 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "12"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:14Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "8fbb3015ae7667cee796b09df47c3a1a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d5a33c68-3643-41d6-b7d2-0760fe304578",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:15 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "12"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:14Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "9ca689c8d08e41aa291759b905fb2cb5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "6081118d-2d99-402f-a394-3327ddcdbc6c",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:16 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "14"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:14Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "20182fec2ddfaab657d22e482d200cff",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e30e5db0-2f87-4309-86e8-e54667491159",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "8"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:14Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "28b599c8c1be45d08679665f551561eb",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "e8dd6a1a-a8b3-4068-be30-65feee7c0dcd",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:19 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:14Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "c4b0fb6a19639a3ad3fb44bca1611408",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "1778dae6-dc41-474d-9df8-7edde9248682",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:20 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "8"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:14Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "6cf0590b03462bf65fd29a65c7575542",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "7f793ecb-21ca-4117-8a4f-3796dd081c47",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:21 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "10"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:14Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "31dd4370476fae9b5e1a55c27d13a324",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9871a173-379c-4c43-a372-10b8fb6b4ffe",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:22 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "14"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:14Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "fb535e64f42466a4048565917fd4d37b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "2c7cfb8d-258a-48df-b6ed-ff13dc49ea98",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:23 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "8"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:14Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "notStarted",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "5e4c01a5e384c398bd420e2bae33ae4b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "084c4740-4ae5-45c3-98aa-fd6e0ed19d02",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:24 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:25Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "running",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "6801762e5a037b1e9f772deae20a2f89",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "d903970b-39ee-4eaa-b157-9cd3e135086e",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:26 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "8"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:25Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "running",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "7b1dd94745c781a0c58f3de1e678b8d0",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8060a49b-2a8c-4e8c-afbd-c28415e97092",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:27 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "10"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:25Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "running",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "096219d66ad34b78e3d0be0db5aee1b3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "1ef57e87-a982-43ac-96ef-6d615a3a9578",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:28 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "10"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:25Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "running",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "d4e485133316e984d57fa3741d3c9526",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "9dba8ab5-8330-40a6-87df-9f919dd699ea",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:29 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:25Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "running",
+        "errors": []
+      }
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/8b3e945e-5efd-49e5-b63b-fd0b1898d443?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "c8135cbe26a8ddb561d198f78692cb17",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "70e2ab80-e5e8-47a6-af73-2e43db1c6965",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:30 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "58"
+      },
+      "ResponseBody": {
+        "jobId": "8b3e945e-5efd-49e5-b63b-fd0b1898d443",
+        "lastUpdateDateTime": "2021-02-24T16:56:31Z",
+        "createdDateTime": "2021-02-24T16:56:14Z",
+        "expirationDateTime": "2021-02-25T16:56:14Z",
+        "status": "succeeded",
+        "errors": [],
+        "results": {
+          "documents": [
+            {
+              "id": "1",
+              "entities": [
+                {
+                  "offset": 18,
+                  "length": 5,
+                  "text": "100mg",
+                  "category": "Dosage",
+                  "confidenceScore": 0.99
+                },
+                {
+                  "offset": 27,
+                  "length": 9,
+                  "text": "ibuprofen",
+                  "category": "MedicationName",
+                  "confidenceScore": 1.0,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C0020740"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000019879"
+                    },
+                    {
+                      "dataSource": "ATC",
+                      "id": "M01AE01"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0046165"
+                    },
+                    {
+                      "dataSource": "CHV",
+                      "id": "0000006519"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "2270-2077"
+                    },
+                    {
+                      "dataSource": "DRUGBANK",
+                      "id": "DB01050"
+                    },
+                    {
+                      "dataSource": "GS",
+                      "id": "1611"
+                    },
+                    {
+                      "dataSource": "LCH_NW",
+                      "id": "sh97005926"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP16165-0"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "40458"
+                    },
+                    {
+                      "dataSource": "MMSL",
+                      "id": "d00015"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D007052"
+                    },
+                    {
+                      "dataSource": "MTHSPL",
+                      "id": "WK2XYI10QM"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C561"
+                    },
+                    {
+                      "dataSource": "NCI_CTRP",
+                      "id": "C561"
+                    },
+                    {
+                      "dataSource": "NCI_DCP",
+                      "id": "00803"
+                    },
+                    {
+                      "dataSource": "NCI_DTP",
+                      "id": "NSC0256857"
+                    },
+                    {
+                      "dataSource": "NCI_FDA",
+                      "id": "WK2XYI10QM"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000613511"
+                    },
+                    {
+                      "dataSource": "NDDF",
+                      "id": "002377"
+                    },
+                    {
+                      "dataSource": "PDQ",
+                      "id": "CDR0000040475"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "x02MO"
+                    },
+                    {
+                      "dataSource": "RXNORM",
+                      "id": "5640"
+                    },
+                    {
+                      "dataSource": "SNM",
+                      "id": "E-7772"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "C-603C0"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "387207008"
+                    },
+                    {
+                      "dataSource": "USP",
+                      "id": "m39860"
+                    },
+                    {
+                      "dataSource": "USPMG",
+                      "id": "MTHU000060"
+                    },
+                    {
+                      "dataSource": "VANDF",
+                      "id": "4017840"
+                    }
+                  ]
+                },
+                {
+                  "offset": 37,
+                  "length": 11,
+                  "text": "twice daily",
+                  "category": "Frequency",
+                  "confidenceScore": 1.0
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "DosageOfMedication",
+                  "entities": [
+                    {
+                      "ref": "#/results/documents/0/entities/0",
+                      "role": "Attribute"
+                    },
+                    {
+                      "ref": "#/results/documents/0/entities/1",
+                      "role": "Entity"
+                    }
+                  ]
+                },
+                {
+                  "relationType": "FrequencyOfMedication",
+                  "entities": [
+                    {
+                      "ref": "#/results/documents/0/entities/1",
+                      "role": "Entity"
+                    },
+                    {
+                      "ref": "#/results/documents/0/entities/2",
+                      "role": "Attribute"
+                    }
+                  ]
+                }
+              ],
+              "warnings": []
+            },
+            {
+              "id": "2",
+              "entities": [
+                {
+                  "offset": 0,
+                  "length": 9,
+                  "text": "Can cause",
+                  "category": "Diagnosis",
+                  "confidenceScore": 0.92
+                },
+                {
+                  "offset": 10,
+                  "length": 5,
+                  "text": "rapid",
+                  "category": "ConditionQualifier",
+                  "confidenceScore": 0.82
+                },
+                {
+                  "offset": 19,
+                  "length": 19,
+                  "text": "irregular heartbeat",
+                  "category": "SymptomOrSign",
+                  "confidenceScore": 0.89,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C0003811"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005346"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00057"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "1017785"
+                    },
+                    {
+                      "dataSource": "CCS",
+                      "id": "7.2.9"
+                    },
+                    {
+                      "dataSource": "CCSR_10",
+                      "id": "CIR017"
+                    },
+                    {
+                      "dataSource": "CHV",
+                      "id": "0000001440"
+                    },
+                    {
+                      "dataSource": "COSTAR",
+                      "id": "153"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3277"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "ARRHYTHMIA"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0011675"
+                    },
+                    {
+                      "dataSource": "ICD10",
+                      "id": "I49.9"
+                    },
+                    {
+                      "dataSource": "ICD10AM",
+                      "id": "I49.9"
+                    },
+                    {
+                      "dataSource": "ICD10CM",
+                      "id": "I49.9"
+                    },
+                    {
+                      "dataSource": "ICD9CM",
+                      "id": "427.9"
+                    },
+                    {
+                      "dataSource": "ICPC",
+                      "id": "K80"
+                    },
+                    {
+                      "dataSource": "ICPC2EENG",
+                      "id": "K80"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU033639"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K80012"
+                    },
+                    {
+                      "dataSource": "LCH",
+                      "id": "U000359"
+                    },
+                    {
+                      "dataSource": "LCH_NW",
+                      "id": "sh85007430"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LA15419-7"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10003119"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "35851"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "147"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D001145"
+                    },
+                    {
+                      "dataSource": "MTH",
+                      "id": "153"
+                    },
+                    {
+                      "dataSource": "MTHICD9",
+                      "id": "427.9"
+                    },
+                    {
+                      "dataSource": "NANDA-I",
+                      "id": "00126"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C2881"
+                    },
+                    {
+                      "dataSource": "NCI_FDA",
+                      "id": "1721"
+                    },
+                    {
+                      "dataSource": "NCI_GDC",
+                      "id": "C2881"
+                    },
+                    {
+                      "dataSource": "NCI_NICHD",
+                      "id": "C2881"
+                    },
+                    {
+                      "dataSource": "NOC",
+                      "id": "040520"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "115000"
+                    },
+                    {
+                      "dataSource": "PSY",
+                      "id": "03790"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "X77BB"
+                    },
+                    {
+                      "dataSource": "SNM",
+                      "id": "F-73102"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-30010"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "698247007"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0433"
+                    }
+                  ]
+                },
+                {
+                  "offset": 40,
+                  "length": 8,
+                  "text": "delirium",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C0011206"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000004328"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "1017884"
+                    },
+                    {
+                      "dataSource": "CHV",
+                      "id": "0000003670"
+                    },
+                    {
+                      "dataSource": "COSTAR",
+                      "id": "U000178"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "5003-0016"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "DELIRIUM"
+                    },
+                    {
+                      "dataSource": "DSM-5",
+                      "id": "780.09"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U000937"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0031258"
+                    },
+                    {
+                      "dataSource": "ICD10",
+                      "id": "F05.9"
+                    },
+                    {
+                      "dataSource": "ICD10AM",
+                      "id": "F05.9"
+                    },
+                    {
+                      "dataSource": "ICD10CM",
+                      "id": "R41.0"
+                    },
+                    {
+                      "dataSource": "ICNP",
+                      "id": "10022091"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU022150"
+                    },
+                    {
+                      "dataSource": "LCH",
+                      "id": "U001289"
+                    },
+                    {
+                      "dataSource": "LCH_NW",
+                      "id": "sh85036579"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP89856-6"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10012218"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "677"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "5562"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D003693"
+                    },
+                    {
+                      "dataSource": "NANDA-I",
+                      "id": "02157"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C2981"
+                    },
+                    {
+                      "dataSource": "NCI_CTCAE",
+                      "id": "E12898"
+                    },
+                    {
+                      "dataSource": "NCI_CTRP",
+                      "id": "C2981"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000450100"
+                    },
+                    {
+                      "dataSource": "NCI_NICHD",
+                      "id": "C2981"
+                    },
+                    {
+                      "dataSource": "NOC",
+                      "id": "091213"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU035152"
+                    },
+                    {
+                      "dataSource": "PDQ",
+                      "id": "CDR0000042226"
+                    },
+                    {
+                      "dataSource": "PSY",
+                      "id": "13360"
+                    },
+                    {
+                      "dataSource": "QMR",
+                      "id": "Q0200089"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "XE1Xv"
+                    },
+                    {
+                      "dataSource": "SNM",
+                      "id": "F-85720"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D9-20100"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "2776000"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0099"
+                    }
+                  ]
+                },
+                {
+                  "offset": 50,
+                  "length": 5,
+                  "text": "panic",
+                  "category": "Diagnosis",
+                  "confidenceScore": 0.98,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C0030318"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000023911"
+                    },
+                    {
+                      "dataSource": "CHV",
+                      "id": "0000009234"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "AGITATION"
+                    },
+                    {
+                      "dataSource": "ICD10CM",
+                      "id": "F41.0"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU057222"
+                    },
+                    {
+                      "dataSource": "LCH",
+                      "id": "U003458"
+                    },
+                    {
+                      "dataSource": "LCH_NW",
+                      "id": "sh85097438"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10033670"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D010200"
+                    },
+                    {
+                      "dataSource": "MTH",
+                      "id": "551"
+                    },
+                    {
+                      "dataSource": "MTHICD9",
+                      "id": "300.01"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C94438"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000454704"
+                    },
+                    {
+                      "dataSource": "NOC",
+                      "id": "121346"
+                    },
+                    {
+                      "dataSource": "PSY",
+                      "id": "36260"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "Xa3Vj"
+                    },
+                    {
+                      "dataSource": "SNM",
+                      "id": "F-90880"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "F-92560"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "79823003"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0163"
+                    }
+                  ]
+                },
+                {
+                  "offset": 57,
+                  "length": 9,
+                  "text": "psychosis",
+                  "category": "Diagnosis",
+                  "confidenceScore": 0.97,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C0033975"
+                    },
+                    {
+                      "dataSource": "AIR",
+                      "id": "PSYCH"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000004324"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00688"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "1018204"
+                    },
+                    {
+                      "dataSource": "CHV",
+                      "id": "0000010350"
+                    },
+                    {
+                      "dataSource": "COSTAR",
+                      "id": "089"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "2484-8182"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "PSYCHOSIS"
+                    },
+                    {
+                      "dataSource": "DXP",
+                      "id": "U003257"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0000709"
+                    },
+                    {
+                      "dataSource": "ICD9CM",
+                      "id": "298.9"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU070382"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "P98004"
+                    },
+                    {
+                      "dataSource": "LCH_NW",
+                      "id": "sh85108502"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LA7534-6"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10061920"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "364298"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "4180"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D011618"
+                    },
+                    {
+                      "dataSource": "MTH",
+                      "id": "089"
+                    },
+                    {
+                      "dataSource": "MTHICD9",
+                      "id": "298.9"
+                    },
+                    {
+                      "dataSource": "NANDA-I",
+                      "id": "03128"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C78576"
+                    },
+                    {
+                      "dataSource": "NCI_CELLOSAURUS",
+                      "id": "C78576"
+                    },
+                    {
+                      "dataSource": "NCI_CTCAE",
+                      "id": "E12954"
+                    },
+                    {
+                      "dataSource": "NCI_NCI-GLOSS",
+                      "id": "CDR0000450115"
+                    },
+                    {
+                      "dataSource": "NCI_NICHD",
+                      "id": "C78576"
+                    },
+                    {
+                      "dataSource": "NOC",
+                      "id": "061619"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU002910"
+                    },
+                    {
+                      "dataSource": "PSY",
+                      "id": "41910"
+                    },
+                    {
+                      "dataSource": "QMR",
+                      "id": "Q0200208"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "X00S6"
+                    },
+                    {
+                      "dataSource": "SNM",
+                      "id": "D-9200"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D9-72000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "69322001"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0193"
+                    }
+                  ]
+                },
+                {
+                  "offset": 72,
+                  "length": 13,
+                  "text": "heart failure",
+                  "category": "Diagnosis",
+                  "confidenceScore": 1.0,
+                  "links": [
+                    {
+                      "dataSource": "UMLS",
+                      "id": "C0018801"
+                    },
+                    {
+                      "dataSource": "AOD",
+                      "id": "0000005308"
+                    },
+                    {
+                      "dataSource": "BI",
+                      "id": "BI00019"
+                    },
+                    {
+                      "dataSource": "CCPSS",
+                      "id": "0017571"
+                    },
+                    {
+                      "dataSource": "CCS",
+                      "id": "7.2.11.2"
+                    },
+                    {
+                      "dataSource": "CCSR_10",
+                      "id": "CIR019"
+                    },
+                    {
+                      "dataSource": "CHV",
+                      "id": "0000005877"
+                    },
+                    {
+                      "dataSource": "COSTAR",
+                      "id": "U000338"
+                    },
+                    {
+                      "dataSource": "CSP",
+                      "id": "1393-3587"
+                    },
+                    {
+                      "dataSource": "CST",
+                      "id": "HEART FAIL"
+                    },
+                    {
+                      "dataSource": "HPO",
+                      "id": "HP:0001635"
+                    },
+                    {
+                      "dataSource": "ICD10",
+                      "id": "I50.9"
+                    },
+                    {
+                      "dataSource": "ICD10AM",
+                      "id": "I50.9"
+                    },
+                    {
+                      "dataSource": "ICD10CM",
+                      "id": "I50.9"
+                    },
+                    {
+                      "dataSource": "ICD9CM",
+                      "id": "428.9"
+                    },
+                    {
+                      "dataSource": "ICPC",
+                      "id": "K77"
+                    },
+                    {
+                      "dataSource": "ICPC2EENG",
+                      "id": "K77"
+                    },
+                    {
+                      "dataSource": "ICPC2ICD10ENG",
+                      "id": "MTHU027668"
+                    },
+                    {
+                      "dataSource": "ICPC2P",
+                      "id": "K77011"
+                    },
+                    {
+                      "dataSource": "LCH",
+                      "id": "U005616"
+                    },
+                    {
+                      "dataSource": "LCH_NW",
+                      "id": "sh85059745"
+                    },
+                    {
+                      "dataSource": "LNC",
+                      "id": "LP269421-6"
+                    },
+                    {
+                      "dataSource": "MDR",
+                      "id": "10007554"
+                    },
+                    {
+                      "dataSource": "MEDCIN",
+                      "id": "95724"
+                    },
+                    {
+                      "dataSource": "MEDLINEPLUS",
+                      "id": "199"
+                    },
+                    {
+                      "dataSource": "MSH",
+                      "id": "D006333"
+                    },
+                    {
+                      "dataSource": "MTHICD9",
+                      "id": "428.9"
+                    },
+                    {
+                      "dataSource": "NCI",
+                      "id": "C50577"
+                    },
+                    {
+                      "dataSource": "NCI_CTCAE",
+                      "id": "E10124"
+                    },
+                    {
+                      "dataSource": "NCI_FDA",
+                      "id": "2206"
+                    },
+                    {
+                      "dataSource": "NCI_NICHD",
+                      "id": "C50577"
+                    },
+                    {
+                      "dataSource": "OMIM",
+                      "id": "MTHU009472"
+                    },
+                    {
+                      "dataSource": "RCD",
+                      "id": "G58.."
+                    },
+                    {
+                      "dataSource": "SNM",
+                      "id": "D-7050"
+                    },
+                    {
+                      "dataSource": "SNMI",
+                      "id": "D3-16000"
+                    },
+                    {
+                      "dataSource": "SNOMEDCT_US",
+                      "id": "84114007"
+                    },
+                    {
+                      "dataSource": "WHO",
+                      "id": "0496"
+                    }
+                  ]
+                }
+              ],
+              "relations": [
+                {
+                  "relationType": "QualifierOfCondition",
+                  "entities": [
+                    {
+                      "ref": "#/results/documents/1/entities/0",
+                      "role": "Entity"
+                    },
+                    {
+                      "ref": "#/results/documents/1/entities/1",
+                      "role": "Attribute"
+                    }
+                  ]
+                }
+              ],
+              "warnings": []
+            }
+          ],
+          "errors": [],
+          "modelVersion": "2021-01-11"
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "21962335",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+  }
+}

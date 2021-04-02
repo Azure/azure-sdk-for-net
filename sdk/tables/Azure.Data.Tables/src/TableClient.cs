@@ -20,31 +20,35 @@ namespace Azure.Data.Tables
     /// </summary>
     public class TableClient
     {
+        private static readonly char[] ContinuationTokenSplit = new[] { ' ' };
+
         private readonly string _table;
         private readonly ClientDiagnostics _diagnostics;
         private readonly TableRestClient _tableOperations;
         private readonly string _version;
         private readonly bool _isPremiumEndpoint;
         private readonly ResponseFormat _returnNoContent = ResponseFormat.ReturnNoContent;
-        private readonly QueryOptions _defaultQueryOptions= new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata};
+        private readonly QueryOptions _defaultQueryOptions = new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata };
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> containing a shared access signature (SAS)
-        /// token credential. See <see cref="TableClient.GetSasBuilder(TableSasPermissions, DateTimeOffset)" /> for creating a SAS token.
+        /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> <see cref="AzureSasCredential"/>.
+        /// See <see cref="GetSasBuilder(TableSasPermissions, DateTimeOffset)" /> for creating a SAS token.
         /// </summary>
         /// <param name="endpoint">
         /// A <see cref="Uri"/> referencing the table service account.
         /// This is likely to be similar to "https://{account_name}.table.core.windows.net/" or "https://{account_name}.table.cosmos.azure.com/".
         /// </param>
         /// <param name="tableName">The name of the table with which this client instance will interact.</param>
+        /// <param name="credential">The shared access signature credential used to sign requests.</param>
         /// <param name="options">
         /// Optional client options that define the transport pipeline policies for authentication, retries, etc., that are applied to every request.
         /// </param>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not https.</exception>
-        public TableClient(Uri endpoint, string tableName, TableClientOptions options = null)
-            : this(endpoint, tableName, default(TableSharedKeyPipelinePolicy), options)
+        public TableClient(Uri endpoint, string tableName, AzureSasCredential credential, TableClientOptions options = null)
+            : this(endpoint, tableName, default, credential, options)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             if (endpoint.Scheme != "https")
             {
@@ -63,7 +67,7 @@ namespace Azure.Data.Tables
         /// <param name="credential">The shared key credential used to sign requests.</param>
         /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
         public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential)
-            : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), null)
+            : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, null)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -83,7 +87,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="tableName"/> or <paramref name="credential"/> is null.</exception>
         public TableClient(Uri endpoint, string tableName, TableSharedKeyCredential credential, TableClientOptions options = null)
-            : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), options)
+            : this(endpoint, tableName, new TableSharedKeyPipelinePolicy(credential), default, options)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -147,13 +151,17 @@ namespace Azure.Data.Tables
             _isPremiumEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
         }
 
-        internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, TableClientOptions options)
+        internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new TableClientOptions();
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
+            HttpPipeline pipeline = sasCredential switch
+            {
+                null => HttpPipelineBuilder.Build(options, policy),
+                _ => HttpPipelineBuilder.Build(options, policy, new AzureSasCredentialSynchronousPolicy(sasCredential))
+            };
 
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);
@@ -219,7 +227,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null,  queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (Exception ex)
@@ -263,7 +271,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null,  queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
+                var response = _tableOperations.Create(new TableProperties() { TableName = _table }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -289,7 +297,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null,  queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _tableOperations.CreateAsync(new TableProperties() { TableName = _table }, null, queryOptions: _defaultQueryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value as TableItem, response.GetRawResponse());
             }
             catch (RequestFailedException ex) when (ex.Status == (int)HttpStatusCode.Conflict)
@@ -430,7 +438,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = _tableOperations.QueryEntitiesWithPartitionAndRowKey(
+                var response = _tableOperations.QueryEntityWithPartitionAndRowKey(
                     _table,
                     partitionKey,
                     rowKey,
@@ -469,7 +477,7 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
-                var response = await _tableOperations.QueryEntitiesWithPartitionAndRowKeyAsync(
+                var response = await _tableOperations.QueryEntityWithPartitionAndRowKeyAsync(
                     _table,
                     partitionKey,
                     rowKey,
@@ -712,7 +720,7 @@ namespace Azure.Data.Tables
         /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="filter">
         /// Returns only entities that satisfy the specified filter expression.
-        /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>x => e.PartitionKey == "foo"</c>.
+        /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>e => e.PartitionKey == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
         /// The maximum number of entities that will be returned per page.
@@ -746,7 +754,7 @@ namespace Azure.Data.Tables
         /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="filter">
         /// Returns only entities that satisfy the specified filter expression.
-        /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>x => e.PartitionKey == "foo"</c>.
+        /// For example, the following expression would filter entities with a PartitionKey of 'foo': <c>e => e.PartitionKey == "foo"</c>.
         /// </param>
         /// <param name="maxPerPage">
         /// The maximum number of entities that will be returned per page.
@@ -806,7 +814,7 @@ namespace Azure.Data.Tables
                     {
                         var response = await _tableOperations.QueryEntitiesAsync(
                             _table,
-                            queryOptions: new QueryOptions() {Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg},
+                            queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
                             cancellationToken: cancellationToken).ConfigureAwait(false);
 
                         return Page.FromValues(response.Value.Value.ToTableEntityList<T>(),
@@ -829,7 +837,7 @@ namespace Azure.Data.Tables
 
                         var response = await _tableOperations.QueryEntitiesAsync(
                             _table,
-                            queryOptions: new QueryOptions() {Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg},
+                            queryOptions: new QueryOptions() { Format = _defaultQueryOptions.Format, Top = pageSizeHint, Filter = filter, Select = selectArg },
                             nextPartitionKey: NextPartitionKey,
                             nextRowKey: NextRowKey,
                             cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -1084,10 +1092,10 @@ namespace Azure.Data.Tables
         /// Create a <see cref="TableTransactionalBatch" /> for the given <paramref name="partitionKey"/> value.
         /// </summary>
         /// <param name="partitionKey">The partitionKey context for the batch.</param>
-        /// <returns></returns>
+        /// <returns>An instance of <see cref="TableTransactionalBatch"/>.</returns>
         public virtual TableTransactionalBatch CreateTransactionalBatch(string partitionKey)
         {
-            return new TableTransactionalBatch(_table, _tableOperations, _defaultQueryOptions.Format.Value);
+            return new TableTransactionalBatch(_table, partitionKey, _tableOperations, _defaultQueryOptions.Format.Value);
         }
 
         internal static string Bind(Expression expression)
@@ -1110,7 +1118,7 @@ namespace Azure.Data.Tables
             return parser.FilterString == "true" ? null : parser.FilterString;
         }
 
-        private static string CreateContinuationTokenFromHeaders(TableQueryEntitiesHeaders headers)
+        internal static string CreateContinuationTokenFromHeaders(TableQueryEntitiesHeaders headers)
         {
             if (headers.XMsContinuationNextPartitionKey == null && headers.XMsContinuationNextRowKey == null)
             {
@@ -1122,16 +1130,16 @@ namespace Azure.Data.Tables
             }
         }
 
-        private static (string NextPartitionKey, string NextRowKey) ParseContinuationToken(string continuationToken)
+        internal static (string NextPartitionKey, string NextRowKey) ParseContinuationToken(string continuationToken)
         {
             // There were no headers passed and the continuation token contains just the space delimiter
-            if (continuationToken?.Length <= 1)
+            if (continuationToken is null || continuationToken.Length <= 1)
             {
                 return (null, null);
             }
 
-            var tokens = continuationToken.Split(' ');
-            return (tokens[0], tokens.Length > 1 ? tokens[1] : null);
+            var tokens = continuationToken.Split(ContinuationTokenSplit, 2);
+            return (tokens[0], tokens.Length > 1 && tokens[1].Length > 0 ? tokens[1] : null);
         }
     }
 }

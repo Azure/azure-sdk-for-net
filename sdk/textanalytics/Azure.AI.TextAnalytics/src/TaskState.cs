@@ -10,14 +10,14 @@ namespace Azure.AI.TextAnalytics
     /// TaskState.
     /// </summary>
     [CodeGenModel("TaskState")]
-    public partial class TaskState
+    internal partial class TaskState
     {
         /// <summary> Initializes a new instance of TaskState. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal TaskState(DateTimeOffset lastUpdateDateTime, string name, JobStatus status)
+        internal TaskState(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Name = name;
@@ -37,6 +37,6 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Status for Task.
         /// </summary>
-        public JobStatus Status { get; }
+        public TextAnalyticsOperationStatus Status { get; }
     }
 }

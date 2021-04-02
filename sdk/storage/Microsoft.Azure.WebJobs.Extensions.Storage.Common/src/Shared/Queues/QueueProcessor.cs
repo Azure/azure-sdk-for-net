@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             }
         }
 
-        private async Task HandlePoisonMessageAsync(QueueMessage message, CancellationToken cancellationToken)
+        internal async Task HandlePoisonMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
             if (_poisonQueue != null)
             {

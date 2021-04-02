@@ -6,46 +6,42 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Azure.AI.TextAnalytics.Models;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The HealthcareRelation. </summary>
+    /// <summary> Every relation is an entity graph of a certain relationType, where all entities are connected and have specific roles within the relation context. </summary>
     internal partial class HealthcareRelationInternal
     {
         /// <summary> Initializes a new instance of HealthcareRelationInternal. </summary>
         /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </param>
-        /// <param name="bidirectional"> If true the relation between the entities is bidirectional, otherwise directionality is source to target. </param>
-        /// <param name="source"> Reference link to the source entity. </param>
-        /// <param name="target"> Reference link to the target entity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationType"/>, <paramref name="source"/>, or <paramref name="target"/> is null. </exception>
-        internal HealthcareRelationInternal(string relationType, bool bidirectional, string source, string target)
+        /// <param name="entities"> The entities in the relation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
+        internal HealthcareRelationInternal(HealthcareEntityRelationType relationType, IEnumerable<HealthcareRelationEntity> entities)
         {
-            if (relationType == null)
+            if (entities == null)
             {
-                throw new ArgumentNullException(nameof(relationType));
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (target == null)
-            {
-                throw new ArgumentNullException(nameof(target));
+                throw new ArgumentNullException(nameof(entities));
             }
 
             RelationType = relationType;
-            Bidirectional = bidirectional;
-            Source = source;
-            Target = target;
+            Entities = entities.ToList();
+        }
+
+        /// <summary> Initializes a new instance of HealthcareRelationInternal. </summary>
+        /// <param name="relationType"> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </param>
+        /// <param name="entities"> The entities in the relation. </param>
+        internal HealthcareRelationInternal(HealthcareEntityRelationType relationType, IReadOnlyList<HealthcareRelationEntity> entities)
+        {
+            RelationType = relationType;
+            Entities = entities;
         }
 
         /// <summary> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </summary>
-        public string RelationType { get; }
-        /// <summary> If true the relation between the entities is bidirectional, otherwise directionality is source to target. </summary>
-        public bool Bidirectional { get; }
-        /// <summary> Reference link to the source entity. </summary>
-        public string Source { get; }
-        /// <summary> Reference link to the target entity. </summary>
-        public string Target { get; }
+        public HealthcareEntityRelationType RelationType { get; }
+        /// <summary> The entities in the relation. </summary>
+        public IReadOnlyList<HealthcareRelationEntity> Entities { get; }
     }
 }

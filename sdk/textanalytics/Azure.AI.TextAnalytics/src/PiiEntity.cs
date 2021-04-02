@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.TextAnalytics.Models;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
@@ -18,6 +20,7 @@ namespace Azure.AI.TextAnalytics
             SubCategory = entity.Subcategory;
             ConfidenceScore = entity.ConfidenceScore;
             Offset = entity.Offset;
+            Length = entity.Length;
         }
 
         /// <summary>
@@ -26,13 +29,13 @@ namespace Azure.AI.TextAnalytics
         public string Text { get; }
 
         /// <summary>
-        /// Gets the entity category inferred by the Text Analytics service's
+        /// Gets the PII entity category inferred by the Text Analytics service's
         /// named entity recognition model, such as Financial Account
         /// Identification/Social Security Number/Phone Number, etc.
         /// The list of available categories is described at
         /// <a href="https://aka.ms/tanerpii"/>.
         /// </summary>
-        public EntityCategory Category { get; }
+        public PiiEntityCategory Category { get; }
 
         /// <summary>
         /// Gets the sub category of the entity inferred by the Text Analytics service's
@@ -49,8 +52,13 @@ namespace Azure.AI.TextAnalytics
         public double ConfidenceScore { get; }
 
         /// <summary>
-        /// Gets the starting position (in UTF-16 code units) for the matching text in the input document.
+        /// Gets the starting position for the matching text in the input document.
         /// </summary>
         public int Offset { get; }
+
+        /// <summary>
+        /// Gets the length of the matching text in the input document.
+        /// </summary>
+        public int Length { get; }
     }
 }

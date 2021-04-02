@@ -76,6 +76,58 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Updates a SQL Pool geo backup policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for creating or updating the geo backup policy.
+            /// </param>
+            public static GeoBackupPolicy CreateOrUpdate(this ISqlPoolGeoBackupPoliciesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, GeoBackupPolicy parameters)
+            {
+                return operations.CreateOrUpdateAsync(resourceGroupName, workspaceName, sqlPoolName, parameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates a SQL Pool geo backup policy.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='parameters'>
+            /// The required parameters for creating or updating the geo backup policy.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GeoBackupPolicy> CreateOrUpdateAsync(this ISqlPoolGeoBackupPoliciesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, GeoBackupPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get a SQL pool geo backup policy
             /// </summary>
             /// <remarks>

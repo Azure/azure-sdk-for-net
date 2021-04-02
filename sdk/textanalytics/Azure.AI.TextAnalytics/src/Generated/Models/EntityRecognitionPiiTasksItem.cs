@@ -10,21 +10,13 @@ using System;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The TasksStateTasksEntityRecognitionPiiTasksItem. </summary>
-    public partial class EntityRecognitionPiiTasksItem : TaskState
+    internal partial class EntityRecognitionPiiTasksItem : TaskState
     {
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
         /// <param name="lastUpdateDateTime"> . </param>
         /// <param name="status"> . </param>
-        /// <param name="resultsInternal"> . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resultsInternal"/> is null. </exception>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, JobStatus status, PiiEntitiesResult resultsInternal) : base(lastUpdateDateTime, status)
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
-            if (resultsInternal == null)
-            {
-                throw new ArgumentNullException(nameof(resultsInternal));
-            }
-
-            ResultsInternal = resultsInternal;
         }
 
         /// <summary> Initializes a new instance of EntityRecognitionPiiTasksItem. </summary>
@@ -32,7 +24,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="name"> . </param>
         /// <param name="status"> . </param>
         /// <param name="resultsInternal"> . </param>
-        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, JobStatus status, PiiEntitiesResult resultsInternal) : base(lastUpdateDateTime, name, status)
+        internal EntityRecognitionPiiTasksItem(DateTimeOffset lastUpdateDateTime, string name, TextAnalyticsOperationStatus status, PiiEntitiesResult resultsInternal) : base(lastUpdateDateTime, name, status)
         {
             ResultsInternal = resultsInternal;
         }

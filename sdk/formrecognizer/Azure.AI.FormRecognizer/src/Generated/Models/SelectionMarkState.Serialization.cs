@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal static class SelectionMarkStateExtensions
+    internal static partial class SelectionMarkStateExtensions
     {
         public static string ToSerialString(this SelectionMarkState value) => value switch
         {

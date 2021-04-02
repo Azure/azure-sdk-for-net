@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal static VirtualMachineScaleSetManagedDiskParameters DeserializeVirtualMachineScaleSetManagedDiskParameters(JsonElement element)
         {
             Optional<StorageAccountTypes> storageAccountType = default;
-            Optional<SubResource> diskEncryptionSet = default;
+            Optional<DiskEncryptionSetParameters> diskEncryptionSet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountType"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    diskEncryptionSet = SubResource.DeserializeSubResource(property.Value);
+                    diskEncryptionSet = DiskEncryptionSetParameters.DeserializeDiskEncryptionSetParameters(property.Value);
                     continue;
                 }
             }

@@ -298,10 +298,37 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 },
                 new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
 
-            await Task.Delay(TimeSpan.FromSeconds(2));
             // UnregisterMessageHandlerAsync should wait up to the provided timeout to finish the message handling tasks
-            await messageReceiver.UnregisterMessageHandlerAsync(TimeSpan.FromSeconds(20)); 
+            await messageReceiver.UnregisterMessageHandlerAsync(TimeSpan.FromSeconds(10)); 
             Assert.True(count == maxConcurrentCalls);
+
+            // Reregister won't have any problems
+            count = 0;
+            var remainingMessageCount = messageCount - maxConcurrentCalls;
+            messageReceiver.RegisterMessageHandler(
+                async (message, token) =>
+                {
+                    TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                    if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                    {
+                        await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    }
+                    Interlocked.Increment(ref count);
+                },
+                new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+
+
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 60)
+            {
+                if (count == remainingMessageCount)
+                {
+                    TestUtility.Log($"All '{remainingMessageCount}' messages Received.");
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+            Assert.True(count == remainingMessageCount);
         }
 
         internal async Task OnMessageAsyncUnregisterHandlerShortTimeoutTestCase(
@@ -326,11 +353,37 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 },
                 new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
 
-            await Task.Delay(TimeSpan.FromSeconds(2));
-            await messageReceiver.UnregisterMessageHandlerAsync(TimeSpan.FromSeconds(2)); 
+            await messageReceiver.UnregisterMessageHandlerAsync(TimeSpan.FromSeconds(2));
             Assert.True(count == 0);
-        }
 
+            // Reregister won't have any problems
+            count = 0;
+            var remainingMessageCount = messageCount - maxConcurrentCalls;
+            messageReceiver.RegisterMessageHandler(
+                async (message, token) =>
+                {
+                    TestUtility.Log($"Received message: SequenceNumber: {message.SystemProperties.SequenceNumber}");
+                    if (messageReceiver.ReceiveMode == ReceiveMode.PeekLock && !autoComplete)
+                    {
+                        await messageReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    }
+                    Interlocked.Increment(ref count);
+                },
+                new MessageHandlerOptions(ExceptionReceivedHandler) { MaxConcurrentCalls = maxConcurrentCalls, AutoComplete = autoComplete });
+            
+            var stopwatch = Stopwatch.StartNew();
+            while (stopwatch.Elapsed.TotalSeconds <= 60)
+            {
+                if (count == remainingMessageCount)
+                {
+                    TestUtility.Log($"All '{remainingMessageCount}' messages Received.");
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+            Assert.True(count == remainingMessageCount);
+        }
+        
         internal async Task OnMessageRegistrationWithoutPendingMessagesTestCase(
             IMessageSender messageSender,
             IMessageReceiver messageReceiver,

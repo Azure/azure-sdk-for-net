@@ -82,6 +82,58 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Gets the specific Sql pool data masking rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='dataMaskingRuleName'>
+            /// The name of the data masking rule.
+            /// </param>
+            public static DataMaskingRule Get(this IDataMaskingRulesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string dataMaskingRuleName)
+            {
+                return operations.GetAsync(resourceGroupName, workspaceName, sqlPoolName, dataMaskingRuleName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the specific Sql pool data masking rule.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='dataMaskingRuleName'>
+            /// The name of the data masking rule.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DataMaskingRule> GetAsync(this IDataMaskingRulesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string dataMaskingRuleName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, dataMaskingRuleName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list of Sql pool data masking rules.
             /// </summary>
             /// <param name='operations'>

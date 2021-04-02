@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of AzureApplicationInsightsDataFeedPatch. </summary>
         public AzureApplicationInsightsDataFeedPatch()
         {
-            DataSourceType = DataFeedDetailPatchDataSourceType.AzureApplicationInsights;
+            DataSourceType = DataFeedSourceType.AzureApplicationInsights;
         }
 
         public AzureApplicationInsightsParameter DataSourceParameter { get; set; }

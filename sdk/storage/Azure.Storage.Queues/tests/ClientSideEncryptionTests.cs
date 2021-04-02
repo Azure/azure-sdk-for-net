@@ -265,25 +265,25 @@ namespace Azure.Storage.Queues.Test
                 ClientSideEncryption = options1
             });
 
-            Assert.AreEqual(options1.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
-            Assert.AreEqual(options1.KeyResolver, client.ClientSideEncryption.KeyResolver);
-            Assert.AreEqual(options1.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
+            Assert.AreEqual(options1.KeyEncryptionKey, client.ClientConfiguration.ClientSideEncryption.KeyEncryptionKey);
+            Assert.AreEqual(options1.KeyResolver, client.ClientConfiguration.ClientSideEncryption.KeyResolver);
+            Assert.AreEqual(options1.KeyWrapAlgorithm, client.ClientConfiguration.ClientSideEncryption.KeyWrapAlgorithm);
 
             Assert.AreEqual(0, options1EventCalled);
             Assert.AreEqual(0, options2EventCalled);
-            client.ClientSideEncryption.OnDecryptionFailed(default, default);
+            client.ClientConfiguration.ClientSideEncryption.OnDecryptionFailed(default, default);
             Assert.AreEqual(1, options1EventCalled);
             Assert.AreEqual(0, options2EventCalled);
 
             client = client.WithClientSideEncryptionOptions(options2);
 
-            Assert.AreEqual(options2.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
-            Assert.AreEqual(options2.KeyResolver, client.ClientSideEncryption.KeyResolver);
-            Assert.AreEqual(options2.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
+            Assert.AreEqual(options2.KeyEncryptionKey, client.ClientConfiguration.ClientSideEncryption.KeyEncryptionKey);
+            Assert.AreEqual(options2.KeyResolver, client.ClientConfiguration.ClientSideEncryption.KeyResolver);
+            Assert.AreEqual(options2.KeyWrapAlgorithm, client.ClientConfiguration.ClientSideEncryption.KeyWrapAlgorithm);
 
             Assert.AreEqual(1, options1EventCalled);
             Assert.AreEqual(0, options2EventCalled);
-            client.ClientSideEncryption.OnDecryptionFailed(default, default);
+            client.ClientConfiguration.ClientSideEncryption.OnDecryptionFailed(default, default);
             Assert.AreEqual(1, options1EventCalled);
             Assert.AreEqual(1, options2EventCalled);
         }

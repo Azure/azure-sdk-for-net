@@ -225,25 +225,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                 string eventHubName,
                                 TokenCredential credential,
                                 EventProcessorOptions options = default,
-                                PartitionLoadBalancer loadBalancer = default)
+                                PartitionLoadBalancer loadBalancer = default) : this(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, options, loadBalancer)
         {
-            Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options = options?.Clone() ?? new EventProcessorOptions();
-
-            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
-            FullyQualifiedNamespace = fullyQualifiedNamespace;
-            EventHubName = eventHubName;
-            ConsumerGroup = consumerGroup;
-            Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
-            RetryPolicy = options.RetryOptions.ToRetryPolicy();
-            Options = options;
-            EventBatchMaximumCount = eventBatchMaximumCount;
-            LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
         }
 
         /// <summary>
@@ -264,7 +247,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   Event Hub will result in a connection string that contains the name.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
@@ -289,7 +272,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///   passed only once, either as part of the connection string or separately.
         /// </remarks>
         ///
-        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string"/>
+        /// <seealso href="https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-get-connection-string">How to get an Event Hubs connection string</seealso>
         ///
         protected EventProcessor(int eventBatchMaximumCount,
                                  string consumerGroup,
@@ -325,33 +308,36 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
-        /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="options">The set of options to use for the processor.</param>
         ///
-        internal EventProcessor(int eventBatchMaximumCount,
-                               string consumerGroup,
-                               string fullyQualifiedNamespace,
-                               string eventHubName,
-                               EventHubsSharedAccessKeyCredential credential,
-                               EventProcessorOptions options = default)
+        protected EventProcessor(int eventBatchMaximumCount,
+                                 string consumerGroup,
+                                 string fullyQualifiedNamespace,
+                                 string eventHubName,
+                                 AzureNamedKeyCredential credential,
+                                 EventProcessorOptions options = default) : this(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, options, default)
         {
-            Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
-            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
-            options = options?.Clone() ?? new EventProcessorOptions();
-
-            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
-            FullyQualifiedNamespace = fullyQualifiedNamespace;
-            EventHubName = eventHubName;
-            ConsumerGroup = consumerGroup;
-            Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
-            RetryPolicy = options.RetryOptions.ToRetryPolicy();
-            Options = options;
-            EventBatchMaximumCount = eventBatchMaximumCount;
-            LoadBalancer = new PartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, options.PartitionOwnershipExpirationInterval, options.LoadBalancingUpdateInterval);
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
+        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
+        /// <param name="credential">The shared signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="options">The set of options to use for the processor.</param>
+        ///
+        protected EventProcessor(int eventBatchMaximumCount,
+                                 string consumerGroup,
+                                 string fullyQualifiedNamespace,
+                                 string eventHubName,
+                                 AzureSasCredential credential,
+                                 EventProcessorOptions options = default) : this(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, options, default)
+        {
         }
 
         /// <summary>
@@ -370,7 +356,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                  string fullyQualifiedNamespace,
                                  string eventHubName,
                                  TokenCredential credential,
-                                 EventProcessorOptions options = default) : this(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options, default)
+                                 EventProcessorOptions options = default) : this(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (object)credential, options, default)
         {
         }
 
@@ -380,6 +366,46 @@ namespace Azure.Messaging.EventHubs.Primitives
         ///
         protected EventProcessor()
         {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessor{TPartition}"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventBatchMaximumCount">The desired number of events to include in a batch to be processed.  This size is the maximum count in a batch; the actual count may be smaller, depending on whether events are available in the Event Hub.</param>
+        /// <param name="consumerGroup">The name of the consumer group the processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
+        /// <param name="credential">The credential to use for authorization.  This may be of any type supported by the protected constructors.</param>
+        /// <param name="options">The set of options to use for the processor.</param>
+        /// <param name="loadBalancer">The load balancer to use for coordinating processing with other event processor instances.  If <c>null</c>, the standard load balancer will be created.</param>
+        ///
+        private EventProcessor(int eventBatchMaximumCount,
+                               string consumerGroup,
+                               string fullyQualifiedNamespace,
+                               string eventHubName,
+                               object credential,
+                               EventProcessorOptions options = default,
+                               PartitionLoadBalancer loadBalancer = default)
+        {
+            Argument.AssertInRange(eventBatchMaximumCount, 1, int.MaxValue, nameof(eventBatchMaximumCount));
+            Argument.AssertNotNullOrEmpty(consumerGroup, nameof(consumerGroup));
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options = options?.Clone() ?? new EventProcessorOptions();
+
+            FullyQualifiedNamespace = fullyQualifiedNamespace;
+            EventHubName = eventHubName;
+            ConsumerGroup = consumerGroup;
+            Identifier = string.IsNullOrEmpty(options.Identifier) ? Guid.NewGuid().ToString() : options.Identifier;
+            RetryPolicy = options.RetryOptions.ToRetryPolicy();
+            Options = options;
+            EventBatchMaximumCount = eventBatchMaximumCount;
+
+            ConnectionFactory = () => EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
+            LoadBalancer = loadBalancer ?? new PartitionLoadBalancer(CreateStorageManager(this), Identifier, ConsumerGroup, FullyQualifiedNamespace, EventHubName, Options.PartitionOwnershipExpirationInterval, Options.LoadBalancingUpdateInterval);
         }
 
         /// <summary>
@@ -764,6 +790,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>
         ///   Produces a list of the available checkpoints for the Event Hub and consumer group associated with the
         ///   event processor instance, so that processing for a given set of partitions can be properly initialized.
+        ///   It's recommended that <see cref="GetCheckpointAsync"/> is implemented as well as <see cref="ListCheckpointsAsync"/> to achieve an optimal performance.
         /// </summary>
         ///
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
@@ -780,6 +807,41 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </remarks>
         ///
         protected abstract Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        ///   Returns a checkpoint for the Event Hub, consumer group, and identifier of the partition associated with the
+        ///   event processor instance, so that processing for a given partition can be properly initialized.
+        ///   The default implementation calls the <see cref="ListCheckpointsAsync"/> and filters results by <see cref="EventProcessorCheckpoint.PartitionId"/>.
+        ///   It's recommended that this method is overriden in <see cref="EventProcessor{TPartition}"/> implementations to achieve an optimal performance.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition for which to retrieve the checkpoint.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the processing.  This is most likely to occur when the processor is shutting down.</param>
+        ///
+        /// <returns>The checkpoint for the processor to take into account when initializing partition.</returns>
+        ///
+        /// <remarks>
+        ///   Should a partition not have a corresponding checkpoint, the <see cref="EventProcessorOptions.DefaultStartingPosition" /> will
+        ///   be used to initialize the partition for processing.
+        ///
+        ///   In the event that a custom starting point is desired for a single partition, or each partition should start at a unique place,
+        ///   it is recommended that this method express that intent by returning checkpoints for those partitions with the desired custom
+        ///   starting location set.
+        /// </remarks>
+        ///
+        protected virtual async Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId,
+                                                                                  CancellationToken cancellationToken)
+        {
+            foreach (var checkpoint in await ListCheckpointsAsync(cancellationToken).ConfigureAwait(false))
+            {
+                if (checkpoint.PartitionId == partitionId)
+                {
+                    return checkpoint;
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         ///   Produces a list of the ownership assignments for partitions between each of the cooperating event processor
@@ -1357,18 +1419,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 operationDescription = Resources.OperationListCheckpoints;
 
-                var checkpoints = await ListCheckpointsAsync(cancellationToken).ConfigureAwait(false);
-                operationDescription = Resources.OperationClaimOwnership;
-
                 // Determine the starting position for processing the partition.
 
-                foreach (var checkpoint in checkpoints)
+                var checkpoint = await GetCheckpointAsync(partitionId, cancellationToken).ConfigureAwait(false);
+                operationDescription = Resources.OperationClaimOwnership;
+                if (checkpoint != null)
                 {
-                    if (checkpoint.PartitionId == partitionId)
-                    {
-                        startingPosition = checkpoint.StartingPosition;
-                        break;
-                    }
+                    startingPosition = checkpoint.StartingPosition;
                 }
 
                 // Create and register the partition processor.  Ownership of the cancellationSource is transferred
@@ -1604,6 +1661,21 @@ namespace Azure.Messaging.EventHubs.Primitives
             public override Task UpdateCheckpointAsync(EventProcessorCheckpoint checkpoint,
                                                        EventData eventData,
                                                        CancellationToken cancellationToken) => throw new NotImplementedException();
+
+            /// <summary>
+            ///   Retrieves a checkpoint information from the chosen storage service. The default implementation calls <see cref="ListCheckpointsAsync"/> and selects a checkpoint by id.
+            /// </summary>
+            ///
+            /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the ownership are associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+            /// <param name="eventHubName">The name of the specific Event Hub the ownership are associated with, relative to the Event Hubs namespace that contains it.</param>
+            /// <param name="consumerGroup">The name of the consumer group the ownership are associated with.</param>
+            /// <param name="partitionId">The identifier of the partition to read a checkpoint for.</param>
+            /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal the request to cancel the operation.</param>
+            ///
+            /// <returns>An <see cref="EventProcessorCheckpoint"/> instance if a checkpoint is found for a particular partition otherwise, <code>null</code>.</returns>
+            ///
+            public override async Task<EventProcessorCheckpoint> GetCheckpointAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, CancellationToken cancellationToken)
+                => await Processor.GetCheckpointAsync(partitionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

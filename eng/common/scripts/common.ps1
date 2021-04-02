@@ -24,9 +24,15 @@ $EngScriptsLanguageSettings = Join-path $EngScriptsDir "Language-Settings.ps1"
 if (Test-Path $EngScriptsLanguageSettings) {
   . $EngScriptsLanguageSettings
 }
-if (-not $LanguageShort)
+
+if (!(Get-Variable -Name "LanguageShort" -ValueOnly -ErrorAction "Ignore"))
 {
-  $LangaugeShort = $Language
+  $LanguageShort = $Language
+}
+
+if (!(Get-Variable -Name "LanguageDisplayName" -ValueOnly -ErrorAction "Ignore"))
+{
+  $LanguageDisplayName = $Language
 }
 
 # Transformed Functions

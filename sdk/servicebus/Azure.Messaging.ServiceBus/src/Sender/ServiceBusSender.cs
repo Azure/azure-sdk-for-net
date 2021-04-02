@@ -33,14 +33,14 @@ namespace Azure.Messaging.ServiceBus
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
+        public virtual string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
         ///   The path of the entity that the sender is connected to, specific to the
         ///   Service Bus namespace that contains it.
         /// </summary>
         ///
-        public string EntityPath { get; }
+        public virtual string EntityPath { get; }
 
         /// <summary>
         ///   Indicates whether or not this <see cref="ServiceBusSender"/> has been closed.
@@ -49,7 +49,7 @@ namespace Azure.Messaging.ServiceBus
         /// <value>
         /// <c>true</c> if the sender is closed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsClosed
+        public virtual bool IsClosed
         {
             get => _closed;
             private set => _closed = value;
@@ -115,7 +115,7 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
-                options = options?.Clone() ?? new ServiceBusSenderOptions();
+                options = options ?? new ServiceBusSenderOptions();
                 EntityPath = entityPath;
                 Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
                 _connection = connection;
@@ -146,12 +146,16 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Sends a message to the associated entity of Service Bus.
         /// </summary>
-        /// <param name="message"></param>
-        ///
+        /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
+        /// <exception cref="ServiceBusException">
+        ///   The message exceeds the maximum size allowed, as determined by the Service Bus service.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
+        ///   For more information on service limits, see
+        ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
         public virtual async Task SendMessageAsync(
             ServiceBusMessage message,
             CancellationToken cancellationToken = default)
@@ -173,7 +177,12 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
+        /// <exception cref="ServiceBusException">
+        ///   The set of messages exceeds the maximum size allowed in a single batch, as determined by the Service Bus service.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
+        ///   For more information on service limits, see
+        ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
         public virtual async Task SendMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
@@ -237,7 +246,10 @@ namespace Azure.Messaging.ServiceBus
 
         private DiagnosticScope CreateDiagnosticScope(IEnumerable<ServiceBusMessage> messages, string activityName)
         {
-            InstrumentMessages(messages);
+            foreach (ServiceBusMessage message in messages)
+            {
+                _scopeFactory.InstrumentMessage(message);
+            }
 
             // create a new scope for the specified operation
             DiagnosticScope scope = _scopeFactory.CreateScope(
@@ -246,32 +258,6 @@ namespace Azure.Messaging.ServiceBus
 
             scope.SetMessageData(messages);
             return scope;
-        }
-
-        /// <summary>
-        ///   Performs the actions needed to instrument a set of messages.
-        /// </summary>
-        ///
-        /// <param name="messages">The messages to instrument.</param>
-        ///
-        private void InstrumentMessages(IEnumerable<ServiceBusMessage> messages)
-        {
-            foreach (ServiceBusMessage message in messages)
-            {
-                if (!message.ApplicationProperties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
-                {
-                    using DiagnosticScope messageScope = _scopeFactory.CreateScope(
-                        DiagnosticProperty.MessageActivityName,
-                        DiagnosticProperty.ProducerKind);
-                    messageScope.Start();
-
-                    Activity activity = Activity.Current;
-                    if (activity != null)
-                    {
-                        message.ApplicationProperties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -320,7 +306,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 TransportMessageBatch transportBatch = await _innerSender.CreateMessageBatchAsync(options, cancellationToken).ConfigureAwait(false);
-                batch = new ServiceBusMessageBatch(transportBatch);
+                batch = new ServiceBusMessageBatch(transportBatch, _scopeFactory);
             }
             catch (Exception ex)
             {

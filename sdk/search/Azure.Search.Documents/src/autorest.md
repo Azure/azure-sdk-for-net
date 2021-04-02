@@ -193,6 +193,14 @@ directive:
     $.properties.endTime["x-nullable"] = true;
 ```
 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.CorsOptions
+  transform: >
+    $.properties.maxAgeInSeconds["x-nullable"] = true;
+```
+
 #### Skills
 
 ``` yaml

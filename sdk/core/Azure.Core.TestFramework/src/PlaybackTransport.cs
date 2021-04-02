@@ -97,15 +97,13 @@ namespace Azure.Core.TestFramework
 
         public override Request CreateRequest()
         {
+            var request = base.CreateRequest();
             lock (_random)
             {
-                // Force a call to random.NewGuid so we keep the random seed
-                // unified between record/playback
-                _random.NewGuid();
-
-                // TODO: Pavel will think about ways to unify this
+                // Make sure ClientRequestId are the same across request and response
+                request.ClientRequestId = _random.NewGuid().ToString("N");
             }
-            return base.CreateRequest();
+            return request;
         }
 
         public Response GetResponse(RecordEntry recordEntry)

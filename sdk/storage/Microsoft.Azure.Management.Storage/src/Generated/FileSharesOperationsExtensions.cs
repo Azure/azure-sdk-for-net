@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             /// <param name='expand'>
             /// Optional, used to expand the properties within share's properties. Possible
-            /// values include: 'deleted'
+            /// values include: 'deleted', 'snapshots'
             /// </param>
-            public static IPage<FileShareItem> List(this IFileSharesOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), ListSharesExpand? expand = default(ListSharesExpand?))
+            public static IPage<FileShareItem> List(this IFileSharesOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), string expand = default(string))
             {
                 return operations.ListAsync(resourceGroupName, accountName, maxpagesize, filter, expand).GetAwaiter().GetResult();
             }
@@ -78,12 +78,12 @@ namespace Microsoft.Azure.Management.Storage
             /// </param>
             /// <param name='expand'>
             /// Optional, used to expand the properties within share's properties. Possible
-            /// values include: 'deleted'
+            /// values include: 'deleted', 'snapshots'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FileShareItem>> ListAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), ListSharesExpand? expand = default(ListSharesExpand?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<FileShareItem>> ListAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, maxpagesize, filter, expand, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -117,9 +117,12 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='fileShare'>
             /// Properties of the file share to create.
             /// </param>
-            public static FileShare Create(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, FileShare fileShare)
+            /// <param name='expand'>
+            /// Optional, used to create a snapshot. Possible values include: 'snapshots'
+            /// </param>
+            public static FileShare Create(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, FileShare fileShare, string expand = default(string))
             {
-                return operations.CreateAsync(resourceGroupName, accountName, shareName, fileShare).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, accountName, shareName, fileShare, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -148,12 +151,15 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='fileShare'>
             /// Properties of the file share to create.
             /// </param>
+            /// <param name='expand'>
+            /// Optional, used to create a snapshot. Possible values include: 'snapshots'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileShare> CreateAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, FileShare fileShare, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileShare> CreateAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, FileShare fileShare, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, shareName, fileShare, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, accountName, shareName, fileShare, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -252,9 +258,12 @@ namespace Microsoft.Azure.Management.Storage
             /// Optional, used to expand the properties within share's properties. Possible
             /// values include: 'stats'
             /// </param>
-            public static FileShare Get(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, GetShareExpand? expand = default(GetShareExpand?))
+            /// <param name='xMsSnapshot'>
+            /// Optional, used to retrieve properties of a snapshot.
+            /// </param>
+            public static FileShare Get(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, GetShareExpand? expand = default(GetShareExpand?), string xMsSnapshot = default(string))
             {
-                return operations.GetAsync(resourceGroupName, accountName, shareName, expand).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, accountName, shareName, expand, xMsSnapshot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -282,12 +291,15 @@ namespace Microsoft.Azure.Management.Storage
             /// Optional, used to expand the properties within share's properties. Possible
             /// values include: 'stats'
             /// </param>
+            /// <param name='xMsSnapshot'>
+            /// Optional, used to retrieve properties of a snapshot.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileShare> GetAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, GetShareExpand? expand = default(GetShareExpand?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FileShare> GetAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, GetShareExpand? expand = default(GetShareExpand?), string xMsSnapshot = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, shareName, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, accountName, shareName, expand, xMsSnapshot, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -314,9 +326,12 @@ namespace Microsoft.Azure.Management.Storage
             /// lower-case letters and dash (-) only. Every dash (-) character must be
             /// immediately preceded and followed by a letter or number.
             /// </param>
-            public static void Delete(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName)
+            /// <param name='xMsSnapshot'>
+            /// Optional, used to delete a snapshot.
+            /// </param>
+            public static void Delete(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, string xMsSnapshot = default(string))
             {
-                operations.DeleteAsync(resourceGroupName, accountName, shareName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, accountName, shareName, xMsSnapshot).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -340,12 +355,15 @@ namespace Microsoft.Azure.Management.Storage
             /// lower-case letters and dash (-) only. Every dash (-) character must be
             /// immediately preceded and followed by a letter or number.
             /// </param>
+            /// <param name='xMsSnapshot'>
+            /// Optional, used to delete a snapshot.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IFileSharesOperations operations, string resourceGroupName, string accountName, string shareName, string xMsSnapshot = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, accountName, shareName, xMsSnapshot, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ContainerRegistryChartDeletedEventDataConverter))]
     public partial class ContainerRegistryChartDeletedEventData
     {
         internal static ContainerRegistryChartDeletedEventData DeserializeContainerRegistryChartDeletedEventData(JsonElement element)
@@ -53,6 +55,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new ContainerRegistryChartDeletedEventData(id.Value, Optional.ToNullable(timestamp), action.Value, target.Value);
+        }
+
+        internal partial class ContainerRegistryChartDeletedEventDataConverter : JsonConverter<ContainerRegistryChartDeletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ContainerRegistryChartDeletedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override ContainerRegistryChartDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeContainerRegistryChartDeletedEventData(document.RootElement);
+            }
         }
     }
 }

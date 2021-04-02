@@ -1,0 +1,172 @@
+parameters:
+  - name: Daily
+    type: boolean
+    default: true
+  - name: Artifacts
+    type: object
+    default: []
+  - name: ArtifactName
+    type: string
+    default: ""
+  - name: TimeoutInMinutes
+    type: number
+    default: 60
+
+jobs:
+  - ${{ if eq(parameters.Daily, false) }}:
+    - job: smoke_test_eligibility
+      pool:
+        vmImage: ubuntu-18.04
+      displayName: Check Smoke Test Eligibility
+      steps:
+        # pipelines only supports template each when it generates the entire script block.
+        - ${{ each artifact in parameters.Artifacts }}:
+          - ${{ if and(ne(variables['Skip.Release'], 'true'), ne(artifact.skipPublishPackage, 'true')) }}:
+            - pwsh: |
+                $deps = (Select-Xml -Path ./common/SmokeTests/SmokeTest/SmokeTest.csproj `
+                                    -Xpath //ItemGroup/PackageReference/@Include).Node.Value
+                if ($deps.Contains("${{ artifact.name }}")) {
+                  Write-Host "Smoke tests will run for ${{ artifact.name }}"
+                  Write-Host "##vso[task.setvariable variable=RunSmokeTests]true"
+                } else {
+                  Write-Host "Smoke tests will NOT run for ${{ artifact.name }}"
+                }
+              name: check_smoke_tests_${{ artifact.safeName }}
+              displayName: Check smoke test eligibility for ${{ artifact.name }}
+        - pwsh: |
+            Write-Host "Setting RunSmokeTests to ${env:RunSmokeTests}"
+            Write-Host "##vso[task.setvariable variable=RunSmokeTests;isOutput=true]${env:RunSmokeTests}"
+          name: output_eligibility
+          env:
+            RunSmokeTests: $(RunSmokeTests)
+
+  - job: SmokeTest
+    ${{ if eq(parameters.Daily, false) }}:
+      dependsOn: smoke_test_eligibility
+      condition: and(succeeded(), eq(dependencies.smoke_test_eligibility.outputs['output_eligibility.RunSmokeTests'], true))
+    strategy:
+      matrix:
+        Linux (AzureCloud):
+          Pool: Azure Pipelines
+          OSVmImage: "ubuntu-18.04"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Linux (AzureCloud Canary):
+          Pool: Azure Pipelines
+          OSVmImage: "ubuntu-18.04"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+          ArmTemplateParameters: $(azureCloudArmParameters)
+          Location: "eastus2euap"
+        Windows_NetCoreApp (AzureCloud):
+          Pool: Azure Pipelines
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetFramework (AzureCloud):
+          Pool: Azure Pipelines
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        MacOs (AzureCloud):
+          Pool: Azure Pipelines
+          OSVmImage: "macOS-10.15"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_Net50 (AzureCloud):
+          Pool: Azure Pipelines
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net5.0
+          SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+          ArmTemplateParameters: $(azureCloudArmParameters)
+        Windows_NetCoreApp (AzureUSGovernment):
+          Pool: Azure Pipelines
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-gov-test-resources)
+          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
+        Windows_NetFramework (AzureUSGovernment):
+          Pool: Azure Pipelines
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          SubscriptionConfiguration: $(sub-config-gov-test-resources)
+          ArmTemplateParameters: $(azureUSGovernmentArmParameters)
+        Windows_NetCoreApp (AzureChinaCloud):
+          Pool: Azure Pipelines
+          OSVmImage: "windows-2019"
+          TestTargetFramework: netcoreapp2.1
+          SubscriptionConfiguration: $(sub-config-cn-test-resources)
+          ArmTemplateParameters: $(azureChinaCloudArmParameters)
+        Windows_NetFramework (AzureChinaCloud):
+          Pool: Azure Pipelines
+          OSVmImage: "windows-2019"
+          TestTargetFramework: net461
+          SubscriptionConfiguration: $(sub-config-cn-test-resources)
+          ArmTemplateParameters: $(azureChinaCloudArmParameters)
+
+    variables:
+      azureCloudArmParameters: "@{ storageEndpointSuffix = 'core.windows.net'; azureCloud = 'AzureCloud'; }"
+      azureUSGovernmentArmParameters: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; azureCloud = 'AzureUSGovernment'; }"
+      azureChinaCloudArmParameters: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; azureCloud = 'AzureChinaCloud'; }"
+
+    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+
+    pool:
+      name: $(Pool)
+      vmImage: $(OSVmImage)
+
+    steps:
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+        parameters:
+          AgentImage: $(OSVmImage)
+
+      - ${{ if eq(parameters.Daily, true) }}:
+        - task: PowerShell@2
+          displayName: Use latest dev feed package versions
+          inputs:
+            targetType: filePath
+            filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+            arguments: -CI -Daily
+            workingDirectory: common/SmokeTests/SmokeTest
+            pwsh: true
+
+      - ${{ if eq(parameters.Daily, false) }}:
+        - download: current
+          artifact: ${{ parameters.ArtifactName }}
+          timeoutInMinutes: 5
+
+      - ${{ if eq(parameters.Daily, false) }}:
+        - task: PowerShell@2
+          displayName: Use latest GA/Beta package versions
+          inputs:
+            targetType: filePath
+            filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+            arguments: -CI -ArtifactsPath "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}"
+            workingDirectory: common/SmokeTests/SmokeTest
+            pwsh: true
+
+      - pwsh: Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: Show SmokeTest.csproj
+
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+      - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+        displayName: dotnet restore
+
+      - template: /eng/common/TestResources/deploy-test-resources.yml
+        parameters:
+          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)
+          ArmTemplateParameters: $(ArmTemplateParameters)
+
+      - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
+        displayName: "Run Smoke Tests"
+
+      - template: /eng/common/TestResources/remove-test-resources.yml
+        parameters:
+          ServiceDirectory: '$(Build.SourcesDirectory)/common/SmokeTests/'
+          SubscriptionConfiguration: $(SubscriptionConfiguration)

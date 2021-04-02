@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Linq;
 
     /// <summary>
-    /// Name of the resource provide by the resource Provider. Please use this
-    /// name property for quotaRequests.
+    /// Resource name provided by the resource provider. Use this property for
+    /// quotaRequest parameter.
     /// </summary>
     public partial class ResourceName
     {
@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the ResourceName class.
         /// </summary>
         /// <param name="value">Resource name.</param>
-        /// <param name="localizedValue">Resource display name.</param>
+        /// <param name="localizedValue">Resource display localized
+        /// name.</param>
         public ResourceName(string value = default(string), string localizedValue = default(string))
         {
             Value = value;
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string Value { get; set; }
 
         /// <summary>
-        /// Gets resource display name.
+        /// Gets resource display localized name.
         /// </summary>
         [JsonProperty(PropertyName = "localizedValue")]
         public string LocalizedValue { get; private set; }

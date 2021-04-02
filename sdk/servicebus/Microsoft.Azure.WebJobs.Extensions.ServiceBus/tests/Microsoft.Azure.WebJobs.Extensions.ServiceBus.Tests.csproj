@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>SA1636</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" VersionOverride="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" VersionOverride="2.1.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Polly" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
+    <PackageReference Include="Microsoft.Azure.Management.ServiceBus" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Microsoft.Azure.WebJobs.Extensions.ServiceBus.csproj" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <Compile Include="..\..\..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\tests\shared\**\*.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.ServiceBus\tests\Infrastructure\ServiceBusTestEnvironment.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.ServiceBus\tests\Infrastructure\ServiceBusScope.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Authorization\SharedAccessSignature.cs" LinkBase="Shared" />
+  </ItemGroup>
+</Project>  

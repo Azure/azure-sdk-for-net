@@ -93,7 +93,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
             return queueProcessor;
         }
 
-        private static QueueClient CreatePoisonQueueReference(QueueServiceClient client, string name)
+        internal static QueueClient CreatePoisonQueueReference(QueueServiceClient client, string name)
         {
             Debug.Assert(client != null);
 

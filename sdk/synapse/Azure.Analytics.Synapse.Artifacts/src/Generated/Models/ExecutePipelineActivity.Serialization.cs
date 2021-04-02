@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ExecutePipelineActivityConverter))]
     public partial class ExecutePipelineActivity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -179,6 +182,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new ExecutePipelineActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, pipeline, Optional.ToDictionary(parameters), Optional.ToNullable(waitOnCompletion));
+        }
+
+        internal partial class ExecutePipelineActivityConverter : JsonConverter<ExecutePipelineActivity>
+        {
+            public override void Write(Utf8JsonWriter writer, ExecutePipelineActivity model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override ExecutePipelineActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeExecutePipelineActivity(document.RootElement);
+            }
         }
     }
 }

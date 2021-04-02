@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics
         {
             return type switch
             {
-                PiiEntityDomainType.ProtectedHealthInformation => "PHI",
+                PiiEntityDomainType.ProtectedHealthInformation => "phi",
                 _ => null,
             };
         }

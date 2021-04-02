@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EndpointServicesListResult
+    internal partial class EndpointServicesListResult
     {
         internal static EndpointServicesListResult DeserializeEndpointServicesListResult(JsonElement element)
         {

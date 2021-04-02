@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.EventHubs
     public partial class NamespacesCreateOrUpdateOperation : Operation<EHNamespace>, IOperationSource<EHNamespace>
     {
         private readonly ArmOperationHelpers<EHNamespace> _operation;
+
+        /// <summary> Initializes a new instance of NamespacesCreateOrUpdateOperation for mocking. </summary>
+        protected NamespacesCreateOrUpdateOperation()
+        {
+        }
+
         internal NamespacesCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<EHNamespace>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NamespacesCreateOrUpdateOperation");

@@ -1,0 +1,141 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs?stringIndexType=Utf16CodeUnit",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "1555",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-d4724e7f3abf864ebea4b33d566a63f2-58ed8dafd3c65d49-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "d6f2d0cc095dc3418ddc67fdaec34f8c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "0",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
+            "language": "en"
+          },
+          {
+            "id": "1",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
+            "language": "en"
+          },
+          {
+            "id": "2",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
+            "language": "en"
+          },
+          {
+            "id": "3",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
+            "language": "en"
+          },
+          {
+            "id": "4",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
+            "language": "en"
+          },
+          {
+            "id": "5",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
+            "language": "en"
+          },
+          {
+            "id": "6",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
+            "language": "en"
+          },
+          {
+            "id": "7",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
+            "language": "en"
+          },
+          {
+            "id": "8",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
+            "language": "en"
+          },
+          {
+            "id": "9",
+            "text": "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |",
+            "language": "en"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "2264953a-206e-430f-8e3a-6e8151b92a00",
+        "Date": "Wed, 24 Feb 2021 16:56:56 GMT",
+        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/a4ae660f-5657-4127-87fd-0071ca16f382",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "235"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/a4ae660f-5657-4127-87fd-0071ca16f382",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "e1bd0b21afaacf4ed5d58b17e46d5140",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "4800462b-3107-4493-9b44-5e6dc66aedd4",
+        "Date": "Wed, 24 Feb 2021 16:56:57 GMT",
+        "operation-location": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/a4ae660f-5657-4127-87fd-0071ca16f382",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/health/jobs/a4ae660f-5657-4127-87fd-0071ca16f382?showStats=false",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "0b47155e744b34ff8e7def83a29a0d23",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "567c6e8b-385e-4d04-9cd5-b875b0d5fd0d",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Feb 2021 16:56:57 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "7"
+      },
+      "ResponseBody": {
+        "jobId": "a4ae660f-5657-4127-87fd-0071ca16f382",
+        "lastUpdateDateTime": "2021-02-24T16:56:57Z",
+        "createdDateTime": "2021-02-24T16:56:57Z",
+        "expirationDateTime": "2021-02-25T16:56:57Z",
+        "status": "cancelled",
+        "errors": []
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1115976718",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+  }
+}

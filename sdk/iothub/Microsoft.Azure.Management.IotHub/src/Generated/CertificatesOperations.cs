@@ -469,12 +469,13 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='certificateName'>
         /// The name of the certificate
         /// </param>
-        /// <param name='certificateDescription'>
-        /// The certificate body.
-        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Certificate. Do not specify for creating a brand new
         /// certificate. Required to update an existing certificate.
+        /// </param>
+        /// <param name='certificate'>
+        /// base-64 representation of the X509 leaf certificate .cer file or just .pem
+        /// file content.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -497,7 +498,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CertificateDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, CertificateBodyDescription certificateDescription, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateDescription>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch = default(string), string certificate = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -526,9 +527,10 @@ namespace Microsoft.Azure.Management.IotHub
                     throw new ValidationException(ValidationRules.Pattern, "certificateName", "^[A-Za-z0-9-._]{1,64}$");
                 }
             }
-            if (certificateDescription == null)
+            CertificateBodyDescription certificateDescription = new CertificateBodyDescription();
+            if (certificate != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "certificateDescription");
+                certificateDescription.Certificate = certificate;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -540,8 +542,8 @@ namespace Microsoft.Azure.Management.IotHub
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("certificateName", certificateName);
-                tracingParameters.Add("certificateDescription", certificateDescription);
                 tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("certificateDescription", certificateDescription);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -1157,11 +1159,12 @@ namespace Microsoft.Azure.Management.IotHub
         /// <param name='certificateName'>
         /// The name of the certificate
         /// </param>
-        /// <param name='certificateVerificationBody'>
-        /// The name of the certificate
-        /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Certificate.
+        /// </param>
+        /// <param name='certificate'>
+        /// base-64 representation of X509 certificate .cer file or just .pem file
+        /// content.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1184,7 +1187,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CertificateDescription>> VerifyWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, CertificateVerificationDescription certificateVerificationBody, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateDescription>> VerifyWithHttpMessagesAsync(string resourceGroupName, string resourceName, string certificateName, string ifMatch, string certificate = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1213,13 +1216,14 @@ namespace Microsoft.Azure.Management.IotHub
                     throw new ValidationException(ValidationRules.Pattern, "certificateName", "^[A-Za-z0-9-._]{1,64}$");
                 }
             }
-            if (certificateVerificationBody == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "certificateVerificationBody");
-            }
             if (ifMatch == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
+            }
+            CertificateVerificationDescription certificateVerificationBody = new CertificateVerificationDescription();
+            if (certificate != null)
+            {
+                certificateVerificationBody.Certificate = certificate;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1231,8 +1235,8 @@ namespace Microsoft.Azure.Management.IotHub
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("certificateName", certificateName);
-                tracingParameters.Add("certificateVerificationBody", certificateVerificationBody);
                 tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("certificateVerificationBody", certificateVerificationBody);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Verify", tracingParameters);
             }

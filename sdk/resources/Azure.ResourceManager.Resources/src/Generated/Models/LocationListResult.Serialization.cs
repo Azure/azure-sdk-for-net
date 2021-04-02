@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class LocationListResult
+    internal partial class LocationListResult
     {
         internal static LocationListResult DeserializeLocationListResult(JsonElement element)
         {

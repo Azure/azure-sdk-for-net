@@ -128,6 +128,19 @@ Because analyzing and training form documents takes time, these operations are i
 
 For long running operations in the Azure SDK, the client exposes a `Start<operation-name>` method that returns an `Operation<T>`.  You can use the extension method `WaitForCompletionAsync()` to wait for the operation to complete and obtain its result.  A sample code snippet is provided to illustrate using long-running operations [below](#recognize-content).
 
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
+
 ## Examples
 The following section provides several code snippets illustrating common patterns used in the Form Recognizer .NET API. Most of the snippets below make use of asynchronous service calls, but keep in mind that the Azure.AI.FormRecognizer package supports both synchronous and asynchronous APIs.
 
@@ -160,6 +173,16 @@ foreach (FormPage page in formPages)
     {
         FormLine line = page.Lines[i];
         Console.WriteLine($"  Line {i} has {line.Words.Count} {(line.Words.Count == 1 ? "word" : "words")}, and text: '{line.Text}'.");
+
+        if (line.Appearance != null)
+        {
+            // Check the style and style confidence to see if text is handwritten.
+            // Note that value '0.8' is used as an example.
+            if (line.Appearance.Style.Name == TextStyleName.Handwriting && line.Appearance.Style.Confidence > 0.8)
+            {
+                Console.WriteLine("The text is handwritten");
+            }
+        }
 
         Console.WriteLine("    Its bounding box is:");
         Console.WriteLine($"    Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
@@ -398,7 +421,7 @@ RecognizeInvoicesOperation operation = await client.StartRecognizeInvoicesAsync(
 Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
 RecognizedFormCollection invoices = operationResponse.Value;
 
-// To see the list of the supported fields returned by service and its corresponding types, consult:
+// To see the list of all the supported fields returned by service and its corresponding types, consult:
 // https://aka.ms/formrecognizer/invoicefields
 
 RecognizedForm invoice = invoices.Single();
@@ -418,6 +441,80 @@ if (invoice.Fields.TryGetValue("CustomerName", out FormField customerNameField))
     {
         string customerName = customerNameField.Value.AsString();
         Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
+    }
+}
+
+if (invoice.Fields.TryGetValue("Items", out FormField itemsField))
+{
+    if (itemsField.Value.ValueType == FieldValueType.List)
+    {
+        foreach (FormField itemField in itemsField.Value.AsList())
+        {
+            Console.WriteLine("Item:");
+
+            if (itemField.Value.ValueType == FieldValueType.Dictionary)
+            {
+                IReadOnlyDictionary<string, FormField> itemFields = itemField.Value.AsDictionary();
+
+                if (itemFields.TryGetValue("Description", out FormField itemDescriptionField))
+                {
+                    if (itemDescriptionField.Value.ValueType == FieldValueType.String)
+                    {
+                        string itemDescription = itemDescriptionField.Value.AsString();
+
+                        Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
+                    }
+                }
+
+                if (itemFields.TryGetValue("UnitPrice", out FormField itemUnitPriceField))
+                {
+                    if (itemUnitPriceField.Value.ValueType == FieldValueType.Float)
+                    {
+                        float itemUnitPrice = itemUnitPriceField.Value.AsFloat();
+
+                        Console.WriteLine($"  UnitPrice: '{itemUnitPrice}', with confidence {itemUnitPriceField.Confidence}");
+                    }
+                }
+
+                if (itemFields.TryGetValue("Quantity", out FormField itemQuantityField))
+                {
+                    if (itemQuantityField.Value.ValueType == FieldValueType.Float)
+                    {
+                        float quantityAmount = itemQuantityField.Value.AsFloat();
+
+                        Console.WriteLine($"  Quantity: '{quantityAmount}', with confidence {itemQuantityField.Confidence}");
+                    }
+                }
+
+                if (itemFields.TryGetValue("Amount", out FormField itemAmountField))
+                {
+                    if (itemAmountField.Value.ValueType == FieldValueType.Float)
+                    {
+                        float itemAmount = itemAmountField.Value.AsFloat();
+
+                        Console.WriteLine($"  Amount: '{itemAmount}', with confidence {itemAmountField.Confidence}");
+                    }
+                }
+            }
+        }
+    }
+}
+
+if (invoice.Fields.TryGetValue("SubTotal", out FormField subTotalField))
+{
+    if (subTotalField.Value.ValueType == FieldValueType.Float)
+    {
+        float subTotal = subTotalField.Value.AsFloat();
+        Console.WriteLine($"Sub Total: '{subTotal}', with confidence {subTotalField.Confidence}");
+    }
+}
+
+if (invoice.Fields.TryGetValue("TotalTax", out FormField totalTaxField))
+{
+    if (totalTaxField.Value.ValueType == FieldValueType.Float)
+    {
+        float totalTax = totalTaxField.Value.AsFloat();
+        Console.WriteLine($"Total Tax: '{totalTax}', with confidence {totalTaxField.Confidence}");
     }
 }
 
