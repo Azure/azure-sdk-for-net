@@ -74,6 +74,44 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 - [List repositories asynchronously](#list-repositories-asynchronously)
 
+### List repositories
+
+Iterate through the collection of repositories in the registry.
+
+```C# Snippet:ContainerRegistry_Tests_Samples_CreateClient
+// Get the service endpoint from the environment
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+// Create a new ContainerRegistryClient
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+
+// Perform an operation
+Pageable<string> repositories = client.GetRepositories();
+foreach (string repository in repositories)
+{
+    Console.WriteLine(repository);
+}
+```
+
+### List repositories asynchronously
+
+The asynchronous APIs are identical to their synchronous counterparts, but methods end with the standard .NET "Async" suffix and return a Task.
+
+```C# Snippet:ContainerRegistry_Tests_Samples_CreateClientAsync
+// Get the service endpoint from the environment
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+// Create a new ContainerRegistryClient
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+
+// Perform an operation
+AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+await foreach (string repository in repositories)
+{
+    Console.WriteLine(repository);
+}
+```
+
 ## Troubleshooting
 
 All container registry service operations will throw a
