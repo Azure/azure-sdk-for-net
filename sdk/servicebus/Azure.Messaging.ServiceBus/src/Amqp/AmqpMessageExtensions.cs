@@ -42,16 +42,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
             throw new NotSupportedException($"{message.AmqpMessage.Body.GetType()} is not a supported message body type.");
         }
 
-        private static AmqpMap CreateAmqpMap<K,V>(IEnumerable<KeyValuePair<K,V>> enumerable)
-        {
-            AmqpMap map = new();
-            foreach (KeyValuePair<K, V> kvp in enumerable)
-            {
-                map.Add(new MapKey(kvp.Key), kvp.Value);
-            }
-            return map;
-        }
-
         private static IEnumerable<Data> AsAmqpData(this IEnumerable<ReadOnlyMemory<byte>> binaryData)
         {
             foreach (ReadOnlyMemory<byte> data in binaryData)
