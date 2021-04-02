@@ -27,10 +27,18 @@ namespace Azure.AI.Translator.DocumentTranslation.Samples
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
+            TimeSpan pollingInterval = new(1000);
+
             var documentscompleted = new HashSet<string>();
 
             while (!operation.HasCompleted)
             {
+                if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
+                {
+                    pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
+                }
+
+                await Task.Delay(pollingInterval);
                 await operation.UpdateStatusAsync();
 
                 AsyncPageable<DocumentStatusResult> documentsStatus = operation.GetAllDocumentStatusesAsync();

@@ -47,10 +47,15 @@ var inputs = new List<DocumentTranslationInput>()
 
 DocumentTranslationOperation operation = await client.StartTranslationAsync(inputs);
 
-TimeSpan pollingInterval = new TimeSpan(1000);
+TimeSpan pollingInterval = new(1000);
 
 while (!operation.HasCompleted)
 {
+    if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
+    {
+        pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
+    }
+
     await Task.Delay(pollingInterval);
     await operation.UpdateStatusAsync();
 

@@ -33,7 +33,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Samples
 
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            TimeSpan pollingInterval = new TimeSpan(1000);
+            TimeSpan pollingInterval = new(1000);
 
             AsyncPageable<DocumentStatusResult> documents = operation.GetAllDocumentStatusesAsync();
             await foreach (DocumentStatusResult document in documents)
@@ -44,6 +44,11 @@ namespace Azure.AI.Translator.DocumentTranslation.Samples
 
                 while (!status.Value.HasCompleted)
                 {
+                    if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
+                    {
+                        pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
+                    }
+
                     await Task.Delay(pollingInterval);
                     status = await operation.GetDocumentStatusAsync(document.DocumentId);
                 }

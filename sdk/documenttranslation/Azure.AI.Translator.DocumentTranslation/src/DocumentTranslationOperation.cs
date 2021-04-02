@@ -113,6 +113,11 @@ namespace Azure.AI.Translator.DocumentTranslation
         private Response _response;
 
         /// <summary>
+        /// The last Retry-After Header value from the last HTTP response received from the server. <c>null</c> until the first response is received.
+        /// </summary>
+        private int? _retryAfterHeaderValue;
+
+        /// <summary>
         /// Provides the results for the first page.
         /// </summary>
         private Page<DocumentStatusResult> _firstPage;
@@ -216,7 +221,12 @@ namespace Azure.AI.Translator.DocumentTranslation
             while (true)
             {
                 await UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
-                if (HasCompleted)
+                if (!HasCompleted)
+                {
+                    pollingInterval = _retryAfterHeaderValue.HasValue ? TimeSpan.FromSeconds(_retryAfterHeaderValue.Value) : pollingInterval;
+                    await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
+                }
+                else
                 {
                     var response = await _serviceClient.GetOperationDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
                     _firstPage = Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
@@ -239,8 +249,6 @@ namespace Azure.AI.Translator.DocumentTranslation
                     var result = PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
                     return Response.FromValue(result, response);
                 }
-
-                await Task.Delay(pollingInterval, cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -259,11 +267,12 @@ namespace Azure.AI.Translator.DocumentTranslation
 
                 try
                 {
-                    Response<TranslationStatusResult> update = async
+                    var update = async
                         ? await _serviceClient.GetOperationStatusAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
                         : _serviceClient.GetOperationStatus(new Guid(Id), cancellationToken);
 
                     _response = update.GetRawResponse();
+                    _retryAfterHeaderValue = update.Headers.RetryAfter;
 
                     _createdOn = update.Value.CreatedOn;
                     _lastModified = update.Value.LastModified;
