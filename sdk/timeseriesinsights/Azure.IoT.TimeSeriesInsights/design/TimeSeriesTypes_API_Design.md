@@ -76,11 +76,9 @@ public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> CreateOrRep
 /// <param name="timeSeriesTypeIds">List of Time Series Type Ids of the Time Series Types to return.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>
-/// List of error objects corresponding by position to the <paramref name="timeSeriesIds"/> array in the request.
-/// An error object will be set when operation is unsuccessful.
-/// null will be set when the operation is successful.
+/// List of error objects corresponding by position to the request array in the request - null when the operation is successful.
 /// </returns>
-public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesbyIdAsync(
+public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteTimeSeriesTypesbyIdAsync(
     IEnumerable<string> timeSeriesTypeIds,
     CancellationToken cancellationToken = default)
 ```
@@ -92,11 +90,9 @@ public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeS
 /// <param name="timeSeriesTypeNames">List of names of the Time Series Types to return.</param>
 /// <param name="cancellationToken">The cancellation token.</param>
 /// <returns>
-/// List of error objects corresponding by position to the <paramref name="timeSeriesNames"/> array in the request.
-/// An error object will be set when operation is unsuccessful.
-/// null will be set when the operation is successful.
+/// List of error objects corresponding by position to the request array in the request - null when the operation is successful.
 /// </returns>
-public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> DeleteTimeSeriesTypesbyNamesAsync(
+public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteTimeSeriesTypesbyNamesAsync(
     IEnumerable<string> timeSeriesTypeNames,
     CancellationToken cancellationToken = default)
 ```

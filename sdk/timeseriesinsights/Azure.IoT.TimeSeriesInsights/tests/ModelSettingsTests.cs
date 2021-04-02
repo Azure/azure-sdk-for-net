@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.IoT.TimeSeriesInsights.Models;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -107,11 +106,11 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             type.Id = timeSeriesTypeId;
             timeSeriesTypes.Add(type);
 
-            Response<TimeSeriesOperationError[]> createTypesResult = await client
+            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
                .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
                .ConfigureAwait(false);
 
-            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
+            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
 
             return timeSeriesTypeId;
         }
