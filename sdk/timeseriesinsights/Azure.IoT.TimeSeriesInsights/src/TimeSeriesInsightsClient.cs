@@ -1714,7 +1714,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypes"/> is empty.
         /// </exception>
-        public virtual async Task<Response<TimeSeriesOperationError[]>> CreateOrReplaceTimeSeriesTypesAsync(
+        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> CreateOrReplaceTimeSeriesTypesAsync(
             IEnumerable<TimeSeriesType> timeSeriesTypes,
             CancellationToken cancellationToken = default)
         {
@@ -1741,7 +1741,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 // it will be placed at the same index location that corresponds to its place in the input array.
                 IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
 
-                return Response.FromValue(errorResults.ToArray(), executeBatchResponse.GetRawResponse());
+                return Response.FromValue(executeBatchResponse.Value.Put.ToArray(), executeBatchResponse.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1756,8 +1756,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="timeSeriesTypes">The Time Series instances types to be created or replaced.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of error objects corresponding by position to the <paramref name="timeSeriesTypes"/> array in the request.
-        /// An error object will be set when operation is unsuccessful.
+        /// List of types or error objects corresponding by position to the <paramref name="timeSeriesTypes"/> array in the request.
+        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <seealso cref="CreateOrReplaceTimeSeriesInstancesAsync(IEnumerable{TimeSeriesInstance}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
@@ -1768,7 +1768,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypes"/> is empty.
         /// </exception>
-        public virtual Response<TimeSeriesOperationError[]> CreateOrReplaceTimeSeriesTypes(
+        public virtual Response<TimeSeriesTypeOperationResult[]> CreateOrReplaceTimeSeriesTypes(
             IEnumerable<TimeSeriesType> timeSeriesTypes,
             CancellationToken cancellationToken = default)
         {
@@ -1793,7 +1793,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 // it will be placed at the same index location that corresponds to its place in the input array.
                 IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
 
-                return Response.FromValue(errorResults.ToArray(), executeBatchResponse.GetRawResponse());
+                return Response.FromValue(executeBatchResponse.Value.Put.ToArray(), executeBatchResponse.GetRawResponse());
             }
             catch (Exception ex)
             {
