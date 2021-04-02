@@ -1021,9 +1021,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     case RequestResponseAmqpLink linkTarget:
                         linkTarget.Session?.SafeClose();
                         break;
-
-                    default:
-                        break;
                 }
 
                 target.SafeClose();
