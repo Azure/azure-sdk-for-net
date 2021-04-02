@@ -2931,6 +2931,34 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
+        [Test]
+        [TestCase(Constants.KB)]
+        [TestCase(10 * Constants.KB)]
+        [TestCase(Constants.MB)]
+        [TestCase(10000000)] // test for scientific notation.
+        [TestCase(10 * Constants.MB)]
+        [TestCase(100 * Constants.MB)]
+        [LiveOnly]
+        public async Task UploadAsync_MinStreamOverride_VariousSizes(long size)
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeFileClient file = await test.FileSystem.CreateFileAsync(GetNewFileName());
+
+            var data = GetRandomBuffer(size);
+
+            // Act
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream, overwrite: true);
+            }
+
+            // Assert
+            using var actual = new MemoryStream();
+            await file.ReadToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
         [RecordedTest]
         public async Task UploadAsync_Stream_InvalidStreamPosition()
         {
