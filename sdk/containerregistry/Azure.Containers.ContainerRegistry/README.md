@@ -141,7 +141,7 @@ deeper into the requests you're making against the service.
 
 - Go further with Azure.Containers.ContainerRegistry and our [samples][samples]
 - Watch a [demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?service=container-registry)
-- Read more about the [Azure Container Registry service](https://docs.microsoft.com/sazure/container-registry/container-registry-intro)
+- Read more about the [Azure Container Registry service](https://docs.microsoft.com/azure/container-registry/container-registry-intro)
 
 ## Contributing
 
