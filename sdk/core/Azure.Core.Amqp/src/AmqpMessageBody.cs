@@ -173,22 +173,37 @@ namespace Azure.Core.Amqp
                 case bool:
                 case Guid:
                 case DateTime:
-                case KeyValuePair<string, string>:
-                case KeyValuePair<string, byte>:
-                case KeyValuePair<string, sbyte>:
-                case KeyValuePair<string, char>:
-                case KeyValuePair<string, short>:
-                case KeyValuePair<string, ushort>:
-                case KeyValuePair<string, int>:
-                case KeyValuePair<string, uint>:
-                case KeyValuePair<string, long>:
-                case KeyValuePair<string, ulong>:
-                case KeyValuePair<string, float>:
-                case KeyValuePair<string, double>:
-                case KeyValuePair<string, decimal>:
-                case KeyValuePair<string, bool>:
-                case KeyValuePair<string, Guid>:
-                case KeyValuePair<string, DateTime>:
+                case IEnumerable<byte>:
+                case IEnumerable<sbyte>:
+                case IEnumerable<char>:
+                case IEnumerable<short>:
+                case IEnumerable<ushort>:
+                case IEnumerable<int>:
+                case IEnumerable<uint>:
+                case IEnumerable<long>:
+                case IEnumerable<ulong>:
+                case IEnumerable<float>:
+                case IEnumerable<double>:
+                case IEnumerable<decimal>:
+                case IEnumerable<bool>:
+                case IEnumerable<Guid>:
+                case IEnumerable<DateTime>:
+                case IEnumerable<KeyValuePair<string, string>>:
+                case IEnumerable<KeyValuePair<string, byte>>:
+                case IEnumerable<KeyValuePair<string, sbyte>>:
+                case IEnumerable<KeyValuePair<string, char>>:
+                case IEnumerable<KeyValuePair<string, short>>:
+                case IEnumerable<KeyValuePair<string, ushort>>:
+                case IEnumerable<KeyValuePair<string, int>>:
+                case IEnumerable<KeyValuePair<string, uint>>:
+                case IEnumerable<KeyValuePair<string, long>>:
+                case IEnumerable<KeyValuePair<string, ulong>>:
+                case IEnumerable<KeyValuePair<string, float>>:
+                case IEnumerable<KeyValuePair<string, double>>:
+                case IEnumerable<KeyValuePair<string, decimal>>:
+                case IEnumerable<KeyValuePair<string, bool>>:
+                case IEnumerable<KeyValuePair<string, Guid>>:
+                case IEnumerable<KeyValuePair<string, DateTime>>:
                     return;
                 case KeyValuePair<string, object> kvp:
                     ValidateAmqpPrimitive(kvp.Value, paramName);

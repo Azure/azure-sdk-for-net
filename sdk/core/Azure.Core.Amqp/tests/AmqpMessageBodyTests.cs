@@ -41,7 +41,7 @@ namespace Azure.Core.Amqp.Tests
             new Dictionary<string, decimal> {{ "key", new decimal(3.1415926) } },
             new Dictionary<string, DateTime> {{ "key", DateTimeOffset.Parse("3/24/21").UtcDateTime } },
             new Dictionary<string, Guid> {{ "key", new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554") } },
-            new Dictionary<string, object> { { "key1", "value" }, { "key2", 2 } }
+            new Dictionary<string, object> { { "key1", "value" }, { "key2", 2 } },
         };
 
         [Test]
