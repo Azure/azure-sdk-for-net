@@ -26,6 +26,8 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<IReadOnlyList<FieldValue_internal>> valueArray = default;
             Optional<IReadOnlyDictionary<string, FieldValue_internal>> valueObject = default;
             Optional<SelectionMarkState> valueSelectionMark = default;
+            Optional<FieldValueGender> valueGender = default;
+            Optional<string> valueCountry = default;
             Optional<string> text = default;
             Optional<IReadOnlyList<float>> boundingBox = default;
             Optional<float> confidence = default;
@@ -128,6 +130,21 @@ namespace Azure.AI.FormRecognizer.Models
                     valueSelectionMark = property.Value.GetString().ToSelectionMarkState();
                     continue;
                 }
+                if (property.NameEquals("valueGender"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    valueGender = new FieldValueGender(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("valueCountry"))
+                {
+                    valueCountry = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("text"))
                 {
                     text = property.Value.GetString();
@@ -184,7 +201,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueSelectionMark), text.Value, Optional.ToList(boundingBox), Optional.ToNullable(confidence), Optional.ToList(elements), Optional.ToNullable(page));
+            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToList(valueArray), Optional.ToDictionary(valueObject), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueGender), valueCountry.Value, text.Value, Optional.ToList(boundingBox), Optional.ToNullable(confidence), Optional.ToList(elements), Optional.ToNullable(page));
         }
     }
 }

@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Datadog.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Datadog organization properties
+    /// </summary>
     public partial class DatadogOrganizationProperties
     {
         /// <summary>
@@ -34,14 +37,22 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// existing datadog organization.</param>
         /// <param name="linkingClientId">The client_id from an existing in
         /// exchange for an auth token to link organization.</param>
+        /// <param name="redirectUri">The redirect uri for linking.</param>
+        /// <param name="apiKey">Api key associated to the Datadog
+        /// organization.</param>
+        /// <param name="applicationKey">Application key associated to the
+        /// Datadog organization.</param>
         /// <param name="enterpriseAppId">The Id of the Enterprise App used for
         /// Single sign on.</param>
-        public DatadogOrganizationProperties(string name = default(string), string id = default(string), string linkingAuthCode = default(string), string linkingClientId = default(string), string enterpriseAppId = default(string))
+        public DatadogOrganizationProperties(string name = default(string), string id = default(string), string linkingAuthCode = default(string), string linkingClientId = default(string), string redirectUri = default(string), string apiKey = default(string), string applicationKey = default(string), string enterpriseAppId = default(string))
         {
             Name = name;
             Id = id;
             LinkingAuthCode = linkingAuthCode;
             LinkingClientId = linkingClientId;
+            RedirectUri = redirectUri;
+            ApiKey = apiKey;
+            ApplicationKey = applicationKey;
             EnterpriseAppId = enterpriseAppId;
             CustomInit();
         }
@@ -76,6 +87,25 @@ namespace Microsoft.Azure.Management.Datadog.Models
         /// </summary>
         [JsonProperty(PropertyName = "linkingClientId")]
         public string LinkingClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the redirect uri for linking.
+        /// </summary>
+        [JsonProperty(PropertyName = "redirectUri")]
+        public string RedirectUri { get; set; }
+
+        /// <summary>
+        /// Gets or sets api key associated to the Datadog organization.
+        /// </summary>
+        [JsonProperty(PropertyName = "apiKey")]
+        public string ApiKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets application key associated to the Datadog
+        /// organization.
+        /// </summary>
+        [JsonProperty(PropertyName = "applicationKey")]
+        public string ApplicationKey { get; set; }
 
         /// <summary>
         /// Gets or sets the Id of the Enterprise App used for Single sign on.
