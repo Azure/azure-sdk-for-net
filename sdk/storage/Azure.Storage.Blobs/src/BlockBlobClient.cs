@@ -2817,7 +2817,7 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken).ConfigureAwait(false),
                 UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
                     => await client.StageBlockInternal(
-                        StorageExtensions.GenerateBlockId(offset),
+                        Shared.StorageExtensions.GenerateBlockId(offset),
                         stream,
                         transactionalContentHash: default,
                         args?.Conditions,
@@ -2826,7 +2826,7 @@ namespace Azure.Storage.Blobs.Specialized
                         cancellationToken).ConfigureAwait(false),
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
-                        partitions.Select(partition => StorageExtensions.GenerateBlockId(partition.Offset)),
+                        partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),
                         args?.HttpHeaders,
                         args?.Metadata,
                         args?.Tags,
@@ -2837,7 +2837,7 @@ namespace Azure.Storage.Blobs.Specialized
                         async,
                         cancellationToken).ConfigureAwait(false),
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
-                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}")
+                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(Storage.Blobs.BlobClient.Upload)}")
             };
         }
         #endregion

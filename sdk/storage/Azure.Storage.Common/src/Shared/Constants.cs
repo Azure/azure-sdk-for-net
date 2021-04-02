@@ -617,5 +617,11 @@ namespace Azure.Storage
             internal const int NotFound = 404;
             internal const int NotModified = 304;
         }
+
+        internal static class ServerTimeout
+        {
+            internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
+            internal const string QueryParameterKey = "timeout";
+        }
     }
 }

@@ -217,7 +217,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
 
                 var msg = new ServiceBusMessage();
                 var amqp = new AmqpAnnotatedMessage(
-                    new AmqpMessageBody(
+                    AmqpMessageBody.FromData(
                     new ReadOnlyMemory<byte>[]
                     {
                         new ReadOnlyMemory<byte>(GetRandomBuffer(100)),
@@ -254,17 +254,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
         private static readonly object[] s_amqpValues =
         {
             "string",
-            5,
-            long.MaxValue,
-            (byte) 1,
-            3.1415926,
-            new decimal(3.1415926),
-            DateTimeOffset.Parse("3/24/21").UtcDateTime,
+            new List<string> {"first", "second"},
             'c',
+            5,
+            new int[] { 5 },
+            long.MaxValue,
+            new long[] { long.MaxValue },
+            (byte) 1,
+            (sbyte) 1,
+            (short) 1,
+            (ushort) 1,
+            3.1415926,
+            new double[] { 3.1415926 },
+            new decimal(3.1415926),
+            new decimal[] { new decimal(3.1415926) },
+            DateTimeOffset.Parse("3/24/21").UtcDateTime,
+            new DateTime[] {DateTimeOffset.Parse("3/24/21").UtcDateTime },
             new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554"),
-            new List<string>{"first", "second"},
-            new int[] {1, 2, 3},
-            new AmqpSymbol("symbol"),
+            new Guid[] { new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554"), new Guid("55f239a6-5d50-4f6d-8f84-deed326e4554") },
         };
 
         [Test]
@@ -277,7 +284,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var sender = client.CreateSender(scope.QueueName);
 
                 var msg = new ServiceBusMessage();
-                msg.GetRawAmqpMessage().Body = new AmqpMessageBody(value);
+                msg.GetRawAmqpMessage().Body = AmqpMessageBody.FromValue(value);
 
                 await sender.SendMessageAsync(msg);
 
@@ -304,7 +311,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
                 var sequence = new List<IList<object>>();
                 sequence.Add(new List<object> { "first", 1 });
                 sequence.Add(new List<object> { "second", 2 });
-                msg.GetRawAmqpMessage().Body = new AmqpMessageBody(sequence);
+                msg.GetRawAmqpMessage().Body = AmqpMessageBody.FromSequence(sequence);
 
                 await sender.SendMessageAsync(msg);
 

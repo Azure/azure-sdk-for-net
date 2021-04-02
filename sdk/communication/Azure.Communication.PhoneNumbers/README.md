@@ -139,7 +139,7 @@ await releaseOperation.WaitForCompletionResponseAsync();
 
 ## Next steps
 
-[Read more about Communication user access tokens][user_access_token]
+[Read more about managing phone numbers][phone_numbers]
 
 ## Contributing
 
@@ -158,6 +158,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
 <!--[package]: https://www.nuget.org/packages/Azure.Communication.PhoneNumbers-->
+[phone_numbers]: https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/get-phone-number?pivots=programming-language-csharp
 [product_docs]: https://docs.microsoft.com/azure/communication-services/overview
 [nuget]: https://www.nuget.org/
 [communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp

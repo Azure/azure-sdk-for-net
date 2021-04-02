@@ -37,6 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     case "AvroWriteSettings": return AvroWriteSettings.DeserializeAvroWriteSettings(element);
                     case "JsonWriteSettings": return JsonWriteSettings.DeserializeJsonWriteSettings(element);
+                    case "OrcWriteSettings": return OrcWriteSettings.DeserializeOrcWriteSettings(element);
+                    case "ParquetWriteSettings": return ParquetWriteSettings.DeserializeParquetWriteSettings(element);
                     case "DelimitedTextWriteSettings": return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element);
                 }
             }

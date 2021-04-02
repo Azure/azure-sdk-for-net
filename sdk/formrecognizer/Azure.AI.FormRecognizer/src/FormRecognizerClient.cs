@@ -142,7 +142,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     recognizeContentOptions.Language,
-                    null, // TODO: pass reading order.
+                    recognizeContentOptions.ReadingOrder,
                     form,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -182,7 +182,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     recognizeContentOptions.Language,
-                    null, // TODO: pass reading order.
+                    recognizeContentOptions.ReadingOrder,
                     form,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -220,7 +220,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = ServiceClient.AnalyzeLayoutAsync(
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     recognizeContentOptions.Language,
-                    null, // TODO: pass reading order.
+                    recognizeContentOptions.ReadingOrder,
                     sourcePath,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -258,7 +258,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = await ServiceClient.AnalyzeLayoutAsyncAsync(
                     recognizeContentOptions.Pages.Count == 0 ? null : recognizeContentOptions.Pages,
                     recognizeContentOptions.Language,
-                    null, // TODO: pass reading order.
+                    recognizeContentOptions.ReadingOrder,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -303,7 +303,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeReceiptsOptions.Pages.Count == 0 ? null : recognizeReceiptsOptions.Pages,
                     receipt,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -344,7 +344,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeReceiptsOptions.Pages.Count == 0 ? null : recognizeReceiptsOptions.Pages,
                     receipt,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -383,7 +383,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = await ServiceClient.AnalyzeReceiptAsyncAsync(
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeReceiptsOptions.Pages.Count == 0 ? null : recognizeReceiptsOptions.Pages,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -422,7 +422,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = ServiceClient.AnalyzeReceiptAsync(
                     recognizeReceiptsOptions.IncludeFieldElements,
                     recognizeReceiptsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeReceiptsOptions.Pages.Count == 0 ? null : recognizeReceiptsOptions.Pages,
                     sourcePath,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -467,7 +467,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeBusinessCardsOptions.Pages.Count == 0 ? null : recognizeBusinessCardsOptions.Pages,
                     businessCard,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -508,7 +508,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeBusinessCardsOptions.Pages.Count == 0 ? null : recognizeBusinessCardsOptions.Pages,
                     businessCard,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -547,7 +547,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = await ServiceClient.AnalyzeBusinessCardAsyncAsync(
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeBusinessCardsOptions.Pages.Count == 0 ? null : recognizeBusinessCardsOptions.Pages,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -586,7 +586,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = ServiceClient.AnalyzeBusinessCardAsync(
                     recognizeBusinessCardsOptions.IncludeFieldElements,
                     recognizeBusinessCardsOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeBusinessCardsOptions.Pages.Count == 0 ? null : recognizeBusinessCardsOptions.Pages,
                     sourcePath,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -631,7 +631,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeInvoicesOptions.Pages.Count == 0 ? null : recognizeInvoicesOptions.Pages,
                     invoice,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -672,7 +672,7 @@ namespace Azure.AI.FormRecognizer
                     formContentType,
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeInvoicesOptions.Pages.Count == 0 ? null : recognizeInvoicesOptions.Pages,
                     invoice,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -711,7 +711,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = await ServiceClient.AnalyzeInvoiceAsyncAsync(
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeInvoicesOptions.Pages.Count == 0 ? null : recognizeInvoicesOptions.Pages,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -750,7 +750,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = ServiceClient.AnalyzeInvoiceAsync(
                     recognizeInvoicesOptions.IncludeFieldElements,
                     recognizeInvoicesOptions.Locale,
-                    null, // TODO: pass pages.
+                    recognizeInvoicesOptions.Pages.Count == 0 ? null : recognizeInvoicesOptions.Pages,
                     sourcePath,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -763,6 +763,170 @@ namespace Azure.AI.FormRecognizer
                 throw;
             }
         }
+        #endregion
+
+        #region ID Documents
+
+        /// <summary>
+        /// Analyze ID documents using optical character recognition (OCR) and a prebuilt model trained on ID documents
+        /// to extract key information from passports and US driver licenses.
+        /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an ID document.</para>
+        /// </summary>
+        /// <param name="idDocument">The stream containing the one or more ID documents to recognize values from.</param>
+        /// <param name="recognizeIdDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeIdDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdDocumentsOperation.Value"/> upon successful
+        /// completion will contain the extracted ID document information.</returns>
+        public virtual async Task<RecognizeIdDocumentsOperation> StartRecognizeIdDocumentsAsync(Stream idDocument, RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(idDocument, nameof(idDocument));
+
+            recognizeIdDocumentsOptions ??= new RecognizeIdDocumentsOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeIdDocuments)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType formContentType = recognizeIdDocumentsOptions.ContentType ?? DetectContentType(idDocument, nameof(idDocument));
+
+                Response response = await ServiceClient.AnalyzeIdDocumentAsyncAsync(
+                    formContentType,
+                    recognizeIdDocumentsOptions.IncludeFieldElements,
+                    recognizeIdDocumentsOptions.Pages.Count == 0 ? null : recognizeIdDocumentsOptions.Pages,
+                    idDocument,
+                    cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeIdDocumentsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Analyze ID documents using optical character recognition (OCR) and a prebuilt model trained on ID documents
+        /// to extract key information from passports and US driver licenses.
+        /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an ID document.</para>
+        /// </summary>
+        /// <param name="idDocument">The stream containing the one or more ID documents to recognize values from.</param>
+        /// <param name="recognizeIdDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeIdDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdDocumentsOperation.Value"/> upon successful
+        /// completion will contain the extracted ID document information.</returns>
+        public virtual RecognizeIdDocumentsOperation StartRecognizeIdDocuments(Stream idDocument, RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(idDocument, nameof(idDocument));
+
+            recognizeIdDocumentsOptions ??= new RecognizeIdDocumentsOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeIdDocuments)}");
+            scope.Start();
+
+            try
+            {
+                FormContentType formContentType = recognizeIdDocumentsOptions.ContentType ?? DetectContentType(idDocument, nameof(idDocument));
+
+                Response response = ServiceClient.AnalyzeIdDocumentAsync(
+                    formContentType,
+                    recognizeIdDocumentsOptions.IncludeFieldElements,
+                    recognizeIdDocumentsOptions.Pages.Count == 0 ? null : recognizeIdDocumentsOptions.Pages,
+                    idDocument,
+                    cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeIdDocumentsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Analyze ID documents using optical character recognition (OCR) and a prebuilt model trained on ID documents
+        /// to extract key information from passports and US driver licenses.
+        /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an ID document.</para>
+        /// </summary>
+        /// <param name="idDocumentUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeIdDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeIdDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdDocumentsOperation.Value"/> upon successful
+        /// completion will contain the extracted ID document information.</returns>
+        public virtual async Task<RecognizeIdDocumentsOperation> StartRecognizeIdDocumentsFromUriAsync(Uri idDocumentUri, RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(idDocumentUri, nameof(idDocumentUri));
+
+            recognizeIdDocumentsOptions ??= new RecognizeIdDocumentsOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeIdDocumentsFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath sourcePath = new SourcePath() { Source = idDocumentUri.AbsoluteUri };
+                Response response = await ServiceClient.AnalyzeIdDocumentAsyncAsync(
+                    recognizeIdDocumentsOptions.IncludeFieldElements,
+                    recognizeIdDocumentsOptions.Pages.Count == 0 ? null : recognizeIdDocumentsOptions.Pages,
+                    sourcePath,
+                    cancellationToken).ConfigureAwait(false);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeIdDocumentsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Analyze ID documents using optical character recognition (OCR) and a prebuilt model trained on ID documents
+        /// to extract key information from passports and US driver licenses.
+        /// <para>See <a href="https://aka.ms/formrecognizer/iddocumentfields"/> for a list of available fields on an ID document.</para>
+        /// </summary>
+        /// <param name="idDocumentUri">The absolute URI of the remote file to recognize values from.</param>
+        /// <param name="recognizeIdDocumentsOptions">A set of options available for configuring the recognize request. For example, specify the content type of the
+        /// form, or whether or not to include form elements.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="RecognizeIdDocumentsOperation"/> to wait on this long-running operation.  Its <see cref="RecognizeIdDocumentsOperation.Value"/> upon successful
+        /// completion will contain the extracted ID document information.</returns>
+        public virtual RecognizeIdDocumentsOperation StartRecognizeIdDocumentsFromUri(Uri idDocumentUri, RecognizeIdDocumentsOptions recognizeIdDocumentsOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(idDocumentUri, nameof(idDocumentUri));
+
+            recognizeIdDocumentsOptions ??= new RecognizeIdDocumentsOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(FormRecognizerClient)}.{nameof(StartRecognizeIdDocumentsFromUri)}");
+            scope.Start();
+
+            try
+            {
+                SourcePath sourcePath = new SourcePath() { Source = idDocumentUri.AbsoluteUri };
+                Response response = ServiceClient.AnalyzeIdDocumentAsync(
+                    recognizeIdDocumentsOptions.IncludeFieldElements,
+                    recognizeIdDocumentsOptions.Pages.Count == 0 ? null : recognizeIdDocumentsOptions.Pages,
+                    sourcePath,
+                    cancellationToken);
+                string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
+
+                return new RecognizeIdDocumentsOperation(ServiceClient, Diagnostics, location);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Custom Forms
@@ -796,7 +960,7 @@ namespace Azure.AI.FormRecognizer
                     guid,
                     formContentType,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
-                    null, // TODO: pass pages.
+                    recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     form,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -838,7 +1002,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = ServiceClient.AnalyzeWithCustomModel(
                     guid,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
-                    null, // TODO: pass pages.
+                    recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     sourcePath,
                     cancellationToken);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -881,7 +1045,7 @@ namespace Azure.AI.FormRecognizer
                     guid,
                     formContentType,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
-                    null, // TODO: pass pages.
+                    recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     form,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);
@@ -923,7 +1087,7 @@ namespace Azure.AI.FormRecognizer
                 Response response = await ServiceClient.AnalyzeWithCustomModelAsync(
                     guid,
                     includeTextDetails: recognizeCustomFormsOptions.IncludeFieldElements,
-                    null, // TODO: pass pages.
+                    recognizeCustomFormsOptions.Pages.Count == 0 ? null : recognizeCustomFormsOptions.Pages,
                     sourcePath,
                     cancellationToken).ConfigureAwait(false);
                 string location = ClientCommon.GetResponseHeader(response.Headers, Constants.OperationLocationHeader);

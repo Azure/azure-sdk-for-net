@@ -53,6 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "BlobEventsTrigger": return BlobEventsTrigger.DeserializeBlobEventsTrigger(element);
                     case "BlobTrigger": return BlobTrigger.DeserializeBlobTrigger(element);
                     case "ChainingTrigger": return ChainingTrigger.DeserializeChainingTrigger(element);
+                    case "CustomEventsTrigger": return CustomEventsTrigger.DeserializeCustomEventsTrigger(element);
                     case "MultiplePipelineTrigger": return MultiplePipelineTrigger.DeserializeMultiplePipelineTrigger(element);
                     case "RerunTumblingWindowTrigger": return RerunTumblingWindowTrigger.DeserializeRerunTumblingWindowTrigger(element);
                     case "ScheduleTrigger": return ScheduleTrigger.DeserializeScheduleTrigger(element);

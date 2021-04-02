@@ -23,7 +23,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<DateTimeOffset> lastUpdateTime = default;
             Optional<string> architecture = default;
             Optional<string> os = default;
-            Optional<IReadOnlyList<RegistryArtifactProperties>> references = default;
+            Optional<IReadOnlyList<ManifestAttributesManifestReferences>> references = default;
             Optional<IReadOnlyList<string>> tags = default;
             Optional<ContentProperties> changeableAttributes = default;
             foreach (var property in element.EnumerateObject())
@@ -94,10 +94,10 @@ namespace Azure.Containers.ContainerRegistry
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<RegistryArtifactProperties> array = new List<RegistryArtifactProperties>();
+                            List<ManifestAttributesManifestReferences> array = new List<ManifestAttributesManifestReferences>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeRegistryArtifactProperties(item));
+                                array.Add(ManifestAttributesManifestReferences.DeserializeManifestAttributesManifestReferences(item));
                             }
                             references = array;
                             continue;

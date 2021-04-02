@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of RegistryArtifactProperties. </summary>
         internal RegistryArtifactProperties()
         {
-            References = new ChangeTrackingList<RegistryArtifactProperties>();
+            References = new ChangeTrackingList<ManifestAttributesManifestReferences>();
             Tags = new ChangeTrackingList<string>();
         }
 
@@ -32,7 +32,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="references"> List of manifest attributes details. </param>
         /// <param name="tags"> List of tags. </param>
         /// <param name="writeableProperties"> Writeable properties of the resource. </param>
-        internal RegistryArtifactProperties(string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, IReadOnlyList<RegistryArtifactProperties> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
+        internal RegistryArtifactProperties(string repository, string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
         {
             Repository = repository;
             Digest = digest;
