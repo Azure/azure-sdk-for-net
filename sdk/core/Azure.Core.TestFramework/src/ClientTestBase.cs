@@ -89,6 +89,8 @@ namespace Azure.Core.TestFramework
                 interceptors.Add(s_diagnosticScopeValidatingInterceptor);
             }
 
+            interceptors.Add(new InstrumentResultInterceptor(this));
+
             // Ignore the async method interceptor entirely if we're running a
             // a SyncOnly test
             TestContext.TestAdapter test = TestContext.CurrentContext.Test;
@@ -97,8 +99,6 @@ namespace Azure.Core.TestFramework
             {
                 interceptors.Add(IsAsync ? s_avoidSyncInterceptor : s_useSyncInterceptor);
             }
-
-            interceptors.Add(new InstrumentResultInterceptor(this));
 
             return ProxyGenerator.CreateClassProxyWithTarget(
                 clientType,

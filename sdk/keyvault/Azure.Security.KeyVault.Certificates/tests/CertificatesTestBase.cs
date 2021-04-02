@@ -207,26 +207,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
             pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : pollingInterval ?? TimeSpan.FromSeconds(1);
 
-            try
-            {
-                if (IsAsync)
-                {
-                    await operation.WaitForCompletionAsync(pollingInterval.Value, cts.Token);
-                }
-                else
-                {
-                    while (!operation.HasCompleted)
-                    {
-                        operation.UpdateStatus(cts.Token);
-
-                        await Task.Delay(pollingInterval.Value, cts.Token);
-                    }
-                }
-            }
-            catch (TaskCanceledException)
-            {
-                Assert.Inconclusive("Timed out while waiting for operation {0}", operation.Id);
-            }
+            await operation.WaitForCompletionAsync(pollingInterval.Value, cts.Token);
 
             return operation.Value;
         }

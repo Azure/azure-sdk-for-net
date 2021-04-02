@@ -24,24 +24,25 @@ namespace Azure.Core.TestFramework
 
         public void Intercept(IInvocation invocation)
         {
-            invocation.Proceed();
-
-            var result = invocation.ReturnValue;
-            if (result == null)
-            {
-                return;
-            }
-
-            var type = result.GetType();
+            var type = invocation.Method.ReturnType;
 
             // We don't want to instrument generated rest clients.
             if ((type.Name.EndsWith("Client") && !type.Name.EndsWith("RestClient")) ||
                 // Generated ARM clients will have a property containing the sub-client that ends with Operations.
                 (invocation.Method.Name.StartsWith("get_") && type.Name.EndsWith("Operations")))
             {
+                invocation.Proceed();
+
+                var result = invocation.ReturnValue;
+                if (result == null)
+                {
+                    return;
+                }
+
                 invocation.ReturnValue = _testBase.InstrumentClient(type, result, Array.Empty<IInterceptor>());
                 return;
             }
+
             if (type is {IsGenericType: true, GenericTypeArguments: {} arguments } &&
                 type.GetGenericTypeDefinition() == typeof(Task<>) &&
                 typeof(Operation).IsAssignableFrom(arguments[0]))
@@ -49,6 +50,8 @@ namespace Azure.Core.TestFramework
                 DiagnosticScopeValidatingInterceptor.WrapAsyncResult(invocation, this, InstrumentOperationInterceptorMethodInfo);
                 return;
             }
+
+            invocation.Proceed();
         }
 
         internal async ValueTask<T> InstrumentOperationInterceptor<T>(IInvocation invocation, Func<ValueTask<T>> innerTask)
