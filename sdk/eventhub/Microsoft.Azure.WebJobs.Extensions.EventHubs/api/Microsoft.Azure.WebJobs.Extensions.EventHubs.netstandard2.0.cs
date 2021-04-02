@@ -38,8 +38,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     public partial class InitialOffsetOptions
     {
         public InitialOffsetOptions() { }
-        public string EnqueuedTimeUTC { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
+        public System.DateTimeOffset? EnqueuedTimeUtc { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.EventHubs.OffsetType? Type { get { throw null; } set { } }
+    }
+    public enum OffsetType
+    {
+        FromStart = 0,
+        FromEnd = 1,
+        FromEnqueuedTime = 2,
     }
 }
 namespace Microsoft.Extensions.Hosting

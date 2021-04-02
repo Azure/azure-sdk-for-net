@@ -136,8 +136,9 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task RecognizeLinkedEntitiesBatchConvenienceWithStatisticsTest()
         {
+            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             TextAnalyticsClient client = GetClient();
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", options);
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
@@ -146,6 +147,32 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
+        }
+
+        [Test]
+        public async Task RecognizeLinkedEntitiesBatchConvenienceWithRecognizeLinkedEntitiesOptionsStatisticsTest()
+        {
+            RecognizeLinkedEntitiesOptions options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
+            TextAnalyticsClient client = GetClient();
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchConvenienceDocuments, "en", options);
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "0", s_document1ExpectedOutput },
+                { "1", s_document2ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [Test]
@@ -166,8 +193,9 @@ namespace Azure.AI.TextAnalytics.Tests
         [Test]
         public async Task RecognizeLinkedEntitiesBatchWithStatisticsTest()
         {
+            TextAnalyticsRequestOptions options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
             TextAnalyticsClient client = GetClient();
-            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, new TextAnalyticsRequestOptions { IncludeStatistics = true });
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, options);
 
             var expectedOutput = new Dictionary<string, List<string>>()
             {
@@ -176,6 +204,32 @@ namespace Azure.AI.TextAnalytics.Tests
             };
 
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
+        }
+
+        [Test]
+        public async Task RecognizeLinkedEntitiesBatchWithRecognizeLinkedEntitiesOptionsStatisticsTest()
+        {
+            RecognizeLinkedEntitiesOptions options = new RecognizeLinkedEntitiesOptions { IncludeStatistics = true };
+            TextAnalyticsClient client = GetClient();
+            RecognizeLinkedEntitiesResultCollection results = await client.RecognizeLinkedEntitiesBatchAsync(s_batchDocuments, options);
+
+            var expectedOutput = new Dictionary<string, List<string>>()
+            {
+                { "1", s_document1ExpectedOutput },
+                { "3", s_document1ExpectedOutput },
+            };
+
+            ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
+
+            // Assert the options classes since overloads were added and the original now instantiates a RecognizeLinkedEntitiesOptions.
+            Assert.IsTrue(options.IncludeStatistics);
+            Assert.IsNull(options.ModelVersion);
+            Assert.AreEqual(StringIndexType.Utf16CodeUnit, options.StringIndexType);
         }
 
         [Test]

@@ -4,10 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
+using IList = System.Collections.IList;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -19,6 +21,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 return AmqpMessage.Create(dataBody.AsAmqpData());
             }
+            if (message.AmqpMessage.Body.TryGetValue(out object value))
+            {
+                return AmqpMessage.Create(new AmqpValue { Value = value });
+            }
+            if (message.AmqpMessage.Body.TryGetSequence(out IEnumerable<IList<object>> sequence))
+            {
+                return AmqpMessage.Create(sequence.Select(s => new AmqpSequence((IList) s)).ToList());
+            }
             throw new NotSupportedException($"{message.AmqpMessage.Body.GetType()} is not a supported message body type.");
         }
 
@@ -26,21 +36,24 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             foreach (ReadOnlyMemory<byte> data in binaryData)
             {
+                if (!MemoryMarshal.TryGetArray(data, out ArraySegment<byte> segment))
+                {
+                    segment = new ArraySegment<byte>(data.ToArray());
+                }
+
                 yield return new Data
                 {
-                    Value = new ArraySegment<byte>(data.IsEmpty ? Array.Empty<byte>() : data.ToArray())
+                    Value = segment
                 };
             }
         }
 
-        private static byte[] GetByteArray(this Data data)
+        private static ReadOnlyMemory<byte> GetByteArray(this Data data)
         {
             switch (data.Value)
             {
                 case byte[] byteArray:
                     return byteArray;
-                case ArraySegment<byte> arraySegment when arraySegment.Count == arraySegment.Array?.Length:
-                    return arraySegment.Array;
                 case ArraySegment<byte> arraySegment:
                     var bytes = new byte[arraySegment.Count];
                     Array.ConstrainedCopy(
@@ -60,7 +73,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             IList<ReadOnlyMemory<byte>> dataList = new List<ReadOnlyMemory<byte>>();
             foreach (Data data in (message.DataBody ?? Enumerable.Empty<Data>()))
             {
-                dataList.Add(BinaryData.FromBytes(data.GetByteArray()));
+                dataList.Add(data.GetByteArray());
             }
             return dataList;
         }
@@ -134,7 +147,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 return dataBody.ConvertAndFlattenData();
             }
-            throw new NotSupportedException($"{message.Body.BodyType} is not a supported message body type.");
+            throw new NotSupportedException($"{message.Body.BodyType} cannot be retrieved using the {nameof(ServiceBusMessage.Body)} property." +
+                $"Use {nameof(ServiceBusMessage.GetRawAmqpMessage)} to access the underlying Amqp Message object.");
         }
     }
 }

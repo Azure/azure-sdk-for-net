@@ -45,7 +45,6 @@ TokenCredential credential = new DefaultAzureCredential();
 
 var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
 var eventHubName = "<< NAME OF THE EVENT HUB >>";
-
 var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
 try
@@ -73,11 +72,67 @@ finally
 
 ## Publishing events with Shared Access Signature authorization
 
-**COMING SOON**
+```C# Snippet:EventHubs_Sample06_SharedAccessSignature
+var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
+
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
+
+try
+{
+    using var eventBatch = await producer.CreateBatchAsync();
+
+    for (var index = 0; index < 5; ++index)
+    {
+        var eventBody = new BinaryData($"Event #{ index }");
+        var eventData = new EventData(eventBody);
+
+        if (!eventBatch.TryAdd(eventData))
+        {
+            throw new Exception($"The event at { index } could not be added.");
+        }
+    }
+
+    await producer.SendAsync(eventBatch);
+}
+finally
+{
+    await producer.CloseAsync();
+}
+```
 
 ## Publishing events with Shared Access Key authorization
 
-**COMING SOON**
+```C# Snippet:EventHubs_Sample06_SharedAccessKey
+var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED KEY >>");
+
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
+
+try
+{
+    using var eventBatch = await producer.CreateBatchAsync();
+
+    for (var index = 0; index < 5; ++index)
+    {
+        var eventBody = new BinaryData($"Event #{ index }");
+        var eventData = new EventData(eventBody);
+
+        if (!eventBatch.TryAdd(eventData))
+        {
+            throw new Exception($"The event at { index } could not be added.");
+        }
+    }
+
+    await producer.SendAsync(eventBatch);
+}
+finally
+{
+    await producer.CloseAsync();
+}
+```
 
 ## Parsing a connection string for information
 

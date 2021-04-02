@@ -10,7 +10,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.PhoneNumbers.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -20,6 +19,11 @@ namespace Azure.Communication.PhoneNumbers
     public partial class UpdatePhoneNumberCapabilitiesOperation : Operation<PurchasedPhoneNumber>, IOperationSource<PurchasedPhoneNumber>
     {
         private readonly ArmOperationHelpers<PurchasedPhoneNumber> _operation;
+
+        /// <summary> Initializes a new instance of UpdatePhoneNumberCapabilitiesOperation for mocking. </summary>
+        protected UpdatePhoneNumberCapabilitiesOperation()
+        {
+        }
 
         /// <inheritdoc />
         public override PurchasedPhoneNumber Value => _operation.Value;

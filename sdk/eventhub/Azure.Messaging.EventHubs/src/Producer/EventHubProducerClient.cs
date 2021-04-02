@@ -245,36 +245,30 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the producer with.</param>
-        /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
         ///
-        internal EventHubProducerClient(string fullyQualifiedNamespace,
-                                        string eventHubName,
-                                        EventHubsSharedAccessKeyCredential credential,
-                                        EventHubProducerClientOptions clientOptions = default)
+        public EventHubProducerClient(string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      AzureNamedKeyCredential credential,
+                                      EventHubProducerClientOptions clientOptions = default) : this(fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
+        }
 
-            clientOptions = clientOptions?.Clone() ?? new EventHubProducerClientOptions();
-
-            OwnsConnection = true;
-            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
-            Options = clientOptions;
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-
-            PartitionProducerPool = new TransportProducerPool(partitionId =>
-                Connection.CreateTransportProducer(
-                    partitionId,
-                    clientOptions.CreateFeatureFlags(),
-                    Options.GetPublishingOptionsOrDefaultForPartition(partitionId),
-                    RetryPolicy));
-
-            if (RequiresStatefulPartitions(clientOptions))
-            {
-                PartitionState = new ConcurrentDictionary<string, PartitionPublishingState>();
-            }
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the producer with.</param>
+        /// <param name="credential">The shared access signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
+        ///
+        public EventHubProducerClient(string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      AzureSasCredential credential,
+                                      EventHubProducerClientOptions clientOptions = default) : this(fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
+        {
         }
 
         /// <summary>
@@ -289,30 +283,8 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubProducerClient(string fullyQualifiedNamespace,
                                       string eventHubName,
                                       TokenCredential credential,
-                                      EventHubProducerClientOptions clientOptions = default)
+                                      EventHubProducerClientOptions clientOptions = default): this(fullyQualifiedNamespace, eventHubName, (object)credential, clientOptions)
         {
-            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
-            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            clientOptions = clientOptions?.Clone() ?? new EventHubProducerClientOptions();
-
-            OwnsConnection = true;
-            Connection = new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
-            Options = clientOptions;
-            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
-
-            PartitionProducerPool = new TransportProducerPool(partitionId =>
-                Connection.CreateTransportProducer(
-                    partitionId,
-                    clientOptions.CreateFeatureFlags(),
-                    Options.GetPublishingOptionsOrDefaultForPartition(partitionId),
-                    RetryPolicy));
-
-            if (RequiresStatefulPartitions(clientOptions))
-            {
-                PartitionState = new ConcurrentDictionary<string, PartitionPublishingState>();
-            }
         }
 
         /// <summary>
@@ -385,6 +357,44 @@ namespace Azure.Messaging.EventHubs.Producer
         protected EventHubProducerClient()
         {
             OwnsConnection = false;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventHubProducerClient" /> class.
+        /// </summary>
+        ///
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the producer with.</param>
+        /// <param name="credential">The credential to use for authorization.  This may be of any type supported by the public constructors.</param>
+        /// <param name="clientOptions">A set of options to apply when configuring the producer.</param>
+        ///
+        private EventHubProducerClient(string fullyQualifiedNamespace,
+                                       string eventHubName,
+                                       object credential,
+                                       EventHubProducerClientOptions clientOptions = default)
+        {
+            Argument.AssertWellFormedEventHubsNamespace(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
+            Argument.AssertNotNullOrEmpty(eventHubName, nameof(eventHubName));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            clientOptions = clientOptions?.Clone() ?? new EventHubProducerClientOptions();
+
+            OwnsConnection = true;
+            Connection = EventHubConnection.CreateWithCredential(fullyQualifiedNamespace, eventHubName, credential, clientOptions.ConnectionOptions);
+            Options = clientOptions;
+            RetryPolicy = clientOptions.RetryOptions.ToRetryPolicy();
+
+            PartitionProducerPool = new TransportProducerPool(partitionId =>
+                Connection.CreateTransportProducer(
+                    partitionId,
+                    clientOptions.CreateFeatureFlags(),
+                    Options.GetPublishingOptionsOrDefaultForPartition(partitionId),
+                    RetryPolicy));
+
+            if (RequiresStatefulPartitions(clientOptions))
+            {
+                PartitionState = new ConcurrentDictionary<string, PartitionPublishingState>();
+            }
         }
 
         /// <summary>

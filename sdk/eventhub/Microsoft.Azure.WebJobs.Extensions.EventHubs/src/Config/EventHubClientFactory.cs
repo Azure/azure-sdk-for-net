@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         private readonly EventHubOptions _options;
         private readonly INameResolver _nameResolver;
         private readonly ConcurrentDictionary<string, EventHubProducerClient> _producerCache;
-        private readonly ConcurrentDictionary<string, IEventHubConsumerClient> _consumerCache = new ();
+        private readonly ConcurrentDictionary<string, IEventHubConsumerClient> _consumerCache = new();
 
         public EventHubClientFactory(
             IConfiguration configuration,

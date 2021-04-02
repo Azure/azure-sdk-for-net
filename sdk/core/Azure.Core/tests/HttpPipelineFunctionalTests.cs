@@ -60,6 +60,7 @@ namespace Azure.Core.Tests
                 using Response response = await ExecuteRequest(request, httpPipeline);
 
                 Assert.AreEqual(response.ContentStream.Length, 1000);
+                Assert.AreEqual(response.Content.ToMemory().Length, 1000);
             }
         }
 
@@ -92,6 +93,7 @@ namespace Azure.Core.Tests
                     await ExecuteRequest(message, httpPipeline);
 
                     Assert.False(message.Response.ContentStream.CanSeek);
+                    Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
 
                     extractedStream = message.ExtractResponseContent();
                 }
@@ -145,6 +147,7 @@ namespace Azure.Core.Tests
                     await ExecuteRequest(message, httpPipeline);
 
                     Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
+                    Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
 
                     extractedStream = message.ExtractResponseContent();
                 }
@@ -263,6 +266,7 @@ namespace Azure.Core.Tests
                     await ExecuteRequest(message, httpPipeline);
 
                     Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
+                    Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
 
                     response = message.Response;
                 }
@@ -415,6 +419,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(message.Response.Status, 201);
             Assert.AreEqual("Hello world!", await new StreamReader(message.Response.ContentStream).ReadToEndAsync());
+            Assert.AreEqual("Hello world!", message.Response.Content.ToString());
             Assert.AreEqual(2, i);
 
             testDoneTcs.Cancel();
@@ -453,6 +458,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(message.Response.Status, 200);
             var responseContentStream = message.Response.ContentStream;
+            Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
             var buffer = new byte[10];
             Assert.AreEqual(1, await responseContentStream.ReadAsync(buffer, 0, 1));
             Assert.That(async () => await responseContentStream.ReadAsync(buffer, 0, 10), Throws.InstanceOf<OperationCanceledException>());

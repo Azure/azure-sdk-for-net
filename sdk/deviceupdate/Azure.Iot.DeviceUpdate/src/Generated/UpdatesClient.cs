@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Iot.DeviceUpdate.Models;
+using Azure.IoT.DeviceUpdate.Models;
 
-namespace Azure.Iot.DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The Updates service client. </summary>
     public partial class UpdatesClient
@@ -124,7 +124,7 @@ namespace Azure.Iot.DeviceUpdate
         /// <param name="operationId"> Operation identifier. </param>
         /// <param name="accessCondition"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Operation>> GetOperationAsync(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.Operation>> GetOperationAsync(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperation");
             scope.Start();
@@ -143,7 +143,7 @@ namespace Azure.Iot.DeviceUpdate
         /// <param name="operationId"> Operation identifier. </param>
         /// <param name="accessCondition"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Operation> GetOperation(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
+        public virtual Response<Models.Operation> GetOperation(string operationId, AccessCondition accessCondition = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperation");
             scope.Start();
@@ -530,9 +530,9 @@ namespace Azure.Iot.DeviceUpdate
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<Operation> GetOperationsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Models.Operation> GetOperationsAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Operation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<Models.Operation>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
                 scope.Start();
@@ -547,7 +547,7 @@ namespace Azure.Iot.DeviceUpdate
                     throw;
                 }
             }
-            async Task<Page<Operation>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<Models.Operation>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
                 scope.Start();
@@ -569,9 +569,9 @@ namespace Azure.Iot.DeviceUpdate
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<Operation> GetOperations(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<Models.Operation> GetOperations(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<Operation> FirstPageFunc(int? pageSizeHint)
+            Page<Models.Operation> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
                 scope.Start();
@@ -586,7 +586,7 @@ namespace Azure.Iot.DeviceUpdate
                     throw;
                 }
             }
-            Page<Operation> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<Models.Operation> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _clientDiagnostics.CreateScope("UpdatesClient.GetOperations");
                 scope.Start();

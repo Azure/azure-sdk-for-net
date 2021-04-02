@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> Group details. </summary>
     public partial class Group

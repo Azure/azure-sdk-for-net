@@ -1,0 +1,617 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/types?api-version=2020-07-31",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210401.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "67bf9060bd9a900894386a10d7faef96",
+        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
+        "Content-Type": "application/json",
+        "Date": "Fri, 02 Apr 2021 00:07:16 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-request-id": "5afc6494-18d9-42e6-8c72-eeb9febeb0bd"
+      },
+      "ResponseBody": {
+        "types": [
+          {
+            "id": "1be09af9-f089-4d6b-9f0b-48018b5f7393",
+            "name": "DefaultType",
+            "description": "Default type",
+            "variables": {
+              "EventCount": {
+                "kind": "aggregate",
+                "aggregation": {
+                  "tsx": "count()"
+                }
+              }
+            }
+          },
+          {
+            "id": "7b842385-0888-49d7-ba15-0c314f5b4a76",
+            "name": "TemperatureSensor",
+            "variables": {
+              "ValueTimesTwo": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.temperature.Double*2"
+                },
+                "aggregation": {
+                  "tsx": "avg($value)"
+                }
+              },
+              "ValuesTimesThree": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.temperature.Double*3"
+                },
+                "aggregation": {
+                  "tsx": "avg($value)"
+                }
+              },
+              "Value": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.temperature.Double"
+                },
+                "aggregation": {
+                  "tsx": "avg($value)"
+                }
+              },
+              "InterpolationRightStep": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.temperature.Double"
+                },
+                "aggregation": {
+                  "tsx": "right($value)"
+                },
+                "interpolation": {
+                  "kind": "step"
+                }
+              },
+              "InterpolationRightLinear": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.temperature.Double"
+                },
+                "aggregation": {
+                  "tsx": "right($value)"
+                },
+                "interpolation": {
+                  "kind": "linear"
+                }
+              },
+              "InterpolationAvgStep": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.temperature.Double"
+                },
+                "aggregation": {
+                  "tsx": "twavg($value)"
+                },
+                "interpolation": {
+                  "kind": "step"
+                }
+              },
+              "InterpolationAvgLinear": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.temperature.Double"
+                },
+                "aggregation": {
+                  "tsx": "twavg($value)"
+                },
+                "interpolation": {
+                  "kind": "linear"
+                }
+              },
+              "avgNumeric": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.temperature.Double"
+                },
+                "aggregation": {
+                  "tsx": "avg($value)"
+                }
+              },
+              "maxNumeric": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.temperature.Double"
+                },
+                "aggregation": {
+                  "tsx": "max($value)"
+                }
+              }
+            }
+          },
+          {
+            "id": "5107825e-4b61-4d03-b84d-1df93999b0a8",
+            "name": "ddd",
+            "variables": {
+              "aaaa": {
+                "kind": "categorical",
+                "value": {
+                  "tsx": "$event.building.String"
+                },
+                "filter": {
+                  "tsx": "($event.building.String) != null"
+                },
+                "interpolation": {
+                  "kind": "step",
+                  "boundary": {
+                    "span": "PT5M"
+                  }
+                },
+                "categories": [
+                  {
+                    "label": "dddd",
+                    "values": [
+                      "asdada"
+                    ],
+                    "annotations": {}
+                  }
+                ],
+                "defaultCategory": {
+                  "label": "aa",
+                  "annotations": {}
+                }
+              }
+            }
+          },
+          {
+            "id": "3feefdef-5342-44bf-bbe7-7b9da91d056e",
+            "name": "Humidity Sensor",
+            "variables": {
+              "[Numeric] Value": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.humidity.Double"
+                },
+                "aggregation": {
+                  "tsx": "avg($value)"
+                }
+              },
+              "[Numeric] Value * 2": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.humidity.Double * 2"
+                },
+                "aggregation": {
+                  "tsx": "avg($value)"
+                }
+              },
+              "[Aggregate] Count": {
+                "kind": "aggregate",
+                "aggregation": {
+                  "tsx": "count()"
+                }
+              },
+              "[Aggregate] Avg": {
+                "kind": "aggregate",
+                "aggregation": {
+                  "tsx": "avg($event.Humidity.Double)"
+                }
+              },
+              "[Numeric] Interpolation Left Step": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.humidity.Double"
+                },
+                "aggregation": {
+                  "tsx": "left($value)"
+                },
+                "interpolation": {
+                  "kind": "step"
+                }
+              },
+              "[Numeric] Interpolation Left Linear": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.humidity.Double"
+                },
+                "aggregation": {
+                  "tsx": "left($value)"
+                },
+                "interpolation": {
+                  "kind": "linear"
+                }
+              },
+              "[Numeric] Interpolation Right Step": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.humidity.Double"
+                },
+                "aggregation": {
+                  "tsx": "right($value)"
+                },
+                "interpolation": {
+                  "kind": "step"
+                }
+              },
+              "[Numeric] Interpolation TWAVG Linear": {
+                "kind": "numeric",
+                "value": {
+                  "tsx": "$event.humidity.Double"
+                },
+                "aggregation": {
+                  "tsx": "twavg($value)"
+                },
+                "interpolation": {
+                  "kind": "linear"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/types/$batch?api-version=2020-07-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "283",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210401.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "3238db40cd59c99bd261d6897c35217a",
+        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "put": [
+          {
+            "id": "1620243014",
+            "name": "typePAEo4xao",
+            "variables": {
+              "aggregateVariableORkHuZGW": {
+                "aggregation": {
+                  "tsx": "count()"
+                },
+                "kind": "aggregate"
+              }
+            }
+          },
+          {
+            "id": "2128951516",
+            "name": "typec3p8uTpT",
+            "variables": {
+              "aggregateVariableORkHuZGW": {
+                "aggregation": {
+                  "tsx": "count()"
+                },
+                "kind": "aggregate"
+              }
+            }
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
+        "Content-Type": "application/json",
+        "Date": "Fri, 02 Apr 2021 00:07:16 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-request-id": "2edc6199-0c39-4870-8583-6a5427bb250f"
+      },
+      "ResponseBody": {
+        "put": [
+          {
+            "timeSeriesType": {
+              "id": "1620243014",
+              "name": "typePAEo4xao",
+              "variables": {
+                "aggregateVariableORkHuZGW": {
+                  "kind": "aggregate",
+                  "aggregation": {
+                    "tsx": "count()"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "timeSeriesType": {
+              "id": "2128951516",
+              "name": "typec3p8uTpT",
+              "variables": {
+                "aggregateVariableORkHuZGW": {
+                  "kind": "aggregate",
+                  "aggregation": {
+                    "tsx": "count()"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/types/$batch?api-version=2020-07-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "49",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210401.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "b087095bdf840b2f4c1a9757149e0511",
+        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "get": {
+          "names": [
+            "typePAEo4xao",
+            "typec3p8uTpT"
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
+        "Content-Type": "application/json",
+        "Date": "Fri, 02 Apr 2021 00:07:16 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-request-id": "d8279a77-029e-4ee4-a7ce-6c7ab0df58b6"
+      },
+      "ResponseBody": {
+        "get": [
+          {
+            "timeSeriesType": {
+              "id": "1620243014",
+              "name": "typePAEo4xao",
+              "variables": {
+                "aggregateVariableORkHuZGW": {
+                  "kind": "aggregate",
+                  "aggregation": {
+                    "tsx": "count()"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "timeSeriesType": {
+              "id": "2128951516",
+              "name": "typec3p8uTpT",
+              "variables": {
+                "aggregateVariableORkHuZGW": {
+                  "kind": "aggregate",
+                  "aggregation": {
+                    "tsx": "count()"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/types/$batch?api-version=2020-07-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "339",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210401.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "c6b37a20860a9244f4f59438e67f145f",
+        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "put": [
+          {
+            "id": "1620243014",
+            "name": "typePAEo4xao",
+            "description": "Description",
+            "variables": {
+              "aggregateVariableORkHuZGW": {
+                "aggregation": {
+                  "tsx": "count()"
+                },
+                "kind": "aggregate"
+              }
+            }
+          },
+          {
+            "id": "2128951516",
+            "name": "typec3p8uTpT",
+            "description": "Description",
+            "variables": {
+              "aggregateVariableORkHuZGW": {
+                "aggregation": {
+                  "tsx": "count()"
+                },
+                "kind": "aggregate"
+              }
+            }
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
+        "Content-Type": "application/json",
+        "Date": "Fri, 02 Apr 2021 00:07:16 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-request-id": "f7f490b4-9ae4-4bb9-8c52-64549e922b0f"
+      },
+      "ResponseBody": {
+        "put": [
+          {
+            "timeSeriesType": {
+              "id": "1620243014",
+              "name": "typePAEo4xao",
+              "description": "Description",
+              "variables": {
+                "aggregateVariableORkHuZGW": {
+                  "kind": "aggregate",
+                  "aggregation": {
+                    "tsx": "count()"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "timeSeriesType": {
+              "id": "2128951516",
+              "name": "typec3p8uTpT",
+              "description": "Description",
+              "variables": {
+                "aggregateVariableORkHuZGW": {
+                  "kind": "aggregate",
+                  "aggregation": {
+                    "tsx": "count()"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/types/$batch?api-version=2020-07-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "47",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210401.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "cdb5f0173e736011ac2de53e3644b434",
+        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "get": {
+          "typeIds": [
+            "1620243014",
+            "2128951516"
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
+        "Content-Type": "application/json",
+        "Date": "Fri, 02 Apr 2021 00:07:16 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-request-id": "7aa60276-47d4-437d-94ec-e6767a2f7e8e"
+      },
+      "ResponseBody": {
+        "get": [
+          {
+            "timeSeriesType": {
+              "id": "1620243014",
+              "name": "typePAEo4xao",
+              "description": "Description",
+              "variables": {
+                "aggregateVariableORkHuZGW": {
+                  "kind": "aggregate",
+                  "aggregation": {
+                    "tsx": "count()"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "timeSeriesType": {
+              "id": "2128951516",
+              "name": "typec3p8uTpT",
+              "description": "Description",
+              "variables": {
+                "aggregateVariableORkHuZGW": {
+                  "kind": "aggregate",
+                  "aggregation": {
+                    "tsx": "count()"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://fakeHost.api.wus2.timeseriesinsights.azure.com/timeseries/types/$batch?api-version=2020-07-31",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "50",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-IoT.TimeSeriesInsights/1.0.0-alpha.20210401.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "0168c45c5a82d56fc5f4bb8f4af624cc",
+        "x-ms-client-session-id": "00000000-0000-0000-0000-000000000000",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "delete": {
+          "typeIds": [
+            "1620243014",
+            "2128951516"
+          ]
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "x-ms-request-id,x-ms-continuation",
+        "Content-Type": "application/json",
+        "Date": "Fri, 02 Apr 2021 00:07:16 GMT",
+        "Server": "Microsoft-HTTPAPI/2.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-request-id": "6a226d24-b95c-474f-96eb-f9cb9d2e9dd3"
+      },
+      "ResponseBody": {
+        "delete": [
+          null,
+          null
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1762763152",
+    "TIMESERIESINSIGHTS_URL": "fakeHost.api.wus2.timeseriesinsights.azure.com"
+  }
+}

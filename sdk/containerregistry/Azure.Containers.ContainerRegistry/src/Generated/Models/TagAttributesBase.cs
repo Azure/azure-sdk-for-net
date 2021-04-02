@@ -5,31 +5,35 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Tag attribute details. </summary>
     internal partial class TagAttributesBase
     {
         /// <summary> Initializes a new instance of TagAttributesBase. </summary>
-        internal TagAttributesBase()
+        /// <param name="createdOn"> Tag created time. </param>
+        /// <param name="lastUpdatedOn"> Tag last update time. </param>
+        internal TagAttributesBase(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
         }
 
         /// <summary> Initializes a new instance of TagAttributesBase. </summary>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
-        /// <param name="createdTime"> Tag created time. </param>
-        /// <param name="lastUpdateTime"> Tag last update time. </param>
-        /// <param name="signed"> Is signed. </param>
-        /// <param name="changeableAttributes"> Changeable attributes. </param>
-        internal TagAttributesBase(string name, string digest, string createdTime, string lastUpdateTime, bool? signed, ContentProperties changeableAttributes)
+        /// <param name="createdOn"> Tag created time. </param>
+        /// <param name="lastUpdatedOn"> Tag last update time. </param>
+        /// <param name="writeableProperties"> Writeable properties of the resource. </param>
+        internal TagAttributesBase(string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ContentProperties writeableProperties)
         {
             Name = name;
             Digest = digest;
-            CreatedTime = createdTime;
-            LastUpdateTime = lastUpdateTime;
-            Signed = signed;
-            ChangeableAttributes = changeableAttributes;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            WriteableProperties = writeableProperties;
         }
 
         /// <summary> Tag name. </summary>
@@ -37,12 +41,10 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Tag digest. </summary>
         public string Digest { get; }
         /// <summary> Tag created time. </summary>
-        public string CreatedTime { get; }
+        public DateTimeOffset CreatedOn { get; }
         /// <summary> Tag last update time. </summary>
-        public string LastUpdateTime { get; }
-        /// <summary> Is signed. </summary>
-        public bool? Signed { get; }
-        /// <summary> Changeable attributes. </summary>
-        public ContentProperties ChangeableAttributes { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
+        /// <summary> Writeable properties of the resource. </summary>
+        public ContentProperties WriteableProperties { get; }
     }
 }

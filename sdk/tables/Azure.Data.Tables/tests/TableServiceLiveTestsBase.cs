@@ -535,9 +535,16 @@ namespace Azure.Data.Tables.Tests
             public DateTimeOffset? Timestamp { get; set; }
             public ETag ETag { get; set; }
             public Foo MyFoo { get; set; }
+            public NullableFoo? MyNullableFoo { get; set; }
         }
 
         public enum Foo
+        {
+            One,
+            Two
+        }
+
+        public enum NullableFoo
         {
             One,
             Two

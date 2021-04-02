@@ -113,17 +113,21 @@ namespace Azure.Security.Attestation.Tests.Samples
             byte[] binaryQuote = Base64Url.Decode(_sgxQuote);
             byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
 
+            #region Snippet:GetSigningCertificates
             var client = GetAttestationClient();
 
             IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
+            #endregion
             {
-                // Collect quote and enclave held data from OpenEnclave enclave.
+                #region Snippet:AttestSgxEnclave
+                // Collect quote and runtime data from OpenEnclave enclave.
 
                 var attestationResult = client.AttestSgxEnclave(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false).Value;
                 Assert.AreEqual(binaryRuntimeData, attestationResult.DeprecatedEnclaveHeldData);
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
+                #endregion
             }
             return;
         }
@@ -133,11 +137,9 @@ namespace Azure.Security.Attestation.Tests.Samples
             var client = new AttestationAdministrationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential());
             var attestClient = new AttestationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential(),
                 new AttestationClientOptions(validationCallback: (attestationToken, signer) => true));
-
             IReadOnlyList<AttestationSigner> signingCertificates = attestClient.GetSigningCertificates().Value;
-
             var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
-            var result = policyResult.Value.AttestationPolicy;
+            var result = policyResult.Value;
         }
 
         [Test]
@@ -146,10 +148,9 @@ namespace Azure.Security.Attestation.Tests.Samples
             var endpoint = TestEnvironment.AadAttestationUrl;
 #region Snippet:GetPolicy
             var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
-            var attestClient = new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(),
-                new AttestationClientOptions(validationCallback: (attestationToken, signer) => true));
+
             var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
-            var result = policyResult.Value.AttestationPolicy;
+            var result = policyResult.Value;
             #endregion
 
 #region Snippet:SetPolicy
@@ -157,30 +158,36 @@ namespace Azure.Security.Attestation.Tests.Samples
 
             var policyTokenSigner = TestEnvironment.PolicyCertificate0;
 
-            AttestationToken policySetToken = new SecuredAttestationToken(
-                new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(attestationPolicy), },
-                TestEnvironment.PolicySigningKey0,
-                policyTokenSigner);
+            var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, TestEnvironment.PolicySigningKey0, policyTokenSigner);
+#endregion
 
-            var setResult = client.SetPolicy(AttestationType.SgxEnclave, policySetToken);
+#region Snippet:VerifySigningHash
+
+            // The SetPolicyAsync API will create a SecuredAttestationToken to transmit the policy.
+            var policySetToken = new SecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }, TestEnvironment.PolicySigningKey0, policyTokenSigner);
+
+            var shaHasher = SHA256Managed.Create();
+            var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
+
+            CollectionAssert.AreEqual(attestationPolicyHash, setResult.Value.PolicyTokenHash);
+
 #endregion
             var resetResult = client.ResetPolicy(AttestationType.SgxEnclave);
 
             // When the attestation instance is in Isolated mode, the ResetPolicy API requires using a signing key/certificate to authorize the user.
             var resetResult2 = client.ResetPolicy(
                 AttestationType.SgxEnclave,
-                new SecuredAttestationToken(TestEnvironment.PolicySigningKey0, policyTokenSigner));
+                TestEnvironment.PolicySigningKey0, policyTokenSigner);
             return;
         }
         private AttestationClient GetAttestationClient()
         {
             string endpoint = TestEnvironment.SharedUkSouth;
 
-            /*TokenCredential credential = TestEnvironment.Credential;*/
-
+            #region Snippet:CreateAttestationClient
             var options = new AttestationClientOptions();
-//            string powerShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
             return new AttestationClient(new Uri(endpoint), new DefaultAzureCredential(), options);
+            #endregion
         }
     }
 }

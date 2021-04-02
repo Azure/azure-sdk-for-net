@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> Update identifier and the number of devices for which the update is applicable. </summary>
     public partial class UpdatableDevices

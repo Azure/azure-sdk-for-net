@@ -28,12 +28,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="deliveryStatusDetails"> Details about Delivery Status. </param>
         /// <param name="deliveryAttempts"> List of details of delivery attempts made. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS delivery report was received. </param>
-        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset? receivedTimestamp) : base(messageId, @from, to)
+        /// <param name="tag"> Customer Content. </param>
+        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset? receivedTimestamp, string tag) : base(messageId, @from, to)
         {
             DeliveryStatus = deliveryStatus;
             DeliveryStatusDetails = deliveryStatusDetails;
             DeliveryAttempts = deliveryAttempts;
             ReceivedTimestamp = receivedTimestamp;
+            Tag = tag;
         }
 
         /// <summary> Status of Delivery. </summary>
@@ -44,5 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public IReadOnlyList<AcsSmsDeliveryAttemptProperties> DeliveryAttempts { get; }
         /// <summary> The time at which the SMS delivery report was received. </summary>
         public DateTimeOffset? ReceivedTimestamp { get; }
+        /// <summary> Customer Content. </summary>
+        public string Tag { get; }
     }
 }

@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Specialized;
 using System.Threading;
-using System.Web;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -15,34 +14,35 @@ namespace Azure.Containers.ContainerRegistry
     {
         private readonly Uri _endpoint;
         private readonly HttpPipeline _pipeline;
+        private readonly HttpPipeline _acrAuthPipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly RepositoryRestClient _restClient;
+        private readonly ContainerRegistryRestClient _restClient;
+
+        private readonly AuthenticationRestClient _acrAuthClient;
+        private readonly string AcrAadScope = "https://management.core.windows.net/.default";
 
         /// <summary>
-        /// <paramref name="endpoint"/>
         /// </summary>
-        public ContainerRegistryClient(Uri endpoint, string username, string password) : this(endpoint, username, password,  new ContainerRegistryClientOptions())
+        public ContainerRegistryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ContainerRegistryClientOptions())
         {
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="endpoint"></param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="options"></param>
-        public ContainerRegistryClient(Uri endpoint, string username, string password, ContainerRegistryClientOptions options)
+        public ContainerRegistryClient(Uri endpoint, TokenCredential credential, ContainerRegistryClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _pipeline = HttpPipelineBuilder.Build(options, new BasicAuthenticationPolicy(username, password));
-
+            _endpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            _endpoint = endpoint;
+            _acrAuthPipeline = HttpPipelineBuilder.Build(options);
+            _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
 
-            _restClient = new RepositoryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
+            _pipeline = HttpPipelineBuilder.Build(options, new ContainerRegistryChallengeAuthenticationPolicy(credential, AcrAadScope, _acrAuthClient));
+            _restClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, _endpoint.AbsoluteUri);
         }
 
         /// <summary> Initializes a new instance of RepositoryClient for mocking. </summary>
@@ -50,73 +50,155 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
+        /// <summary>
+        /// Ge the service endpoint for this client.
+        /// </summary>
+        public Uri Endpoint {  get { return _endpoint; } }
+
         /// <summary> List repositories. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<string> GetRepositoriesAsync(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async (continuationToken, pageSizeHint) =>
+            async Task<Page<string>> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<Repositories, RepositoryGetListHeaders> response =
-                        await _restClient.GetListAsync(
-                            continuationToken,
-                            pageSizeHint,
-                            cancellationToken)
-                       .ConfigureAwait(false);
-
-                    string lastRepository = null;
-                    if (!string.IsNullOrEmpty(response.Headers.Link))
-                    {
-                        Uri nextLink = new Uri(response.Headers.Link);
-                        NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
-                        lastRepository = queryParams["last"];
-                    }
-
-                    return Page<string>.FromValues(response.Value.Names, lastRepository, response.GetRawResponse());
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesAsync(last: null, n: pageSizeHint, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
-                    scope.Failed(ex);
+                    scope.Failed(e);
                     throw;
                 }
-            });
+            }
+
+            async Task<Page<string>> NextPageFunc(string continuationToken, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+                scope.Start();
+                try
+                {
+                    string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = await _restClient.GetRepositoriesNextPageAsync(uriReference, last: null, n: null, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary> List repositories. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<string> GetRepositories(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable((continuationToken, pageSizeHint) =>
+            Page<string> FirstPageFunc(int? pageSizeHint)
             {
                 using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
                 scope.Start();
                 try
                 {
-                    ResponseWithHeaders<Repositories, RepositoryGetListHeaders> response =
-                        _restClient.GetList(
-                            continuationToken,
-                            pageSizeHint,
-                            cancellationToken);
-
-                    string lastRepository = null;
-                    if (!string.IsNullOrEmpty(response.Headers.Link))
-                    {
-                        Uri nextLink = new Uri(response.Headers.Link);
-                        NameValueCollection queryParams = HttpUtility.ParseQueryString(nextLink.Query);
-                        lastRepository = queryParams["last"];
-                    }
-
-                    return Page<string>.FromValues(response.Value.Names, lastRepository, response.GetRawResponse());
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositories(last: null, n: pageSizeHint, cancellationToken);
+                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
                 }
-                catch (Exception ex)
+                catch (Exception e)
                 {
-                    scope.Failed(ex);
+                    scope.Failed(e);
                     throw;
                 }
-            });
+            }
+
+            Page<string> NextPageFunc(string continuationToken, int? pageSizeHint)
+            {
+                using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(GetRepositories)}");
+                scope.Start();
+                try
+                {
+                    string uriReference = ParseUriReferenceFromLinkHeader(continuationToken);
+                    ResponseWithHeaders<Repositories, ContainerRegistryGetRepositoriesHeaders> response = _restClient.GetRepositoriesNextPage(uriReference, last: null, n: null, cancellationToken);
+                    return Page.FromValues(response.Value.RepositoriesValue, response.Headers.Link, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        internal static string ParseUriReferenceFromLinkHeader(string linkValue)
+        {
+            // Per the Docker v2 HTTP API spec, the Link header is an RFC5988
+            // compliant rel='next' with URL to next result set, if available.
+            // See: https://docs.docker.com/registry/spec/api/
+            //
+            // The URI reference can be obtained from link-value as follows:
+            //   Link       = "Link" ":" #link-value
+            //   link-value = "<" URI-Reference ">" * (";" link-param )
+            // See: https://tools.ietf.org/html/rfc5988#section-5
+
+            return linkValue?.Substring(1, linkValue.IndexOf('>') - 1);
+        }
+
+        /// <summary> Delete the repository identified by `repostitory`. </summary>
+        /// <param name="repository"> Repository name (including the namespace). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DeleteRepositoryResult>> DeleteRepositoryAsync(string repository, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
+            scope.Start();
+            try
+            {
+                return await _restClient.DeleteRepositoryAsync(repository, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete the repository identified by `repostitory`. </summary>
+        /// <param name="repository"> Repository name (including the namespace). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DeleteRepositoryResult> DeleteRepository(string repository, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(DeleteRepository)}");
+            scope.Start();
+            try
+            {
+                return _restClient.DeleteRepository(repository, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a new <see cref="ContainerRepositoryClient"/> object for the specified repository.
+        /// The new <see cref="ContainerRepositoryClient"/> uses the same request
+        /// pipeline as the <see cref="ContainerRegistryClient"/>.
+        /// </summary>
+        /// <param name="repository"> The repository to reference. </param>
+        /// <returns> A new <see cref="ContainerRepositoryClient"/> for the desired repository. </returns>
+        public virtual ContainerRepositoryClient GetRepositoryClient(string repository)
+        {
+            return new ContainerRepositoryClient(_endpoint,
+                repository,
+                _clientDiagnostics,
+                _pipeline,
+                _acrAuthPipeline);
         }
     }
 }

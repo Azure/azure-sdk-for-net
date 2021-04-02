@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,27 +15,34 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class TagList
     {
         /// <summary> Initializes a new instance of TagList. </summary>
-        internal TagList()
+        /// <param name="repository"> Image name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="repository"/> is null. </exception>
+        internal TagList(string repository)
         {
-            Tags = new ChangeTrackingList<TagAttributesBase>();
+            if (repository == null)
+            {
+                throw new ArgumentNullException(nameof(repository));
+            }
+
+            Repository = repository;
+            TagAttributeBases = new ChangeTrackingList<TagAttributesBase>();
         }
 
         /// <summary> Initializes a new instance of TagList. </summary>
-        /// <param name="registry"> Registry name. </param>
-        /// <param name="imageName"> Image name. </param>
-        /// <param name="tags"> List of tag attribute details. </param>
-        internal TagList(string registry, string imageName, IReadOnlyList<TagAttributesBase> tags)
+        /// <param name="repository"> Image name. </param>
+        /// <param name="tagAttributeBases"> List of tag attribute details. </param>
+        /// <param name="link"> . </param>
+        internal TagList(string repository, IReadOnlyList<TagAttributesBase> tagAttributeBases, string link)
         {
-            Registry = registry;
-            ImageName = imageName;
-            Tags = tags;
+            Repository = repository;
+            TagAttributeBases = tagAttributeBases;
+            Link = link;
         }
 
-        /// <summary> Registry name. </summary>
-        public string Registry { get; }
         /// <summary> Image name. </summary>
-        public string ImageName { get; }
+        public string Repository { get; }
         /// <summary> List of tag attribute details. </summary>
-        public IReadOnlyList<TagAttributesBase> Tags { get; }
+        public IReadOnlyList<TagAttributesBase> TagAttributeBases { get; }
+        public string Link { get; }
     }
 }

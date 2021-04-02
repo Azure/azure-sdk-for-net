@@ -17,6 +17,10 @@
     </Description>
     <RootNamespace>Azure.Storage</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- Force a project reference until core ship -->
+    <UseProjectReferenceToAzureClients>true</UseProjectReferenceToAzureClients>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
   </ItemGroup>

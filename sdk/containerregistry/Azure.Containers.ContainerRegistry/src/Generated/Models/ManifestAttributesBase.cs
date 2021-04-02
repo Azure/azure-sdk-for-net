@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -14,55 +15,60 @@ namespace Azure.Containers.ContainerRegistry
     internal partial class ManifestAttributesBase
     {
         /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
-        internal ManifestAttributesBase()
+        /// <param name="digest"> Manifest. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
+        internal ManifestAttributesBase(string digest)
         {
+            if (digest == null)
+            {
+                throw new ArgumentNullException(nameof(digest));
+            }
+
+            Digest = digest;
+            References = new ChangeTrackingList<ManifestAttributesManifestReferences>();
             Tags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
         /// <param name="digest"> Manifest. </param>
-        /// <param name="imageSize"> Image size. </param>
-        /// <param name="createdTime"> Created time. </param>
-        /// <param name="lastUpdateTime"> Last update time. </param>
-        /// <param name="architecture"> CPU architecture. </param>
-        /// <param name="os"> Operating system. </param>
-        /// <param name="mediaType"> Media type. </param>
-        /// <param name="configMediaType"> Config blob media type. </param>
+        /// <param name="size"> Image size. </param>
+        /// <param name="createdOn"> Created time. </param>
+        /// <param name="lastUpdatedOn"> Last update time. </param>
+        /// <param name="cpuArchitecture"> CPU architecture. </param>
+        /// <param name="operatingSystem"> Operating system. </param>
+        /// <param name="references"> List of manifest attributes details. </param>
         /// <param name="tags"> List of tags. </param>
-        /// <param name="changeableAttributes"> Changeable attributes. </param>
-        internal ManifestAttributesBase(string digest, long? imageSize, string createdTime, string lastUpdateTime, string architecture, string os, string mediaType, string configMediaType, IReadOnlyList<string> tags, ContentProperties changeableAttributes)
+        /// <param name="writeableProperties"> Writeable properties of the resource. </param>
+        internal ManifestAttributesBase(string digest, long? size, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string cpuArchitecture, string operatingSystem, IReadOnlyList<ManifestAttributesManifestReferences> references, IReadOnlyList<string> tags, ContentProperties writeableProperties)
         {
             Digest = digest;
-            ImageSize = imageSize;
-            CreatedTime = createdTime;
-            LastUpdateTime = lastUpdateTime;
-            Architecture = architecture;
-            Os = os;
-            MediaType = mediaType;
-            ConfigMediaType = configMediaType;
+            Size = size;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            CpuArchitecture = cpuArchitecture;
+            OperatingSystem = operatingSystem;
+            References = references;
             Tags = tags;
-            ChangeableAttributes = changeableAttributes;
+            WriteableProperties = writeableProperties;
         }
 
         /// <summary> Manifest. </summary>
         public string Digest { get; }
         /// <summary> Image size. </summary>
-        public long? ImageSize { get; }
+        public long? Size { get; }
         /// <summary> Created time. </summary>
-        public string CreatedTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last update time. </summary>
-        public string LastUpdateTime { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> CPU architecture. </summary>
-        public string Architecture { get; }
+        public string CpuArchitecture { get; }
         /// <summary> Operating system. </summary>
-        public string Os { get; }
-        /// <summary> Media type. </summary>
-        public string MediaType { get; }
-        /// <summary> Config blob media type. </summary>
-        public string ConfigMediaType { get; }
+        public string OperatingSystem { get; }
+        /// <summary> List of manifest attributes details. </summary>
+        public IReadOnlyList<ManifestAttributesManifestReferences> References { get; }
         /// <summary> List of tags. </summary>
         public IReadOnlyList<string> Tags { get; }
-        /// <summary> Changeable attributes. </summary>
-        public ContentProperties ChangeableAttributes { get; }
+        /// <summary> Writeable properties of the resource. </summary>
+        public ContentProperties WriteableProperties { get; }
     }
 }

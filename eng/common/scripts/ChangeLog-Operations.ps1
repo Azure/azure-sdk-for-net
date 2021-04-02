@@ -193,7 +193,8 @@ function Set-ChangeLogContent {
 
   try
   {
-    $ChangeLogEntries = $ChangeLogEntries.Values | Sort-Object -Descending -Property ReleaseStatus, ReleaseVersion
+    $ChangeLogEntries = $ChangeLogEntries.Values | Sort-Object -Descending -Property ReleaseStatus, `
+      @{e = {[AzureEngSemanticVersion]::new($_.ReleaseVersion)}}
   }
   catch {
     LogError "Problem sorting version in ChangeLogEntries"

@@ -18,6 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts
     public partial class SparkJobDefinitionDeleteSparkJobDefinitionOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of SparkJobDefinitionDeleteSparkJobDefinitionOperation for mocking. </summary>
+        protected SparkJobDefinitionDeleteSparkJobDefinitionOperation()
+        {
+        }
+
         internal SparkJobDefinitionDeleteSparkJobDefinitionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SparkJobDefinitionDeleteSparkJobDefinitionOperation");

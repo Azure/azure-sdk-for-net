@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Storage
     }
     public partial class StorageAccountsCreateOperation : Azure.Operation<Azure.ResourceManager.Storage.Models.StorageAccount>
     {
-        internal StorageAccountsCreateOperation() { }
+        protected StorageAccountsCreateOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Storage
     }
     public partial class StorageAccountsFailoverOperation : Azure.Operation<Azure.Response>
     {
-        internal StorageAccountsFailoverOperation() { }
+        protected StorageAccountsFailoverOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Storage
     }
     public partial class StorageAccountsRestoreBlobRangesOperation : Azure.Operation<Azure.ResourceManager.Storage.Models.BlobRestoreStatus>
     {
-        internal StorageAccountsRestoreBlobRangesOperation() { }
+        protected StorageAccountsRestoreBlobRangesOperation() { }
         public override bool HasCompleted { get { throw null; } }
         public override bool HasValue { get { throw null; } }
         public override string Id { get { throw null; } }

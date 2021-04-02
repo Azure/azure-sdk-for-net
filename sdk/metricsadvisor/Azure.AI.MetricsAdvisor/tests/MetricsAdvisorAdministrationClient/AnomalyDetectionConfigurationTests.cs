@@ -69,7 +69,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             {
                 MetricId = FakeGuid,
                 Name = "configName",
-                WholeSeriesDetectionConditions = new ()
+                WholeSeriesDetectionConditions = new()
             };
 
             using var cancellationSource = new CancellationTokenSource();

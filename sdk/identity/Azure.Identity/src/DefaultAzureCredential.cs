@@ -143,7 +143,7 @@ namespace Azure.Identity
             }
         }
 
-        private static async ValueTask<(AccessToken, TokenCredential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
+        private static async ValueTask<(AccessToken Token, TokenCredential Credential)> GetTokenFromSourcesAsync(TokenCredential[] sources, TokenRequestContext requestContext, bool async, CancellationToken cancellationToken)
         {
             List<CredentialUnavailableException> exceptions = new List<CredentialUnavailableException>();
 

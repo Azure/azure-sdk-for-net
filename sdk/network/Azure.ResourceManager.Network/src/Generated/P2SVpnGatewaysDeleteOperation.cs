@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Network
     public partial class P2SVpnGatewaysDeleteOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of P2SVpnGatewaysDeleteOperation for mocking. </summary>
+        protected P2SVpnGatewaysDeleteOperation()
+        {
+        }
+
         internal P2SVpnGatewaysDeleteOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "P2SVpnGatewaysDeleteOperation");

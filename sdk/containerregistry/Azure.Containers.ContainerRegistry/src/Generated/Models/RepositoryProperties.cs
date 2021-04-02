@@ -13,30 +13,43 @@ namespace Azure.Containers.ContainerRegistry
     public partial class RepositoryProperties
     {
         /// <summary> Initializes a new instance of RepositoryProperties. </summary>
-        internal RepositoryProperties()
-        {
-        }
-
-        /// <summary> Initializes a new instance of RepositoryProperties. </summary>
-        /// <param name="registry"> Registry name. </param>
         /// <param name="name"> Image name. </param>
         /// <param name="createdOn"> Image created time. </param>
         /// <param name="lastUpdatedOn"> Image last update time. </param>
         /// <param name="registryArtifactCount"> Number of the manifests. </param>
         /// <param name="tagCount"> Number of the tags. </param>
-        /// <param name="modifiableProperties"> Changeable attributes. </param>
-        internal RepositoryProperties(string registry, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int registryArtifactCount, int tagCount, ContentProperties modifiableProperties)
+        /// <param name="writeableProperties"> Writeable properties of the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="writeableProperties"/> is null. </exception>
+        internal RepositoryProperties(string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int registryArtifactCount, int tagCount, ContentProperties writeableProperties)
         {
-            Registry = registry;
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (writeableProperties == null)
+            {
+                throw new ArgumentNullException(nameof(writeableProperties));
+            }
+
             Name = name;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
             RegistryArtifactCount = registryArtifactCount;
             TagCount = tagCount;
-            ModifiableProperties = modifiableProperties;
+            WriteableProperties = writeableProperties;
         }
 
-        /// <summary> Registry name. </summary>
-        public string Registry { get; }
+        /// <summary> Image name. </summary>
+        public string Name { get; }
+        /// <summary> Image created time. </summary>
+        public DateTimeOffset CreatedOn { get; }
+        /// <summary> Image last update time. </summary>
+        public DateTimeOffset LastUpdatedOn { get; }
+        /// <summary> Number of the manifests. </summary>
+        public int RegistryArtifactCount { get; }
+        /// <summary> Number of the tags. </summary>
+        public int TagCount { get; }
+        /// <summary> Writeable properties of the resource. </summary>
+        public ContentProperties WriteableProperties { get; }
     }
 }
