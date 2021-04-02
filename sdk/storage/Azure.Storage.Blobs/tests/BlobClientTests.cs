@@ -174,7 +174,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        [LiveOnly]
+        [Ignore("These test don't work with old generator")]
         public void Ctor_With_Sas_Does_Not_Reorder_Services()
         {
             // Arrange
