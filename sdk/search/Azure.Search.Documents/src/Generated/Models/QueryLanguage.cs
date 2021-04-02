@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The language of the query. </summary>
-    public readonly partial struct QueryLanguage : IEquatable<QueryLanguage>
+    internal readonly partial struct QueryLanguage : IEquatable<QueryLanguage>
     {
         private readonly string _value;
 

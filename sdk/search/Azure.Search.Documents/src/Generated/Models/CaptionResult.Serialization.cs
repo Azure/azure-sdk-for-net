@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class CaptionResult
+    internal partial class CaptionResult
     {
         internal static CaptionResult DeserializeCaptionResult(JsonElement element)
         {

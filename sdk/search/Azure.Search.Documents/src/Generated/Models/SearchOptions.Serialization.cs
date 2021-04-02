@@ -159,8 +159,8 @@ namespace Azure.Search.Documents
             Optional<string> searchFields = default;
             Optional<SearchMode> searchMode = default;
             Optional<QueryLanguage> queryLanguage = default;
-            Optional<QuerySpeller> speller = default;
-            Optional<QueryAnswer> answers = default;
+            Optional<Speller> speller = default;
+            Optional<Answers> answers = default;
             Optional<string> select = default;
             Optional<int> skip = default;
             Optional<int> top = default;
@@ -308,7 +308,7 @@ namespace Azure.Search.Documents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    speller = new QuerySpeller(property.Value.GetString());
+                    speller = new Speller(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("answers"))
@@ -318,7 +318,7 @@ namespace Azure.Search.Documents
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    answers = new QueryAnswer(property.Value.GetString());
+                    answers = new Answers(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("select"))
