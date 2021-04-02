@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// </summary>
         private readonly string subscriptionId;
 
+        public List<string> notes;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CacheHelper"/> class.
         /// </summary>
@@ -56,6 +58,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="subnet">Object representing a subnet for cache.</param>
         public CacheHelper(string subscription_id, StorageCacheManagementClient client, ResourceGroup resourceGroup, VirtualNetwork virtualNetwork, Subnet subnet)
         {
+            notes = new List<string>();
+            notes.Add($"CacheHelper using sub {subscription_id} rg {resourceGroup.Name} vnet {virtualNetwork.Name} subnet {subnet.Name}");
             this.StoragecacheManagementClient = client;
             this.resourceGroup = resourceGroup;
             this.virtualNetwork = virtualNetwork;
@@ -101,11 +105,13 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
         /// <param name="encryptionKeyURL">The URL referencing a key encryption key in key vault.</param>
         /// <param name="skipGet">Skip get cache before creating it.</param>
         /// <returns>Cache object.</returns>
-        public Cache Create(string name, string sku, int cacheSize, CacheIdentity identity, KeyVaultKeyReferenceSourceVault keyVaultResourceId = null, string encryptionKeyURL = null, bool skipGet = false)
+        public Cache Create(string name, string sku, int cacheSize, CacheIdentity identity, KeyVaultKeyReferenceSourceVault keyVaultResourceId = null, string encryptionKeyURL = null, bool skipGet = false,
+            CacheNetworkSettings networkSettings = null, CacheSecuritySettings securitySettings = null)
         {
             Cache cache;
             CacheEncryptionSettings cacheEncryptionSettings;
             CacheNetworkSettings cacheNetworkSettings;
+            CacheSecuritySettings cacheSecuritySettings;
             KeyVaultKeyReference keyVaultKeyReference;
             if (!skipGet)
             {
@@ -152,13 +158,23 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                     };
                 }
 
-                cacheNetworkSettings = new CacheNetworkSettings()
+                if(networkSettings is null)
                 {
-                    DnsSearchDomain = "contoso.com",
-                    DnsServers = { "10.1.22.33", "10.1.12.33" },
-                    NtpServer = "time.contoso.com",
-                    Mtu = 1500
-                };
+                    cacheNetworkSettings = new CacheNetworkSettings();
+                }
+                else
+                {
+                    cacheNetworkSettings = networkSettings;
+                }
+
+                if(securitySettings is null)
+                {
+                    cacheSecuritySettings = new CacheSecuritySettings();
+                }
+                else
+                {
+                    cacheSecuritySettings = securitySettings;
+                }
 
                 var cacheParameters = new Cache()
                 {
@@ -168,7 +184,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                     Subnet = subnetUri,
                     Identity = identity,
                     EncryptionSettings = cacheEncryptionSettings,
-                    NetworkSettings = cacheNetworkSettings
+                    SecuritySettings = cacheSecuritySettings,
+                    NetworkSettings = cacheNetworkSettings,
                 };
                 cache = this.StoragecacheManagementClient.Caches.CreateOrUpdate(this.resourceGroup.Name, name, cacheParameters);
             }
@@ -330,8 +347,13 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
             string namespacePath,
             string subscriptionId = null,
             string resourceGroupName = null,
-            string usageModel = null)
+            string usageModel = null,
+            ITestOutputHelper testOutputHelper = null)
         {
+            if (testOutputHelper != null)
+            {
+                testOutputHelper.WriteLine("Create BlobNfs StorageTarget Parameters");
+            }
             var subscriptionID = string.IsNullOrEmpty(subscriptionId) ? this.subscriptionId : subscriptionId;
             var resourceGroup = string.IsNullOrEmpty(resourceGroupName) ? this.resourceGroup.Name : resourceGroupName;
             BlobNfsTarget blobNfsTarget = new BlobNfsTarget()
@@ -344,6 +366,9 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
 
                 UsageModel = usageModel
             };
+
+            testOutputHelper.WriteLine($"BlobNFS Target Values U {blobNfsTarget.UsageModel}");
+            testOutputHelper.WriteLine($"BlobNFS Target Values T {blobNfsTarget.Target}");
 
             NamespaceJunction namespaceJunction = new NamespaceJunction()
             {
@@ -358,8 +383,10 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                 Junctions = new List<NamespaceJunction>() { namespaceJunction },
             };
 
+            testOutputHelper.WriteLine($"BlobNFS Target Values U {storageTargetParameters.BlobNfs.UsageModel}");
             return storageTargetParameters;
         }
+
 
         /// <summary>
         /// Create CLFS storage target.
@@ -399,6 +426,17 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                 this.WaitForStoragteTargetState(cacheName, storageTargetName, "Succeeded", testOutputHelper).GetAwaiter().GetResult();
             }
 
+            return storageTarget;
+        }
+
+        public StorageTarget CreateInvalidStorageTarget(
+            string cacheName,
+            string storageTargetName,
+            StorageTarget storageTargetParameters,
+            ITestOutputHelper testOutputHelper = null)
+        {
+            StorageTarget storageTarget = this.StoragecacheManagementClient.StorageTargets.CreateOrUpdate(
+                this.resourceGroup.Name, cacheName, storageTargetName, storageTargetParameters);              
             return storageTarget;
         }
 
@@ -514,6 +552,8 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
             string exceptionMessage,
             ITestOutputHelper testOutputHelper = null)
         {
+            testOutputHelper.WriteLine("Retry");
+
             var remainingTries = maxRequestTries;
             var exceptions = new List<Exception>();
 
@@ -526,6 +566,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                 }
                 catch (CloudErrorException e)
                 {
+                    testOutputHelper.WriteLine($"Exception with Message {e.Message}");
                     if (e.Body.Error.Message.Contains(exceptionMessage))
                     {
                         if (remainingTries > 0)
@@ -543,6 +584,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Helpers
                     }
                     else
                     {
+                        remainingTries = 0;
                         throw;
                     }
                 }

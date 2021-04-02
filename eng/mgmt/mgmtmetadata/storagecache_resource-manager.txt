@@ -4,11 +4,11 @@ Commencing code generation
 Generating CSharp code
 Executing AutoRest command
 cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/storagecache/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp.namespace=Microsoft.Azure.Management.StorageCache --csharp.output-folder=C:\swaggersdk\azure-sdk-for-net\sdk\storagecache\Microsoft.Azure.Management.StorageCache\src\Generated
-2021-03-10 01:25:12 UTC
+2021-04-02 00:07:47 UTC
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      8d15dc681b081cca983e4d67fbf6441841d94ce4
+Commit:      f953424dd168e71373bc52edb9713d2d86a14ada
 AutoRest information
 Requested version: v2
 Bootstrapper version:    autorest@2.0.4413

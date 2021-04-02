@@ -36,13 +36,17 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         /// </summary>
         private readonly Dictionary<string, BlobContainer> blobContainersCache = new Dictionary<string, BlobContainer>();
 
+        public List<string> notes;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageAccountsFixture"/> class.
         /// </summary>
         /// <param name="fixture">StorageCacheTestFixture.</param>
         public StorageAccountsFixture(StorageCacheTestFixture fixture)
         {
+            notes = new List<string>();
             this.fixture = fixture;
+            notes.Add("SAF Ctor");
         }
 
         /// <inheritdoc/>
@@ -70,10 +74,21 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
             bool addPermissions = true,
             ITestOutputHelper testOutputHelper = null,
             int sleep = 300,
-            bool waitForPermissions = true)
+            bool waitForPermissions = true,
+            bool blobNfs = false)
         {
+            if (testOutputHelper != null)
+            {
+                testOutputHelper.WriteLine($"SAF Add Storage Account {resourceGroup.Name + suffix}");
+                testOutputHelper.WriteLine($"SAF Add Storage Account blobNfs {blobNfs}");
+                testOutputHelper.WriteLine($"SAF Add Storage Account addpermissions {addPermissions}");
+            }
+            notes.Add("SAF AddStorageAccount");
+
             if (this.storageAccountsCache.TryGetValue(resourceGroup.Name + suffix, out StorageAccount storageAccount))
             {
+                notes.Add("SAF AddStorageAccount Using Existing Storage Account.");
+
                 if (testOutputHelper != null)
                 {
                     testOutputHelper.WriteLine($"Using existing storage account {resourceGroup.Name + suffix}");
@@ -82,11 +97,20 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                 return storageAccount;
             }
 
+            notes.Add("SAF AddStorageAccount Need to create a storage account.");
             StorageManagementClient storageManagementClient = context.GetClient<StorageManagementClient>();
             StorageAccountsHelper storageAccountsHelper = new StorageAccountsHelper(storageManagementClient, resourceGroup);
-            storageAccount = storageAccountsHelper.CreateStorageAccount(resourceGroup.Name + suffix);
+            string subnetUri = $"/subscriptions/{fixture.SubscriptionID}/resourcegroups/{fixture.ResourceGroup.Name}/providers/Microsoft.Network/virtualNetworks/{fixture.VirtualNetwork.Name}/subnets/{fixture.SubNet.Name}";
+            notes.Add($"SAF AddStroageAccount subnetUri: {subnetUri}");
+            storageAccount = storageAccountsHelper.CreateStorageAccount(resourceGroup.Name + suffix, blobNfs: blobNfs, subnetUri: subnetUri);
+            if(storageAccount == null)
+            {
+                testOutputHelper.WriteLine("Failed to create storageAccount");
+                return storageAccount;
+            }
             if (addPermissions)
             {
+                notes.Add("SAF AddStorageAccount Add SA Access Rules");
                 this.AddStorageAccountAccessRules(context, storageAccount);
             }
 
@@ -116,6 +140,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
             string suffix = null,
             ITestOutputHelper testOutputHelper = null)
         {
+            if (testOutputHelper != null)
+            {
+                testOutputHelper.WriteLine($"SAF Add blob container {resourceGroup.Name + suffix}");
+            }
+
             if (this.blobContainersCache.TryGetValue(resourceGroup.Name + suffix, out BlobContainer blobContainer))
             {
                 if (testOutputHelper != null)
@@ -155,6 +184,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
             bool waitForPermissions = true,
             int maxRequestTries = 25)
         {
+            if (testOutputHelper != null)
+            {
+                testOutputHelper.WriteLine($"SAF Add clfs Storage Account with wait for ST {waitForStorageTarget}, add Permissions {addPermissions}, waitForPermissions {waitForPermissions}");
+            }
+
             string storageTargetName = string.IsNullOrEmpty(suffix) ? this.fixture.ResourceGroup.Name : this.fixture.ResourceGroup.Name + suffix;
             string junction = "/junction" + suffix;
             var storageAccount = this.AddStorageAccount(
@@ -191,7 +225,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         }
 
         /// <summary>
-        /// Creates storage account, blob container and adds CLFS storage account to cache.
+        /// Creates storage account, blob container and adds BlobNfs storage account to cache.
         /// </summary>
         /// <param name="context">StorageCacheTestContext.</param>
         /// <param name="suffix">suffix.</param>
@@ -213,6 +247,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
             int maxRequestTries = 25,
             string usageModel = "WRITE_WORKLOAD_15")
         {
+            if (testOutputHelper != null)
+            {
+                testOutputHelper.WriteLine($"SAF Add blob nfs Storage Account");
+            }
+
             string storageTargetName = string.IsNullOrEmpty(suffix) ? this.fixture.ResourceGroup.Name : this.fixture.ResourceGroup.Name + suffix;
             string junction = "/junction" + suffix;
             var storageAccount = this.AddStorageAccount(
@@ -222,13 +261,18 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                 addPermissions,
                 testOutputHelper,
                 sleep: sleep,
-                waitForPermissions: waitForPermissions);
+                waitForPermissions: waitForPermissions,
+                blobNfs: true);
             var blobContainer = this.AddBlobContainer(context, this.fixture.ResourceGroup, storageAccount, suffix, testOutputHelper);
+            testOutputHelper.WriteLine($"Add Storage Target Usage Model {usageModel}");
             StorageTarget storageTargetParameters = this.fixture.CacheHelper.CreateBlobNfsStorageTargetParameters(
                 storageAccount.Name,
                 blobContainer.Name,
                 junction,
-                usageModel);
+                usageModel: usageModel,
+                testOutputHelper: testOutputHelper);
+            testOutputHelper.WriteLine($"Storage Target Parameters BlobNfs {storageTargetParameters.BlobNfs.UsageModel}");
+            testOutputHelper.WriteLine($"Storage Target Parameters BlobNfs {storageTargetParameters.BlobNfs.Target}");
             StorageTarget storageTarget = this.fixture.CacheHelper.CreateStorageTarget(
                 this.fixture.Cache.Name,
                 storageTargetName,
@@ -250,6 +294,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
             return storageTarget;
         }
 
+
         /// <summary>
         /// Adds storage account access roles.
         /// Storage Account Contributor or Storage blob Contributor.
@@ -262,6 +307,11 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
             StorageAccount storageAccount,
             ITestOutputHelper testOutputHelper = null)
         {
+            if (testOutputHelper != null)
+            {
+                testOutputHelper.WriteLine("Add Storage Account Rules");
+            }
+
             try
             {
                 string role1 = "Storage Account Contributor";
@@ -274,9 +324,12 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                     testOutputHelper.WriteLine($"Added {role1} role to storage account {storageAccount.Name}.");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+               if (ex.Message != "The role assignment already exists.")
+               {
+                   throw;
+               }
             }
         }
     }
