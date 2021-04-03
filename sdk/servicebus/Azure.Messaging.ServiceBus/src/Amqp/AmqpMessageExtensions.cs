@@ -7,7 +7,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Azure.Core;
 using Azure.Core.Amqp;
+using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
+using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using IList = System.Collections.IList;
 
@@ -23,12 +25,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             if (message.AmqpMessage.Body.TryGetValue(out object value))
             {
-                return AmqpMessage.Create(new AmqpValue { Value = value });
+                if (AmqpMessageConverter.TryGetAmqpObjectFromNetObject(value, MappingType.MessageBody, out object amqpObject))
+                {
+                    return AmqpMessage.Create(new AmqpValue { Value = amqpObject });
+                }
+                else
+                {
+                    throw new NotSupportedException(Resources.InvalidAmqpMessageValueBody.FormatForUser(amqpObject?.GetType()));
+                }
             }
             if (message.AmqpMessage.Body.TryGetSequence(out IEnumerable<IList<object>> sequence))
             {
-                return AmqpMessage.Create(sequence.Select(s => new AmqpSequence((IList) s)).ToList());
+                return AmqpMessage.Create(sequence.Select(s => new AmqpSequence((IList)s)).ToList());
             }
+
             throw new NotSupportedException($"{message.AmqpMessage.Body.GetType()} is not a supported message body type.");
         }
 

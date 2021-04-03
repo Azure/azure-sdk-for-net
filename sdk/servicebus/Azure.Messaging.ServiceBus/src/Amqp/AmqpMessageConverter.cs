@@ -145,11 +145,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 case BufferListStream bufferListStream:
                     return bufferListStream.ReadBytes((int)stream.Length);
                 default:
-                {
-                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStream.ToArray());
-                }
+                    {
+                        using var memStream = new MemoryStream(StreamBufferSizeInBytes);
+                        stream.CopyTo(memStream, StreamBufferSizeInBytes);
+                        return new ArraySegment<byte>(memStream.ToArray());
+                    }
             }
         }
 
@@ -229,7 +229,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0 && amqpMessage.ValueBody?.Value != null)
             {
-                annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(amqpMessage.ValueBody.Value));
+                if (TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out object netObject))
+                {
+                    annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(netObject));
+                }
+                else
+                {
+                    throw new NotSupportedException(Resources.InvalidAmqpMessageValueBody.FormatForUser(amqpMessage.ValueBody.Value.GetType()));
+                }
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpSequence) != 0)
             {
