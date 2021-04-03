@@ -538,7 +538,7 @@ namespace Azure.Search.Documents.Indexes.Models
     }
     public partial class CustomNormalizer : Azure.Search.Documents.Indexes.Models.LexicalNormalizer
     {
-        public CustomNormalizer(string oDataType, string name) : base (default(string), default(string)) { }
+        public CustomNormalizer(string name) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.CharFilterName> CharFilters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.TokenFilterName> TokenFilters { get { throw null; } }
     }
@@ -1135,9 +1135,8 @@ namespace Azure.Search.Documents.Indexes.Models
     }
     public partial class LexicalNormalizer
     {
-        public LexicalNormalizer(string oDataType, string name) { }
+        public LexicalNormalizer(string name) { }
         public string Name { get { throw null; } set { } }
-        public string ODataType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LexicalNormalizerName : System.IEquatable<Azure.Search.Documents.Indexes.Models.LexicalNormalizerName>

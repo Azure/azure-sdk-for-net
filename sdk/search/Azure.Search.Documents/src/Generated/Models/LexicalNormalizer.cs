@@ -13,26 +13,29 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class LexicalNormalizer
     {
         /// <summary> Initializes a new instance of LexicalNormalizer. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the normalizer. </param>
         /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in &apos;.microsoft&apos; nor &apos;.lucene&apos;, nor be named &apos;asciifolding&apos;, &apos;standard&apos;, &apos;lowercase&apos;, &apos;uppercase&apos;, or &apos;elision&apos;. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="oDataType"/> or <paramref name="name"/> is null. </exception>
-        public LexicalNormalizer(string oDataType, string name)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public LexicalNormalizer(string name)
         {
-            if (oDataType == null)
-            {
-                throw new ArgumentNullException(nameof(oDataType));
-            }
             if (name == null)
             {
                 throw new ArgumentNullException(nameof(name));
             }
 
+            Name = name;
+        }
+
+        /// <summary> Initializes a new instance of LexicalNormalizer. </summary>
+        /// <param name="oDataType"> Identifies the concrete type of the normalizer. </param>
+        /// <param name="name"> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in &apos;.microsoft&apos; nor &apos;.lucene&apos;, nor be named &apos;asciifolding&apos;, &apos;standard&apos;, &apos;lowercase&apos;, &apos;uppercase&apos;, or &apos;elision&apos;. </param>
+        internal LexicalNormalizer(string oDataType, string name)
+        {
             ODataType = oDataType;
             Name = name;
         }
 
         /// <summary> Identifies the concrete type of the normalizer. </summary>
-        public string ODataType { get; set; }
+        internal string ODataType { get; set; }
         /// <summary> The name of the normalizer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. It cannot end in &apos;.microsoft&apos; nor &apos;.lucene&apos;, nor be named &apos;asciifolding&apos;, &apos;standard&apos;, &apos;lowercase&apos;, &apos;uppercase&apos;, or &apos;elision&apos;. </summary>
         public string Name { get; set; }
     }

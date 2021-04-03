@@ -24,6 +24,13 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static LexicalNormalizer DeserializeLexicalNormalizer(JsonElement element)
         {
+            if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "#Microsoft.Azure.Search.CustomNormalizer": return CustomNormalizer.DeserializeCustomNormalizer(element);
+                }
+            }
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())

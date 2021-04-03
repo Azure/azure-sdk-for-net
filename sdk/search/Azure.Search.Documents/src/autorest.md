@@ -31,6 +31,13 @@ These should eventually be fixed in the code generator.
 
 ## Swagger hacks
 These should eventually be fixed in the swagger files.
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.LexicalNormalizer
+  transform: >
+    $["discriminator"] = "@odata.type";
+```
 
 ### Mark definitions as objects
 The modeler warns about models without an explicit type.

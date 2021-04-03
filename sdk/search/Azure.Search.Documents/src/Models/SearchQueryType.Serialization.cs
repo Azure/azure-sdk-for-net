@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
             SearchQueryType.Simple => "simple",
             SearchQueryType.Full => "full",
             // SearchQueryType.Semantic => "semantic",
-            _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.")
+            _ => throw new ArgumentOutOfRangeException(nameof(value), value, $"Unknown {nameof(SearchQueryType)} value.")
         };
 
         public static SearchQueryType ToSearchQueryType(this string value)
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Models
                 return SearchQueryType.Full;
             //if (string.Equals(value, "semantic", StringComparison.InvariantCultureIgnoreCase))
             //    return SearchQueryType.Semantic;
-            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SearchQueryType value.");
+            throw new ArgumentOutOfRangeException(nameof(value), value, $"Unknown {nameof(SearchQueryType)} value.");
         }
     }
 }
