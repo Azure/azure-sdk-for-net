@@ -3,7 +3,7 @@
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    internal partial struct CharFilterName
+    public partial struct CharFilterName
     {
     }
 }
