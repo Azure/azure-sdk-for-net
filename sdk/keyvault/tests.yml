@@ -6,6 +6,8 @@ extends:
     ServiceDirectory: keyvault
     MaxParallel: 5
     TimeoutInMinutes: 180
+    # Keyvault test resources are expensive, and managed HSM modules don't necessarily work in Canary
+    UnsupportedClouds: Canary
     AdditionalMatrixConfigs:
       - Name: keyvault_test_matrix_addons
         Path: sdk/keyvault/platform-matrix.json
