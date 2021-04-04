@@ -49,7 +49,5 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> A country code to use as a hint to the language detection model if it cannot disambiguate the language. </summary>
         public string DefaultCountryHint { get; set; }
-        /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
-        public string ModelVersion { get; set; }
     }
 }

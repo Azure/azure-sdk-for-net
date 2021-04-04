@@ -53,7 +53,5 @@ namespace Azure.Search.Documents.Indexes.Models
         public KeyPhraseExtractionSkillLanguage? DefaultLanguageCode { get; set; }
         /// <summary> A number indicating how many key phrases to return. If absent, all identified key phrases will be returned. </summary>
         public int? MaxKeyPhraseCount { get; set; }
-        /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>
-        public string ModelVersion { get; set; }
     }
 }
