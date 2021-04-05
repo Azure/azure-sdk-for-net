@@ -27,7 +27,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         private static EventWaitHandle _waitHandle2;
         private static EventWaitHandle _drainValidationPreDelay;
         private static EventWaitHandle _drainValidationPostDelay;
-
         public ServiceBusSessionsEndToEndTests() : base(isSession: true)
         {
         }
@@ -419,53 +418,71 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private async Task TestMultiple<T>(bool isXml = false)
         {
-            _waitHandle1 = new ManualResetEvent(initialState: false);
+            await _semaphore.WaitAsync();
 
-            if (isXml)
+            try
             {
-                await WriteQueueMessage(new TestPoco() { Name = "Test1" }, "sessionId");
-                await WriteQueueMessage(new TestPoco() { Name = "Test2" }, "sessionId");
+                _waitHandle1 = new ManualResetEvent(initialState: false);
+
+                if (isXml)
+                {
+                    await WriteQueueMessage(new TestPoco() { Name = "Test1" }, "sessionId");
+                    await WriteQueueMessage(new TestPoco() { Name = "Test2" }, "sessionId");
+                }
+                else
+                {
+                    await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId");
+                    await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}", "sessionId");
+                }
+                var (jobHost, _) = BuildSessionHost<T>(true);
+                using (jobHost)
+                {
+                    bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                    Assert.True(result);
+                    await jobHost.StopAsync();
+                }
             }
-            else
+            finally
             {
-                await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId");
-                await WriteQueueMessage("{'Name': 'Test2', 'Value': 'Value'}", "sessionId");
-            }
-            var (jobHost, _) = BuildSessionHost<T>(true);
-            using (jobHost)
-            {
-                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
-                await jobHost.StopAsync();
+                _semaphore.Release();
             }
         }
 
         private async Task TestMultipleDrainMode<T>(bool sendToQueue)
         {
-            _drainValidationPreDelay = new ManualResetEvent(initialState: false);
-            _drainValidationPostDelay = new ManualResetEvent(initialState: false);
+            await _semaphore.WaitAsync();
 
-            if (sendToQueue)
+            try
             {
-                await WriteQueueMessage(DrainingQueueMessageBody, _drainModeSessionId);
+                _drainValidationPreDelay = new ManualResetEvent(initialState: false);
+                _drainValidationPostDelay = new ManualResetEvent(initialState: false);
+
+                if (sendToQueue)
+                {
+                    await WriteQueueMessage(DrainingQueueMessageBody, _drainModeSessionId);
+                }
+                else
+                {
+                    await WriteTopicMessage(DrainingTopicMessageBody, _drainModeSessionId);
+                }
+                var (jobHost, host) = BuildSessionHost<T>(false, false);
+                using (jobHost)
+                {
+                    // Wait to ensure function invocatoin has started before draining messages
+                    Assert.True(_drainValidationPreDelay.WaitOne(SBTimeoutMills));
+
+                    // Start draining in-flight messages
+                    var drainModeManager = host.Services.GetService<IDrainModeManager>();
+                    await drainModeManager.EnableDrainModeAsync(CancellationToken.None);
+
+                    // Validate that function execution was allowed to complete
+                    Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
+                    await jobHost.StopAsync();
+                }
             }
-            else
+            finally
             {
-                await WriteTopicMessage(DrainingTopicMessageBody, _drainModeSessionId);
-            }
-            var (jobHost, host) = BuildSessionHost<T>(false, false);
-            using (jobHost)
-            {
-                // Wait to ensure function invocatoin has started before draining messages
-                Assert.True(_drainValidationPreDelay.WaitOne(SBTimeoutMills));
-
-                // Start draining in-flight messages
-                var drainModeManager = host.Services.GetService<IDrainModeManager>();
-                await drainModeManager.EnableDrainModeAsync(CancellationToken.None);
-
-                // Validate that function execution was allowed to complete
-                Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
-                await jobHost.StopAsync();
+                _semaphore.Release();
             }
         }
 

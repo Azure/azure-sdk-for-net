@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using Azure.Core.TestFramework;
@@ -62,6 +63,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         protected static TopicScope _topicScope;
 
         private readonly bool _isSession;
+        protected static SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
         protected WebJobsServiceBusTestBase(bool isSession)
         {
