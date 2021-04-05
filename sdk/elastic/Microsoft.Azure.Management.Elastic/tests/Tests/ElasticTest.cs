@@ -1,7 +1,7 @@
 ﻿using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Elastic;
-using Microsoft.Elastic.Models;
+using Microsoft.Azure.Management.Elastic;
+using Microsoft.Azure.Management.Elastic.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
