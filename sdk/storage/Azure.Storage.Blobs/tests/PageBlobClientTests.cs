@@ -2105,14 +2105,8 @@ namespace Azure.Storage.Blobs.Test
             Operation<long> operation = await destinationBlob.StartCopyIncrementalAsync(
                 sourceUri: sourceBlob.Uri,
                 snapshot: snapshot);
-            if (Mode == RecordedTestMode.Playback)
-            {
-                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-            }
-            else
-            {
-                await operation.WaitForCompletionAsync();
-            }
+
+            await operation.WaitForCompletionAsync();
 
             // Assert
             Response<BlobProperties> properties = await destinationBlob.GetPropertiesAsync();
@@ -2389,14 +2383,9 @@ namespace Azure.Storage.Blobs.Test
             Operation<long> operation = await destinationBlob.StartCopyFromUriAsync(
                 sourceBlob.Uri,
                 accessTier: AccessTier.P20);
-            if (Mode == RecordedTestMode.Playback)
-            {
-                await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-            }
-            else
-            {
-                await operation.WaitForCompletionAsync();
-            }
+
+            await operation.WaitForCompletionAsync();
+
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
 
