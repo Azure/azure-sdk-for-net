@@ -16,24 +16,41 @@ param (
 # outputs from the ARM deployment passed in from New-TestResources
 $PrimaryAccountName = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_NAME']
 $PrimaryAccountKey = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_KEY']
-$PrimaryAccountZoneWithPeriod = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_ZONE_WITH_PERIOD']
+$PrimaryAccountBlobEndpointSuffix = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
+$PrimaryAccountFileEndpointSuffix = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
+$PrimaryAccountQueueEndpointSuffix = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX']
+$PrimaryAccountTableEndpointSuffix = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX']
 $SecondaryAccountName = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_NAME']
 $SecondaryAccountKey = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_KEY']
-$SecondaryAccountZoneWithPeriod = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_ZONE_WITH_PERIOD']
+$SecondaryAccountBlobEndpointSuffix = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
+$SecondaryAccountFileEndpointSuffix = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
+$SecondaryAccountQueueEndpointSuffix = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX']
+$SecondaryAccountTableEndpointSuffix = $DeploymentOutputs['SECONDARY_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX']
 $PremiumAccountName = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_NAME']
 $PremiumAccountKey = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_KEY']
-$PremiumAccountZoneWithPeriod = $DeploymentOutputs['PRIMARY_STORAGE_ACCOUNT_ZONE_WITH_PERIOD']
+$PremiumAccountBlobEndpointSuffix = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
+$PremiumAccountFileEndpointSuffix = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
+$PremiumAccountQueueEndpointSuffix = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX']
+$PremiumAccountTableEndpointSuffix = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX']
 $DataLakeAccountName = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_NAME']
 $DataLakeAccountKey = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_KEY']
-$DataLakeAccountZoneWithPeriod = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_ZONE_WITH_PERIOD']
+$DataLakeAccountBlobEndpointSuffix = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
+$DataLakeAccountFileEndpointSuffix = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
+$DataLakeAccountQueueEndpointSuffix = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX']
+$DataLakeAccountTableEndpointSuffix = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX']
 $SoftDeleteAccountName = $DeploymentOutputs['SOFT_DELETE_ACCOUNT_NAME']
 $SoftDeleteAccountKey = $DeploymentOutputs['SOFT_DELETE_ACCOUNT_KEY']
-$SoftDeleteAccountZoneWithPeriod = $DeploymentOutputs['SOFT_DELETE_STORAGE_ACCOUNT_ZONE_WITH_PERIOD']
+$SoftDeleteAccountBlobEndpointSuffix = $DeploymentOutputs['SOFT_DELETE_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
+$SoftDeleteAccountFileEndpointSuffix = $DeploymentOutputs['SOFT_DELETE_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
+$SoftDeleteAccountQueueEndpointSuffix = $DeploymentOutputs['SOFT_DELETE_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX']
+$SoftDeleteAccountTableEndpointSuffix = $DeploymentOutputs['SOFT_DELETE_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX']
 $PremiumFileAccountName = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_NAME']
 $PremiumFileAccountKey = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_KEY']
-$PremiumFileAccountZoneWithPeriod = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_ZONE_WITH_PERIOD']
+$PremiumFileAccountBlobEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
+$PremiumFileAccountFileEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
+$PremiumFileAccountQueueEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX']
+$PremiumFileAccountTableEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX']
 $KeyVaultUri = $DeploymentOutputs['KEYVAULT_URI']
-$EndpointSuffix = $DeploymentOutputs['ENDPOINT_SUFFIX']
 
 # Construct the content of the configuration file that the Storage tests expect
 $content = 
@@ -53,44 +70,44 @@ $content =
       <TenantType>Cloud</TenantType>
       <AccountName>$PrimaryAccountName</AccountName>
       <AccountKey>$PrimaryAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary$PrimaryAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary$PrimaryAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary$PrimaryAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary$PrimaryAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceSecondaryEndpoint>
-      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;BlobEndpoint=https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.blob.$EndpointSuffix;FileEndpoint=https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.file.$EndpointSuffix;QueueEndpoint=https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.queue.$EndpointSuffix;TableEndpoint=https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.table.$EndpointSuffix</ConnectionString>
+      <BlobServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountFileEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;BlobEndpoint=https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix;FileEndpoint=https://$PrimaryAccountName.$PrimaryAccountFileEndpointSuffix;QueueEndpoint=https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix;TableEndpoint=https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</ConnectionString>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>PremiumTenant</TenantName>
       <TenantType>Cloud</TenantType>
       <AccountName>$PremiumAccountName</AccountName>
       <AccountKey>$PremiumAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$PremiumAccountName$PremiumAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PremiumAccountName$PremiumAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$PremiumAccountName$PremiumAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$PremiumAccountName$PremiumAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$PremiumAccountName-secondary$PremiumAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PremiumAccountName-secondary$PremiumAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$PremiumAccountName-secondary$PremiumAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$PremiumAccountName-secondary$PremiumAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceSecondaryEndpoint>
-      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PremiumAccountName;AccountKey=$PremiumAccountKey;BlobEndpoint=https://$PremiumAccountName$PremiumAccountZoneWithPeriod.blob.$EndpointSuffix;FileEndpoint=https://$PremiumAccountName$PremiumAccountZoneWithPeriod.file.$EndpointSuffix;QueueEndpoint=https://$PremiumAccountName$PremiumAccountZoneWithPeriod.queue.$EndpointSuffix;TableEndpoint=https://$PremiumAccountName$PremiumAccountZoneWithPeriod.table.$EndpointSuffix</ConnectionString>
+      <BlobServiceEndpoint>https://$PremiumAccountName.$PremiumAccountBlobEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$PremiumAccountName.$PremiumAccountQueueEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$PremiumAccountName.$PremiumAccountTableEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$PremiumAccountName.$PremiumAccountFileEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.$PremiumAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.$PremiumAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.$PremiumAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.$PremiumAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PremiumAccountName;AccountKey=$PremiumAccountKey;BlobEndpoint=https://$PremiumAccountName.$PremiumAccountBlobEndpointSuffix;FileEndpoint=https://$PremiumAccountName.$PremiumAccountFileEndpointSuffix;QueueEndpoint=https://$PremiumAccountName.$PremiumAccountQueueEndpointSuffix;TableEndpoint=https://$PremiumAccountName.$PremiumAccountTableEndpointSuffix</ConnectionString>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>ProductionTenant2</TenantName>
       <TenantType>Cloud</TenantType>
       <AccountName>$SecondaryAccountName</AccountName>
       <AccountKey>$SecondaryAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$SecondaryAccountName$SecondaryAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$SecondaryAccountName$SecondaryAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$SecondaryAccountName$SecondaryAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$SecondaryAccountName$SecondaryAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary$SecondaryAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary$SecondaryAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary$SecondaryAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary$SecondaryAccountZoneWithPeriod.table.$EndpointSuffix<TableServiceSecondaryEndpoint>
+      <BlobServiceEndpoint>https://$SecondaryAccountName.$SecondaryAccountBlobEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$SecondaryAccountName.$SecondaryAccountQueueEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$SecondaryAccountName.$SecondaryAccountTableEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$SecondaryAccountName.$SecondaryAccountFileEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.$SecondaryAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.$SecondaryAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.$SecondaryAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$SecondaryAccountName-secondary.$SecondaryAccountTableEndpointSuffix<TableServiceSecondaryEndpoint>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>OAuthTenant</TenantName>
@@ -101,15 +118,15 @@ $content =
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
       <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
-      <BlobServiceEndpoint>https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary$PrimaryAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary$PrimaryAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary$PrimaryAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary$PrimaryAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceSecondaryEndpoint>
-      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;BlobEndpoint=https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.blob.$EndpointSuffix;FileEndpoint=https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.file.$EndpointSuffix;QueueEndpoint=https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.queue.$EndpointSuffix;TableEndpoint=https://$PrimaryAccountName$PrimaryAccountZoneWithPeriod.table.$EndpointSuffix</ConnectionString>
+      <BlobServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$PrimaryAccountName.$PrimaryAccountFileEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$PrimaryAccountName-secondary.$PrimaryAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PrimaryAccountName;AccountKey=$PrimaryAccountKey;BlobEndpoint=https://$PrimaryAccountName.$PrimaryAccountBlobEndpointSuffix;FileEndpoint=https://$PrimaryAccountName.$PrimaryAccountFileEndpointSuffix;QueueEndpoint=https://$PrimaryAccountName.$PrimaryAccountQueueEndpointSuffix;TableEndpoint=https://$PrimaryAccountName.$PrimaryAccountTableEndpointSuffix</ConnectionString>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>NamespaceTenant</TenantName>
@@ -120,42 +137,42 @@ $content =
       <ActiveDirectoryApplicationSecret>$TestApplicationSecret</ActiveDirectoryApplicationSecret>
       <ActiveDirectoryTenantId>$TenantId</ActiveDirectoryTenantId>
       <ActiveDirectoryAuthEndpoint>https://login.microsoftonline.com/</ActiveDirectoryAuthEndpoint>
-      <BlobServiceEndpoint>https://$DataLakeAccountName$DataLakeAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$DataLakeAccountName$DataLakeAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$DataLakeAccountName$DataLakeAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$DataLakeAccountName$DataLakeAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary$DataLakeAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary$DataLakeAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary$DataLakeAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary$DataLakeAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceSecondaryEndpoint>
+      <BlobServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountBlobEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountQueueEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountTableEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$DataLakeAccountName.$DataLakeAccountFileEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$DataLakeAccountName-secondary.$DataLakeAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>SoftDeleteTenant</TenantName>
       <TenantType>Cloud</TenantType>
       <AccountName>$SoftDeleteAccountName</AccountName>
       <AccountKey>$SoftDeleteAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$SoftDeleteAccountName$SoftDeleteAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$SoftDeleteAccountName$SoftDeleteAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$SoftDeleteAccountName$SoftDeleteAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$SoftDeleteAccountName$SoftDeleteAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary$SoftDeleteAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary$SoftDeleteAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary$SoftDeleteAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary$SoftDeleteAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceSecondaryEndpoint>
+      <BlobServiceEndpoint>https://$SoftDeleteAccountName.$SoftDeleteAccountBlobEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$SoftDeleteAccountName.$SoftDeleteAccountQueueEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$SoftDeleteAccountName.$SoftDeleteAccountTableEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$SoftDeleteAccountName.$SoftDeleteAccountFileEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.$SoftDeleteAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.$SoftDeleteAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.$SoftDeleteAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$SoftDeleteAccountName-secondary.$SoftDeleteAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>PremiumFileTenant</TenantName>
       <TenantType>Cloud</TenantType>
       <AccountName>$PremiumFileAccountName</AccountName>
       <AccountKey>$PremiumFileAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$PremiumFileAccountName$PremiumFileAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PremiumFileAccountName$PremiumFileAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$PremiumFileAccountName$PremiumFileAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$PremiumFileAccountName$PremiumFileAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary$PremiumFileAccountZoneWithPeriod.blob.$EndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary$PremiumFileAccountZoneWithPeriod.queue.$EndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary$PremiumFileAccountZoneWithPeriod.file.$EndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary$PremiumFileAccountZoneWithPeriod.table.$EndpointSuffix</TableServiceSecondaryEndpoint>
+      <BlobServiceEndpoint>https://$PremiumFileAccountName.$PremiumFileAccountBlobEndpointSuffix</BlobServiceEndpoint>
+      <QueueServiceEndpoint>https://$PremiumFileAccountName.$PremiumFileAccountQueueEndpointSuffix</QueueServiceEndpoint>
+      <TableServiceEndpoint>https://$PremiumFileAccountName.$PremiumFileAccountTableEndpointSuffix</TableServiceEndpoint>
+      <FileServiceEndpoint>https://$PremiumFileAccountName.$PremiumFileAccountFileEndpointSuffix</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.$PremiumFileAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.$PremiumFileAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.$PremiumFileAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.$PremiumFileAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
   </TenantConfigurations>
   <KeyVaultConfigurations>
