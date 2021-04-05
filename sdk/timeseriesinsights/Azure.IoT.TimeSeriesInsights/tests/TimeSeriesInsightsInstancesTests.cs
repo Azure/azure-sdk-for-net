@@ -53,7 +53,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 {
                     // Create TSI instances
                     Response<TimeSeriesOperationError[]> createInstancesResult = await client
-                    .CreateOrReplaceTimeSeriesInstancesAsync(timeSeriesInstances)
+                    .Instances
+                    .CreateOrReplaceAsync(timeSeriesInstances)
                     .ConfigureAwait(false);
 
                     // Assert that the result error array does not contain any object that is set
@@ -61,7 +62,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
                     // Get the created instances by Ids
                     Response<InstancesOperationResult[]> getInstancesByIdsResult = await client
-                        .GetInstancesAsync(timeSeriesInstancesIds)
+                        .Instances
+                        .GetAsync(timeSeriesInstancesIds)
                         .ConfigureAwait(false);
 
                     getInstancesByIdsResult.Value.Length.Should().Be(timeSeriesInstances.Count);
@@ -83,7 +85,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                     timeSeriesInstance.Description = "Description");
 
                 Response<InstancesOperationResult[]> replaceInstancesResult = await client
-                    .ReplaceTimeSeriesInstancesAsync(timeSeriesInstances)
+                    .Instances
+                    .ReplaceAsync(timeSeriesInstances)
                     .ConfigureAwait(false);
 
                 replaceInstancesResult.Value.Length.Should().Be(timeSeriesInstances.Count);
@@ -94,7 +97,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 {
                     // Get instances by name
                     Response<InstancesOperationResult[]> getInstancesByNameResult = await client
-                        .GetInstancesAsync(timeSeriesInstances.Select((instance) => instance.Name))
+                        .Instances
+                        .GetAsync(timeSeriesInstances.Select((instance) => instance.Name))
                         .ConfigureAwait(false);
 
                     getInstancesByNameResult.Value.Length.Should().Be(timeSeriesInstances.Count);
@@ -112,7 +116,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 }, MaxNumberOfRetries, s_retryDelay);
 
                 // Get all Time Series instances in the environment
-                AsyncPageable<TimeSeriesInstance> getAllInstancesResponse = client.GetInstancesAsync();
+                AsyncPageable<TimeSeriesInstance> getAllInstancesResponse = client.Instances.GetAsync();
 
                 int numOfInstances = 0;
                 await foreach (TimeSeriesInstance tsiInstance in getAllInstancesResponse)
@@ -128,6 +132,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 Response<SearchSuggestion[]> searchSuggestionResponse = await TestRetryHelper.RetryAsync(async () =>
                 {
                     Response<SearchSuggestion[]> searchSuggestions = await client
+                        .Instances
                         .GetSearchSuggestionsAsync(suggestionString)
                         .ConfigureAwait(false);
 
@@ -147,7 +152,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 try
                 {
                     Response<TimeSeriesOperationError[]> deleteInstancesResponse = await client
-                        .DeleteInstancesAsync(timeSeriesInstancesIds)
+                        .Instances
+                        .DeleteAsync(timeSeriesInstancesIds)
                         .ConfigureAwait(false);
 
                     // Assert that the response array does not have any error object set

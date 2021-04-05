@@ -118,7 +118,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 };
 
                 Response<InstancesOperationResult[]> getInstancesResult = await tsiClient
-                    .GetInstancesAsync(new List<TimeSeriesId> { tsId })
+                    .Instances
+                    .GetAsync(new List<TimeSeriesId> { tsId })
                     .ConfigureAwait(false);
 
                 if (getInstancesResult.Value?.First()?.Error != null)

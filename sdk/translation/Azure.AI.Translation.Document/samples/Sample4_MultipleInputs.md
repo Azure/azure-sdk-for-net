@@ -1,4 +1,4 @@
-# Translating Documents
+# Multiple Translation operations
 This sample demonstrates how to translate documents in multiple blob container to different languages simultaneously. To get started you will need a Translator endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `DocumentTranslationClient`
@@ -90,7 +90,7 @@ await foreach (DocumentStatusResult document in operation.GetValuesAsync())
 
 To see the full example source files, see:
 
-* [Synchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translation.Document/tests/samples/Sample_MultipleInputs.cs)
-* [Asynchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translation.Document/tests/samples/Sample_MultipleInputsAsync.cs)
+* [Synchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_MultipleInputs.cs)
+* [Asynchronously MultipleInputs ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_MultipleInputsAsync.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translation.Document/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/README.md

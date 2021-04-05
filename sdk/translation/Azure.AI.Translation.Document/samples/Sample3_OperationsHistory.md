@@ -1,4 +1,4 @@
-# Translation History
+# Translation Operations History
 This sample demonstrates how to get the history for all submitted translation operations on your Translator resource. To get started you will need a Translator endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `DocumentTranslationClient`
@@ -50,7 +50,7 @@ Console.WriteLine($"Cancelled Documents: {docsCancelled}");
 
 To see the full example source files, see:
 
-* [Synchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translation.Document/tests/samples/Sample_OperationsHistory.cs)
-* [Asynchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translation.Document/tests/samples/Sample_OperationsHistoryAsync.cs)
+* [Synchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_OperationsHistory.cs)
+* [Asynchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_OperationsHistoryAsync.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translation.Document/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/README.md
