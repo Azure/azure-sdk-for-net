@@ -46,9 +46,9 @@ namespace Azure.AI.FormRecognizer.Samples
 
             if (idDocument.Fields.TryGetValue("Country", out FormField countryField))
             {
-                if (countryField.Value.ValueType == FieldValueType.String)
+                if (countryField.Value.ValueType == FieldValueType.Country)
                 {
-                    string country = countryField.Value.AsString();
+                    string country = countryField.Value.AsCountryCode();
                     Console.WriteLine($"Country: '{country}', with confidence {countryField.Confidence}");
                 }
             }

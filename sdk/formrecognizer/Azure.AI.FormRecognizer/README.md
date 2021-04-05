@@ -7,7 +7,7 @@ Azure Cognitive Services Form Recognizer is a cloud service that uses machine le
   - Receipts - Recognize and extract common fields from receipts, using a pre-trained receipt model.
   - Business Cards - Recognize and extract common fields from business cards, using a pre-trained business cards model.
   - Invoices - Recognize and extract common fields from invoices, using a pre-trained invoice model.
-  - Identity Documents - Recognize and extract common fields from identity documents like passports or driver's licenses, using a pre-trained invoice model.
+  - Identity Documents - Recognize and extract common fields from identity documents like passports or driver's licenses, using a pre-trained ID documents model.
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 
@@ -109,7 +109,7 @@ Supported prebuilt models:
   - Receipts.
   - Business cards.
   - Invoices.
-  - Id Documents.
+  - ID Documents.
 
 ### FormTrainingClient
 
@@ -254,7 +254,7 @@ Extract fields from certain types of common forms using prebuilt models provided
 - Sales receipts. See fields found on a receipt [here][service_recognize_receipt_fields].
 - Business cards. See fields found on a business card [here][service_recognize_business_cards_fields].
 - Invoices. See fields found on an invoice [here][service_recognize_invoices_fields].
-- Id documents. See fields found on an Id document [here][service_recognize_id_documents_fields].
+- ID documents. See fields found on an ID document [here][service_recognize_id_documents_fields].
 
 For example, to extract fields from a sales receipt, use the prebuilt Receipt model provided by the `StartRecognizeReceiptsAsync` method:
 
@@ -344,7 +344,7 @@ For more information and samples using prebuilt models see:
 - [Receipts sample][recognize_receipts].
 - [Business Cards sample][recognize_business_cards].
 - [Invoices][recognize_invoices].
-- [Id Documents][recognize_id_documents].
+- [ID Documents][recognize_id_documents].
 
 ### Train a Model
 Train a machine-learned model on your own form types. The resulting model will be able to recognize values from the types of forms it was trained on.
@@ -554,7 +554,7 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Recognize receipts][recognize_receipts]
 - [Recognize business cards][recognize_business_cards]
 - [Recognize invoices][recognize_invoices]
-- [Recognize Id documents][recognize_id_documents]
+- [Recognize ID documents][recognize_id_documents]
 - [Train a model][train_a_model]
 - [Manage custom models][manage_custom_models]
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]

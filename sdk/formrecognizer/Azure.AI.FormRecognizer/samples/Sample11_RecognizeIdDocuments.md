@@ -1,6 +1,6 @@
-# Recognize Id Documents
+# Recognize ID Documents
 
-This sample demonstrates how to recognize and extract common fields from Id documents, using a pre-trained model. For a suggested approach to extracting information from ID documents, see [strongly-typing a recognized form][strongly_typing_a_recognized_form].
+This sample demonstrates how to recognize and extract common fields from ID documents, using a pre-trained model. For a suggested approach to extracting information from ID documents, see [strongly-typing a recognized form][strongly_typing_a_recognized_form].
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -17,9 +17,9 @@ var credential = new AzureKeyCredential(apiKey);
 var client = new FormRecognizerClient(new Uri(endpoint), credential);
 ```
 
-## Recognize Id documents from a URI
+## Recognize ID documents from a URI
 
-To recognize Id documents from a URI, use the `StartRecognizeIdDocumentsFromUriAsync` method.
+To recognize ID documents from a URI, use the `StartRecognizeIdDocumentsFromUriAsync` method.
 
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/iddocumentfields).
 
@@ -108,9 +108,9 @@ if (idDocument.Fields.TryGetValue("Region", out FormField regionfield))
 }
 ```
 
-## Recognize Id documents from a given file
+## Recognize ID documents from a given file
 
-To recognize Id documents from a given file, use the `StartRecognizeIdDocumentsAsync` method.
+To recognize ID documents from a given file, use the `StartRecognizeIdDocumentsAsync` method.
 
 For simplicity, we are not showing all the fields that the service returns. To see the list of all the supported fields returned by service and its corresponding types, consult: [here](https://aka.ms/formrecognizer/iddocumentfields).
 
@@ -203,8 +203,8 @@ if (idDocument.Fields.TryGetValue("Region", out FormField regionfield))
 
 To see the full example source files, see:
 
-* [Recognize Id documents from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample15_RecognizeIdDocumentsFromUri.cs)
-* [Recognize Id documents from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample15_RecognizeIdDocumentsFromFile.cs)
+* [Recognize ID documents from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample15_RecognizeIdDocumentsFromUri.cs)
+* [Recognize ID documents from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample15_RecognizeIdDocumentsFromFile.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md
