@@ -39,10 +39,22 @@ namespace Azure.Core.Tests
 
             var original = GetOriginal(operation);
 
-            Assert.AreEqual(TimeSpan.FromMilliseconds(1), original.WaitForCompletionCalls[0]);
-            Assert.AreEqual(TimeSpan.FromMilliseconds(1), original.WaitForCompletionCalls[1]);
-            Assert.AreEqual(TimeSpan.FromMilliseconds(1), original.WaitForCompletionCalls[2]);
-            Assert.AreEqual(TimeSpan.FromMilliseconds(1), original.WaitForCompletionCalls[3]);
+            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[0]);
+            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[1]);
+            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[2]);
+            Assert.AreEqual(TimeSpan.Zero, original.WaitForCompletionCalls[3]);
+        }
+
+        [Test]
+        [PlaybackOnly("Validates logic that only runs during the playback")]
+        public async Task ThrowsForLowPollingIntervalInPlayback()
+        {
+            var client = InstrumentClient(new RecordedClient());
+
+            var operation = await client.StartOperationAsync();
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await operation.WaitForCompletionAsync(TimeSpan.FromSeconds(0.9), default));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await operation.WaitForCompletionResponseAsync(TimeSpan.FromSeconds(0.9), default));
         }
 
         [Test]
