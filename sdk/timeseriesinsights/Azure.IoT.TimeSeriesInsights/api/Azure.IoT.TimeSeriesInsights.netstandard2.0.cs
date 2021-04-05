@@ -105,6 +105,12 @@ namespace Azure.IoT.TimeSeriesInsights
         public System.Collections.Generic.IReadOnlyList<Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchyOrError> Get { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchyOrError> Put { get { throw null; } }
     }
+    public partial class HierarchiesClient
+    {
+        protected HierarchiesClient() { }
+        public virtual Azure.Pageable<Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchy> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchy> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class HierarchiesExpandParameter
     {
         public HierarchiesExpandParameter() { }
@@ -409,6 +415,7 @@ namespace Azure.IoT.TimeSeriesInsights
         protected TimeSeriesInsightsClient() { }
         public TimeSeriesInsightsClient(string environmentFqdn, Azure.Core.TokenCredential credential) { }
         public TimeSeriesInsightsClient(string environmentFqdn, Azure.Core.TokenCredential credential, Azure.IoT.TimeSeriesInsights.TimeSeriesInsightsClientOptions options) { }
+        public virtual Azure.IoT.TimeSeriesInsights.HierarchiesClient Hierarchies { get { throw null; } }
         public virtual Azure.IoT.TimeSeriesInsights.InstancesClient Instances { get { throw null; } }
         public virtual Azure.IoT.TimeSeriesInsights.ModelSettingsClient ModelSettings { get { throw null; } }
         public virtual Azure.IoT.TimeSeriesInsights.QueryClient Query { get { throw null; } }
