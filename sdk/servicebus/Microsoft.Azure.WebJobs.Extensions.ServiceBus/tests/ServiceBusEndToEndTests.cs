@@ -79,6 +79,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 var count = await CleanUpEntity(_firstQueueScope.QueueName);
 
                 Assert.AreEqual(numMessages * 3, count);
+                await jobHost.StopAsync();
             }
         }
 
@@ -128,6 +129,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 IEnumerable<LogMessage> messages = loggerProvider.GetAllLogMessages().Where(m => m.Category == CustomMessagingProvider.CustomMessagingCategory);
                 Assert.AreEqual(4, messages.Count(p => p.FormattedMessage.Contains("Custom processor Begin called!")));
                 Assert.AreEqual(4, messages.Count(p => p.FormattedMessage.Contains("Custom processor End called!")));
+                await jobHost.StopAsync();
             }
         }
 
@@ -154,6 +156,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // ensure all logs have had a chance to flush
                 await Task.Delay(3000);
+                await jobHost.StopAsync();
             }
 
             Assert.AreEqual("Test-topic-1", _resultMessage1);
@@ -197,6 +200,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("PocoValues(foo,bar)", logs);
+                await jobHost.StopAsync();
             }
         }
 
@@ -214,6 +218,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage).ToList();
                 Assert.Contains("Input(foobar)", logs);
+                await jobHost.StopAsync();
             }
         }
 
@@ -278,6 +283,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
+                await jobHost.StopAsync();
             }
         }
 
@@ -343,6 +349,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
+                await jobHost.StopAsync();
             }
         }
 

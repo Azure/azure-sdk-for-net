@@ -61,6 +61,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     StringAssert.StartsWith("message" + i++, logMessage.FormattedMessage);
                 }
+                await jobHost.StopAsync();
             }
         }
 
@@ -93,6 +94,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     StringAssert.StartsWith("message" + i++, logMessage.FormattedMessage);
                 }
+                await jobHost.StopAsync();
             }
         }
 
@@ -144,6 +146,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     Assert.AreEqual(sessionId2, m.FormattedMessage[m.FormattedMessage.Length - 1]);
                 }
+                await jobHost1.StopAsync();
+                await jobHost2.StopAsync();
             }
         }
 
@@ -196,6 +200,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     Assert.AreEqual(sessionId2, m.FormattedMessage[m.FormattedMessage.Length - 1]);
                 }
+                await jobHost1.StopAsync();
+                await jobHost2.StopAsync();
             }
         }
 
@@ -247,6 +253,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                             consoleOutput1[5].FormattedMessage[consoleOutput1[0].FormattedMessage.Length - 1]);
                     }
                 }
+                await jobHost.StopAsync();
             }
         }
 
@@ -298,6 +305,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                             consoleOutput1[5].FormattedMessage[consoleOutput1[0].FormattedMessage.Length - 1]);
                     }
                 }
+                await jobHost.StopAsync();
             }
         }
 
@@ -405,6 +413,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
+                await jobHost.StopAsync();
             }
         }
 
@@ -427,6 +436,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+                await jobHost.StopAsync();
             }
         }
 
@@ -455,6 +465,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 // Validate that function execution was allowed to complete
                 Assert.True(_drainValidationPostDelay.WaitOne(DrainWaitTimeoutMills + SBTimeoutMills));
+                await jobHost.StopAsync();
             }
         }
 
