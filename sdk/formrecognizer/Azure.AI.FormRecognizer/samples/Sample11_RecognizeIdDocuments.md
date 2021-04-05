@@ -203,8 +203,8 @@ if (idDocument.Fields.TryGetValue("Region", out FormField regionfield))
 
 To see the full example source files, see:
 
-* [Recognize ID documents from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample15_RecognizeIdDocumentsFromUri.cs)
-* [Recognize ID documents from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample15_RecognizeIdDocumentsFromFile.cs)
+<!--* [Recognize ID documents from URI](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample15_RecognizeIdDocumentsFromUri.cs)
+* [Recognize ID documents from file](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample15_RecognizeIdDocumentsFromFile.cs)-->
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [strongly_typing_a_recognized_form]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample4_StronglyTypingARecognizedForm.md

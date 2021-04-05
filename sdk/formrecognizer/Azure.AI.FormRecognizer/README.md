@@ -106,10 +106,10 @@ var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredent
 - Recognizing form content, including tables, lines, words, and selection marks like radio buttons and check boxes without the need to train a model.  Form content is returned in a collection of `FormPage` objects. See example [Recognize Content](#recognize-content).
 - Recognizing common fields from the following form types using prebuilt models. These fields and meta-data are returned in a collection of `RecognizedForm` objects.
 Supported prebuilt models:
-  - Receipts.
-  - Business cards.
-  - Invoices.
-  - ID Documents.
+  - Receipts
+  - Business cards
+  - Invoices
+  - ID Documents
 
 ### FormTrainingClient
 
@@ -344,7 +344,7 @@ For more information and samples using prebuilt models see:
 - [Receipts sample][recognize_receipts].
 - [Business Cards sample][recognize_business_cards].
 - [Invoices][recognize_invoices].
-- [ID Documents][recognize_id_documents].
+<!-- - [ID Documents][recognize_id_documents].-->
 
 ### Train a Model
 Train a machine-learned model on your own form types. The resulting model will be able to recognize values from the types of forms it was trained on.
@@ -554,7 +554,7 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Recognize receipts][recognize_receipts]
 - [Recognize business cards][recognize_business_cards]
 - [Recognize invoices][recognize_invoices]
-- [Recognize ID documents][recognize_id_documents]
+<!--- [Recognize ID documents][recognize_id_documents]-->
 - [Train a model][train_a_model]
 - [Manage custom models][manage_custom_models]
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]
