@@ -1,0 +1,38 @@
+{
+    "version": "0.1",
+    "language": "en_US",
+    "languageId": "csharp",
+    "dictionaries": [
+      "powershell"
+    ],
+    "ignorePaths": [
+      "**/SessionRecords/**",
+      "**/packages/**",
+      "artifacts/**/*",
+      "*.exe",
+      "*.dll",
+      "*.nupkg",
+      "*.bmp",
+      "*.png",
+      "*.gif",
+      "*.jpg",
+      "*.tiff",
+      "*.wav",
+      "*.pdf",
+      "*.zip",
+      "*.sha512",
+      "*.ico",
+      "*.pri",
+      "common/Perf/Azure.Test.Perf/PerfProgram.cs",
+      "common/SmokeTests/smoke-tests.yml",
+      "common/SmokeTests/SmokeTest/BlobStorageTest.cs",
+      "common/SmokeTests/SmokeTest/CosmosDBTest.cs",
+      "common/SmokeTests/SmokeTest/EventHubsTest.cs",
+      "common/SmokeTests/SmokeTest/KeyVaultTest.cs",
+      "common/SmokeTests/SmokeTest/test-resources.json",
+      "common/SmokeTests/SmokeTest/Update-Dependencies.ps1"
+    ],
+    "words": [],
+    "allowCompoundWords": true
+  }
+  
