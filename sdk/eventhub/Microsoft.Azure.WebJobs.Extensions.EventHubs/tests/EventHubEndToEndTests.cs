@@ -198,6 +198,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     })));
         }
 
+        [Test]
+        public void ThrowsIfBindingToASingleEvent()
+        {
+            Assert.Throws<NotSupportedException>(() =>
+                BuildHost<EventHubTestSingleDispatchJobWithConnection>(builder =>
+                    builder.ConfigureServices(services =>
+                        services.Configure<EventHubOptions>(options => options.IsSingleDispatchEnabled = false))));
+        }
+
         private static string GetServiceUri()
         {
             return "https://" + StorageTestEnvironment.Instance.StorageAccountName + ".blob." + StorageTestEnvironment.Instance.StorageEndpointSuffix;
@@ -299,7 +308,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         services.Configure<EventHubOptions>(options =>
                         {
-                            options.InitialOffsetOptions.Type = "FromStart";
+                            options.InitialOffsetOptions.Type = OffsetType.FromStart;
                         });
                     });
                     ConfigureTestEventHub(builder);
@@ -325,7 +334,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         services.Configure<EventHubOptions>(options =>
                         {
-                            options.InitialOffsetOptions.Type = "FromEnd";
+                            options.InitialOffsetOptions.Type = OffsetType.FromEnd;
                         });
                     });
                     ConfigureTestEventHub(builder);
@@ -346,8 +355,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task EventHub_InitialOffsetFromEnqueuedTime()
         {
-            // Mark the time now and send a message which should be the only one that is picked up when we run the actual test host
-
             var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
             for (int i = 0; i < 3; i++)
             {
@@ -377,9 +384,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     {
                         services.Configure<EventHubOptions>(options =>
                         {
-                            options.InitialOffsetOptions.Type = "FromEnqueuedTime";
-                            // for some reason, this doesn't seem to work if including milliseconds in the format
-                            options.InitialOffsetOptions.EnqueuedTimeUTC = _initialOffsetEnqueuedTimeUTC.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                            options.InitialOffsetOptions.Type = OffsetType.FromEnqueuedTime;
+                            // for some reason, this doesn't seem to work reliably if including milliseconds in the format
+                            var dto = DateTimeOffset.Parse(_initialOffsetEnqueuedTimeUTC.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+                            options.InitialOffsetOptions.EnqueuedTimeUtc = dto;
                         });
                     });
                     ConfigureTestEventHub(builder);
@@ -658,6 +666,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMultipleEvents([EventHubTrigger(TestHubName, Connection = TestHubName)] EventData[] events)
             {
+                Assert.LessOrEqual(events.Length, ExpectedEventsCount);
                 foreach (EventData eventData in events)
                 {
                     string message = Encoding.UTF8.GetString(eventData.Body.ToArray());

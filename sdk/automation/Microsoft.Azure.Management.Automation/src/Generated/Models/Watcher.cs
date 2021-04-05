@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// Definition of the watcher type.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Watcher : TrackedResource
+    public partial class Watcher : Resource
     {
         /// <summary>
         /// Initializes a new instance of the Watcher class.
@@ -38,9 +38,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// resource</param>
         /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="tags">Resource tags.</param>
-        /// <param name="location">The Azure Region where the resource
-        /// lives</param>
         /// <param name="executionFrequencyInSeconds">Gets or sets the
         /// frequency at which the watcher is invoked.</param>
         /// <param name="scriptName">Gets or sets the name of the script the
@@ -59,8 +56,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// the watcher.</param>
         /// <param name="description">Gets or sets the description.</param>
         /// <param name="etag">Gets or sets the etag of the resource.</param>
-        public Watcher(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), long? executionFrequencyInSeconds = default(long?), string scriptName = default(string), IDictionary<string, string> scriptParameters = default(IDictionary<string, string>), string scriptRunOn = default(string), string status = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string), string description = default(string), string etag = default(string))
-            : base(id, name, type, tags, location)
+        /// <param name="tags">Resource tags.</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
+        public Watcher(string id = default(string), string name = default(string), string type = default(string), long? executionFrequencyInSeconds = default(long?), string scriptName = default(string), IDictionary<string, string> scriptParameters = default(IDictionary<string, string>), string scriptRunOn = default(string), string status = default(string), System.DateTimeOffset creationTime = default(System.DateTimeOffset), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), string lastModifiedBy = default(string), string description = default(string), string etag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string))
+            : base(id, name, type)
         {
             ExecutionFrequencyInSeconds = executionFrequencyInSeconds;
             ScriptName = scriptName;
@@ -72,6 +72,8 @@ namespace Microsoft.Azure.Management.Automation.Models
             LastModifiedBy = lastModifiedBy;
             Description = description;
             Etag = etag;
+            Tags = tags;
+            Location = location;
             CustomInit();
         }
 
@@ -141,6 +143,18 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the geo-location where the resource lives
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
     }
 }

@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var tokenValue = "ValuE_oF_tHE_tokEn";
             var expires = DateTimeOffset.Parse("2015-10-27T00:00:00Z");
             var mockCredential = new Mock<TokenCredential>();
-            var credential = new EventHubTokenCredential(mockCredential.Object, "test");
+            var credential = new EventHubTokenCredential(mockCredential.Object);
             var provider = new CbsTokenProvider(credential, default);
 
             mockCredential
@@ -63,13 +63,14 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetTokenAsyncSetsTheCorrectTypeForSharedAccessSignatureTokens()
+        public async Task GetTokenAsyncSetsTheCorrectTypeForSharedAccessTokens()
         {
             var value = "TOkEn!";
             var signature = new SharedAccessSignature("hub", "keyName", "key", value, DateTimeOffset.Parse("2015-10-27T00:00:00Z"));
-            var sasCredential = new SharedAccessSignatureCredential(signature);
-            var credential = new EventHubTokenCredential(sasCredential, "test");
+            var sasCredential = new SharedAccessCredential(signature);
+            var credential = new EventHubTokenCredential(sasCredential);
             var provider = new CbsTokenProvider(credential, default);
+
             CbsToken cbsToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
 
             Assert.That(cbsToken, Is.Not.Null, "The token should have been produced");
@@ -87,7 +88,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var tokenValue = "ValuE_oF_tHE_tokEn";
             var expires = DateTimeOffset.Parse("2015-10-27T00:00:00Z");
             var mockCredential = new Mock<TokenCredential>();
-            var credential = new EventHubTokenCredential(mockCredential.Object, "test");
+            var credential = new EventHubTokenCredential(mockCredential.Object);
             var provider = new CbsTokenProvider(credential, default);
 
             mockCredential
@@ -107,7 +108,7 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static string GetSharedAccessTokenType() =>
                     (string)typeof(CbsTokenProvider)
-                        .GetField("SharedAccessSignatureTokenType", BindingFlags.Static | BindingFlags.NonPublic)
+                        .GetField("SharedAccessTokenType", BindingFlags.Static | BindingFlags.NonPublic)
                         .GetValue(null);
 
         /// <summary>

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary> A Microsoft Azure Attestation response token body - the body of a response token issued by MAA. </summary>
     public partial class AttestationResult

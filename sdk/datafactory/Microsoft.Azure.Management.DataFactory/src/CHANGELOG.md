@@ -1,5 +1,20 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.17.0
+###  Feature Additions
+- Fixed FactoryIdentity property Type can not be null issue
+
+## Version 4.16.0
+###  Feature Additions
+- Added Amazon S3 Compatible and Oracle Cloud Storage connectors
+- Updated AzureDataExplorer LinkedService servicePrincipalId, servicePrincipalKey, tenant properties from required to optional
+- Added accountKind property to AzureBlobStorage LinkedService
+- Added AAD auth to CosmosDb LinkedService
+- Added authHeaders to HTTP/REST/OData LinkedService
+- Added MultiFactor auth to SFTP LinkedService
+- Added UAMI to Identity
+- Added privateEndpointConnection apis to DataFactory
+
 ## Version 4.15.0
 ###  Feature Additions
 - Added WebActivity support for Service Principal

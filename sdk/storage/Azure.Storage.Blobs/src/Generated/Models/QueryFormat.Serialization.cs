@@ -33,6 +33,10 @@ namespace Azure.Storage.Blobs.Models
             {
                 writer.WriteObjectValue(ArrowConfiguration, "ArrowConfiguration");
             }
+            if (Optional.IsDefined(ParquetTextConfiguration))
+            {
+                writer.WriteObjectValue(ParquetTextConfiguration, "ParquetTextConfiguration");
+            }
             writer.WriteEndElement();
         }
     }

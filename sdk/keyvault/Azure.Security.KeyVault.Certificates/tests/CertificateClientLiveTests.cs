@@ -110,7 +110,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
 
             OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
-                () => WaitForCompletion(operation),
+                async () => await WaitForCompletion(operation),
                 $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
 
             Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
@@ -142,7 +142,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
 
             OperationCanceledException ex = Assert.ThrowsAsync<OperationCanceledException>(
-                () => WaitForCompletion(operation),
+                async () => await WaitForCompletion(operation),
                 $"Expected exception {nameof(OperationCanceledException)} not thrown. Operation status: {operation?.Properties?.Status}, error: {operation?.Properties?.Error?.Message}");
             Assert.AreEqual("The operation was canceled so no value is available.", ex.Message);
 
@@ -165,7 +165,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             await operation.DeleteAsync();
 
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForCompletion(operation));
             Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -195,7 +195,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 Assert.Inconclusive("The create operation completed before it could be canceled.");
             }
 
-            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(() => WaitForCompletion(operation));
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await WaitForCompletion(operation));
             Assert.AreEqual("The operation was deleted so no value is available.", ex.Message);
 
             Assert.IsTrue(operation.HasCompleted);
@@ -228,8 +228,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 RegisterForCleanup(certName);
 
-                using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-                TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+                using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+                TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 2);
 
                 while (!operation.HasCompleted)
                 {
@@ -321,8 +321,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CertificateOperation operation = new CertificateOperation(Client, certName);
 
             // Need to call the real async wait method or the sync version of this test fails because it's using the instrumented Client directly.
-            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+            using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 2);
 
             await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
 

@@ -15,9 +15,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema. </summary>
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
         /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
-        /// <param name="refreshToken"> Must be a valid ACR refresh token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="refreshToken"/> is null. </exception>
-        internal PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string scope, string refreshToken)
+        /// <param name="acrRefreshToken"> Must be a valid ACR refresh token. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/>, or <paramref name="acrRefreshToken"/> is null. </exception>
+        internal PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string scope, string acrRefreshToken)
         {
             if (service == null)
             {
@@ -27,15 +27,15 @@ namespace Azure.Containers.ContainerRegistry
             {
                 throw new ArgumentNullException(nameof(scope));
             }
-            if (refreshToken == null)
+            if (acrRefreshToken == null)
             {
-                throw new ArgumentNullException(nameof(refreshToken));
+                throw new ArgumentNullException(nameof(acrRefreshToken));
             }
 
             GrantType = "refresh_token";
             Service = service;
             Scope = scope;
-            RefreshToken = refreshToken;
+            AcrRefreshToken = acrRefreshToken;
         }
 
         /// <summary> Grant type is expected to be refresh_token. </summary>
@@ -45,6 +45,6 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </summary>
         public string Scope { get; }
         /// <summary> Must be a valid ACR refresh token. </summary>
-        public string RefreshToken { get; }
+        public string AcrRefreshToken { get; }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -19,9 +20,24 @@ namespace Azure.Search.Documents.Tests
 {
     public class BatchingTests : SearchTestBase
     {
+        private TestEventListener _listener;
+
         public BatchingTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+        }
+
+        [SetUp]
+        public void Setup()
+        {
+            _listener = new TestEventListener();
+            _listener.EnableEvents(AzureSearchDocumentsEventSource.Instance, EventLevel.Verbose);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _listener.Dispose();
         }
 
         #region Utilities
@@ -1013,6 +1029,19 @@ namespace Azure.Search.Documents.Tests
         }
         #endregion
 
+        #region EventSource
+        [Test]
+        public void EventSourceMatchesNameAndGuid()
+        {
+            Type eventSourceType = typeof(AzureSearchDocumentsEventSource);
+
+            Assert.NotNull(eventSourceType);
+            Assert.AreEqual("Azure-Search-Documents", EventSource.GetName(eventSourceType));
+            Assert.AreEqual(Guid.Parse("ecf8d17a-8cd1-5cb8-7adb-5d7d3221a642"), EventSource.GetGuid(eventSourceType));
+            Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
+        }
+        #endregion
+
         #region Behavior
         [Test]
         public async Task Behavior_Split()
@@ -1024,9 +1053,37 @@ namespace Azure.Search.Documents.Tests
             await using SearchIndexingBufferedSender<SimpleDocument> indexer =
                 client.CreateIndexingBufferedSender<SimpleDocument>();
             AssertNoFailures(indexer);
+
             client.SplitNextBatch = true;
+
             await indexer.UploadDocumentsAsync(data);
             await indexer.FlushAsync();
+
+            List<EventWrittenEventArgs> eventData = _listener.EventData.ToList();
+
+            Assert.AreEqual(8, eventData.Count);
+            Assert.AreEqual("PendingQueueResized", eventData[0].EventName);         // 1. All events are pushed into the pending queue.
+            Assert.AreEqual(512, eventData[0].GetProperty<int>("queueSize"));
+            Assert.AreEqual("PendingQueueResized", eventData[1].EventName);         // 2. All events are pulled out of the pending queue.
+            Assert.AreEqual(0, eventData[1].GetProperty<int>("queueSize"));
+            Assert.AreEqual("BatchSubmitted", eventData[2].EventName);              // 3. A batch is created for submission and contains all events.
+            Assert.NotNull(eventData[2].GetProperty<string>("endPoint"));
+            Assert.AreEqual(512, eventData[2].GetProperty<int>("batchSize"));
+            Assert.AreEqual("BatchActionCountUpdated", eventData[3].EventName);     // 4. Batch is split up and default action count is updated.
+            Assert.NotNull(eventData[3].GetProperty<string>("endPoint"));
+            Assert.AreEqual(512, eventData[3].GetProperty<int>("oldBatchCount"));
+            Assert.AreEqual(256, eventData[3].GetProperty<int>("newBatchCount"));
+            Assert.AreEqual("RetryQueueResized", eventData[4].EventName);           // 5. Second part of the batch is pushed into the retry queue.
+            Assert.AreEqual(256, eventData[4].GetProperty<int>("queueSize"));
+            Assert.AreEqual("BatchSubmitted", eventData[5].EventName);              // 6. First part of the batch is submitted.
+            Assert.NotNull(eventData[5].GetProperty<string>("endPoint"));
+            Assert.AreEqual(256, eventData[5].GetProperty<int>("batchSize"));
+            Assert.AreEqual("RetryQueueResized", eventData[6].EventName);           // 7. Remaining events are pulled out of the retry queue.
+            Assert.AreEqual(0, eventData[6].GetProperty<int>("queueSize"));
+            Assert.AreEqual("BatchSubmitted", eventData[7].EventName);              // 8. Second part of the batch is submitted.
+            Assert.NotNull(eventData[7].GetProperty<string>("endPoint"));
+            Assert.AreEqual(256, eventData[7].GetProperty<int>("batchSize"));
+
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
         }
 

@@ -255,6 +255,30 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the ISharedGalleryImageVersionsOperations.
         /// </summary>
         public virtual ISharedGalleryImageVersionsOperations SharedGalleryImageVersions { get; private set; }
+        
+        /// Gets the ICloudServiceRoleInstancesOperations.
+        /// </summary>
+        public virtual ICloudServiceRoleInstancesOperations CloudServiceRoleInstances { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServiceRolesOperations.
+        /// </summary>
+        public virtual ICloudServiceRolesOperations CloudServiceRoles { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServicesOperations.
+        /// </summary>
+        public virtual ICloudServicesOperations CloudServices { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServicesUpdateDomainOperations.
+        /// </summary>
+        public virtual ICloudServicesUpdateDomainOperations CloudServicesUpdateDomain { get; private set; }
+
+        /// <summary>
+        /// Gets the ICloudServiceOperatingSystemsOperations.
+        /// </summary>
+        public virtual ICloudServiceOperatingSystemsOperations CloudServiceOperatingSystems { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ComputeManagementClient class.
@@ -534,6 +558,12 @@ namespace Microsoft.Azure.Management.Compute
             SharedGalleries = new SharedGalleriesOperations(this);
             SharedGalleryImages = new SharedGalleryImagesOperations(this);
             SharedGalleryImageVersions = new SharedGalleryImageVersionsOperations(this);
+            CloudServiceRoleInstances = new CloudServiceRoleInstancesOperations(this);
+            CloudServiceRoles = new CloudServiceRolesOperations(this);
+            CloudServices = new CloudServicesOperations(this);
+            CloudServicesUpdateDomain = new CloudServicesUpdateDomainOperations(this);
+            CloudServiceOperatingSystems = new CloudServiceOperatingSystemsOperations(this);
+
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

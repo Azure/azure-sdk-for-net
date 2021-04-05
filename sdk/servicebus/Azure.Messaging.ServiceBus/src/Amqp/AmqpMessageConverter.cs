@@ -6,7 +6,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
+using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Amqp.Framing;
@@ -15,7 +17,6 @@ using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
-using SBMessage = Azure.Messaging.ServiceBus.ServiceBusMessage;
 
 namespace Azure.Messaging.ServiceBus.Amqp
 {
@@ -29,14 +30,14 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>The size, in bytes, to use as a buffer for stream operations.</summary>
         private const int StreamBufferSizeInBytes = 512;
 
-        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IEnumerable<SBMessage> source, bool forceBatch = false)
+        public static AmqpMessage BatchSBMessagesAsAmqpMessage(IEnumerable<ServiceBusMessage> source, bool forceBatch = false)
         {
             Argument.AssertNotNull(source, nameof(source));
             return BuildAmqpBatchFromMessage(source, forceBatch);
         }
 
         /// <summary>
-        ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="SBMessage" />
+        ///   Builds a batch <see cref="AmqpMessage" /> from a set of <see cref="ServiceBusMessage" />
         ///   optionally propagating the custom properties.
         /// </summary>
         ///
@@ -45,10 +46,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         /// <returns>The batch <see cref="AmqpMessage" /> containing the source messages.</returns>
         ///
-        private static AmqpMessage BuildAmqpBatchFromMessage(IEnumerable<SBMessage> source, bool forceBatch)
+        private static AmqpMessage BuildAmqpBatchFromMessage(IEnumerable<ServiceBusMessage> source, bool forceBatch)
         {
             AmqpMessage firstAmqpMessage = null;
-            SBMessage firstMessage = null;
+            ServiceBusMessage firstMessage = null;
 
             return BuildAmqpBatchFromMessages(
                 source.Select(sbMessage =>
@@ -78,7 +79,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private static AmqpMessage BuildAmqpBatchFromMessages(
             IList<AmqpMessage> batchMessages,
-            SBMessage firstMessage,
+            ServiceBusMessage firstMessage,
             bool forceBatch)
         {
             AmqpMessage batchEnvelope;
@@ -139,13 +140,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 return new ArraySegment<byte>();
             }
 
-            using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-            stream.CopyTo(memStream, StreamBufferSizeInBytes);
-
-            return new ArraySegment<byte>(memStream.ToArray());
+            switch (stream)
+            {
+                case BufferListStream bufferListStream:
+                    return bufferListStream.ReadBytes((int)stream.Length);
+                default:
+                    {
+                        using var memStream = new MemoryStream(StreamBufferSizeInBytes);
+                        stream.CopyTo(memStream, StreamBufferSizeInBytes);
+                        return new ArraySegment<byte>(memStream.ToArray());
+                    }
+            }
         }
 
-        public static AmqpMessage SBMessageToAmqpMessage(SBMessage sbMessage)
+        public static AmqpMessage SBMessageToAmqpMessage(ServiceBusMessage sbMessage)
         {
             var amqpMessage = sbMessage.ToAmqpMessage();
             amqpMessage.Properties.MessageId = sbMessage.MessageId;
@@ -217,8 +225,25 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if ((amqpMessage.BodyType & SectionFlag.Data) != 0 && amqpMessage.DataBody != null)
             {
-                annotatedMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(amqpMessage.GetDataViaDataBody()));
+                annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(BodyMemory.FromAmqpData(amqpMessage.DataBody)));
             }
+            else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0 && amqpMessage.ValueBody?.Value != null)
+            {
+                if (TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out object netObject))
+                {
+                    annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(netObject));
+                }
+                else
+                {
+                    throw new NotSupportedException(Resources.InvalidAmqpMessageValueBody.FormatForUser(amqpMessage.ValueBody.Value.GetType()));
+                }
+            }
+            else if ((amqpMessage.BodyType & SectionFlag.AmqpSequence) != 0)
+            {
+                annotatedMessage = new AmqpAnnotatedMessage(
+                    AmqpMessageBody.FromSequence(amqpMessage.SequenceBody.Select(s => (IList<object>) s.List).ToList()));
+            }
+            // default to using an empty Data section if no data
             else
             {
                 annotatedMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(Enumerable.Empty<ReadOnlyMemory<byte>>()));
@@ -303,16 +328,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     switch (key)
                     {
                         case AmqpMessageConstants.EnqueuedTimeUtcName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = (DateTime)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.EnqueuedTimeUtcName] = pair.Value;
                             break;
                         case AmqpMessageConstants.ScheduledEnqueueTimeUtcName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = (DateTime)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = pair.Value;
                             break;
                         case AmqpMessageConstants.SequenceNumberName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.SequenceNumberName] = (long)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.SequenceNumberName] = pair.Value;
                             break;
                         case AmqpMessageConstants.EnqueueSequenceNumberName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = (long)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.EnqueueSequenceNumberName] = pair.Value;
                             break;
                         case AmqpMessageConstants.LockedUntilName:
                             DateTimeOffset lockedUntil = (DateTime)pair.Value >= DateTimeOffset.MaxValue.UtcDateTime ?
@@ -320,16 +345,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             annotatedMessage.MessageAnnotations[AmqpMessageConstants.LockedUntilName] = lockedUntil.UtcDateTime;
                             break;
                         case AmqpMessageConstants.PartitionKeyName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = (string)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = pair.Value;
                             break;
                         case AmqpMessageConstants.PartitionIdName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.PartitionIdName] = (short)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.PartitionIdName] = pair.Value;
                             break;
                         case AmqpMessageConstants.ViaPartitionKeyName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = (string)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = pair.Value;
                             break;
                         case AmqpMessageConstants.DeadLetterSourceName:
-                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = (string)pair.Value;
+                            annotatedMessage.MessageAnnotations[AmqpMessageConstants.DeadLetterSourceName] = pair.Value;
                             break;
                         default:
                             if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out var netObject))
@@ -343,9 +368,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (amqpMessage.DeliveryTag.Count == GuidSizeInBytes)
             {
-                var guidBuffer = new byte[GuidSizeInBytes];
-                Buffer.BlockCopy(amqpMessage.DeliveryTag.Array, amqpMessage.DeliveryTag.Offset, guidBuffer, 0, GuidSizeInBytes);
-                sbMessage.LockTokenGuid = new Guid(guidBuffer);
+                Span<byte> guidBytes = stackalloc byte[GuidSizeInBytes];
+                amqpMessage.DeliveryTag.AsSpan().CopyTo(guidBytes);
+                if (!MemoryMarshal.TryRead<Guid>(guidBytes, out var lockTokenGuid))
+                {
+                    lockTokenGuid = new Guid(guidBytes.ToArray());
+                }
+                sbMessage.LockTokenGuid = lockTokenGuid;
             }
 
             amqpMessage.Dispose();

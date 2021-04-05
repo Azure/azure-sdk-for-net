@@ -55,6 +55,7 @@ namespace Azure.Messaging.ServiceBus
                 entityPath: entityPath,
                 plugins: plugins,
                 options: options,
+                cancellationToken: cancellationToken,
                 sessionId: sessionId);
             try
             {
@@ -77,14 +78,16 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="entityPath"></param>
         /// <param name="plugins">The set of plugins to apply to incoming messages.</param>
         /// <param name="options">A set of options to apply when configuring the consumer.</param>
+        /// <param name="cancellationToken">The cancellation token to use when opening the receiver link.</param>
         /// <param name="sessionId">An optional session Id to receive from.</param>
         internal ServiceBusSessionReceiver(
             ServiceBusConnection connection,
             string entityPath,
             IList<ServiceBusPlugin> plugins,
             ServiceBusSessionReceiverOptions options,
+            CancellationToken cancellationToken,
             string sessionId = default) :
-            base(connection, entityPath, true, plugins, options?.ToReceiverOptions(), sessionId)
+            base(connection, entityPath, true, plugins, options?.ToReceiverOptions(), sessionId, cancellationToken)
         {
         }
 
