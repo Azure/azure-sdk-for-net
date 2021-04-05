@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -11,27 +13,32 @@ namespace Azure.ResourceManager.Core.Tests
     public class SubscriptionOperationsTests : ResourceManagerTestBase
     {
         public SubscriptionOperationsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
         [TestCase]
-        [SyncOnly]
         [RecordedTest]
-        public void GetSubscriptionOperation()
+        public async Task GetSubscriptionOperation()
         {
-            var sub = Client.GetSubscriptionOperations(TestEnvironment.SubscriptionId);
+            var sub = await Client.GetSubscriptions().TryGetAsync(TestEnvironment.SubscriptionId);
             Assert.AreEqual(sub.Id.SubscriptionId, TestEnvironment.SubscriptionId);
         }
 
         [TestCase(null)]
         [TestCase("")]
-        [SyncOnly]
         [RecordedTest]
-        public void TestGetResourceGroupOpsArgNullException(string resourceGroupName)
+        public async Task TestGetResourceGroupOpsArgNullException(string resourceGroupName)
         {
             var subOps = Client.DefaultSubscription;
-            Assert.Throws<ArgumentOutOfRangeException>(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
+            try
+            {
+                _ = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
+                Assert.Fail("Expected exception was not thrown");
+            }
+            catch (AggregateException e) when (e.InnerExceptions.FirstOrDefault(ie => ie is ArgumentException) != null)
+            {
+            }
         }
 
         [TestCase("te%st")]        
@@ -39,44 +46,59 @@ namespace Azure.ResourceManager.Core.Tests
         [TestCase("te$st")]
         [TestCase("te#st")]
         [TestCase("te#st")]
-        [SyncOnly]
         [RecordedTest]
-        public void TestGetResourceGroupOpsArgException(string resourceGroupName)
+        public async Task TestGetResourceGroupOpsArgException(string resourceGroupName)
         {
             var subOps = Client.DefaultSubscription;
-            Assert.Throws<ArgumentException>(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
+            try
+            {
+                _ = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
+                Assert.Fail("Expected exception was not thrown");
+            }
+            catch (AggregateException e) when (e.InnerExceptions.FirstOrDefault(ie => ie is RequestFailedException) != null)
+            {
+            }
         }
 
         [TestCase(91)]
-        [SyncOnly]
         [RecordedTest]
-        public void TestGetResourceGroupOpsOutOfRangeArgException(int length)
+        public async Task TestGetResourceGroupOpsOutOfRangeArgException(int length)
         {
             var resourceGroupName = GetLongString(length);
             var subOps = Client.DefaultSubscription;
-            Assert.Throws<ArgumentOutOfRangeException>(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
+            try
+            {
+                _ = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
+                Assert.Fail("Expected exception was not thrown");
+            }
+            //catch (AggregateException e) when (e.InnerExceptions.FirstOrDefault(ie => ie is RequestFailedException) != null)
+            //{
+            //}
+            catch (Exception ex)
+            {
+                string x = ex.Message;
+
+            }
         }
 
-        [TestCase("te.st")]
+            [TestCase("te.st")]
         [TestCase("te")]
         [TestCase("t")]
-        [SyncOnly]
         [RecordedTest]
-        public void TestGetResourceGroupOpsValid(string resourceGroupName)
+        public async Task TestGetResourceGroupOpsValid(string resourceGroupName)
         {
             var subOps = Client.DefaultSubscription;
-            Assert.DoesNotThrow(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
+            _ = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
         }
 
         [TestCase(89)]
         [TestCase(90)]
-        [SyncOnly]
         [RecordedTest]
-        public void TestGetResourceGroupOpsLong(int length)
+        public async Task TestGetResourceGroupOpsLong(int length)
         {
             var resourceGroupName = GetLongString(length);
             var subOps = Client.DefaultSubscription;
-            Assert.DoesNotThrow(delegate { subOps.GetResourceGroupOperations(resourceGroupName); });
+            _ = await subOps.GetResourceGroups().GetAsync(resourceGroupName);
         }
 
         private string GetLongString(int length)
