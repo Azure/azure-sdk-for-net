@@ -1,4 +1,4 @@
-# Translation History
+# Translation Operations History
 This sample demonstrates how to get the history for all submitted translation operations on your Translator resource. To get started you will need a Translator endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `DocumentTranslationClient`
