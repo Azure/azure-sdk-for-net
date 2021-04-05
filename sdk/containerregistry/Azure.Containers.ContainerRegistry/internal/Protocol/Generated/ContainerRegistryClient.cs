@@ -19,6 +19,8 @@ namespace Azure.Containers.ContainerRegistry.Protocol
     /// <summary> The ContainerRegistry service client. </summary>
     public partial class ContainerRegistryClient
     {
+        /// <summary>
+        /// </summary>
         protected HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://management.core.windows.net/.default" };
         private string url;
@@ -31,15 +33,8 @@ namespace Azure.Containers.ContainerRegistry.Protocol
         /// <summary> Initializes a new instance of ContainerRegistryClient. </summary>
         /// <param name="url"> Registry login URL. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public ContainerRegistryClient(string url, TokenCredential credential) : this(url, credential, new Core.ProtocolClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of ContainerRegistryClient. </summary>
-        /// <param name="url"> Registry login URL. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> Options to control the underlying operations. </param>
-        internal ContainerRegistryClient(string url, TokenCredential credential, Core.ProtocolClientOptions options = null)
+        /// <param name="options"> The options for configuring the client. </param>
+        internal ContainerRegistryClient(string url, TokenCredential credential, ContainerRegistryProtocolClientOptions options = null)
         {
             if (url == null)
             {
@@ -49,8 +44,8 @@ namespace Azure.Containers.ContainerRegistry.Protocol
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            options ??= new Core.ProtocolClientOptions();
 
+            options ??= new ContainerRegistryProtocolClientOptions();
             Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
             this.url = url;
         }
