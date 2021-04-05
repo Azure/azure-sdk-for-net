@@ -7,13 +7,14 @@
 
 using System;
 using System.Text.Json;
+using Azure.AI.TextAnalytics;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class TasksStateTasksDetailsInternal
+    internal partial class TasksStateTasksDetails
     {
-        internal static TasksStateTasksDetailsInternal DeserializeTasksStateTasksDetailsInternal(JsonElement element)
+        internal static TasksStateTasksDetails DeserializeTasksStateTasksDetails(JsonElement element)
         {
             DateTimeOffset lastUpdateDateTime = default;
             Optional<string> name = default;
@@ -36,7 +37,7 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new TasksStateTasksDetailsInternal(lastUpdateDateTime, name.Value, status);
+            return new TasksStateTasksDetails(lastUpdateDateTime, name.Value, status);
         }
     }
 }

@@ -106,6 +106,16 @@ namespace Azure.Data.Tables
 
         /// <summary>
         /// Get the value of a <see cref="TableEntity"/>'s
+        /// <see cref="BinaryData"/> property called
+        /// <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The name of the property.</param>
+        /// <returns>The value of the property.</returns>
+        /// <exception cref="InvalidOperationException">Value associated with given <paramref name="key"/> is not of type byte array.</exception>
+        public BinaryData GetBinaryData(string key) => GetValue<BinaryData>(key);
+
+        /// <summary>
+        /// Get the value of a <see cref="TableEntity"/>'s
         /// <see cref="byte"/> property called
         /// <paramref name="key"/>.
         /// </summary>
@@ -227,7 +237,15 @@ namespace Azure.Data.Tables
 
             if (type != null)
             {
-                EnforceType(type, value.GetType());
+                var valueType = value.GetType();
+                if (type == typeof(BinaryData) && valueType == typeof(byte[]))
+                {
+                    value = new BinaryData(value);
+                }
+                else
+                {
+                    EnforceType(type, valueType);
+                }
             }
 
             return value;
