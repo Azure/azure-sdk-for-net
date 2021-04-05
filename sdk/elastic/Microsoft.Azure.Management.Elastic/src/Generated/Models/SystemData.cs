@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Elastic.Models
+namespace Microsoft.Azure.Management.Elastic.Models
 {
     using Newtonsoft.Json;
     using System.Linq;

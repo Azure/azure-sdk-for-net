@@ -5,7 +5,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Elastic
+namespace Microsoft.Azure.Management.Elastic
 {
   using System;
   using System.Collections.Generic;

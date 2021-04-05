@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Elastic
+namespace Microsoft.Azure.Management.Elastic
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
