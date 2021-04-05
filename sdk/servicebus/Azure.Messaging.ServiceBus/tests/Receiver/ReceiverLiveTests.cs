@@ -132,12 +132,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.ThrowsAsync<TaskCanceledException>(async () => await receiver.ReceiveMessagesAsync(1, cancellationToken: cancellationTokenSource.Token));
                 var stop = DateTime.UtcNow;
 
-                Assert.That(stop - start,  Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(3)));
+                Assert.That(stop - start, Is.EqualTo(TimeSpan.FromSeconds(3)).Within(TimeSpan.FromSeconds(3)));
             }
         }
 
         [Test]
-        public async Task CancellingDoesNotLoseMessages()
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task CancellingDoesNotLoseMessages(bool prefetch)
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
@@ -150,7 +152,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 await sender.SendMessagesAsync(batch);
                 var receiver = client.CreateReceiver(
                     scope.QueueName,
-                    new ServiceBusReceiverOptions { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete });
+                    new ServiceBusReceiverOptions { ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete, PrefetchCount = prefetch ? 10 : 0 });
 
                 using var cancellationTokenSource = new CancellationTokenSource(500);
                 var received = 0;
@@ -177,6 +179,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     received++;
                 }
                 Assert.AreEqual(messageCount, received);
+            }
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("Not yet implemented")]
+        public async Task CancellingDoesNotBlockSubsequentReceives(bool prefetch)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = CreateClient();
+
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions { PrefetchCount = prefetch ? 10 : 0 });
+
+                using var cancellationTokenSource = new CancellationTokenSource(2000);
+                var start = DateTime.UtcNow;
+                Assert.That(
+                    async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(60), cancellationToken: cancellationTokenSource.Token),
+                    Throws.InstanceOf<TaskCanceledException>());
+
+                await sender.SendMessageAsync(GetMessage());
+                var msg = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual(1, msg.DeliveryCount);
+                var end = DateTime.UtcNow;
+                Assert.NotNull(msg);
+                Assert.Less(end - start, TimeSpan.FromSeconds(5));
             }
         }
 
@@ -857,7 +887,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 
                 await sender.SendMessagesAsync(new List<ServiceBusMessage>());
 
-                for (int i = 0; i < sentCount/messagesPerBatch; i++)
+                for (int i = 0; i < sentCount / messagesPerBatch; i++)
                 {
                     await sender.SendMessagesAsync(GetMessages(messagesPerBatch));
                 }

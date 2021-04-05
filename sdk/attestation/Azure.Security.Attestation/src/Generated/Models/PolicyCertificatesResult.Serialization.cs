@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
+    [JsonConverter(typeof(PolicyCertificatesResultConverter))]
     public partial class PolicyCertificatesResult
     {
         internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element)
@@ -29,6 +32,19 @@ namespace Azure.Security.Attestation.Models
                 }
             }
             return new PolicyCertificatesResult(xMsPolicyCertificates.Value);
+        }
+
+        internal partial class PolicyCertificatesResultConverter : JsonConverter<PolicyCertificatesResult>
+        {
+            public override void Write(Utf8JsonWriter writer, PolicyCertificatesResult model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override PolicyCertificatesResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializePolicyCertificatesResult(document.RootElement);
+            }
         }
     }
 }

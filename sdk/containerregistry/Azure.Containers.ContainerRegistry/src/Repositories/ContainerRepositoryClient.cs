@@ -21,11 +21,20 @@ namespace Azure.Containers.ContainerRegistry
         private readonly AuthenticationRestClient _acrAuthClient;
         private readonly string AcrAadScope = "https://management.core.windows.net/.default";
 
-        private readonly string _repository;
-
         /// <summary>
+        /// Gets the blob service's primary <see cref="Uri"/> endpoint.
         /// </summary>
         public virtual Uri Endpoint { get; }
+
+        /// <summary>
+        /// Gets the name of the container registry.
+        /// </summary>
+        public virtual string Registry => Endpoint.Host;
+
+        /// <summary>
+        /// Gets the name of the repository.
+        /// </summary>
+        public virtual string Repository { get; }
 
         /// <summary>
         /// </summary>
@@ -43,7 +52,7 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNull(options, nameof(options));
 
             Endpoint = endpoint;
-            _repository = repository;
+            Repository = repository;
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
@@ -60,6 +69,21 @@ namespace Azure.Containers.ContainerRegistry
         {
         }
 
+        internal ContainerRepositoryClient(Uri endpoint, string repository, ClientDiagnostics diagnostics, HttpPipeline pipeline, HttpPipeline authPipeline)
+        {
+            Endpoint = endpoint;
+            Repository = repository;
+
+            _clientDiagnostics = diagnostics;
+
+            _acrAuthPipeline = authPipeline;
+            _acrAuthClient = new AuthenticationRestClient(_clientDiagnostics, _acrAuthPipeline, endpoint.AbsoluteUri);
+
+            _pipeline = pipeline;
+            _restClient = new ContainerRegistryRepositoryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
+            _registryRestClient = new ContainerRegistryRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri);
+        }
+
         #region Repository methods
         /// <summary> Get repository properties. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -69,7 +93,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.GetPropertiesAsync(_repository, cancellationToken).ConfigureAwait(false);
+                return await _restClient.GetPropertiesAsync(Repository, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -86,7 +110,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.GetProperties(_repository, cancellationToken);
+                return _restClient.GetProperties(Repository, cancellationToken);
             }
             catch (Exception e)
             {
@@ -98,13 +122,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Update the attribute identified by `name` where `reference` is the name of the repository. </summary>
         /// <param name="value"> Repository attribute value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SetPropertiesAsync(ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RepositoryProperties>> SetPropertiesAsync(ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetProperties)}");
             scope.Start();
             try
             {
-                return await _restClient.SetPropertiesAsync(_repository, value, cancellationToken).ConfigureAwait(false);
+                return await _restClient.SetPropertiesAsync(Repository, value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -116,13 +140,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary>Update the repository properties.</summary>
         /// <param name="value"> Repository properties to set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SetProperties(ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<RepositoryProperties> SetProperties(ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetProperties)}");
             scope.Start();
             try
             {
-                return _restClient.SetProperties(_repository, value, cancellationToken);
+                return _restClient.SetProperties(Repository, value, cancellationToken);
             }
             catch (Exception e)
             {
@@ -139,7 +163,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _registryRestClient.DeleteRepositoryAsync(_repository, cancellationToken).ConfigureAwait(false);
+                return await _registryRestClient.DeleteRepositoryAsync(Repository, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -156,7 +180,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _registryRestClient.DeleteRepository(_repository, cancellationToken);
+                return _registryRestClient.DeleteRepository(Repository, cancellationToken);
             }
             catch (Exception e)
             {
@@ -170,7 +194,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get the collection of registry artifacts for a repository. </summary>
         /// <param name="options"> Options to override default collection getting behavior. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<RegistryArtifactProperties> GetRegistryArtifactsAsync(GetRegistryArtifactOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RegistryArtifactProperties> GetRegistryArtifactsAsync(GetRegistryArtifactsOptions options = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<RegistryArtifactProperties>> FirstPageFunc(int? pageSizeHint)
             {
@@ -178,7 +202,7 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetManifestsAsync(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetManifestsAsync(Repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -195,7 +219,7 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
-                    var response = await _restClient.GetManifestsNextPageAsync(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetManifestsNextPageAsync(uriReference, Repository, last: null, n: null, orderby: options?.OrderBy.ToString(), cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -211,7 +235,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get the collection of tags for a repository. </summary>
         /// <param name="options"> Options to override default collection getting behavior. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<RegistryArtifactProperties> GetRegistryArtifacts(GetRegistryArtifactOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<RegistryArtifactProperties> GetRegistryArtifacts(GetRegistryArtifactsOptions options = null, CancellationToken cancellationToken = default)
         {
             Page<RegistryArtifactProperties> FirstPageFunc(int? pageSizeHint)
             {
@@ -219,7 +243,7 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetManifests(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), cancellationToken: cancellationToken);
+                    var response = _restClient.GetManifests(Repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -236,7 +260,7 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
-                    var response = _restClient.GetManifestsNextPage(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), cancellationToken);
+                    var response = _restClient.GetManifestsNextPage(uriReference, Repository, last: null, n: null, orderby: options?.OrderBy.ToString(), cancellationToken);
                     return Page.FromValues(response.Value.RegistryArtifacts, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -260,9 +284,9 @@ namespace Azure.Containers.ContainerRegistry
             try
             {
                 string digest = IsDigest(tagOrDigest) ? tagOrDigest :
-                    (await _restClient.GetTagPropertiesAsync(_repository, tagOrDigest, cancellationToken).ConfigureAwait(false)).Value.Digest;
+                    (await _restClient.GetTagPropertiesAsync(Repository, tagOrDigest, cancellationToken).ConfigureAwait(false)).Value.Digest;
 
-                return await _restClient.GetRegistryArtifactPropertiesAsync(_repository, digest, cancellationToken).ConfigureAwait(false);
+                return await _restClient.GetRegistryArtifactPropertiesAsync(Repository, digest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -281,9 +305,9 @@ namespace Azure.Containers.ContainerRegistry
 
             try
             {
-                string digest = IsDigest(tagOrDigest) ? tagOrDigest : _restClient.GetTagProperties(_repository, tagOrDigest, cancellationToken).Value.Digest;
+                string digest = IsDigest(tagOrDigest) ? tagOrDigest : _restClient.GetTagProperties(Repository, tagOrDigest, cancellationToken).Value.Digest;
 
-                return _restClient.GetRegistryArtifactProperties(_repository, digest, cancellationToken);
+                return _restClient.GetRegistryArtifactProperties(Repository, digest, cancellationToken);
             }
             catch (Exception e)
             {
@@ -301,13 +325,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="value"> Manifest properties value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SetManifestPropertiesAsync(string digest, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RegistryArtifactProperties>> SetManifestPropertiesAsync(string digest, ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetManifestProperties)}");
             scope.Start();
             try
             {
-                return await _restClient.UpdateManifestAttributesAsync(_repository, digest, value, cancellationToken).ConfigureAwait(false);
+                return await _restClient.UpdateManifestAttributesAsync(Repository, digest, value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -320,13 +344,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="value"> Manifest properties value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SetManifestProperties(string digest, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<RegistryArtifactProperties> SetManifestProperties(string digest, ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetManifestProperties)}");
             scope.Start();
             try
             {
-                return _restClient.UpdateManifestAttributes(_repository, digest, value, cancellationToken);
+                return _restClient.UpdateManifestAttributes(Repository, digest, value, cancellationToken);
             }
             catch (Exception e)
             {
@@ -344,7 +368,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.DeleteManifestAsync(_repository, digest, cancellationToken).ConfigureAwait(false);
+                return await _restClient.DeleteManifestAsync(Repository, digest, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -362,7 +386,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.DeleteManifest(_repository, digest, cancellationToken);
+                return _restClient.DeleteManifest(Repository, digest, cancellationToken);
             }
             catch (Exception e)
             {
@@ -374,10 +398,10 @@ namespace Azure.Containers.ContainerRegistry
         #endregion
 
         #region Tag methods
-		        /// <summary> Get the collection of tags for a repository. </summary>
+        /// <summary> Get the collection of tags for a repository. </summary>
         /// <param name="options"> Options to override default collection getting behavior. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<TagProperties> GetTagsAsync(GetTagOptions options = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TagProperties> GetTagsAsync(GetTagsOptions options = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<TagProperties>> FirstPageFunc(int? pageSizeHint)
             {
@@ -385,7 +409,7 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    var response = await _restClient.GetTagsAsync(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetTagsAsync(Repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -402,7 +426,7 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
-                    var response = await _restClient.GetTagsNextPageAsync(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken).ConfigureAwait(false);
+                    var response = await _restClient.GetTagsNextPageAsync(uriReference, Repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -418,7 +442,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Get the collection of tags for a repository. </summary>
         /// <param name="options"> Options to override default collection getting behavior. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<TagProperties> GetTags(GetTagOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TagProperties> GetTags(GetTagsOptions options = null, CancellationToken cancellationToken = default)
         {
             Page<TagProperties> FirstPageFunc(int? pageSizeHint)
             {
@@ -426,7 +450,7 @@ namespace Azure.Containers.ContainerRegistry
                 scope.Start();
                 try
                 {
-                    var response = _restClient.GetTags(_repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken: cancellationToken);
+                    var response = _restClient.GetTags(Repository, last: null, n: pageSizeHint, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -443,7 +467,7 @@ namespace Azure.Containers.ContainerRegistry
                 try
                 {
                     string uriReference = ContainerRegistryClient.ParseUriReferenceFromLinkHeader(nextLink);
-                    var response = _restClient.GetTagsNextPage(uriReference, _repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken);
+                    var response = _restClient.GetTagsNextPage(uriReference, Repository, last: null, n: null, orderby: options?.OrderBy.ToString(), digest: null, cancellationToken);
                     return Page.FromValues(response.Value.Tags, response.Headers.Link, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -465,7 +489,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.GetTagPropertiesAsync(_repository, tag, cancellationToken).ConfigureAwait(false);
+                return await _restClient.GetTagPropertiesAsync(Repository, tag, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -483,7 +507,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.GetTagProperties(_repository, tag, cancellationToken);
+                return _restClient.GetTagProperties(Repository, tag, cancellationToken);
             }
             catch (Exception e)
             {
@@ -496,13 +520,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tag"> Tag name. </param>
         /// <param name="value"> Tag property value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> SetTagPropertiesAsync(string tag, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TagProperties>> SetTagPropertiesAsync(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetTagProperties)}");
             scope.Start();
             try
             {
-                return await _restClient.UpdateTagAttributesAsync(_repository, tag, value, cancellationToken).ConfigureAwait(false);
+                return await _restClient.UpdateTagAttributesAsync(Repository, tag, value, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -515,13 +539,13 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="tag"> Tag name. </param>
         /// <param name="value"> Tag property value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response SetTagProperties(string tag, ContentProperties value, CancellationToken cancellationToken = default)
+        public virtual Response<TagProperties> SetTagProperties(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetTagProperties)}");
             scope.Start();
             try
             {
-                return _restClient.UpdateTagAttributes(_repository, tag, value, cancellationToken);
+                return _restClient.UpdateTagAttributes(Repository, tag, value, cancellationToken);
             }
             catch (Exception e)
             {
@@ -539,7 +563,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return await _restClient.DeleteTagAsync(_repository, tag, cancellationToken).ConfigureAwait(false);
+                return await _restClient.DeleteTagAsync(Repository, tag, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -557,7 +581,7 @@ namespace Azure.Containers.ContainerRegistry
             scope.Start();
             try
             {
-                return _restClient.DeleteTag(_repository, tag, cancellationToken);
+                return _restClient.DeleteTag(Repository, tag, cancellationToken);
             }
             catch (Exception e)
             {

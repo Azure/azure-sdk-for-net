@@ -26,5 +26,5 @@ extends:
     ServiceDirectory: documenttranslation
     ArtifactName: packages
     Artifacts:
-    - name: Azure.AI.DocumentTranslation
-      safeName: AzureAIDocumentTranslation
+    - name: Azure.AI.Translation.Document
+      safeName: AzureAITranslationDocument
