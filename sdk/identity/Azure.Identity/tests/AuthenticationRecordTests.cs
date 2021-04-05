@@ -95,11 +95,22 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expRecord.ClientId, actRecord.ClientId);
             Assert.AreEqual(expRecord.Version, actRecord.Version);
         }
+        [Test]
+        public void DeserializeThrowsWithNonCurrentVersion()
+        {
+            var version = "2.0";
+            var jsonWithVersion = $"{{\"username\":\"2012c4ff-e82f-40de-ab6e-0afa51a1700d\",\"authority\":\"f5313742-e9ea-49fe-8864-910911375241\",\"homeAccountId\":\"309958ce-97c3-4c0e-8047-ba3931aef15f\",\"tenantId\":\"5d083b4e-4d2e-431c-adb7-fec97397a359\",\"clientId\":\"387f4ada-ea9b-4773-b5c3-ea5f54991738\",\"version\":\"{version}\"}}";
+
+            var buff = Encoding.UTF8.GetBytes(jsonWithVersion);
+            var stream = new MemoryStream(buff, 0, buff.Length);
+
+            Assert.Throws<InvalidOperationException>(() => AuthenticationRecord.Deserialize(stream));
+        }
 
         [Test]
         public void DeserializesWithVersion()
         {
-            var version = "2.0";
+            var version = "1.0";
             var jsonWithVersion = $"{{\"username\":\"2012c4ff-e82f-40de-ab6e-0afa51a1700d\",\"authority\":\"f5313742-e9ea-49fe-8864-910911375241\",\"homeAccountId\":\"309958ce-97c3-4c0e-8047-ba3931aef15f\",\"tenantId\":\"5d083b4e-4d2e-431c-adb7-fec97397a359\",\"clientId\":\"387f4ada-ea9b-4773-b5c3-ea5f54991738\",\"version\":\"{version}\"}}";
 
             var buff = Encoding.UTF8.GetBytes(jsonWithVersion);

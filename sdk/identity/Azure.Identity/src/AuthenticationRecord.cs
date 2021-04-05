@@ -191,6 +191,10 @@ namespace Azure.Identity
                         break;
                     case VersionPropertyName:
                         authProfile.Version = prop.Value.GetString();
+                        if (authProfile.Version != CurrentVersion)
+                        {
+                            throw new InvalidOperationException($"Attempted to deserialize an {nameof(AuthenticationRecord)} with a version that is not the current version. Expected: '{CurrentVersion}', Actual: '{authProfile.Version}'");
+                        }
                         break;
                 }
             }
