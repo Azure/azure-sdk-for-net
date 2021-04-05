@@ -1,7 +1,10 @@
 # Release History
 
-## 11.3.0-beta.1 (Unreleased)
+## 11.3.0-beta.1 (2021-04-06)
 
+### Added
+- Added support for [`Azure.Core.GeoJson`](https://docs.microsoft.com/dotnet/api/azure.core.geojson) types in `SearchDocument`, `SearchFilter` and `FieldBuilder`.
+- Added [`EventSource`](https://docs.microsoft.com/dotnet/api/system.diagnostics.tracing.eventsource) based logging. Event source name is **Azure-Search-Documents**. Current set of events are focused on tuning batch sizes for [`SearchIndexingBufferedSender`](https://docs.microsoft.com/dotnet/api/azure.search.documents.searchindexingbufferedsender-1).
 
 ## 11.2.0 (2021-02-10)
 

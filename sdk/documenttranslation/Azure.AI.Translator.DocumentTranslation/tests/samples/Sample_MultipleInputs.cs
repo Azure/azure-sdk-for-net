@@ -53,10 +53,15 @@ namespace Azure.AI.Translator.DocumentTranslation.Samples
 
             DocumentTranslationOperation operation = client.StartTranslation(inputs);
 
-            TimeSpan pollingInterval = new TimeSpan(1000);
+            TimeSpan pollingInterval = new(1000);
 
             while (!operation.HasCompleted)
             {
+                if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
+                {
+                    pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
+                }
+
                 Thread.Sleep(pollingInterval);
                 operation.UpdateStatus();
 

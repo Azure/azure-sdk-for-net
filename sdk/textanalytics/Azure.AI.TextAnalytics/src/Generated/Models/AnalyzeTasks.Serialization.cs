@@ -9,13 +9,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     internal partial class AnalyzeTasks
     {
         internal static AnalyzeTasks DeserializeAnalyzeTasks(JsonElement element)
         {
-            Optional<TasksStateTasksDetailsInternal> details = default;
+            Optional<TasksStateTasksDetails> details = default;
             int completed = default;
             int failed = default;
             int inProgress = default;
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    details = TasksStateTasksDetailsInternal.DeserializeTasksStateTasksDetailsInternal(property.Value);
+                    details = TasksStateTasksDetails.DeserializeTasksStateTasksDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("completed"))

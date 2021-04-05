@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
-using Azure.Security.Attestation.Models;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -38,9 +36,6 @@ namespace Azure.Security.Attestation
             TokenHeaderBytes = Base64Url.Decode(decomposedToken[0]);
             TokenBodyBytes = Base64Url.Decode(decomposedToken[1]);
             TokenSignatureBytes = Base64Url.Decode(decomposedToken[2]);
-
-            _options.Converters.Add(new PolicyResultConverter());
-            _options.Converters.Add(new AttestationResultConverter());
         }
 
         /// <summary>
@@ -72,10 +67,73 @@ namespace Azure.Security.Attestation
         /// </summary>
         public ReadOnlyMemory<byte> TokenSignatureBytes { get; }
 
+        // Standard JSON Web Signature/Json Web Token header values.
+
+        /// <summary>
+        /// Json Web Token Header "algorithm". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.1 for details.
+        /// If the value of <see cref="Algorithm"/> is "none" it indicates that the token is unsecured.
+        /// </summary>
+        public string Algorithm { get => Header.Algorithm; }
+
+        /// <summary>
+        /// Json Web Token Header "type". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.9 for details.
+        ///
+        /// If present, the value for this field is normally "JWT".
+        /// </summary>
+        public string Type { get => Header.Type; }
+
+        /// <summary>
+        /// Json Web Token Header "content type". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.10 for details.
+        /// </summary>
+        public string ContentType { get => Header.ContentType; }
+        /// <summary>
+        /// Json Web Token Header "Key URL". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.2 for details.
+        /// </summary>
+        public Uri KeyUrl { get => Header.JWKUri; }
+        /// <summary>
+        /// Json Web Token Header "Key ID". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.4 for details.
+        /// </summary>
+        public string KeyId { get => Header.KeyId; }
+
+        /// <summary>
+        /// Json Web Token Header "X509 URL". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.5 for details.
+        /// </summary>
+        public Uri X509Url { get => Header.X509Uri; }
+
+        /// <summary>
+        /// An array of X.509Certificates which represent a certificate chain used to sign the token. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6 for details.
+        /// </summary>
+        public X509Certificate2[] X509CertificateChain {
+            get
+            {
+                List<X509Certificate2> certificates = new List<X509Certificate2>();
+                foreach (var certificate in Header.X509CertificateChain)
+                {
+                    certificates.Add(new X509Certificate2(certificate));
+                }
+                return certificates.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// The "thumbprint" of the certificate used to sign the request. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.7 for details.
+        /// </summary>
+        public string X509CertificateThumbprint { get => Header.X509CertificateThumbprint; }
+
+        /// <summary>
+        /// The "thumbprint" of the certificate used to sign the request generated using the SHA256 algorithm. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.8 for details.
+        /// </summary>
+        public string X509CertificateSha256Thumbprint { get => Header.X509CertificateSha256Thumbprint; }
+
+        /// <summary>
+        /// Json Web TOken Header "Critical". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.11 for details.
+        /// </summary>
+        public bool? Critical { get => Header.Critical; }
+
         /// <summary>
         /// Returns the standard properties in the JSON Web Token header. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        private JsonWebTokenHeader Header { get => JsonSerializer.Deserialize<JsonWebTokenHeader>(TokenHeaderBytes.ToArray()); }
+        internal JsonWebTokenHeader Header { get => JsonSerializer.Deserialize<JsonWebTokenHeader>(TokenHeaderBytes.ToArray()); }
 
         /// <summary>
         /// Returns the standard properties in the JSON Web Token header. See https://tools.ietf.org/html/rfc7515 for more details.

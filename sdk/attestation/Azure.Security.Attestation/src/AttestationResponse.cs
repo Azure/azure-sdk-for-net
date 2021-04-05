@@ -17,15 +17,23 @@ namespace Azure.Security.Attestation
     {
         private readonly AttestationToken _token;
         private readonly Response _response;
+        private readonly T _body;
 
-        internal AttestationResponse(Response response, AttestationToken underlyingToken) : base()
+        /// <summary>
+        /// Represents a response from the Microsoft Azure Attestation service.
+        /// </summary>
+        /// <param name="response">The underlying response object corresponding to the original request,</param>
+        /// <param name="underlyingToken">The attestation token returned from the attestation service.</param>
+        /// <param name="body">The optional value of the body of the token to be returned to the customer. If none is provided, then the body will be retrieved from the attestation token.</param>
+        internal AttestationResponse(Response response, AttestationToken underlyingToken, T body = default(T)) : base()
         {
             _response = response;
             _token = underlyingToken;
+            _body = body;
         }
 
         /// <inheritdoc/>
-        public override T Value => _token.GetBody<T>();
+        public override T Value => _body ?? _token.GetBody<T>();
 
         /// <summary>
         /// Returns the raw attestation token returned from the Microsoft Azure Attestation service.

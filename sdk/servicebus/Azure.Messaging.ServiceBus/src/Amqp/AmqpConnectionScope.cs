@@ -989,9 +989,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // use a static delegate with tuple state to avoid allocating a closure
                 using var registration = cancellationToken.Register(static state =>
                 {
-                    var tuple = ((TaskCompletionSource<object>, AmqpObject))state;
-                    TaskCompletionSource<object> tcs = tuple.Item1;
-                    AmqpObject target = tuple.Item2;
+                    var (tcs, target) = ((TaskCompletionSource<object>, AmqpObject)) state;
                     if (tcs.TrySetCanceled())
                     {
                         target.SafeClose();
@@ -1022,9 +1020,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         break;
                     case RequestResponseAmqpLink linkTarget:
                         linkTarget.Session?.SafeClose();
-                        break;
-
-                    default:
                         break;
                 }
 
