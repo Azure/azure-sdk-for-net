@@ -13,8 +13,8 @@
 
   <!-- Low-level client generated files -->
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\internal\Protocol\Generated\ContainerRegistryBlobProtocolClient.cs"/>
-    <Compile Include="$(MSBuildThisFileDirectory)..\internal\Protocol\Generated\ContainerRegistryProtocolClientOptions.cs"/>
+    <Compile Include="$(MSBuildThisFileDirectory)..\internal\Protocol\Generated\ContainerRegistryBlobProtocolClient.cs" LinkBase="Protocol" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\internal\Protocol\Generated\ContainerRegistryProtocolClientOptions.cs" LinkBase="Protocol" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

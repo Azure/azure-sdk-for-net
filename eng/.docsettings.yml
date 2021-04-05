@@ -14,6 +14,7 @@ omitted_paths:
   - sdk/*/samples/*
   - sdk/*/*/samples/*
   - sdk/*/swagger/*
+  - sdk/*/internal/Protocol/*
   - doc/ApiDocGeneration/*
 language: net
 root_check_enabled: True
