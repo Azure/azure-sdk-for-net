@@ -29,7 +29,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             TimeSeriesInsightsClient client = GetClient();
 
             // GET model settings
-            Response<TimeSeriesModelSettings> currentSettings = await client.GetModelSettingsAsync().ConfigureAwait(false);
+            Response<TimeSeriesModelSettings> currentSettings = await client.ModelSettings.GetAsync().ConfigureAwait(false);
             currentSettings.GetRawResponse().Status.Should().Be((int)HttpStatusCode.OK);
             string testName = "testModel";
             // UPDATE model settings
@@ -38,17 +38,17 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
 
             try
             {
-                Response<TimeSeriesModelSettings> updatedSettingsName = await client.UpdateModelSettingsNameAsync(testName).ConfigureAwait(false);
+                Response<TimeSeriesModelSettings> updatedSettingsName = await client.ModelSettings.UpdateNameAsync(testName).ConfigureAwait(false);
                 updatedSettingsName.GetRawResponse().Status.Should().Be((int)HttpStatusCode.OK);
                 updatedSettingsName.Value.Name.Should().Be(testName);
 
                 await TestRetryHelper.RetryAsync<Response<TimeSeriesModelSettings>>(async () =>
                 {
-                    Response<TimeSeriesModelSettings> updatedSettingsId = await client.UpdateModelSettingsDefaultTypeIdAsync(typeId).ConfigureAwait(false);
+                    Response<TimeSeriesModelSettings> updatedSettingsId = await client.ModelSettings.UpdateDefaultTypeIdAsync(typeId).ConfigureAwait(false);
                     updatedSettingsId.Value.DefaultTypeId.Should().Be(typeId);
 
                     // update it back to the default Type Id
-                    updatedSettingsId = await client.UpdateModelSettingsDefaultTypeIdAsync(defaultTypeId).ConfigureAwait(false);
+                    updatedSettingsId = await client.ModelSettings.UpdateDefaultTypeIdAsync(defaultTypeId).ConfigureAwait(false);
                     updatedSettingsId.Value.DefaultTypeId.Should().Be(defaultTypeId);
 
                     return null;
@@ -81,7 +81,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             TimeSeriesInsightsClient client = GetClient();
 
             // act
-            Func<Task> act = async () => await client.UpdateModelSettingsDefaultTypeIdAsync("testId").ConfigureAwait(false);
+            Func<Task> act = async () => await client.ModelSettings.UpdateDefaultTypeIdAsync("testId").ConfigureAwait(false);
 
             // assert
             act.Should().Throw<RequestFailedException>()
