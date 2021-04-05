@@ -76,7 +76,7 @@
     <PackageReference Update="Azure.Core" Version="1.12.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.0.0" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.10" />
-    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.3.1" />
+    <PackageReference Update="Azure.Messaging.EventHubs" Version="5.4.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.0.0" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.2.0-beta.1" />
     <PackageReference Update="Azure.Identity" Version="1.2.1" />
