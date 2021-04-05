@@ -102,7 +102,7 @@ jobs:
     steps:
       - pwsh: |
           npx cspell lint `
-            --config .\.vscode\cspell.json `
+            --config ./.vscode/cspell.json `
             ./sdk/${{ parameters.ServiceDirectory }}/*/api/*.cs
         displayName: Check spelling of public API surface
       - task: UsePythonVersion@0
