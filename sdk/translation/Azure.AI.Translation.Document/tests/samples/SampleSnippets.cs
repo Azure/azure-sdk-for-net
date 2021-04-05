@@ -67,12 +67,8 @@ namespace Azure.AI.Translation.Document.Samples
             #region Snippet:DocumentTranslationSingleInput
             //@@ Uri sourceSasUri = <source SAS URI>;
             //@@ Uri frenchTargetSasUri = <french target SAS URI>;
-            //@@ Uri arabicTargetSasUri = <arabic target SAS URI>;
-            //@@ Uri spanishTargetSasUri = <spanish target SAS URI>;
 
             var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
-            input.AddTarget(arabicTargetSasUri, "ar");
-            input.AddTarget(spanishTargetSasUri, "es");
             #endregion
 
             Uri source1SasUri = new Uri("<source1 SAS URI>");
@@ -81,6 +77,8 @@ namespace Azure.AI.Translation.Document.Samples
             #region Snippet:DocumentTranslationMultipleInputs
             //@@ Uri source1SasUri = <source1 SAS URI>;
             //@@ Uri source2SasUri = <source2 SAS URI>;
+            //@@ Uri frenchTargetSasUri = <french target SAS URI>;
+            //@@ Uri spanishTargetSasUri = <spanish target SAS URI>;
 
             var inputs = new List<DocumentTranslationInput>
             {

@@ -1,4 +1,4 @@
-# Translating Documents
+# Multiple Translation operations
 This sample demonstrates how to translate documents in multiple blob container to different languages simultaneously. To get started you will need a Translator endpoint and credentials.  See [README][README] for links and instructions.
 
 ## Creating a `DocumentTranslationClient`
