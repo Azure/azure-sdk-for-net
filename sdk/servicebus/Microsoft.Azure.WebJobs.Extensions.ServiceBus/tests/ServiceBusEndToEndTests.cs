@@ -767,9 +767,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class ServiceBusSingleMessageTestJob_BindMultipleFunctionsToSameEntity
         {
-            protected static bool firstReceived = false;
-            protected static bool secondReceived = false;
-
             public static void SBQueueFunction(
                 [ServiceBusTrigger(FirstQueueNameKey)] string message)
             {
