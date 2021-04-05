@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.ServiceBus;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -124,8 +125,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 IEnumerable<LogMessage> logMessages1 = host1.GetTestLoggerProvider().GetAllLogMessages();
                 List<LogMessage> consoleOutput1 = logMessages1.Where(m => m.Category == "Function.SBQueue1Trigger.User").ToList();
+                Assert.IsNotEmpty(logMessages1.Where(m => m.Category == "CustomMessagingProvider" && m.FormattedMessage.StartsWith("Custom processor Begin called!")));
+                Assert.IsNotEmpty(logMessages1.Where(m => m.Category == "CustomMessagingProvider" && m.FormattedMessage.StartsWith("Custom processor End called!")));
                 IEnumerable<LogMessage> logMessages2 = host2.GetTestLoggerProvider().GetAllLogMessages();
                 List<LogMessage> consoleOutput2 = logMessages2.Where(m => m.Category == "Function.SBQueue2Trigger.User").ToList();
+                Assert.IsNotEmpty(logMessages2.Where(m => m.Category == "CustomMessagingProvider" && m.FormattedMessage.StartsWith("Custom processor Begin called!")));
+                Assert.IsNotEmpty(logMessages2.Where(m => m.Category == "CustomMessagingProvider" && m.FormattedMessage.StartsWith("Custom processor End called!")));
                 char sessionId1 = consoleOutput1[0].FormattedMessage[consoleOutput1[0].FormattedMessage.Length - 1];
                 foreach (LogMessage m in consoleOutput1)
                 {
@@ -171,8 +176,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 IEnumerable<LogMessage> logMessages1 = host1.GetTestLoggerProvider().GetAllLogMessages();
                 List<LogMessage> consoleOutput1 = logMessages1.Where(m => m.Category == "Function.SBSub1Trigger.User").ToList();
+                Assert.IsNotEmpty(logMessages1.Where(m => m.Category == "CustomMessagingProvider" && m.FormattedMessage.StartsWith("Custom processor Begin called!")));
+                Assert.IsNotEmpty(logMessages1.Where(m => m.Category == "CustomMessagingProvider" && m.FormattedMessage.StartsWith("Custom processor End called!")));
                 IEnumerable<LogMessage> logMessages2 = host2.GetTestLoggerProvider().GetAllLogMessages();
                 List<LogMessage> consoleOutput2 = logMessages2.Where(m => m.Category == "Function.SBSub2Trigger.User").ToList();
+                Assert.IsNotEmpty(logMessages2.Where(m => m.Category == "CustomMessagingProvider" && m.FormattedMessage.StartsWith("Custom processor Begin called!")));
+                Assert.IsNotEmpty(logMessages2.Where(m => m.Category == "CustomMessagingProvider" && m.FormattedMessage.StartsWith("Custom processor End called!")));
 
                 char sessionId1 = consoleOutput1[0].FormattedMessage[consoleOutput1[0].FormattedMessage.Length - 1];
                 foreach (LogMessage m in consoleOutput1)
@@ -191,7 +200,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task ServiceBusSessionQueue_SessionLocks()
         {
-            var (jobHost, host) = BuildSessionHost<ServiceBusSessionsTestJobs1>(tryTimeout: TimeSpan.FromSeconds(90));
+            var (jobHost, host) = BuildSessionHost<ServiceBusSessionsTestJobs1>(addCustomProvider: true);
             using (jobHost)
             {
                 _waitHandle1 = new ManualResetEvent(initialState: false);
@@ -241,7 +250,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task ServiceBusSessionSub_SessionLocks()
         {
-            var (jobHost, host) = BuildSessionHost<ServiceBusSessionsTestJobs1>(tryTimeout: TimeSpan.FromSeconds(90));
+            var (jobHost, host) = BuildSessionHost<ServiceBusSessionsTestJobs1>(addCustomProvider: true);
             using (jobHost)
             {
                 _waitHandle1 = new ManualResetEvent(initialState: false);
@@ -336,11 +345,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await TestMultipleDrainMode<DrainModeTestJobTopicBatch>(false);
         }
 
+        [Test]
+        public async Task MultipleFunctionsBindingToSameEntity()
+        {
+            await TestMultiple<ServiceBusSingleMessageTestJob_BindMultipleFunctionsToSameEntity>();
+        }
+
         /*
          * Helper functions
          */
 
-        private (JobHost JobHost, IHost Host) BuildSessionHost<T>(bool autoComplete = true, TimeSpan? tryTimeout = default)
+        private (JobHost JobHost, IHost Host) BuildSessionHost<T>(bool addCustomProvider = false, bool autoComplete = true)
         {
             return BuildHost<T>(builder =>
                 builder.ConfigureWebJobs(b =>
@@ -350,11 +365,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         sbOptions.AutoCompleteMessages = autoComplete;
                         sbOptions.MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin);
                         sbOptions.MaxConcurrentSessions = 1;
-                        if (tryTimeout != null)
-                        {
-                            sbOptions.RetryOptions.TryTimeout = tryTimeout.Value;
-                        }
-                    })));
+                    }))
+                .ConfigureServices(services =>
+                {
+                    if (addCustomProvider)
+                    {
+                        services.AddSingleton<MessagingProvider, CustomMessagingProvider>();
+                    }
+                })
+            );
         }
 
         private async Task TestSingleDrainMode<T>(bool sendToQueue)
@@ -370,7 +389,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await WriteTopicMessage(DrainingTopicMessageBody, _drainModeSessionId);
             }
-            var (jobHost, host) = BuildSessionHost<T>(false);
+            var (jobHost, host) = BuildSessionHost<T>(false, false);
             using (jobHost)
             {
                 // Wait to ensure function invocatoin has started before draining messages
@@ -420,7 +439,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await WriteTopicMessage(DrainingTopicMessageBody, _drainModeSessionId);
             }
-            var (jobHost, host) = BuildSessionHost<T>(false);
+            var (jobHost, host) = BuildSessionHost<T>(false, false);
             using (jobHost)
             {
                 // Wait to ensure function invocatoin has started before draining messages
@@ -635,6 +654,82 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 ServiceBusMultipleTestJobsBase.ProcessMessages(messages);
             }
         }
+
+        public class ServiceBusSingleMessageTestJob_BindMultipleFunctionsToSameEntity
+        {
+            protected static bool firstReceived = false;
+            protected static bool secondReceived = false;
+
+            public static void SBQueueFunction(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] string message)
+            {
+                ServiceBusMultipleTestJobsBase.ProcessMessages(new string[] { message });
+            }
+
+            public static void SBQueueFunction2(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] string message)
+            {
+                ServiceBusMultipleTestJobsBase.ProcessMessages(new string[] { message });
+            }
+        }
+
+        public class CustomMessagingProvider : MessagingProvider
+        {
+            public const string CustomMessagingCategory = "CustomMessagingProvider";
+            private readonly ILogger _logger;
+            private readonly ServiceBusOptions _options;
+
+            public CustomMessagingProvider(
+                IOptions<ServiceBusOptions> serviceBusOptions,
+                ILoggerFactory loggerFactory)
+                : base(serviceBusOptions)
+            {
+                _options = serviceBusOptions.Value;
+                _options.SessionIdleTimeout = TimeSpan.FromSeconds(90);
+                _options.MaxConcurrentSessions = 1;
+                _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);
+            }
+
+            public override SessionMessageProcessor CreateSessionMessageProcessor(ServiceBusClient client, string entityPath)
+            {
+                ServiceBusSessionProcessor processor;
+                if (entityPath == _firstQueueScope.QueueName)
+                {
+                    processor = client.CreateSessionProcessor(entityPath, _options.ToSessionProcessorOptions());
+                }
+                else
+                {
+                    string[] arr = entityPath.Split('/');
+                    processor = client.CreateSessionProcessor(arr[0], arr[2], _options.ToSessionProcessorOptions());
+                }
+                processor.ProcessErrorAsync += args => Task.CompletedTask;
+                return new CustomSessionMessageProcessor(client, processor, _logger);
+            }
+
+            private class CustomSessionMessageProcessor : SessionMessageProcessor
+            {
+                private readonly ILogger _logger;
+
+                public CustomSessionMessageProcessor(ServiceBusClient client, ServiceBusSessionProcessor sessionProcessor, ILogger logger)
+                    : base(client, sessionProcessor)
+                {
+                    _logger = logger;
+                }
+
+                public override async Task<bool> BeginProcessingMessageAsync(ServiceBusSessionMessageActions sessionActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
+                {
+                    _logger?.LogInformation("Custom processor Begin called!" + message.Body.ToString());
+                    return await base.BeginProcessingMessageAsync(sessionActions, message, cancellationToken);
+                }
+
+                public override async Task CompleteProcessingMessageAsync(ServiceBusSessionMessageActions sessionActions, ServiceBusReceivedMessage message, Executors.FunctionResult result, CancellationToken cancellationToken)
+                {
+                    _logger?.LogInformation("Custom processor End called!" + message.Body.ToString());
+                    await base.CompleteProcessingMessageAsync(sessionActions, message, result, cancellationToken);
+                }
+            }
+        }
+
         public void Dispose()
         {
             if (_waitHandle1 != null)

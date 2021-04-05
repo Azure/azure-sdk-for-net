@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
 {
-    public class MessageProviderTests
+    public class MessagingProviderTests
     {
         private static string _defaultConnection = "Endpoint=sb://default.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=abc123=";
         private static ServiceBusClient _client = new(_defaultConnection);
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var options = new ServiceBusOptions();
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", _defaultConnection));
 
-            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options), new AzureEventSourceLogForwarder(new NullLoggerFactory()));
+            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
 
             var receiver = provider.CreateBatchMessageReceiver(_client, "entityPath");
             Assert.AreEqual("entityPath", receiver.EntityPath);
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
         {
             var options = new ServiceBusOptions();
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", _defaultConnection));
-            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options), new AzureEventSourceLogForwarder(new NullLoggerFactory()));
+            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
 
             var processor = provider.CreateProcessor(_client, "entityPath");
             Assert.AreEqual("entityPath", processor.EntityPath);
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var options = new ServiceBusOptions();
 
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", defaultConnection));
-            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options), new AzureEventSourceLogForwarder(new NullLoggerFactory()));
+            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
 
             var sender = provider.CreateMessageSender(_client, "entityPath");
             Assert.AreEqual("entityPath", sender.EntityPath);

@@ -241,6 +241,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await TestMultipleDrainMode<DrainModeTestJobTopicBatch>(false);
         }
 
+        [Test]
+        public async Task MultipleFunctionsBindingToSameEntity()
+        {
+            await TestMultiple<ServiceBusSingleMessageTestJob_BindMultipleFunctionsToSameEntity>();
+        }
+
         /*
          * Helper functions
          */
@@ -366,10 +372,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
                 .GetAllLogMessages();
 
-            // filter out anything from the custom processor for easier validation.
+            // Filter out anything from the Azure SDK (Service Bus, Identity, Core) and custom message processor for
+            // easier validation.
             IEnumerable<LogMessage> consoleOutput = logMessages
-                .Where(m => m.Category != CustomMessagingProvider.CustomMessagingCategory);
+                .Where(m => !m.Category.StartsWith("Azure.") && m.Category != CustomMessagingProvider.CustomMessagingCategory);
 
+            // Intentionally do this check after filtering Azure SDK logs until https://github.com/Azure/azure-sdk-for-net/issues/19098
+            // is fixed since stopping the processor will cause errors to be logged.
             Assert.False(consoleOutput.Where(p => p.Level == LogLevel.Error).Any());
 
             string[] consoleOutputLines = consoleOutput
@@ -752,6 +761,24 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        public class ServiceBusSingleMessageTestJob_BindMultipleFunctionsToSameEntity
+        {
+            protected static bool firstReceived = false;
+            protected static bool secondReceived = false;
+
+            public static void SBQueueFunction(
+                [ServiceBusTrigger(FirstQueueNameKey)] string message)
+            {
+                ServiceBusMultipleTestJobsBase.ProcessMessages(new string[] { message });
+            }
+
+            public static void SBQueueFunction2(
+                [ServiceBusTrigger(FirstQueueNameKey)] string message)
+            {
+                ServiceBusMultipleTestJobsBase.ProcessMessages(new string[] { message });
+            }
+        }
+
         public class DrainModeHelper
         {
             public static async Task WaitForCancellation(CancellationToken cancellationToken)
@@ -774,10 +801,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             private readonly ServiceBusOptions _options;
 
             public CustomMessagingProvider(
-                AzureEventSourceLogForwarder forwarder,
                 IOptions<ServiceBusOptions> serviceBusOptions,
                 ILoggerFactory loggerFactory)
-                : base(serviceBusOptions, forwarder)
+                : base(serviceBusOptions)
             {
                 _options = serviceBusOptions.Value;
                 _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);

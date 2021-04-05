@@ -167,27 +167,5 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             // verify that the service bus config provider was registered
             var serviceBusExtensionConfig = configProviders.OfType<ServiceBusExtensionConfigProvider>().Single();
         }
-
-        [Test]
-        [TestCase("DefaultConnectionString", "DefaultConectionSettingString", "DefaultConnectionString")]
-        [TestCase("DefaultConnectionString", null, "DefaultConnectionString")]
-        [TestCase(null, "DefaultConectionSettingString", "DefaultConectionSettingString")]
-        [TestCase(null, null, null)]
-        public void ReadDefaultConnectionString(string defaultConnectionString, string defaultConectionSettingString, string expectedValue)
-        {
-            ServiceBusOptions options = TestHelpers.GetConfiguredOptions<ServiceBusOptions>(b =>
-            {
-                var test = b.Services.Single(x => x.ServiceType == typeof(IConfiguration));
-
-                var envPrpvider = (test.ImplementationInstance as ConfigurationRoot).Providers
-                    .Single(x => x.GetType() == typeof(EnvironmentVariablesConfigurationProvider));
-                envPrpvider.Set("ConnectionStrings:" + Constants.DefaultConnectionStringName, defaultConnectionString);
-                envPrpvider.Set(Constants.DefaultConnectionSettingStringName, defaultConectionSettingString);
-
-                b.AddServiceBus();
-            }, new Dictionary<string, string>());
-
-            //Assert.AreEqual(options.ConnectionString, expectedValue);
-        }
     }
 }

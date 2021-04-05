@@ -53,7 +53,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config
         private ServiceBusConnectionInformation ResolveConnectionInformation(string connection)
         {
             var connectionSetting = connection ?? Constants.DefaultConnectionStringName;
-            IConfigurationSection connectionSection = _configuration.GetWebJobsConnectionStringSection(connectionSetting);
+            IConfigurationSection connectionSection = _configuration.GetWebJobsConnectionStringSectionServiceBus(connectionSetting);
             if (!connectionSection.Exists())
             {
                 // Not found

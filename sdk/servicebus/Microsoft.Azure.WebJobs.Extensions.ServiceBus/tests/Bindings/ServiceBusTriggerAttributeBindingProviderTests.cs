@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
             ServiceBusOptions options = new ServiceBusOptions();
 
             Mock<IConverterManager> convertManager = new Mock<IConverterManager>(MockBehavior.Default);
-            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options), new AzureEventSourceLogForwarder(new NullLoggerFactory()));
+            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
             var factory = new ServiceBusClientFactory(configuration, new Mock<AzureComponentFactory>().Object, provider);
             _provider = new ServiceBusTriggerAttributeBindingProvider(mockResolver.Object, options, provider, NullLoggerFactory.Instance, convertManager.Object, factory);
         }
