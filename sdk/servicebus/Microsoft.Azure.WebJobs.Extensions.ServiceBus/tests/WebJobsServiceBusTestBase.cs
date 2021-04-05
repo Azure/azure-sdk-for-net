@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         // the connection key shouldn't use the % because the value specified is assumed to be a pointer
         protected const string SecondaryConnectionStringKey = "webjobtestsecondaryconnection";
 
-        protected const int SBTimeoutMills = 120 * 1000;
+        protected const int SBTimeoutMills = 240 * 1000;
         protected const int DrainWaitTimeoutMills = 120 * 1000;
         protected const int DrainSleepMills = 5 * 1000;
         internal const int MaxAutoRenewDurationMin = 5;
