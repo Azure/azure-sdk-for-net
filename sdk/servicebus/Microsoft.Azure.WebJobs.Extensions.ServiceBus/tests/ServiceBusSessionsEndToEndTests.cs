@@ -615,19 +615,24 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMessages(string[] messages, EventWaitHandle waitHandle = null)
             {
+                TestContext.Out.WriteLine(messages.Length);
                 if (messages.Contains("{'Name': 'Test1', 'Value': 'Value'}"))
                 {
                     firstReceived = true;
+                    TestContext.Out.WriteLine("first received");
                 }
                 if (messages.Contains("{'Name': 'Test2', 'Value': 'Value'}"))
                 {
                     secondReceived = true;
+                    TestContext.Out.WriteLine("second received");
                 }
 
                 if (firstReceived && secondReceived)
                 {
+                    TestContext.Out.WriteLine("both received");
                     bool b = (waitHandle != null) ? waitHandle.Set() : _waitHandle1.Set();
                 }
+                TestContext.Out.WriteLine("exit");
             }
         }
 
