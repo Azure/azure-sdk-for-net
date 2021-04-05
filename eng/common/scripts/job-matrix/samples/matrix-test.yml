@@ -18,7 +18,7 @@ jobs:
         # Exclusion example
         - OSVmImage=^(?!macOS).*
       MatrixReplace:
-        - OsVmImage=.*ubuntu.*/ubuntu-20.04
+        - OsVmImage=(ubuntu).*/$1-20.04
         - .*Framework.*=net5.0/net5.1
       MatrixConfigs:
         - Name: base_product_matrix
