@@ -50,7 +50,12 @@ namespace Azure.Storage
             switch (message.Response.Status)
             {
                 case 409:
-                    var header = message.Request.Headers;
+                    // We're not considering Container/BlobAlreadyExists as errors when the request has conditional headers.
+                    // Convenience methods like BlobContainerClient.CreateIfNotExists will cause a lot of these responses and
+                    // we don't want them polluting AppInsights with noise.  See RequestActivityPolicy for how this is applied.
+
+                    RequestHeaders header = message.Request.Headers;
+
                     if (header.TryGetValue(Constants.HeaderNames.ErrorCode, out var error) &&
                         (error == Constants.ErrorCodes.ContainerAlreadyExists ||
                          error == Constants.ErrorCodes.BlobAlreadyExists))
