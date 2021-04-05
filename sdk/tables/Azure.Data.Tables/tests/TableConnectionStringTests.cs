@@ -115,7 +115,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(tcs.TableStorageUri.SecondaryUri, Is.EqualTo(new Uri($"https://{AccountName}{TableConstants.ConnectionStrings.SecondaryLocationAccountSuffix}.table.cosmos.azure.com:443/")), "The SecondaryUri should have matched.");
         }
 
-        public static IEnumerable<object[]> ValidSaSStorageConnStrings()
+        public static IEnumerable<object[]> ValidSasStorageConnStrings()
         {
             yield return new object[] { $"DefaultEndpointsProtocol=https;AccountName={AccountName};SharedAccessSignature={SasToken};EndpointSuffix=core.windows.net" };
             yield return new object[] { $"AccountName={AccountName};SharedAccessSignature={SasToken};EndpointSuffix=core.windows.net" };
@@ -128,8 +128,8 @@ namespace Azure.Data.Tables.Tests
         /// Validates the functionality of the TableConnectionString.
         /// </summary>
         [Test]
-        [TestCaseSource(nameof(ValidSaSStorageConnStrings))]
-        public void ParsesSaSStorage(string connString)
+        [TestCaseSource(nameof(ValidSasStorageConnStrings))]
+        public void ParsesSasStorage(string connString)
         {
             Assert.That(TableConnectionString.TryParse(connString, out TableConnectionString tcs), "Parsing should have been successful");
             Assert.That(tcs.Credentials, Is.Not.Null);
