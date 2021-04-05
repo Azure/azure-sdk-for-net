@@ -607,12 +607,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMessages(string[] messages)
             {
+                TestContext.Out.WriteLine(messages.Length);
                 if (messages.Contains("{'Name': 'Test1', 'Value': 'Value'}"))
                 {
+                    TestContext.Out.WriteLine("first received");
                     firstReceived = true;
                 }
                 if (messages.Contains("{'Name': 'Test2', 'Value': 'Value'}"))
                 {
+                    TestContext.Out.WriteLine("second received");
                     secondReceived = true;
                 }
 
@@ -623,6 +626,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     secondReceived = false;
                     _topicSubscriptionCalled1.Set();
                 }
+                TestContext.Out.WriteLine("exit");
             }
         }
 
