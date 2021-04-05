@@ -105,6 +105,12 @@ namespace Azure.IoT.TimeSeriesInsights
         public System.Collections.Generic.IReadOnlyList<Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchyOrError> Get { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchyOrError> Put { get { throw null; } }
     }
+    public partial class HierarchiesClient
+    {
+        protected HierarchiesClient() { }
+        public virtual Azure.Pageable<Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchy> GetHierarchies(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchy> GetHierarchiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class HierarchiesExpandParameter
     {
         public HierarchiesExpandParameter() { }
