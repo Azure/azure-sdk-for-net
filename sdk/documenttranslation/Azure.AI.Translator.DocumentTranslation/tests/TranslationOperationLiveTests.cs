@@ -31,7 +31,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             if (operation.DocumentsSucceeded < 1)
             {
@@ -64,7 +64,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Tests
             input.AddTarget(targetArabic, "ar");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             if (operation.DocumentsSucceeded < 3)
             {
@@ -99,7 +99,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Tests
 
             DocumentTranslationOperation operation = await client.StartTranslationAsync(inputs);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             if (operation.DocumentsSucceeded < 2)
             {
@@ -136,7 +136,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(source, targets);
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             if (operation.DocumentsSucceeded < 1)
             {
@@ -173,7 +173,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(source, targets);
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             if (operation.DocumentsSucceeded < 1)
             {
@@ -202,7 +202,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(sourceUri, targetUri, translateTo);
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            AsyncPageable<DocumentStatusResult> documentsFromOperation = await operation.WaitForCompletionAsync(PollingInterval);
+            AsyncPageable<DocumentStatusResult> documentsFromOperation = await operation.WaitForCompletionAsync();
             List<DocumentStatusResult> documentsFromOperationList = await documentsFromOperation.ToEnumerableAsync();
 
             Assert.AreEqual(1, documentsFromOperationList.Count);
@@ -234,7 +234,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(sourceUri, targetUri, translateTo);
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
             AsyncPageable<DocumentStatusResult> documents = operation.GetAllDocumentStatusesAsync();
 
             List<DocumentStatusResult> documentsList = await documents.ToEnumerableAsync();
@@ -305,7 +305,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            await operation.WaitForCompletionAsync(PollingInterval);
+            await operation.WaitForCompletionAsync();
 
             if (operation.DocumentsSucceeded < 1)
             {
@@ -338,7 +338,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            AsyncPageable<DocumentStatusResult> documents = await operation.WaitForCompletionAsync(PollingInterval);
+            AsyncPageable<DocumentStatusResult> documents = await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
@@ -368,7 +368,7 @@ namespace Azure.AI.Translator.DocumentTranslation.Tests
             var input = new DocumentTranslationInput(source, target, "fr");
             DocumentTranslationOperation operation = await client.StartTranslationAsync(input);
 
-            AsyncPageable<DocumentStatusResult> documents = await operation.WaitForCompletionAsync(PollingInterval);
+            AsyncPageable<DocumentStatusResult> documents = await operation.WaitForCompletionAsync();
 
             Assert.IsTrue(operation.HasCompleted);
             Assert.IsTrue(operation.HasValue);
