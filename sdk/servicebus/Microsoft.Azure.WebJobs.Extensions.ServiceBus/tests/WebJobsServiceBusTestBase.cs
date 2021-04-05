@@ -63,7 +63,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         protected static TopicScope _topicScope;
 
         private readonly bool _isSession;
-        protected static SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+        protected static EventWaitHandle _topicSubscriptionCalled1;
+        protected static EventWaitHandle _topicSubscriptionCalled2;
+        protected static EventWaitHandle _waitHandle1;
+        protected static EventWaitHandle _waitHandle2;
+        protected static EventWaitHandle _drainValidationPreDelay;
+        protected static EventWaitHandle _drainValidationPostDelay;
 
         protected WebJobsServiceBusTestBase(bool isSession)
         {
@@ -89,6 +94,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 enablePartitioning: false,
                 enableSession: _isSession,
                 overrideNamespace: ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespace);
+            _topicSubscriptionCalled1 = new ManualResetEvent(initialState: false);
+            _topicSubscriptionCalled2 = new ManualResetEvent(initialState: false);
+            _waitHandle1 = new ManualResetEvent(initialState: false);
+            _waitHandle2 = new ManualResetEvent(initialState: false);
+            _drainValidationPreDelay = new ManualResetEvent(initialState: false);
+            _drainValidationPostDelay = new ManualResetEvent(initialState: false);
         }
 
         /// <summary>
