@@ -7,13 +7,11 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
-using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -60,13 +58,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
         internal static void TestJob_AccountOverride(
             [ServiceBusAttribute("test"),
-             ServiceBusAccount(ServiceBusTestEnvironment.ServiceBusConnectionStringEnvironmentVariable)] out ServiceBusMessage message)
+             ServiceBusAccount(Constants.DefaultConnectionStringName)] out ServiceBusMessage message)
         {
             message = new ServiceBusMessage();
         }
 
         internal static void TestJob(
-            [ServiceBusAttribute("test", Connection = ServiceBusTestEnvironment.ServiceBusConnectionStringEnvironmentVariable)]
+            [ServiceBusAttribute("test", Connection = Constants.DefaultConnectionStringName)]
             out ServiceBusMessage message)
         {
             message = new ServiceBusMessage();
