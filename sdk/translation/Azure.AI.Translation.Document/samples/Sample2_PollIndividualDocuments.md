@@ -62,7 +62,7 @@ await foreach (DocumentStatusResult document in documents)
 
 To see the full example source files, see:
 
-* [Synchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocuments.cs)
-* [Asynchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocumentsAsync.cs)
+* [Synchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocuments.cs)
+* [Asynchronously PollIndividualDocuments ](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_PollIndividualDocumentsAsync.cs)
 
-[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/documenttranslation/Azure.AI.Translation.Document/README.md
+[README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/translation/Azure.AI.Translation.Document/README.md
