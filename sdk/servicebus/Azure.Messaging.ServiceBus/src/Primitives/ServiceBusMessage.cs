@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="body">The payload of the message in bytes.</param>
         public ServiceBusMessage(ReadOnlyMemory<byte> body)
         {
-            AmqpMessageBody amqpBody = new AmqpMessageBody(BodyMemory.FromReadOnlyMemory(new ReadOnlyMemory<byte>[] { body }));
+            AmqpMessageBody amqpBody = new AmqpMessageBody(BodyMemory.FromReadOnlyMemory(body));
             AmqpMessage = new AmqpAnnotatedMessage(amqpBody);
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
             get => AmqpMessage.GetBody();
             set
             {
-                AmqpMessage.Body = new AmqpMessageBody(BodyMemory.FromReadOnlyMemory(new ReadOnlyMemory<byte>[] { value }));
+                AmqpMessage.Body = new AmqpMessageBody(BodyMemory.FromReadOnlyMemory(value));
             }
         }
 
