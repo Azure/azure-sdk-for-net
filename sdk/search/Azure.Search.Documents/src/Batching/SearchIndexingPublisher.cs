@@ -124,7 +124,7 @@ namespace Azure.Search.Documents.Batching
                 await _sender.OnActionSentAsync(action.Document, cancellationToken).ConfigureAwait(false);
             }
 
-            AzureSearchDocumentsEventSource.Instance.BatchSubmitted(_sender.Endpoint.AbsoluteUri, batch.Count);
+            AzureSearchDocumentsEventSource.Instance.BatchSubmitted($"{GetType().Name}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, batch.Count);
 
             // Send the request to the service
             Response<IndexDocumentsResult> response = null;
@@ -144,7 +144,7 @@ namespace Azure.Search.Documents.Batching
                 // Update 'BatchActionCount' so future submissions can avoid this error.
                 BatchActionCount = (int)Math.Floor((double)batch.Count / 2.0);
 
-                AzureSearchDocumentsEventSource.Instance.BatchActionCountUpdated(_sender.Endpoint.AbsoluteUri, oldBatchActionCount, BatchActionCount);
+                AzureSearchDocumentsEventSource.Instance.BatchActionCountUpdated($"{GetType().Name}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, oldBatchActionCount, BatchActionCount);
 
                 var smaller = new List<PublisherAction<IndexDocumentsAction<T>>>(batch.Take(BatchActionCount));
 

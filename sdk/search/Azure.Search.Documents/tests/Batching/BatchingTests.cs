@@ -1061,28 +1061,31 @@ namespace Azure.Search.Documents.Tests
 
             List<EventWrittenEventArgs> eventData = _listener.EventData.ToList();
 
-            Assert.AreEqual(8, eventData.Count);
+            Assert.AreEqual(9, eventData.Count);
             Assert.AreEqual("PendingQueueResized", eventData[0].EventName);         // 1. All events are pushed into the pending queue.
             Assert.AreEqual(512, eventData[0].GetProperty<int>("queueSize"));
-            Assert.AreEqual("PendingQueueResized", eventData[1].EventName);         // 2. All events are pulled out of the pending queue.
-            Assert.AreEqual(0, eventData[1].GetProperty<int>("queueSize"));
-            Assert.AreEqual("BatchSubmitted", eventData[2].EventName);              // 3. A batch is created for submission and contains all events.
-            Assert.NotNull(eventData[2].GetProperty<string>("endPoint"));
-            Assert.AreEqual(512, eventData[2].GetProperty<int>("batchSize"));
-            Assert.AreEqual("BatchActionCountUpdated", eventData[3].EventName);     // 4. Batch is split up and default action count is updated.
+            Assert.AreEqual("PublishingDocuments", eventData[1].EventName);         // 2. Documents are being published.
+            Assert.IsTrue(eventData[1].GetProperty<bool>("flush"));
+            Assert.AreEqual("PendingQueueResized", eventData[2].EventName);         // 3. All events are pulled out of the pending queue.
+            Assert.AreEqual(0, eventData[2].GetProperty<int>("queueSize"));
+            Assert.AreEqual("BatchSubmitted", eventData[3].EventName);              // 4. A batch is created for submission and contains all events.
             Assert.NotNull(eventData[3].GetProperty<string>("endPoint"));
-            Assert.AreEqual(512, eventData[3].GetProperty<int>("oldBatchCount"));
-            Assert.AreEqual(256, eventData[3].GetProperty<int>("newBatchCount"));
-            Assert.AreEqual("RetryQueueResized", eventData[4].EventName);           // 5. Second part of the batch is pushed into the retry queue.
-            Assert.AreEqual(256, eventData[4].GetProperty<int>("queueSize"));
-            Assert.AreEqual("BatchSubmitted", eventData[5].EventName);              // 6. First part of the batch is submitted.
-            Assert.NotNull(eventData[5].GetProperty<string>("endPoint"));
-            Assert.AreEqual(256, eventData[5].GetProperty<int>("batchSize"));
-            Assert.AreEqual("RetryQueueResized", eventData[6].EventName);           // 7. Remaining events are pulled out of the retry queue.
-            Assert.AreEqual(0, eventData[6].GetProperty<int>("queueSize"));
-            Assert.AreEqual("BatchSubmitted", eventData[7].EventName);              // 8. Second part of the batch is submitted.
-            Assert.NotNull(eventData[7].GetProperty<string>("endPoint"));
-            Assert.AreEqual(256, eventData[7].GetProperty<int>("batchSize"));
+            Assert.AreEqual(512, eventData[3].GetProperty<int>("batchSize"));
+            Assert.AreEqual("BatchActionCountUpdated", eventData[4].EventName);     // 5. Batch is split up and default action count is updated.
+            Assert.AreEqual(EventLevel.Warning, eventData[4].Level);                //    This event is logged at 'Warning' level.
+            Assert.NotNull(eventData[4].GetProperty<string>("endPoint"));
+            Assert.AreEqual(512, eventData[4].GetProperty<int>("oldBatchCount"));
+            Assert.AreEqual(256, eventData[4].GetProperty<int>("newBatchCount"));
+            Assert.AreEqual("RetryQueueResized", eventData[5].EventName);           // 6. Second part of the batch is pushed into the retry queue.
+            Assert.AreEqual(256, eventData[5].GetProperty<int>("queueSize"));
+            Assert.AreEqual("BatchSubmitted", eventData[6].EventName);              // 7. First part of the batch is submitted.
+            Assert.NotNull(eventData[6].GetProperty<string>("endPoint"));
+            Assert.AreEqual(256, eventData[6].GetProperty<int>("batchSize"));
+            Assert.AreEqual("RetryQueueResized", eventData[7].EventName);           // 8. Remaining events are pulled out of the retry queue.
+            Assert.AreEqual(0, eventData[7].GetProperty<int>("queueSize"));
+            Assert.AreEqual("BatchSubmitted", eventData[8].EventName);              // 9. Second part of the batch is submitted.
+            Assert.NotNull(eventData[8].GetProperty<string>("endPoint"));
+            Assert.AreEqual(256, eventData[8].GetProperty<int>("batchSize"));
 
             await WaitForDocumentCountAsync(resources.GetSearchClient(), data.Length);
         }

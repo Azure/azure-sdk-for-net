@@ -289,7 +289,7 @@ namespace Azure.Search.Documents.Batching
                 _pending.Enqueue(action);
             }
 
-            AzureSearchDocumentsEventSource.Instance.PendingQueueResized(_pending.Count);
+            AzureSearchDocumentsEventSource.Instance.PendingQueueResized($"{GetType().Name}<{typeof(T).Name}>", _pending.Count);
 
             // Automatically trigger a submission if enabled
             if (AutoFlush)
@@ -400,6 +400,8 @@ namespace Azure.Search.Documents.Batching
             // already submitting
             StopTimer();
 
+            AzureSearchDocumentsEventSource.Instance.PublishingDocuments($"{GetType().Name}<{typeof(T).Name}>", flush);
+
             do
             {
                 List<PublisherAction<T>> batch = new List<PublisherAction<T>>(
@@ -416,12 +418,12 @@ namespace Azure.Search.Documents.Batching
 
                 if (oldRetryBatchCount != _retry.Count)
                 {
-                    AzureSearchDocumentsEventSource.Instance.RetryQueueResized(_retry.Count);
+                    AzureSearchDocumentsEventSource.Instance.RetryQueueResized($"{GetType().Name}<{typeof(T).Name}>", _retry.Count);
                 }
 
                 if (oldPendingBatchCount != _pending.Count)
                 {
-                    AzureSearchDocumentsEventSource.Instance.PendingQueueResized(_pending.Count);
+                    AzureSearchDocumentsEventSource.Instance.PendingQueueResized($"{GetType().Name}<{typeof(T).Name}>", _pending.Count);
                 }
 
                 // Submit the batch
@@ -519,7 +521,7 @@ namespace Azure.Search.Documents.Batching
                 _retry.Enqueue(action);
             }
 
-            AzureSearchDocumentsEventSource.Instance.RetryQueueResized(_retry.Count);
+            AzureSearchDocumentsEventSource.Instance.RetryQueueResized($"{GetType().Name}<{typeof(T).Name}>", _retry.Count);
         }
         #endregion Publishing
 
