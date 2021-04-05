@@ -145,11 +145,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 case BufferListStream bufferListStream:
                     return bufferListStream.ReadBytes((int)stream.Length);
                 default:
-                {
-                    using var memStream = new MemoryStream(StreamBufferSizeInBytes);
-                    stream.CopyTo(memStream, StreamBufferSizeInBytes);
-                    return new ArraySegment<byte>(memStream.ToArray());
-                }
+                    {
+                        using var memStream = new MemoryStream(StreamBufferSizeInBytes);
+                        stream.CopyTo(memStream, StreamBufferSizeInBytes);
+                        return new ArraySegment<byte>(memStream.ToArray());
+                    }
             }
         }
 
@@ -225,16 +225,23 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if ((amqpMessage.BodyType & SectionFlag.Data) != 0 && amqpMessage.DataBody != null)
             {
-                annotatedMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(amqpMessage.GetDataViaDataBody()));
+                annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromData(BodyMemory.FromAmqpData(amqpMessage.DataBody)));
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpValue) != 0 && amqpMessage.ValueBody?.Value != null)
             {
-                annotatedMessage = new AmqpAnnotatedMessage(new AmqpMessageBody(amqpMessage.ValueBody.Value));
+                if (TryGetNetObjectFromAmqpObject(amqpMessage.ValueBody.Value, MappingType.MessageBody, out object netObject))
+                {
+                    annotatedMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(netObject));
+                }
+                else
+                {
+                    throw new NotSupportedException(Resources.InvalidAmqpMessageValueBody.FormatForUser(amqpMessage.ValueBody.Value.GetType()));
+                }
             }
             else if ((amqpMessage.BodyType & SectionFlag.AmqpSequence) != 0)
             {
                 annotatedMessage = new AmqpAnnotatedMessage(
-                    new AmqpMessageBody(amqpMessage.SequenceBody.Select(s => (IList<object>) s.List).ToList()));
+                    AmqpMessageBody.FromSequence(amqpMessage.SequenceBody.Select(s => (IList<object>) s.List).ToList()));
             }
             // default to using an empty Data section if no data
             else

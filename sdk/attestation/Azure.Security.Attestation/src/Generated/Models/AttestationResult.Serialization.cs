@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
+    [JsonConverter(typeof(AttestationResultConverter))]
     public partial class AttestationResult
     {
         internal static AttestationResult DeserializeAttestationResult(JsonElement element)
@@ -333,6 +335,19 @@ namespace Azure.Security.Attestation.Models
                 }
             }
             return new AttestationResult(jti.Value, iss.Value, iat, exp, nbf, cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Optional.ToNullable(xMsSgxIsDebuggable), Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value);
+        }
+
+        internal partial class AttestationResultConverter : JsonConverter<AttestationResult>
+        {
+            public override void Write(Utf8JsonWriter writer, AttestationResult model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override AttestationResult Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAttestationResult(document.RootElement);
+            }
         }
     }
 }

@@ -31,6 +31,11 @@ namespace Azure.IoT.TimeSeriesInsights
         private readonly QueryRestClient _queryRestClient;
 
         /// <summary>
+        /// Client to get and update model settings.
+        /// </summary>
+        public virtual ModelSettingsClient ModelSettings { get; private set; }
+
+        /// <summary>
         /// Creates a new instance of the <see cref="TimeSeriesInsightsClient"/> class.
         /// </summary>
         /// <param name='environmentFqdn'>Per environment FQDN, for example 10000000-0000-0000-0000-100000000109.env.timeseries.azure.com.
@@ -90,6 +95,8 @@ namespace Azure.IoT.TimeSeriesInsights
             _timeSeriesInstancesRestClient = new TimeSeriesInstancesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _timeSeriesTypesRestClient = new TimeSeriesTypesRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
             _queryRestClient = new QueryRestClient(_clientDiagnostics, _httpPipeline, environmentFqdn, versionString);
+
+            ModelSettings = new ModelSettingsClient(_modelSettingsRestClient, _clientDiagnostics);
         }
 
         /// <summary>
@@ -104,152 +111,6 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </summary>
         /// <returns>List of scopes for the specified endpoint.</returns>
         internal static string[] GetAuthorizationScopes() => s_tsiDefaultScopes;
-
-        /// <summary>
-        /// Gets Time Series model settings asynchronously.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// The model settings which includes model display name, Time Series Id properties and default type Id with the
-        /// http response <see cref="Response{TimeSeriesModelSettings}"/>.
-        /// </returns>
-        public virtual async Task<Response<TimeSeriesModelSettings>> GetModelSettingsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
-            scope.Start();
-            try
-            {
-                // To do: Generate client session Id
-                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.GetAsync(null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets Time Series model settings synchronously.
-        /// </summary>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>
-        /// The model settings which includes model display name, Time Series Id properties and default type Id with the
-        /// http response <see cref="Response{TimeSeriesModelSettings}"/>.
-        /// </returns>
-        public virtual Response<TimeSeriesModelSettings> GetModelSettings(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetModelSettings)}");
-            scope.Start();
-            try
-            {
-                // To do: Generate client session Id
-                Response<ModelSettingsResponse> modelSettings = _modelSettingsRestClient.Get(null, cancellationToken);
-                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates model name on Time Series model settings asynchronously.
-        /// </summary>
-        /// <param name="name">Model display name which is mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
-        public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsNameAsync(string name, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsName)}");
-            scope.Start();
-            try
-            {
-                // To do: Generate client session Id
-                var options = new UpdateModelSettingsRequest { Name = name };
-                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.UpdateAsync(options, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates model default type Id on Time Series model settings asynchronously.
-        /// </summary>
-        /// <param name="defaultTypeId">Default type Id of the model that new instances will automatically belong to.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
-        public virtual async Task<Response<TimeSeriesModelSettings>> UpdateModelSettingsDefaultTypeIdAsync(string defaultTypeId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsDefaultTypeId)}");
-            scope.Start();
-            try
-            {
-                // To do: Generate client session Id
-                var options = new UpdateModelSettingsRequest { DefaultTypeId = defaultTypeId };
-                Response<ModelSettingsResponse> modelSettings = await _modelSettingsRestClient.UpdateAsync(options, null, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates model name on Time Series model settings synchronously.
-        /// </summary>
-        /// <param name="name">Model display name which is mutable by the user. Initial value is &quot;DefaultModel&quot;.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
-        public virtual Response<TimeSeriesModelSettings> UpdateModelSettingsName(string name, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsName)}");
-            scope.Start();
-            try
-            {
-                // To do: Generate client session Id
-                var options = new UpdateModelSettingsRequest { Name = name };
-                Response<ModelSettingsResponse> modelSettings = _modelSettingsRestClient.Update(options, null, cancellationToken);
-                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates default type Id on Time Series model settings synchronously.
-        /// </summary>
-        /// <param name="defaultTypeId">Default type Id of the model that new instances will automatically belong to.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The updated model settings with the http response <see cref="Response{TimeSeriesModelSettings}"/>.</returns>
-        public virtual Response<TimeSeriesModelSettings> UpdateModelSettingsDefaultTypeId(string defaultTypeId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(UpdateModelSettingsDefaultTypeId)}");
-            scope.Start();
-            try
-            {
-                // To do: Generate client session Id
-                var options = new UpdateModelSettingsRequest { DefaultTypeId = defaultTypeId };
-                Response<ModelSettingsResponse> modelSettings = _modelSettingsRestClient.Update(options, null, cancellationToken);
-                return Response.FromValue(modelSettings.Value.ModelSettings, modelSettings.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
 
         /// <summary>
         /// Gets Time Series instances in pages asynchronously.
@@ -1714,7 +1575,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypes"/> is empty.
         /// </exception>
-        public virtual async Task<Response<TimeSeriesOperationError[]>> CreateOrReplaceTimeSeriesTypesAsync(
+        public virtual async Task<Response<TimeSeriesTypeOperationResult[]>> CreateOrReplaceTimeSeriesTypesAsync(
             IEnumerable<TimeSeriesType> timeSeriesTypes,
             CancellationToken cancellationToken = default)
         {
@@ -1737,11 +1598,9 @@ namespace Azure.IoT.TimeSeriesInsights
                     .ExecuteBatchAsync(batchRequest, _clientSessionId, cancellationToken)
                     .ConfigureAwait(false);
 
-                // Extract the errors array from the response. If there was an error with creating or replacing one of the types,
-                // it will be placed at the same index location that corresponds to its place in the input array.
                 IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
 
-                return Response.FromValue(errorResults.ToArray(), executeBatchResponse.GetRawResponse());
+                return Response.FromValue(executeBatchResponse.Value.Put.ToArray(), executeBatchResponse.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1756,8 +1615,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="timeSeriesTypes">The Time Series instances types to be created or replaced.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of error objects corresponding by position to the <paramref name="timeSeriesTypes"/> array in the request.
-        /// An error object will be set when operation is unsuccessful.
+        /// List of types or error objects corresponding by position to the <paramref name="timeSeriesTypes"/> array in the request.
+        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
         /// </returns>
         /// <seealso cref="CreateOrReplaceTimeSeriesInstancesAsync(IEnumerable{TimeSeriesInstance}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
@@ -1768,7 +1627,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentException">
         /// The exception is thrown when <paramref name="timeSeriesTypes"/> is empty.
         /// </exception>
-        public virtual Response<TimeSeriesOperationError[]> CreateOrReplaceTimeSeriesTypes(
+        public virtual Response<TimeSeriesTypeOperationResult[]> CreateOrReplaceTimeSeriesTypes(
             IEnumerable<TimeSeriesType> timeSeriesTypes,
             CancellationToken cancellationToken = default)
         {
@@ -1789,11 +1648,9 @@ namespace Azure.IoT.TimeSeriesInsights
                 Response<TypesBatchResponse> executeBatchResponse = _timeSeriesTypesRestClient
                     .ExecuteBatch(batchRequest, _clientSessionId, cancellationToken);
 
-                // Extract the errors array from the response. If there was an error with creating or replacing one of the types,
-                // it will be placed at the same index location that corresponds to its place in the input array.
                 IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
 
-                return Response.FromValue(errorResults.ToArray(), executeBatchResponse.GetRawResponse());
+                return Response.FromValue(executeBatchResponse.Value.Put.ToArray(), executeBatchResponse.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -1808,8 +1665,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="timeSeriesTypeNames">List of names of the Time Series types to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of type or error objects corresponding by position to the array in the request.
-        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
@@ -1860,8 +1716,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="timeSeriesTypeNames">List of names of the Time Series types to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of type or error objects corresponding by position to the array in the request.
-        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <seealso cref="DeleteTimeSeriesTypesByNamesAsync(IEnumerable{string}, CancellationToken)">
         /// See the asynchronous version of this method for examples.
@@ -1911,8 +1766,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="timeSeriesTypeIds">List of Time Series type Ids of the Time Series types to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of type or error objects corresponding by position to the array in the request.
-        /// Type object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <remarks>
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
@@ -1963,8 +1817,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="timeSeriesTypeIds">List of Ids of the Time Series instances to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
-        /// List of error objects corresponding by position to the array in the request. Null means the instance has been deleted, or did not exist.
-        /// Error object is set when operation is unsuccessful.
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
         /// </returns>
         /// <seealso cref="DeleteInstancesAsync(IEnumerable{TimeSeriesId}, CancellationToken)">
         /// See the asynchronous version of this method for examples.

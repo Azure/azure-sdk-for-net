@@ -114,11 +114,139 @@ finally
 
 ## Processing events with Shared Access Signature authorization
 
-**COMING SOON**
+```C# Snippet:EventHubs_Processor_Sample05_SharedAccessSignature
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+ var storageClient = new BlobContainerClient(
+    storageConnectionString,
+    blobContainerName);
+
+var processor = new EventProcessorClient(
+    storageClient,
+    consumerGroup,
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
+
+try
+{
+    using var cancellationSource = new CancellationTokenSource();
+    cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+    // The event handlers are not relevant for this sample; for
+    // illustration, they're delegating the implementation to the
+    // host application.
+
+    processor.ProcessEventAsync += Application.ProcessorEventHandler;
+    processor.ProcessErrorAsync += Application.ProcessorErrorHandler;
+
+    try
+    {
+        await processor.StartProcessingAsync(cancellationSource.Token);
+        await Task.Delay(Timeout.Infinite, cancellationSource.Token);
+    }
+    catch (TaskCanceledException)
+    {
+        // This is expected if the cancellation token is
+        // signaled.
+    }
+    finally
+    {
+        // This may take up to the length of time defined
+        // as part of the configured TryTimeout of the processor;
+        // by default, this is 60 seconds.
+
+        await processor.StopProcessingAsync();
+    }
+}
+catch
+{
+    // If this block is invoked, then something external to the
+    // processor was the source of the exception.
+}
+finally
+{
+   // It is encouraged that you unregister your handlers when you have
+   // finished using the Event Processor to ensure proper cleanup.
+
+   processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+}
+```
 
 ## Processing events with Shared Access Key authorization
 
-**COMING SOON**
+```C# Snippet:EventHubs_Processor_Sample05_SharedAccessKey
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED KEY >>");
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+ var storageClient = new BlobContainerClient(
+    storageConnectionString,
+    blobContainerName);
+
+var processor = new EventProcessorClient(
+    storageClient,
+    consumerGroup,
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
+
+try
+{
+    using var cancellationSource = new CancellationTokenSource();
+    cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+    // The event handlers are not relevant for this sample; for
+    // illustration, they're delegating the implementation to the
+    // host application.
+
+    processor.ProcessEventAsync += Application.ProcessorEventHandler;
+    processor.ProcessErrorAsync += Application.ProcessorErrorHandler;
+
+    try
+    {
+        await processor.StartProcessingAsync(cancellationSource.Token);
+        await Task.Delay(Timeout.Infinite, cancellationSource.Token);
+    }
+    catch (TaskCanceledException)
+    {
+        // This is expected if the cancellation token is
+        // signaled.
+    }
+    finally
+    {
+        // This may take up to the length of time defined
+        // as part of the configured TryTimeout of the processor;
+        // by default, this is 60 seconds.
+
+        await processor.StopProcessingAsync();
+    }
+}
+catch
+{
+    // If this block is invoked, then something external to the
+    // processor was the source of the exception.
+}
+finally
+{
+   // It is encouraged that you unregister your handlers when you have
+   // finished using the Event Processor to ensure proper cleanup.
+
+   processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+}
+```
 
 ## Parsing a connection string for information
 

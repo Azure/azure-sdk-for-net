@@ -4,9 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
+    [CodeGenModel("JsonWebKeySet")]
     internal partial class JsonWebKeySet
     {
     }

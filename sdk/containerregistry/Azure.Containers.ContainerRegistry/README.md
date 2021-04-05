@@ -39,8 +39,8 @@ The [Azure Identity library][identity] provides easy Azure Active Directory supp
 
 ```C#
 // Create a ContainerRegistryClient that will authenticate through Active Directory
-Uri registryUri = new Uri("https://MYCONTAINERREGISTRY.azurecr.io/");
-ContainerRegistryClient client = new ContainerRegistryClient(registryUri, new DefaultAzureCredential());
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 ```
 
 ## Key concepts
@@ -66,16 +66,82 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-<!-- Pending Sample Creation -->
+### Sync examples
+
+- [List repositories](#list-repositories)
+
+### Async examples
+
+- [List repositories asynchronously](#list-repositories-asynchronously)
+
+### List repositories
+
+Iterate through the collection of repositories in the registry.
+
+```C# Snippet:ContainerRegistry_Tests_Samples_CreateClient
+// Get the service endpoint from the environment
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+// Create a new ContainerRegistryClient
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+
+// Perform an operation
+Pageable<string> repositories = client.GetRepositories();
+foreach (string repository in repositories)
+{
+    Console.WriteLine(repository);
+}
+```
+
+### List repositories asynchronously
+
+The asynchronous APIs are identical to their synchronous counterparts, but methods end with the standard .NET "Async" suffix and return a Task.
+
+```C# Snippet:ContainerRegistry_Tests_Samples_CreateClientAsync
+// Get the service endpoint from the environment
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+// Create a new ContainerRegistryClient
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
+
+// Perform an operation
+AsyncPageable<string> repositories = client.GetRepositoriesAsync();
+await foreach (string repository in repositories)
+{
+    Console.WriteLine(repository);
+}
+```
 
 ## Troubleshooting
 
 All container registry service operations will throw a
 [RequestFailedException][RequestFailedException] on failure.
 
+```C# Snippet:ContainerRegistry_Tests_Samples_HandleErrors
+Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
+
+// Create an invalid ContainerRepositoryClient
+string fakeRepositoryName = "doesnotexist";
+ContainerRepositoryClient client = new ContainerRepositoryClient(endpoint, fakeRepositoryName, new DefaultAzureCredential());
+
+try
+{
+    client.GetProperties();
+}
+catch (RequestFailedException ex) when (ex.Status == 404)
+{
+    Console.WriteLine("Repository wasn't found.");
+}
+```
+
+You can also easily [enable console logging](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md#logging) if you want to dig
+deeper into the requests you're making against the service.
+
 ## Next steps
 
-<!-- Pending Sample Creation -->
+- Go further with Azure.Containers.ContainerRegistry and our [samples][samples]
+- Watch a [demo or deep dive video](https://azure.microsoft.com/resources/videos/index/?service=container-registry)
+- Read more about the [Azure Container Registry service](https://docs.microsoft.com/azure/container-registry/container-registry-intro)
 
 ## Contributing
 

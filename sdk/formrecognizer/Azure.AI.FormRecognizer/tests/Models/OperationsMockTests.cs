@@ -202,6 +202,41 @@ namespace Azure.AI.FormRecognizer.Tests.Models
         }
 
         [Test]
+        public async Task RecognizeIdDocumentsOperationCreatesDiagnosticScopeOnUpdate()
+        {
+            using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("{}"));
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.ContentStream = stream;
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new FormRecognizerClientOptions() { Transport = mockTransport };
+            var client = CreateFormRecognizerClient(options);
+
+            var operation = new RecognizeIdDocumentsOperation("00000000-0000-0000-0000-000000000000", client);
+
+            if (IsAsync)
+            {
+                await operation.UpdateStatusAsync();
+            }
+            else
+            {
+                operation.UpdateStatus();
+            }
+
+            testListener.AssertScope($"{nameof(RecognizeIdDocumentsOperation)}.{nameof(RecognizeIdDocumentsOperation.UpdateStatus)}");
+        }
+
+        [Test]
+        public void RecognizeIdDocumentsOperationRequiredParameters()
+        {
+            FormRecognizerClient client = CreateFormRecognizerClient();
+
+            Assert.Throws<ArgumentNullException>(() => new RecognizeIdDocumentsOperation("00000000 - 0000 - 0000 - 0000 - 000000000000", null));
+        }
+
+        [Test]
         public async Task RecognizeCustomFormsOperationCreatesDiagnosticScopeOnUpdate()
         {
             using var testListener = new ClientDiagnosticListener(DiagnosticNamespace);
