@@ -2,18 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Text;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-#pragma warning disable AZC0007
-
 namespace Azure.Containers.ContainerRegistry.Protocol
 {
-    /// <summary> The Authentication service client. </summary>
-    internal partial class AuthenticationClient
+    [CodeGenModel("ContainerRegistryBlobClient")]
+    public partial class ContainerRegistryBlobProtocolClient
     {
     }
 }

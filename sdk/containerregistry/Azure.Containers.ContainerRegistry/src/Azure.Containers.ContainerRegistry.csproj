@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description></Description>
     <AssemblyTitle>Microsoft Azure.Containers.ContainerRegistry client library</AssemblyTitle>
@@ -9,6 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <!-- Low-level client generated files -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\internal\Protocol\ProtocolClientOptions.cs"/>
+    <Compile Include="$(MSBuildThisFileDirectory)..\internal\Protocol\Generated\ContainerRegistryBlobProtocolClient.cs"/>
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Containers.ContainerRegistry.Protocol
 {
     /// <summary> The ContainerRegistryRepository service client. </summary>
-    internal partial class ContainerRegistryRepositoryClient
+    public partial class ContainerRegistryRepositoryClient
     {
         protected HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://management.core.windows.net/.default" };

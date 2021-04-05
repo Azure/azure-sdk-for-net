@@ -16,30 +16,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Containers.ContainerRegistry.Protocol
 {
-    /// <summary> The ContainerRegistryBlob service client. </summary>
-    public partial class ContainerRegistryBlobClient
+    /// <summary> The ContainerRegistryBlobProtocol service client. </summary>
+    public partial class ContainerRegistryBlobProtocolClient
     {
         protected HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://management.core.windows.net/.default" };
         private string url;
 
-        /// <summary> Initializes a new instance of ContainerRegistryBlobClient for mocking. </summary>
-        protected ContainerRegistryBlobClient()
+        /// <summary> Initializes a new instance of ContainerRegistryBlobProtocolClient for mocking. </summary>
+        protected ContainerRegistryBlobProtocolClient()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryBlobClient. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryBlobProtocolClient. </summary>
         /// <param name="url"> Registry login URL. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public ContainerRegistryBlobClient(string url, TokenCredential credential) : this(url, credential, new Core.ProtocolClientOptions())
+        public ContainerRegistryBlobProtocolClient(string url, TokenCredential credential) : this(url, credential, new Core.ProtocolClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryBlobClient. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryBlobProtocolClient. </summary>
         /// <param name="url"> Registry login URL. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> Options to control the underlying operations. </param>
-        internal ContainerRegistryBlobClient(string url, TokenCredential credential, Core.ProtocolClientOptions options = null)
+        internal ContainerRegistryBlobProtocolClient(string url, TokenCredential credential, Core.ProtocolClientOptions options = null)
         {
             if (url == null)
             {
