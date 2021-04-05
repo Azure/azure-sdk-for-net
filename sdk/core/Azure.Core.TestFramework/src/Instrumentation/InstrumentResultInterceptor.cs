@@ -12,8 +12,9 @@ namespace Azure.Core.TestFramework
 {
     internal class InstrumentResultInterceptor : IInterceptor
     {
-        private static readonly MethodInfo InstrumentOperationInterceptorMethodInfo = typeof(InstrumentResultInterceptor).
-            GetMethod(nameof(InstrumentOperationInterceptor), BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly MethodInfo InstrumentOperationInterceptorMethodInfo = typeof(InstrumentResultInterceptor)
+            .GetMethod(nameof(InstrumentOperationInterceptor), BindingFlags.NonPublic | BindingFlags.Instance)
+            ?? throw new InvalidOperationException("Unable to find InstrumentOperationInterceptor method");
 
         private readonly ClientTestBase _testBase;
 

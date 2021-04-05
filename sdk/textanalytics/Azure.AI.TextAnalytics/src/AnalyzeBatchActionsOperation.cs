@@ -39,7 +39,7 @@ namespace Azure.AI.TextAnalytics
         /// <summary>
         /// Total actions executed in the operation.
         /// </summary>
-        public int ActionsTotal => _actionsTotal;
+        public virtual int ActionsTotal => _actionsTotal;
 
         /// <summary>
         /// Time when the operation was created on.

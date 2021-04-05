@@ -14,11 +14,13 @@ namespace Azure.Core.TestFramework
 {
     public class DiagnosticScopeValidatingInterceptor : IInterceptor
     {
-        private static readonly MethodInfo ValidateDiagnosticScopeMethodInfo = typeof(DiagnosticScopeValidatingInterceptor).
-            GetMethod(nameof(ValidateDiagnosticScopeInterceptor), BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly MethodInfo ValidateDiagnosticScopeMethodInfo = typeof(DiagnosticScopeValidatingInterceptor)
+            .GetMethod(nameof(ValidateDiagnosticScopeInterceptor), BindingFlags.NonPublic | BindingFlags.Instance)
+            ?? throw new InvalidOperationException("Unable to find DiagnosticScopeValidatingInterceptor.ValidateDiagnosticScopeInterceptor method");
 
-        private static readonly MethodInfo WrapAsyncResultCoreMethod = typeof(DiagnosticScopeValidatingInterceptor).
-            GetMethod(nameof(WrapAsyncResultCore), BindingFlags.NonPublic | BindingFlags.Static);
+        private static readonly MethodInfo WrapAsyncResultCoreMethod = typeof(DiagnosticScopeValidatingInterceptor)
+            .GetMethod(nameof(WrapAsyncResultCore), BindingFlags.NonPublic | BindingFlags.Static)
+            ?? throw new InvalidOperationException("Unable to find DiagnosticScopeValidatingInterceptor.WrapAsyncResultCore method");
 
         public void Intercept(IInvocation invocation)
         {

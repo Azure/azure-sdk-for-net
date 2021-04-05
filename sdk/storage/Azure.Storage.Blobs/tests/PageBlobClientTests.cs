@@ -2174,14 +2174,7 @@ namespace Azure.Storage.Blobs.Test
                 Operation<long> operation = await blob.StartCopyIncrementalAsync(
                     sourceUri: sourceBlob.Uri,
                     snapshot: snapshot);
-                if (Mode == RecordedTestMode.Playback)
-                {
-                    await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-                }
-                else
-                {
-                    await operation.WaitForCompletionAsync();
-                }
+                await operation.WaitForCompletionAsync();
                 parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
 
                 PageBlobRequestConditions accessConditions = BuildAccessConditions(parameters: parameters);
@@ -2233,14 +2226,7 @@ namespace Azure.Storage.Blobs.Test
                 Operation<long> operation = await blob.StartCopyIncrementalAsync(
                     sourceUri: sourceBlob.Uri,
                     snapshot: snapshot);
-                if (Mode == RecordedTestMode.Playback)
-                {
-                    await operation.WaitForCompletionAsync(TimeSpan.FromMilliseconds(10), CancellationToken.None);
-                }
-                else
-                {
-                    await operation.WaitForCompletionAsync();
-                }
+                await operation.WaitForCompletionAsync();
                 parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
                 await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
 
