@@ -7,6 +7,9 @@ using System.Text.Json;
 using Azure.Core;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Azure.Security.Attestation
 {
@@ -16,7 +19,7 @@ namespace Azure.Security.Attestation
     public class AttestationToken
     {
         protected private string _token;
-        private JsonSerializerOptions _options = new JsonSerializerOptions();
+        private JsonSerializerOptions _serializerOptions = new JsonSerializerOptions();
 
         private object _deserializedBody;
         private object _statelock = new object();
@@ -25,7 +28,7 @@ namespace Azure.Security.Attestation
         /// Initializes a new instance of the <see cref="AttestationToken"/> class.
         /// </summary>
         /// <param name="token">string JWT to initialize.</param>
-        internal AttestationToken(string token)
+        internal protected AttestationToken(string token)
         {
             _token = token;
             string[] decomposedToken = token.Split('.');
@@ -39,33 +42,69 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
-        /// Protected token for mocking.
+        /// Creates a new unsecured attestation token with an empty body. Used for the <see cref="AttestationAdministrationClient.ResetPolicy(AttestationType, TokenSigningKey, System.Threading.CancellationToken)"/> API.
         /// </summary>
-        protected AttestationToken()
+        public AttestationToken()
         {
+            _token = "eyJhbGciOiJub25lIn0..";
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AttestationToken"/> class as an unsecured JSON Web Token, with <paramref name="body"/> as the body of the token.
+        /// </summary>
+        /// <param name="body">Object to be used as the body of the newly created attestation token.</param>
+        public AttestationToken(object body)
+        {
+            _token = CreateUnsecuredJwt(body);
+        }
+
+        /// <summary>
+        /// Creates a new attestation token based on the supplied body signed with the specified signing key.
+        /// </summary>
+        /// <param name="body">The body of the generated token.</param>
+        /// <param name="signingKey"><see cref="TokenSigningKey"/> which will be used to sign the generated token.</param>
+        public AttestationToken(object body, TokenSigningKey signingKey)
+        {
+            _token = signingKey != null ? GenerateSecuredJsonWebToken(body, signingKey) : CreateUnsecuredJwt(body);
+        }
+
+        /// <summary>
+        /// Creates a new unsecured attestation token with an empty body. Used for the <see cref="AttestationAdministrationClient.ResetPolicy(AttestationType, TokenSigningKey, System.Threading.CancellationToken)"/> API.
+        /// </summary>
+        /// <param name="signingKey"><see cref="TokenSigningKey"/> which will be used to sign the generated token.</param>
+        public AttestationToken(TokenSigningKey signingKey)
+        {
+            _token = signingKey != null ? GenerateSecuredJsonWebToken(null, signingKey) : CreateUnsecuredJwt(null);
         }
 
         /// <summary>
         /// Returns the thumbprint of the X.509 certificate which was used to verify the attestation token.
         ///
-        /// Null until the <see cref="AttestationToken.ValidateToken(IReadOnlyList{AttestationSigner}, Func{AttestationToken, AttestationSigner, bool})"/> method has been called.
+        /// Null until the <see cref="AttestationToken.ValidateToken(AttestationTokenOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
         /// </summary>
-        public string CertificateThumbprint { get; }
+        public virtual string CertificateThumbprint { get; private set; }
+
+        /// <summary>
+        /// Returns the X.509 certificate which was used to verify the attestation token.
+        ///
+        /// Null until the <see cref="AttestationToken.ValidateToken(AttestationTokenOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
+        /// </summary>
+        public virtual AttestationSigner SigningCertificate { get; private set; }
 
         /// <summary>
         /// Decoded header for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public ReadOnlyMemory<byte> TokenHeaderBytes { get; }
+        public virtual ReadOnlyMemory<byte> TokenHeaderBytes { get; }
 
         /// <summary>
         /// Decoded body for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public ReadOnlyMemory<byte> TokenBodyBytes { get; }
+        public virtual ReadOnlyMemory<byte> TokenBodyBytes { get; }
 
         /// <summary>
         /// Decoded signature for the attestation token. See https://tools.ietf.org/html/rfc7515 for more details.
         /// </summary>
-        public ReadOnlyMemory<byte> TokenSignatureBytes { get; }
+        public virtual ReadOnlyMemory<byte> TokenSignatureBytes { get; }
 
         // Standard JSON Web Signature/Json Web Token header values.
 
@@ -73,37 +112,37 @@ namespace Azure.Security.Attestation
         /// Json Web Token Header "algorithm". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.1 for details.
         /// If the value of <see cref="Algorithm"/> is "none" it indicates that the token is unsecured.
         /// </summary>
-        public string Algorithm { get => Header.Algorithm; }
+        public virtual string Algorithm { get => Header.Algorithm; }
 
         /// <summary>
         /// Json Web Token Header "type". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.9 for details.
         ///
         /// If present, the value for this field is normally "JWT".
         /// </summary>
-        public string Type { get => Header.Type; }
+        public virtual string Type { get => Header.Type; }
 
         /// <summary>
         /// Json Web Token Header "content type". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.10 for details.
         /// </summary>
-        public string ContentType { get => Header.ContentType; }
+        public virtual string ContentType { get => Header.ContentType; }
         /// <summary>
         /// Json Web Token Header "Key URL". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.2 for details.
         /// </summary>
-        public Uri KeyUrl { get => Header.JWKUri; }
+        public virtual Uri KeyUrl { get => Header.JWKUri; }
         /// <summary>
         /// Json Web Token Header "Key ID". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.4 for details.
         /// </summary>
-        public string KeyId { get => Header.KeyId; }
+        public virtual string KeyId { get => Header.KeyId; }
 
         /// <summary>
         /// Json Web Token Header "X509 URL". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.5 for details.
         /// </summary>
-        public Uri X509Url { get => Header.X509Uri; }
+        public virtual Uri X509Url { get => Header.X509Uri; }
 
         /// <summary>
         /// An array of X.509Certificates which represent a certificate chain used to sign the token. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6 for details.
         /// </summary>
-        public X509Certificate2[] X509CertificateChain {
+        public virtual X509Certificate2[] X509CertificateChain {
             get
             {
                 List<X509Certificate2> certificates = new List<X509Certificate2>();
@@ -118,17 +157,17 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// The "thumbprint" of the certificate used to sign the request. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.7 for details.
         /// </summary>
-        public string X509CertificateThumbprint { get => Header.X509CertificateThumbprint; }
+        public virtual string X509CertificateThumbprint { get => Header.X509CertificateThumbprint; }
 
         /// <summary>
         /// The "thumbprint" of the certificate used to sign the request generated using the SHA256 algorithm. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.8 for details.
         /// </summary>
-        public string X509CertificateSha256Thumbprint { get => Header.X509CertificateSha256Thumbprint; }
+        public virtual string X509CertificateSha256Thumbprint { get => Header.X509CertificateSha256Thumbprint; }
 
         /// <summary>
         /// Json Web TOken Header "Critical". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.11 for details.
         /// </summary>
-        public bool? Critical { get => Header.Critical; }
+        public virtual bool? Critical { get => Header.Critical; }
 
         /// <summary>
         /// Returns the standard properties in the JSON Web Token header. See https://tools.ietf.org/html/rfc7515 for more details.
@@ -143,43 +182,267 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Expiration time for the token.
         /// </summary>
-        public DateTimeOffset ExpirationTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.ExpirationTime); }
+        public virtual DateTimeOffset? ExpirationTime
+        {
+            get
+            {
+                if (Payload.ExpirationTime.HasValue)
+                {
+                    return DateTimeOffset.FromUnixTimeSeconds((long)Payload.ExpirationTime.Value);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
         /// <summary>
         /// Time before which this token is not valid.
         /// </summary>
-        public DateTimeOffset NotBeforeTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.NotBeforeTime); }
+        public virtual DateTimeOffset? NotBeforeTime
+        {
+            get
+            {
+                if (Payload.NotBeforeTime.HasValue)
+                {
+                    return DateTimeOffset.FromUnixTimeSeconds((long)Payload.NotBeforeTime.Value);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
         /// <summary>
         /// Time at which this token was issued.
         /// </summary>
-        public DateTimeOffset IssuedAtTime { get => DateTimeOffset.FromUnixTimeSeconds(Payload.IssuedAtTime); }
+        public virtual DateTimeOffset? IssuedAtTime
+        {
+            get
+            {
+                if (Payload.IssuedAtTime.HasValue)
+                {
+                    return DateTimeOffset.FromUnixTimeSeconds((long)Payload.IssuedAtTime.Value);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
 
         /// <summary>
         /// Represents the body of the token encoded as a string.
         /// </summary>
-        public string TokenBody  { get => Encoding.UTF8.GetString(TokenBodyBytes.ToArray()); }
+        public virtual string TokenBody  { get => Encoding.UTF8.GetString(TokenBodyBytes.ToArray()); }
 
         /// <summary>
         /// Represents the body of the token encoded as a string.
         /// </summary>
-        public string TokenHeader { get => Encoding.UTF8.GetString(TokenHeaderBytes.ToArray()); }
+        public virtual string TokenHeader { get => Encoding.UTF8.GetString(TokenHeaderBytes.ToArray()); }
 
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
         /// </summary>
+        /// <param name="options">Options used while validating the attestation token.</param>
         /// <param name="attestationSigningCertificates">Signing Certificates used to validate the token.</param>
-        /// <param name="validationCallback">User provided callback which allows the customer to validate the token.</param>
+        /// <param name="cancellationToken">Token used to cancel this operation if necessary.</param>
         /// <returns></returns>
-        public virtual bool ValidateToken(IReadOnlyList<AttestationSigner> attestationSigningCertificates, Func<AttestationToken, AttestationSigner, bool> validationCallback = default)
+        public virtual async Task<bool> ValidateToken(AttestationTokenOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(attestationSigningCertificates, nameof(attestationSigningCertificates));
-            Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
-            Argument.AssertNotNullOrEmpty(attestationSigningCertificates, nameof(attestationSigningCertificates));
-
-            if (validationCallback != null)
+            // Before we waste a lot of time, see if the token is unsecured. If it is, then validation is simple.
+            if (Header.Algorithm.Equals("none", StringComparison.OrdinalIgnoreCase))
             {
-                return validationCallback(this, attestationSigningCertificates[0]);
+                if (!ValidateCommonProperties(options))
+                {
+                    return false;
+                }
+                if (options.ValidationCallback != null)
+                {
+                    return options.ValidationCallback(this, null);
+                }
+                return true;
+            }
+
+            // This token is a secured attestation token. If the caller provided signing certificates, then
+            // they need to have provided at least one certificate.
+            if (attestationSigningCertificates != null)
+            {
+                Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
+            }
+            else
+            {
+            }
+
+            var possibleCertificates = await GetCandidateSigningCertificates(attestationSigningCertificates).ConfigureAwait(false);
+            if (possibleCertificates.Length == 0)
+            {
+                throw new Exception($"Unable to find any certificates which can be used to validate the token.");
+            }
+
+            if (!ValidateTokenSignature(possibleCertificates))
+            {
+                throw new Exception($"Could not find a certificate which was used to sign the token.");
+            }
+
+            if (!ValidateCommonProperties(options))
+            {
+                return false;
+            }
+            if (options.ValidationCallback != null)
+            {
+                return options.ValidationCallback(this, SigningCertificate);
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Returns a set of candidate signing certificates based on the contents of the token.
+        /// </summary>
+        /// <param name="attestationSigners">The desired set of signers for this token - if present, then this is the exclusive set of signers for the token.</param>
+        /// <returns></returns>
+        private async Task<X509Certificate2[]> GetCandidateSigningCertificates(IReadOnlyList<AttestationSigner> attestationSigners)
+        {
+            string desiredKeyId = Header.KeyId;
+            List<X509Certificate2> candidateCertificates = new List<X509Certificate2>();
+            if (desiredKeyId != null)
+            {
+                // We start looking for candidate signers by looking in the provided attestation signers.
+                // The list of attestation signers trumps
+                foreach (var signer in attestationSigners)
+                {
+                    if (signer.CertificateKeyId == desiredKeyId)
+                    {
+                        candidateCertificates.Add(signer.SigningCertificates[0]);
+                        break;
+                    }
+                }
+
+                // We didn't find a certificate from the attestation signers. That means we need to look in the
+                // Header to see if we can find one there.
+                if (candidateCertificates.Count == 0)
+                {
+                    if (Header.JsonWebKey != null)
+                    {
+                        // If the key matches the header's JWK, then the signer is going to be the leaf certificate
+                        // in the certificate chain.
+                        if (desiredKeyId == Header.JsonWebKey.Kid)
+                        {
+                            candidateCertificates.Add(new X509Certificate2(Convert.FromBase64String(Header.JsonWebKey.X5C[0])));
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // We don't have a desired Key ID, so we need to try all the possible signing certificates :(.
+
+                // Start with the attestationSigners provided by the caller. Remember that attestation signers
+                // trump all signers in the header.
+                if (attestationSigners != null)
+                {
+                    foreach (var signer in attestationSigners)
+                    {
+                        candidateCertificates.Add(signer.SigningCertificates[0]);
+                    }
+                }
+                else
+                {
+                    if (Header.X509CertificateChain != null)
+                    {
+                        candidateCertificates.Add(new X509Certificate2(Convert.FromBase64String(Header.X509CertificateChain[0])));
+                    }
+                    if (Header.JsonWebKey != null)
+                    {
+                        candidateCertificates.Add(new X509Certificate2(Convert.FromBase64String(Header.JsonWebKey.X5C[0])));
+                    }
+                }
+            }
+            await Task.Yield();
+            return candidateCertificates.ToArray();
+        }
+
+        /// <summary>
+        /// Iterate over the set of possible signers looking for a signer which can validate the signature
+        /// </summary>
+        /// <param name="possibleSigners">A set of X509 Certificates which might be used to sign the token.</param>
+        /// <returns>true if the signature in the token was validated.</returns>
+        private bool ValidateTokenSignature(X509Certificate2[] possibleSigners)
+        {
+            bool signatureValidated = false;
+            X509Certificate2 signingCert = null;
+
+            foreach (var cert in possibleSigners)
+            {
+                AsymmetricAlgorithm asymmetricAlgorithm = cert.PublicKey.Key;
+
+                if (asymmetricAlgorithm is RSA rsaKey)
+                {
+                    signatureValidated = rsaKey.VerifyData(
+                        Encoding.UTF8.GetBytes(Base64Url.Encode(this.TokenHeaderBytes.ToArray()) + "." + Base64Url.Encode(this.TokenBodyBytes.ToArray())),
+                        this.TokenSignatureBytes.ToArray(),
+                        HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+                    if (signatureValidated)
+                    {
+                        signingCert = cert;
+                    }
+                    break;
+                }
+                else if (asymmetricAlgorithm is ECDsa ecdsa)
+                {
+                    signatureValidated = ecdsa.VerifyData(
+                        Encoding.UTF8.GetBytes(Base64Url.Encode(this.TokenHeaderBytes.ToArray()) + "." + Base64Url.Encode(this.TokenBodyBytes.ToArray())),
+                        this.TokenSignatureBytes.ToArray(),
+                        HashAlgorithmName.SHA256);
+                    if (signatureValidated)
+                    {
+                        signingCert = cert;
+                    }
+                    break;
+                }
+            }
+            if (signatureValidated)
+            {
+                this.CertificateThumbprint = signingCert.Thumbprint;
+                this.SigningCertificate = new AttestationSigner(new List<X509Certificate2> { signingCert }.ToArray(), null);
+            }
+            return signatureValidated;
+        }
+
+        /// <summary>
+        /// Validate the common properties of the attestation token - ensure that the expiration time for the token is "reasonable", if present.
+        /// </summary>
+        /// <returns></returns>
+        private bool ValidateCommonProperties(AttestationTokenOptions options)
+        {
+            if (Payload.ExpirationTime.HasValue && (options?.ValidateExpirationTime ?? true))
+            {
+                DateTimeOffset timeNow = DateTimeOffset.Now;
+                if (timeNow.CompareTo(ExpirationTime.Value) > 0)
+                {
+                    if (options?.TimeValidationSlack != 0)
+                    {
+                        var delta = timeNow.Subtract(ExpirationTime.Value);
+                        if (delta.Seconds > options?.TimeValidationSlack)
+                        {
+                            throw new Exception("Attestation token expired before the slack time provided.");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Attestation token expired.");
+                    }
+                }
+            }
+
+            if (Payload.NotBeforeTime.HasValue && (options?.ValidateNotBeforeTime?? true))
+            {
+                if (DateTimeOffset.Now.CompareTo(NotBeforeTime.Value) < 0)
+                {
+                    throw new Exception("Attestation token cannot be evaluated because it is too early.");
+                }
             }
             return true;
         }
@@ -189,23 +452,115 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <typeparam name="T">Underlying type for the token body.</typeparam>
         /// <returns></returns>
-        public T GetBody<T>()
+        public virtual T GetBody<T>()
             where T: class
         {
             lock (_statelock)
             {
                 if (_deserializedBody == null || _deserializedBody.GetType() != typeof(T))
                 {
-                    _deserializedBody = JsonSerializer.Deserialize<T>(TokenBodyBytes.ToArray(), _options);
+                    _deserializedBody = JsonSerializer.Deserialize<T>(TokenBodyBytes.ToArray(), _serializerOptions);
                 }
                 return (T)_deserializedBody;
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns the attestation token composed as JSON Web Token
+        /// </summary>
+        /// <returns>The value of the AttestationToken as a JSON Web Token.</returns>
         public override string ToString()
         {
-            return _token ??  GetType().Name;
+            return _token ?? GetType().Name;
+        }
+
+        /// <summary>
+        /// Create an unsecured JSON Web Token based on the specified token body.
+        /// </summary>
+        /// <param name="body">Object to be embeeded as the body of the attestation token.</param>
+        /// <returns></returns>
+        private static string CreateUnsecuredJwt(object body)
+        {
+            string returnValue = "eyJhbGciOiJub25lIn0.";
+
+            string encodedDocument;
+            if (body != null)
+            {
+                string bodyString = JsonSerializer.Serialize(body);
+
+                // Either base64 or json encode the policy depending on the setting of the encodePolicyBody parameter.
+                encodedDocument = Base64Url.EncodeString(bodyString);
+            }
+            else
+            {
+                encodedDocument = string.Empty;
+            }
+
+            returnValue += encodedDocument;
+            returnValue += ".";
+
+            return returnValue;
+        }
+
+        /// <summary>
+        /// Create a secured JSON Web Token based on the specified token body and the specified signing key.
+        /// </summary>
+        /// <param name="body">Object to be embeeded as the body of the attestation token.</param>
+        /// <param name="signingKey">Key used to sign the attestation token.</param>
+        /// <returns></returns>
+        private static string GenerateSecuredJsonWebToken(object body, TokenSigningKey signingKey)
+        {
+            Argument.AssertNotNull(signingKey, nameof(signingKey));
+
+            AsymmetricAlgorithm signer;
+            if (signingKey.Certificate.HasPrivateKey)
+            {
+                signer = signingKey.Certificate.PrivateKey;
+            }
+            else
+            {
+                signer = signingKey.Signer;
+            }
+
+            JsonWebTokenHeader header = new JsonWebTokenHeader
+            {
+                Algorithm = signingKey.Signer is RSA ? "RSA256" : (signingKey.Signer is ECDsa ? "ECDH256" : null),
+                X509CertificateChain = new string[] { Convert.ToBase64String(signingKey.Certificate.Export(X509ContentType.Cert)) },
+            };
+            var serializationOptions = new JsonSerializerOptions
+            {
+                IgnoreNullValues = true,
+            };
+            byte[] jwtHeader = JsonSerializer.SerializeToUtf8Bytes<JsonWebTokenHeader>(header, serializationOptions);
+            string encodedHeader = Base64Url.Encode(jwtHeader);
+
+            byte[] jwtBody = null;
+            if (body != null)
+            {
+                jwtBody = JsonSerializer.SerializeToUtf8Bytes(body, serializationOptions);
+            }
+
+            string encodedBody = jwtBody != null ? Base64Url.Encode(jwtBody) : string.Empty;
+
+            string signedData = encodedHeader + '.' + encodedBody;
+
+            byte[] signature;
+            if (signingKey.Signer is RSA rsaKey)
+            {
+                signature = rsaKey.SignData(Encoding.UTF8.GetBytes(signedData), HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+            }
+            else if (signingKey.Signer is ECDsa ecdh)
+            {
+                signature = ecdh.SignData(Encoding.UTF8.GetBytes(signedData), HashAlgorithmName.SHA256);
+            }
+            else
+            {
+                throw new JsonException();
+            }
+
+            string jwt = signedData + '.' + Base64Url.Encode(signature);
+
+            return jwt;
         }
     }
 }

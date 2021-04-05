@@ -117,7 +117,7 @@ namespace Azure.Security.Attestation
 
                 if (_options.ValidateAttestationTokens)
                 {
-                    attestationToken.ValidateToken(GetSigners(), _options.ValidationCallback);
+                    attestationToken.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
                 }
 
                 return new AttestationResponse<AttestationResult>(response.GetRawResponse(), attestationToken);
@@ -167,7 +167,7 @@ namespace Azure.Security.Attestation
 
                 if (_options.ValidateAttestationTokens)
                 {
-                    attestationToken.ValidateToken(GetSigners(), _options.ValidationCallback);
+                    await attestationToken.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
 
                 return new AttestationResponse<AttestationResult>(response.GetRawResponse(), attestationToken);
@@ -217,7 +217,7 @@ namespace Azure.Security.Attestation
 
                 if (_options.ValidateAttestationTokens)
                 {
-                    attestationToken.ValidateToken(GetSigners(), _options.ValidationCallback);
+                    attestationToken.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
                 }
 
                 return new AttestationResponse<AttestationResult>(response.GetRawResponse(), attestationToken);
@@ -267,7 +267,7 @@ namespace Azure.Security.Attestation
 
                 if (_options.ValidateAttestationTokens)
                 {
-                    attestationToken.ValidateToken(GetSigners(), _options.ValidationCallback);
+                    await attestationToken.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
 
                 return new AttestationResponse<AttestationResult>(response.GetRawResponse(), attestationToken);

@@ -88,7 +88,7 @@ namespace Azure.Security.Attestation.Tests
             {
             }
 
-            var policySetResult = await adminClient.ResetPolicyAsync(AttestationType.OpenEnclave, rsaKey, x509Certificate);
+            var policySetResult = await adminClient.ResetPolicyAsync(AttestationType.OpenEnclave, (rsaKey != null ? new TokenSigningKey(rsaKey, x509Certificate) : null));
             Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
             Assert.AreEqual(PolicyModification.Removed, policySetResult.Value.PolicyResolution);
         }
@@ -112,7 +112,7 @@ namespace Azure.Security.Attestation.Tests
 
                 // The SetPolicyAsync API will create an UnsecuredAttestationToken to transmit the policy.
                 var shaHasher = SHA256Managed.Create();
-                var policySetToken = new UnsecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = disallowDebugging });
+                var policySetToken = new AttestationToken(new StoredAttestationPolicy { AttestationPolicy = disallowDebugging });
 
                 disallowDebuggingHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
 
@@ -175,11 +175,12 @@ namespace Azure.Security.Attestation.Tests
 
             byte[] disallowDebuggingHash;
             {
-                var policySetResult = await adminClient.SetPolicyAsync(AttestationType.OpenEnclave, disallowDebugging, rsaKey, x509Certificate);
+                var policySetResult = await adminClient.SetPolicyAsync(AttestationType.OpenEnclave, disallowDebugging, new TokenSigningKey(rsaKey, x509Certificate));
 
                 var shaHasher = SHA256Managed.Create();
 
-                var policySetToken = new SecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = disallowDebugging }, rsaKey, x509Certificate);
+                var policySetToken = new AttestationToken(
+                    new StoredAttestationPolicy { AttestationPolicy = disallowDebugging }, new TokenSigningKey(rsaKey, x509Certificate));
                 disallowDebuggingHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
 
                 Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
@@ -194,7 +195,7 @@ namespace Azure.Security.Attestation.Tests
                 Assert.AreEqual(disallowDebugging, policyResult.Value);
             }
             {
-                var policySetResult = await adminClient.ResetPolicyAsync(AttestationType.OpenEnclave, rsaKey, x509Certificate);
+                var policySetResult = await adminClient.ResetPolicyAsync(AttestationType.OpenEnclave, new TokenSigningKey(rsaKey, x509Certificate));
                 Assert.AreEqual(200, policySetResult.GetRawResponse().Status);
                 Assert.AreEqual(PolicyModification.Removed, policySetResult.Value.PolicyResolution);
             }
@@ -264,7 +265,7 @@ namespace Azure.Security.Attestation.Tests
             {
                 var modificationResult = await adminClient.AddPolicyManagementCertificateAsync(
                     TestEnvironment.PolicyCertificate2,
-                    rsaKey, x509Certificate);
+                    new TokenSigningKey(rsaKey, x509Certificate));
                 Assert.AreEqual(CertificateModification.IsPresent, modificationResult.Value.CertificateResolution);
                 Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
 
@@ -286,8 +287,7 @@ namespace Azure.Security.Attestation.Tests
             {
                 var modificationResult = await adminClient.AddPolicyManagementCertificateAsync(
                     TestEnvironment.PolicyCertificate2,
-                    rsaKey,
-                    x509Certificate);
+                    new TokenSigningKey(rsaKey, x509Certificate));
                 Assert.AreEqual(CertificateModification.IsPresent, modificationResult.Value.CertificateResolution);
                 Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
 
@@ -308,8 +308,7 @@ namespace Azure.Security.Attestation.Tests
             {
                 var modificationResult = await adminClient.RemovePolicyManagementCertificateAsync(
                     TestEnvironment.PolicyCertificate2,
-                    rsaKey,
-                    x509Certificate);
+                    new TokenSigningKey(rsaKey, x509Certificate));
                 Assert.AreEqual(CertificateModification.IsAbsent, modificationResult.Value.CertificateResolution);
                 Assert.AreEqual(TestEnvironment.PolicyCertificate2.Thumbprint, modificationResult.Value.CertificateThumbprint);
 
@@ -328,10 +327,17 @@ namespace Azure.Security.Attestation.Tests
             }
         }
 
+        private bool IsPlaybackMode { get => TestEnvironment.Mode == RecordedTestMode.Playback; }
+        private bool IsRecordMode { get => TestEnvironment.Mode == RecordedTestMode.Record; }
+        private bool IsLiveMode { get => TestEnvironment.Mode == RecordedTestMode.Live; }
+        private bool IsTalkingToLiveServer { get => IsRecordMode || IsLiveMode; }
+
         private AttestationAdministrationClient GetSharedAdministrationClient()
         {
             string endpoint = TestEnvironment.SharedUkSouth;
-            var options = InstrumentClientOptions(new AttestationClientOptions());
+
+            // We want to disable expiration checks in playback modes, because the recorded token is almost certainly expired.
+            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new AttestationTokenOptions { ValidateExpirationTime = IsTalkingToLiveServer, }));
             return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
@@ -339,7 +345,8 @@ namespace Azure.Security.Attestation.Tests
         {
             string endpoint = TestEnvironment.AadAttestationUrl;
 
-            var options = InstrumentClientOptions(new AttestationClientOptions());
+            // We want to disable expiration checks in playback modes, because the recorded token is almost certainly expired.
+            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new AttestationTokenOptions { ValidateExpirationTime = IsTalkingToLiveServer, }));
             return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
@@ -347,7 +354,8 @@ namespace Azure.Security.Attestation.Tests
         {
             string endpoint = TestEnvironment.IsolatedAttestationUrl;
 
-            var options = InstrumentClientOptions(new AttestationClientOptions());
+            // We want to disable expiration checks in playback modes, because the recorded token is almost certainly expired.
+            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new AttestationTokenOptions { ValidateExpirationTime = IsTalkingToLiveServer, }));
             return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
     }

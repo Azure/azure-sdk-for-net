@@ -8,8 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "1135",
         "Content-Type": "text/plain",
-        "traceparent": "00-11e53a8f3a43784fba303476091e2300-19e510bac93d924c-00",
-        "User-Agent": "azsdk-net-Security.Attestation/1.0.0-alpha.20210330.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
+        "traceparent": "00-3844e2ecb66bc042b6630749576bdd2f-fa76d224f85b3548-00",
+        "User-Agent": [
+          "azsdk-net-Security.Attestation/1.0.0-alpha.20210405.1",
+          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
+        ],
         "x-ms-client-request-id": "0e751e98e77b2ca8d15ae46755e35c32",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,15 +21,15 @@
       "ResponseHeaders": {
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Mar 2021 23:42:34 GMT",
+        "Date": "Mon, 05 Apr 2021 20:22:43 GMT",
         "Server": "Kestrel",
-        "x-ms-maa-service-version": "1.10.01516.0001",
-        "x-ms-request-id": "00-11e53a8f3a43784fba303476091e2300-19e510bac93d924c-00"
+        "x-ms-maa-service-version": "1.10.01543.0002",
+        "x-ms-request-id": "00-3844e2ecb66bc042b6630749576bdd2f-fa76d224f85b3548-00"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidOperation",
-          "message": "Native operation failed with 74: ..\\Enclave\\enclave.cpp(2359)\\(null)!: (caller: ) Exception(0) 83FF004A Bad message    Msg:[Unsigned JWS specified but enclave is configured with signing certificates.] \n\r\n..\\Enclave\\api.cpp(663)\\(null)!: (caller: ) LogHr(0) 83FF004A Bad message    Msg:[Unhandled Enclave Exception: \u0022Bad message\u0022] \n\r\n"
+          "message": "Native operation failed with 74: ..\\Enclave\\enclave.cpp(2430)\\(null)!: (caller: ) Exception(0) 83FF004A Bad message    Msg:[Unsigned JWS specified but enclave is configured with signing certificates.] \n\r\n..\\Enclave\\api.cpp(679)\\(null)!: (caller: ) LogHr(0) 83FF004A Bad message    Msg:[Unhandled Enclave Exception: \u0022Bad message\u0022] \n\r\n"
         }
       }
     }
