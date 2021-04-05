@@ -43,5 +43,30 @@ namespace Azure.Storage
             }
             return base.IsRetriableResponse(message);
         }
+
+        /// <inheritdoc />
+        public override bool IsErrorResponse(HttpMessage message)
+        {
+            switch (message.Response.Status)
+            {
+                case 409:
+                    var header = message.Request.Headers;
+                    if (header.TryGetValue(Constants.HeaderNames.ErrorCode, out var error) &&
+                        (error == Constants.ErrorCodes.ContainerAlreadyExists ||
+                         error == Constants.ErrorCodes.BlobAlreadyExists))
+                    {
+                        var isConditional =
+                            header.Contains(HttpHeader.Names.IfMatch) ||
+                            header.Contains(HttpHeader.Names.IfNoneMatch) ||
+                            header.Contains(HttpHeader.Names.IfModifiedSince) ||
+                            header.Contains(HttpHeader.Names.IfUnmodifiedSince);
+                        return !isConditional;
+                    }
+
+                    break;
+            }
+
+            return base.IsErrorResponse(message);
+        }
     }
 }
