@@ -146,3 +146,52 @@ namespace Azure.Containers.ContainerRegistry
         public Azure.Containers.ContainerRegistry.ContentProperties WriteableProperties { get { throw null; } }
     }
 }
+namespace Azure.Containers.ContainerRegistry.Protocol
+{
+    public partial class ContainerRegistryBlobProtocolClient
+    {
+        protected ContainerRegistryBlobProtocolClient() { }
+        protected Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response CancelUpload(Azure.Core.RequestContent requestBody, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CancelUploadAsync(Azure.Core.RequestContent requestBody, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CheckBlobExists(Azure.Core.RequestContent requestBody, string name, string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CheckBlobExistsAsync(Azure.Core.RequestContent requestBody, string name, string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CheckChunkExists(Azure.Core.RequestContent requestBody, string name, string digest, string range, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CheckChunkExistsAsync(Azure.Core.RequestContent requestBody, string name, string digest, string range, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CompleteUpload(Azure.Core.RequestContent requestBody, string digest, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CompleteUploadAsync(Azure.Core.RequestContent requestBody, string digest, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected Azure.Core.Request CreateCancelUploadRequest(Azure.Core.RequestContent requestBody, string location) { throw null; }
+        protected Azure.Core.Request CreateCheckBlobExistsRequest(Azure.Core.RequestContent requestBody, string name, string digest) { throw null; }
+        protected Azure.Core.Request CreateCheckChunkExistsRequest(Azure.Core.RequestContent requestBody, string name, string digest, string range) { throw null; }
+        protected Azure.Core.Request CreateCompleteUploadRequest(Azure.Core.RequestContent requestBody, string digest, string location) { throw null; }
+        protected Azure.Core.Request CreateDeleteBlobRequest(Azure.Core.RequestContent requestBody, string name, string digest) { throw null; }
+        protected Azure.Core.Request CreateGetBlobRequest(Azure.Core.RequestContent requestBody, string name, string digest) { throw null; }
+        protected Azure.Core.Request CreateGetChunkRequest(Azure.Core.RequestContent requestBody, string name, string digest, string range) { throw null; }
+        protected Azure.Core.Request CreateGetUploadStatusRequest(Azure.Core.RequestContent requestBody, string location) { throw null; }
+        protected Azure.Core.Request CreateMountBlobRequest(Azure.Core.RequestContent requestBody, string name, string from, string mount) { throw null; }
+        protected Azure.Core.Request CreateStartUploadRequest(Azure.Core.RequestContent requestBody, string name) { throw null; }
+        protected Azure.Core.Request CreateUploadChunkRequest(Azure.Core.RequestContent requestBody, string location) { throw null; }
+        public virtual Azure.Response DeleteBlob(Azure.Core.RequestContent requestBody, string name, string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteBlobAsync(Azure.Core.RequestContent requestBody, string name, string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetBlob(Azure.Core.RequestContent requestBody, string name, string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetBlobAsync(Azure.Core.RequestContent requestBody, string name, string digest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetChunk(Azure.Core.RequestContent requestBody, string name, string digest, string range, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetChunkAsync(Azure.Core.RequestContent requestBody, string name, string digest, string range, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetUploadStatus(Azure.Core.RequestContent requestBody, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetUploadStatusAsync(Azure.Core.RequestContent requestBody, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response MountBlob(Azure.Core.RequestContent requestBody, string name, string from, string mount, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> MountBlobAsync(Azure.Core.RequestContent requestBody, string name, string from, string mount, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response StartUpload(Azure.Core.RequestContent requestBody, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> StartUploadAsync(Azure.Core.RequestContent requestBody, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UploadChunk(Azure.Core.RequestContent requestBody, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UploadChunkAsync(Azure.Core.RequestContent requestBody, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ContainerRegistryProtocolClientOptions : Azure.Core.ClientOptions
+    {
+        public ContainerRegistryProtocolClientOptions(Azure.Containers.ContainerRegistry.Protocol.ContainerRegistryProtocolClientOptions.ServiceVersion version = Azure.Containers.ContainerRegistry.Protocol.ContainerRegistryProtocolClientOptions.ServiceVersion.V2019_08_15_preview) { }
+        public enum ServiceVersion
+        {
+            V2019_08_15_preview = 1,
+        }
+    }
+}
