@@ -3,8 +3,6 @@
 
 using System;
 using System.Diagnostics.Tracing;
-using System.Globalization;
-using System.Text;
 using Azure.Core.Diagnostics;
 
 namespace Azure.Search.Documents
@@ -29,58 +27,58 @@ namespace Azure.Search.Documents
 
         public static AzureSearchDocumentsEventSource Instance { get; } = new AzureSearchDocumentsEventSource();
 
-        [Event(PendingQueueResizedEvent, Level = EventLevel.Verbose, Message = "{0}: pending queue size = {1}.")]
-        public void PendingQueueResized(string publisherType, int queueSize)
+        [Event(PendingQueueResizedEvent, Level = EventLevel.Verbose, Message = "{0}: pending queue size = {2} for {1}.")]
+        public void PendingQueueResized(string senderType, string endPoint, int queueSize)
         {
-            WriteEvent(PendingQueueResizedEvent, publisherType, queueSize);
+            WriteEvent(PendingQueueResizedEvent, senderType, endPoint, queueSize);
         }
 
-        [Event(RetryQueueResizedEvent, Level = EventLevel.Verbose, Message = "{0}: retry queue size = {1}.")]
-        public void RetryQueueResized(string publisherType, int queueSize)
+        [Event(RetryQueueResizedEvent, Level = EventLevel.Verbose, Message = "{0}: retry queue size = {2} for {1}.")]
+        public void RetryQueueResized(string senderType, string endPoint, int queueSize)
         {
-            WriteEvent(RetryQueueResizedEvent, publisherType, queueSize);
+            WriteEvent(RetryQueueResizedEvent, senderType, endPoint, queueSize);
         }
 
-        [Event(BatchSubmittedEvent, Level = EventLevel.Informational, Message = "{0} at {1} has submitted batch of size {2}.")]
-        public void BatchSubmitted(string publisherType, string endPoint, int batchSize)
+        [Event(BatchSubmittedEvent, Level = EventLevel.Informational, Message = "{0}: submitted batch of size {2} for {1}.")]
+        public void BatchSubmitted(string senderType, string endPoint, int batchSize)
         {
-            WriteEvent(BatchSubmittedEvent, publisherType, endPoint, batchSize);
+            WriteEvent(BatchSubmittedEvent, senderType, endPoint, batchSize);
         }
 
-        [Event(BatchActionCountUpdatedEvent, Level = EventLevel.Warning, Message = "{0} at {1} has updated the starting batch action count from {2} to {3}.")]
-        public void BatchActionCountUpdated(string publisherType, string endPoint, int oldBatchCount, int newBatchCount)
+        [Event(BatchActionCountUpdatedEvent, Level = EventLevel.Warning, Message = "{0}: updated the starting batch action count from {2} to {3} for {1}.")]
+        public void BatchActionCountUpdated(string senderType, string endPoint, int oldBatchCount, int newBatchCount)
         {
-            WriteEvent(BatchActionCountUpdatedEvent, publisherType, endPoint, oldBatchCount, newBatchCount);
+            WriteEvent(BatchActionCountUpdatedEvent, senderType, endPoint, oldBatchCount, newBatchCount);
         }
 
-        [Event(SearchIndexingBufferedSenderDisposedWithPendingActionsEvent, Level = EventLevel.Error, Message = "{0}: {2} unsent indexing actions at {1}.")]
-        public void SearchIndexingBufferedSenderDisposedWithPendingActions(string componentType, string endPoint, int indexingActionsCount)
+        [Event(SearchIndexingBufferedSenderDisposedWithPendingActionsEvent, Level = EventLevel.Error, Message = "{0}: {2} unsent indexing actions for {1}.")]
+        public void SearchIndexingBufferedSenderDisposedWithPendingActions(string senderType, string endPoint, int indexingActionsCount)
         {
-            WriteEvent(SearchIndexingBufferedSenderDisposedWithPendingActionsEvent, componentType, endPoint, indexingActionsCount);
+            WriteEvent(SearchIndexingBufferedSenderDisposedWithPendingActionsEvent, senderType, endPoint, indexingActionsCount);
         }
 
-        [Event(DocumentsPublishedEvent, Level = EventLevel.Verbose, Message = "{0}: publishing documents. Flush = {2}")]
-        public void PublishingDocuments(string publisherType, bool flush)
+        [Event(DocumentsPublishedEvent, Level = EventLevel.Verbose, Message = "{0}: publishing documents for {1}. Flush = {2}")]
+        public void PublishingDocuments(string senderType, string endPoint, bool flush)
         {
-            WriteEvent(DocumentsPublishedEvent, publisherType, flush);
+            WriteEvent(DocumentsPublishedEvent, senderType, endPoint, flush);
         }
 
         [Event(ActionNotificationEventHandlerExceptionThrownEvent, Level = EventLevel.Error, Message = "{0}: exception thrown for {1}. Action = {2}. Exception: {3}")]
-        public void ActionNotificationEventHandlerExceptionThrown(string componentType, string endPoint, string action, string exceptionText)
+        public void ActionNotificationEventHandlerExceptionThrown(string senderType, string endPoint, string action, string exceptionText)
         {
-            WriteEvent(ActionNotificationEventHandlerExceptionThrownEvent, componentType, endPoint, action, exceptionText);
+            WriteEvent(ActionNotificationEventHandlerExceptionThrownEvent, senderType, endPoint, action, exceptionText);
         }
 
-        [Event(BatchActionPayloadTooLargeEvent, Level = EventLevel.Warning, Message = "{0}: Batch action count {2} is too large for {1}.")]
+        [Event(BatchActionPayloadTooLargeEvent, Level = EventLevel.Warning, Message = "{0}: batch action count {2} is too large for {1}.")]
         public void BatchActionPayloadTooLarge(string componentType, string endPoint, int batchActionCount)
         {
             WriteEvent(BatchActionPayloadTooLargeEvent, componentType, endPoint, batchActionCount);
         }
 
         [NonEvent]
-        public void ActionNotificationEventHandlerExceptionThrown(string componentType, string endPoint, string action, Exception e)
+        public void ActionNotificationEventHandlerExceptionThrown(string senderType, string endPoint, string action, Exception e)
         {
-            ActionNotificationEventHandlerExceptionThrown(componentType, endPoint, action, e.ToString());
+            ActionNotificationEventHandlerExceptionThrown(senderType, endPoint, action, e.ToString());
         }
     }
 }

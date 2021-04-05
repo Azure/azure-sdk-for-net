@@ -1071,7 +1071,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual("BatchSubmitted", eventData[3].EventName);              // 4. A batch is created for submission and contains all events.
             Assert.NotNull(eventData[3].GetProperty<string>("endPoint"));
             Assert.AreEqual(512, eventData[3].GetProperty<int>("batchSize"));
-            Assert.AreEqual("BatchActionPayloadTooLarge", eventData[4].EventName);  // 5. A batch is created for submission and contains all events.
+            Assert.AreEqual("BatchActionPayloadTooLarge", eventData[4].EventName);  // 5. Service responded to the index request with a 'payload too large' exception.
             Assert.AreEqual(EventLevel.Warning, eventData[4].Level);                //    This event is logged at 'Warning' level.
             Assert.AreEqual(512, eventData[4].GetProperty<int>("batchActionCount"));
             Assert.AreEqual("BatchActionCountUpdated", eventData[5].EventName);     // 6. Batch is split up and default action count is updated.

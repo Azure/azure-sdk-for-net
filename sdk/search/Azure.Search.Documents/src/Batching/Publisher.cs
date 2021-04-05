@@ -289,7 +289,7 @@ namespace Azure.Search.Documents.Batching
                 _pending.Enqueue(action);
             }
 
-            AzureSearchDocumentsEventSource.Instance.PendingQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _pending.Count);
+            AzureSearchDocumentsEventSource.Instance.PendingQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", GetEndpoint().AbsoluteUri, _pending.Count);
 
             // Automatically trigger a submission if enabled
             if (AutoFlush)
@@ -400,7 +400,7 @@ namespace Azure.Search.Documents.Batching
             // already submitting
             StopTimer();
 
-            AzureSearchDocumentsEventSource.Instance.PublishingDocuments($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", flush);
+            AzureSearchDocumentsEventSource.Instance.PublishingDocuments($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", GetEndpoint().AbsoluteUri, flush);
 
             do
             {
@@ -418,12 +418,12 @@ namespace Azure.Search.Documents.Batching
 
                 if (oldRetryBatchCount != _retry.Count)
                 {
-                    AzureSearchDocumentsEventSource.Instance.RetryQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _retry.Count);
+                    AzureSearchDocumentsEventSource.Instance.RetryQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", GetEndpoint().AbsoluteUri, _retry.Count);
                 }
 
                 if (oldPendingBatchCount != _pending.Count)
                 {
-                    AzureSearchDocumentsEventSource.Instance.PendingQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _pending.Count);
+                    AzureSearchDocumentsEventSource.Instance.PendingQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", GetEndpoint().AbsoluteUri, _pending.Count);
                 }
 
                 // Submit the batch
@@ -488,6 +488,12 @@ namespace Azure.Search.Documents.Batching
         protected abstract Task<bool> OnSubmitBatchAsync(IList<PublisherAction<T>> batch, CancellationToken cancellationToken);
 
         /// <summary>
+        /// Gets the endpoint information of the publisher.
+        /// </summary>
+        /// <returns>Service End point Uri of the publisher</returns>
+        protected abstract Uri GetEndpoint();
+
+        /// <summary>
         /// Enqueues an action to be retried.
         /// </summary>
         /// <param name="action">The action to be retried.</param>
@@ -521,7 +527,7 @@ namespace Azure.Search.Documents.Batching
                 _retry.Enqueue(action);
             }
 
-            AzureSearchDocumentsEventSource.Instance.RetryQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _retry.Count);
+            AzureSearchDocumentsEventSource.Instance.RetryQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", GetEndpoint().AbsoluteUri, _retry.Count);
         }
         #endregion Publishing
 

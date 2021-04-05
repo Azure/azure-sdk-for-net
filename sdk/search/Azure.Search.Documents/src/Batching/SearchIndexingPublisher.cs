@@ -208,6 +208,9 @@ namespace Azure.Search.Documents.Batching
             return throttled;
         }
 
+        /// <inheritdoc />
+        protected override Uri GetEndpoint() => _sender.Endpoint;
+
         /// <summary>
         /// Attempt to add an item to the retry queue or raise a failure
         /// notification if it's been retried too many times.
