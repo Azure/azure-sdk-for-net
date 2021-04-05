@@ -124,6 +124,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RepositoryProperties>> SetPropertiesAsync(ContentProperties value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetProperties)}");
             scope.Start();
             try
@@ -142,6 +144,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RepositoryProperties> SetProperties(ContentProperties value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetProperties)}");
             scope.Start();
             try
@@ -278,6 +282,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RegistryArtifactProperties>> GetRegistryArtifactPropertiesAsync(string tagOrDigest, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetRegistryArtifactProperties)}");
             scope.Start();
 
@@ -300,6 +306,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RegistryArtifactProperties> GetRegistryArtifactProperties(string tagOrDigest, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tagOrDigest, nameof(tagOrDigest));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetRegistryArtifactProperties)}");
             scope.Start();
 
@@ -327,6 +335,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RegistryArtifactProperties>> SetManifestPropertiesAsync(string digest, ContentProperties value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(value, nameof(value));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetManifestProperties)}");
             scope.Start();
             try
@@ -346,6 +357,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RegistryArtifactProperties> SetManifestProperties(string digest, ContentProperties value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(digest, nameof(digest));
+            Argument.AssertNotNull(value, nameof(value));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetManifestProperties)}");
             scope.Start();
             try
@@ -364,6 +378,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteRegistryArtifactAsync(string digest, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(digest, nameof(digest));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteRegistryArtifact)}");
             scope.Start();
             try
@@ -382,6 +398,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeleteRegistryArtifact(string digest, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(digest, nameof(digest));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteRegistryArtifact)}");
             scope.Start();
             try
@@ -503,6 +521,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TagProperties> GetTagProperties(string tag, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tag, nameof(tag));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(GetTagProperties)}");
             scope.Start();
             try
@@ -522,6 +542,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TagProperties>> SetTagPropertiesAsync(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tag, nameof(tag));
+            Argument.AssertNotNull(value, nameof(value));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetTagProperties)}");
             scope.Start();
             try
@@ -541,6 +564,9 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TagProperties> SetTagProperties(string tag, ContentProperties value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tag, nameof(tag));
+            Argument.AssertNotNull(value, nameof(value));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(SetTagProperties)}");
             scope.Start();
             try
@@ -559,6 +585,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteTagAsync(string tag, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tag, nameof(tag));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteTag)}");
             scope.Start();
             try
@@ -577,6 +605,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DeleteTag(string tag, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tag, nameof(tag));
+
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ContainerRepositoryClient)}.{nameof(DeleteTag)}");
             scope.Start();
             try
