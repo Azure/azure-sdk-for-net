@@ -124,7 +124,7 @@ namespace Azure.Search.Documents.Batching
                 await _sender.OnActionSentAsync(action.Document, cancellationToken).ConfigureAwait(false);
             }
 
-            AzureSearchDocumentsEventSource.Instance.BatchSubmitted($"{GetType().Name}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, batch.Count);
+            AzureSearchDocumentsEventSource.Instance.BatchSubmitted($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, batch.Count);
 
             // Send the request to the service
             Response<IndexDocumentsResult> response = null;
@@ -138,13 +138,15 @@ namespace Azure.Search.Documents.Batching
             // Handle batch level failures
             catch (RequestFailedException ex) when (ex.Status == 413) // Payload Too Large
             {
+                AzureSearchDocumentsEventSource.Instance.BatchActionPayloadTooLarge($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, BatchActionCount);
+
                 int oldBatchActionCount = BatchActionCount;
 
                 // Split the batch and try with smaller payloads
                 // Update 'BatchActionCount' so future submissions can avoid this error.
                 BatchActionCount = (int)Math.Floor((double)batch.Count / 2.0);
 
-                AzureSearchDocumentsEventSource.Instance.BatchActionCountUpdated($"{GetType().Name}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, oldBatchActionCount, BatchActionCount);
+                AzureSearchDocumentsEventSource.Instance.BatchActionCountUpdated($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _sender.Endpoint.AbsoluteUri, oldBatchActionCount, BatchActionCount);
 
                 var smaller = new List<PublisherAction<IndexDocumentsAction<T>>>(batch.Take(BatchActionCount));
 

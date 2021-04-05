@@ -182,7 +182,7 @@ namespace Azure.Search.Documents
             {
                 try
                 {
-                    AzureSearchDocumentsEventSource.Instance.PublisherDisposedWithPendingActions($"{GetType().Name}<{typeof(T).Name}>", Endpoint.AbsoluteUri, _publisher.IndexingActionsCount);
+                    AzureSearchDocumentsEventSource.Instance.SearchIndexingBufferedSenderDisposedWithPendingActions($"{GetType().Name}<{typeof(T).Name}>", Endpoint.AbsoluteUri, _publisher.IndexingActionsCount);
 
                     #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
                     throw new ObjectNotDisposedException(
@@ -423,9 +423,6 @@ namespace Azure.Search.Documents
             catch (Exception e)
             {
                 AzureSearchDocumentsEventSource.Instance.ActionNotificationEventHandlerExceptionThrown($"{GetType().Name}<{typeof(T).Name}>", Endpoint.AbsoluteUri, nameof(ActionCompleted), e);
-
-                // TODO: #16706 - Log any exceptions raised from async events
-                // we can't let bubble out because they'd tear down the process
             }
         }
 

@@ -289,7 +289,7 @@ namespace Azure.Search.Documents.Batching
                 _pending.Enqueue(action);
             }
 
-            AzureSearchDocumentsEventSource.Instance.PendingQueueResized($"{GetType().Name}<{typeof(T).Name}>", _pending.Count);
+            AzureSearchDocumentsEventSource.Instance.PendingQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _pending.Count);
 
             // Automatically trigger a submission if enabled
             if (AutoFlush)
@@ -400,7 +400,7 @@ namespace Azure.Search.Documents.Batching
             // already submitting
             StopTimer();
 
-            AzureSearchDocumentsEventSource.Instance.PublishingDocuments($"{GetType().Name}<{typeof(T).Name}>", flush);
+            AzureSearchDocumentsEventSource.Instance.PublishingDocuments($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", flush);
 
             do
             {
@@ -418,12 +418,12 @@ namespace Azure.Search.Documents.Batching
 
                 if (oldRetryBatchCount != _retry.Count)
                 {
-                    AzureSearchDocumentsEventSource.Instance.RetryQueueResized($"{GetType().Name}<{typeof(T).Name}>", _retry.Count);
+                    AzureSearchDocumentsEventSource.Instance.RetryQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _retry.Count);
                 }
 
                 if (oldPendingBatchCount != _pending.Count)
                 {
-                    AzureSearchDocumentsEventSource.Instance.PendingQueueResized($"{GetType().Name}<{typeof(T).Name}>", _pending.Count);
+                    AzureSearchDocumentsEventSource.Instance.PendingQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _pending.Count);
                 }
 
                 // Submit the batch
@@ -521,7 +521,7 @@ namespace Azure.Search.Documents.Batching
                 _retry.Enqueue(action);
             }
 
-            AzureSearchDocumentsEventSource.Instance.RetryQueueResized($"{GetType().Name}<{typeof(T).Name}>", _retry.Count);
+            AzureSearchDocumentsEventSource.Instance.RetryQueueResized($"{nameof(SearchIndexingBufferedSender<T>)}<{typeof(T).Name}>", _retry.Count);
         }
         #endregion Publishing
 
