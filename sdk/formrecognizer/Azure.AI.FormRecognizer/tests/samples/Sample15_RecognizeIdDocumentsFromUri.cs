@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
@@ -15,21 +14,19 @@ namespace Azure.AI.FormRecognizer.Samples
     public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
     {
         [Test]
-        public async Task RecognizeIdDocumentsFromFile()
+        public async Task RecognizeIdDocumentsFromUri()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-            string sourcePath = FormRecognizerTestEnvironment.CreatePath("license.jpg");
+            Uri sourceUri = FormRecognizerTestEnvironment.CreateUri("license.jpg");
 
-            #region Snippet:FormRecognizerSampleRecognizeIdDocumentsFileStream
-            //@@ string sourcePath = "<sourcePath>";
+            #region Snippet:FormRecognizerSampleRecognizeIdDocumentsUri
+            //@@ string sourceUri = "<sourceUri>";
 
-            using var stream = new FileStream(sourcePath, FileMode.Open);
-
-            RecognizeIdDocumentsOperation operation = await client.StartRecognizeIdDocumentsAsync(stream);
+            RecognizeIdDocumentsOperation operation = await client.StartRecognizeIdDocumentsFromUriAsync(sourceUri);
             Response<RecognizedFormCollection> operationResponse = await operation.WaitForCompletionAsync();
             RecognizedFormCollection idDocuments = operationResponse.Value;
 
