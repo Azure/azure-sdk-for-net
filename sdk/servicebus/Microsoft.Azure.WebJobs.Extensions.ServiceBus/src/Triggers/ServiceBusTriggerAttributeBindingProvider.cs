@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
 using Microsoft.Extensions.Azure;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
 {
@@ -20,22 +21,25 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
     {
         private readonly INameResolver _nameResolver;
         private readonly ServiceBusOptions _options;
-        private readonly ServiceBusClientFactory _clientFactory;
+        private readonly MessagingProvider _messagingProvider;
         private readonly ILoggerFactory _loggerFactory;
         private readonly IConverterManager _converterManager;
+        private readonly ServiceBusClientFactory _clientFactory;
 
         public ServiceBusTriggerAttributeBindingProvider(
             INameResolver nameResolver,
             ServiceBusOptions options,
-            ServiceBusClientFactory messagingProvider,
+            MessagingProvider messagingProvider,
             ILoggerFactory loggerFactory,
-            IConverterManager converterManager)
+            IConverterManager converterManager,
+            ServiceBusClientFactory clientFactory)
         {
             _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
             _options = options ?? throw new ArgumentNullException(nameof(options));
-            _clientFactory = messagingProvider ?? throw new ArgumentNullException(nameof(messagingProvider));
+            _messagingProvider = messagingProvider ?? throw new ArgumentNullException(nameof(messagingProvider));
             _loggerFactory = loggerFactory;
             _converterManager = converterManager;
+            _clientFactory = clientFactory;
         }
 
         public Task<ITriggerBinding> TryCreateAsync(TriggerBindingProviderContext context)
@@ -73,7 +77,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
             Func<ListenerFactoryContext, bool, Task<IListener>> createListener =
             (factoryContext, singleDispatch) =>
             {
-                IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, entityType, entityPath, attribute.IsSessionsEnabled, factoryContext.Executor, _options, attribute.Connection, _clientFactory, _loggerFactory, singleDispatch);
+                IListener listener = new ServiceBusListener(factoryContext.Descriptor.Id, entityType, entityPath, attribute.IsSessionsEnabled, factoryContext.Executor, _options, attribute.Connection, _messagingProvider, _loggerFactory, singleDispatch, _clientFactory);
                 return Task.FromResult(listener);
             };
 

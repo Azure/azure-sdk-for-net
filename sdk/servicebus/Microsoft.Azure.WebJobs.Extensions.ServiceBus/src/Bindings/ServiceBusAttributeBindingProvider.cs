@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Extensions.Azure;
@@ -26,23 +27,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
                 new AsyncCollectorArgumentBindingProvider());
 
         private readonly INameResolver _nameResolver;
+        private readonly MessagingProvider _messagingProvider;
         private readonly ServiceBusClientFactory _clientFactory;
 
         public ServiceBusAttributeBindingProvider(
             INameResolver nameResolver,
+            MessagingProvider messagingProvider,
             ServiceBusClientFactory clientFactory)
         {
-            if (nameResolver == null)
-            {
-                throw new ArgumentNullException(nameof(nameResolver));
-            }
-            if (clientFactory == null)
-            {
-                throw new ArgumentNullException(nameof(clientFactory));
-            }
-
-            _nameResolver = nameResolver;
-            _clientFactory = clientFactory;
+            _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
+            _messagingProvider = messagingProvider ?? throw new ArgumentNullException(nameof(messagingProvider));
+            _clientFactory = clientFactory ?? throw new ArgumentNullException(nameof(clientFactory));
         }
 
         public Task<IBinding> TryCreateAsync(BindingProviderContext context)
@@ -72,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
 
             attribute.Connection = _nameResolver.ResolveWholeString(attribute.Connection);
 
-            IBinding binding = new ServiceBusBinding(parameter.Name, argumentBinding, path, attribute, _clientFactory);
+            IBinding binding = new ServiceBusBinding(parameter.Name, argumentBinding, path, attribute, _messagingProvider, _clientFactory);
             return Task.FromResult<IBinding>(binding);
         }
 

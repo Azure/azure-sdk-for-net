@@ -1,6 +1,7 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,13 +12,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
         private readonly ServiceBusAttribute _attribute;
         private readonly IBindableServiceBusPath _defaultPath;
         private readonly EntityType _entityType;
+        private readonly MessagingProvider _messagingProvider;
         private readonly ServiceBusClientFactory _clientFactory;
 
-        public StringToServiceBusEntityConverter(ServiceBusAttribute attribute, IBindableServiceBusPath defaultPath, ServiceBusClientFactory clientFactory)
+        public StringToServiceBusEntityConverter(ServiceBusAttribute attribute, IBindableServiceBusPath defaultPath, MessagingProvider messagingProvider, ServiceBusClientFactory clientFactory)
         {
             _attribute = attribute;
             _defaultPath = defaultPath;
             _entityType = _attribute.EntityType;
+            _messagingProvider = messagingProvider;
             _clientFactory = clientFactory;
         }
 
@@ -36,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             }
 
             cancellationToken.ThrowIfCancellationRequested();
-            var messageSender = _clientFactory.CreateMessageSender(queueOrTopicName, _attribute.Connection);
+            var messageSender = _messagingProvider.CreateMessageSender(_clientFactory.CreateClientFromSetting(_attribute.Connection), queueOrTopicName);
 
             var entity = new ServiceBusEntity
             {

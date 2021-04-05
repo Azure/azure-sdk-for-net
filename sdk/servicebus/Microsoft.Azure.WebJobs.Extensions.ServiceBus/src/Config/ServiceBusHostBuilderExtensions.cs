@@ -3,6 +3,7 @@
 
 using System;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Azure.WebJobs.ServiceBus.Config;
 using Microsoft.Extensions.Azure;
@@ -81,8 +82,8 @@ namespace Microsoft.Extensions.Hosting
                 });
 
             builder.Services.AddAzureClientsCore();
+            builder.Services.AddSingleton<MessagingProvider>();
             builder.Services.AddSingleton<ServiceBusClientFactory>();
-
             return builder;
         }
     }

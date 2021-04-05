@@ -7,41 +7,45 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Extensions.Clients.Shared;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 {
     internal sealed class ServiceBusListener : IListener, IScaleMonitorProvider
     {
-        private readonly ServiceBusClientFactory _clientFactory;
+        private readonly MessagingProvider _messagingProvider;
         private readonly ITriggeredFunctionExecutor _triggerExecutor;
         private readonly string _functionId;
         private readonly EntityType _entityType;
         private readonly string _entityPath;
         private readonly bool _isSessionsEnabled;
         private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly MessageProcessor _messageProcessor;
         private readonly ServiceBusOptions _serviceBusOptions;
         private readonly ILoggerFactory _loggerFactory;
         private readonly bool _singleDispatch;
         private readonly ILogger<ServiceBusListener> _logger;
 
+        private readonly Lazy<MessageProcessor> _messageProcessor;
         private Lazy<ServiceBusReceiver> _batchReceiver;
-        private Lazy<ServiceBusClient> _sessionClient;
+        private Lazy<ServiceBusClient> _client;
+        private Lazy<SessionMessageProcessor> _sessionMessageProcessor;
+        private Lazy<ServiceBusScaleMonitor> _scaleMonitor;
+
         private bool _disposed;
         private bool _started;
         // Serialize execution of StopAsync to avoid calling Unregister* concurrently
         private readonly SemaphoreSlim _stopAsyncSemaphore = new SemaphoreSlim(1, 1);
-
-        private SessionMessageProcessor _sessionMessageProcessor;
-
-        private Lazy<ServiceBusScaleMonitor> _scaleMonitor;
 
         public ServiceBusListener(
             string functionId,
@@ -51,9 +55,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             ITriggeredFunctionExecutor triggerExecutor,
             ServiceBusOptions options,
             string connection,
-            ServiceBusClientFactory clientFactory,
+            MessagingProvider messagingProvider,
             ILoggerFactory loggerFactory,
-            bool singleDispatch)
+            bool singleDispatch,
+            ServiceBusClientFactory clientFactory)
         {
             _functionId = functionId;
             _entityType = entityType;
@@ -61,26 +66,19 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _isSessionsEnabled = isSessionsEnabled;
             _triggerExecutor = triggerExecutor;
             _cancellationTokenSource = new CancellationTokenSource();
-            _clientFactory = clientFactory;
+            _messagingProvider = messagingProvider;
             _loggerFactory = loggerFactory;
             _logger = loggerFactory.CreateLogger<ServiceBusListener>();
-            _batchReceiver = new Lazy<ServiceBusReceiver>(() => _clientFactory.CreateBatchMessageReceiver(_entityPath, connection));
-            _sessionClient = new Lazy<ServiceBusClient>(() => _clientFactory.CreateSessionClient(connection));
-            _scaleMonitor = new Lazy<ServiceBusScaleMonitor>(() => new ServiceBusScaleMonitor(_functionId, _entityType, _entityPath, connection, _batchReceiver, _loggerFactory, _clientFactory));
-            _singleDispatch = singleDispatch;
 
-            if (_isSessionsEnabled)
-            {
-                _sessionMessageProcessor = _clientFactory.CreateSessionMessageProcessor(_entityPath, connection);
-            }
-            else
-            {
-                _messageProcessor = _clientFactory.CreateMessageProcessor(_entityPath, connection);
-            }
+            _client = new Lazy<ServiceBusClient>(() => clientFactory.CreateClientFromSetting(connection));
+            _batchReceiver = new Lazy<ServiceBusReceiver>(() => _messagingProvider.CreateBatchMessageReceiver(_client.Value, _entityPath));
+            _messageProcessor = new Lazy<MessageProcessor>(() => _messagingProvider.CreateMessageProcessor(_client.Value, _entityPath));
+            _sessionMessageProcessor = new Lazy<SessionMessageProcessor>(() => _messagingProvider.CreateSessionMessageProcessor(_client.Value, _entityPath));
+
+            _scaleMonitor = new Lazy<ServiceBusScaleMonitor>(() => new ServiceBusScaleMonitor(_functionId, _entityType, _entityPath, connection, _batchReceiver, _loggerFactory, clientFactory));
+            _singleDispatch = singleDispatch;
             _serviceBusOptions = options;
         }
-
-        internal ServiceBusReceiver BatchReceiver => _batchReceiver.Value;
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
@@ -95,13 +93,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
                 if (_isSessionsEnabled)
                 {
-                    _sessionMessageProcessor.Processor.ProcessMessageAsync += ProcessSessionMessageAsync;
-                    await _sessionMessageProcessor.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                    _sessionMessageProcessor.Value.Processor.ProcessMessageAsync += ProcessSessionMessageAsync;
+                    await _sessionMessageProcessor.Value.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    _messageProcessor.Processor.ProcessMessageAsync += ProcessMessageAsync;
-                    await _messageProcessor.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
+                    _messageProcessor.Value.Processor.ProcessMessageAsync += ProcessMessageAsync;
+                    await _messageProcessor.Value.Processor.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
                 }
             }
             else
@@ -131,11 +129,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                     {
                         if (_isSessionsEnabled)
                         {
-                            await _sessionMessageProcessor.Processor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
+                            await _sessionMessageProcessor.Value.Processor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
                         }
                         else
                         {
-                            await _messageProcessor.Processor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
+                            await _messageProcessor.Value.Processor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
                         }
                     }
                     // Batch processing will be stopped via the _started flag on its next iteration
@@ -168,16 +166,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                 if (_batchReceiver != null && _batchReceiver.IsValueCreated)
                 {
-                    BatchReceiver.CloseAsync().Wait();
+                    _batchReceiver.Value.CloseAsync().Wait();
                     _batchReceiver = null;
                 }
 
-                if (_sessionClient != null && _sessionClient.IsValueCreated)
+                if (_client != null && _client.IsValueCreated)
                 {
 #pragma warning disable AZC0107 // DO NOT call public asynchronous method in synchronous scope.
-                    _sessionClient.Value.DisposeAsync().EnsureCompleted();
+                    _client.Value.DisposeAsync().EnsureCompleted();
 #pragma warning restore AZC0107 // DO NOT call public asynchronous method in synchronous scope.
-                    _sessionClient = null;
+                    _client = null;
                 }
 
                 _stopAsyncSemaphore.Dispose();
@@ -192,7 +190,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
             {
                 var actions = new ServiceBusMessageActions(args);
-                if (!await _messageProcessor.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token).ConfigureAwait(false))
+                if (!await _messageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token).ConfigureAwait(false))
                 {
                     return;
                 }
@@ -202,7 +200,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
-                await _messageProcessor.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
+                await _messageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
             }
         }
 
@@ -211,7 +209,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
             {
                 var actions = new ServiceBusSessionMessageActions(args);
-                if (!await _sessionMessageProcessor.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token).ConfigureAwait(false))
+                if (!await _sessionMessageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token).ConfigureAwait(false))
                 {
                     return;
                 }
@@ -221,7 +219,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
                 FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
-                await _sessionMessageProcessor.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
+                await _sessionMessageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token).ConfigureAwait(false);
             }
         }
 
@@ -231,11 +229,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             ServiceBusReceiver receiver = null;
             if (_isSessionsEnabled)
             {
-                sessionClient = _sessionClient.Value;
+                sessionClient = _client.Value;
             }
             else
             {
-                receiver = BatchReceiver;
+                receiver = _batchReceiver.Value;
             }
 
             Task.Run(async () =>
@@ -250,7 +248,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             return;
                         }
 
-                        if (_isSessionsEnabled && ( receiver == null || receiver.IsClosed))
+                        if (_isSessionsEnabled && (receiver == null || receiver.IsClosed))
                         {
                             try
                             {
@@ -276,7 +274,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                             ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateBatch(messagesArray);
                             if (_isSessionsEnabled)
                             {
-                                input.MessageActions = new ServiceBusSessionMessageActions((ServiceBusSessionReceiver) receiver);
+                                input.MessageActions = new ServiceBusSessionMessageActions((ServiceBusSessionReceiver)receiver);
                             }
                             else
                             {

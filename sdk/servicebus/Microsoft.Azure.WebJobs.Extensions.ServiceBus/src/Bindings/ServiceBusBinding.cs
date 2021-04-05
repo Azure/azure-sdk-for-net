@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Converters;
 using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -16,6 +17,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
         private readonly IArgumentBinding<ServiceBusEntity> _argumentBinding;
         private readonly IBindableServiceBusPath _path;
         private readonly IAsyncObjectToTypeConverter<ServiceBusEntity> _converter;
+        private readonly MessagingProvider _messagingProvider;
         private readonly ServiceBusClientFactory _clientFactory;
         private readonly ServiceBusAttribute _attribute;
 
@@ -24,14 +26,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             IArgumentBinding<ServiceBusEntity> argumentBinding,
             IBindableServiceBusPath path,
             ServiceBusAttribute attribute,
+            MessagingProvider messagingProvider,
             ServiceBusClientFactory clientFactory)
         {
             _parameterName = parameterName;
             _argumentBinding = argumentBinding;
             _path = path;
+            _messagingProvider = messagingProvider;
             _clientFactory = clientFactory;
             _attribute = attribute;
-            _converter = new OutputConverter<string>(new StringToServiceBusEntityConverter(_attribute, _path, _clientFactory));
+            _converter = new OutputConverter<string>(new StringToServiceBusEntityConverter(_attribute, _path, _messagingProvider, _clientFactory));
         }
 
         public bool FromAttribute
@@ -44,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Bindings
             context.CancellationToken.ThrowIfCancellationRequested();
 
             string boundQueueName = _path.Bind(context.BindingData);
-            var messageSender = _clientFactory.CreateMessageSender(boundQueueName, _attribute.Connection);
+            var messageSender = _messagingProvider.CreateMessageSender(_clientFactory.CreateClientFromSetting(_attribute.Connection), boundQueueName);
 
             var entity = new ServiceBusEntity
             {

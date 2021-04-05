@@ -13,6 +13,8 @@ using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.ServiceBus;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -106,9 +108,37 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task CustomMessageProcessorTest()
+        {
+            var (jobHost, host) = BuildHost<ServiceBusTestJobs>(host =>
+                host.ConfigureServices(services =>
+                {
+                    services.AddSingleton<MessagingProvider, CustomMessagingProvider>();
+                }),
+                startHost: false);
+
+            using (jobHost)
+            {
+                var loggerProvider = host.GetTestLoggerProvider();
+
+                await ServiceBusEndToEndInternal<ServiceBusTestJobs>(host: host);
+
+                // in addition to verifying that our custom processor was called, we're also
+                // verifying here that extensions can log
+                IEnumerable<LogMessage> messages = loggerProvider.GetAllLogMessages().Where(m => m.Category == CustomMessagingProvider.CustomMessagingCategory);
+                Assert.AreEqual(4, messages.Count(p => p.FormattedMessage.Contains("Custom processor Begin called!")));
+                Assert.AreEqual(4, messages.Count(p => p.FormattedMessage.Contains("Custom processor End called!")));
+            }
+        }
+
+        [Test]
         public async Task MultipleAccountTest()
         {
-            var (jobHost, host) = BuildHost<ServiceBusTestJobs>();
+            var (jobHost, host) = BuildHost<ServiceBusTestJobs>(host =>
+                host.ConfigureServices(services =>
+                {
+                    services.AddSingleton<MessagingProvider, CustomMessagingProvider>();
+                }));
             using (jobHost)
             {
                 await WriteQueueMessage(
@@ -336,11 +366,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
                 .GetAllLogMessages();
 
-            //filter out anything from the Azure SDK (Service Bus, Identity, Core) for easier validation.
-           IEnumerable <LogMessage> consoleOutput = logMessages
-               .Where(m => !m.Category.StartsWith("Azure."));
+            // filter out anything from the custom processor for easier validation.
+            IEnumerable<LogMessage> consoleOutput = logMessages
+                .Where(m => m.Category != CustomMessagingProvider.CustomMessagingCategory);
 
-           Assert.False(consoleOutput.Where(p => p.Level == LogLevel.Error).Any());
+            Assert.False(consoleOutput.Where(p => p.Level == LogLevel.Error).Any());
+
             string[] consoleOutputLines = consoleOutput
                 .Where(p => p.FormattedMessage != null)
                 .SelectMany(p => p.FormattedMessage.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
@@ -735,13 +766,69 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await Task.Delay(DrainSleepMills);
             }
         }
+
+        private class CustomMessagingProvider : MessagingProvider
+        {
+            public const string CustomMessagingCategory = "CustomMessagingProvider";
+            private readonly ILogger _logger;
+            private readonly ServiceBusOptions _options;
+
+            public CustomMessagingProvider(
+                AzureEventSourceLogForwarder forwarder,
+                IOptions<ServiceBusOptions> serviceBusOptions,
+                ILoggerFactory loggerFactory)
+                : base(serviceBusOptions, forwarder)
+            {
+                _options = serviceBusOptions.Value;
+                _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);
+            }
+
+            public override MessageProcessor CreateMessageProcessor(ServiceBusClient client, string entityPath)
+            {
+                var options = new ServiceBusProcessorOptions()
+                {
+                    MaxConcurrentCalls = 3,
+                    MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(MaxAutoRenewDurationMin)
+                };
+
+                var processor = client.CreateProcessor(entityPath, options);
+                var receiver = client.CreateReceiver(entityPath);
+                // TODO decide whether it makes sense to still default error handler when there is a custom provider
+                // currently user needs to set it.
+                processor.ProcessErrorAsync += args => Task.CompletedTask;
+                return new CustomMessageProcessor(processor, receiver, _logger);
+            }
+
+            private class CustomMessageProcessor : MessageProcessor
+            {
+                private readonly ILogger _logger;
+
+                public CustomMessageProcessor(ServiceBusProcessor processor, ServiceBusReceiver receiver, ILogger logger)
+                    : base(processor, receiver)
+                {
+                    _logger = logger;
+                }
+
+                public override async Task<bool> BeginProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, CancellationToken cancellationToken)
+                {
+                    _logger?.LogInformation("Custom processor Begin called!");
+                    return await base.BeginProcessingMessageAsync(messageActions, message, cancellationToken);
+                }
+
+                public override async Task CompleteProcessingMessageAsync(ServiceBusMessageActions messageActions, ServiceBusReceivedMessage message, Executors.FunctionResult result, CancellationToken cancellationToken)
+                {
+                    _logger?.LogInformation("Custom processor End called!");
+                    await base.CompleteProcessingMessageAsync(messageActions, message, result, cancellationToken);
+                }
+            }
+        }
     }
+}
 
 #pragma warning disable SA1402 // File may only contain a single type
-    public class TestPoco
+public class TestPoco
 #pragma warning restore SA1402 // File may only contain a single type
-    {
-        public string Name { get; set; }
-        public string Value { get; set; }
-    }
+{
+    public string Name { get; set; }
+    public string Value { get; set; }
 }
