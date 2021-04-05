@@ -602,8 +602,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class ServiceBusMultipleTestJobsBase
         {
-            protected static bool firstReceived = false;
-            protected static bool secondReceived = false;
+            protected static volatile bool firstReceived = false;
+            protected static volatile bool secondReceived = false;
 
             public static void ProcessMessages(string[] messages)
             {
