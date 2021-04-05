@@ -38,20 +38,21 @@ namespace Compute.Tests
             {
                 var patchSetting = new PatchSettings
                 {
-                    PatchMode = "AutomaticByOS"
+                    PatchMode = "AutomaticByOS",
                 };
                 StartPatchSettingTest(context, patchSetting, true);
             }
         }
 
         [Fact()]
-        public void TestVMWithSettingWindowsConfigurationPatchSettingsValueOfAutomaticByPlatform()
+        public void TestVMWithSettingWindowsConfigurationPatchSettingsValuesOfAutomaticByPlatform()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
                 var patchSetting = new PatchSettings
                 {
-                    PatchMode = "AutomaticByPlatform"
+                    PatchMode = "AutomaticByPlatform",
+                    AssessmentMode = "AutomaticByPlatform",
                 };
                 StartPatchSettingTest(context, patchSetting, true);
             }
@@ -64,22 +65,9 @@ namespace Compute.Tests
             {
                 var patchSetting = new PatchSettings
                 {
-                    AssessmentMode = "ImageDefault"
+                    AssessmentMode = "ImageDefault",
                 };
                 StartPatchSettingTest(context, patchSetting, false);
-            }
-        }
-
-        [Fact()]
-        public void TestVMWithSettingWindowsConfigurationPatchSettingsAssessmentModeOfAutomaticByPlatform()
-        {
-            using (MockContext context = MockContext.Start(this.GetType()))
-            {
-                var patchSetting = new PatchSettings
-                {
-                    AssessmentMode = "AutomaticByPlatform"
-                };
-                StartPatchSettingTest(context, patchSetting, true);
             }
         }
 
@@ -128,7 +116,9 @@ namespace Compute.Tests
             }
             else
             {
-                Assert.Null(osProfile.WindowsConfiguration.PatchSettings.PatchMode);
+                // By default in supported API versions, a value is provided in the VM model even if one is
+                // not specified by the user.
+                Assert.Equal("AutomaticByOS", osProfile.WindowsConfiguration.PatchSettings.PatchMode);
             }
 
             if (patchSetting.AssessmentMode != null)
@@ -138,7 +128,9 @@ namespace Compute.Tests
             }
             else
             {
-                Assert.Null(osProfile.WindowsConfiguration.PatchSettings.AssessmentMode);
+                // By default in supported API versions, a value is provided in the VM model even if one is
+                // not specified by the user.
+                Assert.Equal("ImageDefault", osProfile.WindowsConfiguration.PatchSettings.AssessmentMode);
             }
         }
 
