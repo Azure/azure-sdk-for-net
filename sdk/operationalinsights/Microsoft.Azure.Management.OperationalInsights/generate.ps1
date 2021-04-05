@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "operationalinsights/resource-manager" -AutoRestVersion "latest"
+Start-AutoRestCodeGeneration -ResourceProvider "operationalinsights/resource-manager" -AutoRestVersion "v2"
