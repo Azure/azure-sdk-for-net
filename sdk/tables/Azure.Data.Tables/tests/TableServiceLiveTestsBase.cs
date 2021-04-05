@@ -223,7 +223,7 @@ namespace Azure.Data.Tables.Tests
                 return new ComplexEntity(partitionKeyValue, string.Format("{0:0000}", n))
                 {
                     String = string.Format("{0:0000}", n),
-                    Binary = new byte[] { 0x01, 0x02, (byte)n },
+                    Binary = new BinaryData(new byte[] { 0x01, 0x02, (byte)n }),
                     BinaryPrimitive = new byte[] { 0x01, 0x02, (byte)n },
                     Bool = n % 2 == 0,
                     BoolPrimitive = n % 2 == 0,
@@ -410,9 +410,9 @@ namespace Azure.Data.Tables.Tests
 
             public bool BoolPrimitive { get; set; } = false;
 
-            public Byte[] Binary { get; set; } = new Byte[] { 1, 2, 3, 4 };
+            public BinaryData Binary { get; set; } = new BinaryData(new byte[] { 1, 2, 3, 4 });
 
-            public Byte[] BinaryNull { get; set; } = null;
+            public BinaryData BinaryNull { get; set; } = null;
 
             public byte[] BinaryPrimitive { get; set; } = new byte[] { 1, 2, 3, 4 };
 
@@ -510,9 +510,9 @@ namespace Azure.Data.Tables.Tests
                 Assert.AreEqual(a.BinaryPrimitive.GetValue(0), b.BinaryPrimitive.GetValue(0));
                 Assert.AreEqual(a.BinaryPrimitive.GetValue(1), b.BinaryPrimitive.GetValue(1));
                 Assert.AreEqual(a.BinaryPrimitive.GetValue(2), b.BinaryPrimitive.GetValue(2));
-                Assert.AreEqual(a.Binary.GetValue(0), b.Binary.GetValue(0));
-                Assert.AreEqual(a.Binary.GetValue(1), b.Binary.GetValue(1));
-                Assert.AreEqual(a.Binary.GetValue(2), b.Binary.GetValue(2));
+                Assert.AreEqual(a.Binary.ToArray().GetValue(0), b.Binary.ToArray().GetValue(0));
+                Assert.AreEqual(a.Binary.ToArray().GetValue(1), b.Binary.ToArray().GetValue(1));
+                Assert.AreEqual(a.Binary.ToArray().GetValue(2), b.Binary.ToArray().GetValue(2));
                 Assert.AreEqual(a.BoolPrimitive, b.BoolPrimitive);
                 Assert.AreEqual(a.BoolPrimitiveN, b.BoolPrimitiveN);
                 Assert.AreEqual(a.BoolPrimitiveNull, b.BoolPrimitiveNull);
@@ -535,9 +535,16 @@ namespace Azure.Data.Tables.Tests
             public DateTimeOffset? Timestamp { get; set; }
             public ETag ETag { get; set; }
             public Foo MyFoo { get; set; }
+            public NullableFoo? MyNullableFoo { get; set; }
         }
 
         public enum Foo
+        {
+            One,
+            Two
+        }
+
+        public enum NullableFoo
         {
             One,
             Two

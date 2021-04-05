@@ -6,9 +6,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
-#if EXPERIMENTAL_SPATIAL
 using Azure.Core.GeoJson;
-#endif
 using Microsoft.Spatial;
 using KeyFieldAttribute = System.ComponentModel.DataAnnotations.KeyAttribute;
 
@@ -107,9 +105,7 @@ namespace Azure.Search.Documents.Tests
 
         public int? NullableInt { get; set; }
 
-#if EXPERIMENTAL_SPATIAL
         public GeoPoint GeoPoint { get; set; }
-#endif
 
         public GeographyPoint GeographyPoint { get; set; }
 
@@ -173,7 +169,6 @@ namespace Azure.Search.Documents.Tests
 
         public ICollection<DateTimeOffset> DateTimeOffsetICollection { get; set; }
 
-#if EXPERIMENTAL_SPATIAL
         public GeoPoint[] GeoPointArray { get; set; }
 
         public IList<GeoPoint> GeoPointIList { get; set; }
@@ -183,7 +178,6 @@ namespace Azure.Search.Documents.Tests
         public IEnumerable<GeoPoint> GeoPointIEnumerable { get; set; }
 
         public ICollection<GeoPoint> GeoPointICollection { get; set; }
-#endif
 
         public GeographyPoint[] GeographyPointArray { get; set; }
 

@@ -8,4 +8,3 @@ steps:
     echo "##vso[task.setvariable variable=DefaultBranch]$setDefaultBranch"
   displayName: "Setup Default Branch"
   workingDirectory: ${{ parameters.workingDirectory }}
-  condition: eq(variables['DefaultBranch'], '')

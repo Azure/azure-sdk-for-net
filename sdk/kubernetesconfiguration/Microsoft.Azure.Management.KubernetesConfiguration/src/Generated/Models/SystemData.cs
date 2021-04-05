@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
     using System.Linq;
 
     /// <summary>
-    /// Metadata pertaining to creation and last modification of the resource.
+    /// Top level metadata
+    /// https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/common-api-contracts.md#system-metadata-for-all-azure-resources
     /// </summary>
     public partial class SystemData
     {
@@ -29,18 +30,17 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         /// <summary>
         /// Initializes a new instance of the SystemData class.
         /// </summary>
-        /// <param name="createdBy">The identity that created the
-        /// resource.</param>
+        /// <param name="createdBy">A string identifier for the identity that
+        /// created the resource</param>
         /// <param name="createdByType">The type of identity that created the
-        /// resource. Possible values include: 'User', 'Application',
-        /// 'ManagedIdentity', 'Key'</param>
+        /// resource: user, application, managedIdentity, key</param>
         /// <param name="createdAt">The timestamp of resource creation
-        /// (UTC).</param>
-        /// <param name="lastModifiedBy">The identity that last modified the
-        /// resource.</param>
+        /// (UTC)</param>
+        /// <param name="lastModifiedBy">A string identifier for the identity
+        /// that last modified the resource</param>
         /// <param name="lastModifiedByType">The type of identity that last
-        /// modified the resource. Possible values include: 'User',
-        /// 'Application', 'ManagedIdentity', 'Key'</param>
+        /// modified the resource: user, application, managedIdentity,
+        /// key</param>
         /// <param name="lastModifiedAt">The timestamp of resource last
         /// modification (UTC)</param>
         public SystemData(string createdBy = default(string), string createdByType = default(string), System.DateTime? createdAt = default(System.DateTime?), string lastModifiedBy = default(string), string lastModifiedByType = default(string), System.DateTime? lastModifiedAt = default(System.DateTime?))
@@ -60,44 +60,43 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the identity that created the resource.
+        /// Gets a string identifier for the identity that created the resource
         /// </summary>
         [JsonProperty(PropertyName = "createdBy")]
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; private set; }
 
         /// <summary>
-        /// Gets or sets the type of identity that created the resource.
-        /// Possible values include: 'User', 'Application', 'ManagedIdentity',
-        /// 'Key'
+        /// Gets the type of identity that created the resource: user,
+        /// application, managedIdentity, key
         /// </summary>
         [JsonProperty(PropertyName = "createdByType")]
-        public string CreatedByType { get; set; }
+        public string CreatedByType { get; private set; }
 
         /// <summary>
-        /// Gets or sets the timestamp of resource creation (UTC).
+        /// Gets the timestamp of resource creation (UTC)
         /// </summary>
         [JsonProperty(PropertyName = "createdAt")]
-        public System.DateTime? CreatedAt { get; set; }
+        public System.DateTime? CreatedAt { get; private set; }
 
         /// <summary>
-        /// Gets or sets the identity that last modified the resource.
+        /// Gets a string identifier for the identity that last modified the
+        /// resource
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedBy")]
-        public string LastModifiedBy { get; set; }
+        public string LastModifiedBy { get; private set; }
 
         /// <summary>
-        /// Gets or sets the type of identity that last modified the resource.
-        /// Possible values include: 'User', 'Application', 'ManagedIdentity',
-        /// 'Key'
+        /// Gets the type of identity that last modified the resource: user,
+        /// application, managedIdentity, key
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedByType")]
-        public string LastModifiedByType { get; set; }
+        public string LastModifiedByType { get; private set; }
 
         /// <summary>
-        /// Gets or sets the timestamp of resource last modification (UTC)
+        /// Gets the timestamp of resource last modification (UTC)
         /// </summary>
         [JsonProperty(PropertyName = "lastModifiedAt")]
-        public System.DateTime? LastModifiedAt { get; set; }
+        public System.DateTime? LastModifiedAt { get; private set; }
 
     }
 }

@@ -57,17 +57,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// data, including face recognition feature, and up to 1,000,000
         /// people.
         /// &lt;br /&gt; After creation, use [LargePersonGroup Person -
-        /// Create](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroupperson/create)
+        /// Create](https://docs.microsoft.com/rest/api/faceapi/largepersongroupperson/create)
         /// to add person into the group, and call [LargePersonGroup -
-        /// Train](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroup/train)
+        /// Train](https://docs.microsoft.com/rest/api/faceapi/largepersongroup/train)
         /// to get this group ready for [Face -
-        /// Identify](https://docs.microsoft.com/rest/api/cognitiveservices/face/face/identify).
+        /// Identify](https://docs.microsoft.com/rest/api/faceapi/face/identify).
         /// &lt;br /&gt; No image will be stored. Only the person's extracted face
         /// features and userData will be stored on server until [LargePersonGroup
         /// Person -
-        /// Delete](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroupperson/delete)
+        /// Delete](https://docs.microsoft.com/rest/api/faceapi/largepersongroupperson/delete)
         /// or [LargePersonGroup -
-        /// Delete](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroup/delete)
+        /// Delete](https://docs.microsoft.com/rest/api/faceapi/largepersongroup/delete)
         /// is called.
         /// &lt;br/&gt;'recognitionModel' should be specified to associate with this
         /// large person group. The default value for 'recognitionModel' is
@@ -76,14 +76,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// large person group will use the recognition model that's already associated
         /// with the collection. Existing face features in a large person group can't
         /// be updated to features extracted by another version of recognition model.
-        /// * 'recognition_01': The default recognition model for [LargePersonGroup -
-        /// Create](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroup/create).
-        /// All those large person groups created before 2019 March are bonded with
-        /// this recognition model.
-        /// * 'recognition_02': Recognition model released in 2019 March.
-        /// * 'recognition_03': Recognition model released in 2020 May.
-        /// 'recognition_03' is recommended since its overall accuracy is improved
-        /// compared with 'recognition_01' and 'recognition_02'.
+        /// Please refer to [Specify a face recognition
+        /// model](https://docs.microsoft.com/azure/cognitive-services/face/face-api-how-to-topics/specify-recognition-model).
         ///
         /// Large person group quota:
         /// * Free-tier subscription quota: 1,000 large person groups.
@@ -100,7 +94,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </param>
         /// <param name='recognitionModel'>
         /// Possible values include: 'recognition_01', 'recognition_02',
-        /// 'recognition_03'
+        /// 'recognition_03', 'recognition_04'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -139,6 +133,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (name != null)
+            {
+                if (name.Length > 128)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "name", 128);
+                }
+            }
+            if (userData != null)
+            {
+                if (userData.Length > 16384)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "userData", 16384);
                 }
             }
             MetaDataContract body = new MetaDataContract();
@@ -401,7 +409,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Retrieve the information of a large person group, including its name,
         /// userData and recognitionModel. This API returns large person group
         /// information only, use [LargePersonGroup Person -
-        /// List](https://docs.microsoft.com/rest/api/cognitiveservices/face/largepersongroupperson/list)
+        /// List](https://docs.microsoft.com/rest/api/faceapi/largepersongroupperson/list)
         /// instead to retrieve person information under the large person group.
         ///
         /// </summary>
@@ -630,6 +638,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 if (!System.Text.RegularExpressions.Regex.IsMatch(largePersonGroupId, "^[a-z0-9-_]+$"))
                 {
                     throw new ValidationException(ValidationRules.Pattern, "largePersonGroupId", "^[a-z0-9-_]+$");
+                }
+            }
+            if (name != null)
+            {
+                if (name.Length > 128)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "name", 128);
+                }
+            }
+            if (userData != null)
+            {
+                if (userData.Length > 16384)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "userData", 16384);
                 }
             }
             NameAndUserDataContract body = new NameAndUserDataContract();

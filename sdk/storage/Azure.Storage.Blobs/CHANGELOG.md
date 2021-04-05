@@ -1,7 +1,11 @@
 # Release History
 
 ## 12.9.0-beta.3 (Unreleased)
+- Added support for service version 2020-08-04.
+- Added support for Blob Query Parquet input format.
 
+## 12.8.1 (2021-03-29)
+- Fixed bug where ClientDiagnostics's DiagnosticListener was leaking resources.
 
 ## 12.9.0-beta.2 (2021-03-09)
 - Fixed a bug where BlockBlobClient.GetBlockList threw when dealing with extremely large blocks.

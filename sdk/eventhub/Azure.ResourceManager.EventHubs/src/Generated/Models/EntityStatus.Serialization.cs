@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    internal static class EntityStatusExtensions
+    internal static partial class EntityStatusExtensions
     {
         public static string ToSerialString(this EntityStatus value) => value switch
         {

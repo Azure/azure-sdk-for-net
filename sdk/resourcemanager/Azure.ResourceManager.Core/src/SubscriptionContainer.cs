@@ -12,16 +12,21 @@ namespace Azure.ResourceManager.Core
     /// <summary>
     /// A class representing collection of Subscription and their operations
     /// </summary>
-    public class SubscriptionContainer : ContainerBase<Subscription>
+    public class SubscriptionContainer : ContainerBase<SubscriptionResourceIdentifier, Subscription>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class for mocking.
+        /// </summary>
+        protected SubscriptionContainer()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SubscriptionContainer"/> class.
         /// </summary>
-        /// <param name="options"> The client parameters to use in these operations. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="baseUri"> The base URI of the service. </param>
-        internal SubscriptionContainer(AzureResourceManagerClientOptions options, TokenCredential credential, Uri baseUri)
-            : base(options, null, credential, baseUri)
+        /// <param name="clientContext"></param>
+        internal SubscriptionContainer(ClientContext clientContext)
+            : base(clientContext, null)
         {
         }
 
@@ -45,11 +50,23 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken">A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />.</param>
         /// <returns> A collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public Pageable<Subscription> List(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual Pageable<Subscription> List(CancellationToken cancellationToken = default)
         {
-            return new PhWrappingPageable<ResourceManager.Resources.Models.Subscription, Subscription>(
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+            scope.Start();
+
+            try
+            {
+                return new PhWrappingPageable<ResourceManager.Resources.Models.Subscription, Subscription>(
                 Operations.List(cancellationToken),
                 Converter());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -58,11 +75,23 @@ namespace Azure.ResourceManager.Core
         /// <param name="cancellationToken">A token to allow the caller to cancel the call to the service.
         /// The default value is <see cref="CancellationToken.None" />.</param>
         /// <returns> An async collection of resource operations that may take multiple service requests to iterate over. </returns>
-        public AsyncPageable<Subscription> ListAsync(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<Subscription> ListAsync(CancellationToken cancellationToken = default)
         {
-            return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.Subscription, Subscription>(
+            using var scope = Diagnostics.CreateScope("SubscriptionContainer.List");
+            scope.Start();
+
+            try
+            {
+                return new PhWrappingAsyncPageable<ResourceManager.Resources.Models.Subscription, Subscription>(
                 Operations.ListAsync(cancellationToken),
                 Converter());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -79,15 +108,16 @@ namespace Azure.ResourceManager.Core
         /// Get an instance of the operations this container holds.
         /// </summary>
         /// <param name="subscriptionGuid"> The guid of the subscription to be found. </param>
-        /// <returns> An instance of <see cref="ResourceOperationsBase{Subscription}"/>. </returns>
-        protected override ResourceOperationsBase<Subscription> GetOperation(string subscriptionGuid)
+        /// <returns> An instance of <see cref="ResourceOperationsBase{TenantResourceIdentifier, Subscription}"/>. </returns>
+        protected override ResourceOperationsBase<SubscriptionResourceIdentifier, Subscription> GetOperation(string subscriptionGuid)
         {
-            return new SubscriptionOperations(ClientOptions, subscriptionGuid, Credential, BaseUri);
+            return new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), subscriptionGuid);
         }
 
+        //TODO: can make static?
         private Func<ResourceManager.Resources.Models.Subscription, Subscription> Converter()
         {
-            return s => new Subscription(new SubscriptionOperations(ClientOptions, s.SubscriptionId, Credential, BaseUri), new SubscriptionData(s));
+            return s => new Subscription(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), s.SubscriptionId), new SubscriptionData(s));
         }
     }
 }

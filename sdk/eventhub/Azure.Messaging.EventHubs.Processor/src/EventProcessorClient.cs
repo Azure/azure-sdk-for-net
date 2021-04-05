@@ -74,7 +74,6 @@ namespace Azure.Messaging.EventHubs
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
-        [SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations", Justification = "Guidelines do allow throwing NotSupportedException or ArgumentException here")]
         public event Func<PartitionInitializingEventArgs, Task> PartitionInitializingAsync
         {
             add
@@ -112,7 +111,6 @@ namespace Azure.Messaging.EventHubs
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
-        [SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations", Justification = "Guidelines do allow throwing NotSupportedException or ArgumentException here")]
         public event Func<PartitionClosingEventArgs, Task> PartitionClosingAsync
         {
             add
@@ -153,7 +151,6 @@ namespace Azure.Messaging.EventHubs
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
-        [SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations", Justification = "Guidelines do allow throwing NotSupportedException or ArgumentException here")]
         public event Func<ProcessEventArgs, Task> ProcessEventAsync
         {
             add
@@ -203,7 +200,6 @@ namespace Azure.Messaging.EventHubs
         ///
         [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
-        [SuppressMessage("Design", "CA1065:Do not raise exceptions in unexpected locations", Justification = "Guidelines do allow throwing NotSupportedException or ArgumentException here")]
         public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
         {
             add
@@ -413,7 +409,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
-        /// <param name="credential">The Event Hubs shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The shared access key credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
@@ -421,14 +417,40 @@ namespace Azure.Messaging.EventHubs
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.
         /// </remarks>
         ///
-        internal EventProcessorClient(BlobContainerClient checkpointStore,
-                                      string consumerGroup,
-                                      string fullyQualifiedNamespace,
-                                      string eventHubName,
-                                      EventHubsSharedAccessKeyCredential credential,
-                                      EventProcessorClientOptions clientOptions = default) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (TokenCredential)(object)credential, CreateOptions(clientOptions))
+        public EventProcessorClient(BlobContainerClient checkpointStore,
+                                    string consumerGroup,
+                                    string fullyQualifiedNamespace,
+                                    string eventHubName,
+                                    AzureNamedKeyCredential credential,
+                                    EventProcessorClientOptions clientOptions = default) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, CreateOptions(clientOptions))
         {
-            // TODO: Update the credential type and base class constructor invocation.
+            Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
+            StorageManager = CreateStorageManager(checkpointStore);
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
+        /// </summary>
+        ///
+        /// <param name="checkpointStore">The client responsible for persisting checkpoints and processor state to durable storage. The associated container is expected to exist.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
+        /// <param name="credential">The shared access signature credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="clientOptions">The set of options to use for this processor.</param>
+        ///
+        /// <remarks>
+        ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
+        ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.
+        /// </remarks>
+        ///
+        public EventProcessorClient(BlobContainerClient checkpointStore,
+                                    string consumerGroup,
+                                    string fullyQualifiedNamespace,
+                                    string eventHubName,
+                                    AzureSasCredential credential,
+                                    EventProcessorClientOptions clientOptions = default) : base((clientOptions ?? DefaultClientOptions).CacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, CreateOptions(clientOptions))
+        {
             Argument.AssertNotNull(checkpointStore, nameof(checkpointStore));
             StorageManager = CreateStorageManager(checkpointStore);
         }
@@ -469,7 +491,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="cacheEventCount">The maximum number of events that will be read from the Event Hubs service and held in a local memory cache when reading is active and events are being emitted to an enumerator for processing.</param>
-        /// <param name="credential">A shared access key credential to satisfy base class requirements; this credential may not be <c>null</c> but will only be used in the case that <see cref="CreateConnection" /> has not been overridden.</param>
+        /// <param name="credential">An Azure identity credential to satisfy base class requirements; this credential may not be <c>null</c> but will only be used in the case that <see cref="CreateConnection" /> has not been overridden.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
@@ -481,10 +503,9 @@ namespace Azure.Messaging.EventHubs
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
                                       int cacheEventCount,
-                                      EventHubsSharedAccessKeyCredential credential,
-                                      EventProcessorOptions clientOptions) : base(cacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, (TokenCredential)(object)credential, clientOptions)
+                                      TokenCredential credential,
+                                      EventProcessorOptions clientOptions) : base(cacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
         {
-            // TODO: Update the credential type and base class constructor invocation.
             Argument.AssertNotNull(storageManager, nameof(storageManager));
 
             DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);
@@ -500,7 +521,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
         /// <param name="cacheEventCount">The maximum number of events that will be read from the Event Hubs service and held in a local memory cache when reading is active and events are being emitted to an enumerator for processing.</param>
-        /// <param name="credential">An Azure identity credential to satisfy base class requirements; this credential may not be <c>null</c> but will only be used in the case that <see cref="CreateConnection" /> has not been overridden.</param>
+        /// <param name="credential">A shared access key credential to satisfy base class requirements; this credential may not be <c>null</c> but will only be used in the case that <see cref="CreateConnection" /> has not been overridden.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>
@@ -512,7 +533,37 @@ namespace Azure.Messaging.EventHubs
                                       string fullyQualifiedNamespace,
                                       string eventHubName,
                                       int cacheEventCount,
-                                      TokenCredential credential,
+                                      AzureNamedKeyCredential credential,
+                                      EventProcessorOptions clientOptions) : base(cacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
+        {
+            Argument.AssertNotNull(storageManager, nameof(storageManager));
+
+            DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);
+            StorageManager = storageManager;
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
+        /// </summary>
+        ///
+        /// <param name="storageManager">Responsible for creation of checkpoints and for ownership claim.</param>
+        /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  Events are read in the context of this group.</param>
+        /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
+        /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
+        /// <param name="cacheEventCount">The maximum number of events that will be read from the Event Hubs service and held in a local memory cache when reading is active and events are being emitted to an enumerator for processing.</param>
+        /// <param name="credential">A shared access signature credential to satisfy base class requirements; this credential may not be <c>null</c> but will only be used in the case that <see cref="CreateConnection" /> has not been overridden.</param>
+        /// <param name="clientOptions">The set of options to use for this processor.</param>
+        ///
+        /// <remarks>
+        ///   This constructor is intended only to support functional testing and mocking; it should not be used for production scenarios.
+        /// </remarks>
+        ///
+        internal EventProcessorClient(StorageManager storageManager,
+                                      string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      int cacheEventCount,
+                                      AzureSasCredential credential,
                                       EventProcessorOptions clientOptions) : base(cacheEventCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, clientOptions)
         {
             Argument.AssertNotNull(storageManager, nameof(storageManager));

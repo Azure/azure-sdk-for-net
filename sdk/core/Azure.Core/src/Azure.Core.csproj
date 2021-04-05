@@ -2,11 +2,9 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.11.0</Version>
+    <Version>1.13.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.10.0</ApiCompatVersion>
-    <!-- TODO: remove when we have a released package with the netcoreapp2.1 target -->
-    <ApiCompatVersion Condition="$(TargetFramework) == 'netcoreapp2.1'"></ApiCompatVersion>
+    <ApiCompatVersion>1.12.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
@@ -33,14 +31,15 @@
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />
+    <Compile Include="Shared\ClientDiagnostics.cs" />
+    <Compile Include="Shared\ContentTypeUtilities.cs" />
+    <Compile Include="Shared\DiagnosticScope.cs" />
+    <Compile Include="Shared\DiagnosticScopeFactory.cs" />
+    <Compile Include="Shared\DictionaryHeaders.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
-    <Compile Include="Shared\ClientDiagnostics.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
-    <Compile Include="Shared\ContentTypeUtilities.cs" />
-    <Compile Include="Shared\DiagnosticScopeFactory.cs" />
-    <Compile Include="Shared\DiagnosticScope.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
   </ItemGroup>
 

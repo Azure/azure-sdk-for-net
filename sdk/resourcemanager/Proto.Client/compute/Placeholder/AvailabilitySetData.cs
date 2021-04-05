@@ -8,7 +8,7 @@ namespace Proto.Compute
     /// <summary>
     /// A class representing the availability set data model.
     /// </summary>
-    public class AvailabilitySetData : TrackedResource<Azure.ResourceManager.Compute.Models.AvailabilitySet>
+    public class AvailabilitySetData : TrackedResource<ResourceGroupResourceIdentifier, Azure.ResourceManager.Compute.Models.AvailabilitySet>
     {
         /// <summary>
         /// Gets the resource type definition for an availability set.

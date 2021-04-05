@@ -13,6 +13,9 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>A single-page blank form.</summary>
         public const string Blank = "blank.pdf";
 
+        /// <summary>A driver's license.</summary>
+        public const string DriverLicenseJpg = "license.jpg";
+
         /// <summary>One of the purchase orders used for model training.</summary>
         public const string Form1 = "Form_1.jpg";
 
@@ -36,6 +39,9 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>A file with two business cards, one per page.</summary>
         public const string BusinessMultipage = "multipleBusinessCards.pdf";
+
+        /// <summary>A complete invoice file.</summary>
+        public const string InvoiceJpg = "recommended_invoice.jpg";
 
         /// <summary>A basic invoice file.</summary>
         public const string InvoicePdf = "Invoice_1.pdf";

@@ -1,6 +1,4 @@
 # Azure Communication SMS client library for .NET
-> Server Version: 
-Sms client: 2021-03-07
 
 This package contains a C# SDK for Azure Communication Services for SMS and Telephony.
 
@@ -11,7 +9,7 @@ This package contains a C# SDK for Azure Communication Services for SMS and Tele
 Install the Azure Communication SMS client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.Sms --version 1.0.0-beta.4
+dotnet add package Azure.Communication.Sms --version 1.0.0
 ``` 
 
 ### Prerequisites
@@ -60,7 +58,7 @@ Console.WriteLine($"Sms id: {sendResult.MessageId}");
 To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the `SmsClient` with a list of recipient's phone numbers.
 You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags.
 ```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
-Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
+var response = await smsClient.SendAsync(
     from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
     to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
     message: "Weekly Promotion!",
@@ -68,8 +66,7 @@ Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
     {
         Tag = "marketing", // custom tags
     });
-IEnumerable<SmsSendResult> results = response.Value;
-foreach (SmsSendResult result in results)
+foreach (SmsSendResult result in response.Value)
 {
     Console.WriteLine($"Sms id: {result.MessageId}");
     Console.WriteLine($"Send Result Successful: {result.Successful}");
@@ -83,7 +80,7 @@ Please use the `Successful` flag to validate each individual result to verify if
 ```C# Snippet:Azure_Communication_Sms_Tests_Troubleshooting
 try
 {
-    Response<IEnumerable<SmsSendResult>> response = await smsClient.SendAsync(
+    var response = await smsClient.SendAsync(
         from: "<from-phone-number>" // Your E.164 formatted phone number used to send SMS
         to: new string [] {"<to-phone-number-1>", "<to-phone-number-2>"}, // E.164 formatted recipient phone number
         message: "Weekly Promotion!",
@@ -91,8 +88,7 @@ try
         {
             Tag = "marketing", // custom tags
         });
-    IEnumerable<SmsSendResult> results = response.Value;
-    foreach (SmsSendResult result in results)
+    foreach (SmsSendResult result in response.Value)
     {
         if (result.Successful)
         {
