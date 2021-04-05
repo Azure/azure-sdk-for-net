@@ -43,7 +43,7 @@ When deployed, use the [application settings](https://docs.microsoft.com/azure/a
 
 #### Managed identity authentication
 
-If your environment has [managed identity](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet) enabled you can use it to authenticate the Event Hubs extension.
+If your environment has [managed identity](https://docs.microsoft.com/azure/app-service/overview-managed-identity?tabs=dotnet) enabled you can use it to authenticate the Service Bus extension.
 To use managed identity provide the `<connection_name>__fullyQualifiedNamespace` configuration setting.
 
 ```json

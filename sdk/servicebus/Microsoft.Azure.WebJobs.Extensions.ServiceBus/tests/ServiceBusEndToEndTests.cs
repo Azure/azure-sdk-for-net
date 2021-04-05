@@ -372,14 +372,11 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
                 .GetAllLogMessages();
 
-            // Filter out anything from the Azure SDK (Service Bus, Identity, Core) and custom message processor for
-            // easier validation.
-            IEnumerable<LogMessage> consoleOutput = logMessages
-                .Where(m => !m.Category.StartsWith("Azure.") && m.Category != CustomMessagingProvider.CustomMessagingCategory);
+            Assert.False(logMessages.Where(p => p.Level == LogLevel.Error).Any());
 
-            // Intentionally do this check after filtering Azure SDK logs until https://github.com/Azure/azure-sdk-for-net/issues/19098
-            // is fixed since stopping the processor will cause errors to be logged.
-            Assert.False(consoleOutput.Where(p => p.Level == LogLevel.Error).Any());
+            // filter out anything from the custom processor for easier validation.
+            IEnumerable<LogMessage> consoleOutput = logMessages
+               .Where(m => m.Category != CustomMessagingProvider.CustomMessagingCategory);
 
             string[] consoleOutputLines = consoleOutput
                 .Where(p => p.FormattedMessage != null)

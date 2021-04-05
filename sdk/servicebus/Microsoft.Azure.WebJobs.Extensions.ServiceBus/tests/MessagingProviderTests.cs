@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             Assert.AreEqual("entityPath", processor.EntityPath);
 
             var processor2 = provider.CreateProcessor(_client, "entityPath");
-            Assert.AreSame(processor, processor2);
+            Assert.AreNotSame(processor, processor2);
 
             options.PrefetchCount = 100;
             options.MaxConcurrentCalls = 5;

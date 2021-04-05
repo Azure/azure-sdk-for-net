@@ -49,6 +49,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(_waitHandle1.WaitOne(SBTimeoutMills));
 
                 IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
+                Assert.False(logMessages.Where(p => p.Level == LogLevel.Error).Any());
 
                 // filter out anything from the custom processor for easier validation.
                 List<LogMessage> consoleOutput = logMessages.Where(m => m.Category == "Function.SBQueue1Trigger.User").ToList();
@@ -80,6 +81,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(_waitHandle1.WaitOne(SBTimeoutMills));
 
                 IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
+                Assert.False(logMessages.Where(p => p.Level == LogLevel.Error).Any());
 
                 // filter out anything from the custom processor for easier validation.
                 List<LogMessage> consoleOutput = logMessages.Where(m => m.Category == "Function.SBSub1Trigger.User").ToList();
@@ -225,6 +227,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(_waitHandle2.WaitOne(SBTimeoutMills));
 
                 IEnumerable<LogMessage> logMessages1 = host.GetTestLoggerProvider().GetAllLogMessages();
+                Assert.False(logMessages1.Where(p => p.Level == LogLevel.Error).Any());
 
                 // filter out anything from the custom processor for easier validation.
                 List<LogMessage> consoleOutput1 = logMessages1.Where(m => m.Category == "Function.SBQueue1Trigger.User").ToList();
@@ -275,6 +278,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(_waitHandle2.WaitOne(SBTimeoutMills));
 
                 IEnumerable<LogMessage> logMessages1 = host.GetTestLoggerProvider().GetAllLogMessages();
+                Assert.False(logMessages1.Where(p => p.Level == LogLevel.Error).Any());
 
                 // filter out anything from the custom processor for easier validation.
                 List<LogMessage> consoleOutput1 = logMessages1.Where(m => m.Category == "Function.SBSub1Trigger.User").ToList();
