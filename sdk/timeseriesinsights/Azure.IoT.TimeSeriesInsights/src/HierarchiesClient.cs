@@ -18,7 +18,7 @@ namespace Azure.IoT.TimeSeriesInsights
         private readonly ClientDiagnostics _clientDiagnostics;
 
         /// <summary>
-        /// Initializes a new instance of ModelSettings. This constructor should only be used for mocking purposes.
+        /// Initializes a new instance of HierarchiesClient. This constructor should only be used for mocking purposes.
         /// </summary>
         protected HierarchiesClient()
         {
@@ -38,17 +38,17 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{TimeSeriesHierarchy}"/> of Time Series hierarchies with the http response.</returns>
-        public virtual AsyncPageable<TimeSeriesHierarchy> GetHierarchiesAsync(
+        public virtual AsyncPageable<TimeSeriesHierarchy> GetAsync(
             CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetHierarchies)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
             scope.Start();
 
             try
             {
                 async Task<Page<TimeSeriesHierarchy>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetHierarchies)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
                     scope.Start();
 
                     try
@@ -67,7 +67,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 async Task<Page<TimeSeriesHierarchy>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetHierarchies)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
                     scope.Start();
 
                     try
@@ -98,19 +98,19 @@ namespace Azure.IoT.TimeSeriesInsights
         /// </summary>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="Pageable{TimeSeriesHierarchy}"/> of Time Series hierarchies with the http response.</returns>
-        /// <seealso cref="GetHierarchiesAsync(CancellationToken)">
+        /// <seealso cref="GetAsync(CancellationToken)">
         /// See the asynchronous version of this method for examples.
         /// </seealso>
-        public virtual Pageable<TimeSeriesHierarchy> GetHierarchies(CancellationToken cancellationToken = default)
+        public virtual Pageable<TimeSeriesHierarchy> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetHierarchies)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
             scope.Start();
 
             try
             {
                 Page<TimeSeriesHierarchy> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetHierarchies)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
                     scope.Start();
 
                     try
@@ -127,7 +127,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 Page<TimeSeriesHierarchy> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetHierarchies)}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(Get)}");
                     scope.Start();
 
                     try
