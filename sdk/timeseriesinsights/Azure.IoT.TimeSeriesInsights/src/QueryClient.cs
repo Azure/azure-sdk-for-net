@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// Query client that can be used to perform query operations on Time Series Insights.
+    /// Query client that can be used to query for events, series and aggregate series on Time Series Insights.
     /// </summary>
     public class QueryClient
     {

@@ -12,7 +12,8 @@ using Azure.Core.Pipeline;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// Time Series Insights instances client.
+    /// Time Series Insights instances client that can be used to perform operations such as creating, listing, replacing and deleting
+    /// Time Series instances.
     /// </summary>
     public class InstancesClient
     {

@@ -12,7 +12,7 @@ using Azure.Core.Pipeline;
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary>
-    /// Types client that can be used to perform operations for Time Series types.
+    /// Types client that can be used to perform operations such as creating, listing, replacing and deleting Time Series types.
     /// </summary>
     public class TypesClient
     {

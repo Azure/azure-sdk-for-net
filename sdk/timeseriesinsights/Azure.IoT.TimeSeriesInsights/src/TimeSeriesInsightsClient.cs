@@ -36,7 +36,7 @@ namespace Azure.IoT.TimeSeriesInsights
         public virtual InstancesClient Instances { get; private set; }
 
         /// <summary>
-        /// Types client to perform various Time Seris Insights types operations.
+        /// Types client to perform various Time Series Insights types operations.
         /// </summary>
         public virtual TypesClient Types { get; private set; }
 
