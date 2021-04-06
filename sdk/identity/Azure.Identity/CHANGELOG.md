@@ -15,7 +15,8 @@ Thank you to our developer community members who helped to make Azure Identity b
 ### Fixes and improvements
 
 - When logging is enabled, the log output from MSAL is also logged.
-- Fixed an issue where an account credential fails to load from the cache when EnableGuestTenantAuthentication is true and the account found in the cache has multiple matching tenantIds.
+- Fixed an issue where an account credential fails to load from the cache when EnableGuestTenantAuthentication is true and the account found in the cache has multiple matching tenantIds ([#18276](https://github.com/Azure/azure-sdk-for-net/issues/18276)).
+- Fixed deadlock issue in `InteractiveBrowserCredential` when running in a UI application ([#18418](https://github.com/Azure/azure-sdk-for-net/issues/18418)).
 
 ### Breaking Changes
 
