@@ -6,6 +6,7 @@ using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using static Azure.Communication.Identity.CommunicationIdentityClientOptions;
 
 namespace Azure.Communication.Identity.Tests
 {
@@ -23,20 +24,20 @@ namespace Azure.Communication.Identity.Tests
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.ConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(ServiceVersion.V2021_02_22_preview1))));
 
         protected CommunicationIdentityClient CreateClientWithAzureKeyCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.Endpoint,
                     new AzureKeyCredential(TestEnvironment.AccessKey),
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(ServiceVersion.V2021_02_22_preview1))));
 
         protected CommunicationIdentityClient CreateClientWithTokenCredential()
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.Endpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions())));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(ServiceVersion.V2021_02_22_preview1))));
     }
 }

@@ -19,7 +19,6 @@ namespace Azure.Communication.Identity
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         internal CommunicationIdentityRestClient RestClient { get; }
-        internal CommunicationIdentityRestClient TurnRestClient { get; }
 
         #region public constructors - all argument need null check
 
@@ -82,7 +81,6 @@ namespace Azure.Communication.Identity
         {
             _clientDiagnostics = new ClientDiagnostics(options);
             RestClient = new CommunicationIdentityRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
-            TurnRestClient = new CommunicationIdentityRestClient(_clientDiagnostics, httpPipeline, endpoint, "2021-02-22-preview1");
         }
 
         #endregion
@@ -92,7 +90,6 @@ namespace Azure.Communication.Identity
         {
             _clientDiagnostics = null;
             RestClient = null;
-            TurnRestClient = null;
         }
 
         /// <summary>Creates a new <see cref="CommunicationUserIdentifier"/>.</summary>
@@ -294,7 +291,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return TurnRestClient.IssueTurnCredentials(communicationUser.Id, cancellationToken);
+                return RestClient.IssueTurnCredentials(communicationUser.Id, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -312,7 +309,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return await TurnRestClient.IssueTurnCredentialsAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.IssueTurnCredentialsAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

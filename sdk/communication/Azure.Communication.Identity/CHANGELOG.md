@@ -1,7 +1,9 @@
 # Release History
 
 ## 1.1.0-beta.1 (Unreleased)
-
+### Added
+- Added CommunicationIdentityClient.GetTurnCredentials in preview.
+- Added CommunicationIdentityClient.GetTurnCredentialsAsync in preview.
 
 ## 1.0.0 (2021-03-29)
 Updated `Azure.Communication.Identity` version.

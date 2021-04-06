@@ -25,6 +25,7 @@ namespace Azure.Communication.Identity
         public CommunicationIdentityClientOptions(Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07) { }
         public enum ServiceVersion
         {
+            V2021_02_22_preview1 = 0,
             V2021_03_07 = 1,
         }
     }
