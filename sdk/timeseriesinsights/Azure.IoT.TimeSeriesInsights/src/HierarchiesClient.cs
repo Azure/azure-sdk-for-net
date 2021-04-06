@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -143,6 +145,212 @@ namespace Azure.IoT.TimeSeriesInsights
                 }
 
                 return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series Insights hierarchies by hierarchy names asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series hierarchies to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of hierarchy or error objects corresponding by position to the array in the request.
+        /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is empty.
+        /// </exception>
+        public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> GetByNameAsync(
+            IEnumerable<string> timeSeriesHierarchyNames,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetByName)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
+
+                var batchRequest = new HierarchiesBatchRequest()
+                {
+                    Get = new HierarchiesRequestBatchGetDelete()
+                };
+
+                foreach (string timeSeriesName in timeSeriesHierarchyNames)
+                {
+                    batchRequest.Get.Names.Add(timeSeriesName);
+                }
+
+                Response<HierarchiesBatchResponse> executeBatchResponse = await _hierarchiesRestClient
+                    .ExecuteBatchAsync(batchRequest, null, cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series Insights hierarchies by hierarchy names synchronously.
+        /// </summary>
+        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series hierarchies to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of hierarchy or error objects corresponding by position to the array in the request.
+        /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <seealso cref="GetByNameAsync(IEnumerable{string}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is empty.
+        /// </exception>
+        public virtual Response<TimeSeriesHierarchyOperationResult[]> GetByName(
+            IEnumerable<string> timeSeriesHierarchyNames,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetByName)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
+
+                var batchRequest = new HierarchiesBatchRequest()
+                {
+                    Get = new HierarchiesRequestBatchGetDelete()
+                };
+
+                foreach (string timeSeriesName in timeSeriesHierarchyNames)
+                {
+                    batchRequest.Get.Names.Add(timeSeriesName);
+                }
+
+                Response<HierarchiesBatchResponse> executeBatchResponse = _hierarchiesRestClient
+                    .ExecuteBatch(batchRequest, null, cancellationToken);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series Insights hierarchies by hierarchy Ids asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesHierarchyIds">List of Time Series hierarchy Ids of the Time Series hierarchies to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of hierarchy or error objects corresponding by position to the array in the request.
+        /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
+        /// </exception>
+        public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> GetByIdAsync(
+            IEnumerable<string> timeSeriesHierarchyIds,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetById)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
+
+                var batchRequest = new HierarchiesBatchRequest()
+                {
+                    Get = new HierarchiesRequestBatchGetDelete()
+                };
+
+                foreach (string hierarchyId in timeSeriesHierarchyIds)
+                {
+                    batchRequest.Get.HierarchyIds.Add(hierarchyId);
+                }
+
+                Response<HierarchiesBatchResponse> executeBatchResponse = await _hierarchiesRestClient
+                    .ExecuteBatchAsync(batchRequest, null, cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets Time Series Insights hierarchies by hierarchy Ids synchronously.
+        /// </summary>
+        /// <param name="timeSeriesHierarchyIds">List of Time Series hierarchy Ids of the Time Series hierarchies to return.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of hierarchy or error objects corresponding by position to the array in the request.
+        /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <seealso cref="GetByIdAsync(IEnumerable{string}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
+        /// </exception>
+        public virtual Response<TimeSeriesHierarchyOperationResult[]> GetById(
+            IEnumerable<string> timeSeriesHierarchyIds,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(GetById)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
+
+                var batchRequest = new HierarchiesBatchRequest()
+                {
+                    Get = new HierarchiesRequestBatchGetDelete()
+                };
+
+                foreach (string hierarchyId in timeSeriesHierarchyIds)
+                {
+                    batchRequest.Get.HierarchyIds.Add(hierarchyId);
+                }
+
+                Response<HierarchiesBatchResponse> executeBatchResponse = _hierarchiesRestClient
+                    .ExecuteBatch(batchRequest, null, cancellationToken);
+
+                return Response.FromValue(executeBatchResponse.Value.Get.ToArray(), executeBatchResponse.GetRawResponse());
             }
             catch (Exception ex)
             {

@@ -15,8 +15,8 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static HierarchiesBatchResponse DeserializeHierarchiesBatchResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<TimeSeriesHierarchyOrError>> @get = default;
-            Optional<IReadOnlyList<TimeSeriesHierarchyOrError>> put = default;
+            Optional<IReadOnlyList<TimeSeriesHierarchyOperationResult>> @get = default;
+            Optional<IReadOnlyList<TimeSeriesHierarchyOperationResult>> put = default;
             Optional<IReadOnlyList<TimeSeriesOperationError>> delete = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.IoT.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TimeSeriesHierarchyOrError> array = new List<TimeSeriesHierarchyOrError>();
+                    List<TimeSeriesHierarchyOperationResult> array = new List<TimeSeriesHierarchyOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesHierarchyOrError.DeserializeTimeSeriesHierarchyOrError(item));
+                        array.Add(TimeSeriesHierarchyOperationResult.DeserializeTimeSeriesHierarchyOperationResult(item));
                     }
                     @get = array;
                     continue;
@@ -42,10 +42,10 @@ namespace Azure.IoT.TimeSeriesInsights
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TimeSeriesHierarchyOrError> array = new List<TimeSeriesHierarchyOrError>();
+                    List<TimeSeriesHierarchyOperationResult> array = new List<TimeSeriesHierarchyOperationResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesHierarchyOrError.DeserializeTimeSeriesHierarchyOrError(item));
+                        array.Add(TimeSeriesHierarchyOperationResult.DeserializeTimeSeriesHierarchyOperationResult(item));
                     }
                     put = array;
                     continue;
