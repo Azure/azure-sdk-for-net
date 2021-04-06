@@ -145,8 +145,7 @@ namespace Azure.Core.Pipeline
 
         private static HttpMessageHandler CreateDefaultHandler()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")) ||
-                RuntimeInformation.IsOSPlatform(OSPlatform.Create("WEBASSEMBLY")))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
                 return new HttpClientHandler();
             }
@@ -160,8 +159,7 @@ namespace Azure.Core.Pipeline
 
         private static void SetProxySettings(HttpMessageHandler messageHandler)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")) ||
-                RuntimeInformation.IsOSPlatform(OSPlatform.Create("WEBASSEMBLY")))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
                 return;
             }

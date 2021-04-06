@@ -52,8 +52,7 @@ namespace Azure.Core.Pipeline
 #endif
         public static void SetLimits(HttpMessageHandler messageHandler)
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")) ||
-                RuntimeInformation.IsOSPlatform(OSPlatform.Create("WEBASSEMBLY")))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
             {
                 return;
             }
