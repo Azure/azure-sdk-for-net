@@ -207,7 +207,7 @@ string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issua
 
 var policyTokenSigner = TestEnvironment.PolicyCertificate0;
 
-var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, TestEnvironment.PolicySigningKey0, policyTokenSigner);
+var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
 ```
 
 Clients need to be able to verify that the attestation policy document was not modified before the policy document was received by the attestation service's enclave.
@@ -220,7 +220,9 @@ To verify the hash, clients can generate an attestation token and verify the has
 
 ```C# Snippet:VerifySigningHash
 // The SetPolicyAsync API will create a SecuredAttestationToken to transmit the policy.
-var policySetToken = new SecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }, TestEnvironment.PolicySigningKey0, policyTokenSigner);
+var policySetToken = new AttestationToken(
+    new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
+    new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
 
 var shaHasher = SHA256Managed.Create();
 var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));

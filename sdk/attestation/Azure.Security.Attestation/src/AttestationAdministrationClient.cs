@@ -196,7 +196,9 @@ namespace Azure.Security.Attestation
         /// To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
         /// <code snippet="Snippet:VerifySigningHash">
         /// // The SetPolicyAsync API will create a SecuredAttestationToken to transmit the policy.
-        /// var policySetToken = new SecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }, TestEnvironment.PolicySigningKey0, policyTokenSigner);
+        /// var policySetToken = new AttestationToken(
+        ///     new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
+        ///     new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
         ///
         /// var shaHasher = SHA256Managed.Create();
         /// var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
@@ -272,7 +274,9 @@ namespace Azure.Security.Attestation
         /// To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
         /// <code snippet="Snippet:VerifySigningHash">
         /// // The SetPolicyAsync API will create a SecuredAttestationToken to transmit the policy.
-        /// var policySetToken = new SecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }, TestEnvironment.PolicySigningKey0, policyTokenSigner);
+        /// var policySetToken = new AttestationToken(
+        ///     new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
+        ///     new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
         ///
         /// var shaHasher = SHA256Managed.Create();
         /// var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
