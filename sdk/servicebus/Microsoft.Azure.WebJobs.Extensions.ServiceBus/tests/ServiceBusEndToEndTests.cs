@@ -298,7 +298,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         private async Task TestMultiple<T>(bool isXml = false)
         {
-            var (jobHost, _) = BuildHost<T>();
+            var (jobHost, host) = BuildHost<T>();
             using (jobHost)
             {
                 if (isXml)
@@ -314,6 +314,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
+                await jobHost.StopAsync();
+
+                IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
+                    .GetAllLogMessages();
+                foreach (var message in logMessages)
+                {
+                    TestContext.Progress.WriteLine(message.FormattedMessage);
+                }
             }
         }
 
