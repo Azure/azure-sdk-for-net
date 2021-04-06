@@ -7,7 +7,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Data.Tables
 {
     /// <summary>
-    /// HttpPipelinePolicy to sign requests using an Azure Storage shared key.
+    /// HttpPipelinePolicy to transform PATCH requests into POST requests with the "X-HTTP-Method":"MERGE" header set.
     /// </summary>
     internal sealed class CosmosPatchTransformPolicy : HttpPipelineSynchronousPolicy
     {
@@ -18,9 +18,9 @@ namespace Azure.Data.Tables
         { }
 
         /// <summary>
-        /// Sign the request using the shared key credentials.
+        /// Do the transform, if necessary.
         /// </summary>
-        /// <param name="message">The message with the request to sign.</param>
+        /// <param name="message">The message with the request to transform.</param>
         public override void OnSendingRequest(HttpMessage message)
         {
             base.OnSendingRequest(message);
@@ -30,6 +30,11 @@ namespace Azure.Data.Tables
                 TransformPatchToCosmosPost(message);
             }
         }
+
+        /// <summary>
+        /// Transform a PATCH request into POST request with the "X-HTTP-Method":"MERGE" header set.
+        /// </summary>
+        /// <param name="message"></param>
         public static void TransformPatchToCosmosPost(HttpMessage message)
         {
             message.Request.Method = RequestMethod.Post;
