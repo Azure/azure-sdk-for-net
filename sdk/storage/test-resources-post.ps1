@@ -29,9 +29,6 @@ $SecondaryAccountTableEndpointSuffix = $DeploymentOutputs['SECONDARY_STORAGE_ACC
 $PremiumAccountName = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_NAME']
 $PremiumAccountKey = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_KEY']
 $PremiumAccountBlobEndpointSuffix = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
-$PremiumAccountFileEndpointSuffix = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
-$PremiumAccountQueueEndpointSuffix = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX']
-$PremiumAccountTableEndpointSuffix = $DeploymentOutputs['PREMIUM_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX']
 $DataLakeAccountName = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_NAME']
 $DataLakeAccountKey = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_KEY']
 $DataLakeAccountBlobEndpointSuffix = $DeploymentOutputs['DATALAKE_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
@@ -46,10 +43,7 @@ $SoftDeleteAccountQueueEndpointSuffix = $DeploymentOutputs['SOFT_DELETE_STORAGE_
 $SoftDeleteAccountTableEndpointSuffix = $DeploymentOutputs['SOFT_DELETE_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX']
 $PremiumFileAccountName = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_NAME']
 $PremiumFileAccountKey = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_KEY']
-$PremiumFileAccountBlobEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_BLOB_ENDPOINT_SUFFIX']
 $PremiumFileAccountFileEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_FILE_ENDPOINT_SUFFIX']
-$PremiumFileAccountQueueEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_QUEUE_ENDPOINT_SUFFIX']
-$PremiumFileAccountTableEndpointSuffix = $DeploymentOutputs['PREMIUM_FILE_STORAGE_ACCOUNT_TABLE_ENDPOINT_SUFFIX']
 $KeyVaultUri = $DeploymentOutputs['KEYVAULT_URI']
 
 # Construct the content of the configuration file that the Storage tests expect
@@ -86,14 +80,8 @@ $content =
       <AccountName>$PremiumAccountName</AccountName>
       <AccountKey>$PremiumAccountKey</AccountKey>
       <BlobServiceEndpoint>https://$PremiumAccountName.$PremiumAccountBlobEndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PremiumAccountName.$PremiumAccountQueueEndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$PremiumAccountName.$PremiumAccountTableEndpointSuffix</TableServiceEndpoint>
-      <FileServiceEndpoint>https://$PremiumAccountName.$PremiumAccountFileEndpointSuffix</FileServiceEndpoint>
       <BlobServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.$PremiumAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.$PremiumAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
-      <FileServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.$PremiumAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$PremiumAccountName-secondary.$PremiumAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
-      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PremiumAccountName;AccountKey=$PremiumAccountKey;BlobEndpoint=https://$PremiumAccountName.$PremiumAccountBlobEndpointSuffix;FileEndpoint=https://$PremiumAccountName.$PremiumAccountFileEndpointSuffix;QueueEndpoint=https://$PremiumAccountName.$PremiumAccountQueueEndpointSuffix;TableEndpoint=https://$PremiumAccountName.$PremiumAccountTableEndpointSuffix</ConnectionString>
+      <ConnectionString>DefaultEndpointsProtocol=https;AccountName=$PremiumAccountName;AccountKey=$PremiumAccountKey;BlobEndpoint=https://$PremiumAccountName.$PremiumAccountBlobEndpointSuffix</ConnectionString>
     </TenantConfiguration>
     <TenantConfiguration>
       <TenantName>ProductionTenant2</TenantName>
@@ -164,15 +152,8 @@ $content =
       <TenantName>PremiumFileTenant</TenantName>
       <TenantType>Cloud</TenantType>
       <AccountName>$PremiumFileAccountName</AccountName>
-      <AccountKey>$PremiumFileAccountKey</AccountKey>
-      <BlobServiceEndpoint>https://$PremiumFileAccountName.$PremiumFileAccountBlobEndpointSuffix</BlobServiceEndpoint>
-      <QueueServiceEndpoint>https://$PremiumFileAccountName.$PremiumFileAccountQueueEndpointSuffix</QueueServiceEndpoint>
-      <TableServiceEndpoint>https://$PremiumFileAccountName.$PremiumFileAccountTableEndpointSuffix</TableServiceEndpoint>
       <FileServiceEndpoint>https://$PremiumFileAccountName.$PremiumFileAccountFileEndpointSuffix</FileServiceEndpoint>
-      <BlobServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.$PremiumFileAccountBlobEndpointSuffix</BlobServiceSecondaryEndpoint>
-      <QueueServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.$PremiumFileAccountQueueEndpointSuffix</QueueServiceSecondaryEndpoint>
       <FileServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.$PremiumFileAccountFileEndpointSuffix</FileServiceSecondaryEndpoint>
-      <TableServiceSecondaryEndpoint>https://$PremiumFileAccountName-secondary.$PremiumFileAccountTableEndpointSuffix</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
   </TenantConfigurations>
   <KeyVaultConfigurations>
