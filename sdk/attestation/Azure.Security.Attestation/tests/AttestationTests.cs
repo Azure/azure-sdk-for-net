@@ -109,7 +109,7 @@ namespace Azure.Security.Attestation.Tests
             byte[] binaryQuote = Base64Url.Decode(_sgxQuote);
             byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
 
-            var client = GetSharedAttestationClient();
+            var client = TestEnvironment.GetSharedAttestationClient(this);
 
             IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
             {
@@ -125,44 +125,38 @@ namespace Azure.Security.Attestation.Tests
             }
         }
 
-        private bool IsPlaybackMode { get => TestEnvironment.Mode == RecordedTestMode.Playback; }
-        private bool IsRecordMode { get => TestEnvironment.Mode == RecordedTestMode.Record; }
-        private bool IsLiveMode { get => TestEnvironment.Mode == RecordedTestMode.Live; }
-
-        private bool IsTalkingToLiveServer { get => IsRecordMode || IsLiveMode; }
-
-        private AttestationClient GetSharedAttestationClient()
+        [RecordedTest]
+        public async Task AttestSgxSharedValidateCallback()
         {
-            String regionShortName = TestEnvironment.LocationShortName;
+            byte[] binaryQuote = Base64Url.Decode(_sgxQuote);
+            byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
+            bool callbackInvoked = false;
 
-            string endpoint = "https://shared" + regionShortName + "." + regionShortName + ".test.attest.azure.net";
+            var client = TestEnvironment.GetSharedAttestationClient(this, new TokenValidationOptions(validationCallback: (attestationToken, signer) =>
+            {
+                // Verify that the callback can access the enclave held data field.
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationToken.GetBody<AttestationResult>().EnclaveHeldData);
 
-            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
-        }
+                // The MAA service always sends a Key ID for the signer.
+                Assert.IsNotNull(signer.CertificateKeyId);
+                Assert.AreEqual(TestEnvironment.SharedAttestationUrl, attestationToken.Issuer);
+                callbackInvoked = true;
+                return true;
+            }));
 
-        private AttestationClient GetAadAttestationClient()
-        {
-            string endpoint = TestEnvironment.AadAttestationUrl;
+            IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
+            {
+                // Collect quote and enclave held data from an SGX enclave.
 
-            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
-        }
+                var attestationResult = await client.AttestSgxEnclaveAsync(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false);
 
-        private AttestationAdministrationClient GetAadAdministrationClient()
-        {
-            string endpoint = TestEnvironment.AadAttestationUrl;
-
-            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
-            return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
-        }
-
-        private AttestationClient GetIsolatedAttestationClient()
-        {
-            string endpoint = TestEnvironment.IsolatedAttestationUrl;
-
-            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
+                // Confirm that the attestation token contains the enclave held data we specified.
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);
+                // VERIFY ATTESTATIONRESULT.
+                // Encrypt Data using DeprecatedEnclaveHeldData
+                // Send to enclave.
+                Assert.IsTrue(callbackInvoked);
+            }
         }
     }
 }

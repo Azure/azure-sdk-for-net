@@ -1,20 +1,38 @@
 # Release History
 ## 1.0.0-beta.3 (Unreleased)
-- Hopefully the final changes for Azure Attestation Service for .Net. 
+### Changed
+- Hopefully the final changes for Azure Attestation Service for .Net. Mostly code cleanups, but significant improvements to the `AttestationToken` class.
 
-#### Breaking changes since 1.0.0-beta.2:
- - Clients no longer need to instantiate SecuredAttestationToken or UnsecuredAttestationToken objects to validate the token hash. All of the functionality associated wth SecuredAttestationToken and UnsecuredAttestationToken has been folded into the AttestationToken class.
- - The JSON Web Token associated properties in the AttestationToken class have been converted to nullable types to allow the AttestationToken class to express JSON Web Signature objects.
- - The token validation related properties in the AttestationClientOptions class (validateAttestationTokens, validationCallback) have been moved into the new TokenValidationOptions class.
-- The TokenValidationOptions class contains a number of functions to tweak the validation process, modeled extremely loosely after constructs in [Nimbus JWT](https://connect2id.com/products/nimbus-jose-jwt) and [PyJWT](https://pyjwt.readthedocs.io/en/latest/).
+### Breaking change
+- Clients no longer need to instantiate `SecuredAttestationToken` or `UnsecuredAttestationToken` objects to validate the token hash. All of the functionality associated wth SecuredAttestationToken and UnsecuredAttestationToken has been folded into the `AttestationToken` class. 
+As a result, the `SecuredAttestationToken` and `UnsecuredAttestationToken` types have been removed.
+
+```C# Snippet:VerifySigningHash
+// The SetPolicyAsync API will create an AttestationToken signed with the TokenSigningKey to transmit the policy.
+// To verify that the policy specified by the caller was received by the service inside the enclave, we
+// verify that the hash of the policy document returned from the Attestation Service matches the hash
+// of an attestation token created locally.
+var policySetToken = new AttestationToken(
+    new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
+    new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
+
+var shaHasher = SHA256Managed.Create();
+var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
+
+CollectionAssert.AreEqual(attestationPolicyHash, setResult.Value.PolicyTokenHash);
+```
+- The JSON Web Token associated properties in the `AttestationToken` class have been converted to nullable types to allow the AttestationToken class to express JSON Web Signature objects.
+- The token validation related properties in the `AttestationClientOptions` class (validateAttestationTokens, validationCallback) have been moved into the new `TokenValidationOptions` class.
+- The `TokenValidationOptions` class contains a number of options to tweak the JSON Web Token validation process, modeled extremely loosely after constructs in [Nimbus JWT](https://connect2id.com/products/nimbus-jose-jwt) and [PyJWT](https://pyjwt.readthedocs.io/en/latest/).
 
 ## 1.0.0-beta.2 (2021-04-06)
 
-- Fixed bug #19708, handle JSON values that are not just simple integers.
-- Fixed bug #18183, Significant cleanup of README.md.
-- Fixed bug #18739, reference the readme.md file in the azure-rest-apis directory instead of referencing the attestation JSON file directly. Also updated to the most recent version of the dataplane swagger files.
+### Fixed
+ - [19708](https://github.com/Azure/azure-sdk-for-net/issues/19708), handle JSON values that are not just simple integers.
+ - [18183](https://github.com/Azure/azure-sdk-for-net/issues/18183), Significant cleanup of README.md.
+ - [18739](https://github.com/Azure/azure-sdk-for-net/issues/18739), reference the readme.md file in the azure-rest-apis directory instead of referencing the attestation JSON file directly. Also updated to the most recent version of the dataplane swagger files.
 
-### Breaking Changes since 1.0.0-beta.1:
+### Breaking Change
 - It is no longer necessary to manually Base64Url encode the AttestationPolicy property in the StoredAttestationPolicy model. 
 This dramatically simplifies the user experience for interacting with the saved attestation policies - developers can treat attestation policies as string values.
 - The `SecuredAttestationToken` and `UnsecuredAttestationToken` parameters have been removed from the APIs which took them. Instead those APIs directly take the underlying type.

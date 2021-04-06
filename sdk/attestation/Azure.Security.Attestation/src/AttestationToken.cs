@@ -141,6 +141,11 @@ namespace Azure.Security.Attestation
         public virtual Uri X509Url { get => Header.X509Uri; }
 
         /// <summary>
+        /// Json Web Token Body Issuer. See https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1.1 for details.
+        /// </summary>
+        public virtual string Issuer { get => Payload.Issuer; }
+
+        /// <summary>
         /// An array of X.509Certificates which represent a certificate chain used to sign the token. See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.6 for details.
         /// </summary>
         public virtual X509Certificate2[] X509CertificateChain {

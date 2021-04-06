@@ -195,7 +195,10 @@ namespace Azure.Security.Attestation
         /// </list>
         /// To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
         /// <code snippet="Snippet:VerifySigningHash">
-        /// // The SetPolicyAsync API will create a SecuredAttestationToken to transmit the policy.
+        /// // The SetPolicyAsync API will create an AttestationToken signed with the TokenSigningKey to transmit the policy.
+        /// // To verify that the policy specified by the caller was received by the service inside the enclave, we
+        /// // verify that the hash of the policy document returned from the Attestation Service matches the hash
+        /// // of an attestation token created locally.
         /// var policySetToken = new AttestationToken(
         ///     new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
         ///     new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
@@ -273,7 +276,10 @@ namespace Azure.Security.Attestation
         /// </list>
         /// To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
         /// <code snippet="Snippet:VerifySigningHash">
-        /// // The SetPolicyAsync API will create a SecuredAttestationToken to transmit the policy.
+        /// // The SetPolicyAsync API will create an AttestationToken signed with the TokenSigningKey to transmit the policy.
+        /// // To verify that the policy specified by the caller was received by the service inside the enclave, we
+        /// // verify that the hash of the policy document returned from the Attestation Service matches the hash
+        /// // of an attestation token created locally.
         /// var policySetToken = new AttestationToken(
         ///     new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
         ///     new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
