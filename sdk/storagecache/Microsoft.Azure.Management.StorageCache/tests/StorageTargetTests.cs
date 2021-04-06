@@ -3,15 +3,13 @@
 
 namespace Microsoft.Azure.Management.StorageCache.Tests
 {
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.Storage;
-    using Microsoft.Azure.Management.Storage.Models;
     using Microsoft.Azure.Management.StorageCache.Models;
     using Microsoft.Azure.Management.StorageCache.Tests.Fixtures;
     using Microsoft.Azure.Management.StorageCache.Tests.Utilities;
     using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
+    using System.Collections.Generic;
     using Xunit;
     using Xunit.Abstractions;
 

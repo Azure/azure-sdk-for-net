@@ -54,24 +54,33 @@ namespace Microsoft.Azure.Management.StorageCache.Tests
                 ApiOperationListResult result = OperationsExtensions.List(client.Operations);
 
                 IList<MetricSpecification> metrics = new List<MetricSpecification>();
-                MetricSpecification metric = new MetricSpecification();
-                metric.AggregationType = "string";
-                metric.Unit = "unit";
-                metric.Name = "name";
-                metric.MetricClass = "metricClass";
-                metric.DisplayName = "displayName";
-                metric.DisplayDescription = "displayDescription";
-                MetricDimension dim = new MetricDimension();
-                dim.DisplayName = "dname";
-                dim.InternalName = "iname";
-                dim.Name = "name";
-                dim.ToBeExportedForShoebox = false;
+
+                MetricDimension dim = new MetricDimension
+                {
+                    DisplayName = "dname",
+                    InternalName = "iname",
+                    Name = "name",
+                    ToBeExportedForShoebox = false
+                };
+
                 IList<MetricDimension> dims = new List<MetricDimension>();
                 dims.Add(dim);
-                metric.Dimensions = dims;
+
                 IList<string> aggrTypes = new List<string>();
                 aggrTypes.Add("string");
-                metric.SupportedAggregationTypes = aggrTypes;
+
+                MetricSpecification metric = new MetricSpecification
+                {
+                    AggregationType = "string",
+                    Unit = "unit",
+                    Name = "name",
+                    MetricClass = "metricClass",
+                    DisplayName = "displayName",
+                    DisplayDescription = "displayDescription",
+                    SupportedAggregationTypes = aggrTypes,
+                    Dimensions = dims
+                };
+
                 ApiOperationPropertiesServiceSpecification serviceSpecification = new ApiOperationPropertiesServiceSpecification();
                 serviceSpecification.MetricSpecifications = metrics;
 

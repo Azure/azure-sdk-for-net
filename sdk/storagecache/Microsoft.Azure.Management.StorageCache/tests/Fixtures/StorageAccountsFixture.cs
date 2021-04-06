@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
         {
             notes = new List<string>();
             this.fixture = fixture;
-            notes.Add("SAF Ctor");
+            notes.Add("Storage Account Fixture Ctor");
         }
 
         /// <inheritdoc/>

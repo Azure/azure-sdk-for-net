@@ -155,19 +155,20 @@ namespace Microsoft.Azure.Management.StorageCache.Tests.Fixtures
                         cacheNetworkSettings.NtpServer = "time.windows.com";
                         cacheNetworkSettings.Mtu = 1500;
 
-
                         // Build up cache security settings.
                         CacheSecuritySettings cacheSecuritySettings = new CacheSecuritySettings();
 
                         NfsAccessPolicy nfsAccessPolicy = new NfsAccessPolicy();
                         nfsAccessPolicy.Name = "testAccessPolicy";
 
-                        NfsAccessRule nfsAccessRule = new NfsAccessRule();
-                        nfsAccessRule.Access = "rw";
-                        nfsAccessRule.Scope = "default";
-                        nfsAccessRule.Suid = false;
-                        nfsAccessRule.SubmountAccess = true;
-                        nfsAccessRule.RootSquash = false;
+                        NfsAccessRule nfsAccessRule = new NfsAccessRule
+                        {
+                            Access = "rw",
+                            Scope = "default",
+                            Suid = false,
+                            SubmountAccess = true,
+                            RootSquash = false
+                        };
 
                         List<NfsAccessRule> accessRules = new List<NfsAccessRule>();
                         accessRules.Add(nfsAccessRule);
