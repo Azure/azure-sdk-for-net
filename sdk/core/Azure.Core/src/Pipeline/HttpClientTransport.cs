@@ -85,7 +85,9 @@ namespace Azure.Core.Pipeline
 #if NET5_0
                 if (!async)
                 {
-                    // Sync HttpClient.Send is not supported on browser but so is the sync-over-async
+                    // Sync HttpClient.Send is not supported on browser but neither is the sync-over-async
+                    // HttpClient.Send would throw a NotSupported exception instead of GetAwaiter().GetResult()
+                    // throwing a System.Threading.SynchronizationLockException: Cannot wait on monitors on this runtime.
 #pragma warning disable CA1416 // 'HttpClient.Send(HttpRequestMessage, HttpCompletionOption, CancellationToken)' is unsupported on 'browser'
                     responseMessage = Client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
 #pragma warning restore CA1416
