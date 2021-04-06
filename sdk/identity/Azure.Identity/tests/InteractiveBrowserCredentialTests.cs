@@ -106,53 +106,71 @@ namespace Azure.Identity.Tests
 
         [Test]
         [NonParallelizable]
-        public async Task InteractiveBrowserValidateSyncWorkaroundCompatSwitch([Values(true, false)]bool appSwitchSet)
+        public async Task InteractiveBrowserValidateSyncWorkaroundCompatSwitch()
         {
-            string expInnerExMessage = Guid.NewGuid().ToString();
-            string expToken = Guid.NewGuid().ToString();
-            DateTimeOffset expExpiresOn = DateTimeOffset.UtcNow.AddMinutes(5);
+            // once the AppContext switch is set it cannot be unset for this reason this test must sequentially test the following
+            // neither Environment variable or AppContext switch is set.
+            // environment variable is set and AppContext switch is not set
+            // AppContext switch is set
+            await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
 
-            AppContext.SetSwitch("Azure.Identity.DisableInteractiveBrowserThreadpoolExecution", appSwitchSet);
+            using (var envVar = new TestEnvVar("AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION", string.Empty))
+            {
+                await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
+            }
 
+            using (var envVar = new TestEnvVar("AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION", "false"))
+            {
+                await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
+            }
+
+            using (var envVar = new TestEnvVar("AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION", "true"))
+            {
+                await ValidateSyncWorkaroundCompatSwitch(false);
+            }
+
+            using (var envVar = new TestEnvVar("AZURE_IDENTITY_DISABLE_INTERACTIVEBROWSERTHREADPOOLEXECUTION", "1"))
+            {
+                await ValidateSyncWorkaroundCompatSwitch(false);
+            }
+
+            AppContext.SetSwitch("Azure.Identity.DisableInteractiveBrowserThreadpoolExecution", true);
+
+            await ValidateSyncWorkaroundCompatSwitch(false);
+
+            AppContext.SetSwitch("Azure.Identity.DisableInteractiveBrowserThreadpoolExecution", false);
+
+            await ValidateSyncWorkaroundCompatSwitch(!IsAsync);
+        }
+
+        private async Task ValidateSyncWorkaroundCompatSwitch(bool expectedThreadPoolExecution)
+        {
             bool threadPoolExec = false;
             bool inlineExec = false;
 
-            // we expect the IBC to execute the AcquireTokenInteractive on the threadpool if we are in an sync context
-            // and the AppContext switch is not set
-            bool expectedThreadPoolExecute = !IsAsync && !appSwitchSet;
-
-            try
+            AzureEventSourceListener listener = new AzureEventSourceListener((args, text) =>
             {
-                AppContext.SetSwitch("Azure.Identity.DisableInteractiveBrowserThreadpoolExecution", appSwitchSet);
-
-                AzureEventSourceListener listener = new AzureEventSourceListener((args, text) =>
+                if (args.EventName == "InteractiveAuthenticationExecutingOnThreadPool")
                 {
-                    if (args.EventName == "InteractiveAuthenticationExecutingOnThreadPool")
-                    {
-                        threadPoolExec = true;
-                    }
-                    if (args.EventName == "InteractiveAuthenticationExecutingInline")
-                    {
-                        inlineExec = true;
-                    }
-                }, System.Diagnostics.Tracing.EventLevel.Informational);
-
-                var mockMsalClient = new MockMsalPublicClient
+                    threadPoolExec = true;
+                }
+                if (args.EventName == "InteractiveAuthenticationExecutingInline")
                 {
-                    InteractiveAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: expToken, expiresOn: expExpiresOn); }
-                };
+                    inlineExec = true;
+                }
+            }, System.Diagnostics.Tracing.EventLevel.Informational);
 
-                var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
-
-                AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
-
-                Assert.AreEqual(expectedThreadPoolExecute, threadPoolExec);
-                Assert.AreEqual(!expectedThreadPoolExecute, inlineExec);
-            }
-            finally
+            var mockMsalClient = new MockMsalPublicClient
             {
-                AppContext.SetSwitch("Azure.Identity.DisableInteractiveBrowserThreadpoolExecution", false);
-            }
+                InteractiveAuthFactory = (_) => { return AuthenticationResultFactory.Create(accessToken: Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5)); }
+            };
+
+            var credential = InstrumentClient(new InteractiveBrowserCredential(default, "", default, default, mockMsalClient));
+
+            AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(expectedThreadPoolExecution, threadPoolExec);
+            Assert.AreEqual(!expectedThreadPoolExecution, inlineExec);
         }
 
         [Test]
