@@ -177,7 +177,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task TestBatch_DataContractPoco()
         {
-            await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>(true);
+            //for (int i = 0; i < 100; i++)
+            {
+                //TestContext.Progress.Write($"{DateTimeOffset.Now}: #{i}");
+                //await FixtureSetUp();
+                await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToPocoArray>(true);
+                //await FixtureTearDown();
+            }
         }
 
         [Test]
@@ -589,22 +595,27 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMessages(string[] messages)
             {
+                TestContext.Progress.WriteLine($"{DateTimeOffset.Now}: {messages.Length}");
                 if (messages.Contains("{'Name': 'Test1', 'Value': 'Value'}"))
                 {
+                    TestContext.Progress.WriteLine($"{DateTimeOffset.Now}: first received");
                     firstReceived = true;
                 }
                 if (messages.Contains("{'Name': 'Test2', 'Value': 'Value'}"))
                 {
+                    TestContext.Progress.WriteLine($"{DateTimeOffset.Now}: second received");
                     secondReceived = true;
                 }
 
                 if (firstReceived && secondReceived)
                 {
+                    TestContext.Progress.WriteLine($"{DateTimeOffset.Now}: both received");
                     // reset for the next test
                     firstReceived = false;
                     secondReceived = false;
                     _topicSubscriptionCalled1.Set();
                 }
+                TestContext.Progress.WriteLine($"{DateTimeOffset.Now}: exit");
             }
         }
 
