@@ -68,6 +68,7 @@
     <PackageReference Update="System.Threading.Channels" Version="4.6.0" />
     <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="4.5.0" />
     <PackageReference Update="System.Text.Json" Version="4.6.0" />
+    <PackageReference Update="System.Text.Encodings.Web" Version="4.7.2" />
     <PackageReference Update="System.ValueTuple" Version="4.5.0" />
     <PackageReference Update="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.5.0" />
