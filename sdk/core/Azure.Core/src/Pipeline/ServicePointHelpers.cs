@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Azure.Core.Pipeline
@@ -51,12 +52,12 @@ namespace Azure.Core.Pipeline
 #endif
         public static void SetLimits(HttpMessageHandler messageHandler)
         {
-#if NET5_0_OR_GREATER
-            if (OperatingSystem.IsBrowser())
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")) ||
+                RuntimeInformation.IsOSPlatform(OSPlatform.Create("WEBASSEMBLY")))
             {
                 return;
             }
-#endif
+
             switch (messageHandler)
             {
                 case HttpClientHandler httpClientHandler:

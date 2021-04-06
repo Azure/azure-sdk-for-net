@@ -9,6 +9,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -144,12 +145,11 @@ namespace Azure.Core.Pipeline
 
         private static HttpMessageHandler CreateDefaultHandler()
         {
-#if NET5_0_OR_GREATER
-            if (OperatingSystem.IsBrowser())
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")) ||
+                RuntimeInformation.IsOSPlatform(OSPlatform.Create("WEBASSEMBLY")))
             {
                 return new HttpClientHandler();
             }
-#endif
 
 #if NETCOREAPP
             return new SocketsHttpHandler();
@@ -160,12 +160,12 @@ namespace Azure.Core.Pipeline
 
         private static void SetProxySettings(HttpMessageHandler messageHandler)
         {
-#if NET5_0_OR_GREATER
-            if (OperatingSystem.IsBrowser())
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")) ||
+                RuntimeInformation.IsOSPlatform(OSPlatform.Create("WEBASSEMBLY")))
             {
                 return;
             }
-#endif
+
             if (HttpEnvironmentProxy.TryCreate(out IWebProxy webProxy))
             {
                 switch (messageHandler)
