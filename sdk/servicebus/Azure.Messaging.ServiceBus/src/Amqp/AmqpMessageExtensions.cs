@@ -8,7 +8,6 @@ using System.Runtime.InteropServices;
 using Azure.Core.Amqp;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.Amqp;
-using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
 using IList = System.Collections.IList;
 
