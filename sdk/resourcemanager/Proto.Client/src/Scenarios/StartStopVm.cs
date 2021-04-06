@@ -13,9 +13,9 @@ namespace Proto.Client
             createVm.Execute();
 
             var client = new ArmClient(new DefaultAzureCredential());
-            var subscription = client.GetSubscriptionOperations(Context.SubscriptionId);
-            var resourceGroup = subscription.GetResourceGroupOperations(Context.RgName);
-            var vm = resourceGroup.GetVirtualMachineOperations(Context.VmName);
+            var subscription = client.GetSubscriptions().TryGet(Context.SubscriptionId);
+            var resourceGroup = subscription.GetResourceGroups().Get(Context.RgName).Value;
+            var vm = resourceGroup.GetVirtualMachines().Get(Context.VmName).Value;
             Console.WriteLine($"Found VM {Context.VmName}");
             Console.WriteLine("--------Stopping VM--------");
             vm.PowerOff();

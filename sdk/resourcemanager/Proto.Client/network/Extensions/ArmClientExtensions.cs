@@ -24,9 +24,7 @@ namespace Proto.Network
             if (resourceId.ResourceType != NetworkInterfaceOperations.ResourceType)
                 throw new ArgumentException($"{nameof(resourceId.ResourceType)} provided is not for a NetworkInterface.", nameof(resourceId.ResourceType));
 
-            var subOps = client.GetSubscriptionOperations(resourceId.SubscriptionId);
-            var rgOps = subOps.GetResourceGroupOperations(resourceId.ResourceGroupName);
-            return rgOps.GetNetworkInterfaceOperations(resourceId.Name);
+            return new NetworkInterfaceOperations(client.GetResourceGroupOperations(resourceId), resourceId.Name);
         }
 
         /// <summary>
@@ -44,9 +42,7 @@ namespace Proto.Network
             if (resourceId.ResourceType != NetworkSecurityGroupOperations.ResourceType)
                 throw new ArgumentException($"{nameof(resourceId.ResourceType)} provided is not for a NetworkSecurityGroup.", nameof(resourceId.ResourceType));
 
-            var subOps = client.GetSubscriptionOperations(resourceId.SubscriptionId);
-            var rgOps = subOps.GetResourceGroupOperations(resourceId.ResourceGroupName);
-            return rgOps.GetNetworkSecurityGroupOperations(resourceId.Name);
+            return new NetworkSecurityGroupOperations(client.GetResourceGroupOperations(resourceId), resourceId.Name);
         }
 
         /// <summary>
@@ -64,9 +60,7 @@ namespace Proto.Network
             if (resourceId.ResourceType != PublicIpAddressOperations.ResourceType)
                 throw new ArgumentException($"{nameof(resourceId.ResourceType)} provided is not for a PublicIpAddress.", nameof(resourceId.ResourceType));
 
-            var subOps = client.GetSubscriptionOperations(resourceId.SubscriptionId);
-            var rgOps = subOps.GetResourceGroupOperations(resourceId.ResourceGroupName);
-            return rgOps.GetPublicIpAddressOperations(resourceId.Name);
+            return new PublicIpAddressOperations(client.GetResourceGroupOperations(resourceId), resourceId.Name);
         }
 
         /// <summary>
@@ -83,10 +77,8 @@ namespace Proto.Network
                 throw new ArgumentNullException(nameof(resourceId));
             if (resourceId.ResourceType != SubnetOperations.ResourceType)
                 throw new ArgumentException($"{nameof(resourceId.ResourceType)} provided is not for a Subnet.", nameof(resourceId.ResourceType));
-            var subOps = client.GetSubscriptionOperations(resourceId.SubscriptionId);
-            var rgOps = subOps.GetResourceGroupOperations(resourceId.ResourceGroupName);
-            var vnetOps = rgOps.GetVirtualNetworkOperations(resourceId.Parent.Name);
-            return vnetOps.GetSubnetOperations(resourceId.Name);
+
+            return new SubnetOperations(client.GetVirtualNetworkOperations(resourceId.Parent as ResourceGroupResourceIdentifier), resourceId.Name);
         }
 
         /// <summary>
@@ -104,9 +96,7 @@ namespace Proto.Network
             if (resourceId.ResourceType != VirtualNetworkOperations.ResourceType)
                 throw new ArgumentException($"{nameof(resourceId.ResourceType)} provided is not for a VirtualNetwork.", nameof(resourceId.ResourceType));
 
-            var subOps = client.GetSubscriptionOperations(resourceId.SubscriptionId);
-            var rgOps = subOps.GetResourceGroupOperations(resourceId.ResourceGroupName);
-            return rgOps.GetVirtualNetworkOperations(resourceId.Parent.Name);
+            return new VirtualNetworkOperations(client.GetResourceGroupOperations(resourceId), resourceId.Name);
         }
     }
 }

@@ -128,6 +128,16 @@ namespace Azure.ResourceManager.Core
         }
 
         /// <summary>
+        /// Gets a resource group operations object.
+        /// </summary>
+        /// <param name="id"> The id of the resourcegroup </param>
+        /// <returns> Resource operations of the resource. </returns>
+        public ResourceGroupOperations GetResourceGroupOperations(ResourceGroupResourceIdentifier id)
+        {
+            return new ResourceGroupOperations(new SubscriptionOperations(new ClientContext(ClientOptions, Credential, BaseUri), id.SubscriptionId), id.ResourceGroupName);
+        }
+
+        /// <summary>
         /// Gets resource operations base.
         /// </summary>
         /// <typeparam name="T"> The type of the underlying model this class wraps. </typeparam>
