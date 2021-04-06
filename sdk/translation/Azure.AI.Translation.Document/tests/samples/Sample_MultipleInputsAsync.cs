@@ -53,27 +53,7 @@ namespace Azure.AI.Translation.Document.Samples
 
             DocumentTranslationOperation operation = await client.StartTranslationAsync(inputs);
 
-            TimeSpan pollingInterval = new(1000);
-
-            while (!operation.HasCompleted)
-            {
-                if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
-                {
-                    pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
-                }
-
-                await Task.Delay(pollingInterval);
-                await operation.UpdateStatusAsync();
-
-                Console.WriteLine($"  Status: {operation.Status}");
-                Console.WriteLine($"  Created on: {operation.CreatedOn}");
-                Console.WriteLine($"  Last modified: {operation.LastModified}");
-                Console.WriteLine($"  Total documents: {operation.DocumentsTotal}");
-                Console.WriteLine($"    Succeeded: {operation.DocumentsSucceeded}");
-                Console.WriteLine($"    Failed: {operation.DocumentsFailed}");
-                Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
-                Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
-            }
+            await operation.WaitForCompletionAsync();
 
             await foreach (DocumentStatusResult document in operation.GetValuesAsync())
             {
