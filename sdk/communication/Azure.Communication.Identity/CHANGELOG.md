@@ -1,8 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-## 1.1.0-beta.2 (2021-02-22-preview1)
+## 1.1.0-beta.1 (2021-02-22-preview1)
 ### Added
 - Added CommunicationIdentityClient.GetTurnCredentials in preview.
 - Added CommunicationIdentityClient.GetTurnCredentialsAsync in preview.
