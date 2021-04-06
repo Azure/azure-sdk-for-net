@@ -17,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             string imageName = default;
             DateTimeOffset createdTime = default;
-            Optional<DateTimeOffset> lastUpdateTime = default;
+            DateTimeOffset lastUpdateTime = default;
             int manifestCount = default;
             int tagCount = default;
             ContentProperties changeableAttributes = default;
@@ -35,11 +35,6 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("lastUpdateTime"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     lastUpdateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -59,7 +54,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new RepositoryProperties(imageName, createdTime, Optional.ToNullable(lastUpdateTime), manifestCount, tagCount, changeableAttributes);
+            return new RepositoryProperties(imageName, createdTime, lastUpdateTime, manifestCount, tagCount, changeableAttributes);
         }
     }
 }

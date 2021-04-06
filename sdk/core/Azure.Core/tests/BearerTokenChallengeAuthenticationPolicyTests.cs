@@ -560,7 +560,7 @@ namespace Azure.Core.Tests
             var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
             cts.Cancel();
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await firstRequestTask);
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
             responseMre.Set();
 
             var response = await secondRequestTask;
@@ -582,7 +582,7 @@ namespace Azure.Core.Tests
                 return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
             }, IsAsync);
 
-            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
             MockTransport transport = CreateMockTransport((req) =>
             {
                 return new MockResponse(200);
@@ -595,10 +595,51 @@ namespace Azure.Core.Tests
             cts1.Cancel();
             cts2.Cancel();
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await firstRequestTask);
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
             responseMre.Set();
 
-            Assert.ThrowsAsync<OperationCanceledException>(async () => await secondRequestTask);
+            Assert.CatchAsync<OperationCanceledException>(async () => await secondRequestTask);
+        }
+
+        [Test]
+        [Repeat(10)]
+        public void BearerTokenChallengeAuthenticationPolicy_UnobservedTaskException()
+        {
+            var unobservedTaskExceptionWasRaised = false;
+            var expectedFailedException = new RequestFailedException("Communication Error");
+            try
+            {
+                TaskScheduler.UnobservedTaskException += UnobservedTaskExceptionHandler;
+                var credential =
+                    new TokenCredentialStub((_, ct) => throw expectedFailedException,
+                        IsAsync);
+
+                var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
+                MockTransport transport = CreateMockTransport((_) => new MockResponse(500));
+
+                Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await SendRequestAsync(transport, request => { request.Uri.Scheme = "https"; }, policy));
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+            }
+            finally
+            {
+                TaskScheduler.UnobservedTaskException -= UnobservedTaskExceptionHandler;
+            }
+
+            Assert.False(unobservedTaskExceptionWasRaised, "UnobservedTaskException should not be raised");
+
+            void UnobservedTaskExceptionHandler(object sender, UnobservedTaskExceptionEventArgs args)
+            {
+                if (args.Exception.InnerException == null ||
+                    args.Exception.InnerException.ToString() != expectedFailedException.ToString())
+                    return;
+
+                args.SetObserved();
+                unobservedTaskExceptionWasRaised = true;
+            }
         }
 
         private class TokenCredentialStub : TokenCredential

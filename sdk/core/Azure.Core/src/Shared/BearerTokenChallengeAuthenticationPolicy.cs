@@ -197,12 +197,12 @@ namespace Azure.Core.Pipeline
                         catch (OperationCanceledException)
                         {
                             headerValueTcs.SetCanceled();
-                            throw;
                         }
                         catch (Exception exception)
                         {
                             headerValueTcs.SetException(exception);
-                            throw;
+                            // The exception will be thrown on the next lines when we touch the result of
+                            // headerValueTcs.Task, this approach will prevent later runtime UnobservedTaskException
                         }
                     }
 

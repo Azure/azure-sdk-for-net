@@ -61,7 +61,7 @@ To run multiple actions in multiple documents, call `StartAnalyzeBatchActionsAsy
     Console.WriteLine($"Last modified: {operation.LastModified}");
     if (!string.IsNullOrEmpty(operation.DisplayName))
         Console.WriteLine($"Display name: {operation.DisplayName}");
-    Console.WriteLine($"Total actions: {operation.TotalActions}");
+    Console.WriteLine($"Total actions: {operation.ActionsTotal}");
     Console.WriteLine($"  Succeeded actions: {operation.ActionsSucceeded}");
     Console.WriteLine($"  Failed actions: {operation.ActionsFailed}");
     Console.WriteLine($"  In progress actions: {operation.ActionsInProgress}");

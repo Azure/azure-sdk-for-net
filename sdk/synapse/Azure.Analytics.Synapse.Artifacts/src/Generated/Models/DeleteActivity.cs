@@ -46,13 +46,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="enableLogging"> Whether to record detailed logs of delete-activity execution. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="logStorageSettings"> Log storage settings customer need to provide when enableLogging is true. </param>
         /// <param name="dataset"> Delete activity dataset reference. </param>
-        internal DeleteActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object recursive, int? maxConcurrentConnections, object enableLogging, LogStorageSettings logStorageSettings, DatasetReference dataset) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="storeSettings"> Delete activity store settings. </param>
+        internal DeleteActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object recursive, int? maxConcurrentConnections, object enableLogging, LogStorageSettings logStorageSettings, DatasetReference dataset, StoreReadSettings storeSettings) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Recursive = recursive;
             MaxConcurrentConnections = maxConcurrentConnections;
             EnableLogging = enableLogging;
             LogStorageSettings = logStorageSettings;
             Dataset = dataset;
+            StoreSettings = storeSettings;
             Type = type ?? "Delete";
         }
 
@@ -66,5 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public LogStorageSettings LogStorageSettings { get; set; }
         /// <summary> Delete activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
+        /// <summary> Delete activity store settings. </summary>
+        public StoreReadSettings StoreSettings { get; set; }
     }
 }

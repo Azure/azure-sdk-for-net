@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(MappingDataFlowConverter))]
     public partial class MappingDataFlow : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -190,6 +193,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new MappingDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value);
+        }
+
+        internal partial class MappingDataFlowConverter : JsonConverter<MappingDataFlow>
+        {
+            public override void Write(Utf8JsonWriter writer, MappingDataFlow model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override MappingDataFlow Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMappingDataFlow(document.RootElement);
+            }
         }
     }
 }

@@ -1,0 +1,595 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyze?includeTextDetails=false\u0026pages=1",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "108935",
+        "Content-Type": "application/pdf",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-2d06d4e01d286f42a6fcd3082ea40031-793ee566f1f26b47-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "2c464879aefbd09df4a5a92c329bf51c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "0f702474-772c-4030-896e-b0f0f9716267",
+        "Content-Length": "0",
+        "Date": "Mon, 29 Mar 2021 17:16:46 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/0f702474-772c-4030-896e-b0f0f9716267",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "498"
+      },
+      "ResponseBody": []
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/0f702474-772c-4030-896e-b0f0f9716267",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "855e82c827bb37e5cc6ff1acd1fc7c41",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "fc0f6265-b7ca-4c30-be80-8de54d3211d7",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:16:46 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-03-29T17:16:46Z",
+        "lastUpdatedDateTime": "2021-03-29T17:16:46Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/0f702474-772c-4030-896e-b0f0f9716267",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "9e79003554b44cd713205426bf5abc76",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "40fac371-b65a-4043-bb5a-9aa458ac7d84",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:16:48 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:16:46Z",
+        "lastUpdatedDateTime": "2021-03-29T17:16:47Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/0f702474-772c-4030-896e-b0f0f9716267",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "0f252187051c5122630e608bbdf0fef8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "f0172bb9-0786-4f15-bfbc-7842ccb72202",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:16:49 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "16"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:16:46Z",
+        "lastUpdatedDateTime": "2021-03-29T17:16:47Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/0f702474-772c-4030-896e-b0f0f9716267",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "31f7672857227467aa12719ad2be7871",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "cd6a2612-b92d-4676-8762-a93ecf566219",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:16:50 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "25"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-29T17:16:46Z",
+        "lastUpdatedDateTime": "2021-03-29T17:16:47Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/0f702474-772c-4030-896e-b0f0f9716267",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210329.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "af257ab26dd62f25de273ba6f44b8f23",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "0118e930-17f0-4157-9163-c40f950651b0",
+        "Content-Length": "4097",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Mon, 29 Mar 2021 17:16:51 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "17"
+      },
+      "ResponseBody": {
+        "status": "succeeded",
+        "createdDateTime": "2021-03-29T17:16:46Z",
+        "lastUpdatedDateTime": "2021-03-29T17:16:51Z",
+        "analyzeResult": {
+          "version": "2.1.0",
+          "readResults": [
+            {
+              "page": 1,
+              "angle": 0,
+              "width": 8.5,
+              "height": 11,
+              "unit": "inch"
+            }
+          ],
+          "documentResults": [
+            {
+              "docType": "prebuilt:receipt",
+              "pageRange": [
+                1,
+                1
+              ],
+              "fields": {
+                "Items": {
+                  "type": "array",
+                  "valueArray": [
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 1,
+                          "text": "1",
+                          "boundingBox": [
+                            3.2589,
+                            3.2116,
+                            3.3202,
+                            3.2116,
+                            3.3202,
+                            3.3176,
+                            3.2589,
+                            3.3176
+                          ],
+                          "page": 1,
+                          "confidence": 0.971
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 10.99,
+                          "text": "10.99",
+                          "boundingBox": [
+                            5.4232,
+                            3.2108,
+                            5.7784,
+                            3.2108,
+                            5.7784,
+                            3.319,
+                            5.4232,
+                            3.319
+                          ],
+                          "page": 1,
+                          "confidence": 0.952
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 2,
+                          "text": "2",
+                          "boundingBox": [
+                            3.2541,
+                            3.4241,
+                            3.3199,
+                            3.4241,
+                            3.3199,
+                            3.531,
+                            3.2541,
+                            3.531
+                          ],
+                          "page": 1,
+                          "confidence": 0.971
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 14.67,
+                          "text": "14.67",
+                          "boundingBox": [
+                            5.4232,
+                            3.4241,
+                            5.7789,
+                            3.4241,
+                            5.7789,
+                            3.5323,
+                            5.4232,
+                            3.5323
+                          ],
+                          "page": 1,
+                          "confidence": 0.954
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 4,
+                          "text": "4",
+                          "boundingBox": [
+                            3.2486,
+                            3.6351,
+                            3.3244,
+                            3.6351,
+                            3.3244,
+                            3.7413,
+                            3.2486,
+                            3.7413
+                          ],
+                          "page": 1,
+                          "confidence": 0.971
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 15.66,
+                          "text": "15.66",
+                          "boundingBox": [
+                            5.4232,
+                            3.6341,
+                            5.78,
+                            3.6341,
+                            5.78,
+                            3.7423,
+                            5.4232,
+                            3.7423
+                          ],
+                          "page": 1,
+                          "confidence": 0.958
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 1,
+                          "text": "1",
+                          "boundingBox": [
+                            3.2589,
+                            3.845,
+                            3.3202,
+                            3.845,
+                            3.3202,
+                            3.951,
+                            3.2589,
+                            3.951
+                          ],
+                          "page": 1,
+                          "confidence": 0.971
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 12,
+                          "text": "12.00",
+                          "boundingBox": [
+                            5.4232,
+                            3.8441,
+                            5.7809,
+                            3.8441,
+                            5.7809,
+                            3.9523,
+                            5.4232,
+                            3.9523
+                          ],
+                          "page": 1,
+                          "confidence": 0.957
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 4,
+                          "text": "4",
+                          "boundingBox": [
+                            3.2486,
+                            4.0556,
+                            3.3244,
+                            4.0556,
+                            3.3244,
+                            4.1617,
+                            3.2486,
+                            4.1617
+                          ],
+                          "page": 1,
+                          "confidence": 0.971
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 10,
+                          "text": "10.00",
+                          "boundingBox": [
+                            5.4232,
+                            4.0546,
+                            5.781,
+                            4.0546,
+                            5.781,
+                            4.1627,
+                            5.4232,
+                            4.1627
+                          ],
+                          "page": 1,
+                          "confidence": 0.961
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 6,
+                          "text": "6",
+                          "boundingBox": [
+                            3.2534,
+                            4.2646,
+                            3.3226,
+                            4.2646,
+                            3.3226,
+                            4.3727,
+                            3.2534,
+                            4.3727
+                          ],
+                          "page": 1,
+                          "confidence": 0.971
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 12,
+                          "text": "12.00",
+                          "boundingBox": [
+                            5.4232,
+                            4.2646,
+                            5.7809,
+                            4.2646,
+                            5.7809,
+                            4.3727,
+                            5.4232,
+                            4.3727
+                          ],
+                          "page": 1,
+                          "confidence": 0.549
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Price": {
+                          "type": "number",
+                          "valueNumber": 22,
+                          "text": "22.00",
+                          "boundingBox": [
+                            5.4184,
+                            4.4746,
+                            5.781,
+                            4.4746,
+                            5.781,
+                            4.5827,
+                            5.4184,
+                            4.5827
+                          ],
+                          "page": 1,
+                          "confidence": 0.394
+                        },
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 8,
+                          "text": "8",
+                          "boundingBox": [
+                            3.2514,
+                            4.4746,
+                            3.3224,
+                            4.4746,
+                            3.3224,
+                            4.5827,
+                            3.2514,
+                            4.5827
+                          ],
+                          "page": 1,
+                          "confidence": 0.97
+                        }
+                      }
+                    }
+                  ]
+                },
+                "MerchantAddress": {
+                  "type": "string",
+                  "valueString": "567 Main St. Redmond, WA",
+                  "text": "567 Main St. Redmond, WA",
+                  "boundingBox": [
+                    0.8852,
+                    1.846,
+                    1.8537,
+                    1.846,
+                    1.8537,
+                    2.1975,
+                    0.8852,
+                    2.1975
+                  ],
+                  "page": 1,
+                  "confidence": 0.97
+                },
+                "MerchantName": {
+                  "type": "string",
+                  "valueString": "Bilbo Baggins",
+                  "text": "Bilbo Baggins",
+                  "boundingBox": [
+                    6.0164,
+                    1.4503,
+                    6.8967,
+                    1.4503,
+                    6.8967,
+                    1.5931,
+                    6.0164,
+                    1.5931
+                  ],
+                  "page": 1,
+                  "confidence": 0.661
+                },
+                "MerchantPhoneNumber": {
+                  "type": "phoneNumber",
+                  "valuePhoneNumber": "\u002B15555555555",
+                  "text": "555-555-5555",
+                  "boundingBox": [
+                    6.0105,
+                    2.1187,
+                    6.9371,
+                    2.1187,
+                    6.9371,
+                    2.2254,
+                    6.0105,
+                    2.2254
+                  ],
+                  "page": 1,
+                  "confidence": 0.987
+                },
+                "ReceiptType": {
+                  "type": "string",
+                  "valueString": "Itemized",
+                  "confidence": 0.994
+                },
+                "Subtotal": {
+                  "type": "number",
+                  "valueNumber": 300,
+                  "text": "300.00",
+                  "boundingBox": [
+                    6.1794,
+                    4.9042,
+                    6.632,
+                    4.9042,
+                    6.632,
+                    5.0131,
+                    6.1794,
+                    5.0131
+                  ],
+                  "page": 1,
+                  "confidence": 0.983
+                },
+                "Tax": {
+                  "type": "number",
+                  "valueNumber": 30,
+                  "text": "30.00",
+                  "boundingBox": [
+                    5.836,
+                    5.1245,
+                    6.2022,
+                    5.1245,
+                    6.2022,
+                    5.2333,
+                    5.836,
+                    5.2333
+                  ],
+                  "page": 1,
+                  "confidence": 0.987
+                },
+                "Tip": {
+                  "type": "number",
+                  "valueNumber": 100,
+                  "text": "100.00",
+                  "boundingBox": [
+                    5.811,
+                    5.3445,
+                    6.2587,
+                    5.3445,
+                    6.2587,
+                    5.4533,
+                    5.811,
+                    5.4533
+                  ],
+                  "page": 1,
+                  "confidence": 0.942
+                },
+                "Total": {
+                  "type": "number",
+                  "valueNumber": 430,
+                  "text": "430.00",
+                  "boundingBox": [
+                    5.942,
+                    5.5645,
+                    6.3987,
+                    5.5645,
+                    6.3987,
+                    5.6733,
+                    5.942,
+                    5.6733
+                  ],
+                  "page": 1,
+                  "confidence": 0.981
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "FORM_RECOGNIZER_API_KEY": "Sanitized",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "RandomSeed": "1411766238"
+  }
+}

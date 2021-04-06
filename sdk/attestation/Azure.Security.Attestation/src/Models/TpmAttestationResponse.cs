@@ -4,11 +4,12 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
     /// <summary>
     /// Represents a response for a TPM attestation call. See https://docs.microsoft.com/en-us/azure/attestation/virtualization-based-security-protocol  for more information.
     /// </summary>
+    [CodeGenModel("TpmAttestationResponse")]
     public partial class TpmAttestationResponse
     {
         /// <summary>

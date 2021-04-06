@@ -107,6 +107,21 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("searchMode");
                 writer.WriteStringValue(SearchMode.Value.ToSerialString());
             }
+            if (Optional.IsDefined(QueryLanguage))
+            {
+                writer.WritePropertyName("queryLanguage");
+                writer.WriteStringValue(QueryLanguage.Value.ToString());
+            }
+            if (Optional.IsDefined(Speller))
+            {
+                writer.WritePropertyName("speller");
+                writer.WriteStringValue(Speller.Value.ToString());
+            }
+            if (Optional.IsDefined(Answers))
+            {
+                writer.WritePropertyName("answers");
+                writer.WriteStringValue(Answers.Value.ToString());
+            }
             if (Optional.IsDefined(SelectRaw))
             {
                 writer.WritePropertyName("select");
@@ -143,6 +158,9 @@ namespace Azure.Search.Documents
             Optional<string> search = default;
             Optional<string> searchFields = default;
             Optional<SearchMode> searchMode = default;
+            Optional<QueryLanguage> queryLanguage = default;
+            Optional<Speller> speller = default;
+            Optional<Answers> answers = default;
             Optional<string> select = default;
             Optional<int> skip = default;
             Optional<int> top = default;
@@ -273,6 +291,36 @@ namespace Azure.Search.Documents
                     searchMode = property.Value.GetString().ToSearchMode();
                     continue;
                 }
+                if (property.NameEquals("queryLanguage"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    queryLanguage = new QueryLanguage(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("speller"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    speller = new Speller(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("answers"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    answers = new Answers(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("select"))
                 {
                     select = property.Value.GetString();
@@ -299,7 +347,7 @@ namespace Azure.Search.Documents
                     continue;
                 }
             }
-            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, search.Value, searchFields.Value, Optional.ToNullable(searchMode), select.Value, Optional.ToNullable(skip), Optional.ToNullable(top));
+            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), Optional.ToNullable(answers), select.Value, Optional.ToNullable(skip), Optional.ToNullable(top));
         }
     }
 }
