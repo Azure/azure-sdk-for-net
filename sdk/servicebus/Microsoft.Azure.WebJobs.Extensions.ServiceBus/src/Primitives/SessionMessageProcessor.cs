@@ -11,15 +11,22 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 {
     public class SessionMessageProcessor
     {
-        public SessionMessageProcessor(ServiceBusSessionProcessor processor)
+        public SessionMessageProcessor(ServiceBusClient client, ServiceBusSessionProcessor processor)
         {
             Processor = processor ?? throw new ArgumentNullException(nameof(processor));
+            Client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Processor"/> that will be used by the <see cref="SessionMessageProcessor"/>.
+        /// Gets or sets the <see cref="ServiceBusSessionProcessor"/> that will be used by the <see cref="SessionMessageProcessor"/>.
         /// </summary>
-        internal ServiceBusSessionProcessor Processor { get; set; }
+        protected internal ServiceBusSessionProcessor Processor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="ServiceBusClient"/> that will be used by the <see cref="SessionMessageProcessor"/> to
+        /// accept new sessions for multiple dispatch functions..
+        /// </summary>
+        protected internal ServiceBusClient Client { get; set; }
 
         /// <summary>
         /// This method is called when there is a new message to process, before the job function is invoked.
