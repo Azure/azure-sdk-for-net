@@ -113,7 +113,7 @@ namespace Azure.Security.Attestation
             {
                 var result = _policyClient.Get(attestationType, cancellationToken);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
                 }
@@ -152,7 +152,7 @@ namespace Azure.Security.Attestation
             {
                 var result = await _policyClient.GetAsync(attestationType, cancellationToken).ConfigureAwait(false);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
@@ -231,7 +231,7 @@ namespace Azure.Security.Attestation
 
                 var result = _policyClient.Set(attestationType, tokenToSet.ToString(), cancellationToken);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
                 }
@@ -308,7 +308,7 @@ namespace Azure.Security.Attestation
 
                 var result = await _policyClient.SetAsync(attestationType, tokenToSet.ToString(), cancellationToken).ConfigureAwait(false);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
@@ -349,7 +349,7 @@ namespace Azure.Security.Attestation
 
                 var result = _policyClient.Reset(attestationType, tokenToSet.ToString(), cancellationToken);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
                 }
@@ -389,7 +389,7 @@ namespace Azure.Security.Attestation
 
                 var result = await _policyClient.ResetAsync(attestationType, tokenToSet.ToString(), cancellationToken).ConfigureAwait(false);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
@@ -417,7 +417,7 @@ namespace Azure.Security.Attestation
             {
                 var result = _policyManagementClient.Get(cancellationToken);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
                 }
@@ -445,7 +445,7 @@ namespace Azure.Security.Attestation
             {
                 var result = await _policyManagementClient.GetAsync(cancellationToken).ConfigureAwait(false);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
@@ -484,7 +484,7 @@ namespace Azure.Security.Attestation
                         existingSigningKey);
                 var result = _policyManagementClient.Add(tokenToAdd.ToString(), cancellationToken);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
                 }
@@ -521,7 +521,7 @@ namespace Azure.Security.Attestation
                         existingSigningKey);
                 var result = await _policyManagementClient.AddAsync(tokenToAdd.ToString(), cancellationToken).ConfigureAwait(false);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
@@ -556,7 +556,7 @@ namespace Azure.Security.Attestation
 
                 var result = _policyManagementClient.Remove(tokenToRemove.ToString(), cancellationToken);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
                 }
@@ -591,7 +591,7 @@ namespace Azure.Security.Attestation
 
                 var result = await _policyManagementClient.RemoveAsync(tokenToRemove.ToString(), cancellationToken).ConfigureAwait(false);
                 var token = new AttestationToken(result.Value.Token);
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }

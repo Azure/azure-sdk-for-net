@@ -13,16 +13,12 @@ namespace Azure.Security.Attestation
     {
         internal string Version { get; }
 
-        internal bool ValidateAttestationTokens { get; }
-
-        private AttestationTokenOptions _tokenOptions = new AttestationTokenOptions();
-
-        internal AttestationTokenOptions TokenOptions { get => _tokenOptions; private set => _tokenOptions = value; }
+        internal TokenValidationOptions TokenOptions { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="AttestationClientOptions"/>.</summary>
         public AttestationClientOptions(
             ServiceVersion version = ServiceVersion.V2020_10_01,
-            AttestationTokenOptions tokenOptions = default
+            TokenValidationOptions tokenOptions = default
             )
         {
             if (version == default)
@@ -36,8 +32,9 @@ namespace Azure.Security.Attestation
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
 
-            TokenOptions = tokenOptions;
-            ValidateAttestationTokens = true;
+            // If the caller specified that they have token validation options, use them, otherwise
+            // use the defaults.
+            TokenOptions = tokenOptions?? new TokenValidationOptions();
         }
 
         /// <summary>

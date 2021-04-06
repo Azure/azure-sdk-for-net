@@ -133,9 +133,11 @@ namespace Azure.Security.Attestation.Tests
 
         private AttestationClient GetSharedAttestationClient()
         {
-            string endpoint = TestEnvironment.SharedUkSouth;
+            String regionShortName = TestEnvironment.LocationShortName;
 
-            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new AttestationTokenOptions { ValidateExpirationTime = IsTalkingToLiveServer, }));
+            string endpoint = "https://shared" + regionShortName + "." + regionShortName + ".test.attest.azure.net";
+
+            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
             return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
@@ -143,7 +145,7 @@ namespace Azure.Security.Attestation.Tests
         {
             string endpoint = TestEnvironment.AadAttestationUrl;
 
-            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new AttestationTokenOptions { ValidateExpirationTime = IsTalkingToLiveServer, }));
+            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
             return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
@@ -151,7 +153,7 @@ namespace Azure.Security.Attestation.Tests
         {
             string endpoint = TestEnvironment.AadAttestationUrl;
 
-            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new AttestationTokenOptions { ValidateExpirationTime = IsTalkingToLiveServer, }));
+            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
             return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
@@ -159,7 +161,7 @@ namespace Azure.Security.Attestation.Tests
         {
             string endpoint = TestEnvironment.IsolatedAttestationUrl;
 
-            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new AttestationTokenOptions { ValidateExpirationTime = IsTalkingToLiveServer, }));
+            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
             return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
     }

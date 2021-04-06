@@ -1,17 +1,17 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://larryoattestationiso.wus.attest.azure.net/policies/OpenEnclave?api-version=2020-10-01",
+      "RequestUri": "https://cslarryoattestationiso.uks.attest.azure.net/policies/OpenEnclave?api-version=2020-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1135",
         "Content-Type": "text/plain",
-        "traceparent": "00-60af539ce8f2bf42918031bc0dca76bc-c096a6b32687324e-00",
+        "traceparent": "00-96ba4ba4db615a4992c55ebbc552f1dd-eb25472bbd74524d-00",
         "User-Agent": [
-          "azsdk-net-Security.Attestation/1.0.0-alpha.20210405.1",
-          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19043 )"
+          "azsdk-net-Security.Attestation/1.0.0-alpha.20210406.1",
+          "(.NET 5.0.4; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "f91ba243e23912b5ee839315a98bf30d",
         "x-ms-return-client-request-id": "true"
@@ -21,10 +21,10 @@
       "ResponseHeaders": {
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 05 Apr 2021 20:22:30 GMT",
+        "Date": "Tue, 06 Apr 2021 19:23:57 GMT",
         "Server": "Kestrel",
         "x-ms-maa-service-version": "1.10.01543.0002",
-        "x-ms-request-id": "00-60af539ce8f2bf42918031bc0dca76bc-c096a6b32687324e-00"
+        "x-ms-request-id": "00-96ba4ba4db615a4992c55ebbc552f1dd-eb25472bbd74524d-00"
       },
       "ResponseBody": {
         "error": {
@@ -35,7 +35,7 @@
     }
   ],
   "Variables": {
-    "ISOLATED_ATTESTATION_URL": "https://larryoattestationiso.wus.attest.azure.net",
+    "ATTESTATION_ISOLATED_URL": "https://cslarryoattestationiso.uks.attest.azure.net",
     "RandomSeed": "1803895978"
   }
 }

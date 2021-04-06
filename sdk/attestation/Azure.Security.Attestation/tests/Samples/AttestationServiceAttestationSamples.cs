@@ -108,8 +108,6 @@ namespace Azure.Security.Attestation.Tests.Samples
         [Test]
         public async Task AttestingAnSgxEnclave()
         {
-            var endpoint = TestEnvironment.SharedEusTest;
-
             byte[] binaryQuote = Base64Url.Decode(_sgxQuote);
             byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
 
@@ -136,7 +134,7 @@ namespace Azure.Security.Attestation.Tests.Samples
         {
             var client = new AttestationAdministrationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential());
             var attestClient = new AttestationClient(new Uri(TestEnvironment.AadAttestationUrl), new DefaultAzureCredential(),
-                new AttestationClientOptions(tokenOptions:new AttestationTokenOptions { ValidationCallback = (attestationToken, signer) => true }))
+                new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validationCallback: (attestationToken, signer) => true)));
             ;
             IReadOnlyList<AttestationSigner> signingCertificates = attestClient.GetSigningCertificates().Value;
             var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
@@ -185,7 +183,9 @@ namespace Azure.Security.Attestation.Tests.Samples
         }
         private AttestationClient GetAttestationClient()
         {
-            string endpoint = TestEnvironment.SharedUkSouth;
+            String regionShortName = TestEnvironment.LocationShortName;
+
+            string endpoint = "https://shared" + regionShortName + "." + regionShortName + ".test.attest.azure.net";
 
             #region Snippet:CreateAttestationClient
             var options = new AttestationClientOptions();

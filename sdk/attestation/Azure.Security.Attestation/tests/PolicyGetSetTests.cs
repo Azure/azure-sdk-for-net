@@ -334,10 +334,12 @@ namespace Azure.Security.Attestation.Tests
 
         private AttestationAdministrationClient GetSharedAdministrationClient()
         {
-            string endpoint = TestEnvironment.SharedUkSouth;
+            String regionShortName = TestEnvironment.LocationShortName;
+
+            string endpoint = "https://shared" + regionShortName + "." + regionShortName + ".test.attest.azure.net";
 
             // We want to disable expiration checks in playback modes, because the recorded token is almost certainly expired.
-            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new AttestationTokenOptions { ValidateExpirationTime = IsTalkingToLiveServer, }));
+            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
             return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
@@ -346,7 +348,7 @@ namespace Azure.Security.Attestation.Tests
             string endpoint = TestEnvironment.AadAttestationUrl;
 
             // We want to disable expiration checks in playback modes, because the recorded token is almost certainly expired.
-            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new AttestationTokenOptions { ValidateExpirationTime = IsTalkingToLiveServer, }));
+            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
             return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
 
@@ -355,7 +357,7 @@ namespace Azure.Security.Attestation.Tests
             string endpoint = TestEnvironment.IsolatedAttestationUrl;
 
             // We want to disable expiration checks in playback modes, because the recorded token is almost certainly expired.
-            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new AttestationTokenOptions { ValidateExpirationTime = IsTalkingToLiveServer, }));
+            var options = InstrumentClientOptions(new AttestationClientOptions(tokenOptions: new TokenValidationOptions(validateExpirationTime: IsTalkingToLiveServer)));
             return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
         }
     }

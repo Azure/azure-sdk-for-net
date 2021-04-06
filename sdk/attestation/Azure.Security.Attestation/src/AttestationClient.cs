@@ -115,7 +115,7 @@ namespace Azure.Security.Attestation
                     cancellationToken);
                 var attestationToken = new AttestationToken(response.Value.Token);
 
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     attestationToken.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
                 }
@@ -165,7 +165,7 @@ namespace Azure.Security.Attestation
                     cancellationToken).ConfigureAwait(false);
                 var attestationToken = new AttestationToken(response.Value.Token);
 
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     await attestationToken.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
@@ -215,7 +215,7 @@ namespace Azure.Security.Attestation
                     cancellationToken);
                 var attestationToken = new AttestationToken(response.Value.Token);
 
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     attestationToken.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
                 }
@@ -265,7 +265,7 @@ namespace Azure.Security.Attestation
                 cancellationToken).ConfigureAwait(false);
                 var attestationToken = new AttestationToken(response.Value.Token);
 
-                if (_options.ValidateAttestationTokens)
+                if (_options.TokenOptions.ValidateToken)
                 {
                     await attestationToken.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }

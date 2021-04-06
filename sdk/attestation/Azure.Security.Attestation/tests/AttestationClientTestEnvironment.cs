@@ -14,8 +14,8 @@ namespace Azure.Security.Attestation.Tests
 {
     public class AttestationClientTestEnvironment : TestEnvironment
     {
-        public string IsolatedAttestationUrl => GetRecordedVariable("ISOLATED_ATTESTATION_URL");
-        public string AadAttestationUrl => GetRecordedVariable("AAD_ATTESTATION_URL");
+        public string IsolatedAttestationUrl => GetRecordedVariable("ATTESTATION_ISOLATED_URL");
+        public string AadAttestationUrl => GetRecordedVariable("ATTESTATION_AAD_URL");
 
         public X509Certificate2 PolicyCertificate0 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("policySigningCertificate0")));
         public X509Certificate2 PolicyCertificate1 => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("policySigningCertificate1")));
@@ -29,8 +29,10 @@ namespace Azure.Security.Attestation.Tests
         public X509Certificate2 PolicyManagementCertificate => new X509Certificate2(Convert.FromBase64String(GetRecordedVariable("isolatedSigningCertificate")));
         public RSA PolicyManagementKey => GetRSACryptoServiceProvider("serializedIsolatedSigningKey");
 
-        public string SharedEusTest => "https://sharedeus.eus.test.attest.azure.net";
-        public string SharedUkSouth => "https://shareduks.uks.test.attest.azure.net";
+        //        public string SharedEusTest => "https://sharedeus.eus.test.attest.azure.net";
+        //        public string SharedUkSouth => "https://shareduks.uks.test.attest.azure.net";
+
+        public string LocationShortName => GetRecordedVariable("locationShortName");
 
         private static Uri DataPlaneScope => new Uri($"https://attest.azure.net");
 

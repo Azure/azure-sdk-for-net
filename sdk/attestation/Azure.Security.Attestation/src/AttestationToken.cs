@@ -10,6 +10,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Linq;
 
 namespace Azure.Security.Attestation
 {
@@ -80,14 +81,14 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Returns the thumbprint of the X.509 certificate which was used to verify the attestation token.
         ///
-        /// Null until the <see cref="AttestationToken.ValidateToken(AttestationTokenOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
+        /// Null until the <see cref="AttestationToken.ValidateToken(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
         /// </summary>
         public virtual string CertificateThumbprint { get; private set; }
 
         /// <summary>
         /// Returns the X.509 certificate which was used to verify the attestation token.
         ///
-        /// Null until the <see cref="AttestationToken.ValidateToken(AttestationTokenOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
+        /// Null until the <see cref="AttestationToken.ValidateToken(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/> method has been called.
         /// </summary>
         public virtual AttestationSigner SigningCertificate { get; private set; }
 
@@ -250,8 +251,14 @@ namespace Azure.Security.Attestation
         /// <param name="attestationSigningCertificates">Signing Certificates used to validate the token.</param>
         /// <param name="cancellationToken">Token used to cancel this operation if necessary.</param>
         /// <returns></returns>
-        public virtual async Task<bool> ValidateToken(AttestationTokenOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
+        public virtual async Task<bool> ValidateToken(TokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
         {
+            // Early out if the caller doesn't want us to validate the token.
+            if (!options.ValidateToken)
+            {
+                return true;
+            }
+
             // Before we waste a lot of time, see if the token is unsecured. If it is, then validation is simple.
             if (Header.Algorithm.Equals("none", StringComparison.OrdinalIgnoreCase))
             {
@@ -303,10 +310,10 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="attestationSigners">The desired set of signers for this token - if present, then this is the exclusive set of signers for the token.</param>
         /// <returns></returns>
-        private async Task<X509Certificate2[]> GetCandidateSigningCertificates(IReadOnlyList<AttestationSigner> attestationSigners)
+        private async Task<AttestationSigner[]> GetCandidateSigningCertificates(IReadOnlyList<AttestationSigner> attestationSigners)
         {
             string desiredKeyId = Header.KeyId;
-            List<X509Certificate2> candidateCertificates = new List<X509Certificate2>();
+            List<AttestationSigner> candidateCertificates = new List<AttestationSigner>();
             if (desiredKeyId != null)
             {
                 // We start looking for candidate signers by looking in the provided attestation signers.
@@ -315,7 +322,7 @@ namespace Azure.Security.Attestation
                 {
                     if (signer.CertificateKeyId == desiredKeyId)
                     {
-                        candidateCertificates.Add(signer.SigningCertificates[0]);
+                        candidateCertificates.Add(new AttestationSigner(signer.SigningCertificates.ToArray(), desiredKeyId));
                         break;
                     }
                 }
@@ -327,10 +334,12 @@ namespace Azure.Security.Attestation
                     if (Header.JsonWebKey != null)
                     {
                         // If the key matches the header's JWK, then the signer is going to be the leaf certificate
-                        // in the certificate chain.
+                        // of the certificates in the chain.
                         if (desiredKeyId == Header.JsonWebKey.Kid)
                         {
-                            candidateCertificates.Add(new X509Certificate2(Convert.FromBase64String(Header.JsonWebKey.X5C[0])));
+                            candidateCertificates.Add(new AttestationSigner(
+                                ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5C),
+                                desiredKeyId));
                         }
                     }
                 }
@@ -343,20 +352,23 @@ namespace Azure.Security.Attestation
                 // trump all signers in the header.
                 if (attestationSigners != null)
                 {
+                    // Copy the signers to the candidate certificates.
+                    //
+                    // Note: because we don't have a KeyID, we neuter the KeyID in the AttestationSigner.
                     foreach (var signer in attestationSigners)
                     {
-                        candidateCertificates.Add(signer.SigningCertificates[0]);
+                        candidateCertificates.Add(new AttestationSigner(signer.SigningCertificates.ToArray(), null));
                     }
                 }
                 else
                 {
                     if (Header.X509CertificateChain != null)
                     {
-                        candidateCertificates.Add(new X509Certificate2(Convert.FromBase64String(Header.X509CertificateChain[0])));
+                        candidateCertificates.Add(new AttestationSigner(ConvertBase64CertificateArrayToCertificateChain(Header.X509CertificateChain), null));
                     }
                     if (Header.JsonWebKey != null)
                     {
-                        candidateCertificates.Add(new X509Certificate2(Convert.FromBase64String(Header.JsonWebKey.X5C[0])));
+                        candidateCertificates.Add(new AttestationSigner(ConvertBase64CertificateArrayToCertificateChain(Header.JsonWebKey.X5C), null));
                     }
                 }
             }
@@ -364,20 +376,31 @@ namespace Azure.Security.Attestation
             return candidateCertificates.ToArray();
         }
 
+        private static X509Certificate2[] ConvertBase64CertificateArrayToCertificateChain(IList<string> base64certificates)
+        {
+            List<X509Certificate2> jwkCertificates = new List<X509Certificate2>();
+            foreach (var base64Cert in base64certificates)
+            {
+                jwkCertificates.Add(new X509Certificate2(Convert.FromBase64String(base64Cert)));
+            }
+            return jwkCertificates.ToArray();
+        }
+
         /// <summary>
         /// Iterate over the set of possible signers looking for a signer which can validate the signature
         /// </summary>
-        /// <param name="possibleSigners">A set of X509 Certificates which might be used to sign the token.</param>
-        /// <returns>true if the signature in the token was validated.</returns>
-        private bool ValidateTokenSignature(X509Certificate2[] possibleSigners)
+        /// <param name="possibleSigners">A set of attestation signers which might have been used to sign the token.</param>
+        /// <returns>true if one of the possibleSigners signed the token, false otherwise</returns>
+        private bool ValidateTokenSignature(AttestationSigner[] possibleSigners)
         {
             bool signatureValidated = false;
-            X509Certificate2 signingCert = null;
+            AttestationSigner actualSigner = null;
 
-            foreach (var cert in possibleSigners)
+            foreach (var signer in possibleSigners)
             {
-                AsymmetricAlgorithm asymmetricAlgorithm = cert.PublicKey.Key;
-
+                // The leaf certificate is defined as the certificate which signed the token, so we just need to look
+                // at the first certificate in the chain.
+                AsymmetricAlgorithm asymmetricAlgorithm = signer.SigningCertificates[0].PublicKey.Key;
                 if (asymmetricAlgorithm is RSA rsaKey)
                 {
                     signatureValidated = rsaKey.VerifyData(
@@ -386,7 +409,7 @@ namespace Azure.Security.Attestation
                         HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
                     if (signatureValidated)
                     {
-                        signingCert = cert;
+                        actualSigner = signer;
                     }
                     break;
                 }
@@ -398,28 +421,29 @@ namespace Azure.Security.Attestation
                         HashAlgorithmName.SHA256);
                     if (signatureValidated)
                     {
-                        signingCert = cert;
+                        actualSigner = signer;
                     }
                     break;
                 }
             }
-            if (signatureValidated)
+
+            if (actualSigner != null)
             {
-                this.CertificateThumbprint = signingCert.Thumbprint;
-                this.SigningCertificate = new AttestationSigner(new List<X509Certificate2> { signingCert }.ToArray(), null);
+                this.CertificateThumbprint = actualSigner.SigningCertificates[0].Thumbprint;
+                this.SigningCertificate = actualSigner;
             }
-            return signatureValidated;
+            return actualSigner != null;
         }
 
         /// <summary>
         /// Validate the common properties of the attestation token - ensure that the expiration time for the token is "reasonable", if present.
         /// </summary>
         /// <returns></returns>
-        private bool ValidateCommonProperties(AttestationTokenOptions options)
+        private bool ValidateCommonProperties(TokenValidationOptions options)
         {
+            DateTimeOffset timeNow = DateTimeOffset.Now;
             if (Payload.ExpirationTime.HasValue && (options?.ValidateExpirationTime ?? true))
             {
-                DateTimeOffset timeNow = DateTimeOffset.Now;
                 if (timeNow.CompareTo(ExpirationTime.Value) > 0)
                 {
                     if (options?.TimeValidationSlack != 0)
@@ -441,7 +465,26 @@ namespace Azure.Security.Attestation
             {
                 if (DateTimeOffset.Now.CompareTo(NotBeforeTime.Value) < 0)
                 {
-                    throw new Exception("Attestation token cannot be evaluated because it is too early.");
+                    if (options?.TimeValidationSlack != 0)
+                    {
+                        var delta = timeNow.Subtract(NotBeforeTime.Value);
+                        if (Math.Abs(delta.Seconds) > options?.TimeValidationSlack)
+                        {
+                            throw new Exception("Attestation token will not become valid before the slack time provided.");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Attestation token is not yet valid.");
+                    }
+                }
+            }
+
+            if (Payload.Issuer != null && (options?.ValidateIssuer ?? true) && options?.ExpectedIssuer != null)
+            {
+                if (options?.ExpectedIssuer != Payload.Issuer)
+                {
+                    throw new Exception($"Unknown Issuer for attestation token. Expected {options.ExpectedIssuer}, found {Payload.Issuer}");
                 }
             }
             return true;
