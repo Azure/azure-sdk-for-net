@@ -344,7 +344,7 @@ For more information and samples using prebuilt models see:
 - [Receipts sample][recognize_receipts].
 - [Business Cards sample][recognize_business_cards].
 - [Invoices][recognize_invoices].
-<!-- - [ID Documents][recognize_id_documents].-->
+- [ID Documents][recognize_id_documents].
 
 ### Train a Model
 Train a machine-learned model on your own form types. The resulting model will be able to recognize values from the types of forms it was trained on.
@@ -554,7 +554,7 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Recognize receipts][recognize_receipts]
 - [Recognize business cards][recognize_business_cards]
 - [Recognize invoices][recognize_invoices]
-<!--- [Recognize ID documents][recognize_id_documents]-->
+- [Recognize ID documents][recognize_id_documents]
 - [Train a model][train_a_model]
 - [Manage custom models][manage_custom_models]
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]
