@@ -370,6 +370,18 @@ namespace Azure.Core.Pipeline
                     currentRequest.Content = currentContent;
                 }
 
+                // Disable response caching and enable streaming in Blazor apps
+                // see https://github.com/dotnet/aspnetcore/blob/3143d9550014006080bb0def5b5c96608b025a13/src/Components/WebAssembly/WebAssembly/src/Http/WebAssemblyHttpRequestMessageExtensions.cs
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
+                {
+#pragma warning disable 618 // Options property is NET5+
+                    currentRequest.Properties.Add("WebAssemblyFetchOptions", new Dictionary<string, object> {
+                        { "cache", "no-store" }
+                    });
+                    currentRequest.Properties.Add("WebAssemblyEnableStreamingResponse", true);
+#pragma warning restore 618
+                }
+
                 _wasSent = true;
                 return currentRequest;
             }
