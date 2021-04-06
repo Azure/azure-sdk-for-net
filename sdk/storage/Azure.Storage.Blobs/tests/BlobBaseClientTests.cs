@@ -6760,7 +6760,6 @@ namespace Azure.Storage.Blobs.Test
             };
             BlobSasPermissions permissions = BlobSasPermissions.Read;
             DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
-            DateTimeOffset startsOn = Recording.UtcNow.AddHours(-1);
             BlobBaseClient blobClient = InstrumentClient(new BlobBaseClient(
                 blobUriBuilder.ToUri(),
                 constants.Sas.SharedKeyCredential,
@@ -6781,7 +6780,6 @@ namespace Azure.Storage.Blobs.Test
             {
                 BlobContainerName = containerName,
                 BlobName = blobName,
-                StartsOn = startsOn
             };
             BlobUriBuilder expectedUri = new BlobUriBuilder(serviceUri)
             {
