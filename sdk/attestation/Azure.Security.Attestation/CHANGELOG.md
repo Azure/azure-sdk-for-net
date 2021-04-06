@@ -1,6 +1,12 @@
 # Release History
 ## 1.0.0-beta.3 (Unreleased)
+- Hopefully the final changes for Azure Attestation Service for .Net. 
 
+#### Breaking changes since 1.0.0-beta.2:
+ - Clients no longer need to instantiate SecuredAttestationToken or UnsecuredAttestationToken objects to validate the token hash. All of the functionality associated wth SecuredAttestationToken and UnsecuredAttestationToken has been folded into the AttestationToken class.
+ - The JSON Web Token associated properties in the AttestationToken class have been converted to nullable types to allow the AttestationToken class to express JSON Web Signature objects.
+ - The token validation related properties in the AttestationClientOptions class (validateAttestationTokens, validationCallback) have been moved into the new TokenValidationOptions class.
+- The TokenValidationOptions class contains a number of functions to tweak the validation process, modeled extremely loosely after constructs in [Nimbus JWT](https://connect2id.com/products/nimbus-jose-jwt) and [PyJWT](https://pyjwt.readthedocs.io/en/latest/).
 
 ## 1.0.0-beta.2 (2021-04-06)
 
