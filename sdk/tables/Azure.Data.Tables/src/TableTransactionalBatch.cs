@@ -163,7 +163,7 @@ namespace Azure.Data.Tables
                 _ => throw new ArgumentException($"Unexpected value for {nameof(mode)}: {mode}")
             };
 
-            if (_isCosmosEndpoint)
+            if (_isCosmosEndpoint && mode == TableUpdateMode.Merge)
             {
                 CosmosPatchTransformPolicy.TransformPatchToCosmosPost(msg);
             }
