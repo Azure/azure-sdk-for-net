@@ -36,7 +36,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             return InstrumentClient(registryClient.GetRepositoryClient(repository ?? _repositoryName));
         }
-
         #endregion
 
         #region Repository Tests

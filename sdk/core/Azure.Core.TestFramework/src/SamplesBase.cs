@@ -22,6 +22,10 @@ namespace Azure.Core.TestFramework
             _previousClientSecret = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
             _previousClientTenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
 
+            Console.WriteLine($"TestEnvironment.ClientId is {TestEnvironment.ClientId} of length {TestEnvironment.ClientId.Length}");
+            Console.WriteLine($"TestEnvironment.ClientSecret is {TestEnvironment.ClientSecret} of length {TestEnvironment.ClientSecret.Length}");
+            Console.WriteLine($"TestEnvironment.TenantId is {TestEnvironment.TenantId} of length {TestEnvironment.TenantId.Length}");
+
             Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", TestEnvironment.ClientId);
             Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", TestEnvironment.ClientSecret);
             Environment.SetEnvironmentVariable("AZURE_TENANT_ID", TestEnvironment.TenantId);

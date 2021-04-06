@@ -18,6 +18,17 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
         [SyncOnly]
         public void CreateClient()
         {
+            // Check that AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID
+            // have been set by SamplesBase.
+
+            var azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
+            var azureClientSecret = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
+            var azureTenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+
+            Console.WriteLine($"AZURE_CLIENT_ID is {azureClientId} of length {azureClientId.Length}");
+            Console.WriteLine($"AZURE_CLIENT_SECRET is {azureClientSecret} of length {azureClientSecret.Length}");
+            Console.WriteLine($"AZURE_TENANT_ID is {azureTenantId} of length {azureTenantId.Length}");
+
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             #region Snippet:ContainerRegistry_Tests_Samples_CreateClient
