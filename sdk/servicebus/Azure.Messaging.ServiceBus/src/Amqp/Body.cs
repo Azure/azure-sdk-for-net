@@ -69,7 +69,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Copies the provided segments into a single continuous buffer on demand while still keeping around a list of the individual copied segments.
+        /// Copies the provided segments into a single continuous buffer on demand while still keeping around a list of the individual copied segments. This path is hit when users modify the body via the underlying AmqpAnnotatedMessage.
         /// </summary>
         private sealed class CopyingOnConversionBody : Body
         {
