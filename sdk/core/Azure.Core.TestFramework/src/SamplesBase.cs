@@ -22,6 +22,8 @@ namespace Azure.Core.TestFramework
             _previousClientSecret = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
             _previousClientTenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
 
+            Console.WriteLine($"** Relevant vars: {string.Join("|", TestEnvironment.ClientId, TestEnvironment.ClientSecret, TestEnvironment.TenantId)}");
+
             Console.WriteLine($"TestEnvironment.ClientId is {TestEnvironment.ClientId} of length {TestEnvironment.ClientId.Length}");
             Console.WriteLine($"TestEnvironment.ClientSecret is {TestEnvironment.ClientSecret} of length {TestEnvironment.ClientSecret.Length}");
             Console.WriteLine($"TestEnvironment.TenantId is {TestEnvironment.TenantId} of length {TestEnvironment.TenantId.Length}");
