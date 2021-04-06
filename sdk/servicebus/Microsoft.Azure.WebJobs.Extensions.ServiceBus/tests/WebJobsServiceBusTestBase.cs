@@ -83,7 +83,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [SetUp]
         public async Task FixtureSetUp()
         {
-            TestContext.Progress.WriteLine($"{DateTimeOffset.Now}: Starting {TestContext.CurrentContext.Test.Name}");
             _firstQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession);
             _secondQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession);
             _thirdQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession);
@@ -116,7 +115,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             await _thirdQueueScope.DisposeAsync();
             await _secondaryNamespaceQueueScope.DisposeAsync();
             await _topicScope.DisposeAsync();
-            TestContext.Progress.WriteLine($"{DateTimeOffset.Now}: Finished {TestContext.CurrentContext.Test.Name}");
         }
 
         protected (JobHost JobHost, IHost Host) BuildHost<TJobClass>(
