@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    public partial class TimeSeriesHierarchyOrError
+    public partial class TimeSeriesHierarchyOperationResult
     {
-        internal static TimeSeriesHierarchyOrError DeserializeTimeSeriesHierarchyOrError(JsonElement element)
+        internal static TimeSeriesHierarchyOperationResult DeserializeTimeSeriesHierarchyOperationResult(JsonElement element)
         {
             Optional<TimeSeriesHierarchy> hierarchy = default;
             Optional<TimeSeriesOperationError> error = default;
@@ -39,7 +39,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesHierarchyOrError(hierarchy.Value, error.Value);
+            return new TimeSeriesHierarchyOperationResult(hierarchy.Value, error.Value);
         }
     }
 }
