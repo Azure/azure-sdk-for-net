@@ -1,5 +1,8 @@
 # Release History
 
+## 12.0.0-beta.8 (Unreleased)
+
+
 ## 12.0.0-beta.7 (2021-04-06)
 
 ### Acknowledgments
@@ -11,6 +14,7 @@ Thank you to our developer community members who helped to make Azure Tables bet
 ### Added
 
 - Added the `TableErrorCode` type which allows comparison of the `ErrorCode` on `RequestFailedException`s thrown from client operations with a known error value.
+- `TableEntity` and custom entity types now support `BinaryData` properties.
 
 ### Key Bug Fixes
 
