@@ -4147,6 +4147,51 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public void GenerateSas_BuilderNullShareName()
+        {
+            var constants = new TestConstants(this);
+            ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+
+            string shareName = GetNewShareName();
+            string fileName = GetNewFileName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = fileName
+            };
+
+            ShareFileClient directoryClient = InstrumentClient(new ShareFileClient(
+                shareUriBuilder.ToUri(),
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = null,
+                FilePath = fileName
+            };
+
+            // Act
+            Uri sasUri = directoryClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            ShareSasBuilder sasBuilder2 = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = shareName,
+                FilePath = fileName
+            };
+            ShareUriBuilder expectedUri = new ShareUriBuilder(serviceUri)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = fileName,
+                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri(), sasUri);
+        }
+
+        [RecordedTest]
         public void GenerateSas_BuilderWrongShareName()
         {
             // Arrange
@@ -4174,6 +4219,51 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertExpectedException(
                 () => fileClient.GenerateSasUri(sasBuilder),
                 new InvalidOperationException("SAS Uri cannot be generated. ShareSasBuilder.ShareName does not match ShareName in the Client. ShareSasBuilder.ShareName must either be left empty or match the ShareName in the Client"));
+        }
+
+        [RecordedTest]
+        public void GenerateSas_BuilderNullFileName()
+        {
+            var constants = new TestConstants(this);
+            ShareFileSasPermissions permissions = ShareFileSasPermissions.Read;
+            DateTimeOffset expiresOn = Recording.UtcNow.AddHours(+1);
+
+            string shareName = GetNewShareName();
+            string fileName = GetNewFileName();
+            Uri serviceUri = new Uri($"https://{constants.Sas.Account}.file.core.windows.net");
+            ShareUriBuilder shareUriBuilder = new ShareUriBuilder(serviceUri)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = fileName
+            };
+
+            ShareFileClient directoryClient = InstrumentClient(new ShareFileClient(
+                shareUriBuilder.ToUri(),
+                constants.Sas.SharedKeyCredential,
+                GetOptions()));
+
+            ShareSasBuilder sasBuilder = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = shareName,
+                FilePath = null
+            };
+
+            // Act
+            Uri sasUri = directoryClient.GenerateSasUri(sasBuilder);
+
+            // Assert
+            ShareSasBuilder sasBuilder2 = new ShareSasBuilder(permissions, expiresOn)
+            {
+                ShareName = shareName,
+                FilePath = fileName
+            };
+            ShareUriBuilder expectedUri = new ShareUriBuilder(serviceUri)
+            {
+                ShareName = shareName,
+                DirectoryOrFilePath = fileName,
+                Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+            };
+            Assert.AreEqual(expectedUri.ToUri(), sasUri);
         }
 
         [RecordedTest]
