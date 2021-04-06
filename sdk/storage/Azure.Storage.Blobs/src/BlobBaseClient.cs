@@ -4855,7 +4855,7 @@ namespace Azure.Storage.Blobs.Specialized
                 throw Errors.ArgumentNull(nameof(builder));
             }
 
-            // Deep copy of builder so we don't modify the user's origial BlobSasBuilder.
+            // Deep copy of builder so we don't modify the user's original BlobSasBuilder.
             builder = BlobSasBuilder.DeepCopy(builder);
 
             // Assign builder's ContainerName, BlobName, Snapshot, and BlobVersionId, if they are null.
