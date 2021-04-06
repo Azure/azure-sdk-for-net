@@ -101,6 +101,11 @@ namespace Azure.AI.Translation.Document
         private bool _hasCompleted;
 
         /// <summary>
+        /// <c>true</c> if the long-running operation has a value. Otherwise, <c>false</c>.
+        /// </summary>
+        private bool _hasValue;
+
+        /// <summary>
         /// Returns true if the long-running operation completed.
         /// </summary>
         public override bool HasCompleted => _hasCompleted;
@@ -125,7 +130,7 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
         /// </summary>
-        public override bool HasValue => _firstPage != null;
+        public override bool HasValue => _hasValue;
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -230,7 +235,7 @@ namespace Azure.AI.Translation.Document
                 {
                     var response = await _serviceClient.GetOperationDocumentsStatusAsync(new Guid(Id), cancellationToken: cancellationToken).ConfigureAwait(false);
                     _firstPage = Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-
+                    _hasValue = true;
                     async Task<Page<DocumentStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
                     {
                         // TODO: diagnostics scope?
@@ -289,6 +294,7 @@ namespace Azure.AI.Translation.Document
                         || update.Value.Status == TranslationStatus.Failed)
                     {
                         _hasCompleted = true;
+                        _hasValue = true;
                     }
                     else if (update.Value.Status == TranslationStatus.ValidationFailed)
                     {
