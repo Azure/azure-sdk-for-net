@@ -52,6 +52,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>
         /// Wraps a single data segment into an enumerable like type without copying to optimize for the most commonly used
         /// path by always bridging into enumerable like behavior without the additional overhead of underlying lists and copying.
+        /// This is the common path for ServiceBusMessage when the Body is set via constructor or the Body property.
         /// </summary>
         private sealed class NonCopyingSingleSegmentBody : Body
         {
@@ -69,7 +70,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         }
 
         /// <summary>
-        /// Copies the provided segments into a single continuous buffer on demand while still keeping around a list of the individual copied segments. This path is hit when users modify the body via the underlying AmqpAnnotatedMessage.
+        /// Copies the provided segments into a single continuous buffer on demand while still keeping around a list of the individual copied segments.
+        /// This path is hit when users modify the body via the underlying AmqpAnnotatedMessage.
         /// </summary>
         private sealed class CopyingOnConversionBody : Body
         {
