@@ -19,7 +19,8 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class HttpClientTransport : HttpPipelineTransport
     {
-        private readonly HttpClient _client;
+        // Internal for testing
+        internal HttpClient Client { get; }
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
@@ -34,7 +35,7 @@ namespace Azure.Core.Pipeline
         /// <param name="messageHandler">The instance of <see cref="HttpMessageHandler"/> to use.</param>
         public HttpClientTransport(HttpMessageHandler messageHandler)
         {
-            _client = new HttpClient(messageHandler) ?? throw new ArgumentNullException(nameof(messageHandler));
+            Client = new HttpClient(messageHandler) ?? throw new ArgumentNullException(nameof(messageHandler));
         }
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace Azure.Core.Pipeline
         /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
         public HttpClientTransport(HttpClient client)
         {
-            _client = client ?? throw new ArgumentNullException(nameof(client));
+            Client = client ?? throw new ArgumentNullException(nameof(client));
         }
 
         /// <summary>
@@ -83,13 +84,16 @@ namespace Azure.Core.Pipeline
 #if NET5_0
                 if (!async)
                 {
-                    responseMessage = _client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
+                    // Sync HttpClient.Send is not supported on browser but so is the sync-over-async
+#pragma warning disable CA1416 // 'HttpClient.Send(HttpRequestMessage, HttpCompletionOption, CancellationToken)' is unsupported on 'browser'
+                    responseMessage = Client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
+#pragma warning restore CA1416
                 }
                 else
 #endif
                 {
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
+                    responseMessage = await Client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
                         .ConfigureAwait(false);
                 }
@@ -127,17 +131,8 @@ namespace Azure.Core.Pipeline
 
         private static HttpClient CreateDefaultClient()
         {
-#if NETFRAMEWORK || NETSTANDARD
-            HttpClientHandler httpMessageHandler = new HttpClientHandler();
-#else
-
-            SocketsHttpHandler httpMessageHandler = new SocketsHttpHandler();
-#endif
-            if (HttpEnvironmentProxy.TryCreate(out IWebProxy webProxy))
-            {
-                httpMessageHandler.Proxy = webProxy;
-            }
-
+            var httpMessageHandler = CreateDefaultHandler();
+            SetProxySettings(httpMessageHandler);
             ServicePointHelpers.SetLimits(httpMessageHandler);
 
             return new HttpClient(httpMessageHandler)
@@ -145,6 +140,49 @@ namespace Azure.Core.Pipeline
                 // Timeouts are handled by the pipeline
                 Timeout = Timeout.InfiniteTimeSpan
             };
+        }
+
+        private static HttpMessageHandler CreateDefaultHandler()
+        {
+#if NET5_0_OR_GREATER
+            if (OperatingSystem.IsBrowser())
+            {
+                return new HttpClientHandler();
+            }
+#endif
+
+#if NETCOREAPP
+            return new SocketsHttpHandler();
+#else
+            return new HttpClientHandler();
+#endif
+        }
+
+        private static void SetProxySettings(HttpMessageHandler messageHandler)
+        {
+#if NET5_0_OR_GREATER
+            if (OperatingSystem.IsBrowser())
+            {
+                return;
+            }
+#endif
+            if (HttpEnvironmentProxy.TryCreate(out IWebProxy webProxy))
+            {
+                switch (messageHandler)
+                {
+#if NETCOREAPP
+                    case SocketsHttpHandler socketsHttpHandler:
+                        socketsHttpHandler.Proxy = webProxy;
+                        break;
+#endif
+                    case HttpClientHandler httpClientHandler:
+                        httpClientHandler.Proxy = webProxy;
+                        break;
+                    default:
+                        Debug.Assert(false, "Unknown handler type");
+                        break;
+                }
+            }
         }
 
         private static HttpRequestMessage BuildRequestMessage(HttpMessage message)
