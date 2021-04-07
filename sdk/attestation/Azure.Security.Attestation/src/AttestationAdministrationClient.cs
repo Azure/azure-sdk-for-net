@@ -43,12 +43,10 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
-#pragma warning disable CA1801
         public AttestationAdministrationClient(Uri endpoint, TokenCredential credential)
             : this(endpoint, credential, new AttestationClientOptions())
         {
         }
-#pragma warning restore
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttestationClient"/> class.
@@ -56,7 +54,6 @@ namespace Azure.Security.Attestation
         /// <param name="endpoint">Uri for the Microsoft Azure Attestation Service Instance to use.</param>
         /// <param name="credential">Credentials to be used in the Client.</param>
         /// <param name="options"><see cref="AttestationClientOptions"/> used to configure the API client.</param>
-#pragma warning disable CA1801
         public AttestationAdministrationClient(Uri endpoint, TokenCredential credential, AttestationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -82,7 +79,6 @@ namespace Azure.Security.Attestation
             // Initialize the Attestation Rest Client.
             _attestationClient = new AttestationClient(endpoint, credential, options);
         }
-#pragma warning restore
 
         /// <summary>
         /// Parameterless constructor for mocking.
@@ -91,8 +87,6 @@ namespace Azure.Security.Attestation
         {
         }
 
-#pragma warning disable CA1822
-#pragma warning disable CA1801
         /// <summary>
         /// Retrieves the attesttion policy for the specified <see cref="AttestationType"/>.
         /// </summary>
@@ -614,8 +608,6 @@ namespace Azure.Security.Attestation
                 throw;
             }
         }
-
-#pragma warning restore
 
         private IReadOnlyList<AttestationSigner> GetSigners()
         {

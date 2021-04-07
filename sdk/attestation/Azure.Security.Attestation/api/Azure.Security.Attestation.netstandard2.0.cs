@@ -93,10 +93,11 @@ namespace Azure.Security.Attestation
     }
     public partial class AttestationToken
     {
-        public AttestationToken() { }
+        protected AttestationToken() { }
         public AttestationToken(Azure.Security.Attestation.TokenSigningKey signingKey) { }
         public AttestationToken(object body) { }
         public AttestationToken(object body, Azure.Security.Attestation.TokenSigningKey signingKey) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal AttestationToken(string token) { }
         public virtual string Algorithm { get { throw null; } }
         public virtual string CertificateThumbprint { get { throw null; } }
@@ -121,7 +122,8 @@ namespace Azure.Security.Attestation
         public virtual System.Uri X509Url { get { throw null; } }
         public virtual T GetBody<T>() where T : class { throw null; }
         public override string ToString() { throw null; }
-        public virtual System.Threading.Tasks.Task<bool> ValidateToken(Azure.Security.Attestation.TokenValidationOptions options, System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner> attestationSigningCertificates, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual bool ValidateToken(Azure.Security.Attestation.TokenValidationOptions options, System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner> attestationSigningCertificates, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<bool> ValidateTokenAsync(Azure.Security.Attestation.TokenValidationOptions options, System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner> attestationSigningCertificates, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AttestationType : System.IEquatable<Azure.Security.Attestation.AttestationType>

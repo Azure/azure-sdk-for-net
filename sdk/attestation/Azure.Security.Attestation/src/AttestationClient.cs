@@ -89,7 +89,6 @@ namespace Azure.Security.Attestation
         /// <param name="runTimeDataIsObject">true if the runTimeData parameter should be treated as an object, false if it should be treated as binary.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel the request.</param>
         /// <returns>An <see cref="AttestationResponse{AttestationResult}"/> which contains the validated claims for the supplied <paramref name="quote"/>, <paramref name="runTimeData"/>, and <paramref name="initTimeData"/></returns>
-#pragma warning disable CA1822
         public virtual AttestationResponse<AttestationResult> AttestSgxEnclave(ReadOnlyMemory<byte> quote, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(runTimeData, nameof(runTimeData));
@@ -332,7 +331,6 @@ namespace Azure.Security.Attestation
                 throw;
             }
         }
-#pragma warning restore
 
         /// <summary>
         /// Retrieves the signing certificates used to sign attestation requests.

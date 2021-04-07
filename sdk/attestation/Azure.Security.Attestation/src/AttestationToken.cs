@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
+using System.ComponentModel;
 
 namespace Azure.Security.Attestation
 {
@@ -26,9 +27,23 @@ namespace Azure.Security.Attestation
         private object _statelock = new object();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AttestationToken"/> class.
+        /// Initializes a new instance of the <see cref="AttestationToken"/> class based on a specified JSON Web Token.
         /// </summary>
         /// <param name="token">string JWT to initialize.</param>
+        /// <remarks>
+        /// For test purposes, it may be useful to instantiate an AttestationToken object whose payload is a developer
+        /// created JSON Web Token. To use this constructor, create a version of the class derived from the <see cref="AttestationToken"/> class and invoke
+        /// the constructor through this derived class:
+        /// <code snippet="Snippet:CreateTestTokenForMocking">
+        /// private class TestAttestationToken : AttestationToken
+        /// {
+        ///     public TestAttestationToken(string token) : base(token)
+        ///     {
+        ///     }
+        /// }
+        /// </code>
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         internal protected AttestationToken(string token)
         {
             _token = token;
@@ -377,10 +392,9 @@ namespace Azure.Security.Attestation
         /// <param name="attestationSigners">The desired set of signers for this token - if present, then this is the exclusive set of signers for the token.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>The set of <see cref="AttestationSigner"/> which might be used to sign the attestation token.</returns>
-        private async Task<AttestationSigner[]> GetCandidateSigningCertificatesAsync(IReadOnlyList<AttestationSigner> attestationSigners, CancellationToken cancellationToken = default)
+        private Task<AttestationSigner[]> GetCandidateSigningCertificatesAsync(IReadOnlyList<AttestationSigner> attestationSigners, CancellationToken cancellationToken = default)
         {
-            await Task.Yield();
-            return GetCandidateSigningCertificates(attestationSigners, cancellationToken);
+            return Task.FromResult(GetCandidateSigningCertificates(attestationSigners, cancellationToken));
         }
 
         /// <summary>

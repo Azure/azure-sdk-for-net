@@ -22,12 +22,14 @@ namespace Azure.Security.Attestation.Tests
         {
         }
 
+        #region Snippet:CreateTestTokenForMocking
         private class TestAttestationToken : AttestationToken
         {
             public TestAttestationToken(string token) : base(token)
             {
             }
         }
+        #endregion
 
         private class TestBody
         {
