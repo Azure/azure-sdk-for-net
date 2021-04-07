@@ -284,7 +284,7 @@ namespace Azure.Security.Attestation
         ///     new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
         ///     new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
         ///
-        /// var shaHasher = SHA256Managed.Create();
+        /// using var shaHasher = SHA256Managed.Create();
         /// var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
         ///
         /// CollectionAssert.AreEqual(attestationPolicyHash, setResult.Value.PolicyTokenHash);
