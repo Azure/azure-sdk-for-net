@@ -94,16 +94,13 @@ namespace Microsoft.Azure.Management.StorageCache.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Mtu != null)
+            if (Mtu > 1500)
             {
-                if (Mtu > 1500)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "Mtu", 1500);
-                }
-                if (Mtu < 576)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "Mtu", 576);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Mtu", 1500);
+            }
+            if (Mtu < 576)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Mtu", 576);
             }
         }
     }
