@@ -1,6 +1,6 @@
 # Release History
 
-## 1.13.0-beta.1 (Unreleased)
+## 1.14.0 (2021-04-07)
 
 ### Key Bug Fixes
 
