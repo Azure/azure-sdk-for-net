@@ -358,5 +358,107 @@ namespace Azure.IoT.TimeSeriesInsights
                 throw;
             }
         }
+
+        /// <summary>
+        /// Creates Time Series Insights hierarchies asynchronously. If a provided hierarchy is already in use, then this will attempt to replace the existing hierarchy with the provided Time Series hierarchy.
+        /// </summary>
+        /// <param name="timeSeriesHierarchies">The Time Series Insights hierarchies to be created or replaced.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of error objects corresponding by position to the <paramref name="timeSeriesHierarchies"/> array in the request.
+        /// An error object will be set when operation is unsuccessful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is empty.
+        /// </exception>
+        public virtual async Task<Response<TimeSeriesHierarchyOperationResult[]>> CreateOrReplaceAsync(
+            IEnumerable<TimeSeriesHierarchy> timeSeriesHierarchies,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics
+                .CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(CreateOrReplace)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchies, nameof(timeSeriesHierarchies));
+
+                var batchRequest = new HierarchiesBatchRequest();
+
+                foreach (TimeSeriesHierarchy hierarchy in timeSeriesHierarchies)
+                {
+                    batchRequest.Put.Add(hierarchy);
+                }
+
+                Response<HierarchiesBatchResponse> executeBatchResponse = await _hierarchiesRestClient
+                    .ExecuteBatchAsync(batchRequest, null, cancellationToken)
+                    .ConfigureAwait(false);
+
+                IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
+
+                return Response.FromValue(executeBatchResponse.Value.Put.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates Time Series Insights hierarchies asynchronously. If a provided hierarchy is already in use, then this will attempt to replace the existing hierarchy with the provided Time Series hierarchy.
+        /// </summary>
+        /// <param name="timeSeriesHierarchies">The Time Series Insights hierarchies to be created or replaced.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of hierarchies or error objects corresponding by position to the <paramref name="timeSeriesHierarchies"/> array in the request.
+        /// Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful.
+        /// </returns>
+        /// <seealso cref="CreateOrReplaceAsync(IEnumerable{TimeSeriesHierarchy}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchies"/> is empty.
+        /// </exception>
+        public virtual Response<TimeSeriesHierarchyOperationResult[]> CreateOrReplace(
+            IEnumerable<TimeSeriesHierarchy> timeSeriesHierarchies,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(CreateOrReplace)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchies, nameof(timeSeriesHierarchies));
+
+                var batchRequest = new HierarchiesBatchRequest();
+
+                foreach (TimeSeriesHierarchy hierarchy in timeSeriesHierarchies)
+                {
+                    batchRequest.Put.Add(hierarchy);
+                }
+
+                Response<HierarchiesBatchResponse> executeBatchResponse = _hierarchiesRestClient
+                    .ExecuteBatch(batchRequest, null, cancellationToken);
+
+                IEnumerable<TimeSeriesOperationError> errorResults = executeBatchResponse.Value.Put.Select((result) => result.Error);
+
+                return Response.FromValue(executeBatchResponse.Value.Put.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }
