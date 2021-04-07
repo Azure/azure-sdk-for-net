@@ -23,7 +23,7 @@ namespace Azure.Data.Tables
         private readonly ServiceRestClient _secondaryServiceOperations;
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
         private readonly string _version;
-        internal readonly bool _isPremiumEndpoint;
+        internal readonly bool _isCosmosEndpoint;
         private readonly QueryOptions _defaultQueryOptions = new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata };
 
         /// <summary>
@@ -134,20 +134,21 @@ namespace Azure.Data.Tables
             options ??= new TableClientOptions();
             var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
             var secondaryEndpoint = connString.TableStorageUri.SecondaryUri?.AbsoluteUri;
+            _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
+            var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
             TableSharedKeyPipelinePolicy policy = connString.Credentials switch
             {
                 TableSharedKeyCredential credential => new TableSharedKeyPipelinePolicy(credential),
                 _ => default
             };
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier());
 
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
-            _isPremiumEndpoint = IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
         }
 
         internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
@@ -155,12 +156,14 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             options ??= new TableClientOptions();
+            _isCosmosEndpoint = IsPremiumEndpoint(endpoint);
+            var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             var endpointString = endpoint.AbsoluteUri;
             string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint)?.AbsoluteUri;
             HttpPipeline pipeline = sasCredential switch
             {
-                null => HttpPipelineBuilder.Build(options, policy),
-                _ => HttpPipelineBuilder.Build(options, policy, new AzureSasCredentialSynchronousPolicy(sasCredential))
+                null => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier()),
+                _ => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new HttpPipelinePolicy[] { policy, new AzureSasCredentialSynchronousPolicy(sasCredential) }, new ResponseClassifier())
             };
 
             _version = options.VersionString;
@@ -168,7 +171,6 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
-            _isPremiumEndpoint = IsPremiumEndpoint(endpoint);
         }
 
         /// <summary>
@@ -220,7 +222,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
 
-            return new TableClient(tableName, _tableOperations, _version, _diagnostics, _isPremiumEndpoint);
+            return new TableClient(tableName, _tableOperations, _version, _diagnostics, _isCosmosEndpoint);
         }
 
         /// <summary>
@@ -583,9 +585,9 @@ namespace Azure.Data.Tables
 
         internal static bool IsPremiumEndpoint(Uri endpoint)
         {
-            string absoluteUri = endpoint.OriginalString.ToLowerInvariant();
             return (endpoint.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase) && endpoint.Port != 10002) ||
-                absoluteUri.Contains(TableConstants.CosmosTableDomain) || absoluteUri.Contains(TableConstants.LegacyCosmosTableDomain);
+                endpoint.Host.IndexOf(TableConstants.CosmosTableDomain, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                endpoint.Host.IndexOf(TableConstants.LegacyCosmosTableDomain, StringComparison.OrdinalIgnoreCase) >= 0;
         }
     }
 }
