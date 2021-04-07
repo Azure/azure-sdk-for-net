@@ -20,13 +20,11 @@ namespace Azure.AI.FormRecognizer.Perf
             {
                 throw new InvalidOperationException("Do not stress the service until we can reduce testing costs. Set '--parallel 1'.");
             }
+
+            TestEnvironment = PerfTestEnvironment.Instance;
         }
 
-        protected string Endpoint => GetEnvironmentVariable("FORM_RECOGNIZER_ENDPOINT");
-
-        protected string ApiKey => GetEnvironmentVariable("FORM_RECOGNIZER_API_KEY");
-
-        protected string BlobContainerSasUrl => GetEnvironmentVariable("FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL");
+        protected PerfTestEnvironment TestEnvironment { get; }
 
         /// <summary>
         /// Creates a URI to a file contained in the test assets folder stored in the
