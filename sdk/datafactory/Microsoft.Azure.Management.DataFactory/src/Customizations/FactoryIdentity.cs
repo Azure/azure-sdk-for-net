@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         partial void CustomInit()
         {
-            if (Type == null)
+            if (Type is null)
             {
                 Type = FactoryIdentityType.SystemAssigned;
             }
