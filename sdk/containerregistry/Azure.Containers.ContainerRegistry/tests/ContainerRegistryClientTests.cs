@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
-    [Order(2)]
     public class ContainerRegistryClientTests : ClientTestBase
     {
         public ContainerRegistryClientTests(bool isAsync) : base(isAsync)
@@ -18,10 +18,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
         private ContainerRegistryClient client { get; set; }
         private readonly Uri _url = new Uri("https://example.azurecr.io");
 
+        private TokenCredential GetCredential()
+        {
+            return new EnvironmentCredential();
+        }
+
         [SetUp]
         public void TestSetup()
         {
-            client = InstrumentClient(new ContainerRegistryClient(_url, new DefaultAzureCredential(), new ContainerRegistryClientOptions()));
+            client = InstrumentClient(new ContainerRegistryClient(_url, GetCredential(), new ContainerRegistryClientOptions()));
         }
 
         /// <summary>
@@ -30,11 +35,11 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [Test]
         public void ConstructorValidatesArguments()
         {
-            Assert.That(() => new ContainerRegistryClient(null, new DefaultAzureCredential()), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
+            Assert.That(() => new ContainerRegistryClient(null, GetCredential()), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
 
             Assert.That(() => new ContainerRegistryClient(_url, null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null credential.");
 
-            Assert.That(() => new ContainerRegistryClient(_url, new DefaultAzureCredential(), null), Throws.InstanceOf<ArgumentNullException>(), "The constructor not accept null options.");
+            Assert.That(() => new ContainerRegistryClient(_url, GetCredential(), null), Throws.InstanceOf<ArgumentNullException>(), "The constructor not accept null options.");
         }
 
         /// <summary>

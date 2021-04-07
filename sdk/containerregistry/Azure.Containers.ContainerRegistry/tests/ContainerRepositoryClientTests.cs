@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
-    [Order(3)]
     public class ContainerRepositoryClientTests : ClientTestBase
     {
         public ContainerRepositoryClientTests(bool isAsync) : base(isAsync)
@@ -19,10 +19,15 @@ namespace Azure.Containers.ContainerRegistry.Tests
         private readonly Uri _url = new Uri("https://example.azurecr.io");
         private readonly string _repository = "hello-world";
 
+        private TokenCredential GetCredential()
+        {
+            return new EnvironmentCredential();
+        }
+
         [SetUp]
         public void TestSetup()
         {
-            client = InstrumentClient(new ContainerRepositoryClient(_url, _repository, new DefaultAzureCredential(), new ContainerRegistryClientOptions()));
+            client = InstrumentClient(new ContainerRepositoryClient(_url, _repository, GetCredential(), new ContainerRegistryClientOptions()));
         }
 
         /// <summary>
@@ -31,13 +36,13 @@ namespace Azure.Containers.ContainerRegistry.Tests
         [Test]
         public void ConstructorValidatesArguments()
         {
-            Assert.That(() => new ContainerRepositoryClient(null, _repository, new DefaultAzureCredential()), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
+            Assert.That(() => new ContainerRepositoryClient(null, _repository, GetCredential()), Throws.InstanceOf<ArgumentNullException>(), "The constructor should validate the url.");
 
-            Assert.That(() => new ContainerRepositoryClient(_url, null, new DefaultAzureCredential()), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null repository.");
+            Assert.That(() => new ContainerRepositoryClient(_url, null, GetCredential()), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null repository.");
 
             Assert.That(() => new ContainerRepositoryClient(_url, _repository, null), Throws.InstanceOf<ArgumentNullException>(), "The constructor should not accept a null credential.");
 
-            Assert.That(() => new ContainerRepositoryClient(_url, _repository, new DefaultAzureCredential(), null), Throws.InstanceOf<ArgumentNullException>(), "The constructor not accept null options.");
+            Assert.That(() => new ContainerRepositoryClient(_url, _repository, GetCredential(), null), Throws.InstanceOf<ArgumentNullException>(), "The constructor not accept null options.");
         }
 
         /// <summary>

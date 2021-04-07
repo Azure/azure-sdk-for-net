@@ -12,7 +12,6 @@ using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests.Samples
 {
-    [Order(1)]
     public partial class HelloWorld : SamplesBase<ContainerRegistryTestEnvironment>
     {
         [Test]
