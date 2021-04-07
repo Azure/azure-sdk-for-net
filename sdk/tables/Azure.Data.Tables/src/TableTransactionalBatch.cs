@@ -276,7 +276,7 @@ namespace Azure.Data.Tables
             {
                 try
                 {
-                    if (exception.Data[TableConstants.ExceptionData.FailedEntityIndex] is int index)
+                    if (exception.Data[TableConstants.ExceptionData.FailedEntityIndex] is string stringIndex && int.TryParse(stringIndex, out int index))
                     {
                         failedEntity = _submittedMessageList[index].Entity;
                     }
