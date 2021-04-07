@@ -185,7 +185,7 @@ namespace Azure.Security.Attestation
         public virtual string X509CertificateSha256Thumbprint { get => Header.X509CertificateSha256Thumbprint; }
 
         /// <summary>
-        /// Json Web TOken Header "Critical". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.11 for details.
+        /// Json Web Token Header "Critical". See https://www.rfc-editor.org/rfc/rfc7515.html#section-4.1.11 for details.
         /// </summary>
         public virtual bool? Critical { get => Header.Critical; }
 
@@ -499,7 +499,7 @@ namespace Azure.Security.Attestation
             {
                 // The leaf certificate is defined as the certificate which signed the token, so we just need to look
                 // at the first certificate in the chain.
-                using AsymmetricAlgorithm asymmetricAlgorithm = signer.SigningCertificates[0].PublicKey.Key;
+                AsymmetricAlgorithm asymmetricAlgorithm = signer.SigningCertificates[0].PublicKey.Key;
                 if (asymmetricAlgorithm is RSA rsaKey)
                 {
                     signatureValidated = rsaKey.VerifyData(
