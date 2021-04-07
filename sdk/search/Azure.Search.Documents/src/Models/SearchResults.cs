@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Models
         public IDictionary<string, IList<FacetResult>> Facets { get; internal set; }
 
         /// <summary> The answers query results for the search operation;
-        /// <code>null</code> if the answers query parameter was not specified or set to <see cref="QueryAnswer.None"/>. </summary>
+        /// <c>null</c> if the answers query parameter was not specified or set to <see cref="QueryAnswer.None"/>. </summary>
         public IDictionary<string, IList<AnswerResult>> Answers { get; internal set; }
 
         /// <summary>
