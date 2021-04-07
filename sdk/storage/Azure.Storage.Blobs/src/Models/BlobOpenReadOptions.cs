@@ -29,6 +29,12 @@ namespace Azure.Storage.Blobs.Models
         public BlobRequestConditions Conditions { get; set; }
 
         /// <summary>
+        /// Optional settings for downloading with transactional hashing for
+        /// the requested content.
+        /// </summary>
+        public DownloadTransactionalHashingOptions HashingOptions { get; set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="allowModifications">

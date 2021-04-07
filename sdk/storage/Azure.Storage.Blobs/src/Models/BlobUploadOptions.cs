@@ -55,5 +55,11 @@ namespace Azure.Storage.Blobs.Models
         /// parallel transfer behavior.
         /// </summary>
         public StorageTransferOptions TransferOptions { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="UploadTransactionalHashingOptions"/> to configure
+        /// checksum behavior.
+        /// </summary>
+        public UploadTransactionalHashingOptions HashingOptions { get; set; }
     }
 }
