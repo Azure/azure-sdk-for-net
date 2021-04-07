@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Models
         public IDictionary<string, IList<FacetResult>> Facets { get; internal set; }
 
         /// <summary> The answers query results for the search operation;
-        /// <c>null</c> if the answers query parameter was not specified or set to <see cref="QueryAnswer.None"/>. </summary>
+        /// <c>null</c> if the <see cref="SearchOptions.QueryAnswer"/> parameter was not specified or set to <see cref="QueryAnswer.None"/>. </summary>
         public IDictionary<string, IList<AnswerResult>> Answers { get; internal set; }
 
         /// <summary>
@@ -235,17 +235,17 @@ namespace Azure.Search.Documents.Models
                     results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value);
                 }
                 else if (prop.NameEquals(Constants.SearchAnswersKeyJson.EncodedUtf8Bytes) &&
-                    prop.Value.ValueKind == JsonValueKind.Null)
+                    prop.Value.ValueKind != JsonValueKind.Null)
                 {
                     results.Answers = new Dictionary<string, IList<AnswerResult>>();
-                    foreach (JsonProperty answer in prop.Value.EnumerateObject())
+                    foreach (JsonElement answer in prop.Value.EnumerateArray())
                     {
                         List<AnswerResult> values = new();
-                        foreach (JsonElement answerValue in answer.Value.EnumerateArray())
+                        foreach (JsonElement answerValue in answer.EnumerateArray())
                         {
                             values.Add(AnswerResult.DeserializeAnswerResult(answerValue));
                         }
-                        results.Answers[answer.Name] = values;
+                        // results.Answers[answer.Name] = values;
                     }
                 }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))

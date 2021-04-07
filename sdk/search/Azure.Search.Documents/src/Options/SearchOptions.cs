@@ -184,22 +184,25 @@ namespace Azure.Search.Documents
             Debug.Assert(source != null);
             Debug.Assert(destination != null);
 
-            destination.SearchText = source.SearchText;
+            destination.Facets = source.Facets;
             destination.Filter = source.Filter;
             destination.HighlightFields = source.HighlightFields;
-            destination.SearchFields = source.SearchFields;
-            destination.Select = source.Select;
-            destination.Size = source.Size;
-            destination.OrderBy = source.OrderBy;
-            destination.IncludeTotalCount = source.IncludeTotalCount;
-            destination.Facets = source.Facets;
-            destination.ScoringParameters = source.ScoringParameters;
             destination.HighlightPostTag = source.HighlightPostTag;
             destination.HighlightPreTag = source.HighlightPreTag;
+            destination.IncludeTotalCount = source.IncludeTotalCount;
             destination.MinimumCoverage = source.MinimumCoverage;
+            destination.OrderBy = source.OrderBy;
+            destination.QueryAnswer = source.QueryAnswer;
+            destination.QueryLanguage = source.QueryLanguage;
+            destination.QuerySpeller = source.QuerySpeller;
             destination.QueryType = source.QueryType;
+            destination.ScoringParameters = source.ScoringParameters;
             destination.ScoringProfile = source.ScoringProfile;
+            destination.SearchFields = source.SearchFields;
             destination.SearchMode = source.SearchMode;
+            destination.SearchText = source.SearchText;
+            destination.Select = source.Select;
+            destination.Size = source.Size;
             destination.Skip = source.Skip;
         }
 
