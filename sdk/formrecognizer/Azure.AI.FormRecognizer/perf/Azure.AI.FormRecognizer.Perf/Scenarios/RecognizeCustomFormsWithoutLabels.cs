@@ -10,7 +10,7 @@ using Azure.Test.Perf;
 
 namespace Azure.AI.FormRecognizer.Perf
 {
-    public class RecognizeCustomFormsWithoutLabelsTest : FormRecognizerTest<PerfOptions>
+    public sealed class RecognizeCustomFormsWithoutLabels: FormRecognizerTest<PerfOptions>
     {
         private readonly FormRecognizerClient _client;
 
@@ -18,24 +18,27 @@ namespace Azure.AI.FormRecognizer.Perf
 
         private string _modelId;
 
-        public RecognizeCustomFormsWithoutLabelsTest(PerfOptions options) : base(options)
+        public RecognizeCustomFormsWithoutLabels(PerfOptions options) : base(options)
         {
-            _client = new FormRecognizerClient(new Uri(Endpoint), new AzureKeyCredential(ApiKey));
-            _trainingClient = new FormTrainingClient(new Uri(Endpoint), new AzureKeyCredential(ApiKey));
+            _client = new FormRecognizerClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            _trainingClient = new FormTrainingClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
         }
 
-        public override async Task SetupAsync()
+        public override async Task GlobalSetupAsync()
         {
-            var trainingClient = new FormTrainingClient(new Uri(Endpoint), new AzureKeyCredential(ApiKey));
-            var op = await trainingClient.StartTrainingAsync(new Uri(BlobContainerSasUrl), useTrainingLabels: false);
+            await base.GlobalSetupAsync();
+
+            var trainingClient = new FormTrainingClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var op = await trainingClient.StartTrainingAsync(new Uri(TestEnvironment.BlobContainerSasUrl), useTrainingLabels: false);
 
             CustomFormModel model = await op.WaitForCompletionAsync();
             _modelId = model.ModelId;
         }
 
-        public override async Task CleanupAsync()
+        public override async Task GlobalCleanupAsync()
         {
             await _trainingClient.DeleteModelAsync(_modelId);
+            await base.GlobalCleanupAsync();
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
