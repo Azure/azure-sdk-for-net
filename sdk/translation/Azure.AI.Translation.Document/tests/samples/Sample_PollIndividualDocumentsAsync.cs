@@ -35,25 +35,24 @@ namespace Azure.AI.Translation.Document.Samples
 
             TimeSpan pollingInterval = new(1000);
 
-            AsyncPageable<DocumentStatusResult> documents = operation.GetAllDocumentStatusesAsync();
-            await foreach (DocumentStatusResult document in documents)
+            await foreach (DocumentStatusResult document in operation.GetAllDocumentStatusesAsync())
             {
-                Console.WriteLine($"Polling Status for document{document.TranslatedDocumentUri}");
+                Console.WriteLine($"Polling Status for document{document.SourceDocumentUri}");
 
-                Response<DocumentStatusResult> status = await operation.GetDocumentStatusAsync(document.DocumentId);
+                Response<DocumentStatusResult> responseDocumentStatus = await operation.GetDocumentStatusAsync(document.DocumentId);
 
-                while (!status.Value.HasCompleted)
+                while (!responseDocumentStatus.Value.HasCompleted)
                 {
-                    if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
+                    if (responseDocumentStatus.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
                     {
                         pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
                     }
 
                     await Task.Delay(pollingInterval);
-                    status = await operation.GetDocumentStatusAsync(document.DocumentId);
+                    responseDocumentStatus = await operation.GetDocumentStatusAsync(document.DocumentId);
                 }
 
-                if (status.Value.Status == TranslationStatus.Succeeded)
+                if (responseDocumentStatus.Value.Status == TranslationStatus.Succeeded)
                 {
                     Console.WriteLine($"  Translated Document Uri: {document.TranslatedDocumentUri}");
                     Console.WriteLine($"  Translated to language: {document.TranslateTo}.");

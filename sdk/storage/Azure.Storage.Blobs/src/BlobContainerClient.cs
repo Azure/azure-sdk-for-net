@@ -3396,6 +3396,13 @@ namespace Azure.Storage.Blobs
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
+
+            // Deep copy of builder so we don't modify the user's origial BlobSasBuilder.
+            builder = BlobSasBuilder.DeepCopy(builder);
+
+            // Assign builder's ContainerName if it is null.
+            builder.BlobContainerName ??= Name;
+
             if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(
@@ -3412,7 +3419,7 @@ namespace Azure.Storage.Blobs
             }
             BlobUriBuilder sasUri = new BlobUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
             };
             return sasUri.ToUri();
         }

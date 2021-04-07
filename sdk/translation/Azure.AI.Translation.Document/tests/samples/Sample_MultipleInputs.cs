@@ -55,14 +55,8 @@ namespace Azure.AI.Translation.Document.Samples
 
             TimeSpan pollingInterval = new(1000);
 
-            while (!operation.HasCompleted)
+            while (true)
             {
-                if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
-                {
-                    pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
-                }
-
-                Thread.Sleep(pollingInterval);
                 operation.UpdateStatus();
 
                 Console.WriteLine($"  Status: {operation.Status}");
@@ -73,6 +67,19 @@ namespace Azure.AI.Translation.Document.Samples
                 Console.WriteLine($"    Failed: {operation.DocumentsFailed}");
                 Console.WriteLine($"    In Progress: {operation.DocumentsInProgress}");
                 Console.WriteLine($"    Not started: {operation.DocumentsNotStarted}");
+
+                if (operation.HasCompleted)
+                {
+                    break;
+                }
+                else
+                {
+                    if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
+                    {
+                        pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
+                    }
+                    Thread.Sleep(pollingInterval);
+                }
             }
 
             foreach (DocumentStatusResult document in operation.GetValues())

@@ -19,10 +19,11 @@ namespace Azure.AI.Translation.Document.Samples
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            Uri sourceUri = new Uri("");
-            Uri targetUri = new Uri("");
 
             var client = new DocumentTranslationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+
+            Uri sourceUri = new Uri("<source SAS URI>");
+            Uri targetUri = new Uri("<target SAS URI>");
 
             var input = new DocumentTranslationInput(sourceUri, targetUri, "es");
             DocumentTranslationOperation operation = client.StartTranslation(input);
@@ -31,14 +32,8 @@ namespace Azure.AI.Translation.Document.Samples
 
             var documentscompleted = new HashSet<string>();
 
-            while (!operation.HasCompleted)
+            while (true)
             {
-                if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
-                {
-                    pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
-                }
-
-                Thread.Sleep(pollingInterval);
                 operation.UpdateStatus();
 
                 Pageable<DocumentStatusResult> documentsStatus = operation.GetAllDocumentStatuses();
@@ -49,8 +44,21 @@ namespace Azure.AI.Translation.Document.Samples
                     if (docStatus.Status == TranslationStatus.Succeeded || docStatus.Status == TranslationStatus.Failed)
                     {
                         documentscompleted.Add(docStatus.DocumentId);
-                        Console.WriteLine($"Document {docStatus.TranslatedDocumentUri} completed with status ${docStatus.Status}");
+                        Console.WriteLine($"Document {docStatus.TranslatedDocumentUri} completed with status {docStatus.Status}");
                     }
+                }
+
+                if (operation.HasCompleted)
+                {
+                    break;
+                }
+                else
+                {
+                    if (operation.GetRawResponse().Headers.TryGetValue("Retry-After", out string value))
+                    {
+                        pollingInterval = TimeSpan.FromSeconds(Convert.ToInt32(value));
+                    }
+                    Thread.Sleep(pollingInterval);
                 }
             }
         }
