@@ -21,18 +21,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
         #region Setup methods
         protected ContainerRepositoryClient CreateClient(string repository = null)
         {
-            ContainerRegistryClientOptions options = new ContainerRegistryClientOptions()
-            {
-                Diagnostics =
-                {
-                    IsLoggingContentEnabled = Mode == RecordedTestMode.Live,
-                }
-            };
-
             ContainerRegistryClient registryClient = new ContainerRegistryClient(
                 new Uri(TestEnvironment.Endpoint),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(options));
+                InstrumentClientOptions(new ContainerRegistryClientOptions()));
 
             return InstrumentClient(registryClient.GetRepositoryClient(repository ?? _repositoryName));
         }

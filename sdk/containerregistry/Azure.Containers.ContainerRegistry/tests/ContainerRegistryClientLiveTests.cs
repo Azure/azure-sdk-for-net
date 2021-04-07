@@ -17,18 +17,10 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
         private ContainerRegistryClient CreateClient()
         {
-            ContainerRegistryClientOptions options = new ContainerRegistryClientOptions()
-            {
-                Diagnostics =
-                {
-                    IsLoggingContentEnabled = Mode == RecordedTestMode.Live,
-                }
-            };
-
             return InstrumentClient(new ContainerRegistryClient(
                 new Uri(TestEnvironment.Endpoint),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(options)
+                InstrumentClientOptions(new ContainerRegistryClientOptions())
             ));
         }
 
