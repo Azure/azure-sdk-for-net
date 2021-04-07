@@ -373,7 +373,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 await foreach (RegistryArtifactProperties artifact in artifacts)
                 {
                     // Make sure we're looking at a manifest list, which has the tag
-                    if (artifact.References!= null && artifact.References.Count > 0)
+                    if (artifact.References != null && artifact.References.Count > 0)
                     {
                         digest = artifact.Digest;
                         Assert.That(artifact.Repository.Contains(repository));
