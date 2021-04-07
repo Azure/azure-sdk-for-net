@@ -8,6 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Containers.ContainerRegistry.Tests
 {
+    [Order(3)]
     public class ContainerRepositoryClientTests : ClientTestBase
     {
         public ContainerRepositoryClientTests(bool isAsync) : base(isAsync)
