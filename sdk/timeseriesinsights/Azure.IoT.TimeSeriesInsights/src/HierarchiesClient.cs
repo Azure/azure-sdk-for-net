@@ -412,7 +412,7 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Creates Time Series Insights hierarchies asynchronously. If a provided hierarchy is already in use, then this will attempt to replace the existing hierarchy with the provided Time Series hierarchy.
+        /// Creates Time Series Insights hierarchies synchronously. If a provided hierarchy is already in use, then this will attempt to replace the existing hierarchy with the provided Time Series hierarchy.
         /// </summary>
         /// <param name="timeSeriesHierarchies">The Time Series Insights hierarchies to be created or replaced.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -462,9 +462,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Deletes Time Series Insights types by type names asynchronously.
+        /// Deletes Time Series Insights hierarchies by hierarchy names asynchronously.
         /// </summary>
-        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series types to delete.</param>
+        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series hierarchies to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
@@ -513,9 +513,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Deletes Time Series Insights types by type names asynchronously.
+        /// Deletes Time Series Insights hierarchies by hierarchy names synchronously.
         /// </summary>
-        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series types to delete.</param>
+        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series hierarchies to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
@@ -563,9 +563,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Deletes Time Series Insights types by type Ids asynchronously.
+        /// Deletes Time Series Insights hierarchies by hierarchy Ids asynchronously.
         /// </summary>
-        /// <param name="timeSeriesHierarchyIds">List of Time Series type Ids of the Time Series types to delete.</param>
+        /// <param name="timeSeriesHierarchyIds">List of Time Series hierarchy Ids of the Time Series hierarchies to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>
         /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
@@ -595,9 +595,9 @@ namespace Azure.IoT.TimeSeriesInsights
                     Delete = new HierarchiesRequestBatchGetDelete()
                 };
 
-                foreach (string typeId in timeSeriesHierarchyIds)
+                foreach (string hierarchyId in timeSeriesHierarchyIds)
                 {
-                    batchRequest.Delete.HierarchyIds.Add(typeId);
+                    batchRequest.Delete.HierarchyIds.Add(hierarchyId);
                 }
 
                 Response<HierarchiesBatchResponse> executeBatchResponse = await _hierarchiesRestClient
@@ -645,9 +645,9 @@ namespace Azure.IoT.TimeSeriesInsights
                     Delete = new HierarchiesRequestBatchGetDelete()
                 };
 
-                foreach (string typeId in timeSeriesHierarchyIds ?? Enumerable.Empty<string>())
+                foreach (string hierarchyId in timeSeriesHierarchyIds ?? Enumerable.Empty<string>())
                 {
-                    batchRequest.Delete.HierarchyIds.Add(typeId);
+                    batchRequest.Delete.HierarchyIds.Add(hierarchyId);
                 }
                 Response<HierarchiesBatchResponse> executeBatchResponse = _hierarchiesRestClient
                     .ExecuteBatch(batchRequest, null, cancellationToken);
