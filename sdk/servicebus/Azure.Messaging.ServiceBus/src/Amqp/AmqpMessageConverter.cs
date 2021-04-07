@@ -266,7 +266,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             foreach (KeyValuePair<string, object> kvp in sbMessage.AmqpMessage.DeliveryAnnotations)
             {
-                amqpMessage.DeliveryAnnotations.Map.Add(kvp.Key, kvp.Value);
+                if (TryGetAmqpObjectFromNetObject(kvp.Value, MappingType.ApplicationProperty, out var amqpObject))
+                {
+                    amqpMessage.DeliveryAnnotations.Map.Add(kvp.Key, amqpObject);
+                }
             }
 
             // header - except for ttl which is set above with the properties
@@ -471,7 +474,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
             {
                 foreach (KeyValuePair<MapKey, object> kvp in amqpMessage.DeliveryAnnotations.Map)
                 {
-                    annotatedMessage.DeliveryAnnotations.Add(kvp.Key.ToString(), kvp.Value);
+                    if (TryGetNetObjectFromAmqpObject(kvp.Value, MappingType.ApplicationProperty, out var netObject))
+                    {
+                        annotatedMessage.DeliveryAnnotations[kvp.Key.ToString()] = netObject;
+                    }
                 }
             }
 
