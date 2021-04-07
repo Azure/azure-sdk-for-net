@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     {
         private readonly string _repositoryName = "library/hello-world";
 
-        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ContainerRepositoryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
