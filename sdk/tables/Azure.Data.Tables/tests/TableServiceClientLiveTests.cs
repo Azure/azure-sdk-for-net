@@ -228,6 +228,13 @@ namespace Azure.Data.Tables.Tests
 
                 Assert.That(() => tableResponses, Is.Not.Empty);
                 Assert.That(() => tableResponses.Select(r => r.TableName), Contains.Item(tableName));
+
+                // Query with a filter.
+
+                tableResponses = (await service.GetTablesAsync(filter: t => t.TableName == tableName).ToEnumerableAsync().ConfigureAwait(false)).ToList();
+
+                Assert.That(() => tableResponses, Is.Not.Empty);
+                Assert.That(() => tableResponses.Select(r => r.TableName), Contains.Item(tableName));
             }
             finally
             {

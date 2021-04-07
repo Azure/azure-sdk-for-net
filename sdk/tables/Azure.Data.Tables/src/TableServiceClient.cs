@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -330,6 +332,64 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
+        /// Gets a list of tables from the storage account.
+        /// </summary>
+        /// <param name="filter">
+        /// Returns only tables that satisfy the specified filter expression.
+        /// For example, the following expression would filter tables with a TableName of 'foo': <c>e => e.TableName == "foo"</c>.
+        /// </param>
+        /// <param name="maxPerPage">
+        /// The maximum number of entities that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of <see cref="TableItem"/>s.</returns>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual AsyncPageable<TableItem> GetTablesAsync(Expression<Func<TableItem, bool>> filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetTables)}");
+            scope.Start();
+            try
+            {
+                return GetTablesAsync(TableClient.Bind(filter), maxPerPage, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of tables from the storage account.
+        /// </summary>
+        /// <param name="filter">
+        /// Returns only tables that satisfy the specified filter expression.
+        /// For example, the following expression would filter tables with a TableName of 'foo': <c>e => e.TableName == "foo"</c>.
+        /// </param>
+        /// <param name="maxPerPage">
+        /// The maximum number of entities that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="Pageable{T}"/> containing a collection of <see cref="TableItem"/>.</returns>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Pageable<TableItem> GetTables(Expression<Func<TableItem, bool>> filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetTables)}");
+            scope.Start();
+            try
+            {
+                return GetTables(TableClient.Bind(filter), maxPerPage, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Creates a table on the service.
         /// </summary>
         /// <param name="tableName">The name of table to create.</param>
@@ -589,5 +649,13 @@ namespace Azure.Data.Tables
                 endpoint.Host.IndexOf(TableConstants.CosmosTableDomain, StringComparison.OrdinalIgnoreCase) >= 0 ||
                 endpoint.Host.IndexOf(TableConstants.LegacyCosmosTableDomain, StringComparison.OrdinalIgnoreCase) >= 0;
         }
+
+        /// <summary>
+        /// Creates an OData filter query string from the provided expression.
+        /// </summary>
+        /// <typeparam name="T">The type of the entity being queried. Typically this will be derived from <see cref="ITableEntity"/> or <see cref="Dictionary{String, Object}"/>.</typeparam>
+        /// <param name="filter">A filter expression.</param>
+        /// <returns>The string representation of the filter expression.</returns>
+        public static string CreateQueryFilter<T>(Expression<Func<T, bool>> filter) => TableClient.Bind(filter);
     }
 }
