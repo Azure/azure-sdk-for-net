@@ -27,6 +27,25 @@ namespace Azure.Data.Tables
         private readonly string _version;
         internal readonly bool _isCosmosEndpoint;
         private readonly QueryOptions _defaultQueryOptions = new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata };
+        private string _accountName;
+        private readonly Uri _endpoint;
+
+        /// <summary>
+        /// The name of the table account with which this client instance will interact.
+        /// </summary>
+        /// <value></value>
+        public string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    var builder = new TableUriBuilder(_endpoint);
+                    _accountName = builder.AccountName;
+                }
+                return _accountName;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified <see cref="Uri" /> containing a shared access signature (SAS)
@@ -132,6 +151,7 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
+            _accountName = connString._accountName;
 
             options ??= new TableClientOptions();
             var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
@@ -157,6 +177,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
+            _endpoint = endpoint;
             options ??= new TableClientOptions();
             _isCosmosEndpoint = IsPremiumEndpoint(endpoint);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
@@ -224,7 +245,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
 
-            return new TableClient(tableName, _tableOperations, _version, _diagnostics, _isCosmosEndpoint);
+            return new TableClient(tableName, _tableOperations, _version, _diagnostics, _isCosmosEndpoint, _endpoint);
         }
 
         /// <summary>
