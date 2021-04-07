@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.QnaMaker", "src\Azure.AI.QnaMaker.csproj", "{12CB5335-35A8-43CE-B4C5-F4C74DD64C80}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.QnaMaker.Perf", "perf\Azure.AI.QnaMaker.Perf.csproj", "{1C01DBA4-45F7-4825-907E-53EC7CC04839}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.QnaMaker.Tests", "tests\Azure.AI.QnaMaker.Tests.csproj", "{A3B9EE85-5439-4A83-B755-C5D1B60A1E18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Azure.Core\src\Azure.Core.csproj", "{B5A8266F-8283-4471-BA02-A8CAE8C27A68}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{82B1C22E-D5DA-42BD-A23F-814103A2CFA8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{EA060544-E169-4604-B8C3-9256B8D6181A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12CB5335-35A8-43CE-B4C5-F4C74DD64C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CB5335-35A8-43CE-B4C5-F4C74DD64C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CB5335-35A8-43CE-B4C5-F4C74DD64C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CB5335-35A8-43CE-B4C5-F4C74DD64C80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C01DBA4-45F7-4825-907E-53EC7CC04839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C01DBA4-45F7-4825-907E-53EC7CC04839}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C01DBA4-45F7-4825-907E-53EC7CC04839}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C01DBA4-45F7-4825-907E-53EC7CC04839}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3B9EE85-5439-4A83-B755-C5D1B60A1E18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3B9EE85-5439-4A83-B755-C5D1B60A1E18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3B9EE85-5439-4A83-B755-C5D1B60A1E18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3B9EE85-5439-4A83-B755-C5D1B60A1E18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5A8266F-8283-4471-BA02-A8CAE8C27A68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5A8266F-8283-4471-BA02-A8CAE8C27A68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5A8266F-8283-4471-BA02-A8CAE8C27A68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5A8266F-8283-4471-BA02-A8CAE8C27A68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82B1C22E-D5DA-42BD-A23F-814103A2CFA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82B1C22E-D5DA-42BD-A23F-814103A2CFA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82B1C22E-D5DA-42BD-A23F-814103A2CFA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82B1C22E-D5DA-42BD-A23F-814103A2CFA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA060544-E169-4604-B8C3-9256B8D6181A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA060544-E169-4604-B8C3-9256B8D6181A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA060544-E169-4604-B8C3-9256B8D6181A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA060544-E169-4604-B8C3-9256B8D6181A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3D407D0-B2AA-4AE3-94EC-36657AA28768}
+	EndGlobalSection
+EndGlobal
