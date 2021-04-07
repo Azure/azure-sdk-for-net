@@ -129,6 +129,7 @@ namespace Azure.Search.Documents
         public double? MinimumCoverage { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> OrderBy { get { throw null; } }
         public Azure.Search.Documents.Models.QueryAnswer? QueryAnswer { get { throw null; } set { } }
+        public uint QueryAnswerCount { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QueryLanguage? QueryLanguage { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QuerySpeller? QuerySpeller { get { throw null; } set { } }
         public Azure.Search.Documents.Models.SearchQueryType? QueryType { get { throw null; } set { } }
@@ -2580,7 +2581,7 @@ namespace Azure.Search.Documents.Models
     public partial class SearchResults<T>
     {
         internal SearchResults() { }
-        public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.AnswerResult>> Answers { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.AnswerResult> Answers { get { throw null; } }
         public double? Coverage { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> Facets { get { throw null; } }
         public long? TotalCount { get { throw null; } }
