@@ -53,6 +53,10 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public IDictionary<string, IList<FacetResult>> Facets { get; internal set; }
 
+        /// <summary> The answers query results for the search operation;
+        /// <code>null</code> if the answers query parameter was not specified or set to <see cref="QueryAnswer.None"/>. </summary>
+        public IDictionary<string, IList<AnswerResult>> Answers { get; internal set; }
+
         /// <summary>
         /// Gets the first (server side) page of search result values.
         /// </summary>
@@ -229,6 +233,20 @@ namespace Azure.Search.Documents.Models
                 else if (prop.NameEquals(Constants.SearchNextPageKeyJson.EncodedUtf8Bytes))
                 {
                     results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value);
+                }
+                else if (prop.NameEquals(Constants.SearchAnswersKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind == JsonValueKind.Null)
+                {
+                    results.Answers = new Dictionary<string, IList<AnswerResult>>();
+                    foreach (JsonProperty answer in prop.Value.EnumerateObject())
+                    {
+                        List<AnswerResult> values = new();
+                        foreach (JsonElement answerValue in answer.Value.EnumerateArray())
+                        {
+                            values.Add(AnswerResult.DeserializeAnswerResult(answerValue));
+                        }
+                        results.Answers[answer.Name] = values;
+                    }
                 }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {
