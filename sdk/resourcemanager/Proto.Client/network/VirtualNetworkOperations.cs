@@ -148,16 +148,6 @@ namespace Proto.Network
         }
 
         /// <summary>
-        /// Gets a subnet in the virtual nerwork.
-        /// </summary>
-        /// <param name="subnet"> The name of the subnet. </param>
-        /// <returns> An instance of SubnetOperations. </returns>
-        public SubnetOperations GetSubnetOperations(string subnet)
-        {
-            return new SubnetOperations(this, subnet);
-        }
-
-        /// <summary>
         /// Gets a list of subnet in the virtual nerwork.
         /// </summary>
         /// <returns> An object representing collection of subnets and their operations over a virtual network. </returns>
