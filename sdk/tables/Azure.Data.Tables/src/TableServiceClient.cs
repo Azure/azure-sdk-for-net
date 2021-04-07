@@ -33,7 +33,7 @@ namespace Azure.Data.Tables
         /// <summary>
         /// The name of the table account with which this client instance will interact.
         /// </summary>
-        public string AccountName
+        public virtual string AccountName
         {
             get
             {
