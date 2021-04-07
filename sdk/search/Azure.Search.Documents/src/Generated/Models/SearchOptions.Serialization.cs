@@ -112,15 +112,15 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("queryLanguage");
                 writer.WriteStringValue(QueryLanguage.Value.ToString());
             }
-            if (Optional.IsDefined(Speller))
+            if (Optional.IsDefined(QuerySpeller))
             {
                 writer.WritePropertyName("speller");
-                writer.WriteStringValue(Speller.Value.ToString());
+                writer.WriteStringValue(QuerySpeller.Value.ToString());
             }
-            if (Optional.IsDefined(Answers))
+            if (Optional.IsDefined(QueryAnswer))
             {
                 writer.WritePropertyName("answers");
-                writer.WriteStringValue(Answers.Value.ToString());
+                writer.WriteStringValue(QueryAnswer.Value.ToString());
             }
             if (Optional.IsDefined(SelectRaw))
             {
