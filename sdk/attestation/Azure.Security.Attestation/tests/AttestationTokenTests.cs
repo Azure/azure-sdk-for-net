@@ -171,12 +171,11 @@ namespace Azure.Security.Attestation.Tests
         /// Ensure that the serialized token validates correctly.
         /// </summary>
         /// <param name="serializedToken"></param>
-        /// <returns></returns>
         public async Task ValidateSerializedToken(string serializedToken, object expectedBody, TokenValidationOptions tokenOptions = default)
         {
             var parsedToken = new TestAttestationToken(serializedToken);
 
-            Assert.IsTrue(await parsedToken.ValidateToken(tokenOptions ?? new TokenValidationOptions(validateExpirationTime:true), null));
+            Assert.IsTrue(await parsedToken.ValidateTokenAsync(tokenOptions ?? new TokenValidationOptions(validateExpirationTime:true), null));
 
             // The body of the token should match the expected body.
             Assert.AreEqual(JsonSerializer.Serialize(expectedBody), parsedToken.TokenBody);

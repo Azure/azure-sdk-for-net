@@ -157,20 +157,25 @@ namespace Azure.Security.Attestation.Tests.Samples
 #region Snippet:SetPolicy
             string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
 
-            var policyTokenSigner = TestEnvironment.PolicyCertificate0;
+            //@@ X509Certificate2 policyTokenCertificate = new X509Certificate2(<Attestation Policy Signing Certificate>);
+            //@@ AsymmetricAlgorithm policyTokenKey = <Attestation Policy Signing Key>;
+            /*@@*/var policyTokenCertificate = TestEnvironment.PolicyCertificate0;
+            /*@@*/var policyTokenKey = TestEnvironment.PolicySigningKey0;
 
-            var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
-#endregion
+            var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, new TokenSigningKey(policyTokenKey, policyTokenCertificate));
+            #endregion
 
-#region Snippet:VerifySigningHash
+            #region Snippet:VerifySigningHash
 
             // The SetPolicyAsync API will create an AttestationToken signed with the TokenSigningKey to transmit the policy.
             // To verify that the policy specified by the caller was received by the service inside the enclave, we
             // verify that the hash of the policy document returned from the Attestation Service matches the hash
             // of an attestation token created locally.
+            //@@ TokenSigningKey signingKey = new TokenSigningKey(<Customer provided signing key>, <Customer provided certificate>)
+            /*@@*/TokenSigningKey signingKey =  new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
             var policySetToken = new AttestationToken(
                 new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
-                new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
+                signingKey);
 
             using var shaHasher = SHA256Managed.Create();
             var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
@@ -182,7 +187,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             // When the attestation instance is in Isolated mode, the ResetPolicy API requires using a signing key/certificate to authorize the user.
             var resetResult2 = client.ResetPolicy(
                 AttestationType.SgxEnclave,
-                new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
+                new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenCertificate));
             return;
         }
         private AttestationClient GetAttestationClient()

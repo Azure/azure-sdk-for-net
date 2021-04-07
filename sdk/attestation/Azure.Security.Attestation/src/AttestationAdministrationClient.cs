@@ -115,7 +115,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
                 }
 
                 using var document = JsonDocument.Parse(token.TokenBody);
@@ -154,7 +154,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
                 using var document = JsonDocument.Parse(token.TokenBody);
                 PolicyResult policyResult = PolicyResult.DeserializePolicyResult(document.RootElement);
@@ -199,9 +199,10 @@ namespace Azure.Security.Attestation
         /// // To verify that the policy specified by the caller was received by the service inside the enclave, we
         /// // verify that the hash of the policy document returned from the Attestation Service matches the hash
         /// // of an attestation token created locally.
+        /// TokenSigningKey signingKey = new TokenSigningKey(&lt;Customer provided signing key&gt;, &lt;Customer provided certificate&gt;)
         /// var policySetToken = new AttestationToken(
         ///     new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
-        ///     new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
+        ///     signingKey);
         ///
         /// using var shaHasher = SHA256Managed.Create();
         /// var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
@@ -238,7 +239,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
                 }
                 return new AttestationResponse<PolicyResult>(result.GetRawResponse(), token);
             }
@@ -263,7 +264,6 @@ namespace Azure.Security.Attestation
         /// attestation instance is running in Isolated mode, then a signing key and signing certificate MUST be provided to ensure that the caller of the API is authorized to change policy.
         /// The <see cref="TokenSigningKey.Certificate"/> field MUST be one of the certificates returned by the <see cref="GetPolicyManagementCertificates(CancellationToken)"/> API.
         /// <para/>
-        /// <para/>
         /// Clients need to be able to verify that the attestation policy document was not modified before the policy document was received by the attestation service's enclave.
         /// There are two properties provided in the [PolicyResult][attestation_policy_result] that can be used to verify that the service received the policy document:
         /// <list type="bullet">
@@ -280,9 +280,10 @@ namespace Azure.Security.Attestation
         /// // To verify that the policy specified by the caller was received by the service inside the enclave, we
         /// // verify that the hash of the policy document returned from the Attestation Service matches the hash
         /// // of an attestation token created locally.
+        /// TokenSigningKey signingKey = new TokenSigningKey(&lt;Customer provided signing key&gt;, &lt;Customer provided certificate&gt;)
         /// var policySetToken = new AttestationToken(
         ///     new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
-        ///     new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
+        ///     signingKey);
         ///
         /// using var shaHasher = SHA256Managed.Create();
         /// var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
@@ -294,8 +295,8 @@ namespace Azure.Security.Attestation
         /// wrapping the attestation policy. To validate the <see cref="PolicyResult.PolicyTokenHash"/> return value, a developer
         /// can create their own <see cref="AttestationToken"/> and create the hash of that.
         /// <code>
-        /// var shaHasher = SHA256Managed.Create();
-        /// var policySetToken = new UnsecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = disallowDebugging });
+        /// using var shaHasher = SHA256Managed.Create();
+        /// var policySetToken = new AttestationToken(new StoredAttestationPolicy { AttestationPolicy = disallowDebugging });
         /// disallowDebuggingHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
         /// </code>
         /// </remarks>
@@ -320,7 +321,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyResult>(result.GetRawResponse(), token);
             }
@@ -361,7 +362,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
                 }
                 return new AttestationResponse<PolicyResult>(result.GetRawResponse(), token);
             }
@@ -401,7 +402,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyResult>(result.GetRawResponse(), token);
             }
@@ -429,7 +430,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
                 }
                 return new AttestationResponse<PolicyCertificatesResult>(result.GetRawResponse(), token);
             }
@@ -457,7 +458,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyCertificatesResult>(result.GetRawResponse(), token);
             }
@@ -496,7 +497,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }
@@ -533,7 +534,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }
@@ -568,7 +569,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).Wait(cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }
@@ -603,7 +604,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }

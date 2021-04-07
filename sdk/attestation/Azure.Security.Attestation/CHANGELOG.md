@@ -12,9 +12,10 @@ As a result, the `SecuredAttestationToken` and `UnsecuredAttestationToken` types
 // To verify that the policy specified by the caller was received by the service inside the enclave, we
 // verify that the hash of the policy document returned from the Attestation Service matches the hash
 // of an attestation token created locally.
+TokenSigningKey signingKey = new TokenSigningKey(<Customer provided signing key>, <Customer provided certificate>)
 var policySetToken = new AttestationToken(
     new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
-    new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
+    signingKey);
 
 using var shaHasher = SHA256Managed.Create();
 var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
@@ -23,7 +24,7 @@ Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash
 ```
 - The JSON Web Token associated properties in the `AttestationToken` class have been converted to nullable types to allow the AttestationToken class to express JSON Web Signature objects.
 - The token validation related properties in the `AttestationClientOptions` class (validateAttestationTokens, validationCallback) have been moved into the new `TokenValidationOptions` class.
-- The `TokenValidationOptions` class contains a number of options to tweak the JSON Web Token validation process, modeled extremely loosely after constructs in [Nimbus JWT](https://connect2id.com/products/nimbus-jose-jwt) and [PyJWT](https://pyjwt.readthedocs.io/en/latest/).
+- The `TokenValidationOptions` class contains a number of options to tweak the JSON Web Token validation process, modeled extremely loosely after constructs in [Nimbus JWT](https://connect2id.com/products/nimbus-jose-jwt) and [PyJWT](https://pypi.org/project/PyJWT/).
 
 ## 1.0.0-beta.2 (2021-04-06)
 

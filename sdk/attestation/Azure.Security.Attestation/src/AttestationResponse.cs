@@ -45,7 +45,7 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Returns the underlying response returned from the remote service.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The response returned from the remote service. <see cref="Response{T}.GetRawResponse"/></returns>
         public override Response GetRawResponse() => _response;
     }
 }

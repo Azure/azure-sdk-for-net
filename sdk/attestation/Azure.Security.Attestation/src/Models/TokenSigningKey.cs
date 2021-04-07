@@ -12,9 +12,11 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// An AttestationSigningKey encapsulates the two pieces of information necessary to sign a token:
     /// <list type="bullet">
-    /// <item>Signing Key - the key used to sign the token</item>
-    /// <item>Signing Certificate - an X.509 certificate which wraps the public key part of the Signing Key.</item>
+    /// <item><term>Signing Key</term><description>the key used to sign the token</description></item>
+    /// <item><term>Signing Certificate</term><description>an X.509 certificate which wraps the public key part of the Signing Key.</description></item>
     /// </list>
+    /// <para/>
+    /// Note that the Attestation Service only supports validation of tokens which are signed with an X.509 certificate, it does not support arbitrary signing keys.
     /// </summary>
     public class TokenSigningKey
     {

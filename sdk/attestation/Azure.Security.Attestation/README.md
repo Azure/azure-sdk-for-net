@@ -205,9 +205,10 @@ Under the covers, the SetPolicy APIs create a [JSON Web Token][json_web_token] b
 ```C# Snippet:SetPolicy
 string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
 
-var policyTokenSigner = TestEnvironment.PolicyCertificate0;
+X509Certificate2 policyTokenCertificate = new X509Certificate2(<Attestation Policy Signing Certificate>);
+AsymmetricAlgorithm policyTokenKey = <Attestation Policy Signing Key;
 
-var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
+var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, new TokenSigningKey(policyTokenKey, policyTokenCertificate));
 ```
 
 Clients need to be able to verify that the attestation policy document was not modified before the policy document was received by the attestation service's enclave.
@@ -223,9 +224,10 @@ To verify the hash, clients can generate an attestation token and verify the has
 // To verify that the policy specified by the caller was received by the service inside the enclave, we
 // verify that the hash of the policy document returned from the Attestation Service matches the hash
 // of an attestation token created locally.
+TokenSigningKey signingKey = new TokenSigningKey(<Customer provided signing key>, <Customer provided certificate>)
 var policySetToken = new AttestationToken(
     new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
-    new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
+    signingKey);
 
 using var shaHasher = SHA256Managed.Create();
 var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));

@@ -20,7 +20,7 @@ namespace Azure.Security.Attestation
     public class AttestationToken
     {
         protected private string _token;
-        private JsonSerializerOptions _serializerOptions = new JsonSerializerOptions();
+        private readonly JsonSerializerOptions _serializerOptions = new JsonSerializerOptions();
 
         private object _deserializedBody;
         private object _statelock = new object();
@@ -43,11 +43,10 @@ namespace Azure.Security.Attestation
         }
 
         /// <summary>
-        /// Creates a new unsecured attestation token with an empty body. Used for the <see cref="AttestationAdministrationClient.ResetPolicy(AttestationType, TokenSigningKey, System.Threading.CancellationToken)"/> API.
+        /// Creates a new attestation token, used for mocking.
         /// </summary>
-        public AttestationToken()
+        protected AttestationToken()
         {
-            _token = "eyJhbGciOiJub25lIn0..";
         }
 
         /// <summary>
@@ -196,10 +195,7 @@ namespace Azure.Security.Attestation
                 {
                     return DateTimeOffset.FromUnixTimeSeconds((long)Payload.ExpirationTime.Value);
                 }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
         }
 
@@ -214,10 +210,7 @@ namespace Azure.Security.Attestation
                 {
                     return DateTimeOffset.FromUnixTimeSeconds((long)Payload.NotBeforeTime.Value);
                 }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
         }
 
@@ -232,10 +225,7 @@ namespace Azure.Security.Attestation
                 {
                     return DateTimeOffset.FromUnixTimeSeconds((long)Payload.IssuedAtTime.Value);
                 }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
         }
 
@@ -251,12 +241,18 @@ namespace Azure.Security.Attestation
 
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
+        /// <para/>
+        /// If the caller provides a set of signers, than that set of signers will be used as the complete set of candidates for signing.
+        /// If the caller does not provide a set of signers, then the <see cref="ValidateTokenAsync(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
+        /// API will a set of callers derived from the contents of the attestation token.
         /// </summary>
         /// <param name="options">Options used while validating the attestation token.</param>
         /// <param name="attestationSigningCertificates">Signing Certificates used to validate the token.</param>
         /// <param name="cancellationToken">Token used to cancel this operation if necessary.</param>
-        /// <returns></returns>
-        public virtual async Task<bool> ValidateToken(TokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
+        /// <returns>true if the token was valid, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
+        /// <exception cref="Exception">Thrown if validation fails.</exception>
+        public virtual async Task<bool> ValidateTokenAsync(TokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
         {
             // Early out if the caller doesn't want us to validate the token.
             if (!options.ValidateToken)
@@ -284,11 +280,72 @@ namespace Azure.Security.Attestation
             {
                 Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
             }
-            else
+
+            var possibleCertificates = await GetCandidateSigningCertificatesAsync(attestationSigningCertificates, cancellationToken).ConfigureAwait(false);
+            if (possibleCertificates.Length == 0)
             {
+                throw new Exception($"Unable to find any certificates which can be used to validate the token.");
             }
 
-            var possibleCertificates = await GetCandidateSigningCertificates(attestationSigningCertificates).ConfigureAwait(false);
+            if (!ValidateTokenSignature(possibleCertificates))
+            {
+                throw new Exception($"Could not find a certificate which was used to sign the token.");
+            }
+
+            if (!ValidateCommonProperties(options))
+            {
+                return false;
+            }
+            if (options.ValidationCallback != null)
+            {
+                return options.ValidationCallback(this, SigningCertificate);
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Validate a JSON Web Token returned by the MAA.
+        /// <para/>
+        /// If the caller provides a set of signers, than that set of signers will be used as the complete set of candidates for signing.
+        /// If the caller does not provide a set of signers, then the <see cref="ValidateToken(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
+        /// API will a set of callers derived from the contents of the attestation token.
+        /// </summary>
+        /// <param name="options">Options used while validating the attestation token.</param>
+        /// <param name="attestationSigningCertificates">Signing Certificates used to validate the token.</param>
+        /// <param name="cancellationToken">Token used to cancel this operation if necessary.</param>
+        /// <returns>true if the token was valid, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
+        /// <exception cref="Exception">Thrown if validation fails.</exception>
+        public virtual bool ValidateToken(TokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
+        {
+            // Early out if the caller doesn't want us to validate the token.
+            if (!options.ValidateToken)
+            {
+                return true;
+            }
+
+            // Before we waste a lot of time, see if the token is unsecured. If it is, then validation is simple.
+            if (Header.Algorithm.Equals("none", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!ValidateCommonProperties(options))
+                {
+                    return false;
+                }
+                if (options.ValidationCallback != null)
+                {
+                    return options.ValidationCallback(this, null);
+                }
+                return true;
+            }
+
+            // This token is a secured attestation token. If the caller provided signing certificates, then
+            // they need to have provided at least one certificate.
+            if (attestationSigningCertificates != null)
+            {
+                Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
+            }
+
+            var possibleCertificates = GetCandidateSigningCertificates(attestationSigningCertificates, cancellationToken);
             if (possibleCertificates.Length == 0)
             {
                 throw new Exception($"Unable to find any certificates which can be used to validate the token.");
@@ -312,12 +369,34 @@ namespace Azure.Security.Attestation
 
         /// <summary>
         /// Returns a set of candidate signing certificates based on the contents of the token.
+        /// <para/>
+        /// If the caller provides a set of signers, than that set of signers will be used as the complete set of candidates for signing.
+        /// If the caller does not provide a set of signers, then the <see cref="GetCandidateSigningCertificates(IReadOnlyList{AttestationSigner}, CancellationToken)"/>
+        /// API will a set of callers derived from the contents of the attestation token.
         /// </summary>
         /// <param name="attestationSigners">The desired set of signers for this token - if present, then this is the exclusive set of signers for the token.</param>
-        /// <returns></returns>
-        private async Task<AttestationSigner[]> GetCandidateSigningCertificates(IReadOnlyList<AttestationSigner> attestationSigners)
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
+        /// <returns>The set of <see cref="AttestationSigner"/> which might be used to sign the attestation token.</returns>
+        private async Task<AttestationSigner[]> GetCandidateSigningCertificatesAsync(IReadOnlyList<AttestationSigner> attestationSigners, CancellationToken cancellationToken = default)
+        {
+            await Task.Yield();
+            return GetCandidateSigningCertificates(attestationSigners, cancellationToken);
+        }
+
+        /// <summary>
+        /// Returns a set of candidate signing certificates based on the contents of the token.
+        /// </summary>
+        /// <param name="attestationSigners">The desired set of signers for this token - if present, then this is the exclusive set of signers for the token.</param>
+        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
+        /// <returns>The set of <see cref="AttestationSigner"/> which might be used to sign the attestation token.</returns>
+        private AttestationSigner[] GetCandidateSigningCertificates(IReadOnlyList<AttestationSigner> attestationSigners, CancellationToken cancellationToken = default)
         {
             string desiredKeyId = Header.KeyId;
+
+            if (cancellationToken.IsCancellationRequested)
+            {
+                throw new OperationCanceledException();
+            }
             List<AttestationSigner> candidateCertificates = new List<AttestationSigner>();
             if (desiredKeyId != null)
             {
@@ -377,18 +456,19 @@ namespace Azure.Security.Attestation
                     }
                 }
             }
-            await Task.Yield();
             return candidateCertificates.ToArray();
         }
 
         private static X509Certificate2[] ConvertBase64CertificateArrayToCertificateChain(IList<string> base64certificates)
         {
-            List<X509Certificate2> jwkCertificates = new List<X509Certificate2>();
+            X509Certificate2[] jwkCertificates = new X509Certificate2[base64certificates.Count];
+            int i = 0;
             foreach (var base64Cert in base64certificates)
             {
-                jwkCertificates.Add(new X509Certificate2(Convert.FromBase64String(base64Cert)));
+                jwkCertificates[i] = new X509Certificate2(Convert.FromBase64String(base64Cert));
+                i += 1;
             }
-            return jwkCertificates.ToArray();
+            return jwkCertificates;
         }
 
         /// <summary>
@@ -405,7 +485,7 @@ namespace Azure.Security.Attestation
             {
                 // The leaf certificate is defined as the certificate which signed the token, so we just need to look
                 // at the first certificate in the chain.
-                AsymmetricAlgorithm asymmetricAlgorithm = signer.SigningCertificates[0].PublicKey.Key;
+                using AsymmetricAlgorithm asymmetricAlgorithm = signer.SigningCertificates[0].PublicKey.Key;
                 if (asymmetricAlgorithm is RSA rsaKey)
                 {
                     signatureValidated = rsaKey.VerifyData(
@@ -443,7 +523,8 @@ namespace Azure.Security.Attestation
         /// <summary>
         /// Validate the common properties of the attestation token - ensure that the expiration time for the token is "reasonable", if present.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>true if the common properties are valid.</returns>
+        /// <exception cref="Exception">Thrown if the attestation token is not value.</exception>
         private bool ValidateCommonProperties(TokenValidationOptions options)
         {
             DateTimeOffset timeNow = DateTimeOffset.Now;
@@ -499,7 +580,7 @@ namespace Azure.Security.Attestation
         /// Retrieves the body of the AttestationToken as the specified type.
         /// </summary>
         /// <typeparam name="T">Underlying type for the token body.</typeparam>
-        /// <returns></returns>
+        /// <returns>Returns the body of the attestation token.</returns>
         public virtual T GetBody<T>()
             where T: class
         {
@@ -526,9 +607,10 @@ namespace Azure.Security.Attestation
         /// Create an unsecured JSON Web Token based on the specified token body.
         /// </summary>
         /// <param name="body">Object to be embeeded as the body of the attestation token.</param>
-        /// <returns></returns>
+        /// <returns>Returns an secured JWT whose body is the serialized value of the <paramref name="body"/> parameter.</returns>
         private static string CreateUnsecuredJwt(object body)
         {
+            // Base64Url encoded '{"alg":"none"}'. See https://www.rfc-editor.org/rfc/rfc7515.html#appendix-A.5 for more information.
             string returnValue = "eyJhbGciOiJub25lIn0.";
 
             string encodedDocument;
@@ -555,7 +637,7 @@ namespace Azure.Security.Attestation
         /// </summary>
         /// <param name="body">Object to be embeeded as the body of the attestation token.</param>
         /// <param name="signingKey">Key used to sign the attestation token.</param>
-        /// <returns></returns>
+        /// <returns>Returns a secured JWT whose body is the serialized value of the <paramref name="body"/> parameter.</returns>
         private static string GenerateSecuredJsonWebToken(object body, TokenSigningKey signingKey)
         {
             Argument.AssertNotNull(signingKey, nameof(signingKey));
@@ -605,7 +687,6 @@ namespace Azure.Security.Attestation
             {
                 throw new JsonException();
             }
-
             string jwt = signedData + '.' + Base64Url.Encode(signature);
 
             return jwt;
