@@ -40,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings
             base.Close();
             if (_committedAction != null)
             {
-                _committedAction.Execute();
+                _committedAction.Execute(isClosing: true);
             }
         }
     }

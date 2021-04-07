@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -44,6 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         private BlobTriggerQueueWriter _blobTriggerQueueWriter;
         private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
         private readonly HttpRequestProcessor _httpRequestProcessor;
+        private readonly IFunctionDataCache _functionDataCache;
 
         public BlobsExtensionConfigProvider(
             BlobServiceClientProvider blobServiceClientProvider,
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             IConverterManager converterManager,
             BlobTriggerQueueWriterFactory blobTriggerQueueWriterFactory,
             HttpRequestProcessor httpRequestProcessor,
+            IFunctionDataCache functionDataCache,
             ILoggerFactory loggerFactory)
         {
             _blobServiceClientProvider = blobServiceClientProvider;
@@ -62,6 +65,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             _converterManager = converterManager;
             _blobTriggerQueueWriterFactory = blobTriggerQueueWriterFactory;
             _httpRequestProcessor = httpRequestProcessor;
+            _functionDataCache = functionDataCache;
             _logger = loggerFactory.CreateLogger<BlobsExtensionConfigProvider>();
         }
 
@@ -338,7 +342,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             }
         }
 
-        private async Task<Stream> CreateStreamAsync(
+        private async Task<Stream> CreateCacheAwareStreamAsync(
             BlobAttribute blobAttribute,
             ValueBindingContext context)
         {
@@ -348,17 +352,43 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             switch (blobAttribute.Access)
             {
                 case FileAccess.Read:
-                    var readStream = await ReadBlobArgumentBinding.TryBindStreamAsync(blob.BlobClient, context).ConfigureAwait(false);
+                    var readStream = await ReadBlobArgumentBinding.TryBindStreamAsync(blob, context, _functionDataCache).ConfigureAwait(false);
                     return readStream;
 
                 case FileAccess.Write:
                     var writeStream = await WriteBlobArgumentBinding.BindStreamAsync(blob,
-                    context, _blobWrittenWatcherGetter.Value).ConfigureAwait(false);
+                        context, _blobWrittenWatcherGetter.Value, _functionDataCache).ConfigureAwait(false);
                     return writeStream;
 
                 default:
                     throw new InvalidOperationException("Cannot bind blob to Stream using FileAccess ReadWrite.");
             }
+        }
+
+        private async Task<Stream> CreateStreamAsync(
+            BlobAttribute blobAttribute,
+            ValueBindingContext context)
+        {
+            return await CreateCacheAwareStreamAsync(blobAttribute, context).ConfigureAwait(false);
+
+            // TODO clean up
+            //var cancellationToken = context.CancellationToken;
+            //var blob = await GetBlobAsync(blobAttribute, cancellationToken).ConfigureAwait(false);
+
+            //switch (blobAttribute.Access)
+            //{
+            //    case FileAccess.Read:
+            //        var readStream = await ReadBlobArgumentBinding.TryBindStreamAsync(blob.BlobClient, context).ConfigureAwait(false);
+            //        return readStream;
+
+            //    case FileAccess.Write:
+            //        var writeStream = await WriteBlobArgumentBinding.BindStreamAsync(blob,
+            //            context, _blobWrittenWatcherGetter.Value).ConfigureAwait(false);
+            //        return writeStream;
+
+            //    default:
+            //        throw new InvalidOperationException("Cannot bind blob to Stream using FileAccess ReadWrite.");
+            //}
         }
 
         private BlobServiceClient GetClient(
