@@ -467,9 +467,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             // delivery annotations
 
-            foreach (KeyValuePair<MapKey, object> kvp in amqpMessage.DeliveryAnnotations.Map)
+            if (amqpMessage.DeliveryAnnotations != null)
             {
-                annotatedMessage.DeliveryAnnotations.Add(kvp.Key.ToString(), kvp.Value);
+                foreach (KeyValuePair<MapKey, object> kvp in amqpMessage.DeliveryAnnotations.Map)
+                {
+                    annotatedMessage.DeliveryAnnotations.Add(kvp.Key.ToString(), kvp.Value);
+                }
             }
 
             // header
