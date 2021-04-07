@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure.Communication.PhoneNumbers.Models;
+using Azure.Communication.PhoneNumbers;
 using Azure.Core;
 
 namespace Azure.Core.Pipeline

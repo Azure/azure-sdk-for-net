@@ -197,12 +197,12 @@ namespace Azure.Core.Pipeline
                         catch (OperationCanceledException)
                         {
                             headerValueTcs.SetCanceled();
-                            throw;
                         }
                         catch (Exception exception)
                         {
                             headerValueTcs.SetException(exception);
-                            throw;
+                            // The exception will be thrown on the next lines when we touch the result of
+                            // headerValueTcs.Task, this approach will prevent later runtime UnobservedTaskException
                         }
                     }
 
@@ -304,7 +304,7 @@ namespace Azure.Core.Pipeline
             // must be called under lock (_syncObj)
             private bool RequestRequiresNewToken(TokenRequestContext context) =>
                 _currentContext == null ||
-                (context.Scopes != null && !context.Scopes.SequenceEqual(_currentContext.Value.Scopes)) ||
+                (context.Scopes != null && !context.Scopes.AsSpan().SequenceEqual(_currentContext.Value.Scopes.AsSpan())) ||
                 (context.Claims != null && !string.Equals(context.Claims, _currentContext.Value.Claims));
 
             private async ValueTask GetHeaderValueFromCredentialInBackgroundAsync(TaskCompletionSource<HeaderValueInfo> backgroundUpdateTcs, HeaderValueInfo info, TokenRequestContext context, bool async)

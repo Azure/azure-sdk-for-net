@@ -1,7 +1,15 @@
 # Release History
 
-## 1.0.0-preview.8 (Unreleased)
+## 1.0.0-preview.9 (Unreleased)
 
+
+## 1.0.0-preview.8 (2021-04-06)
+
+### Added
+- Many additional model classes
+
+### Changed
+- Exposed Serialization and Deserialization methods.
 
 ## 1.0.0-preview.7 (2021-03-17)
 

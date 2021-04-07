@@ -10,7 +10,7 @@
     <AssemblyTitle>Microsoft Azure Management ExtendedLocation Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.ExtendedLocationn</AssemblyName>
     <PackageTags>ExtendedLocation;</PackageTags>
-    <PackageReleaseNotes>Release official public api version 2020-07-15-privatepreview</PackageReleaseNotes>
+    <PackageReleaseNotes>Release official public api version 2021-03-15-preview</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

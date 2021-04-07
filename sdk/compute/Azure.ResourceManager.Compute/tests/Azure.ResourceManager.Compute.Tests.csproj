@@ -9,5 +9,6 @@
     <PackageReference Include="Azure.ResourceManager.Resources"/>
     <PackageReference Include="Azure.ResourceManager.Network"/>
     <PackageReference Include="Azure.ResourceManager.Storage"/>
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
 </Project>

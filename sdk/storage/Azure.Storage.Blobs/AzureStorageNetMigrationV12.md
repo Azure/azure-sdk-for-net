@@ -24,6 +24,7 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
   - [Listing Blobs in a Container](#listing-blobs-in-a-container)
   - [Generate a SAS](#generate-a-sas)
   - [Content Hashes](#content-hashes)
+  - [Resiliency](#resiliency)
 - [Additional information](#additional-information)
 
 ## Migration benefits
@@ -611,6 +612,58 @@ Stream downloadStream = response.Value.Content;
 byte[] transactionalMD5 = response.Value.Details.ContentHash;
 // validate stream against hash in your workflow
 ```
+
+### Resiliency
+
+#### Retry policy
+
+V11
+
+```csharp
+Stream targetStream = new MemoryStream();
+BlobRequestOptions options = new BlobRequestOptions()
+{
+    RetryPolicy = new ExponentialRetry(deltaBackoff: TimeSpan.FromSeconds(10), maxAttempts: 6)
+};
+await blockBlobClient.DownloadToStreamAsync(targetStream,accessCondition: null, options: options, operationContext: null);
+```
+
+V12
+
+```C# Snippet:SampleSnippetsBlobMigration_RetryPolicy
+BlobClientOptions blobClientOptions = new BlobClientOptions();
+blobClientOptions.Retry.Mode = RetryMode.Exponential;
+blobClientOptions.Retry.Delay = TimeSpan.FromSeconds(10);
+blobClientOptions.Retry.MaxRetries = 6;
+BlobServiceClient service = new BlobServiceClient(connectionString, blobClientOptions);
+BlobClient blobClient = service.GetBlobContainerClient(containerName).GetBlobClient(blobName);
+Stream targetStream = new MemoryStream();
+await blobClient.DownloadToAsync(targetStream);
+```
+
+#### Maximum execution time
+
+V11
+
+```csharp
+Stream targetStream = new MemoryStream();
+BlobRequestOptions options = new BlobRequestOptions()
+{
+    MaximumExecutionTime = TimeSpan.FromSeconds(30)
+};
+await blockBlobClient.DownloadToStreamAsync(targetStream,accessCondition: null, options: options, operationContext: null);
+```
+
+V12
+
+```C# Snippet:SampleSnippetsBlobMigration_MaximumExecutionTime
+BlobClient blobClient = containerClient.GetBlobClient(blobName);
+CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(30));
+Stream targetStream = new MemoryStream();
+await blobClient.DownloadToAsync(targetStream, cancellationTokenSource.Token);
+```
+
 
 ## Additional information
 

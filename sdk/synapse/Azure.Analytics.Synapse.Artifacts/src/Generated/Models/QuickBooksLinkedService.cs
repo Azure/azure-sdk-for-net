@@ -64,6 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> . </param>
+        /// <param name="connectionProperties"> Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="endpoint"> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </param>
         /// <param name="companyId"> The company ID of the QuickBooks company to authorize. </param>
         /// <param name="consumerKey"> The consumer key for OAuth 1.0 authentication. </param>
@@ -72,8 +73,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="accessTokenSecret"> The access token secret for OAuth 1.0 authentication. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal QuickBooksLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, object companyId, object consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret, object useEncryptedEndpoints, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal QuickBooksLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionProperties, object endpoint, object companyId, object consumerKey, SecretBase consumerSecret, SecretBase accessToken, SecretBase accessTokenSecret, object useEncryptedEndpoints, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
+            ConnectionProperties = connectionProperties;
             Endpoint = endpoint;
             CompanyId = companyId;
             ConsumerKey = consumerKey;
@@ -85,6 +87,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "QuickBooks";
         }
 
+        /// <summary> Properties used to connect to QuickBooks. It is mutually exclusive with any other properties in the linked service. Type: object. </summary>
+        public object ConnectionProperties { get; set; }
         /// <summary> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </summary>
         public object Endpoint { get; set; }
         /// <summary> The company ID of the QuickBooks company to authorize. </summary>

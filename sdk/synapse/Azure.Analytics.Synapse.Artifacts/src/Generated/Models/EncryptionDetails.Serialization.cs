@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(EncryptionDetailsConverter))]
     public partial class EncryptionDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -51,6 +54,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new EncryptionDetails(Optional.ToNullable(doubleEncryptionEnabled), cmk.Value);
+        }
+
+        internal partial class EncryptionDetailsConverter : JsonConverter<EncryptionDetails>
+        {
+            public override void Write(Utf8JsonWriter writer, EncryptionDetails model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override EncryptionDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeEncryptionDetails(document.RootElement);
+            }
         }
     }
 }

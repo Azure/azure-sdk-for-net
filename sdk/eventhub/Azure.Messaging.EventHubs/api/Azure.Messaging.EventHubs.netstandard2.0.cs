@@ -3,6 +3,7 @@ namespace Azure.Messaging.EventHubs
     public partial class EventData
     {
         public EventData(System.BinaryData eventBody) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected EventData(System.BinaryData eventBody, System.Collections.Generic.IDictionary<string, object> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, object> systemProperties = null, long sequenceNumber = (long)-9223372036854775808, long offset = (long)-9223372036854775808, System.DateTimeOffset enqueuedTime = default(System.DateTimeOffset), string partitionKey = null) { }
         public EventData(System.ReadOnlyMemory<byte> eventBody) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -31,6 +32,8 @@ namespace Azure.Messaging.EventHubs
         public EventHubConnection(string connectionString) { }
         public EventHubConnection(string connectionString, Azure.Messaging.EventHubs.EventHubConnectionOptions connectionOptions) { }
         public EventHubConnection(string connectionString, string eventHubName) { }
+        public EventHubConnection(string fullyQualifiedNamespace, string eventHubName, Azure.AzureNamedKeyCredential credential, Azure.Messaging.EventHubs.EventHubConnectionOptions connectionOptions = null) { }
+        public EventHubConnection(string fullyQualifiedNamespace, string eventHubName, Azure.AzureSasCredential credential, Azure.Messaging.EventHubs.EventHubConnectionOptions connectionOptions = null) { }
         public EventHubConnection(string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.EventHubConnectionOptions connectionOptions = null) { }
         public EventHubConnection(string connectionString, string eventHubName, Azure.Messaging.EventHubs.EventHubConnectionOptions connectionOptions) { }
         public string EventHubName { get { throw null; } }
@@ -186,6 +189,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         public EventHubConsumerClient(string consumerGroup, string connectionString) { }
         public EventHubConsumerClient(string consumerGroup, string connectionString, Azure.Messaging.EventHubs.Consumer.EventHubConsumerClientOptions clientOptions) { }
         public EventHubConsumerClient(string consumerGroup, string connectionString, string eventHubName) { }
+        public EventHubConsumerClient(string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.AzureNamedKeyCredential credential, Azure.Messaging.EventHubs.Consumer.EventHubConsumerClientOptions clientOptions = null) { }
+        public EventHubConsumerClient(string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.AzureSasCredential credential, Azure.Messaging.EventHubs.Consumer.EventHubConsumerClientOptions clientOptions = null) { }
         public EventHubConsumerClient(string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.Consumer.EventHubConsumerClientOptions clientOptions = null) { }
         public EventHubConsumerClient(string consumerGroup, string connectionString, string eventHubName, Azure.Messaging.EventHubs.Consumer.EventHubConsumerClientOptions clientOptions) { }
         public string ConsumerGroup { get { throw null; } }
@@ -343,6 +348,8 @@ namespace Azure.Messaging.EventHubs.Primitives
     {
         protected EventProcessor() { }
         protected EventProcessor(int eventBatchMaximumCount, string consumerGroup, string connectionString, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected EventProcessor(int eventBatchMaximumCount, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.AzureNamedKeyCredential credential, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
+        protected EventProcessor(int eventBatchMaximumCount, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.AzureSasCredential credential, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
         protected EventProcessor(int eventBatchMaximumCount, string consumerGroup, string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
         protected EventProcessor(int eventBatchMaximumCount, string consumerGroup, string connectionString, string eventHubName, Azure.Messaging.EventHubs.Primitives.EventProcessorOptions options = null) { }
         public string ConsumerGroup { get { throw null; } }
@@ -377,6 +384,8 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected PartitionReceiver() { }
         public PartitionReceiver(string consumerGroup, string partitionId, Azure.Messaging.EventHubs.Consumer.EventPosition eventPosition, Azure.Messaging.EventHubs.EventHubConnection connection, Azure.Messaging.EventHubs.Primitives.PartitionReceiverOptions options = null) { }
         public PartitionReceiver(string consumerGroup, string partitionId, Azure.Messaging.EventHubs.Consumer.EventPosition eventPosition, string connectionString, Azure.Messaging.EventHubs.Primitives.PartitionReceiverOptions options = null) { }
+        public PartitionReceiver(string consumerGroup, string partitionId, Azure.Messaging.EventHubs.Consumer.EventPosition eventPosition, string fullyQualifiedNamespace, string eventHubName, Azure.AzureNamedKeyCredential credential, Azure.Messaging.EventHubs.Primitives.PartitionReceiverOptions options = null) { }
+        public PartitionReceiver(string consumerGroup, string partitionId, Azure.Messaging.EventHubs.Consumer.EventPosition eventPosition, string fullyQualifiedNamespace, string eventHubName, Azure.AzureSasCredential credential, Azure.Messaging.EventHubs.Primitives.PartitionReceiverOptions options = null) { }
         public PartitionReceiver(string consumerGroup, string partitionId, Azure.Messaging.EventHubs.Consumer.EventPosition eventPosition, string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.Primitives.PartitionReceiverOptions options = null) { }
         public PartitionReceiver(string consumerGroup, string partitionId, Azure.Messaging.EventHubs.Consumer.EventPosition eventPosition, string connectionString, string eventHubName, Azure.Messaging.EventHubs.Primitives.PartitionReceiverOptions options = null) { }
         public string ConsumerGroup { get { throw null; } }
@@ -495,6 +504,8 @@ namespace Azure.Messaging.EventHubs.Producer
         public EventHubProducerClient(string connectionString) { }
         public EventHubProducerClient(string connectionString, Azure.Messaging.EventHubs.Producer.EventHubProducerClientOptions clientOptions) { }
         public EventHubProducerClient(string connectionString, string eventHubName) { }
+        public EventHubProducerClient(string fullyQualifiedNamespace, string eventHubName, Azure.AzureNamedKeyCredential credential, Azure.Messaging.EventHubs.Producer.EventHubProducerClientOptions clientOptions = null) { }
+        public EventHubProducerClient(string fullyQualifiedNamespace, string eventHubName, Azure.AzureSasCredential credential, Azure.Messaging.EventHubs.Producer.EventHubProducerClientOptions clientOptions = null) { }
         public EventHubProducerClient(string fullyQualifiedNamespace, string eventHubName, Azure.Core.TokenCredential credential, Azure.Messaging.EventHubs.Producer.EventHubProducerClientOptions clientOptions = null) { }
         public EventHubProducerClient(string connectionString, string eventHubName, Azure.Messaging.EventHubs.Producer.EventHubProducerClientOptions clientOptions) { }
         public string EventHubName { get { throw null; } }

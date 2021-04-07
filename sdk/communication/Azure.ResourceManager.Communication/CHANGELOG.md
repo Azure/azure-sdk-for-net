@@ -1,6 +1,9 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+
+## 1.0.0 (2021-03-29)
 This is the first stable release of the management library for Azure Communication Services. 
 
 Minor changes since the public preview release:
@@ -10,8 +13,6 @@ Minor changes since the public preview release:
 - CommunicationServiceResource now includes the property SystemData
 - OperationList has been changed to use the common type for its response
 - ErrorResponse has been changed to use the common type for ErrorResponse
-
-## 1.0.0-beta.4 (Unreleased)
 
 ## 1.0.0-beta.3 (2020-11-16)
 Updated `Azure.ResourceManager.Communication` version.

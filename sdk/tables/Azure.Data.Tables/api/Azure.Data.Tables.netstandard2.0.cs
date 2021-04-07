@@ -70,6 +70,7 @@ namespace Azure.Data.Tables
         public void Clear() { }
         public bool ContainsKey(string key) { throw null; }
         public byte[] GetBinary(string key) { throw null; }
+        public System.BinaryData GetBinaryData(string key) { throw null; }
         public bool? GetBoolean(string key) { throw null; }
         public System.DateTime? GetDateTime(string key) { throw null; }
         public System.DateTimeOffset? GetDateTimeOffset(string key) { throw null; }
@@ -186,6 +187,70 @@ namespace Azure.Data.Tables.Models
         public string AllowedOrigins { get { throw null; } set { } }
         public string ExposedHeaders { get { throw null; } set { } }
         public int MaxAgeInSeconds { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TableErrorCode : System.IEquatable<Azure.Data.Tables.Models.TableErrorCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TableErrorCode(string value) { throw null; }
+        public static Azure.Data.Tables.Models.TableErrorCode AccountIOPSLimitExceeded { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode AtomFormatNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode AuthorizationPermissionMismatch { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode AuthorizationResourceTypeMismatch { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode CannotCreateTableWithIOPSGreaterThanMaxAllowedPerTable { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode CommandsInBatchActOnDifferentPartitions { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode ContentLengthExceeded { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode DuplicateKeyPropertySpecified { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode DuplicatePropertiesSpecified { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode EntityAlreadyExists { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode EntityNotFound { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode EntityTooLarge { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode Forbidden { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode InvalidDuplicateRow { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode InvalidInput { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode InvalidValueType { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode JsonFormatNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode JsonVerboseFormatNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode KeyValueTooLarge { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode MediaTypeNotSupported { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode MethodNotAllowed { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode NotImplemented { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode OperationTimedOut { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode OperatorInvalid { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode OutOfRangeInput { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeyEqualityComparisonExpected { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeyNotSpecified { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeyPropertyCannotBeUpdated { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PartitionKeySpecifiedMoreThanOnce { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PerTableIOPSDecrementLimitReached { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PerTableIOPSIncrementLimitReached { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PrimaryKeyPropertyIsInvalidType { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertiesNeedValue { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertyNameInvalid { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertyNameTooLong { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode PropertyValueTooLarge { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode ResourceNotFound { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode SettingIOPSForATableInProvisioningNotAllowed { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableAlreadyExists { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableBeingDeleted { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableHasNoProperties { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableHasNoSuchProperty { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TableNotFound { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode TooManyProperties { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode UpdateConditionNotSatisfied { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode XMethodIncorrectCount { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode XMethodIncorrectValue { get { throw null; } }
+        public static Azure.Data.Tables.Models.TableErrorCode XMethodNotUsingPost { get { throw null; } }
+        public bool Equals(Azure.Data.Tables.Models.TableErrorCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Data.Tables.Models.TableErrorCode left, Azure.Data.Tables.Models.TableErrorCode right) { throw null; }
+        public static implicit operator Azure.Data.Tables.Models.TableErrorCode (string value) { throw null; }
+        public static bool operator !=(Azure.Data.Tables.Models.TableErrorCode left, Azure.Data.Tables.Models.TableErrorCode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class TableGeoReplicationInfo
     {

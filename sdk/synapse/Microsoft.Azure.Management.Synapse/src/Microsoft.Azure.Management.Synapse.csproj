@@ -7,11 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.Synapse</PackageId>
 		<Description>Azure Synapse Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Synapse</AssemblyName>
-		<Version>1.0.0</Version>
+		<Version>2.0.0</Version>
 		<PackageTags>Microsoft Azure Synapse Management;Synapse;Synapse Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-			- General available release
+			- SDK now consumes 2021-03-01 API version
       ]]>
 		</PackageReleaseNotes>
     

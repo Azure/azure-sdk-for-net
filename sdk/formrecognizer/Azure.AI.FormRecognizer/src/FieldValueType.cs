@@ -60,6 +60,16 @@ namespace Azure.AI.FormRecognizer.Models
         /// <summary>
         /// Used for <see cref="SelectionMarkState"/> type.
         /// </summary>
-        SelectionMark
+        SelectionMark,
+
+        /// <summary>
+        /// Used for <see cref="FieldValueGender"/> type.
+        /// </summary>
+        Gender,
+
+        /// <summary>
+        /// Used for <see cref="string"/> type with an ISO 3166-1 alpha-3 country code.
+        /// </summary>
+        Country
     }
 }

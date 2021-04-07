@@ -27,6 +27,7 @@ param(
     [Parameter(Mandatory = $false)]
     [string] $PushArgs = "",
 
+    [Parameter(Mandatory = $false)]
     [string] $RemoteName = "azure-sdk-fork",
 
     [Parameter(Mandatory = $false)]
@@ -41,27 +42,36 @@ param(
 # would fail the first time git wrote command output.
 $ErrorActionPreference = "Continue"
 
-if (!(git remote | ? {$_ -eq $RemoteName}))
+if ((git remote) -contains $RemoteName)
 {
-    Write-Host "git remote add $RemoteName $GitUrl"
-    git remote add $RemoteName $GitUrl
-    if ($LASTEXITCODE -ne 0)
-    {
-        Write-Error "Unable to add remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
-        exit $LASTEXITCODE
-    }
+  Write-Host "git remote get-url $RemoteName"
+  $remoteUrl = git remote get-url $RemoteName
+  if ($remoteUrl -ne $GitUrl)
+  {
+    Write-Error "Remote with name $RemoteName already exists with an incompatible url [$remoteUrl] which should be [$GitUrl]."
+    exit 1
+  }
 }
-
-Write-Host "git fetch $RemoteName"
-git fetch $RemoteName
-if ($LASTEXITCODE -ne 0)
+else 
 {
-    Write-Error "Unable to fetch remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
+  Write-Host "git remote add $RemoteName $GitUrl"
+  git remote add $RemoteName $GitUrl
+  if ($LASTEXITCODE -ne 0)
+  {
+    Write-Error "Unable to add remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
     exit $LASTEXITCODE
+  }
 }
-
-Write-Host "git checkout -b $PRBranchName"
-git checkout -b $PRBranchName
+# Checkout to $PRBranch, create new one if not exists.
+git show-ref --verify --quiet refs/heads/$PRBranchName
+if ($LASTEXITCODE -eq 0) {
+  Write-Host "git checkout $PRBranchName."
+  git checkout $PRBranchName 
+} 
+else {
+  Write-Host "git checkout -b $PRBranchName."
+  git checkout -b $PRBranchName
+}
 if ($LASTEXITCODE -ne 0)
 {
     Write-Error "Unable to create branch LASTEXITCODE=$($LASTEXITCODE), see command output above."
@@ -105,6 +115,7 @@ do
     {
         $needsRetry = $true
         Write-Host "Git push failed with LASTEXITCODE=$($LASTEXITCODE) Need to fetch and rebase: attempt number=$($tryNumber)"
+ 
         Write-Host "git fetch $RemoteName"
         git fetch $RemoteName
         if ($LASTEXITCODE -ne 0)
@@ -168,8 +179,12 @@ do
     }
 } while($needsRetry -and $tryNumber -le $numberOfRetries)
 
-if ($LASTEXITCODE -ne 0)
+if ($LASTEXITCODE -ne 0 -or $tryNumber -gt $numberOfRetries)
 {
     Write-Error "Unable to push commit after $($tryNumber) retries LASTEXITCODE=$($LASTEXITCODE), see command output above."
+    if (0 -eq $LASTEXITCODE) 
+    {
+        exit 1
+    }
     exit $LASTEXITCODE
 }

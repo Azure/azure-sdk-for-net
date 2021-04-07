@@ -6,8 +6,9 @@ Run `dotnet build /t:GenerateCode` to generate code.
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/6c9d4fe7445b78db8336271895924379d95fbc6c/specification/cognitiveservices/data-plane/TextAnalytics/preview/v3.1-preview.4/TextAnalytics.json
+tag: release_3_1_preview.4
+require:
+    - https://github.com/Azure/azure-rest-api-specs/blob/c2e50d64a580169c9925b33712421f59462ad761/specification/cognitiveservices/data-plane/TextAnalytics/readme.md
 ```
 
 ### Make generated models internal by default
