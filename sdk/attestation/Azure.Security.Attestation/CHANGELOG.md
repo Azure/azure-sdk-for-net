@@ -4,7 +4,7 @@
 - Hopefully the final changes for Azure Attestation Service for .Net. Mostly code cleanups, but significant improvements to the `AttestationToken` class.
 
 ### Breaking change
-- Clients no longer need to instantiate `SecuredAttestationToken` or `UnsecuredAttestationToken` objects to validate the token hash. All of the functionality associated wth SecuredAttestationToken and UnsecuredAttestationToken has been folded into the `AttestationToken` class. 
+- Clients no longer need to instantiate `SecuredAttestationToken` or `UnsecuredAttestationToken` objects to validate the token hash. All of the functionality associated with `SecuredAttestationToken` and `UnsecuredAttestationToken` has been folded into the `AttestationToken` class. 
 As a result, the `SecuredAttestationToken` and `UnsecuredAttestationToken` types have been removed.
 
 ```C# Snippet:VerifySigningHash
@@ -84,4 +84,3 @@ Released as beta, not alpha.
 ## 1.0.0-alpha.1 (2020-12-08)
 
 Created.
-
