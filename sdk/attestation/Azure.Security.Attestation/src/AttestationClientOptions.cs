@@ -34,7 +34,7 @@ namespace Azure.Security.Attestation
 
             // If the caller specified that they have token validation options, use them, otherwise
             // use the defaults.
-            TokenOptions = tokenOptions?? new TokenValidationOptions();
+            TokenOptions = tokenOptions ?? new TokenValidationOptions();
         }
 
         /// <summary>
