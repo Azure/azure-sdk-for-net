@@ -35,9 +35,9 @@ namespace Azure.Security.Attestation.Tests
         private static Uri DataPlaneScope => new Uri($"https://attest.azure.net");
 
         public bool IsPlaybackMode { get => Mode == RecordedTestMode.Playback; }
-        public  bool IsRecordMode { get => Mode == RecordedTestMode.Record; }
-        public  bool IsLiveMode { get => Mode == RecordedTestMode.Live; }
-        public  bool IsTalkingToLiveServer { get => IsRecordMode || IsLiveMode; }
+        public bool IsRecordMode { get => Mode == RecordedTestMode.Record; }
+        public bool IsLiveMode { get => Mode == RecordedTestMode.Live; }
+        public bool IsTalkingToLiveServer { get => IsRecordMode || IsLiveMode; }
 
         internal AttestationClient GetSharedAttestationClient(RecordedTestBase testBase, TokenValidationOptions tokenValidation = default)
         {

@@ -203,7 +203,7 @@ namespace Azure.Security.Attestation
         ///     new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
         ///     new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
         ///
-        /// var shaHasher = SHA256Managed.Create();
+        /// using var shaHasher = SHA256Managed.Create();
         /// var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
         ///
         /// Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash));
@@ -213,7 +213,7 @@ namespace Azure.Security.Attestation
         /// wrapping the attestation policy. To validate the <see cref="PolicyResult.PolicyTokenHash"/> return value, a developer
         /// can create their own <see cref="AttestationToken"/> and create the hash of that.
         /// <code>
-        /// var shaHasher = SHA256Managed.Create();
+        /// using var shaHasher = SHA256Managed.Create();
         /// var policySetToken = new UnsecuredAttestationToken(new StoredAttestationPolicy { AttestationPolicy = disallowDebugging });
         /// disallowDebuggingHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
         /// </code>
@@ -284,7 +284,7 @@ namespace Azure.Security.Attestation
         ///     new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
         ///     new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
         ///
-        /// var shaHasher = SHA256Managed.Create();
+        /// using var shaHasher = SHA256Managed.Create();
         /// var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
         ///
         /// Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash));
