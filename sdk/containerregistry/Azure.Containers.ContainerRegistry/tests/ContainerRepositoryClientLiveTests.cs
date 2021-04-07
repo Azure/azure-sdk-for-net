@@ -28,7 +28,6 @@ namespace Azure.Containers.ContainerRegistry.Tests
 
             return InstrumentClient(registryClient.GetRepositoryClient(repository ?? _repositoryName));
         }
-
         #endregion
 
         #region Repository Tests
@@ -365,10 +364,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 string digest = null;
                 await foreach (RegistryArtifactProperties artifact in artifacts)
                 {
-                    digest = artifact.Digest;
-                    Assert.That(artifact.Repository.Contains(repository));
-                    Assert.That(artifact.Tags.Contains(tag));
-                    break;
+                    // Make sure we're looking at a manifest list, which has the tag
+                    if (artifact.References != null && artifact.References.Count > 0)
+                    {
+                        digest = artifact.Digest;
+                        Assert.That(artifact.Repository.Contains(repository));
+                        Assert.That(artifact.Tags.Contains(tag));
+                        break;
+                    }
                 }
             }
             finally
