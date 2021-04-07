@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Core.TestFramework
@@ -16,13 +14,13 @@ namespace Azure.Core.TestFramework
         private static AsyncLocal<TokenCredential> CurrentCredential = new AsyncLocal<TokenCredential>();
 
         // Initialize the environment so new DefaultAzureCredential() works
-        [OneTimeSetUp]
+        [SetUp]
         public virtual void SetupDefaultAzureCredential()
         {
             CurrentCredential.Value = TestEnvironment.Credential;
         }
 
-        [OneTimeTearDown]
+        [TearDown]
         public virtual void TearDownDefaultAzureCredential()
         {
             CurrentCredential.Value = null;
