@@ -206,7 +206,7 @@ Under the covers, the SetPolicy APIs create a [JSON Web Token][json_web_token] b
 string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
 
 X509Certificate2 policyTokenCertificate = new X509Certificate2(<Attestation Policy Signing Certificate>);
-AsymmetricAlgorithm policyTokenKey = <Attestation Policy Signing Key;
+AsymmetricAlgorithm policyTokenKey = <Attestation Policy Signing Key>;
 
 var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, new TokenSigningKey(policyTokenKey, policyTokenCertificate));
 ```

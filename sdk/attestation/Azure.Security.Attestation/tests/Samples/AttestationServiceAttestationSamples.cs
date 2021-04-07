@@ -172,7 +172,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             // verify that the hash of the policy document returned from the Attestation Service matches the hash
             // of an attestation token created locally.
             //@@ TokenSigningKey signingKey = new TokenSigningKey(<Customer provided signing key>, <Customer provided certificate>)
-            /*@@*/TokenSigningKey signingKey =  new TokenSigningKey(TestEnvironment.PolicySigningKey0, policyTokenSigner));
+            /*@@*/TokenSigningKey signingKey =  new TokenSigningKey(policyTokenKey, policyTokenCertificate);
             var policySetToken = new AttestationToken(
                 new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
                 signingKey);
