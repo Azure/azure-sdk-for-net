@@ -55,7 +55,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> The answers query results for the search operation;
         /// <c>null</c> if the <see cref="SearchOptions.QueryAnswer"/> parameter was not specified or set to <see cref="QueryAnswer.None"/>. </summary>
-        public IDictionary<string, IList<AnswerResult>> Answers { get; internal set; }
+        public IList<AnswerResult> Answers { get; internal set; }
 
         /// <summary>
         /// Gets the first (server side) page of search result values.
@@ -237,15 +237,10 @@ namespace Azure.Search.Documents.Models
                 else if (prop.NameEquals(Constants.SearchAnswersKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.Answers = new Dictionary<string, IList<AnswerResult>>();
-                    foreach (JsonElement answer in prop.Value.EnumerateArray())
+                    results.Answers = new List<AnswerResult>();
+                    foreach (JsonElement answerValue in prop.Value.EnumerateArray())
                     {
-                        List<AnswerResult> values = new();
-                        foreach (JsonElement answerValue in answer.EnumerateArray())
-                        {
-                            values.Add(AnswerResult.DeserializeAnswerResult(answerValue));
-                        }
-                        // results.Answers[answer.Name] = values;
+                        results.Answers.Add(AnswerResult.DeserializeAnswerResult(answerValue));
                     }
                 }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
