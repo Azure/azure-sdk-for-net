@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             /*@@*/ storageConnectionString = StorageTestEnvironment.Instance.StorageConnectionString;
             /*@@*/ blobContainerName = storageScope.ContainerName;
 
-            //@@ var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
+            var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
@@ -146,7 +146,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             /*@@*/
             /*@@*/ var resource = $"amqps://{ EventHubsTestEnvironment.Instance.FullyQualifiedNamespace }/{ eventHubScope.EventHubName }".ToLowerInvariant();
             /*@@*/ var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
-            /*@@*/ var credential = new AzureSasCredential(signature.Value);
+            /*@@*/ credential = new AzureSasCredential(signature.Value);
 
              var storageClient = new BlobContainerClient(
                 storageConnectionString,

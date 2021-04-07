@@ -1136,19 +1136,14 @@ namespace Azure.Data.Tables.Tests
             // Add the entities to the batch
             batch.AddEntities(entitiesToCreate);
 
-            try
-            {
-                TableBatchResponse response = await batch.SubmitBatchAsync().ConfigureAwait(false);
-            }
-            catch (RequestFailedException ex)
-            {
-                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.EntityAlreadyExists.ToString()));
-                Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
-                Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
-                Assert.That(batch.TryGetFailedEntityFromException(ex, out ITableEntity failedEntity), Is.True);
-                Assert.That(failedEntity.RowKey, Is.EqualTo(entitiesToCreate.Last().RowKey));
-                Assert.That(ex.Message.Contains(nameof(TableTransactionalBatch.TryGetFailedEntityFromException)));
-            }
+            var ex = Assert.ThrowsAsync<RequestFailedException>(() => batch.SubmitBatchAsync());
+
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.EntityAlreadyExists.ToString()));
+            Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
+            Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
+            Assert.That(batch.TryGetFailedEntityFromException(ex, out ITableEntity failedEntity), Is.True);
+            Assert.That(failedEntity.RowKey, Is.EqualTo(entitiesToCreate.Last().RowKey));
+            Assert.That(ex.Message.Contains(nameof(TableTransactionalBatch.TryGetFailedEntityFromException)));
         }
     }
 }
