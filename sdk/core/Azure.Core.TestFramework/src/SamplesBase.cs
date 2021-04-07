@@ -14,7 +14,7 @@ namespace Azure.Core.TestFramework
         private static AsyncLocal<TokenCredential> CurrentCredential = new AsyncLocal<TokenCredential>();
 
         // Initialize the environment so new DefaultAzureCredential() works
-        [SetUp]
+        [OneTimeSetUp]
         public virtual void SetupDefaultAzureCredential()
         {
             CurrentCredential.Value = TestEnvironment.Credential;
@@ -25,6 +25,10 @@ namespace Azure.Core.TestFramework
         /// </summary>
         protected class DefaultAzureCredential: TokenCredential
         {
+            public DefaultAzureCredential(bool includeInteractiveCredentials = false)
+            {
+            }
+
             public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
             {
                 return CurrentCredential.Value.GetTokenAsync(requestContext, cancellationToken);
