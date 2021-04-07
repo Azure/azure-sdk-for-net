@@ -20,12 +20,6 @@ namespace Azure.Core.TestFramework
             CurrentCredential.Value = TestEnvironment.Credential;
         }
 
-        [TearDown]
-        public virtual void TearDownDefaultAzureCredential()
-        {
-            CurrentCredential.Value = null;
-        }
-
         /// <summary>
         /// This class is intended to shade the Identity.DefaultAzureCredential to prevent it from caching hte
         /// </summary>
