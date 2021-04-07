@@ -271,10 +271,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             // header - except for ttl which is set above with the properties
 
-            amqpMessage.Header.DeliveryCount = sbMessage.AmqpMessage.Header.DeliveryCount;
-            amqpMessage.Header.Durable = sbMessage.AmqpMessage.Header.Durable;
-            amqpMessage.Header.FirstAcquirer = sbMessage.AmqpMessage.Header.FirstAcquirer;
-            amqpMessage.Header.Priority = sbMessage.AmqpMessage.Header.Priority;
+            if (sbMessage.AmqpMessage.Header.DeliveryCount != null)
+            {
+                amqpMessage.Header.DeliveryCount = sbMessage.AmqpMessage.Header.DeliveryCount;
+            }
+            if (sbMessage.AmqpMessage.Header.Durable != null)
+            {
+                amqpMessage.Header.Durable = sbMessage.AmqpMessage.Header.Durable;
+            }
+            if (sbMessage.AmqpMessage.Header.FirstAcquirer != null)
+            {
+                amqpMessage.Header.FirstAcquirer = sbMessage.AmqpMessage.Header.FirstAcquirer;
+            }
+            if (sbMessage.AmqpMessage.Header.Priority != null)
+            {
+                amqpMessage.Header.Priority = sbMessage.AmqpMessage.Header.Priority;
+            }
 
             // footer
 
