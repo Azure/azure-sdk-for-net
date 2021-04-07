@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -173,8 +175,7 @@ namespace Azure.Security.Attestation.Tests.Samples
             var shaHasher = SHA256Managed.Create();
             var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
 
-            CollectionAssert.AreEqual(attestationPolicyHash, setResult.Value.PolicyTokenHash);
-
+            Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash));
 #endregion
             var resetResult = client.ResetPolicy(AttestationType.SgxEnclave);
 

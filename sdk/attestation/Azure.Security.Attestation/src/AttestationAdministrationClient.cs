@@ -206,7 +206,7 @@ namespace Azure.Security.Attestation
         /// var shaHasher = SHA256Managed.Create();
         /// var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
         ///
-        /// CollectionAssert.AreEqual(attestationPolicyHash, setResult.Value.PolicyTokenHash);
+        /// Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash));
         /// </code>
         ///
         /// If the signing key and certificate are not provided, then the SetPolicyAsync API will create an unsecured attestation token
@@ -287,7 +287,7 @@ namespace Azure.Security.Attestation
         /// var shaHasher = SHA256Managed.Create();
         /// var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
         ///
-        /// CollectionAssert.AreEqual(attestationPolicyHash, setResult.Value.PolicyTokenHash);
+        /// Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash));
         /// </code>
         ///
         /// If the signing key and certificate are not provided, then the SetPolicyAsync API will create an unsecured attestation token

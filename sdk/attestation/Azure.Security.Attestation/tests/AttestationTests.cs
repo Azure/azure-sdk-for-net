@@ -132,7 +132,9 @@ namespace Azure.Security.Attestation.Tests
             byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
             bool callbackInvoked = false;
 
-            var client = TestEnvironment.GetSharedAttestationClient(this, new TokenValidationOptions(validationCallback: (attestationToken, signer) =>
+            var client = TestEnvironment.GetSharedAttestationClient(this, new TokenValidationOptions(
+                validateExpirationTime: TestEnvironment.IsTalkingToLiveServer,
+                validationCallback: (attestationToken, signer) =>
             {
                 // Verify that the callback can access the enclave held data field.
                 CollectionAssert.AreEqual(binaryRuntimeData, attestationToken.GetBody<AttestationResult>().EnclaveHeldData);

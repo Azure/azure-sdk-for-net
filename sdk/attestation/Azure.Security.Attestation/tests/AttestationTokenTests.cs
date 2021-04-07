@@ -180,7 +180,6 @@ namespace Azure.Security.Attestation.Tests
 
             // The body of the token should match the expected body.
             Assert.AreEqual(JsonSerializer.Serialize(expectedBody), parsedToken.TokenBody);
-            await Task.Yield();
         }
     }
 }

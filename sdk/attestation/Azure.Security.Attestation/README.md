@@ -230,7 +230,7 @@ var policySetToken = new AttestationToken(
 var shaHasher = SHA256Managed.Create();
 var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
 
-CollectionAssert.AreEqual(attestationPolicyHash, setResult.Value.PolicyTokenHash);
+Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash));
 ```
 
 ### Retrieve Token Certificates
