@@ -104,6 +104,7 @@ namespace Azure.Security.Attestation
         public virtual bool? Critical { get { throw null; } }
         public virtual System.DateTimeOffset? ExpirationTime { get { throw null; } }
         public virtual System.DateTimeOffset? IssuedAtTime { get { throw null; } }
+        public virtual string Issuer { get { throw null; } }
         public virtual string KeyId { get { throw null; } }
         public virtual System.Uri KeyUrl { get { throw null; } }
         public virtual System.DateTimeOffset? NotBeforeTime { get { throw null; } }
