@@ -5,9 +5,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary>
-    /// Query speller.
-    /// </summary>
     [CodeGenModel("Speller")]
     public readonly partial struct QuerySpeller
     {

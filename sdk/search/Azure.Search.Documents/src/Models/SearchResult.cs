@@ -120,9 +120,9 @@ namespace Azure.Search.Documents.Models
                 {
                     result.Captions = new List<CaptionResult>();
 
-                    foreach (JsonElement caption in prop.Value.EnumerateArray())
+                    foreach (JsonElement captionValue in prop.Value.EnumerateArray())
                     {
-                        result.Captions.Add(CaptionResult.DeserializeCaptionResult(caption));
+                        result.Captions.Add(CaptionResult.DeserializeCaptionResult(captionValue));
                     }
                 }
             }

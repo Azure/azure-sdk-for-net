@@ -5,9 +5,6 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary>
-    /// Query answer.
-    /// </summary>
     [CodeGenModel("Answers")]
     public readonly partial struct QueryAnswer
     {
