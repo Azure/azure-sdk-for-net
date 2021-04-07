@@ -21,7 +21,7 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// This class is intended to shade the Identity.DefaultAzureCredential to prevent it from caching hte
+        /// This class is intended to shade the Identity.DefaultAzureCredential to prevent it from caching the credential chain.
         /// </summary>
         protected class DefaultAzureCredential: TokenCredential
         {
