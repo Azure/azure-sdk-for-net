@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningServices
 {
-    internal class MachineLearningComputeDeleteHeaders
+    internal partial class MachineLearningComputeDeleteHeaders
     {
         private readonly Response _response;
         public MachineLearningComputeDeleteHeaders(Response response)

@@ -144,6 +144,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
             Assert.AreEqual(options.ReceiveMode, processor.ReceiveMode);
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(options.MaxReceiveWaitTime, processor.MaxReceiveWaitTime);
             Assert.AreEqual(fullyQualifiedNamespace, processor.FullyQualifiedNamespace);
             Assert.IsFalse(processor.IsClosed);
             Assert.IsFalse(processor.IsProcessing);
@@ -315,6 +316,70 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await processor.CloseAsync();
 
             await processor.DisposeAsync();
+        }
+
+        [Test]
+        public async Task CanRaiseEventsOnMockProcessor()
+        {
+            var mockProcessor = new MockProcessor();
+            bool processMessageCalled = false;
+            bool processErrorCalled = false;
+
+            var processArgs = new ProcessMessageEventArgs(
+                ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1"),
+                new Mock<ServiceBusReceiver>().Object,
+                CancellationToken.None);
+
+            var errorArgs = new ProcessErrorEventArgs(
+                new ServiceBusException("error", ServiceBusFailureReason.MessageSizeExceeded),
+                ServiceBusErrorSource.Abandon,
+                "namespace",
+                "entityPath",
+                CancellationToken.None);
+
+            mockProcessor.ProcessMessageAsync += args =>
+            {
+                processMessageCalled = true;
+                Assert.AreEqual("1", args.Message.MessageId);
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.ProcessErrorAsync += args =>
+            {
+                processErrorCalled = true;
+                Assert.AreEqual(
+                    ServiceBusFailureReason.MessageSizeExceeded,
+                    ((ServiceBusException)args.Exception).Reason);
+                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
+                Assert.AreEqual("entityPath", args.EntityPath);
+                Assert.AreEqual(ServiceBusErrorSource.Abandon, args.ErrorSource);
+                return Task.CompletedTask;
+            };
+
+            await mockProcessor.OnProcessMessageAsync(processArgs);
+            await mockProcessor.OnProcessErrorAsync(errorArgs);
+
+            Assert.IsTrue(processMessageCalled);
+            Assert.IsTrue(processErrorCalled);
+        }
+    }
+
+#pragma warning disable SA1402 // File may only contain a single type
+    internal class MockProcessor : ServiceBusProcessor
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        public MockProcessor() : base()
+        {
+        }
+
+        protected internal override async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
+        {
+            await base.OnProcessMessageAsync(args);
+        }
+
+        protected internal override async Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+        {
+            await base.OnProcessErrorAsync(args);
         }
     }
 }

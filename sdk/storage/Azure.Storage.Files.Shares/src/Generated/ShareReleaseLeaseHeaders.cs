@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class ShareReleaseLeaseHeaders
+    internal partial class ShareReleaseLeaseHeaders
     {
         private readonly Response _response;
         public ShareReleaseLeaseHeaders(Response response)

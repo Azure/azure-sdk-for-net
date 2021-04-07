@@ -1,13 +1,16 @@
 # Release History
 
-## 1.0.0-preview.3 (2021-01-15)
+## 1.1.0-beta.1 (Unreleased)
 
-- Updated to latest version of spec file which changes the account identifier to be a `Guid` rather than a `string`.
 
-## 1.0.0-preview.2 (2021-01-12)
+## 1.0.0 (2021-02-23)
 
-- Configured with shared source.
+- First stable release.
 
-## 1.0.0-preview.1 (2020-10-27)
+## 1.0.0-beta.2 (2021-02-16)
 
-- Initial client.
+- Automated update.
+
+## 1.0.0-beta.1 (2021-02-10)
+
+- Initial release.

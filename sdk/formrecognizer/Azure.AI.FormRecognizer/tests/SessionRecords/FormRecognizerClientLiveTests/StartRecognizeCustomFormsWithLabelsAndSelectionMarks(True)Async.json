@@ -1,18 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "42",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-285f633a3f81824d9c0487316f89ef34-15daf75743901749-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "traceparent": "00-0f52ad77653cc74ea80ed1797016b316-c7f946c0c26d5e43-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "c8ed64c1e42ba69f82de0b9db1d36b4b",
         "x-ms-return-client-request-id": "true"
       },
@@ -22,85 +19,109 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "apim-request-id": "2948f004-f0a4-45ea-9844-648bfdf19da4",
+        "apim-request-id": "f55cd881-9f07-4a9b-b676-255af2baf549",
         "Content-Length": "0",
-        "Date": "Fri, 30 Oct 2020 12:59:21 GMT",
-        "Location": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f",
+        "Date": "Wed, 24 Mar 2021 21:50:07 GMT",
+        "Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "109"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "111"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "b6e0a500e19c2e304c51407c5ac34e5e",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "68daf405-afa0-4d61-aac0-78120799860e",
+        "apim-request-id": "51c19228-6fad-4083-984c-1265f094eb0f",
+        "Content-Length": "170",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Oct 2020 12:59:21 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:07 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "29"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "a2d836e2-cd0e-4af5-b572-87643ea4f76f",
+          "modelId": "bf9e8464-faf3-46eb-b9a9-1612543495db",
           "status": "creating",
-          "createdDateTime": "2020-10-30T12:59:22Z",
-          "lastUpdatedDateTime": "2020-10-30T12:59:22Z"
+          "createdDateTime": "2021-03-24T21:50:07Z",
+          "lastUpdatedDateTime": "2021-03-24T21:50:07Z"
         }
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f?includeKeys=true",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db?includeKeys=true",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "a8cace134b4242324943149263608cde",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "32e6836f-1066-42b7-913c-defea9b9eda7",
+        "apim-request-id": "1793a6e6-1802-44ee-942b-22c86835470c",
+        "Content-Length": "170",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Oct 2020 12:59:23 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:09 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "21"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "69"
       },
       "ResponseBody": {
         "modelInfo": {
-          "modelId": "a2d836e2-cd0e-4af5-b572-87643ea4f76f",
+          "modelId": "bf9e8464-faf3-46eb-b9a9-1612543495db",
+          "status": "creating",
+          "createdDateTime": "2021-03-24T21:50:07Z",
+          "lastUpdatedDateTime": "2021-03-24T21:50:07Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db?includeKeys=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "b41f38fe0a28e0e133bf7bd9a4234cbe",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "48556322-dcc0-485e-abb2-7c10b6dc2032",
+        "Content-Length": "771",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Mar 2021 21:50:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "30"
+      },
+      "ResponseBody": {
+        "modelInfo": {
+          "modelId": "bf9e8464-faf3-46eb-b9a9-1612543495db",
           "attributes": {
             "isComposed": false
           },
           "status": "ready",
-          "createdDateTime": "2020-10-30T12:59:22Z",
-          "lastUpdatedDateTime": "2020-10-30T12:59:23Z"
+          "createdDateTime": "2021-03-24T21:50:07Z",
+          "lastUpdatedDateTime": "2021-03-24T21:50:10Z"
         },
         "trainResult": {
-          "averageModelAccuracy": 1.0,
+          "averageModelAccuracy": 0.995,
           "trainingDocuments": [
             {
               "documentName": "CCAuth-1.pdf",
@@ -131,15 +152,15 @@
           "fields": [
             {
               "fieldName": "AMEX_SELECTION_MARK",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "MASTERCARD_SELECTION_MARK",
-              "accuracy": 1.0
+              "accuracy": 0.995
             },
             {
               "fieldName": "VISA_SELECTION_MARK",
-              "accuracy": 1.0
+              "accuracy": 0.995
             }
           ],
           "errors": []
@@ -147,242 +168,245 @@
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f/analyze?includeTextDetails=true",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db/analyze?includeTextDetails=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "251215",
         "Content-Type": "application/pdf",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-b93fcd29f5a220449a4f497293ff3f5f-b309ab176bbcff40-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "b41f38fe0a28e0e133bf7bd9a4234cbe",
+        "traceparent": "00-51d79c2ea9938544b267ce192c45ef37-10a141803b038845-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "e28aac90c208b408729d6c59cc9dcbeb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "f6d7f176-0b57-4937-be0c-d02b0673df1d",
+        "apim-request-id": "aa5bdcd6-cf34-4e93-bfe0-dbb4f55dc0c0",
         "Content-Length": "0",
-        "Date": "Fri, 30 Oct 2020 12:59:25 GMT",
-        "Operation-Location": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.1/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f/analyzeresults/7c550008-4dd6-44ac-8e55-d0cef532a7e3",
+        "Date": "Wed, 24 Mar 2021 21:50:10 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db/analyzeresults/234b8418-a487-4ee9-9cd5-fe09264c19e4",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "79"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "103"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f/analyzeResults/7c550008-4dd6-44ac-8e55-d0cef532a7e3",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db/analyzeResults/234b8418-a487-4ee9-9cd5-fe09264c19e4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "e28aac90c208b408729d6c59cc9dcbeb",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "apim-request-id": "ae67bc25-330f-499e-be10-b9d031977acf",
-        "Content-Length": "109",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Oct 2020 12:59:25 GMT",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "47"
-      },
-      "ResponseBody": {
-        "status": "notStarted",
-        "createdDateTime": "2020-10-30T12:59:25Z",
-        "lastUpdatedDateTime": "2020-10-30T12:59:25Z"
-      }
-    },
-    {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f/analyzeResults/7c550008-4dd6-44ac-8e55-d0cef532a7e3",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "227e61c499a40836edea7483d0589e26",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "5103acff-917b-4654-bf5a-2942efa7044f",
+        "apim-request-id": "551f89e7-9f10-4ec4-9813-09ea2d8a1cde",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Oct 2020 12:59:26 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:11 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "25"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "57"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-10-30T12:59:25Z",
-        "lastUpdatedDateTime": "2020-10-30T12:59:25Z"
+        "createdDateTime": "2021-03-24T21:50:11Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:11Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f/analyzeResults/7c550008-4dd6-44ac-8e55-d0cef532a7e3",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db/analyzeResults/234b8418-a487-4ee9-9cd5-fe09264c19e4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "b60256f6aad63cd52f6a418a9d871396",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "52f7f32e-ca9e-47ea-9f2b-3b26397c44cb",
+        "apim-request-id": "b66e8390-ab55-40c2-84b3-c02af7629a4a",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Oct 2020 12:59:27 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:12 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "22"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "24"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-10-30T12:59:25Z",
-        "lastUpdatedDateTime": "2020-10-30T12:59:25Z"
+        "createdDateTime": "2021-03-24T21:50:11Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:11Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f/analyzeResults/7c550008-4dd6-44ac-8e55-d0cef532a7e3",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db/analyzeResults/234b8418-a487-4ee9-9cd5-fe09264c19e4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "42158ff329a5f6197581f51e4d84e41a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "fb447d53-1501-459a-b9aa-c3070a6e7fc0",
+        "apim-request-id": "090844de-5153-4b35-818f-0710dc9e4a3b",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Oct 2020 12:59:28 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:13 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "31"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "26"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-10-30T12:59:25Z",
-        "lastUpdatedDateTime": "2020-10-30T12:59:28Z"
+        "createdDateTime": "2021-03-24T21:50:11Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:11Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f/analyzeResults/7c550008-4dd6-44ac-8e55-d0cef532a7e3",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db/analyzeResults/234b8418-a487-4ee9-9cd5-fe09264c19e4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "766246ff149b1a158b42f23958ab6b65",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "e7b36150-62f8-4e82-ac35-4b339526e337",
+        "apim-request-id": "ed1eeaf8-893e-4d1a-a7bc-347a0b515169",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Oct 2020 12:59:29 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "25"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "36"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-10-30T12:59:25Z",
-        "lastUpdatedDateTime": "2020-10-30T12:59:28Z"
+        "createdDateTime": "2021-03-24T21:50:11Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:11Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f/analyzeResults/7c550008-4dd6-44ac-8e55-d0cef532a7e3",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db/analyzeResults/234b8418-a487-4ee9-9cd5-fe09264c19e4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "4090ded75b43cc813c0b4154b4b7eeab",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "588aed91-ca67-4770-a3e3-f4b8975466a7",
+        "apim-request-id": "95a6649a-bc50-48b4-b9be-a7e54fad5091",
         "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Oct 2020 12:59:31 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:15 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "23"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "50"
       },
       "ResponseBody": {
         "status": "notStarted",
-        "createdDateTime": "2020-10-30T12:59:25Z",
-        "lastUpdatedDateTime": "2020-10-30T12:59:28Z"
+        "createdDateTime": "2021-03-24T21:50:11Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:15Z"
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f/analyzeResults/7c550008-4dd6-44ac-8e55-d0cef532a7e3",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db/analyzeResults/234b8418-a487-4ee9-9cd5-fe09264c19e4",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "578b27869c25defb79fab66337e09ec9",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a4a7f896-f63b-4472-8429-99f276aa6216",
-        "Content-Length": "35389",
+        "apim-request-id": "e3241e45-44ea-4af3-b683-d7d19752ade2",
+        "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 30 Oct 2020 12:59:32 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "33"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "31"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-03-24T21:50:11Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:15Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db/analyzeResults/234b8418-a487-4ee9-9cd5-fe09264c19e4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "6f479016a4f4a3d7c4953a8fd3c166d4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "73699a64-bc41-4ec6-a041-49c4e17e91c4",
+        "Content-Length": "109",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Mar 2021 21:50:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "26"
+      },
+      "ResponseBody": {
+        "status": "notStarted",
+        "createdDateTime": "2021-03-24T21:50:11Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:15Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db/analyzeResults/234b8418-a487-4ee9-9cd5-fe09264c19e4",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "30b3465313203a3fe3b1c648a41e955c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "cf34626d-80ad-44df-bc2d-42ae261116d5",
+        "Content-Length": "34712",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Mar 2021 21:50:18 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "32"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2020-10-30T12:59:25Z",
-        "lastUpdatedDateTime": "2020-10-30T12:59:31Z",
+        "createdDateTime": "2021-03-24T21:50:11Z",
+        "lastUpdatedDateTime": "2021-03-24T21:50:18Z",
         "analyzeResult": {
           "version": "2.1.0",
           "readResults": [
@@ -395,6 +419,41 @@
               "lines": [
                 {
                   "boundingBox": [
+                    0.5301,
+                    0.697,
+                    2.3829,
+                    0.7018,
+                    2.3829,
+                    1.3034,
+                    0.5301,
+                    1.2986
+                  ],
+                  "text": "Contoso",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  },
+                  "words": [
+                    {
+                      "boundingBox": [
+                        0.5348,
+                        0.7066,
+                        2.3876,
+                        0.826,
+                        2.3781,
+                        1.1888,
+                        0.5587,
+                        1.3034
+                      ],
+                      "text": "Contoso",
+                      "confidence": 0.991
+                    }
+                  ]
+                },
+                {
+                  "boundingBox": [
                     3.2791,
                     0.7167,
                     5.0584,
@@ -405,6 +464,12 @@
                     0.8109
                   ],
                   "text": "STATE OF CALIFORNIA: CONTOSO",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -466,35 +531,6 @@
                 },
                 {
                   "boundingBox": [
-                    0.5367,
-                    0.7,
-                    2.3833,
-                    0.7067,
-                    2.38,
-                    1.2967,
-                    0.5367,
-                    1.2933
-                  ],
-                  "text": "Contoso",
-                  "words": [
-                    {
-                      "boundingBox": [
-                        0.576,
-                        0.7124,
-                        2.3577,
-                        0.8224,
-                        2.3498,
-                        1.1995,
-                        0.6019,
-                        1.2967
-                      ],
-                      "text": "Contoso",
-                      "confidence": 0.973
-                    }
-                  ]
-                },
-                {
-                  "boundingBox": [
                     3.4183,
                     0.8618,
                     4.9237,
@@ -505,6 +541,12 @@
                     0.9561
                   ],
                   "text": "BUREAU OF INSURANCE",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -562,6 +604,12 @@
                     1.1001
                   ],
                   "text": "124 Main Street Palo Alto CA 842325",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -675,6 +723,12 @@
                     1.2694
                   ],
                   "text": "(650)768-2322",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -704,6 +758,12 @@
                     2.333
                   ],
                   "text": "AUTHORIZATION OF CREDIT CARD PAYMENT",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -779,44 +839,50 @@
                 },
                 {
                   "boundingBox": [
-                    3.3533,
-                    3.0267,
-                    5.1867,
-                    3.0267,
-                    5.1867,
-                    3.2267,
-                    3.3533,
-                    3.23
+                    3.3522,
+                    3.0269,
+                    5.186,
+                    3.0269,
+                    5.186,
+                    3.2274,
+                    3.3522,
+                    3.2274
                   ],
                   "text": "CONTOSO BANK",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 0.878
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
-                        3.3563,
-                        3.0304,
-                        4.5105,
-                        3.0286,
-                        4.5106,
-                        3.2286,
-                        3.3624,
-                        3.2333
+                        3.357,
+                        3.0317,
+                        4.4267,
+                        3.0269,
+                        4.4267,
+                        3.2274,
+                        3.3618,
+                        3.2322
                       ],
                       "text": "CONTOSO",
                       "confidence": 0.985
                     },
                     {
                       "boundingBox": [
-                        4.5508,
-                        3.0286,
-                        5.1816,
-                        3.0301,
-                        5.1782,
-                        3.2286,
-                        4.5507,
-                        3.2286
+                        4.5365,
+                        3.0269,
+                        5.143,
+                        3.0317,
+                        5.1382,
+                        3.2274,
+                        4.5365,
+                        3.2274
                       ],
                       "text": "BANK",
-                      "confidence": 0.987
+                      "confidence": 0.994
                     }
                   ]
                 },
@@ -832,6 +898,12 @@
                     3.6446
                   ],
                   "text": "Fees owed to this Department may be paid by the use of a credit card. If you wish to pay your fee(s)",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1155,6 +1227,12 @@
                     3.8101
                   ],
                   "text": "with your credit card, please complete this form and send it with your paperwork. Payment through",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1394,6 +1472,12 @@
                     3.9764
                   ],
                   "text": "credit cards will not be processed without this authorization form. Please print or type clearly.",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1619,6 +1703,12 @@
                     4.3316
                   ],
                   "text": "Name (company/individual for whom payment is being made) (Please Include License # and SSN/FEIN):",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1721,9 +1811,9 @@
                     {
                       "boundingBox": [
                         4.1727,
-                        4.2083,
+                        4.2082,
                         4.5281,
-                        4.2083,
+                        4.2082,
                         4.5281,
                         4.3259,
                         4.1727,
@@ -1735,9 +1825,9 @@
                     {
                       "boundingBox": [
                         4.5718,
-                        4.2083,
+                        4.2082,
                         5.0014,
-                        4.2083,
+                        4.2082,
                         5.0014,
                         4.3259,
                         4.5718,
@@ -1830,6 +1920,12 @@
                     4.4867
                   ],
                   "text": "Contoso Insurance 54353T7A, 36-1222985",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1901,6 +1997,12 @@
                     5.068
                   ],
                   "text": "Purpose of Payment:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -1958,6 +2060,12 @@
                     5.034
                   ],
                   "text": "Balance on Account",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2015,6 +2123,12 @@
                     5.5929
                   ],
                   "text": "Card Type: \u2751Visa",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2072,6 +2186,12 @@
                     5.5922
                   ],
                   "text": "\u2751x AMEX",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2115,6 +2235,12 @@
                     5.6108
                   ],
                   "text": "\u2751Master Card",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2158,6 +2284,12 @@
                     5.8125
                   ],
                   "text": "Name of Cardholder:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2215,6 +2347,12 @@
                     5.8923
                   ],
                   "text": "John Singer",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2258,6 +2396,12 @@
                     5.8091
                   ],
                   "text": "Contact persons phone #, if questions with this",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2385,6 +2529,12 @@
                     5.9847
                   ],
                   "text": "form. Telephone #: (",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2456,6 +2606,12 @@
                     5.9672
                   ],
                   "text": "425",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2485,6 +2641,12 @@
                     5.9847
                   ],
                   "text": ")",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2504,35 +2666,6 @@
                 },
                 {
                   "boundingBox": [
-                    7.3783,
-                    5.9042,
-                    7.4157,
-                    5.9042,
-                    7.4157,
-                    5.918,
-                    7.3783,
-                    5.918
-                  ],
-                  "text": "-",
-                  "words": [
-                    {
-                      "boundingBox": [
-                        7.3783,
-                        5.9042,
-                        7.4157,
-                        5.9042,
-                        7.4157,
-                        5.918,
-                        7.3783,
-                        5.918
-                      ],
-                      "text": "-",
-                      "confidence": 1
-                    }
-                  ]
-                },
-                {
-                  "boundingBox": [
                     7.1288,
                     5.8181,
                     7.809,
@@ -2543,6 +2676,12 @@
                     5.9672
                   ],
                   "text": "779 3479",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2576,6 +2715,41 @@
                 },
                 {
                   "boundingBox": [
+                    7.3783,
+                    5.9042,
+                    7.4157,
+                    5.9042,
+                    7.4157,
+                    5.918,
+                    7.3783,
+                    5.918
+                  ],
+                  "text": "-",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
+                  "words": [
+                    {
+                      "boundingBox": [
+                        7.3783,
+                        5.9042,
+                        7.4157,
+                        5.9042,
+                        7.4157,
+                        5.918,
+                        7.3783,
+                        5.918
+                      ],
+                      "text": "-",
+                      "confidence": 1
+                    }
+                  ]
+                },
+                {
+                  "boundingBox": [
                     0.8964,
                     6.0366,
                     1.8846,
@@ -2586,6 +2760,12 @@
                     6.1393
                   ],
                   "text": "Email Address:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2629,6 +2809,12 @@
                     6.1753
                   ],
                   "text": "johnsinger@hotmail.com",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2658,6 +2844,12 @@
                     6.4101
                   ],
                   "text": "Mailing Address:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2701,6 +2893,12 @@
                     6.4186
                   ],
                   "text": "472 SE 74th ST",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2772,6 +2970,12 @@
                     6.6721
                   ],
                   "text": "City:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2801,6 +3005,12 @@
                     6.6774
                   ],
                   "text": "Lakewood",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2830,6 +3040,12 @@
                     6.645
                   ],
                   "text": "State:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2859,6 +3075,12 @@
                     6.6518
                   ],
                   "text": "WA",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2888,6 +3110,12 @@
                     6.6712
                   ],
                   "text": "Zip Code:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2931,6 +3159,12 @@
                     6.6473
                   ],
                   "text": "98712",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -2960,6 +3194,12 @@
                     7.1067
                   ],
                   "text": "I authorize Contoso Department of Professional and Financial Regulation, Bureau of Insurance",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3143,6 +3383,12 @@
                     7.2983
                   ],
                   "text": "to charge my: Visa",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3214,6 +3460,12 @@
                     7.9603
                   ],
                   "text": "4872876432425423",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3243,6 +3495,12 @@
                     8.0411
                   ],
                   "text": "Expiration date:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3286,6 +3544,12 @@
                     7.9982
                   ],
                   "text": "09",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3315,6 +3579,12 @@
                     8.012
                   ],
                   "text": "/",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3344,6 +3614,12 @@
                     8.0002
                   ],
                   "text": "21",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3373,6 +3649,12 @@
                     8.0289
                   ],
                   "text": "in the amount of: $__________________",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3458,6 +3740,12 @@
                     7.9962
                   ],
                   "text": "263.00",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3487,6 +3775,12 @@
                     8.0307
                   ],
                   "text": "____________________________",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3516,6 +3810,12 @@
                     8.1896
                   ],
                   "text": "(Card number \u2013 Please print clearly)",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3605,44 +3905,50 @@
                 },
                 {
                   "boundingBox": [
-                    1.89,
-                    8.26,
-                    3.2367,
-                    8.27,
-                    3.2333,
-                    8.5567,
-                    1.89,
-                    8.5533
+                    1.8862,
+                    8.2595,
+                    3.2329,
+                    8.2691,
+                    3.2329,
+                    8.5556,
+                    1.8862,
+                    8.5508
                   ],
                   "text": "John Singer",
+                  "appearance": {
+                    "style": {
+                      "name": "handwriting",
+                      "confidence": 0.676
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
-                        1.9698,
-                        8.2645,
-                        2.519,
-                        8.2845,
-                        2.5195,
-                        8.5409,
-                        1.9695,
-                        8.5567
+                        1.891,
+                        8.2595,
+                        2.4354,
+                        8.2786,
+                        2.4354,
+                        8.5412,
+                        1.891,
+                        8.5556
                       ],
                       "text": "John",
-                      "confidence": 0.97
+                      "confidence": 0.87
                     },
                     {
                       "boundingBox": [
-                        2.5778,
-                        8.2865,
-                        3.2251,
-                        8.3065,
-                        3.2268,
-                        8.5309,
-                        2.5784,
-                        8.5396
+                        2.4927,
+                        8.2834,
+                        3.2233,
+                        8.3073,
+                        3.2233,
+                        8.5317,
+                        2.4927,
+                        8.5412
                       ],
                       "text": "Singer",
-                      "confidence": 0.947
+                      "confidence": 0.956
                     }
                   ]
                 },
@@ -3650,14 +3956,20 @@
                   "boundingBox": [
                     0.8059,
                     8.3968,
-                    6.1697,
+                    5.2429,
                     8.3968,
-                    6.1697,
+                    5.2429,
                     8.5421,
                     0.8059,
                     8.5421
                   ],
-                  "text": "Signature: ___________________________________________ Date: ______",
+                  "text": "Signature: ___________________________________________",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3686,34 +3998,6 @@
                       ],
                       "text": "___________________________________________",
                       "confidence": 1
-                    },
-                    {
-                      "boundingBox": [
-                        5.2557,
-                        8.3997,
-                        5.6041,
-                        8.3997,
-                        5.6041,
-                        8.5111,
-                        5.2557,
-                        8.5111
-                      ],
-                      "text": "Date:",
-                      "confidence": 1
-                    },
-                    {
-                      "boundingBox": [
-                        5.66,
-                        8.5205,
-                        6.1697,
-                        8.5205,
-                        6.1697,
-                        8.5281,
-                        5.66,
-                        8.5281
-                      ],
-                      "text": "______",
-                      "confidence": 1
                     }
                   ]
                 },
@@ -3729,6 +4013,12 @@
                     8.4835
                   ],
                   "text": "08",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3748,35 +4038,6 @@
                 },
                 {
                   "boundingBox": [
-                    6.1674,
-                    8.3968,
-                    6.2149,
-                    8.3968,
-                    6.2149,
-                    8.5119,
-                    6.1674,
-                    8.5119
-                  ],
-                  "text": "/",
-                  "words": [
-                    {
-                      "boundingBox": [
-                        6.1674,
-                        8.3968,
-                        6.2149,
-                        8.3968,
-                        6.2149,
-                        8.5119,
-                        6.1674,
-                        8.5119
-                      ],
-                      "text": "/",
-                      "confidence": 1
-                    }
-                  ]
-                },
-                {
-                  "boundingBox": [
                     6.5359,
                     8.3585,
                     6.6943,
@@ -3787,6 +4048,12 @@
                     8.4716
                   ],
                   "text": "23",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3806,35 +4073,6 @@
                 },
                 {
                   "boundingBox": [
-                    6.7199,
-                    8.3968,
-                    6.7673,
-                    8.3968,
-                    6.7673,
-                    8.5119,
-                    6.7199,
-                    8.5119
-                  ],
-                  "text": "/",
-                  "words": [
-                    {
-                      "boundingBox": [
-                        6.7199,
-                        8.3968,
-                        6.7673,
-                        8.3968,
-                        6.7673,
-                        8.5119,
-                        6.7199,
-                        8.5119
-                      ],
-                      "text": "/",
-                      "confidence": 1
-                    }
-                  ]
-                },
-                {
-                  "boundingBox": [
                     7.0358,
                     8.3585,
                     7.3644,
@@ -3845,6 +4083,12 @@
                     8.4715
                   ],
                   "text": "2018",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -3864,58 +4108,35 @@
                 },
                 {
                   "boundingBox": [
-                    6.2125,
+                    5.66,
                     8.5205,
-                    6.7221,
+                    6.1697,
                     8.5205,
-                    6.7221,
+                    6.1697,
                     8.5281,
-                    6.2125,
+                    5.66,
                     8.5281
                   ],
                   "text": "______",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
-                        6.2125,
+                        5.66,
                         8.5205,
-                        6.7221,
+                        6.1697,
                         8.5205,
-                        6.7221,
+                        6.1697,
                         8.5281,
-                        6.2125,
+                        5.66,
                         8.5281
                       ],
                       "text": "______",
-                      "confidence": 1
-                    }
-                  ]
-                },
-                {
-                  "boundingBox": [
-                    6.7649,
-                    8.5205,
-                    7.4445,
-                    8.5205,
-                    7.4445,
-                    8.5281,
-                    6.7649,
-                    8.5281
-                  ],
-                  "text": "________",
-                  "words": [
-                    {
-                      "boundingBox": [
-                        6.7649,
-                        8.5205,
-                        7.4445,
-                        8.5205,
-                        7.4445,
-                        8.5281,
-                        6.7649,
-                        8.5281
-                      ],
-                      "text": "________",
                       "confidence": 1
                     }
                   ]
@@ -3932,6 +4153,12 @@
                     8.7284
                   ],
                   "text": "(must be signed by authorized person to validate)",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -4059,6 +4286,12 @@
                     9.2816
                   ],
                   "text": "Form is available on our website: www.contoso.com/insurance You may fax the form to:",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -4256,6 +4489,12 @@
                     9.4677
                   ],
                   "text": "650-768-2322 or e-mail to: insurance@contoso.com",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -4341,6 +4580,12 @@
                     9.8468
                   ],
                   "text": "OFFICES LOCATED AT 24 Main Street Palo Alto CA 842325",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -4496,6 +4741,12 @@
                     9.9709
                   ],
                   "text": "www.contoso.com/insurance",
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  },
                   "words": [
                     {
                       "boundingBox": [
@@ -4517,114 +4768,44 @@
               "selectionMarks": [
                 {
                   "boundingBox": [
-                    3.0724,
-                    5.4394,
-                    3.2498,
-                    5.4394,
-                    3.2498,
-                    5.6098,
-                    3.0724,
-                    5.6098
+                    1.6159,
+                    5.4302,
+                    1.7762,
+                    5.4302,
+                    1.7762,
+                    5.5929,
+                    1.6159,
+                    5.5929
                   ],
-                  "confidence": 0.991,
+                  "confidence": 1,
                   "state": "unselected"
                 },
                 {
                   "boundingBox": [
-                    1.6064,
-                    5.4233,
-                    1.7774,
-                    5.4233,
-                    1.7774,
-                    5.5937,
-                    1.6064,
-                    5.5937
+                    2.3779,
+                    5.4731,
+                    2.4454,
+                    5.4731,
+                    2.4454,
+                    5.5463,
+                    2.3779,
+                    5.5463
                   ],
-                  "confidence": 0.99,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    2.2849,
-                    5.4179,
-                    2.4652,
-                    5.4179,
-                    2.4652,
-                    5.5969,
-                    2.2849,
-                    5.5969
-                  ],
-                  "confidence": 0.881,
+                  "confidence": 1,
                   "state": "selected"
                 },
                 {
                   "boundingBox": [
-                    0,
-                    10.296,
-                    1.0459,
-                    10.296,
-                    1.0459,
-                    10.9982,
-                    0,
-                    10.9982
+                    3.0846,
+                    5.4481,
+                    3.2448,
+                    5.4481,
+                    3.2448,
+                    5.6108,
+                    3.0846,
+                    5.6108
                   ],
-                  "confidence": 0.833,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    0,
-                    10.6052,
-                    1.5019,
-                    10.6052,
-                    1.5019,
-                    11.0,
-                    0,
-                    11.0
-                  ],
-                  "confidence": 0.69,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    2.2887,
-                    5.4204,
-                    2.4633,
-                    5.4204,
-                    2.4633,
-                    5.5937,
-                    2.2887,
-                    5.5937
-                  ],
-                  "confidence": 0.609,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    3.3758,
-                    5.6907,
-                    4.9999,
-                    5.6907,
-                    4.9999,
-                    5.9387,
-                    3.3758,
-                    5.9387
-                  ],
-                  "confidence": 0.553,
-                  "state": "unselected"
-                },
-                {
-                  "boundingBox": [
-                    0,
-                    10.7248,
-                    0.539,
-                    10.7248,
-                    0.539,
-                    11,
-                    0,
-                    11
-                  ],
-                  "confidence": 0.553,
+                  "confidence": 1,
                   "state": "unselected"
                 }
               ]
@@ -4633,200 +4814,35 @@
           "pageResults": [
             {
               "page": 1,
-              "tables": [
-                {
-                  "rows": 4,
-                  "columns": 4,
-                  "cells": [
-                    {
-                      "rowIndex": 0,
-                      "columnIndex": 0,
-                      "text": "Name of Cardholder: John Singer",
-                      "boundingBox": [
-                        0.8104,
-                        5.6546,
-                        4.1554,
-                        5.6546,
-                        4.1554,
-                        5.9962,
-                        0.8104,
-                        5.9962
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/17/words/0",
-                        "#/readResults/0/lines/17/words/1",
-                        "#/readResults/0/lines/17/words/2",
-                        "#/readResults/0/lines/18/words/0",
-                        "#/readResults/0/lines/18/words/1"
-                      ]
-                    },
-                    {
-                      "rowIndex": 0,
-                      "columnIndex": 2,
-                      "columnSpan": 2,
-                      "text": "Contact persons phone #, if questions with this form. Telephone #: ( ) - 425 779 3479",
-                      "boundingBox": [
-                        5.1496,
-                        5.6546,
-                        8.2604,
-                        5.6546,
-                        8.2604,
-                        5.9962,
-                        5.1496,
-                        5.9962
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/19/words/0",
-                        "#/readResults/0/lines/19/words/1",
-                        "#/readResults/0/lines/19/words/2",
-                        "#/readResults/0/lines/19/words/3",
-                        "#/readResults/0/lines/19/words/4",
-                        "#/readResults/0/lines/19/words/5",
-                        "#/readResults/0/lines/19/words/6",
-                        "#/readResults/0/lines/19/words/7",
-                        "#/readResults/0/lines/20/words/0",
-                        "#/readResults/0/lines/20/words/1",
-                        "#/readResults/0/lines/20/words/2",
-                        "#/readResults/0/lines/20/words/3",
-                        "#/readResults/0/lines/22/words/0",
-                        "#/readResults/0/lines/23/words/0",
-                        "#/readResults/0/lines/21/words/0",
-                        "#/readResults/0/lines/24/words/0",
-                        "#/readResults/0/lines/24/words/1"
-                      ]
-                    },
-                    {
-                      "rowIndex": 1,
-                      "columnIndex": 0,
-                      "text": "Email Address: johnsinger@hotmail.com",
-                      "boundingBox": [
-                        0.8104,
-                        5.9962,
-                        4.1554,
-                        5.9962,
-                        4.1554,
-                        6.2262,
-                        0.8104,
-                        6.2262
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/25/words/0",
-                        "#/readResults/0/lines/25/words/1",
-                        "#/readResults/0/lines/26/words/0"
-                      ]
-                    },
-                    {
-                      "rowIndex": 2,
-                      "columnIndex": 0,
-                      "text": "Mailing Address: 472 SE 74th ST",
-                      "boundingBox": [
-                        0.8104,
-                        6.2262,
-                        4.1554,
-                        6.2262,
-                        4.1554,
-                        6.5021,
-                        0.8104,
-                        6.5021
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/27/words/0",
-                        "#/readResults/0/lines/27/words/1",
-                        "#/readResults/0/lines/28/words/0",
-                        "#/readResults/0/lines/28/words/1",
-                        "#/readResults/0/lines/28/words/2",
-                        "#/readResults/0/lines/28/words/3"
-                      ]
-                    },
-                    {
-                      "rowIndex": 3,
-                      "columnIndex": 0,
-                      "text": "City: Lakewood",
-                      "boundingBox": [
-                        0.8104,
-                        6.5021,
-                        4.1554,
-                        6.5021,
-                        4.1554,
-                        6.7146,
-                        0.8104,
-                        6.7146
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/29/words/0",
-                        "#/readResults/0/lines/30/words/0"
-                      ]
-                    },
-                    {
-                      "rowIndex": 3,
-                      "columnIndex": 1,
-                      "text": "State: WA",
-                      "boundingBox": [
-                        4.1554,
-                        6.5021,
-                        5.1496,
-                        6.5021,
-                        5.1496,
-                        6.7146,
-                        4.1554,
-                        6.7146
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/31/words/0",
-                        "#/readResults/0/lines/32/words/0"
-                      ]
-                    },
-                    {
-                      "rowIndex": 3,
-                      "columnIndex": 3,
-                      "text": "Zip Code: 98712",
-                      "boundingBox": [
-                        6.4104,
-                        6.5021,
-                        8.2604,
-                        6.5021,
-                        8.2604,
-                        6.7146,
-                        6.4104,
-                        6.7146
-                      ],
-                      "elements": [
-                        "#/readResults/0/lines/33/words/0",
-                        "#/readResults/0/lines/33/words/1",
-                        "#/readResults/0/lines/34/words/0"
-                      ]
-                    }
-                  ]
-                }
-              ]
+              "tables": []
             }
           ],
           "documentResults": [
             {
-              "docType": "custom:a2d836e2-cd0e-4af5-b572-87643ea4f76f",
-              "modelId": "a2d836e2-cd0e-4af5-b572-87643ea4f76f",
+              "docType": "custom:bf9e8464-faf3-46eb-b9a9-1612543495db",
+              "modelId": "bf9e8464-faf3-46eb-b9a9-1612543495db",
               "pageRange": [
                 1,
                 1
               ],
               "fields": {
-                "AMEX_SELECTION_MARK": {
+                "VISA_SELECTION_MARK": {
                   "type": "selectionMark",
-                  "text": "selected",
+                  "text": "unselected",
                   "page": 1,
                   "boundingBox": [
-                    2.285,
-                    5.42,
-                    2.465,
-                    5.42,
-                    2.465,
+                    1.615,
+                    5.43,
+                    1.775,
+                    5.43,
+                    1.775,
                     5.595,
-                    2.285,
+                    1.615,
                     5.595
                   ],
-                  "confidence": 1.0,
+                  "confidence": 0.995,
                   "elements": [
-                    "#/readResults/0/selectionMarks/2"
+                    "#/readResults/0/selectionMarks/0"
                   ]
                 },
                 "MASTERCARD_SELECTION_MARK": {
@@ -4834,41 +4850,41 @@
                   "text": "unselected",
                   "page": 1,
                   "boundingBox": [
-                    3.07,
-                    5.44,
-                    3.25,
-                    5.44,
-                    3.25,
+                    3.085,
+                    5.45,
+                    3.245,
+                    5.45,
+                    3.245,
                     5.61,
-                    3.07,
+                    3.085,
                     5.61
                   ],
-                  "confidence": 1.0,
+                  "confidence": 0.995,
                   "elements": [
-                    "#/readResults/0/selectionMarks/0"
+                    "#/readResults/0/selectionMarks/2"
                   ]
                 },
-                "VISA_SELECTION_MARK": {
+                "AMEX_SELECTION_MARK": {
                   "type": "selectionMark",
-                  "text": "unselected",
+                  "text": "selected",
                   "page": 1,
                   "boundingBox": [
-                    1.605,
-                    5.425,
-                    1.775,
-                    5.425,
-                    1.775,
-                    5.595,
-                    1.605,
-                    5.595
+                    2.38,
+                    5.475,
+                    2.445,
+                    5.475,
+                    2.445,
+                    5.545,
+                    2.38,
+                    5.545
                   ],
-                  "confidence": 1.0,
+                  "confidence": 0.995,
                   "elements": [
                     "#/readResults/0/selectionMarks/1"
                   ]
                 }
               },
-              "docTypeConfidence": 1.0
+              "docTypeConfidence": 0.92
             }
           ],
           "errors": []
@@ -4876,35 +4892,32 @@
       }
     },
     {
-      "RequestUri": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.2/custom/models/a2d836e2-cd0e-4af5-b572-87643ea4f76f",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/custom/models/bf9e8464-faf3-46eb-b9a9-1612543495db",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-069b7f7fbd8d6547b1a146132d6eaa0e-511010951e329148-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20201030.1",
-          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "6f479016a4f4a3d7c4953a8fd3c166d4",
+        "traceparent": "00-e24d3d69fe047c4992027b453daa0ac5-5da1a85355368b44-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "233e776d7f6fe1b750e8938f616c0bb8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 204,
       "ResponseHeaders": {
-        "apim-request-id": "0d00b7d0-dc46-485a-a245-f922bf7a5cc2",
+        "apim-request-id": "4f472f8e-6207-4ef7-a51c-353cdeaad5f4",
         "Content-Length": "0",
-        "Date": "Fri, 30 Oct 2020 12:59:32 GMT",
+        "Date": "Wed, 24 Mar 2021 21:50:19 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "32"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "38"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-westcentralus.cognitiveservices.azure.com/",
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
     "FORM_RECOGNIZER_SELECTION_MARK_BLOB_CONTAINER_SAS_URL": "https://sanitized.blob.core.windows.net",
     "RandomSeed": "1190978338"
   }

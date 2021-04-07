@@ -24,7 +24,7 @@ namespace Azure.Storage.Blobs.Test
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_ConnectionString()
         {
             var accountName = "accountName";
@@ -51,7 +51,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(accountName, builder2.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_Uri()
         {
             var accountName = "accountName";
@@ -74,7 +74,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(accountName, builder2.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_TokenAuth_Http()
         {
             // Arrange
@@ -86,7 +86,7 @@ namespace Azure.Storage.Blobs.Test
                  new ArgumentException("Cannot use TokenCredential without HTTPS."));
         }
 
-        [Test]
+        [RecordedTest]
         public void Ctor_CPK_Http()
         {
             // Arrange
@@ -103,7 +103,7 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("Cannot use client-provided key without HTTPS."));
         }
 
-        [Test]
+        [RecordedTest]
         [Ignore("#10044: Re-enable failing Storage tests")]
         public void Ctor_CPK_EncryptionScope()
         {
@@ -121,7 +121,7 @@ namespace Azure.Storage.Blobs.Test
                 new ArgumentException("CustomerProvidedKey and EncryptionScope cannot both be set"));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
             // Arrange
@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(properties);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Ctor_AzureSasCredential_VerifyNoSasInUri()
         {
             // Arrange
@@ -153,6 +153,25 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
+        public void Ctor_With_Sas_Does_Not_Reorder_Services()
+        {
+            // Arrange
+            var uri = new Uri("http://127.0.0.1/accountName?sv=2015-04-05&ss=bqtf&srt=sco&st=2021-03-29T02%3A25%3A53Z&se=2021-06-09T02%3A40%3A53Z&sp=crwdlaup&sig=XXXXX");
+            var transport = new MockTransport(r => new MockResponse(404));
+            var clientOptions = new BlobClientOptions()
+            {
+                Transport = transport
+            };
+
+            // Act
+            var client = new BlobServiceClient(uri, clientOptions);
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetPropertiesAsync());
+
+            // Act
+            StringAssert.Contains("ss=bqtf", transport.SingleRequest.Uri.ToString());
+        }
+
+        [RecordedTest]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange
@@ -186,28 +205,28 @@ namespace Azure.Storage.Blobs.Test
         }
 
         #region Secondary Storage
-        [Test]
+        [RecordedTest]
         public async Task ListContainersSegmentAsync_SecondaryStorageFirstRetrySuccessful()
         {
             TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(1); // one GET failure means the GET request should end up using the SECONDARY host
             AssertSecondaryStorageFirstRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListContainersSegmentAsync_SecondaryStorageSecondRetrySuccessful()
         {
             TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(2); // two GET failures means the GET request should end up using the PRIMARY host
             AssertSecondaryStorageSecondRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListContainersSegmentAsync_SecondaryStorageThirdRetrySuccessful()
         {
             TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3); // three GET failures means the GET request should end up using the SECONDARY host
             AssertSecondaryStorageThirdRetrySuccessful(SecondaryStorageTenantPrimaryHost(), SecondaryStorageTenantSecondaryHost(), testExceptionPolicy);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListContainersSegmentAsync_SecondaryStorage404OnSecondary()
         {
             TestExceptionPolicy testExceptionPolicy = await PerformSecondaryStorageTest(3, true);  // three GET failures + 404 on SECONDARY host means the GET request should end up using the PRIMARY host
@@ -221,15 +240,15 @@ namespace Azure.Storage.Blobs.Test
                 out TestExceptionPolicy testExceptionPolicy,
                 retryOn404);
             await using DisposingContainer test = await GetTestContainerAsync(service: service);
-                IList<BlobContainerItem> containers = await EnsurePropagatedAsync(
-                    async () => await service.GetBlobContainersAsync().ToListAsync(),
-                    containers => containers.Count > 0);
-                Assert.IsTrue(containers.Count >= 1);
+            IList<BlobContainerItem> containers = await EnsurePropagatedAsync(
+                async () => await service.GetBlobContainersAsync().ToListAsync(),
+                containers => containers.Count > 0);
+            Assert.IsTrue(containers.Count >= 1);
             return testExceptionPolicy;
         }
         #endregion
 
-        [Test]
+        [RecordedTest]
         public async Task ListContainersSegmentAsync_Marker()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
@@ -248,7 +267,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(containers.Any(c => test.Container.Uri == InstrumentClient(service.GetBlobContainerClient(c.Name)).Uri));
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task ListContainersSegmentAsync_MaxResults()
         {
@@ -267,7 +286,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(1, page.Values.Count());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListContainersSegmentAsync_Prefix()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
@@ -285,7 +304,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(items.All(c => c.Properties.Metadata == null));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task ListContainersSegmentAsync_Metadata()
         {
             BlobServiceClient service = GetServiceClient_SharedKey();
@@ -305,7 +324,7 @@ namespace Azure.Storage.Blobs.Test
                 containers.Where(c => c.Name == test.Container.Name).FirstOrDefault().Properties.Metadata);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ListContainersSegmentAsync_Deleted()
         {
@@ -327,7 +346,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(containerItem.Properties.RemainingRetentionDays);
         }
 
-        [Test]
+        [RecordedTest]
         [AsyncOnly]
         public async Task ListContainersSegmentAsync_Error()
         {
@@ -340,7 +359,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("OutOfRangeInput", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccountInfoAsync()
         {
             // Arrange
@@ -353,7 +372,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetAccountInfoAsync_HnsFalse()
         {
@@ -367,7 +386,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsFalse(response.Value.IsHierarchicalNamespaceEnabled);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
         public async Task GetAccountInfoAsync_HnsTrue()
         {
@@ -381,7 +400,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(response.Value.IsHierarchicalNamespaceEnabled);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAccountInfoAsync_Error()
         {
             // Arrange
@@ -396,7 +415,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync()
         {
             // Arrange
@@ -409,7 +428,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value.DeleteRetentionPolicy);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -424,7 +443,7 @@ namespace Azure.Storage.Blobs.Test
                 e => { });
         }
 
-        [Test]
+        [RecordedTest]
         [NonParallelizable]
         public async Task SetPropertiesAsync()
         {
@@ -460,7 +479,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(originalCors.Count(), properties.Cors.Count());
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         [NonParallelizable]
         public async Task SetPropertiesAsync_StaticWebsite()
@@ -494,7 +513,7 @@ namespace Azure.Storage.Blobs.Test
             await service.SetPropertiesAsync(properties);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
@@ -512,7 +531,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         // Note: read-access geo-redundant replication must be enabled for test account, or this test will fail.
-        [Test]
+        [RecordedTest]
         public async Task GetStatisticsAsync()
         {
             // Arrange
@@ -530,7 +549,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetUserDelegationKey()
         {
             // Arrange
@@ -543,7 +562,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(response.Value);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetUserDelegationKey_Error()
         {
             // Arrange
@@ -555,7 +574,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual("AuthenticationFailed", e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange
@@ -570,10 +589,11 @@ namespace Azure.Storage.Blobs.Test
                     expiresOn: TimeZoneInfo.ConvertTime(
                         Recording.Now.AddHours(1),
                         TimeZoneInfo.CreateCustomTimeZone("Storage Test Custom Time Zone", TimeSpan.FromHours(-3), "CTZ", "CTZ"))),
-                e => Assert.AreEqual("expiresOn must be UTC", e.Message)); ;
+                e => Assert.AreEqual("expiresOn must be UTC", e.Message));
+            ;
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateBlobContainerAsync()
         {
             var name = GetNewContainerName();
@@ -590,7 +610,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task DeleteBlobContainerAsync()
         {
             var name = GetNewContainerName();
@@ -602,7 +622,7 @@ namespace Azure.Storage.Blobs.Test
                 async () => await container.GetPropertiesAsync());
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task FindBlobsByTagAsync()
         {
@@ -649,7 +669,7 @@ namespace Azure.Storage.Blobs.Test
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         [TestCase(AccountSasPermissions.Filter)]
         [TestCase(AccountSasPermissions.All)]
@@ -691,7 +711,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsNotNull(filterBlob);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task FindBlobsByTagAsync_Error()
         {
@@ -707,7 +727,7 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual(BlobErrorCode.NoAuthenticationInformation.ToString(), e.ErrorCode));
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UndeleteBlobContainerAsync()
         {
@@ -736,7 +756,7 @@ namespace Azure.Storage.Blobs.Test
             await container.DeleteAsync();
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_02_10)]
         public async Task UndeleteBlobContainerAsync_Error()
         {
@@ -751,8 +771,8 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
 
-        [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameBlobContainerAsync()
         {
@@ -775,8 +795,8 @@ namespace Azure.Storage.Blobs.Test
             await newContainer.DeleteAsync();
         }
 
-        [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameBlobContainerAsync_AccountSas()
         {
@@ -801,8 +821,8 @@ namespace Azure.Storage.Blobs.Test
             await newContainer.DeleteAsync();
         }
 
-        [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameBlobContainerAsync_Error()
         {
@@ -815,8 +835,8 @@ namespace Azure.Storage.Blobs.Test
                 e => Assert.AreEqual(BlobErrorCode.ContainerNotFound.ToString(), e.ErrorCode));
         }
 
-        [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameBlobContainerAsync_SourceLease()
         {
@@ -849,8 +869,8 @@ namespace Azure.Storage.Blobs.Test
             await newContainer.DeleteAsync();
         }
 
-        [Test]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18257")]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_06_12)]
         public async Task RenameBlobContainerAsync_SourceLeaseFailed()
         {
@@ -880,7 +900,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         #region GenerateSasTests
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
@@ -923,7 +943,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsFalse(container5.CanGenerateAccountSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateSas_GetContainerClient()
         {
             // Arrange
@@ -972,7 +992,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsFalse(containerClient5.CanGenerateSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void CanGenerateAccountSas_Mockable()
         {
             // Act
@@ -989,7 +1009,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.IsTrue(serviceClient.Object.CanGenerateAccountSasUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateAccountSas_RequiredParameters()
         {
             // Arrange
@@ -1016,7 +1036,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateAccountSas_Builder()
         {
             var constants = new TestConstants(this);
@@ -1045,7 +1065,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(expectedUri.Uri.ToString(), sasUri.ToString());
         }
 
-        [Test]
+        [RecordedTest]
         public void GenerateAccountSas_WrongService_Service()
         {
             var constants = new TestConstants(this);
@@ -1079,7 +1099,7 @@ namespace Azure.Storage.Blobs.Test
         }
         #endregion
 
-        [Test]
+        [RecordedTest]
         public void CanMockClientConstructors()
         {
             // One has to call .Object to trigger constructor. It's lazy.

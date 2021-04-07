@@ -1,11 +1,24 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+
+## 1.0.0 (2021-03-29)
+Updated `Azure.Communication.Sms` version.
+
+## 1.0.0-beta.4 (2021-03-09)
 
 ### Added
 - Added support to create SmsClient with AzureKeyCredential.
-- Support for creating SmsClient with TokenCredential
+- Support for creating SmsClient with TokenCredential.
+- Added support for 1:N SMS messaging.
+- Added support for tagging SMS messages.
+- Send method series in SmsClient are idempotent under retry policy.
 
+### Breaking
+- Updated `Task<Response<SendSmsResponse>> SendAsync(PhoneNumberIdentifier from, PhoneNumberIdentifier to, string message, SendSmsOptions sendSmsOptions = null, CancellationToken cancellationToken = default)`
+to `Task<Response<SmsSendResult>> SendAsync(string from, string to, string message, SmsSendOptions options = default)`
+- Replaced `SendSmsResponse` with `SmsSendResult`.
 
 ## 1.0.0-beta.3 (2020-11-16)
 

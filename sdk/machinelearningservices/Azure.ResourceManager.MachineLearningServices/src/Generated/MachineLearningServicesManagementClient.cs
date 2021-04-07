@@ -13,7 +13,7 @@ using Azure.ResourceManager.MachineLearningServices;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> MachineLearningServices service management client. </summary>
-    public class MachineLearningServicesManagementClient
+    public partial class MachineLearningServicesManagementClient
     {
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;

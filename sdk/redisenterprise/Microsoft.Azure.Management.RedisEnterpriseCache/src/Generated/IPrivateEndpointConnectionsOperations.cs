@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// RedisEnterprise cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// RedisEnterprise cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -78,13 +78,13 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PrivateEndpointConnection>> GetMethodWithHttpMessagesAsync(string resourceGroupName, string clusterName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PrivateEndpointConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, string privateEndpointConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the state of the specified private endpoint connection
         /// associated with the RedisEnterprise cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// the RedisEnterprise cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// associated with the RedisEnterprise cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.

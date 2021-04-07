@@ -43,6 +43,7 @@ namespace Azure.Data.AppConfiguration
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSetting>> SetReadOnlyAsync(string key, string label, bool isReadOnly, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+        public virtual void UpdateSyncToken(string token) { }
     }
     public partial class ConfigurationClientOptions : Azure.Core.ClientOptions
     {
@@ -56,7 +57,7 @@ namespace Azure.Data.AppConfiguration
     {
         public static Azure.Data.AppConfiguration.ConfigurationSetting ConfigurationSetting(string key, string value, string label = null, string contentType = null, Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
     }
-    public sealed partial class ConfigurationSetting
+    public partial class ConfigurationSetting
     {
         public ConfigurationSetting(string key, string value, string label = null) { }
         public string ContentType { get { throw null; } set { } }
@@ -73,6 +74,28 @@ namespace Azure.Data.AppConfiguration
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
+    }
+    public partial class FeatureFlagConfigurationSetting : Azure.Data.AppConfiguration.ConfigurationSetting
+    {
+        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null) : base (default(string), default(string), default(string)) { }
+        public System.Collections.Generic.IList<Azure.Data.AppConfiguration.FeatureFlagFilter> ClientFilters { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
+        public string FeatureId { get { throw null; } set { } }
+        public bool IsEnabled { get { throw null; } set { } }
+        public static string KeyPrefix { get { throw null; } }
+    }
+    public partial class FeatureFlagFilter
+    {
+        public FeatureFlagFilter(string name) { }
+        public FeatureFlagFilter(string name, System.Collections.Generic.IReadOnlyDictionary<string, object> parameters) { }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, object> Parameters { get { throw null; } }
+    }
+    public partial class SecretReferenceConfigurationSetting : Azure.Data.AppConfiguration.ConfigurationSetting
+    {
+        public SecretReferenceConfigurationSetting(string key, System.Uri secretId, string label = null) : base (default(string), default(string), default(string)) { }
+        public System.Uri SecretId { get { throw null; } set { } }
     }
     [System.FlagsAttribute]
     public enum SettingFields : uint

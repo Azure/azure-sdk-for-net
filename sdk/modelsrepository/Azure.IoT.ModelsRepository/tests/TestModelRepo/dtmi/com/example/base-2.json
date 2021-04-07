@@ -1,0 +1,57 @@
+﻿{
+  "@id": "dtmi:com:example:base;2",
+  "@type": "Interface",
+  "contents": [
+    {
+      "@type": "Property",
+      "name": "baseSerialNumber",
+      "schema": "string"
+    }
+  ],
+  "displayName": {
+    "en": "mybaseProp"
+  },
+  "extends": [
+    {
+      "@id": "dtmi:com:example:basic;1",
+      "@type": "Interface",
+      "contents": [
+        {
+          "@type": "Property",
+          "name": "serialNumber",
+          "schema": "string",
+          "writable": false
+        },
+        {
+          "@type": [
+            "Telemetry",
+            "Temperature"
+          ],
+          "displayName": {
+            "en": "temperature"
+          },
+          "name": "temperature",
+          "schema": "double",
+          "unit": "degreeCelsius"
+        },
+        {
+          "@type": "Property",
+          "displayName": {
+            "en": "targetTemperature"
+          },
+          "name": "targetTemperature",
+          "schema": "double",
+          "writable": true
+        }
+      ],
+      "displayName": {
+        "en": "Basic"
+      }
+    },
+    "dtmi:com:example:Freezer;1"
+  ],
+  "@context": [
+    "dtmi:iotcentral:context;2",
+    "dtmi:dtdl:context;2"
+  ]
+}

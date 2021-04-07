@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of job versions. </summary>
-    public partial class JobVersionListResult
+    internal partial class JobVersionListResult
     {
         /// <summary> Initializes a new instance of JobVersionListResult. </summary>
         internal JobVersionListResult()

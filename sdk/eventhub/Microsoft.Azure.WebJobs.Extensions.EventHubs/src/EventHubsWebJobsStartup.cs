@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Microsoft.Azure.WebJobs.EventHubs
 {
-    public class EventHubsWebJobsStartup : IWebJobsStartup
+    internal class EventHubsWebJobsStartup : IWebJobsStartup
     {
         public void Configure(IWebJobsBuilder builder)
         {

@@ -24,5 +24,6 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Security.KeyVault.Certificates.csproj" />
+    <ProjectReference Include="..\..\Azure.Security.KeyVault.Keys\src\Azure.Security.KeyVault.Keys.csproj" />
   </ItemGroup>
 </Project>

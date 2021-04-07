@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal class PrivateEndpointConnectionsDeleteHeaders
+    internal partial class PrivateEndpointConnectionsDeleteHeaders
     {
         private readonly Response _response;
         public PrivateEndpointConnectionsDeleteHeaders(Response response)

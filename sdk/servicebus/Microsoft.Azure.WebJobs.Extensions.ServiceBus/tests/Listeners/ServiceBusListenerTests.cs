@@ -2,15 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Reflection;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
 using Microsoft.Azure.WebJobs.ServiceBus.Listeners;
+using Microsoft.Azure.WebJobs.ServiceBus.Tests;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -22,6 +26,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
         private readonly ServiceBusListener _listener;
         private readonly Mock<ITriggeredFunctionExecutor> _mockExecutor;
         private readonly Mock<MessagingProvider> _mockMessagingProvider;
+        private readonly Mock<ServiceBusClientFactory> _mockClientFactory;
         private readonly Mock<MessageProcessor> _mockMessageProcessor;
         private readonly TestLoggerProvider _loggerProvider;
         private readonly LoggerFactory _loggerFactory;
@@ -36,32 +41,40 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var client = new ServiceBusClient(_testConnection);
             ServiceBusProcessor processor = client.CreateProcessor(_entityPath);
             ServiceBusReceiver receiver = client.CreateReceiver(_entityPath);
+            var configuration = ConfigurationUtilities.CreateConfiguration(new KeyValuePair<string, string>("connection", _testConnection));
 
             ServiceBusOptions config = new ServiceBusOptions
             {
                 ExceptionHandler = ExceptionReceivedHandler
             };
-            _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor);
+            _mockMessageProcessor = new Mock<MessageProcessor>(MockBehavior.Strict, processor, receiver);
 
-            _mockMessagingProvider = new Mock<MessagingProvider>(MockBehavior.Strict, new OptionsWrapper<ServiceBusOptions>(config));
-
+            _mockMessagingProvider = new Mock<MessagingProvider>(new OptionsWrapper<ServiceBusOptions>(config));
+            _mockClientFactory = new Mock<ServiceBusClientFactory>(configuration, Mock.Of<AzureComponentFactory>(), _mockMessagingProvider.Object);
             _mockMessagingProvider
-                .Setup(p => p.CreateMessageProcessor(_entityPath, _testConnection))
+                .Setup(p => p.CreateMessageProcessor(It.IsAny<ServiceBusClient>(), _entityPath))
                 .Returns(_mockMessageProcessor.Object);
 
             _mockMessagingProvider
-                    .Setup(p => p.CreateBatchMessageReceiver(_entityPath, _testConnection))
+                    .Setup(p => p.CreateBatchMessageReceiver(It.IsAny<ServiceBusClient>(), _entityPath))
                     .Returns(receiver);
-
-            Mock<ServiceBusAccount> mockServiceBusAccount = new Mock<ServiceBusAccount>(MockBehavior.Strict);
-            mockServiceBusAccount.Setup(a => a.ConnectionString).Returns(_testConnection);
 
             _loggerFactory = new LoggerFactory();
             _loggerProvider = new TestLoggerProvider();
             _loggerFactory.AddProvider(_loggerProvider);
 
-            _listener = new ServiceBusListener(_functionId, EntityType.Queue, _entityPath, false, _mockExecutor.Object, config, mockServiceBusAccount.Object,
-                                _mockMessagingProvider.Object, _loggerFactory, false);
+            _listener = new ServiceBusListener(
+                _functionId,
+                EntityType.Queue,
+                _entityPath,
+                false,
+                _mockExecutor.Object,
+                config,
+                "connection",
+                _mockMessagingProvider.Object,
+                _loggerFactory,
+                false,
+                _mockClientFactory.Object);
         }
 
         [Test]
@@ -75,12 +88,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 lockedUntil: DateTimeOffset.Now);
             var receiver = new Mock<ServiceBusReceiver>().Object;
             var args = new ProcessMessageEventArgs(message, receiver, CancellationToken.None);
-            _mockMessageProcessor.Setup(p => p.BeginProcessingMessageAsync(receiver, message, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            _mockMessageProcessor.Setup(p => p.BeginProcessingMessageAsync(It.IsAny<ServiceBusMessageActions>(), message, It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
             FunctionResult result = new FunctionResult(true);
             _mockExecutor.Setup(p => p.TryExecuteAsync(It.Is<TriggeredFunctionData>(q => ((ServiceBusTriggerInput)q.TriggerValue).Messages[0] == message), It.IsAny<CancellationToken>())).ReturnsAsync(result);
 
-            _mockMessageProcessor.Setup(p => p.CompleteProcessingMessageAsync(receiver, message, result, It.IsAny<CancellationToken>())).Returns(Task.FromResult(0));
+            _mockMessageProcessor.Setup(p => p.CompleteProcessingMessageAsync(It.IsAny<ServiceBusMessageActions>(), message, result, It.IsAny<CancellationToken>())).Returns(Task.FromResult(0));
 
             await _listener.ProcessMessageAsync(args);
 
@@ -95,7 +108,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
             var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: Guid.NewGuid().ToString());
             var receiver = new Mock<ServiceBusReceiver>().Object;
 
-            _mockMessageProcessor.Setup(p => p.BeginProcessingMessageAsync(receiver, message, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+            _mockMessageProcessor.Setup(p => p.BeginProcessingMessageAsync(
+                It.IsAny<ServiceBusMessageActions>(),
+                message,
+                It.IsAny<CancellationToken>())).ReturnsAsync(false);
             var args = new ProcessMessageEventArgs(message, receiver, CancellationToken.None);
 
             await _listener.ProcessMessageAsync(args);

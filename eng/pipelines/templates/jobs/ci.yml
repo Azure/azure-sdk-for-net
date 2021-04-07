@@ -1,0 +1,165 @@
+parameters:
+- name: Artifacts
+  type: object
+  default: []
+- name: TestPipeline
+  type: boolean
+  default: false
+- name: ArtifactName
+  type: string
+  default: packages
+- name: SDKType
+  type: string
+  default: all
+- name: ServiceDirectory
+  type: string
+  default: not-specified
+- name: ServiceToTest
+  type: string
+  default: ''
+- name: TestSetupSteps
+  type: stepList
+  default: []
+- name: TestTimeoutInMinutes
+  type: number
+- name: MatrixConfigs
+  type: object
+- name: AdditionalMatrixConfigs
+  type: object
+  default: []
+- name: MatrixFilters
+  type: object
+  default: []
+- name: MatrixReplace
+  type: object
+  default: []
+
+jobs:
+  - job: Build
+    pool:
+      name: azsdk-pool-mms-win-2019-general
+      vmImage: MMS2019
+    steps:
+      - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
+        parameters:
+          PackageName: "Azure.Template"
+          ServiceDirectory: "template"
+          TestPipeline: ${{ parameters.TestPipeline }}
+      - pwsh: |
+          echo "##vso[build.addbuildtag]Scheduled"
+        displayName: "Tag scheduled builds"
+        condition: and(eq(variables['Build.SourceBranchName'],'master'),eq(variables['Build.Reason'],'Schedule'))
+      - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
+        parameters:
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      - pwsh: |
+          $skipDevBuildNumber = "false"
+          # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
+          # the SetDevVersion property isn't set to true. All other cases should contain dev version numbers.
+          if ('$(Build.Reason)' -eq 'Manual' -and '$(SetDevVersion)' -ne 'true') {
+            $skipDevBuildNumber = "true"
+          }
+          $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
+          echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
+        displayName: "Setup .NET specific versioning properties"
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.6'
+        inputs:
+          versionSpec: '3.6'
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - script: >-
+          dotnet pack eng/service.proj -warnaserror
+          /p:SDKType=${{ parameters.SDKType }}
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+          /p:IncludeTests=false
+          /p:PublicSign=false $(VersioningProperties)
+          /p:Configuration=$(BuildConfiguration)
+          /p:CommitSHA=$(Build.SourceVersion)
+          /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+        displayName: "Build and Package"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+      - template: /eng/common/pipelines/templates/steps/create-apireview.yml
+        parameters:
+          Artifacts: ${{parameters.Artifacts}}
+
+      - template: ../steps/archetype-sdk-docs.yml
+        parameters:
+          ServiceDirectory: ${{parameters.ServiceDirectory}}
+          Artifacts: ${{parameters.Artifacts}}
+          DocGenerationDir: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
+          LibType: 'client'
+
+      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+        parameters:
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'packages'
+
+  - job: "Analyze"
+    condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
+    pool:
+      name: azsdk-pool-mms-ubuntu-1804-general
+      vmImage: MMSUbuntu18.04
+    steps:
+      - task: UsePythonVersion@0
+        displayName: "Use Python 3.6"
+        inputs:
+          versionSpec: "3.6"
+      - template: /eng/common/pipelines/templates/steps/verify-links.yml
+        parameters:
+          ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+            Directory: ''
+            Urls: (eng/common/scripts/get-markdown-files-from-changed-files.ps1)
+          ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+            Directory: sdk/${{ parameters.ServiceDirectory }}
+          CheckLinkGuidance: $true
+      - script: |
+          pip install setuptools wheel
+          pip install doc-warden==$(DocWardenVersion)
+          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
+        displayName: "Verify Readmes"
+      - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
+        parameters:
+          SourceDirectory: $(Build.SourcesDirectory)
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '14.x'
+        displayName: 'Install NodeJS'
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - task: PowerShell@2
+        displayName: "Verify generated code"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+        inputs:
+          filePath: "eng/scripts/CodeChecks.ps1"
+          arguments: >
+           -ServiceDirectory ${{ parameters.ServiceToTest }}
+           -SDKType ${{ parameters.SDKType }}
+          pwsh: true
+          failOnStderr:  false
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: "Component Detection"
+        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
+        # scheduled builds should be good enough.
+        inputs:
+          ignoreDirectories: "sdk/storage/Azure.Storage.Common/swagger/Generator"
+        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
+      - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
+
+  - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+    parameters:
+      JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+      MatrixConfigs: ${{ parameters.MatrixConfigs }}
+      MatrixFilters: ${{ parameters.MatrixFilters }}
+      MatrixReplace: ${{ parameters.MatrixReplace }}
+      CloudConfig:
+        Cloud: Public
+      AdditionalParameters:
+        SDKType: ${{ parameters.SDKType }}
+        ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        TestSetupSteps: ${{ parameters.TestSetupSteps }}
+        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}

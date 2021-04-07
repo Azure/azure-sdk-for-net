@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Storage;
@@ -37,24 +38,49 @@ namespace Azure.Core.Pipeline
 
             if (content != null)
             {
-                XDocument xml = XDocument.Parse(content);
-                errorCode = xml.Root.Element(Constants.ErrorCode).Value;
-                message = xml.Root.Element(Constants.ErrorMessage).Value;
-
-                foreach (XElement element in xml.Root.Elements())
+                // XML body
+                if (responseHeaders.ContentType.Contains(Constants.ContentTypeApplicationXml))
                 {
-                    switch (element.Name.LocalName)
+                    XDocument xml = XDocument.Parse(content);
+                    errorCode = xml.Root.Element(Constants.ErrorCode).Value;
+                    message = xml.Root.Element(Constants.ErrorMessage).Value;
+
+                    foreach (XElement element in xml.Root.Elements())
                     {
-                        case Constants.ErrorCode:
-                        case Constants.ErrorMessage:
-                            continue;
-                        default:
-                            additionalInfo[element.Name.LocalName] = element.Value;
-                            break;
+                        switch (element.Name.LocalName)
+                        {
+                            case Constants.ErrorCode:
+                            case Constants.ErrorMessage:
+                                continue;
+                            default:
+                                additionalInfo[element.Name.LocalName] = element.Value;
+                                break;
+                        }
                     }
                 }
+
+                // Json body
+                else if (responseHeaders.ContentType.Contains(Constants.ContentTypeApplicationJson))
+                {
+                    JsonDocument json = JsonDocument.Parse(content);
+                    JsonElement error = json.RootElement.GetProperty(Constants.ErrorPropertyKey);
+
+                    IDictionary<string, string> details = default;
+                    if (error.TryGetProperty(Constants.DetailPropertyKey, out JsonElement detail))
+                    {
+                        details = new Dictionary<string, string>();
+                        foreach (JsonProperty property in detail.EnumerateObject())
+                        {
+                            details[property.Name] = property.Value.GetString();
+                        }
+                    }
+
+                    message = error.GetProperty(Constants.MessagePropertyKey).GetString();
+                    errorCode = error.GetProperty(Constants.CodePropertyKey).GetString();
+                    additionalInfo = details;
+                }
             }
-            // Error response does not have a content body.
+            // No response body.
             else
             {
                 // The other headers will appear in the "Headers" section of the Exception message.

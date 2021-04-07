@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal static class ErrorCodeValueExtensions
+    internal static partial class ErrorCodeValueExtensions
     {
         public static string ToSerialString(this ErrorCodeValue value) => value switch
         {

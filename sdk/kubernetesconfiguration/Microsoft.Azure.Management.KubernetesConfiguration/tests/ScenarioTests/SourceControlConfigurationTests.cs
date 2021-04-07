@@ -4,6 +4,7 @@
 namespace KubernetesConfiguration.Tests.ScenarioTests
 {
     using System.Linq;
+    using System.Collections.Generic;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
     using Microsoft.Azure.Management.KubernetesConfiguration.Models;
@@ -16,10 +17,10 @@ namespace KubernetesConfiguration.Tests.ScenarioTests
         public void CanCreateUpdateDeleteSourceControlConfiguration()
         {
             ClusterInfo cluster = new ClusterInfo(
-                name: "azure-arc5",
+                name: "nanthicluster0923",
                 type: ClusterInfo.ClusterType.connectedClusters,
                 location: "eastus2euap",
-                resourceGroup: "haikudevtesting"
+                resourceGroup: "nanthirg0923"
                 );
 
             SourceControlConfiguration configuration = new SourceControlConfiguration(
@@ -30,8 +31,15 @@ namespace KubernetesConfiguration.Tests.ScenarioTests
                 operatorInstanceName: "netsdktestconfig01a-opin",
                 operatorParams: "--git-readonly",
                 operatorScope: "namespace",
-                enableHelmOperator: "true"
-                );
+                enableHelmOperator: true,
+                helmOperatorProperties: new HelmOperatorProperties(
+                    chartVersion: "1.2.0",
+                    chartValues: "--set helm.versions=v3"
+                ),
+                configurationProtectedSettings: new Dictionary<string, string>(){
+                    {"dummyArg", "ZHVtbXlQYXJhbQ=="}
+                }
+            );
 
             using (var context = MockContext.Start(this.GetType()))
             {

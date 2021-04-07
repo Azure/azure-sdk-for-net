@@ -7,7 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.FormRecognizer", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.FormRecognizer.Tests", "tests\Azure.AI.FormRecognizer.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{439F1494-8E96-4931-AB0A-5BBA7EBA15D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{439F1494-8E96-4931-AB0A-5BBA7EBA15D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.FormRecognizer.Perf", "perf\Azure.AI.FormRecognizer.Perf.csproj", "{DAB8EFE6-7DE1-4867-9670-2FF09791E486}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{DECB7564-96C8-413F-8F87-998C1E8C077F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{439F1494-8E96-4931-AB0A-5BBA7EBA15D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{439F1494-8E96-4931-AB0A-5BBA7EBA15D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{439F1494-8E96-4931-AB0A-5BBA7EBA15D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAB8EFE6-7DE1-4867-9670-2FF09791E486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAB8EFE6-7DE1-4867-9670-2FF09791E486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAB8EFE6-7DE1-4867-9670-2FF09791E486}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAB8EFE6-7DE1-4867-9670-2FF09791E486}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DECB7564-96C8-413F-8F87-998C1E8C077F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DECB7564-96C8-413F-8F87-998C1E8C077F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DECB7564-96C8-413F-8F87-998C1E8C077F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DECB7564-96C8-413F-8F87-998C1E8C077F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

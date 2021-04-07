@@ -96,15 +96,9 @@ namespace Azure.Data.Tables.Tests
 
             string token = sas.Sign(credential);
 
-            // Build a SAS URI
-            UriBuilder sasUri = new UriBuilder(ServiceUri)
-            {
-                Query = token
-            };
-
             // Create the TableServiceClient using the SAS URI.
 
-            var sasAuthedService = InstrumentClient(new TableServiceClient(sasUri.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedService = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
             var sasTableclient = sasAuthedService.GetTableClient(tableName);
 
             // Validate that we are able to query the table from the service.
@@ -113,7 +107,16 @@ namespace Azure.Data.Tables.Tests
 
             // Validate that we are not able to upsert an entity to the table.
 
-            Assert.That(async () => await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.Forbidden));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
+            if (_endpointType == TableEndpointType.Storage)
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.AuthorizationPermissionMismatch.ToString()));
+            }
+            else
+            {
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
+            }
         }
 
         /// <summary>
@@ -145,14 +148,8 @@ namespace Azure.Data.Tables.Tests
 
             string token = sas.Sign(credential);
 
-            // Build a SAS URI
-            UriBuilder sasUri = new UriBuilder(ServiceUri)
-            {
-                Query = token
-            };
-
             // Create the TableServiceClient using the SAS URI.
-            var sasAuthedService = InstrumentClient(new TableServiceClient(sasUri.Uri, InstrumentClientOptions(new TableClientOptions())));
+            var sasAuthedService = InstrumentClient(new TableServiceClient(new Uri(ServiceUri), new AzureSasCredential(token), InstrumentClientOptions(new TableClientOptions())));
             var sasTableclient = sasAuthedService.GetTableClient(tableName);
 
             // Insert the entities
@@ -167,7 +164,9 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entities.Count, Is.EqualTo(1));
 
             // Validate that we are not able to fetch the entity outside the range of the row key filter.
-            Assert.That(async () => await sasTableclient.GetEntityAsync<TableEntity>(PartitionKeyValue, entitiesToCreate[1].RowKey).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>().And.Property("Status").EqualTo((int)HttpStatusCode.NotFound));
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await sasTableclient.GetEntityAsync<TableEntity>(PartitionKeyValue, entitiesToCreate[1].RowKey).ConfigureAwait(false));
+            Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.ResourceNotFound.ToString()));
 
             // Validate that we are able to fetch the entity with the client with full access.
             Assert.That(async () => await client.GetEntityAsync<TableEntity>(PartitionKeyValue, entitiesToCreate[1].RowKey).ConfigureAwait(false), Throws.Nothing);
@@ -320,7 +319,8 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Replace).ConfigureAwait(false));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.UpdateConditionNotSatisfied.ToString()));
 
             // Use a matching ETag.
 
@@ -376,7 +376,8 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.UpdateConditionNotSatisfied.ToString()));
 
             // Use a matching ETag.
 
@@ -502,7 +503,8 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, staleEtag).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, staleEtag).ConfigureAwait(false));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.UpdateConditionNotSatisfied.ToString()));
 
             // Use a matching ETag.
 
@@ -767,7 +769,8 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Replace).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Replace).ConfigureAwait(false));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.UpdateConditionNotSatisfied.ToString()));
 
             // Use a matching ETag.
 
@@ -823,7 +826,8 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.UpdateEntityAsync(updatedEntity, originalEntity.ETag, TableUpdateMode.Merge).ConfigureAwait(false));
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.UpdateConditionNotSatisfied.ToString()));
 
             // Use a matching ETag.
 
@@ -882,7 +886,9 @@ namespace Azure.Data.Tables.Tests
 
             // Use a non-matching ETag.
 
-            Assert.That(async () => await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, staleEtag).ConfigureAwait(false), Throws.InstanceOf<RequestFailedException>());
+            var ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeleteEntityAsync(PartitionKeyValue, rowKeyValue, staleEtag).ConfigureAwait(false));
+
+            Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.UpdateConditionNotSatisfied.ToString()));
 
             // Use a matching ETag.
 
@@ -941,7 +947,8 @@ namespace Azure.Data.Tables.Tests
             List<EnumEntity> entityResults;
             var entitiesToCreate = new[]
             {
-                new EnumEntity{ PartitionKey = PartitionKeyValue, RowKey = "01", MyFoo = Foo.Two}
+                new EnumEntity{ PartitionKey = PartitionKeyValue, RowKey = "01", MyFoo = Foo.Two, MyNullableFoo = NullableFoo.Two},
+                new EnumEntity{ PartitionKey = PartitionKeyValue, RowKey = "02", MyFoo = Foo.Two, MyNullableFoo = null},
             };
 
             // Create the new entities.
@@ -960,6 +967,7 @@ namespace Azure.Data.Tables.Tests
                 Assert.That(entityResults[i].PartitionKey, Is.EqualTo(entitiesToCreate[i].PartitionKey), "The entities should be equivalent");
                 Assert.That(entityResults[i].RowKey, Is.EqualTo(entitiesToCreate[i].RowKey), "The entities should be equivalent");
                 Assert.That(entityResults[i].MyFoo, Is.EqualTo(entitiesToCreate[i].MyFoo), "The entities should be equivalent");
+                Assert.That(entityResults[i].MyNullableFoo, Is.EqualTo(entitiesToCreate[i].MyNullableFoo), "The entities should be equivalent");
             }
         }
 
@@ -1085,7 +1093,8 @@ namespace Azure.Data.Tables.Tests
             Assert.ThrowsAsync<InvalidOperationException>(() => batch.SubmitBatchAsync());
 
             // Validate that adding more operations to the batch throws.
-            Assert.Throws<InvalidOperationException>(() => batch.AddEntity(new TableEntity()));
+            var exception = Assert.Throws<InvalidOperationException>(() => batch.AddEntity(new TableEntity()));
+            Assert.That(exception.Message, Is.EqualTo(TableConstants.ExceptionMessages.BatchCanOnlyBeSubmittedOnce));
 
             foreach (var entity in entitiesToCreate)
             {
@@ -1117,6 +1126,10 @@ namespace Azure.Data.Tables.Tests
 
             batch.SetBatchGuids(Recording.Random.NewGuid(), Recording.Random.NewGuid());
 
+            // Sending an empty batch throws.
+            var exception = Assert.ThrowsAsync<InvalidOperationException>(() => batch.SubmitBatchAsync());
+            Assert.That(exception.Message, Is.EqualTo(TableConstants.ExceptionMessages.BatchIsEmpty));
+
             // Add the last entity to the table prior to adding it as part of the batch to cause a batch failure.
             await client.AddEntityAsync(entitiesToCreate.Last());
 
@@ -1129,6 +1142,7 @@ namespace Azure.Data.Tables.Tests
             }
             catch (RequestFailedException ex)
             {
+                Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.EntityAlreadyExists.ToString()));
                 Assert.That(ex.Status == (int)HttpStatusCode.Conflict, $"Status should be {HttpStatusCode.Conflict}");
                 Assert.That(ex.Message, Is.Not.Null, "Message should not be null");
                 Assert.That(batch.TryGetFailedEntityFromException(ex, out ITableEntity failedEntity), Is.True);

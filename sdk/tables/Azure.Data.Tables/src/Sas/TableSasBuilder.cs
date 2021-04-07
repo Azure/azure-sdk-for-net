@@ -10,7 +10,8 @@ namespace Azure.Data.Tables.Sas
     /// <summary>
     /// <see cref="TableSasBuilder"/> is used to generate a Shared Access
     /// Signature (SAS) for an Azure Storage table.
-    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas" />.
+    /// For more information, see <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+    /// Constructing an Account SAS</see>.
     /// </summary>
     public class TableSasBuilder
     {

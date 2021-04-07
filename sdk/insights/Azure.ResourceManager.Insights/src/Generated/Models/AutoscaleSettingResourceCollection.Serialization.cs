@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class AutoscaleSettingResourceCollection
+    internal partial class AutoscaleSettingResourceCollection
     {
         internal static AutoscaleSettingResourceCollection DeserializeAutoscaleSettingResourceCollection(JsonElement element)
         {

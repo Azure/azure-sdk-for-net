@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues
 {
-    internal class MessagesClearHeaders
+    internal partial class MessagesClearHeaders
     {
         private readonly Response _response;
         public MessagesClearHeaders(Response response)

@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal static class DayOfWeekExtensions
+    internal static partial class DayOfWeekExtensions
     {
         public static string ToSerialString(this DayOfWeek value) => value switch
         {

@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/sentiment?showStats=false\u0026opinionMining=true\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/sentiment?showStats=false\u0026opinionMining=true\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
         "Content-Length": "127",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-d810f21b8223f54193f3647dac5bf62f-b3fab1f8a77db644-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210205.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-302343215064e04c806dad13404f4ee1-ace0ab0cde9d7b44-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
         "x-ms-client-request-id": "1e33ed24967d42087f8188a6111ef9b0",
         "x-ms-return-client-request-id": "true"
       },
@@ -24,14 +24,14 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "08c35484-0892-4669-b8d4-cacdf5f2ce09",
+        "apim-request-id": "02467755-e7b0-44ee-b03a-a67af9d3c0a6",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=1",
-        "Date": "Sat, 06 Feb 2021 03:48:29 GMT",
+        "Date": "Wed, 24 Feb 2021 16:55:35 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "93"
+        "x-envoy-upstream-service-time": "96"
       },
       "ResponseBody": {
         "documents": [
@@ -54,7 +54,7 @@
                 "offset": 0,
                 "length": 30,
                 "text": "The park was clean and pretty.",
-                "aspects": [
+                "targets": [
                   {
                     "sentiment": "positive",
                     "confidenceScores": {
@@ -66,17 +66,17 @@
                     "text": "park",
                     "relations": [
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/0/opinions/0"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/0/assessments/0"
                       },
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/0/opinions/1"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/0/assessments/1"
                       }
                     ]
                   }
                 ],
-                "opinions": [
+                "assessments": [
                   {
                     "sentiment": "positive",
                     "confidenceScores": {
@@ -111,7 +111,7 @@
                 "offset": 31,
                 "length": 44,
                 "text": "The bathrooms and restaurant were not clean.",
-                "aspects": [
+                "targets": [
                   {
                     "sentiment": "negative",
                     "confidenceScores": {
@@ -123,8 +123,8 @@
                     "text": "bathrooms",
                     "relations": [
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/1/opinions/0"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/1/assessments/0"
                       }
                     ]
                   },
@@ -139,13 +139,13 @@
                     "text": "restaurant",
                     "relations": [
                       {
-                        "relationType": "opinion",
-                        "ref": "#/documents/0/sentences/1/opinions/0"
+                        "relationType": "assessment",
+                        "ref": "#/documents/0/sentences/1/assessments/0"
                       }
                     ]
                   }
                 ],
-                "opinions": [
+                "assessments": [
                   {
                     "sentiment": "negative",
                     "confidenceScores": {

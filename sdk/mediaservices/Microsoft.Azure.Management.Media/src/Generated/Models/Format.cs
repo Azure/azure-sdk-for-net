@@ -42,8 +42,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// The label assigned to the codec/layer. {Index} - A unique index for
         /// thumbnails. Only applicable to thumbnails. {Bitrate} - The
         /// audio/video bitrate. Not applicable to thumbnails. {Codec} - The
-        /// type of the audio/video codec. Any unsubstituted macros will be
-        /// collapsed and removed from the filename.</param>
+        /// type of the audio/video codec. {Resolution} - The video resolution.
+        /// Any unsubstituted macros will be collapsed and removed from the
+        /// filename.</param>
         public Format(string filenamePattern)
         {
             FilenamePattern = filenamePattern;
@@ -68,8 +69,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// assigned to the codec/layer. {Index} - A unique index for
         /// thumbnails. Only applicable to thumbnails. {Bitrate} - The
         /// audio/video bitrate. Not applicable to thumbnails. {Codec} - The
-        /// type of the audio/video codec. Any unsubstituted macros will be
-        /// collapsed and removed from the filename.
+        /// type of the audio/video codec. {Resolution} - The video resolution.
+        /// Any unsubstituted macros will be collapsed and removed from the
+        /// filename.
         /// </summary>
         [JsonProperty(PropertyName = "filenamePattern")]
         public string FilenamePattern { get; set; }

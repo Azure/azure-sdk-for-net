@@ -30,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-            this.ActivityProcessor = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
+            this.ActivityProcessor = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(
                 options: new AzureMonitorExporterOptions
                 {
                     ConnectionString = EmptyConnectionString,

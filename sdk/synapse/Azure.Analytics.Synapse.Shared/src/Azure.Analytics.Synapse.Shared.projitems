@@ -9,9 +9,6 @@
     <Import_RootNamespace>Azure.Analytics.Synapse</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)SynapseClientPipeline.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" Link="Shared\HashCodeBuilder.cs" />
   </ItemGroup>
 </Project>

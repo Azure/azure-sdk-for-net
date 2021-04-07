@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkInterfacesGetEffectiveRouteTableOperation : Operation<EffectiveRouteListResult>, IOperationSource<EffectiveRouteListResult>
     {
         private readonly ArmOperationHelpers<EffectiveRouteListResult> _operation;
+
+        /// <summary> Initializes a new instance of NetworkInterfacesGetEffectiveRouteTableOperation for mocking. </summary>
+        protected NetworkInterfacesGetEffectiveRouteTableOperation()
+        {
+        }
+
         internal NetworkInterfacesGetEffectiveRouteTableOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<EffectiveRouteListResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkInterfacesGetEffectiveRouteTableOperation");

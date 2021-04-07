@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A list of long term retention policies. </summary>
-    public partial class ManagedInstanceLongTermRetentionPolicyListResult
+    internal partial class ManagedInstanceLongTermRetentionPolicyListResult
     {
         /// <summary> Initializes a new instance of ManagedInstanceLongTermRetentionPolicyListResult. </summary>
         internal ManagedInstanceLongTermRetentionPolicyListResult()

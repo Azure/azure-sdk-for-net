@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Availability Set operation response. </summary>
-    public partial class AvailabilitySetListResult
+    internal partial class AvailabilitySetListResult
     {
         /// <summary> Initializes a new instance of AvailabilitySetListResult. </summary>
         /// <param name="value"> The list of availability sets. </param>

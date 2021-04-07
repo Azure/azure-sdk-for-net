@@ -1,9 +1,45 @@
 # Release History
 
+## 5.1.0-beta.7 (Unreleased)
+
+
+## 5.1.0-beta.6 (2021-04-06)
+### New features
+- Add overloads to `ExtractKeyPhrasesBatch` and `ExtractKeyPhrasesBatchAsync` to on `TextAnalyticsClient` to accept `ExtractKeyPhrasesOptions` and hid the previous methods (non-breaking change).
+- Add overloads to `RecognizeEntitiesBatch` and `RecognizeEntitiesBatchAsync` to on `TextAnalyticsClient` to accept `RecognizeEntitiesOptions` and hid the previous methods (non-breaking change).
+- Add overloads to `RecognizeLinkedEntitiesBatch` and `RecognizeLinkedEntitiesBatch` to on `TextAnalyticsClient` to accept `RecognizeLinkedEntitiesOptions` and hid the previous methods (non-breaking change).
+
+### Breaking changes
+- Renamed `TotalActions` to `ActionsTotal`.
+
+## 5.1.0-beta.5 (2021-03-09)
+### New features
+- Added ability to filter the categories returned in a Personally Identifiable Information recognition with the optional parameter `CategoriesFilter` in `RecognizePiiEntitiesOptions`.
+- Added the ability to recognize linked entities under `StartAnalyzeBatchActions`.
+- Added `RecognizeLinkedEntitiesOptions` to `TextAnalyticsActions`.
+- Added `RecognizeLinkedEntitiesActionsResults` to `AnalyzeBatchActionsResult`.
+- `AnalyzeHealthcareEntitiesResult`, now exposes the property `EntityRelations`of type `HealthcareEntityRelation`.
+- Introduced `HealthcareEntityRelation` class which will determine all the different relations between the entities as `Roles`.
+- Added `HealthcareEntityRelationRole`, which exposes `Name` and `Entity` of type `string` and `HealthcareEntity` respectively.
+- `HealthcareEntityAssertion` is added to `HealthcareEntity` which further exposes `EntityAssociation`, `EntityCertainity` and `EntityConditionality`.
+- Added new types under `HealthcareRelationType` class.
+
+### Breaking changes
+- Renamed `AspectSentiment` to `TargetSentiment`.
+- Renamed `MinedOpinion` to `SentenceOpinion`.
+- Renamed `OpinionSentiment` to `AssessmentSentiment`.
+- For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
+- Removed `RelatedEntities`.
+- `RecognizePiiEntitiesOptions.Domain` is now a nullable type.
+- In `StartAnalyzeBatchActions` when all actions return status `failed` the SDK will no longer throw an exception. The request will succeed and the errors will be located at the specific action level. 
+
+### Fixes
+- `RecognizePiiEntities` and `TextAnalyticsActions.RecognizePiiEntitiesOptions` were always passing `PiiEntityDomainType.PHI`. Now, it is only passed when requested by the user [19086](https://github.com/Azure/azure-sdk-for-net/issues/19086).
+
 ## 5.1.0-beta.4 (2021-02-10)
 ### New features
 - Added property `Length` to `CategorizedEntity`, `SentenceSentiment`, `LinkedEntityMatch`, `AspectSentiment`, `OpinionSentiment`, and `PiiEntity`.
-- `StringIndexType` has been added to all endpoints that expose the new properties `Offset` and `Length` to determine the endoding the service should use. It is added into the `TextAnalyticsRequestOptions` class and default for this SDK is `UTF-16`.
+- `StringIndexType` has been added to all endpoints that expose the new properties `Offset` and `Length` to determine the encoding which service should use. It is added into the `TextAnalyticsRequestOptions` class and default for this SDK is `UTF-16` code unit.
 - `AnalyzeHealthcareEntitiesOperation` now exposes the properties `CreatedOn`, `ExpiresOn`, `LastModified`, and `Status`.
 - `AnalyzeBatchActionsOperation ` now exposes the properties `CreatedOn`, `ExpiresOn`, `LastModified`, `Status`, `ActionsFailed`, `ActionsInProgress`,  `ActionsSucceeded`,  `DisplayName`, and `TotalActions`.
 

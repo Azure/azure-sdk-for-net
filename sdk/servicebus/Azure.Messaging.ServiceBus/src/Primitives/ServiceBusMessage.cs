@@ -44,7 +44,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="body">The payload of the message in bytes.</param>
         public ServiceBusMessage(ReadOnlyMemory<byte> body)
         {
-            AmqpMessageBody amqpBody = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body });
+            AmqpMessageBody amqpBody = new AmqpMessageBody(BodyMemory.FromReadOnlyMemory(new ReadOnlyMemory<byte>[] { body }));
             AmqpMessage = new AmqpAnnotatedMessage(amqpBody);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Messaging.ServiceBus
                 throw new NotSupportedException($"{receivedMessage.AmqpMessage.Body.BodyType} is not a supported message body type.");
             }
 
-            AmqpMessageBody body = new AmqpMessageBody(dataBody);
+            AmqpMessageBody body = new AmqpMessageBody(BodyMemory.FromReadOnlyMemory(dataBody));
             AmqpMessage = new AmqpAnnotatedMessage(body);
 
             // copy properties
@@ -140,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
             get => AmqpMessage.GetBody();
             set
             {
-                AmqpMessage.Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { value });
+                AmqpMessage.Body = new AmqpMessageBody(BodyMemory.FromReadOnlyMemory(new ReadOnlyMemory<byte>[] { value }));
             }
         }
 
@@ -200,7 +200,7 @@ namespace Azure.Messaging.ServiceBus
         /// messages are kept together and in order as they are transferred.
         /// See <see href="https://docs.microsoft.com/azure/service-bus-messaging/service-bus-transactions#transfers-and-send-via">Transfers and Send Via</see>.
         /// </remarks>
-        internal string TransactionPartitionKey
+        public string TransactionPartitionKey
         {
             get
             {

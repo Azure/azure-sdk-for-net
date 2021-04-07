@@ -8,10 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(BigDataPoolResourceInfoConverter))]
     public partial class BigDataPoolResourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -87,6 +89,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("libraryRequirements");
                 writer.WriteObjectValue(LibraryRequirements);
             }
+            if (Optional.IsCollectionDefined(CustomLibraries))
+            {
+                writer.WritePropertyName("customLibraries");
+                writer.WriteStartArray();
+                foreach (var item in CustomLibraries)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(SparkConfigProperties))
             {
                 writer.WritePropertyName("sparkConfigProperties");
@@ -134,11 +146,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> sparkEventsFolder = default;
             Optional<int> nodeCount = default;
             Optional<LibraryRequirements> libraryRequirements = default;
+            Optional<IList<LibraryInfo>> customLibraries = default;
             Optional<LibraryRequirements> sparkConfigProperties = default;
             Optional<string> sparkVersion = default;
             Optional<string> defaultSparkLogFolder = default;
             Optional<NodeSize> nodeSize = default;
             Optional<NodeSizeFamily> nodeSizeFamily = default;
+            Optional<DateTimeOffset> lastSucceededTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -285,6 +299,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             libraryRequirements = LibraryRequirements.DeserializeLibraryRequirements(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("customLibraries"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<LibraryInfo> array = new List<LibraryInfo>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(LibraryInfo.DeserializeLibraryInfo(item));
+                            }
+                            customLibraries = array;
+                            continue;
+                        }
                         if (property0.NameEquals("sparkConfigProperties"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -325,11 +354,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             nodeSizeFamily = new NodeSizeFamily(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("lastSucceededTimestamp"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            lastSucceededTimestamp = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily));
+            return new BigDataPoolResourceInfo(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, provisioningState.Value, autoScale.Value, Optional.ToNullable(creationDate), autoPause.Value, Optional.ToNullable(isComputeIsolationEnabled), Optional.ToNullable(sessionLevelPackagesEnabled), Optional.ToNullable(cacheSize), dynamicExecutorAllocation.Value, sparkEventsFolder.Value, Optional.ToNullable(nodeCount), libraryRequirements.Value, Optional.ToList(customLibraries), sparkConfigProperties.Value, sparkVersion.Value, defaultSparkLogFolder.Value, Optional.ToNullable(nodeSize), Optional.ToNullable(nodeSizeFamily), Optional.ToNullable(lastSucceededTimestamp));
+        }
+
+        internal partial class BigDataPoolResourceInfoConverter : JsonConverter<BigDataPoolResourceInfo>
+        {
+            public override void Write(Utf8JsonWriter writer, BigDataPoolResourceInfo model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override BigDataPoolResourceInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeBigDataPoolResourceInfo(document.RootElement);
+            }
         }
     }
 }

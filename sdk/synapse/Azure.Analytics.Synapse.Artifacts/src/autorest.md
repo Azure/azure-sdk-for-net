@@ -1,32 +1,76 @@
-# Microsoft.Azure.Synapse
+# Microsoft.Azure.Synapse.Artifacts
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
-```yaml
-repo: https://github.com/Azure/azure-rest-api-specs/blob/aa19725fe79aea2a9dc580f3c66f77f89cc34563
-```
-
 ``` yaml
+tag: package-artifacts-2019-06-01-preview
+require:
+    - https://github.com/Azure/azure-rest-api-specs/blob/f953424dd168e71373bc52edb9713d2d86a14ada/specification/synapse/data-plane/readme.md
+namespace: Azure.Analytics.Synapse.Artifacts
 public-clients: true
+credential-types: TokenCredential
+credential-scopes: https://dev.azuresynapse.net/.default
 modelerfour:
   lenient-model-deduplication: true
-input-file:
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/artifacts.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/entityTypes/DataFlow.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/entityTypes/Dataset.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/entityTypes/LinkedService.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/entityTypes/Notebook.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/entityTypes/Pipeline.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/entityTypes/SparkJobDefinition.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/entityTypes/SqlScript.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/entityTypes/Trigger.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/bigDataPools.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/gitintegration.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/integrationRuntimes.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/library.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/sqlPools.json
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-06-01-preview/workspace.json
+```
+
+### Make Endpoint type as Uri
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.Endpoint
+  transform: $.format = "url"
+```
+
+### Expose serialization and deserialization methods and internal models
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.definitions
+  transform: >
+    for (var path in $)
+    {
+      if (path.endsWith("AvroFormat") ||
+          path.endsWith("CopyBehaviorType") ||
+          path.endsWith("CopyTranslator") ||
+          path.endsWith("DataFlowDebugPreviewDataRequest") ||
+          path.endsWith("DataFlowDebugQueryResponse") ||
+          path.endsWith("DataFlowDebugResultResponse") ||
+          path.endsWith("DataFlowDebugStatisticsRequest") ||
+          path.endsWith("DatasetDataElement") ||
+          path.endsWith("DatasetSchemaDataElement") ||
+          path.endsWith("DatasetStorageFormat") ||
+          path.endsWith("EvaluateDataFlowExpressionRequest") ||
+          path.endsWith("ExposureControlRequest") ||
+          path.endsWith("ExposureControlResponse") ||
+          path.endsWith("GetSsisObjectMetadataRequest") ||
+          path.endsWith("JsonFormat") ||
+          path.endsWith("JsonFormatFilePattern") ||
+          path.endsWith("OrcFormat") ||
+          path.endsWith("ParquetFormat") ||
+          path.endsWith("RerunTriggerListResponse") ||
+          path.endsWith("RerunTumblingWindowTriggerActionParameter") ||
+          path.endsWith("SsisObjectMetadataStatusResponse") ||
+          path.endsWith("StartDataFlowDebugSessionRequest") ||
+          path.endsWith("StartDataFlowDebugSessionResponse") ||
+          path.endsWith("TabularTranslator") ||
+          path.endsWith("TextFormat") ||
+          path.endsWith("TriggerDependencyProvisioningStatus") ||
+          path.endsWith("TypeConversionSettings") ||
+          path.endsWith("WorkspaceIdentity") ||
+          path.endsWith("WorkspaceUpdateParameters"))
+      {
+        $[path]["x-csharp-usage"] = "model,input,output,converter";
+        $[path]["x-csharp-formats"] = "json";
+      }
+      else
+      {
+        $[path]["x-csharp-usage"] = "converter";
+      }
+    }
 ```

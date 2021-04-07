@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class SubnetListResult
+    internal partial class SubnetListResult
     {
         internal static SubnetListResult DeserializeSubnetListResult(JsonElement element)
         {

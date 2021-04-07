@@ -5,13 +5,13 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.DataShare</PackageId>
     <Description>Azure Data Share is a first party resource provider that enables customers to easily and securely share big data with other organizations in Azure, with centralized management, monitoring and governance. </Description>
-    <Version>1.0.1</Version>
+    <Version>1.2.0</Version>
     <AssemblyName>Microsoft.Azure.Management.DataShare</AssemblyName>
     <PackageTags>Microsoft Azure resource management;Data Share;ADS;</PackageTags>
     <PackageReleaseNotes><![CDATA[
-  - 2019-11-01 SDK release
-  - Added source share location to share subscription
-  - Correct desription for put dataset and synchronizationsetting call
+  - 2020-09-01 SDK release
+  - Add support to share a new data set type : Azure Synapse Analytics (workspace) SQL pool
+  - Add an expiration date to a provider share subscription
             ]]></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>

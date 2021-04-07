@@ -23,12 +23,12 @@ namespace Azure.Storage.Blobs.Perf
         public override async Task GlobalSetupAsync()
         {
             await base.GlobalSetupAsync();
-            await BlobContainerClient.CreateAsync();
+            await BlobContainerClient.CreateIfNotExistsAsync();
         }
 
         public override async Task GlobalCleanupAsync()
         {
-            await BlobContainerClient.DeleteAsync();
+            await BlobContainerClient.DeleteIfExistsAsync();
             await base.GlobalCleanupAsync();
         }
     }

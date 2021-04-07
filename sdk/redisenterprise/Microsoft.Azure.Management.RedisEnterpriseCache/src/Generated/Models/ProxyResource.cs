@@ -13,9 +13,12 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
     using System.Linq;
 
     /// <summary>
-    /// The resource model definition for an Azure Resource Manager proxy
-    /// resource. It will have everything other than required location and tags
+    /// Proxy Resource
     /// </summary>
+    /// <remarks>
+    /// The resource model definition for a Azure Resource Manager proxy
+    /// resource. It will not have tags and a location
+    /// </remarks>
     public partial class ProxyResource : Resource
     {
         /// <summary>

@@ -18,7 +18,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         //TODO address the flakiness of this test.
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_RoundTrip()
         {
             ShareServiceClient serviceUri = GetServiceClient_AccountSas();
@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(expectedUri, actualUri, "Flaky test -- potential signature generation issue not properly encoding space and + in the output");
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_AccountTest()
         {
             // Arrange
@@ -56,7 +56,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_ShareTest()
         {
             // Arrange
@@ -81,7 +81,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(string.Empty, fileUriBuilder.LastDirectoryOrFileName);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_PathTest()
         {
             // Arrange
@@ -106,7 +106,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_PathTrailingSlash()
         {
             // Arrange
@@ -119,7 +119,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual("path", fileUriBuilder.LastDirectoryOrFileName);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_SnapshotTest()
         {
             // Arrange
@@ -143,7 +143,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_SasTest()
         {
             // Arrange
@@ -180,14 +180,14 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(originalUri, newUri);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_RegularUrl_CNAME()
         {
             var shareUriBuilder = new ShareUriBuilder(new Uri("http://www.contoso.com"));
             Assert.AreEqual(string.Empty, shareUriBuilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_AccountNamePeriod()
         {
             var fileUriBuilder = new ShareUriBuilder(new Uri("https://account.z.file.core.windows.net/share/dir"));
@@ -195,7 +195,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual("account", fileUriBuilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_AccountNameError()
         {
             var fileUriBuilder = new ShareUriBuilder(new Uri("http://notaurl"));
@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsEmpty(fileUriBuilder.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_MalformedSubdomain()
         {
             // account and file swapped
@@ -220,7 +220,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(string.Empty, shareUriBuilder3.AccountName);
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_SpecialCharacters()
         {
             // Unencoded.  We want to encode the special characters.
@@ -248,7 +248,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 uri);
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("2020-10-27", "2020-10-28")]
         [TestCase("2020-10-27T12:10Z", "2020-10-28T13:20Z")]
         [TestCase("2020-10-27T12:10:11Z", "2020-10-28T13:20:14Z")]
@@ -268,7 +268,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsTrue(resultUri.PathAndQuery.Contains($"se={WebUtility.UrlEncode(expiryTime)}"));
         }
 
-        [Test]
+        [RecordedTest]
         public void FileUriBuilder_SasInvalidStartExpiryTimeFormat()
         {
             // Arrange

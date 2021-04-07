@@ -65,7 +65,7 @@ namespace Azure.Data.Tables
         /// <param name="tableStorageUri">A <see cref="System.Uri"/> specifying the Table service endpoint or endpoints.</param>
         public TableConnectionString(
             object storageCredentials,
-            (Uri, Uri) tableStorageUri)
+            (Uri Primary, Uri Secondary) tableStorageUri)
         {
             Credentials = storageCredentials;
             TableStorageUri = tableStorageUri;
@@ -191,9 +191,11 @@ namespace Azure.Data.Tables
                 settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out sasToken);
 
             var matchesAutomaticEndpointsSpec = settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountNameSetting, out var accountName) &&
-                settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey) &&
-                    (settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out var primary) ||
-                    settings.TryGetSegmentValue(TableConstants.ConnectionStrings.EndpointSuffixSetting, out var endpointSuffix));
+                (settings.TryGetSegmentValue(TableConstants.ConnectionStrings.AccountKeySetting, out var accountKey) ||
+              settings.TryGetSegmentValue(TableConstants.ConnectionStrings.SharedAccessSignatureSetting, out sasToken));
+
+            settings.TryGetSegmentValue(TableConstants.ConnectionStrings.TableEndpointSetting, out var primary);
+            var endpointSuffix = settings.GetSegmentValueOrDefault(TableConstants.ConnectionStrings.EndpointSuffixSetting, TableConstants.ConnectionStrings.DefaultEndpointSuffix);
 
             if (matchesAutomaticEndpointsSpec || matchesExplicitEndpointsSpec)
             {
@@ -456,7 +458,7 @@ namespace Azure.Data.Tables
         /// <param name="endpointSuffix">The Endpoint DNS suffix; use <c>null</c> for default.</param>
         /// <param name="sasToken">The sas token; use <c>null</c> for default.</param>
         /// <returns></returns>
-        private static (Uri, Uri) ConstructUris(
+        private static (Uri Primary, Uri Secondary) ConstructUris(
             string scheme,
             string accountName,
             string hostNamePrefix,
@@ -499,7 +501,7 @@ namespace Azure.Data.Tables
         /// <param name="endpointSuffix">The Endpoint DNS suffix; use <c>null</c> for default.</param>
         /// <param name="sasToken">The sas token; use <c>null</c> for default.</param>
         /// <returns>The default table endpoint.</returns>
-        internal static (Uri, Uri) ConstructTableEndpoint(string scheme, string accountName, string endpointSuffix, string sasToken)
+        internal static (Uri Primary, Uri Secondary) ConstructTableEndpoint(string scheme, string accountName, string endpointSuffix, string sasToken)
         {
             if (string.IsNullOrEmpty(scheme))
             {
@@ -524,7 +526,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="settings">The settings.</param>
         /// <returns>The default table endpoint.</returns>
-        private static (Uri, Uri) ConstructTableEndpoint(ConnectionString settings) => ConstructTableEndpoint(
+        private static (Uri Primary, Uri Secondary) ConstructTableEndpoint(ConnectionString settings) => ConstructTableEndpoint(
                 settings.GetRequired(TableConstants.ConnectionStrings.DefaultEndpointsProtocolSetting),
                 settings.GetRequired(TableConstants.ConnectionStrings.AccountNameSetting),
                 settings.GetNonRequired(TableConstants.ConnectionStrings.EndpointSuffixSetting),

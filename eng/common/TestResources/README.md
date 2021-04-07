@@ -19,15 +19,18 @@ scenarios as well as on hosted agents for continuous integration testing.
 ## On the Desktop
 
 To set up your Azure account to run live tests, you'll need to log into Azure,
-create a service principal, and set up your resources defined in
-test-resources.json as shown in the following example using Azure Search.
+and set up your resources defined in test-resources.json as shown in the following
+example using Azure Key Vault. The script will create a service principal automatically,
+or you may create a service principal you can save and reuse subsequently.
 
 Note that `-Subscription` is an optional parameter but recommended if your account
-is a member of multiple subscriptions.
+is a member of multiple subscriptions. If you didn't specify it when logging in,
+you should select your desired subscription using `Select-AzSubscription`. The
+default can be saved using `Set-AzDefault` for future sessions.
 
 ```powershell
 Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
-eng\common\TestResources\New-TestResources.ps1 -ServiceDirectory 'search'
+eng\common\TestResources\New-TestResources.ps1 keyvault
 ```
 
 The `OutFile` switch will be set by default if you are running this for a .NET project on Windows. This will save test environment settings
@@ -39,14 +42,14 @@ Along with some log messages, this will output environment variables based on
 your current shell like in the following example:
 
 ```powershell
-${env:AZURE_TENANT_ID} = '<<secret>>'
-${env:AZURE_CLIENT_ID} = '<<secret>>'
-${env:AZURE_CLIENT_SECRET} = '<<secret>>'
-${env:AZURE_SUBSCRIPTION_ID} = 'YOUR SUBSCRIPTION ID'
-${env:AZURE_RESOURCE_GROUP} = 'rg-myusername'
-${env:AZURE_LOCATION} = 'westus2'
-${env:AZURE_SEARCH_STORAGE_NAME} = 'myusernamestg'
-${env:AZURE_SEARCH_STORAGE_KEY} = '<<secret>>'
+${env:KEYVAULT_TENANT_ID} = '<<secret>>'
+${env:KEYVAULT_CLIENT_ID} = '<<secret>>'
+${env:KEYVAULT_CLIENT_SECRET} = '<<secret>>'
+${env:KEYVAULT_SUBSCRIPTION_ID} = 'YOUR SUBSCRIPTION ID'
+${env:KEYVAULT_RESOURCE_GROUP} = 'rg-myusername'
+${env:KEYVAULT_LOCATION} = 'westus2'
+${env:KEYVAULT_SKU} = 'premium'
+${env:AZURE_KEYVAULT_URL} = '<<url>>'
 ```
 
 For security reasons we do not set these environment variables automatically
@@ -62,32 +65,40 @@ applications started outside the terminal, you could copy and paste the
 following commands:
 
 ```powershell
-setx AZURE_TENANT_ID ${env:AZURE_TENANT_ID}
-setx AZURE_CLIENT_ID ${env:AZURE_CLIENT_ID}
-setx AZURE_CLIENT_SECRET ${env:AZURE_CLIENT_SECRET}
-setx AZURE_SUBSCRIPTION_ID ${env:AZURE_SUBSCRIPTION_ID}
-setx AZURE_RESOURCE_GROUP ${env:AZURE_RESOURCE_GROUP}
-setx AZURE_LOCATION ${env:AZURE_LOCATION}
-setx AZURE_SEARCH_STORAGE_NAME ${env:AZURE_SEARCH_STORAGE_NAME}
-setx AZURE_SEARCH_STORAGE_KEY ${env:AZURE_SEARCH_STORAGE_KEY}
+setx KEYVAULT_TENANT_ID ${env:KEYVAULT_TENANT_ID}
+setx KEYVAULT_CLIENT_ID ${env:KEYVAULT_CLIENT_ID}
+setx KEYVAULT_CLIENT_SECRET ${env:KEYVAULT_CLIENT_SECRET}
+setx KEYVAULT_SUBSCRIPTION_ID ${env:KEYVAULT_SUBSCRIPTION_ID}
+setx KEYVAULT_RESOURCE_GROUP ${env:KEYVAULT_RESOURCE_GROUP}
+setx KEYVAULT_LOCATION ${env:KEYVAULT_LOCATION}
+setx KEYVAULT_SKU ${env:KEYVAULT_SKU}
+setx AZURE_KEYVAULT_URL ${env:AZURE_KEYVAULT_URL}
 ```
 
-After running or recording live tests, if you do not plan on further testing
-you can remove the test resources you created above by running:
-[Remove-TestResources.ps1][]:
+### Cleaning up Resources
+
+By default, resource groups are tagged with a `DeleteAfter` value and date according to the default or specified
+value for the `-DeleteAfterHours` switch. You can use this tag in scheduled jobs to remove older resources based
+on that date.
+
+If you are not ready for the resources to be deleted, you can update the resource group by running [Update-TestResources.ps1][]:
 
 ```powershell
-Remove-TestResources.ps1 -BaseName 'myusername' -Force
+Update-TestResources.ps1 keyvault
 ```
 
-If you created a new service principal as shown above, you might also remove it:
+This will extend the expiration time by the default value (e.g. 48 hours) from now.
+
+Alternatively, after running or recording live tests, if you do not plan on further testing
+you can immediately remove the test resources you created above by running [Remove-TestResources.ps1][]:
 
 ```powershell
-Remove-AzADServicePrincipal -ApplicationId $sp.ApplicationId -Force
-
+Remove-TestResources.ps1 keyvault -Force
 ```
 
 If you persisted environment variables, you should also remove those as well.
+
+### Passing Additional Arguments
 
 Some test-resources.json templates utilize the `AdditionalParameters` parameter to control additional resource configuration options. For example:
 
@@ -123,10 +134,13 @@ Install-Module platyPS -Scope CurrentUser -Force
 New-MarkdownHelp -Command .\New-TestResources.ps1 -OutputFolder . -Force
 ```
 
+After the markdown files are generated, please make sure all "http" URIs use "https".
+
 PowerShell markdown documentation created with [platyPS][].
 
-  [New-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/New-TestResources.ps1.md
-  [Remove-TestResources.ps1]: https://github.com/Azure/azure-sdk-tools/blob/master/eng/common/TestResources/Remove-TestResources.ps1.md
+  [New-TestResources.ps1]: https://aka.ms/azsdk/tools/New-TestResources
+  [Update-TestResources.ps1]: https://aka.ms/azsdk/tools/Update-TestResources
+  [Remove-TestResources.ps1]: https://aka.ms/azsdk/tools/Remove-TestResources
   [PowerShell]: https://github.com/PowerShell/PowerShell
   [PowerShellAz]: https://docs.microsoft.com/powershell/azure/install-az-ps
   [platyPS]: https://github.com/PowerShell/platyPS

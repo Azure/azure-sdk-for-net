@@ -3,13 +3,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -539,251 +537,109 @@ namespace Azure.Core.Tests
             Assert.CatchAsync<InvalidOperationException>(async () => await firstRequestTask);
         }
 
-        private const string CaeInsufficientClaimsChallenge = "Bearer realm=\"\", authorization_uri=\"https://login.microsoftonline.com/common/oauth2/authorize\", client_id=\"00000003-0000-0000-c000-000000000000\", error=\"insufficient_claims\", claims=\"eyJhY2Nlc3NfdG9rZW4iOiB7ImZvbyI6ICJiYXIifX0=\"";
-        private const string CaeInsufficientClaimsChallengeValue = "eyJhY2Nlc3NfdG9rZW4iOiB7ImZvbyI6ICJiYXIifX0=";
-        private static readonly Challenge ParsedCaeInsufficientClaimsChallenge = new Challenge
-        {
-            Scheme = "Bearer",
-            Parameters =
-            {
-                ("realm", ""),
-                ("authorization_uri", "https://login.microsoftonline.com/common/oauth2/authorize"),
-                ("client_id", "00000003-0000-0000-c000-000000000000"),
-                ("error", "insufficient_claims"),
-                ("claims", "eyJhY2Nlc3NfdG9rZW4iOiB7ImZvbyI6ICJiYXIifX0="),
-            }
-        };
-
-        private const string CaeSessionsRevokedClaimsChallenge = "Bearer authorization_uri=\"https://login.windows-ppe.net/\", error=\"invalid_token\", error_description=\"User session has been revoked\", claims=\"eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTYwMzc0MjgwMCJ9fX0=\"";
-        private const string CaeSessionsRevokedClaimsChallengeValue = "eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTYwMzc0MjgwMCJ9fX0=";
-        private static readonly Challenge ParsedCaeSessionsRevokedClaimsChallenge = new Challenge
-        {
-            Scheme = "Bearer",
-            Parameters =
-            {
-                ("authorization_uri", "https://login.windows-ppe.net/"),
-                ("error", "invalid_token"),
-                ("error_description", "User session has been revoked"),
-                ("claims", "eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTYwMzc0MjgwMCJ9fX0="),
-            }
-        };
-
-        private const string KeyVaultChallenge = "Bearer authorization=\"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\", resource=\"https://vault.azure.net\"";
-        private static readonly Challenge ParsedKeyVaultChallenge = new Challenge
-        {
-            Scheme = "Bearer",
-            Parameters =
-            {
-                ("authorization", "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47"),
-                ("resource", "https://vault.azure.net"),
-            }
-        };
-
-        private const string ArmChallenge = "Bearer authorization_uri=\"https://login.windows.net/\", error=\"invalid_token\", error_description=\"The authentication failed because of missing 'Authorization' header.\"";
-        private static readonly Challenge ParsedArmChallenge = new Challenge()
-        {
-            Scheme = "Bearer",
-            Parameters =
-            {
-                ("authorization_uri", "https://login.windows.net/"),
-                ("error", "invalid_token"),
-                ("error_description", "The authentication failed because of missing 'Authorization' header."),
-            }
-        };
-
-        private const string StorageChallenge = "Bearer authorization_uri=https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize resource_id=https://storage.azure.com";
-        private static readonly Challenge ParsedStorageChallenge = new Challenge()
-        {
-            Scheme = "Bearer",
-            Parameters =
-            {
-                ("authorization_uri", "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/authorize"),
-                ("resource_id", "https://storage.azure.com"),
-            }
-        };
-        private static readonly Challenge ParsedMultipleChallenges = new Challenge
-        {
-            Scheme = "Bearer",
-            Parameters =
-            {
-                ("authorization_uri", "https://login.windows-ppe.net/"),
-                ("error", "invalid_token"),
-                ("error_description", "User session has been revoked"),
-                ("claims", "eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTYwMzc0MjgwMCJ9fX0="),
-            }
-        };
-        private static readonly Dictionary<string, string> ChallengeStrings = new Dictionary<string, string>()
-        {
-            { "CaeInsufficientClaims", CaeInsufficientClaimsChallenge },
-            { "CaeSessionsRevoked", CaeSessionsRevokedClaimsChallenge },
-            { "KeyVault", KeyVaultChallenge },
-            { "Arm", ArmChallenge },
-            { "Storage", StorageChallenge },
-        };
-
-        private static readonly Dictionary<string, Challenge> ParsedChallenges = new Dictionary<string, Challenge>()
-        {
-            { "CaeInsufficientClaims", ParsedCaeInsufficientClaimsChallenge },
-            { "CaeSessionsRevoked", ParsedCaeSessionsRevokedClaimsChallenge },
-            { "KeyVault", ParsedKeyVaultChallenge },
-            { "Arm", ParsedArmChallenge },
-            { "Storage", ParsedStorageChallenge }
-        };
-
-        private static readonly List<Challenge> MultipleParsedChallenges = new List<Challenge>()
-        {
-            {  ParsedCaeInsufficientClaimsChallenge },
-            {  ParsedCaeSessionsRevokedClaimsChallenge },
-            {  ParsedKeyVaultChallenge },
-            {  ParsedArmChallenge },
-        };
-
-        private class Challenge
-        {
-            public string Scheme { get; set; }
-
-            public List<(string, string)> Parameters { get; } = new List<(string, string)>();
-        }
-
         [Test]
-        public void BearerTokenChallengeAuthenticationPolicy_ValidateChallengeParsing([Values("CaeInsufficientClaims", "CaeSessionsRevoked", "KeyVault", "Arm", "Storage")] string challengeKey)
+        public async Task BearerTokenChallengeAuthenticationPolicy_CancelledFirstRequestDoesNotCancelPendingSecondRequest()
         {
-            var challenge = ChallengeStrings[challengeKey].AsSpan();
-
-            List<Challenge> parsedChallenges = new List<Challenge>();
-
-            while (BearerTokenChallengeAuthenticationPolicy.TryGetNextChallenge(ref challenge, out var scheme))
-            {
-                Challenge parsedChallenge = new Challenge();
-
-                parsedChallenge.Scheme = scheme.ToString();
-
-                while (BearerTokenChallengeAuthenticationPolicy.TryGetNextParameter(ref challenge, out var key, out var value))
-                {
-                    parsedChallenge.Parameters.Add((key.ToString(), value.ToString()));
-                }
-
-                parsedChallenges.Add(parsedChallenge);
-            }
-
-            Assert.AreEqual(1, parsedChallenges.Count);
-
-            ValidateParsedChallenge(ParsedChallenges[challengeKey], parsedChallenges[0]);
-        }
-
-        [Test]
-        public void BearerTokenChallengeAuthenticationPolicy_ValidateChallengeParsingWithMultipleChallenges()
-        {
-            var challenge = string.Join(", ", new[] { CaeInsufficientClaimsChallenge, CaeSessionsRevokedClaimsChallenge, KeyVaultChallenge, ArmChallenge }).AsSpan();
-
-            List<Challenge> parsedChallenges = new List<Challenge>();
-
-            while (BearerTokenChallengeAuthenticationPolicy.TryGetNextChallenge(ref challenge, out var scheme))
-            {
-                Challenge parsedChallenge = new Challenge();
-
-                parsedChallenge.Scheme = scheme.ToString();
-
-                while (BearerTokenChallengeAuthenticationPolicy.TryGetNextParameter(ref challenge, out var key, out var value))
-                {
-                    parsedChallenge.Parameters.Add((key.ToString(), value.ToString()));
-                }
-
-                parsedChallenges.Add(parsedChallenge);
-            }
-
-            Assert.AreEqual(MultipleParsedChallenges.Count, parsedChallenges.Count);
-
-            for (int i = 0; i < parsedChallenges.Count; i++)
-            {
-                ValidateParsedChallenge(MultipleParsedChallenges[i], parsedChallenges[i]);
-            }
-        }
-
-        [Test]
-        public async Task BearerTokenChallengeAuthenticationPolicy_ValidateClaimsChallengeTokenRequest()
-        {
-            string currentClaimChallenge = null;
-
-            int tokensRequested = 0;
-
+            var currentTime = DateTime.UtcNow;
+            var requestMre = new ManualResetEventSlim(false);
+            var responseMre = new ManualResetEventSlim(false);
+            var cts = new CancellationTokenSource();
             var credential = new TokenCredentialStub((r, c) =>
             {
-                tokensRequested++;
-
-                Assert.AreEqual(currentClaimChallenge, r.Claims);
-
-                return new AccessToken(Guid.NewGuid().ToString(), DateTimeOffset.UtcNow + TimeSpan.FromDays(1));
+                requestMre.Set();
+                responseMre.Wait(c);
+                return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
             }, IsAsync);
 
             var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport((req) => new MockResponse(200));
 
-            var insufficientClaimsChallengeResponse = new MockResponse(401);
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts.Token);
+            requestMre.Wait();
 
-            insufficientClaimsChallengeResponse.AddHeader(new HttpHeader("WWW-Authenticate", CaeInsufficientClaimsChallenge));
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
+            cts.Cancel();
 
-            var sessionRevokedChallengeResponse = new MockResponse(401);
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
+            responseMre.Set();
 
-            sessionRevokedChallengeResponse.AddHeader(new HttpHeader("WWW-Authenticate", CaeSessionsRevokedClaimsChallenge));
-
-            var armChallengeResponse = new MockResponse(401);
-
-            armChallengeResponse.AddHeader(new HttpHeader("WWW-Authenticate", ArmChallenge));
-
-            var keyvaultChallengeResponse = new MockResponse(401);
-
-            keyvaultChallengeResponse.AddHeader(new HttpHeader("WWW-Authenticate", KeyVaultChallenge));
-
-            MockTransport transport = CreateMockTransport(new MockResponse(200),
-                insufficientClaimsChallengeResponse,
-                new MockResponse(200),
-                sessionRevokedChallengeResponse,
-                new MockResponse(200),
-                armChallengeResponse,
-                keyvaultChallengeResponse);
-
-            var response = await SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
-
-            Assert.AreEqual(tokensRequested, 1);
-
-            Assert.AreEqual(response.Status, 200);
-
-            currentClaimChallenge = Base64Url.DecodeString(CaeInsufficientClaimsChallengeValue);
-
-            response = await SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
-
-            Assert.AreEqual(tokensRequested, 2);
-
-            Assert.AreEqual(response.Status, 200);
-
-            currentClaimChallenge = Base64Url.DecodeString(CaeSessionsRevokedClaimsChallengeValue);
-
-            response = await SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
-
-            Assert.AreEqual(tokensRequested, 3);
-
-            Assert.AreEqual(response.Status, 200);
-
-            currentClaimChallenge = null;
-
-            response = await SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
-
-            Assert.AreEqual(tokensRequested, 3);
-
-            Assert.AreEqual(response.Status, 401);
-
-            response = await SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: default);
-
-            Assert.AreEqual(tokensRequested, 3);
-
-            Assert.AreEqual(response.Status, 401);
+            var response = await secondRequestTask;
+            Assert.That(response.Status, Is.EqualTo(200));
         }
 
-        private void ValidateParsedChallenge(Challenge expected, Challenge actual)
+        [Test]
+        public void BearerTokenChallengeAuthenticationPolicy_CancelledFirstRequestAndCancelledSecondRequest()
         {
-            Assert.AreEqual(expected.Scheme, actual.Scheme);
+            var currentTime = DateTime.UtcNow;
+            var requestMre = new ManualResetEventSlim(false);
+            var responseMre = new ManualResetEventSlim(false);
+            var cts1 = new CancellationTokenSource();
+            var cts2 = new CancellationTokenSource();
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                requestMre.Set();
+                responseMre.Wait(c);
+                return new AccessToken(Guid.NewGuid().ToString(), currentTime.AddMinutes(2));
+            }, IsAsync);
 
-            CollectionAssert.AreEquivalent(expected.Parameters, actual.Parameters);
+            var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport((req) =>
+            {
+                return new MockResponse(200);
+            });
+
+            var firstRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts1.Token);
+            requestMre.Wait();
+
+            var secondRequestTask = SendGetRequest(transport, policy, uri: new Uri("https://example.com"), cancellationToken: cts2.Token);
+            cts1.Cancel();
+            cts2.Cancel();
+
+            Assert.CatchAsync<OperationCanceledException>(async () => await firstRequestTask);
+            responseMre.Set();
+
+            Assert.CatchAsync<OperationCanceledException>(async () => await secondRequestTask);
+        }
+
+        [Test]
+        [Repeat(10)]
+        public void BearerTokenChallengeAuthenticationPolicy_UnobservedTaskException()
+        {
+            var unobservedTaskExceptionWasRaised = false;
+            var expectedFailedException = new RequestFailedException("Communication Error");
+            try
+            {
+                TaskScheduler.UnobservedTaskException += UnobservedTaskExceptionHandler;
+                var credential =
+                    new TokenCredentialStub((_, ct) => throw expectedFailedException,
+                        IsAsync);
+
+                var policy = new BearerTokenChallengeAuthenticationPolicy(credential, "scope");
+                MockTransport transport = CreateMockTransport((_) => new MockResponse(500));
+
+                Assert.ThrowsAsync<RequestFailedException>(async () =>
+                    await SendRequestAsync(transport, request => { request.Uri.Scheme = "https"; }, policy));
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+            }
+            finally
+            {
+                TaskScheduler.UnobservedTaskException -= UnobservedTaskExceptionHandler;
+            }
+
+            Assert.False(unobservedTaskExceptionWasRaised, "UnobservedTaskException should not be raised");
+
+            void UnobservedTaskExceptionHandler(object sender, UnobservedTaskExceptionEventArgs args)
+            {
+                if (args.Exception.InnerException == null ||
+                    args.Exception.InnerException.ToString() != expectedFailedException.ToString())
+                    return;
+
+                args.SetObserved();
+                unobservedTaskExceptionWasRaised = true;
+            }
         }
 
         private class TokenCredentialStub : TokenCredential

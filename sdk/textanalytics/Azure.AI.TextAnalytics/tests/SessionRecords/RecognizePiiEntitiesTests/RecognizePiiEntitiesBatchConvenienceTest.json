@@ -1,23 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.3/entities/recognition/pii?showStats=false\u0026domain=phi\u0026stringIndexType=Utf16CodeUnit",
+      "RequestUri": "https://mariari-westus2-s.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/entities/recognition/pii?showStats=false\u0026stringIndexType=Utf16CodeUnit",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json, text/json",
-        "Content-Length": "293",
+        "Content-Length": "316",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-c65ca8c3e549c24ca4be030a17532ede-3510b74a19992646-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210208.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
-        "x-ms-client-request-id": "c173c94341dba618c4f393086e026774",
+        "traceparent": "00-652b21e61cfe124b86768e37dc940d79-9a314740ff23a747-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210302.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "4f9f78c612dc4ff4e6424ecbf4774e1d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "documents": [
           {
             "id": "0",
-            "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs.",
+            "text": "A developer with SSN 859-98-0987 whose phone number is 800-102-1100 is building tools with our APIs. They work at Microsoft",
             "language": "en"
           },
           {
@@ -29,34 +29,41 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "770eb8a8-6aa1-43d2-82b3-c983b46edf3f",
+        "apim-request-id": "44625f7d-29b8-4023-80a8-81a4c742b880",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=2",
-        "Date": "Mon, 08 Feb 2021 16:53:35 GMT",
+        "Date": "Tue, 02 Mar 2021 14:35:03 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "x-content-type-options": "nosniff",
-        "x-envoy-upstream-service-time": "176"
+        "x-envoy-upstream-service-time": "45"
       },
       "ResponseBody": {
         "documents": [
           {
-            "redactedText": "A developer with SSN *********** whose phone number is ************ is building tools with our APIs.",
+            "redactedText": "A developer with SSN *********** whose phone number is ************ is building tools with our APIs. They work at *********",
             "id": "0",
             "entities": [
               {
                 "text": "859-98-0987",
-                "category": "U.S. Social Security Number (SSN)",
+                "category": "USSocialSecurityNumber",
                 "offset": 21,
                 "length": 11,
                 "confidenceScore": 0.65
               },
               {
                 "text": "800-102-1100",
-                "category": "Phone Number",
+                "category": "PhoneNumber",
                 "offset": 55,
                 "length": 12,
                 "confidenceScore": 0.8
+              },
+              {
+                "text": "Microsoft",
+                "category": "Organization",
+                "offset": 114,
+                "length": 9,
+                "confidenceScore": 0.96
               }
             ],
             "warnings": []
@@ -67,21 +74,21 @@
             "entities": [
               {
                 "text": "111000025",
-                "category": "Phone Number",
+                "category": "PhoneNumber",
                 "offset": 18,
                 "length": 9,
                 "confidenceScore": 0.8
               },
               {
                 "text": "111000025",
-                "category": "ABA Routing Number",
+                "category": "ABARoutingNumber",
                 "offset": 18,
                 "length": 9,
                 "confidenceScore": 0.75
               },
               {
                 "text": "111000025",
-                "category": "New Zealand Social Welfare Number",
+                "category": "NZSocialWelfareNumber",
                 "offset": 18,
                 "length": 9,
                 "confidenceScore": 0.65
@@ -91,13 +98,13 @@
           }
         ],
         "errors": [],
-        "modelVersion": "2020-07-01"
+        "modelVersion": "2021-01-15"
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "820182005",
+    "RandomSeed": "1132826820",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",
-    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+    "TEXT_ANALYTICS_ENDPOINT": "https://mariari-westus2-s.cognitiveservices.azure.com/"
   }
 }

@@ -6,11 +6,30 @@ $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/master/_data/releases/latest/dotnet-packages.csv"
 $BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 
-function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
+function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory)
 {
-  $projectPath = Join-Path $pkgPath "src" "$pkgName.csproj"
-  if (Test-Path $projectPath)
+  $projDirPath = (Join-Path $pkgPath "src")
+
+  if (!(Test-Path $projDirPath))
   {
+    return $null
+  }
+
+  $projectPaths = @(Resolve-Path (Join-Path $projDirPath "*.csproj"))
+  
+  if ($projectpaths.Count -ge 1) {
+    $projectPath = $projectPaths[0].path
+    if ($projectPaths.Count -gt 1) {
+      LogWarning "There is more than on csproj file in the projectpath/src directory. First project picked."
+    }
+  }
+  else {
+    return $null
+  }
+
+  if ($projectPath -and (Test-Path $projectPath))
+  {
+    $pkgName = Split-Path -Path $projectPath -LeafBase 
     $projectData = New-Object -TypeName XML
     $projectData.load($projectPath)
     $pkgVersion = Select-XML -Xml $projectData -XPath '/Project/PropertyGroup/Version'
@@ -22,12 +41,11 @@ function Get-dotnet-PackageInfoFromRepo ($pkgPath, $serviceDirectory, $pkgName)
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = $pkgName.StartsWith("Azure")
+    $pkgProp.ArtifactName = $pkgName
     return $pkgProp
   }
-  else
-  {
-    return $null
-  }
+
+  return $null
 }
 
 # Returns the nuget publish status of a package id and version.
@@ -226,7 +244,7 @@ function Find-dotnet-Artifacts-For-Apireview($artifactDir, $packageName)
   return $packages
 }
 
-function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseDate, $BuildType=$null, $GroupId=$null)
+function SetPackageVersion ($PackageName, $Version, $ServiceDirectory, $ReleaseDate)
 {
   if($null -eq $ReleaseDate)
   {

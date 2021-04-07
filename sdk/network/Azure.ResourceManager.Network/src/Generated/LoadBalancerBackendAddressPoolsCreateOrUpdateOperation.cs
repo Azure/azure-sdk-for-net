@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class LoadBalancerBackendAddressPoolsCreateOrUpdateOperation : Operation<BackendAddressPool>, IOperationSource<BackendAddressPool>
     {
         private readonly ArmOperationHelpers<BackendAddressPool> _operation;
+
+        /// <summary> Initializes a new instance of LoadBalancerBackendAddressPoolsCreateOrUpdateOperation for mocking. </summary>
+        protected LoadBalancerBackendAddressPoolsCreateOrUpdateOperation()
+        {
+        }
+
         internal LoadBalancerBackendAddressPoolsCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<BackendAddressPool>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "LoadBalancerBackendAddressPoolsCreateOrUpdateOperation");

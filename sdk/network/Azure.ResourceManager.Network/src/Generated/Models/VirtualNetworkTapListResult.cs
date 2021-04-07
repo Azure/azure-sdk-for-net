@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListVirtualNetworkTap API service call. </summary>
-    public partial class VirtualNetworkTapListResult
+    internal partial class VirtualNetworkTapListResult
     {
         /// <summary> Initializes a new instance of VirtualNetworkTapListResult. </summary>
         internal VirtualNetworkTapListResult()

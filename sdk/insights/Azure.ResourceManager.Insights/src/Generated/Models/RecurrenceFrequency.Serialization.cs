@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    internal static class RecurrenceFrequencyExtensions
+    internal static partial class RecurrenceFrequencyExtensions
     {
         public static string ToSerialString(this RecurrenceFrequency value) => value switch
         {

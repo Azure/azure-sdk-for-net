@@ -1,0 +1,84 @@
+parameters:
+- name: SDKType
+  type: string
+  default: all
+- name: ServiceDirectory
+  type: string
+  default: not-specified
+- name: ServiceToTest
+  type: string
+  default: ''
+- name: TestSetupSteps
+  type: stepList
+  default: []
+- name: TestTimeoutInMinutes
+  type: number
+- name: Matrix
+  type: string
+- name: DependsOn
+  type: string
+  default: ''
+- name: UsePlatformContainer
+  type: boolean
+  default: false
+- name: CloudConfig
+  type: object
+  default: {}
+
+jobs:
+  - job:
+    displayName: "Test"
+    dependsOn: ${{ parameters.DependsOn }}
+    timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+    condition: and(succeededOrFailed(), ne(variables['Skip.Test'], true), ne(${{ parameters.Matrix }}, '{}'))
+    strategy:
+      matrix: $[ ${{ parameters.Matrix }} ]
+    pool:
+      vmImage: $(OSVmImage)
+      name: $(Pool)
+    ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
+      # Add a default so the job doesn't fail when the matrix is empty
+      container: $[ variables['Container'] ]
+    steps:
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+        parameters:
+          AgentImage: $(OSVmImage)
+      - ${{ each step in parameters.TestSetupSteps }}:
+        - ${{ each pair in step }}:
+            ${{ pair.key }}: ${{ pair.value }}
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - script: >-
+          dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
+          --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+          /p:SDKType=${{ parameters.SDKType }}
+          /p:ServiceDirectory=${{ parameters.ServiceToTest }}
+          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
+          /p:Configuration=$(BuildConfiguration) $(ConvertToProjectReferenceOption)
+          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=${{ parameters.ServiceDirectory }}
+        displayName: "Build & Test ($(TestTargetFramework))"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      - task: PublishTestResults@2
+        condition: always()
+        displayName: "Publish Results ($(TestTargetFramework))"
+        inputs:
+          testResultsFiles: "**/$(TestTargetFramework)*.trx"
+          testRunTitle: "$(OSName) $(TestTargetFramework)"
+          testResultsFormat: "VSTest"
+          mergeTestResults: true
+      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+        displayName: Generate Code Coverage Reports
+        inputs:
+          reports: $(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml
+          targetdir: $(Build.ArtifactStagingDirectory)\coverage
+          reporttypes: Cobertura
+          filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
+          verbosity: Verbose
+      - task: PublishCodeCoverageResults@1
+        condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
+        displayName: Publish Code Coverage Reports
+        inputs:
+          codeCoverageTool: Cobertura
+          summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml

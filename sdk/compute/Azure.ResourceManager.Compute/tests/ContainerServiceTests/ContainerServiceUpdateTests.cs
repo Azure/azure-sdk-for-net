@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     cs.AgentPoolProfiles[0].Count = 1;
                     cs.MasterProfile.Count = 1;
                 });
-            var containerService = getTwocontainerService.Item1;
-            inputContainerService = getTwocontainerService.Item2;
+            var containerService = getTwocontainerService.GetResponse;
+            inputContainerService = getTwocontainerService.InputContainerService;
             // Update Container Service with increased AgentPoolProfiles Count
             containerService.AgentPoolProfiles[0].Count = 2;
             UpdateContainerService(rgName, csName, containerService);

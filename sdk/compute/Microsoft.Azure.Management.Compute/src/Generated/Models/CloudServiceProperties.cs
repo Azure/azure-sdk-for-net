@@ -50,18 +50,24 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// run immediately. Instead, the service is PoweredOff until you call
         /// Start, at which time the service will be started. A deployed
         /// service still incurs charges, even if it is poweredoff.</param>
+        /// <param name="allowModelOverride">(Optional) Indicates whether the
+        /// role sku properties (roleProfile.roles.sku) specified in the
+        /// model/template should override the role instance count and vm size
+        /// specified in the .cscfg and .csdef respectively.
+        /// The default value is `false`.</param>
         /// <param name="upgradeMode">Possible values include: 'Auto',
         /// 'Manual', 'Simultaneous'</param>
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         /// <param name="uniqueId">The unique identifier for the cloud
         /// service.</param>
-        public CloudServiceProperties(string packageUrl = default(string), string configuration = default(string), string configurationUrl = default(string), bool? startCloudService = default(bool?), string upgradeMode = default(string), CloudServiceRoleProfile roleProfile = default(CloudServiceRoleProfile), CloudServiceOsProfile osProfile = default(CloudServiceOsProfile), CloudServiceNetworkProfile networkProfile = default(CloudServiceNetworkProfile), CloudServiceExtensionProfile extensionProfile = default(CloudServiceExtensionProfile), string provisioningState = default(string), string uniqueId = default(string))
+        public CloudServiceProperties(string packageUrl = default(string), string configuration = default(string), string configurationUrl = default(string), bool? startCloudService = default(bool?), bool? allowModelOverride = default(bool?), string upgradeMode = default(string), CloudServiceRoleProfile roleProfile = default(CloudServiceRoleProfile), CloudServiceOsProfile osProfile = default(CloudServiceOsProfile), CloudServiceNetworkProfile networkProfile = default(CloudServiceNetworkProfile), CloudServiceExtensionProfile extensionProfile = default(CloudServiceExtensionProfile), string provisioningState = default(string), string uniqueId = default(string))
         {
             PackageUrl = packageUrl;
             Configuration = configuration;
             ConfigurationUrl = configurationUrl;
             StartCloudService = startCloudService;
+            AllowModelOverride = allowModelOverride;
             UpgradeMode = upgradeMode;
             RoleProfile = roleProfile;
             OsProfile = osProfile;
@@ -113,6 +119,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "startCloudService")]
         public bool? StartCloudService { get; set; }
+
+        /// <summary>
+        /// Gets or sets (Optional) Indicates whether the role sku properties
+        /// (roleProfile.roles.sku) specified in the model/template should
+        /// override the role instance count and vm size specified in the
+        /// .cscfg and .csdef respectively.
+        /// The default value is `false`.
+        /// </summary>
+        [JsonProperty(PropertyName = "allowModelOverride")]
+        public bool? AllowModelOverride { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Auto', 'Manual',

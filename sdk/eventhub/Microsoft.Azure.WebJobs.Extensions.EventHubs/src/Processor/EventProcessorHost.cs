@@ -15,7 +15,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
     internal class EventProcessorHost : EventProcessor<EventProcessorHostPartition>
     {
-        private readonly bool _invokeProcessorAfterReceiveTimeout;
         private readonly Action<ExceptionReceivedEventArgs> _exceptionHandler;
         private IEventProcessorFactory _processorFactory;
         private BlobsCheckpointStore _checkpointStore;
@@ -32,10 +31,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             string eventHubName,
             EventProcessorOptions options,
             int eventBatchMaximumCount,
-            bool invokeProcessorAfterReceiveTimeout,
             Action<ExceptionReceivedEventArgs> exceptionHandler) : base(eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options)
         {
-            _invokeProcessorAfterReceiveTimeout = invokeProcessorAfterReceiveTimeout;
             _exceptionHandler = exceptionHandler;
         }
 
@@ -45,10 +42,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             string eventHubName,
             EventProcessorOptions options,
             int eventBatchMaximumCount,
-            bool invokeProcessorAfterReceiveTimeout,
             Action<ExceptionReceivedEventArgs> exceptionHandler) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
         {
-            _invokeProcessorAfterReceiveTimeout = invokeProcessorAfterReceiveTimeout;
             _exceptionHandler = exceptionHandler;
         }
 
@@ -104,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorHostPartition partition, CancellationToken cancellationToken)
         {
-            if ((events == null || !events.Any()) && !_invokeProcessorAfterReceiveTimeout)
+            if (events == null || !events.Any())
             {
                 return Task.CompletedTask;
             }

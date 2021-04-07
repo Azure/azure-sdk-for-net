@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Queues
 {
-    internal class ServiceListQueuesSegmentHeaders
+    internal partial class ServiceListQueuesSegmentHeaders
     {
         private readonly Response _response;
         public ServiceListQueuesSegmentHeaders(Response response)

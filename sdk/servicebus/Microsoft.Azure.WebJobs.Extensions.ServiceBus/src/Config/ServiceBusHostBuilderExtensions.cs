@@ -3,8 +3,10 @@
 
 using System;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Azure.WebJobs.ServiceBus.Config;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -40,9 +42,6 @@ namespace Microsoft.Extensions.Hosting
             builder.AddExtension<ServiceBusExtensionConfigProvider>()
                 .ConfigureOptions<ServiceBusOptions>((config, path, options) =>
                 {
-                    options.ConnectionString = config.GetConnectionString(Constants.DefaultConnectionStringName) ??
-                        config[Constants.DefaultConnectionSettingStringName];
-
                     IConfigurationSection section = config.GetSection(path);
 
                     bool? autoCompleteMessages = section.GetValue(
@@ -75,13 +74,16 @@ namespace Microsoft.Extensions.Hosting
                         "SessionHandlerOptions:MaxConcurrentSessions",
                         options.MaxConcurrentSessions);
 
+                    options.SessionIdleTimeout = section.GetValue("SessionHandlerOptions:MessageWaitTime", options.SessionIdleTimeout);
+
                     section.Bind(options);
 
                     configure(options);
                 });
 
-            builder.Services.TryAddSingleton<MessagingProvider>();
-
+            builder.Services.AddAzureClientsCore();
+            builder.Services.AddSingleton<MessagingProvider>();
+            builder.Services.AddSingleton<ServiceBusClientFactory>();
             return builder;
         }
     }

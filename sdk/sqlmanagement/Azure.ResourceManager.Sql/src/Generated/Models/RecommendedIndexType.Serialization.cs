@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class RecommendedIndexTypeExtensions
+    internal static partial class RecommendedIndexTypeExtensions
     {
         public static string ToSerialString(this RecommendedIndexType value) => value switch
         {

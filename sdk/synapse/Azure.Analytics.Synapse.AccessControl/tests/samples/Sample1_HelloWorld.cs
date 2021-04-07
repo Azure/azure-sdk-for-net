@@ -33,15 +33,14 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 
             #region Snippet:PrepCreateRoleAssignment
             Response<IReadOnlyList<SynapseRoleDefinition>> roles = definitionsClient.ListRoleDefinitions();
-            SynapseRoleDefinition role = roles.Value.Single(role => role.Name == "Workspace Admin");
+            SynapseRoleDefinition role = roles.Value.Single(role => role.Name == "Synapse Administrator");
             Guid roleId = role.Id.Value;
 
             string assignedScope = "workspaces/<my-workspace-name>";
-            /*@@*/assignedScope = "workspaces/workspacechhamosynapse";
+            /*@@*/assignedScope = "workspaces/" + TestEnvironment.WorkspaceName;
 
             // Replace the string below with the ID you'd like to assign the role.
-            Guid principalId = Guid.Parse("<my-principal-id>");
-            /*@@*/principalId = Guid.NewGuid();
+            Guid principalId = /*<my-principal-id>"*/ Guid.NewGuid();
 
             // Replace the string below with the ID of the assignment you'd like to use.
             string assignmentId = "<my-assignment-id>";

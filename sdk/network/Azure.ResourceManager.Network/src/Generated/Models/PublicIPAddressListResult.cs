@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListPublicIpAddresses API service call. </summary>
-    public partial class PublicIPAddressListResult
+    internal partial class PublicIPAddressListResult
     {
         /// <summary> Initializes a new instance of PublicIPAddressListResult. </summary>
         internal PublicIPAddressListResult()

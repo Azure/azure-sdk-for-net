@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    internal static class DeleteSnapshotsOptionTypeExtensions
+    internal static partial class DeleteSnapshotsOptionTypeExtensions
     {
         public static string ToSerialString(this DeleteSnapshotsOptionType value) => value switch
         {

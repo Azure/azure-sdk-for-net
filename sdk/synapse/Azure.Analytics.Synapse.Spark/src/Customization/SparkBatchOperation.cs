@@ -36,6 +36,9 @@ namespace Azure.Analytics.Synapse.Spark
             _diagnostics = diagnostics;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SparkBatchOperation" /> for mocking. </summary>
+        protected SparkBatchOperation() {}
+
         /// <inheritdoc/>
         public override string Id => _value.Id.ToString(CultureInfo.InvariantCulture);
 

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices.Models
 {
     /// <summary> The List Aml user feature operation response. </summary>
-    public partial class ListAmlUserFeatureResult
+    internal partial class ListAmlUserFeatureResult
     {
         /// <summary> Initializes a new instance of ListAmlUserFeatureResult. </summary>
         internal ListAmlUserFeatureResult()

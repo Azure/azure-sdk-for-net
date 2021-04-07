@@ -79,13 +79,23 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// </summary>
         public static BlobOperationName AbortCopyBlob { get; } = new BlobOperationName("AbortCopyBlob");
 
-        ///<inheritdoc/>
+        /// <summary>
+        /// Compares equality of two <see cref="BlobOperationName"/> instances.
+        /// </summary>
+        /// <param name="left">The <see cref="BlobOperationName"/> to compare.</param>
+        /// <param name="right">The <see cref="BlobOperationName"/> to compare to.</param>
+        /// <returns><c>true</c> if values of both BlobOperationName are equal, otherwise <c>false</c>.</returns>
         public static bool operator ==(BlobOperationName left, BlobOperationName right) => left.Equals(right);
 
-        ///<inheritdoc/>
+        /// <summary>
+        /// Compares inequality of two <see cref="BlobOperationName"/> instances.
+        /// </summary>
+        /// <param name="left">The <see cref="BlobOperationName"/> to compare.</param>
+        /// <param name="right">The <see cref="BlobOperationName"/> to compare to.</param>
+        /// <returns><c>true</c> if values of both BlobOperationName are not equal, otherwise <c>false</c>.</returns>
         public static bool operator !=(BlobOperationName left, BlobOperationName right) => !left.Equals(right);
 
-        ///<inheritdoc/>
+        /// <summary> Converts a string to a <see cref="BlobOperationName"/>. </summary>
         public static implicit operator BlobOperationName(string value) => new BlobOperationName(value);
 
         ///<inheritdoc/>

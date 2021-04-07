@@ -268,17 +268,31 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
-            if (take > 500)
+            else if (skip == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                throw new ValidationException(ValidationRules.CannotBeNull, "skip", 0);
             }
-            if (take < 0)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
+            }
+            else if (take == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -633,17 +647,31 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
-            if (take > 500)
+            else if (skip == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                throw new ValidationException(ValidationRules.CannotBeNull, "skip", 0);
             }
-            if (take < 0)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
+            }
+            else if (take == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -825,17 +853,31 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
-            if (take > 500)
+            else if (skip == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                throw new ValidationException(ValidationRules.CannotBeNull, "skip", 0);
             }
-            if (take < 0)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
+            }
+            else if (take == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1017,17 +1059,31 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
-            if (take > 500)
+            else if (skip == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                throw new ValidationException(ValidationRules.CannotBeNull, "skip", 0);
             }
-            if (take < 0)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
+            }
+            else if (take == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1209,17 +1265,31 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
-            if (take > 500)
+            else if (skip == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                throw new ValidationException(ValidationRules.CannotBeNull, "skip", 0);
             }
-            if (take < 0)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
+            }
+            else if (take == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1745,17 +1815,31 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
-            if (take > 500)
+            else if (skip == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                throw new ValidationException(ValidationRules.CannotBeNull, "skip", 0);
             }
-            if (take < 0)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
+            }
+            else if (take == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2095,17 +2179,31 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
-            if (take > 500)
+            else if (skip == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                throw new ValidationException(ValidationRules.CannotBeNull, "skip", 0);
             }
-            if (take < 0)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
+            }
+            else if (take == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2294,17 +2392,31 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "modelId");
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
-            if (take > 500)
+            else if (skip == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                throw new ValidationException(ValidationRules.CannotBeNull, "skip", 0);
             }
-            if (take < 0)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
+            }
+            else if (take == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -6921,13 +7033,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (take > 500)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
-            }
-            if (take < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -7114,13 +7229,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (take > 500)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
-            }
-            if (take < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -9689,17 +9807,31 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
-            if (take > 500)
+            else if (skip == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                throw new ValidationException(ValidationRules.CannotBeNull, "skip", 0);
             }
-            if (take < 0)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
+            }
+            else if (take == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -10054,17 +10186,31 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
             }
-            if (skip < 0)
+            if (skip != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                if (skip < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "skip", 0);
+                }
             }
-            if (take > 500)
+            else if (skip == null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                throw new ValidationException(ValidationRules.CannotBeNull, "skip", 0);
             }
-            if (take < 0)
+            if (take != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                if (take > 500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 500);
+                }
+                if (take < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
+                }
+            }
+            else if (take == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "take", 0);
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

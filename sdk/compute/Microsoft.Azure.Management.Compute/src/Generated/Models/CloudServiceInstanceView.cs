@@ -33,10 +33,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="sdkVersion">The version of the SDK that was used to
         /// generate the package for the cloud service.</param>
-        public CloudServiceInstanceView(InstanceViewStatusesSummary roleInstance = default(InstanceViewStatusesSummary), string sdkVersion = default(string), IList<ResourceInstanceViewStatus> statuses = default(IList<ResourceInstanceViewStatus>))
+        /// <param name="privateIds">Specifies a list of unique identifiers
+        /// generated internally for the cloud service. &lt;br /&gt;&lt;br
+        /// /&gt; NOTE: If you are using Azure Diagnostics extension, this
+        /// property can be used as 'DeploymentId' for querying
+        /// details.</param>
+        public CloudServiceInstanceView(InstanceViewStatusesSummary roleInstance = default(InstanceViewStatusesSummary), string sdkVersion = default(string), IList<string> privateIds = default(IList<string>), IList<ResourceInstanceViewStatus> statuses = default(IList<ResourceInstanceViewStatus>))
         {
             RoleInstance = roleInstance;
             SdkVersion = sdkVersion;
+            PrivateIds = privateIds;
             Statuses = statuses;
             CustomInit();
         }
@@ -57,6 +63,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "sdkVersion")]
         public string SdkVersion { get; private set; }
+
+        /// <summary>
+        /// Gets specifies a list of unique identifiers generated internally
+        /// for the cloud service. &amp;lt;br /&amp;gt;&amp;lt;br /&amp;gt;
+        /// NOTE: If you are using Azure Diagnostics extension, this property
+        /// can be used as 'DeploymentId' for querying details.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateIds")]
+        public IList<string> PrivateIds { get; private set; }
 
         /// <summary>
         /// </summary>

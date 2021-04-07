@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListAuthorizations API service call retrieves all authorizations that belongs to an ExpressRouteCircuit. </summary>
-    public partial class AuthorizationListResult
+    internal partial class AuthorizationListResult
     {
         /// <summary> Initializes a new instance of AuthorizationListResult. </summary>
         internal AuthorizationListResult()

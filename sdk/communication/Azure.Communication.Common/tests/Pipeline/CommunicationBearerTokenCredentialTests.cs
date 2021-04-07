@@ -40,9 +40,10 @@ namespace Azure.Communication.Pipeline
             var tokenCredential = new CommunicationTokenCredential(
                 new CommunicationTokenRefreshOptions(
                 refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-                tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
-                asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken))
-            );
+                tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
+                {
+                    AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken)
+                });
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
 
             await communicationBearerTokenCredential.GetTokenAsync(MockTokenRequestContext(), CancellationToken.None);
@@ -52,13 +53,15 @@ namespace Azure.Communication.Pipeline
         public async Task CommunicationBearerTokenCredential_CreateRefreshableWithInitialToken()
         {
             var initialToken = ExpiredToken;
+
             var tokenCredential = new CommunicationTokenCredential(
                 new CommunicationTokenRefreshOptions(
                 refreshProactively: true, // Indicates if the token should be proactively refreshed in the background or only on-demand
-                tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken),
-                asyncTokenRefresher: cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken),
-                initialToken)
-            );
+                tokenRefresher: cancellationToken => FetchTokenForUserFromMyServer("bob@contoso.com", cancellationToken))
+                {
+                    AsyncTokenRefresher = cancellationToken => FetchTokenForUserFromMyServerAsync("bob@contoso.com", cancellationToken),
+                    InitialToken = initialToken
+                });
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
 
             await communicationBearerTokenCredential.GetTokenAsync(MockTokenRequestContext(), CancellationToken.None);
@@ -107,12 +110,12 @@ namespace Azure.Communication.Pipeline
 
             var tokenCredential = new CommunicationTokenCredential(
                 new CommunicationTokenRefreshOptions(
-                    refreshProactively,
-                    RefreshToken,
-                    c => new ValueTask<string>(RefreshToken(c)),
-                    ExpiredToken)
-                );
-
+                refreshProactively,
+                RefreshToken)
+                {
+                    AsyncTokenRefresher = c => new ValueTask<string>(RefreshToken(c)),
+                    InitialToken = ExpiredToken
+                });
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
             var accessToken = communicationBearerTokenCredential.GetToken(MockTokenRequestContext(), cancellationToken);
             Assert.AreEqual(cancellationToken.GetHashCode(), actualCancellationToken.GetHashCode());
@@ -134,11 +137,12 @@ namespace Azure.Communication.Pipeline
 
             var tokenCredential = new CommunicationTokenCredential(
                 new CommunicationTokenRefreshOptions(
-                    refreshProactively,
-                    RefreshToken,
-                    c => new ValueTask<string>(RefreshToken(c)),
-                    ExpiredToken)
-                );
+                refreshProactively,
+                RefreshToken)
+                {
+                    AsyncTokenRefresher = c => new ValueTask<string>(RefreshToken(c)),
+                    InitialToken = ExpiredToken
+                });
 
             var communicationBearerTokenCredential = new CommunicationBearerTokenCredential(tokenCredential);
             var accessToken = await communicationBearerTokenCredential.GetTokenAsync(MockTokenRequestContext(), cancellationToken);

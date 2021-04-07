@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Communication
 {
     /// <summary> Client options for Communication. </summary>
-    public class CommunicationManagementClientOptions : ClientOptions
+    public partial class CommunicationManagementClientOptions : ClientOptions
     {
     }
 }

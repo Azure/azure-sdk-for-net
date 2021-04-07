@@ -33,8 +33,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// face. The higher confidence, the more similar. Range between
         /// [0,1].</param>
         /// <param name="faceId">FaceId of candidate face when find by faceIds.
-        /// faceId is created by Face - Detect and will expire 24 hours after
-        /// the detection call</param>
+        /// faceId is created by Face - Detect and will expire at the time
+        /// specified by faceIdTimeToLive after the detection call</param>
         /// <param name="persistedFaceId">PersistedFaceId of candidate face
         /// when find by faceListId. persistedFaceId in face list is persisted
         /// and will not expire. As showed in below response</param>
@@ -53,8 +53,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 
         /// <summary>
         /// Gets or sets faceId of candidate face when find by faceIds. faceId
-        /// is created by Face - Detect and will expire 24 hours after the
-        /// detection call
+        /// is created by Face - Detect and will expire at the time specified
+        /// by faceIdTimeToLive after the detection call
         /// </summary>
         [JsonProperty(PropertyName = "faceId")]
         public System.Guid? FaceId { get; set; }

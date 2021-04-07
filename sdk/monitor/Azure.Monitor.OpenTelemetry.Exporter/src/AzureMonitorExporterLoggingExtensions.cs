@@ -22,7 +22,7 @@ namespace Microsoft.Extensions.Logging
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
-            return loggerOptions.AddProcessor(new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(options)));
+            return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options)));
         }
     }
 }

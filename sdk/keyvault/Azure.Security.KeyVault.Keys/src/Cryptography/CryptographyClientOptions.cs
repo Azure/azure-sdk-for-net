@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     /// <summary>
-    /// Options that allow you to configure the management of the request sent to Key Vault.
+    /// Options that allow you to configure the <see cref="CryptographyClient"/> for local or remote operations on Key Vault.
     /// </summary>
     public class CryptographyClientOptions : ClientOptions
     {

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ImageListResult
+    internal partial class ImageListResult
     {
         internal static ImageListResult DeserializeImageListResult(JsonElement element)
         {

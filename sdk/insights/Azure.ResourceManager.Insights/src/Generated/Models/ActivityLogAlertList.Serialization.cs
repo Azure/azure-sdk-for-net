@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Insights.Models
 {
-    public partial class ActivityLogAlertList
+    internal partial class ActivityLogAlertList
     {
         internal static ActivityLogAlertList DeserializeActivityLogAlertList(JsonElement element)
         {

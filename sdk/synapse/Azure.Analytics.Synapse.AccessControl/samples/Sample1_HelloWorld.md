@@ -20,13 +20,13 @@ First, you need to the determine the ID of the role you wish to assign, along wi
 
 ```C# Snippet:PrepCreateRoleAssignment
 Response<IReadOnlyList<SynapseRoleDefinition>> roles = definitionsClient.ListRoleDefinitions();
-SynapseRoleDefinition role = roles.Value.Single(role => role.Name == "Workspace Admin");
+SynapseRoleDefinition role = roles.Value.Single(role => role.Name == "Synapse Administrator");
 Guid roleId = role.Id.Value;
 
 string assignedScope = "workspaces/<my-workspace-name>";
 
 // Replace the string below with the ID you'd like to assign the role.
-Guid principalId = Guid.Parse("<my-principal-id>");
+Guid principalId = /*<my-principal-id>"*/ Guid.NewGuid();
 
 // Replace the string below with the ID of the assignment you'd like to use.
 string assignmentId = "<my-assignment-id>";

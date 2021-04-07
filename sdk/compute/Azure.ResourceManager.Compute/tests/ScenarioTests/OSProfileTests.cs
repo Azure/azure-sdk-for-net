@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Compute.Tests
             StorageAccount storageAccountOutput = await CreateStorageAccount(rgName, storageAccountName);
 
             var returnTwoVM = await CreateVM(rgName, asName, storageAccountOutput, imageRef, vmCustomizer);
-            VirtualMachine vm = returnTwoVM.Item1;
-            inputVM = returnTwoVM.Item2;
-            string inputVMName = returnTwoVM.Item3;
+            VirtualMachine vm = returnTwoVM.Response;
+            inputVM = returnTwoVM.Input;
+            string inputVMName = returnTwoVM.Name;
             //var getVMWithInstanceViewResponse = await VirtualMachinesClient.GetAsync(rgName, inputVM.Name, InstanceViewTypes.InstanceView);
             var getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(rgName, inputVMName);
             ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);

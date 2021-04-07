@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Storage
         /// </param>
         /// <param name='expand'>
         /// Optional, used to expand the properties within share's properties. Possible
-        /// values include: 'deleted'
+        /// values include: 'deleted', 'snapshots'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<FileShareItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), ListSharesExpand? expand = default(ListSharesExpand?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<FileShareItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Storage
             }
             if (expand != null)
             {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expand, Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -339,6 +339,9 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='fileShare'>
         /// Properties of the file share to create.
         /// </param>
+        /// <param name='expand'>
+        /// Optional, used to create a snapshot. Possible values include: 'snapshots'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -360,7 +363,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileShare>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileShare>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -452,6 +455,7 @@ namespace Microsoft.Azure.Management.Storage
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("shareName", shareName);
                 tracingParameters.Add("fileShare", fileShare);
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
@@ -463,6 +467,10 @@ namespace Microsoft.Azure.Management.Storage
             _url = _url.Replace("{shareName}", System.Uri.EscapeDataString(shareName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (expand != null)
+            {
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -916,6 +924,9 @@ namespace Microsoft.Azure.Management.Storage
         /// Optional, used to expand the properties within share's properties. Possible
         /// values include: 'stats'
         /// </param>
+        /// <param name='xMsSnapshot'>
+        /// Optional, used to retrieve properties of a snapshot.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -937,7 +948,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileShare>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, GetShareExpand? expand = default(GetShareExpand?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<FileShare>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, GetShareExpand? expand = default(GetShareExpand?), string xMsSnapshot = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1021,6 +1032,7 @@ namespace Microsoft.Azure.Management.Storage
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("shareName", shareName);
                 tracingParameters.Add("expand", expand);
+                tracingParameters.Add("xMsSnapshot", xMsSnapshot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -1053,6 +1065,14 @@ namespace Microsoft.Azure.Management.Storage
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (xMsSnapshot != null)
+            {
+                if (_httpRequest.Headers.Contains("x-ms-snapshot"))
+                {
+                    _httpRequest.Headers.Remove("x-ms-snapshot");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-snapshot", xMsSnapshot);
             }
             if (Client.AcceptLanguage != null)
             {
@@ -1183,6 +1203,9 @@ namespace Microsoft.Azure.Management.Storage
         /// lower-case letters and dash (-) only. Every dash (-) character must be
         /// immediately preceded and followed by a letter or number.
         /// </param>
+        /// <param name='xMsSnapshot'>
+        /// Optional, used to delete a snapshot.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1201,7 +1224,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string xMsSnapshot = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1284,6 +1307,7 @@ namespace Microsoft.Azure.Management.Storage
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("shareName", shareName);
+                tracingParameters.Add("xMsSnapshot", xMsSnapshot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -1312,6 +1336,14 @@ namespace Microsoft.Azure.Management.Storage
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
             {
                 _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (xMsSnapshot != null)
+            {
+                if (_httpRequest.Headers.Contains("x-ms-snapshot"))
+                {
+                    _httpRequest.Headers.Remove("x-ms-snapshot");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-snapshot", xMsSnapshot);
             }
             if (Client.AcceptLanguage != null)
             {

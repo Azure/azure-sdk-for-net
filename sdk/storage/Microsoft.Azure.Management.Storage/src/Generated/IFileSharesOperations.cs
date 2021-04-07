@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Storage
         /// </param>
         /// <param name='expand'>
         /// Optional, used to expand the properties within share's properties.
-        /// Possible values include: 'deleted'
+        /// Possible values include: 'deleted', 'snapshots'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<FileShareItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), ListSharesExpand? expand = default(ListSharesExpand?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<FileShareItem>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string maxpagesize = default(string), string filter = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new share under the specified account as described by
         /// request body. The share resource includes metadata and properties
@@ -88,6 +88,10 @@ namespace Microsoft.Azure.Management.Storage
         /// <param name='fileShare'>
         /// Properties of the file share to create.
         /// </param>
+        /// <param name='expand'>
+        /// Optional, used to create a snapshot. Possible values include:
+        /// 'snapshots'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -103,7 +107,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FileShare>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FileShare>> CreateWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, FileShare fileShare, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates share properties as specified in request body. Properties
         /// not mentioned in the request will not be changed. Update fails if
@@ -167,6 +171,9 @@ namespace Microsoft.Azure.Management.Storage
         /// Optional, used to expand the properties within share's properties.
         /// Possible values include: 'stats'
         /// </param>
+        /// <param name='xMsSnapshot'>
+        /// Optional, used to retrieve properties of a snapshot.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -182,7 +189,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<FileShare>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, GetShareExpand? expand = default(GetShareExpand?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<FileShare>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, GetShareExpand? expand = default(GetShareExpand?), string xMsSnapshot = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes specified share under its account.
         /// </summary>
@@ -202,6 +209,9 @@ namespace Microsoft.Azure.Management.Storage
         /// character must be immediately preceded and followed by a letter or
         /// number.
         /// </param>
+        /// <param name='xMsSnapshot'>
+        /// Optional, used to delete a snapshot.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -214,7 +224,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string shareName, string xMsSnapshot = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Restore a file share within a valid retention days if share soft
         /// delete is enabled

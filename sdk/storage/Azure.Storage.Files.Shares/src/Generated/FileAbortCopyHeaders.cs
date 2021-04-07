@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class FileAbortCopyHeaders
+    internal partial class FileAbortCopyHeaders
     {
         private readonly Response _response;
         public FileAbortCopyHeaders(Response response)

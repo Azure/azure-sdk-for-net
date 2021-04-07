@@ -18,9 +18,14 @@ The `Azure.Identity` library is recommended for identity-based authentication ac
 
 **Role Assignments** 
 
-Once your environment is configured, you'll need to ensure that the principal that you've chosen has access to your Event Hubs resources in Azure.  To do so, they will be assigned the [Azure Event Hubs Data Owner](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-owner) role.  You will also need to ensure they are assigned the [Storage Blob Data Contributor](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor) role to the Blob Storage container that you're using for checkpoint and ownership data. 
+Once your environment is configured, you'll need to ensure that the principal that you've chosen has access to your Event Hubs resources in Azure.  To do so, they will need to be assigned the appropriate role.  For those unfamiliar with role assignments, it is recommended to follow [these steps](https://docs.microsoft.com/azure/event-hubs/authenticate-managed-identity?tabs=latest#to-assign-azure-roles-using-the-azure-portal) in the Azure portal for the most intuitive experience.  Roles may also be assigned via the [Azure CLI](https://docs.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az_role_assignment_create) or [PowerShell](https://docs.microsoft.com/powershell/module/az.resources/new-azroleassignment), though these require more in-depth knowledge of the Azure platform and may be difficult for developers exploring Azure for the first time.  
 
-For those not familiar with role assignments, it is recommended to follow [these steps](https://docs.microsoft.com/azure/event-hubs/authenticate-managed-identity?tabs=latest#to-assign-azure-roles-using-the-azure-portal) in the Azure portal for the most intuitive experience.  Roles may also be assigned via the [Azure CLI](https://docs.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az_role_assignment_create) or [PowerShell](https://docs.microsoft.com/powershell/module/az.resources/new-azroleassignment), though these require more in-depth knowledge of the Azure platform and may be difficult for developers exploring Azure for the first time.  
+The available role choices for Event Hubs are: 
+
+- [Azure Event Hubs Data Owner](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-owner) for full access to read and publish events.
+- [Azure Event Hubs Data Receiver](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-receiver) for the ability to read events but not publish them.
+
+You will also need to ensure that your principal is assigned the [Storage Blob Data Contributor](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#storage-blob-data-contributor) role for the Blob Storage container that you're using for checkpoint and ownership data. 
 
 ### Event Hubs Shared Access Signature authorization
 
@@ -114,11 +119,139 @@ finally
 
 ## Processing events with Shared Access Signature authorization
 
-**COMING SOON**
+```C# Snippet:EventHubs_Processor_Sample05_SharedAccessSignature
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+var credential = new AzureSasCredential("<< SHARED ACCESS KEY STRING >>");
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+ var storageClient = new BlobContainerClient(
+    storageConnectionString,
+    blobContainerName);
+
+var processor = new EventProcessorClient(
+    storageClient,
+    consumerGroup,
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
+
+try
+{
+    using var cancellationSource = new CancellationTokenSource();
+    cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+    // The event handlers are not relevant for this sample; for
+    // illustration, they're delegating the implementation to the
+    // host application.
+
+    processor.ProcessEventAsync += Application.ProcessorEventHandler;
+    processor.ProcessErrorAsync += Application.ProcessorErrorHandler;
+
+    try
+    {
+        await processor.StartProcessingAsync(cancellationSource.Token);
+        await Task.Delay(Timeout.Infinite, cancellationSource.Token);
+    }
+    catch (TaskCanceledException)
+    {
+        // This is expected if the cancellation token is
+        // signaled.
+    }
+    finally
+    {
+        // This may take up to the length of time defined
+        // as part of the configured TryTimeout of the processor;
+        // by default, this is 60 seconds.
+
+        await processor.StopProcessingAsync();
+    }
+}
+catch
+{
+    // If this block is invoked, then something external to the
+    // processor was the source of the exception.
+}
+finally
+{
+   // It is encouraged that you unregister your handlers when you have
+   // finished using the Event Processor to ensure proper cleanup.
+
+   processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+}
+```
 
 ## Processing events with Shared Access Key authorization
 
-**COMING SOON**
+```C# Snippet:EventHubs_Processor_Sample05_SharedAccessKey
+var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
+var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
+
+var credential = new AzureNamedKeyCredential("<< SHARED KEY NAME >>", "<< SHARED KEY >>");
+var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
+var eventHubName = "<< NAME OF THE EVENT HUB >>";
+var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
+
+ var storageClient = new BlobContainerClient(
+    storageConnectionString,
+    blobContainerName);
+
+var processor = new EventProcessorClient(
+    storageClient,
+    consumerGroup,
+    fullyQualifiedNamespace,
+    eventHubName,
+    credential);
+
+try
+{
+    using var cancellationSource = new CancellationTokenSource();
+    cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+    // The event handlers are not relevant for this sample; for
+    // illustration, they're delegating the implementation to the
+    // host application.
+
+    processor.ProcessEventAsync += Application.ProcessorEventHandler;
+    processor.ProcessErrorAsync += Application.ProcessorErrorHandler;
+
+    try
+    {
+        await processor.StartProcessingAsync(cancellationSource.Token);
+        await Task.Delay(Timeout.Infinite, cancellationSource.Token);
+    }
+    catch (TaskCanceledException)
+    {
+        // This is expected if the cancellation token is
+        // signaled.
+    }
+    finally
+    {
+        // This may take up to the length of time defined
+        // as part of the configured TryTimeout of the processor;
+        // by default, this is 60 seconds.
+
+        await processor.StopProcessingAsync();
+    }
+}
+catch
+{
+    // If this block is invoked, then something external to the
+    // processor was the source of the exception.
+}
+finally
+{
+   // It is encouraged that you unregister your handlers when you have
+   // finished using the Event Processor to ensure proper cleanup.
+
+   processor.ProcessEventAsync -= Application.ProcessorEventHandler;
+   processor.ProcessErrorAsync -= Application.ProcessorErrorHandler;
+}
+```
 
 ## Parsing a connection string for information
 

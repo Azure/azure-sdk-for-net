@@ -39,16 +39,19 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Bytes', 'Count', 'Milliseconds'</param>
         /// <param name="aggregationType">The metric aggregation type. Possible
         /// values include: 'Average', 'Count', 'Total'</param>
+        /// <param name="lockAggregationType">The metric lock aggregation type.
+        /// Possible values include: 'Average', 'Count', 'Total'</param>
         /// <param name="supportedAggregationTypes">Supported aggregation
         /// types.</param>
         /// <param name="dimensions">The metric dimensions.</param>
-        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), MetricUnit unit = default(MetricUnit), MetricAggregationType aggregationType = default(MetricAggregationType), IList<string> supportedAggregationTypes = default(IList<string>), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+        public MetricSpecification(string name = default(string), string displayName = default(string), string displayDescription = default(string), MetricUnit unit = default(MetricUnit), MetricAggregationType aggregationType = default(MetricAggregationType), MetricAggregationType? lockAggregationType = default(MetricAggregationType?), IList<string> supportedAggregationTypes = default(IList<string>), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
         {
             Name = name;
             DisplayName = displayName;
             DisplayDescription = displayDescription;
             Unit = unit;
             AggregationType = aggregationType;
+            LockAggregationType = lockAggregationType;
             SupportedAggregationTypes = supportedAggregationTypes;
             Dimensions = dimensions;
             CustomInit();
@@ -90,6 +93,13 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "aggregationType")]
         public MetricAggregationType AggregationType { get; private set; }
+
+        /// <summary>
+        /// Gets the metric lock aggregation type. Possible values include:
+        /// 'Average', 'Count', 'Total'
+        /// </summary>
+        [JsonProperty(PropertyName = "lockAggregationType")]
+        public MetricAggregationType? LockAggregationType { get; private set; }
 
         /// <summary>
         /// Gets or sets supported aggregation types.

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
-    internal class RoleAssignmentsListRoleAssignmentsHeaders
+    internal partial class RoleAssignmentsListRoleAssignmentsHeaders
     {
         private readonly Response _response;
         public RoleAssignmentsListRoleAssignmentsHeaders(Response response)

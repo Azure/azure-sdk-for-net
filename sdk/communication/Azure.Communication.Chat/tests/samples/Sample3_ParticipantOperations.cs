@@ -24,10 +24,10 @@ namespace Azure.Communication.Chat.Tests.samples
             Response<CommunicationUserIdentifier> amyResponse = await communicationIdentityClient.CreateUserAsync();
             CommunicationUserIdentifier amy = amyResponse.Value;
 
-            AccessToken joshTokenResponse = await communicationIdentityClient.IssueTokenAsync(josh, new[] { CommunicationTokenScope.Chat });
+            AccessToken joshTokenResponse = await communicationIdentityClient.GetTokenAsync(josh, new[] { CommunicationTokenScope.Chat });
 
             ChatClient chatClient = new ChatClient(
-                new Uri(TestEnvironment.ChatApiUrl()),
+                TestEnvironment.Endpoint,
                 new CommunicationTokenCredential(joshTokenResponse.Token));
 
             var chatParticipant = new ChatParticipant(josh)

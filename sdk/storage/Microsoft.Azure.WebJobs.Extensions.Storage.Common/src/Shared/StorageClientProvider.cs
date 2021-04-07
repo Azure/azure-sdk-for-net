@@ -53,27 +53,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
             }
 
             _logForwarder.Start();
-
-            if (!string.IsNullOrWhiteSpace(connectionSection.Value))
-            {
-                return CreateClientFromConnectionString(connectionSection.Value, CreateClientOptions(null));
-            }
-
-            var endpoint = connectionSection["endpoint"];
-            if (string.IsNullOrWhiteSpace(endpoint))
-            {
-                // Not found
-                throw new InvalidOperationException($"Connection should have an 'endpoint' property or be a string representing a connection string.");
-            }
-
             var credential = _componentFactory.CreateTokenCredential(connectionSection);
-            var endpointUri = new Uri(endpoint);
-            return CreateClientFromTokenCredential(endpointUri, credential, CreateClientOptions(connectionSection));
+            var options = CreateClientOptions(connectionSection);
+            return CreateClient(connectionSection, credential, options);
         }
 
-        protected abstract TClient CreateClientFromConnectionString(string connectionString, TClientOptions options);
-
-        protected abstract TClient CreateClientFromTokenCredential(Uri endpointUri, TokenCredential tokenCredential, TClientOptions options);
+        protected virtual TClient CreateClient(IConfiguration configuration, TokenCredential tokenCredential, TClientOptions options)
+        {
+            return (TClient)_componentFactory.CreateClient(typeof(TClient), configuration, tokenCredential, options);
+        }
 
         /// <summary>
         /// The host account is for internal storage mechanisms like load balancer queuing.

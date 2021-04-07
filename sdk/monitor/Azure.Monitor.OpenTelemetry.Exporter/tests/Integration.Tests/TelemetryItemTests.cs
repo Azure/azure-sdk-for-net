@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
             using var activitySource = new ActivitySource(ActivitySourceName);
 
             var mockTransmitter = new MockTransmitter();
-            var processor = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
+            var processor = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(
                 options: new AzureMonitorExporterOptions
                 {
                     ConnectionString = EmptyConnectionString,
@@ -125,7 +125,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
             // SETUP
             var mockTransmitter = new MockTransmitter();
-            var processor = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(
+            var processor = new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(
                 options: new AzureMonitorExporterOptions
                 {
                     ConnectionString = EmptyConnectionString,
@@ -171,11 +171,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
                 ConnectionString = EmptyConnectionString,
             };
 
-            var processor1 = new BatchExportProcessor<Activity>(new AzureMonitorTraceExporter(
+            var processor1 = new BatchActivityExportProcessor(new AzureMonitorTraceExporter(
                 options: azureMonitorExporterOptions,
                 transmitter: mockTransmitter));
 
-            var processor2 = new BatchExportProcessor<LogRecord>(new AzureMonitorLogExporter(
+            var processor2 = new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(
                 options: azureMonitorExporterOptions,
                 transmitter: mockTransmitter));
 

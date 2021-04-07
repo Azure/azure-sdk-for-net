@@ -268,7 +268,7 @@ namespace Compute.Tests
                 m_CrpClient.Galleries.Delete(rgName, galleryName);
             }
         }
-
+        
         [Fact]
         public void GalleryApplicationVersion_CRUD_Tests()
         {
@@ -555,7 +555,7 @@ namespace Compute.Tests
                 Description = "This is the gallery application description.",
             };
         }
-
+        
         private GalleryApplicationVersion GetTestInputGalleryApplicationVersion(string applicationMediaLink)
         {
             return new GalleryApplicationVersion

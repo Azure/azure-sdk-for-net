@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Search.Documents.Models
 {
-    internal static class ScoringStatisticsExtensions
+    internal static partial class ScoringStatisticsExtensions
     {
         public static string ToSerialString(this ScoringStatistics value) => value switch
         {

@@ -2077,7 +2077,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Name = name,
                 DataSource = dataSource,
                 Granularity = new DataFeedGranularity(DataFeedGranularityType.Daily),
-                Schema = new DataFeedSchema() { MetricColumns = { new ("cost") } },
+                Schema = new DataFeedSchema() { MetricColumns = { new("cost") } },
                 IngestionSettings = new DataFeedIngestionSettings() { IngestionStartTime = ingestionStartTime }
             };
         }
@@ -2105,17 +2105,17 @@ namespace Azure.AI.MetricsAdvisor.Tests
                 Description = "This data feed was created to test the .NET client.",
                 AccessMode = DataFeedAccessMode.Public,
                 ActionLinkTemplate = "https://fakeurl.com/%metric/%datafeed",
-                MissingDataPointFillSettings = new () { FillType = DataFeedMissingDataPointFillType.CustomValue, CustomFillValue = 45.0 }
+                MissingDataPointFillSettings = new() { FillType = DataFeedMissingDataPointFillType.CustomValue, CustomFillValue = 45.0 }
             };
 
             dataFeed.Administrators.Add("fake@admin.com");
             dataFeed.Viewers.Add("fake@viewer.com");
 
-            dataFeed.Schema.MetricColumns.Add(new ("cost") { MetricDisplayName = "costDisplayName", MetricDescription = "costDescription" });
-            dataFeed.Schema.MetricColumns.Add(new ("revenue") { MetricDisplayName = "revenueDisplayName", MetricDescription = "revenueDescription" });
+            dataFeed.Schema.MetricColumns.Add(new("cost") { MetricDisplayName = "costDisplayName", MetricDescription = "costDescription" });
+            dataFeed.Schema.MetricColumns.Add(new("revenue") { MetricDisplayName = "revenueDisplayName", MetricDescription = "revenueDescription" });
 
-            dataFeed.Schema.DimensionColumns.Add(new ("city"));
-            dataFeed.Schema.DimensionColumns.Add(new ("category") { DimensionDisplayName = "categoryDisplayName" });
+            dataFeed.Schema.DimensionColumns.Add(new("city"));
+            dataFeed.Schema.DimensionColumns.Add(new("category") { DimensionDisplayName = "categoryDisplayName" });
 
             return dataFeed;
         }
@@ -2154,7 +2154,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
             dataFeed.IngestionSettings.StopRetryAfter = TimeSpan.FromMinutes(20);
             dataFeed.IngestionSettings.DataSourceRequestConcurrency = 6;
 
-            dataFeed.MissingDataPointFillSettings = new ()
+            dataFeed.MissingDataPointFillSettings = new()
             {
                 FillType = DataFeedMissingDataPointFillType.NoFilling
             };

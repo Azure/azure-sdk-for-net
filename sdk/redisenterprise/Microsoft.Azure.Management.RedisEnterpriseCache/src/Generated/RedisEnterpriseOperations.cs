@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
     /// <summary>
     /// RedisEnterpriseOperations operations.
     /// </summary>
-    internal partial class RedisEnterpriseOperations : IServiceOperations<redisenterpriseClient>, IRedisEnterpriseOperations
+    internal partial class RedisEnterpriseOperations : IServiceOperations<RedisEnterpriseManagementClient>, IRedisEnterpriseOperations
     {
         /// <summary>
         /// Initializes a new instance of the RedisEnterpriseOperations class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal RedisEnterpriseOperations(redisenterpriseClient client)
+        internal RedisEnterpriseOperations(RedisEnterpriseManagementClient client)
         {
             if (client == null)
             {
@@ -46,16 +46,16 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         }
 
         /// <summary>
-        /// Gets a reference to the redisenterpriseClient
+        /// Gets a reference to the RedisEnterpriseManagementClient
         /// </summary>
-        public redisenterpriseClient Client { get; private set; }
+        public RedisEnterpriseManagementClient Client { get; private set; }
 
         /// <summary>
         /// Creates or updates an existing (overwrite/recreate, with potential
         /// downtime) cache cluster
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Updates an existing RedisEnterprise cluster
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Deletes a RedisEnterprise cache cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Gets information about a RedisEnterprise cluster
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Cluster>> GetMethodWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Cluster>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetMethod", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -318,7 +318,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Lists all RedisEnterprise clusters in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -674,7 +674,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// downtime) cache cluster
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -897,7 +897,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Updates an existing RedisEnterprise cluster
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.
@@ -1102,7 +1102,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise
         /// Deletes a RedisEnterprise cache cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='clusterName'>
         /// The name of the RedisEnterprise cluster.

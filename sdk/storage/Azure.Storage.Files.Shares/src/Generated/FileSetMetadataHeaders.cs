@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class FileSetMetadataHeaders
+    internal partial class FileSetMetadataHeaders
     {
         private readonly Response _response;
         public FileSetMetadataHeaders(Response response)

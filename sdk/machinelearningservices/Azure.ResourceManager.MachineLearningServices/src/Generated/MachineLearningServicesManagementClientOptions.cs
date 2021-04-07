@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MachineLearningServices
 {
     /// <summary> Client options for MachineLearningServices. </summary>
-    public class MachineLearningServicesManagementClientOptions : ClientOptions
+    public partial class MachineLearningServicesManagementClientOptions : ClientOptions
     {
     }
 }

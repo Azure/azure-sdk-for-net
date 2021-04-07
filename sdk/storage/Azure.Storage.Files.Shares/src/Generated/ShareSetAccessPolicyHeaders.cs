@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares
 {
-    internal class ShareSetAccessPolicyHeaders
+    internal partial class ShareSetAccessPolicyHeaders
     {
         private readonly Response _response;
         public ShareSetAccessPolicyHeaders(Response response)

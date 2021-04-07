@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Analytics.Synapse.AccessControl.Models;
+using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.AccessControl
@@ -21,20 +22,84 @@ namespace Azure.Analytics.Synapse.AccessControl
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly HttpPipeline _pipeline;
         internal RoleAssignmentsRestClient RestClient { get; }
+
         /// <summary> Initializes a new instance of RoleAssignmentsClient for mocking. </summary>
         protected RoleAssignmentsClient()
         {
         }
+
+        /// <summary> Initializes a new instance of RoleAssignmentsClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public RoleAssignmentsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options = null)
+        {
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
+
+            options ??= new AccessControlClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://dev.azuresynapse.net/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
+            RestClient = new RoleAssignmentsRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
+        }
+
         /// <summary> Initializes a new instance of RoleAssignmentsClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        internal RoleAssignmentsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2020-08-01-preview")
+        internal RoleAssignmentsClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2020-08-01-preview")
         {
             RestClient = new RoleAssignmentsRestClient(clientDiagnostics, pipeline, endpoint, apiVersion);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
+        }
+
+        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
+        /// <param name="subject"> Subject details. </param>
+        /// <param name="actions"> List of actions. </param>
+        /// <param name="scope"> Scope at which the check access is done. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
+        {
+            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
+            scope0.Start();
+            try
+            {
+                return await RestClient.CheckPrincipalAccessAsync(subject, actions, scope, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
+        /// <param name="subject"> Subject details. </param>
+        /// <param name="actions"> List of actions. </param>
+        /// <param name="scope"> Scope at which the check access is done. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<CheckPrincipalAccessResponse> CheckPrincipalAccess(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
+        {
+            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
+            scope0.Start();
+            try
+            {
+                return RestClient.CheckPrincipalAccess(subject, actions, scope, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> List role assignments. </summary>
@@ -189,46 +254,6 @@ namespace Azure.Analytics.Synapse.AccessControl
             try
             {
                 return RestClient.DeleteRoleAssignmentById(roleAssignmentId, scope, cancellationToken);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="subject"> Subject details. </param>
-        /// <param name="actions"> List of actions. </param>
-        /// <param name="scope"> Scope at which the check access is done. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckPrincipalAccessResponse>> CheckPrincipalAccessAsync(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
-        {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
-            scope0.Start();
-            try
-            {
-                return await RestClient.CheckPrincipalAccessAsync(subject, actions, scope, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Check if the given principalId has access to perform list of actions at a given scope. </summary>
-        /// <param name="subject"> Subject details. </param>
-        /// <param name="actions"> List of actions. </param>
-        /// <param name="scope"> Scope at which the check access is done. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckPrincipalAccessResponse> CheckPrincipalAccess(SubjectInfo subject, IEnumerable<RequiredAction> actions, string scope, CancellationToken cancellationToken = default)
-        {
-            using var scope0 = _clientDiagnostics.CreateScope("RoleAssignmentsClient.CheckPrincipalAccess");
-            scope0.Start();
-            try
-            {
-                return RestClient.CheckPrincipalAccess(subject, actions, scope, cancellationToken);
             }
             catch (Exception e)
             {
