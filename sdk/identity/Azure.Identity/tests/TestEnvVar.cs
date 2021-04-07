@@ -9,6 +9,7 @@ namespace Azure.Identity.Tests
 {
     internal class TestEnvVar : IDisposable
     {
+        public const string KeyVaultDefaultScope = "https://vault.azure.net/.default";
         private static SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
         private readonly Dictionary<string, string> _originalValues = new Dictionary<string, string>()
         {
