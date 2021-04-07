@@ -192,7 +192,7 @@ namespace Azure.Storage.Sas
         /// canonicalizedresource field of the string-to-sign. This is only used for
         /// User Delegation SAS.
         /// </summary>
-        internal int? _directoryDepth;
+        private int? _directoryDepth;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DataLakeSasBuilder"/>
@@ -604,8 +604,7 @@ namespace Azure.Storage.Sas
                 ContentType = originalDataLakeSasBuilder.ContentType,
                 PreauthorizedAgentObjectId = originalDataLakeSasBuilder.PreauthorizedAgentObjectId,
                 AgentObjectId = originalDataLakeSasBuilder.AgentObjectId,
-                CorrelationId = originalDataLakeSasBuilder.CorrelationId,
-                _directoryDepth = originalDataLakeSasBuilder._directoryDepth
+                CorrelationId = originalDataLakeSasBuilder.CorrelationId
             };
     }
 }
