@@ -460,5 +460,204 @@ namespace Azure.IoT.TimeSeriesInsights
                 throw;
             }
         }
+
+        /// <summary>
+        /// Deletes Time Series Insights types by type names asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series types to delete.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is empty.
+        /// </exception>
+        public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteByNameAsync(
+            IEnumerable<string> timeSeriesHierarchyNames,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteByName)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
+
+                var batchRequest = new HierarchiesBatchRequest
+                {
+                    Delete = new HierarchiesRequestBatchGetDelete()
+                };
+
+                foreach (string timeSeriesName in timeSeriesHierarchyNames)
+                {
+                    batchRequest.Delete.Names.Add(timeSeriesName);
+                }
+
+                Response<HierarchiesBatchResponse> executeBatchResponse = await _hierarchiesRestClient
+                    .ExecuteBatchAsync(batchRequest, null, cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(executeBatchResponse.Value.Delete.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes Time Series Insights types by type names asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesHierarchyNames">List of names of the Time Series types to delete.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
+        /// </returns>
+        /// <seealso cref="DeleteByNameAsync(IEnumerable{string}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyNames"/> is empty.
+        /// </exception>
+        public virtual Response<TimeSeriesOperationError[]> DeleteByName(
+            IEnumerable<string> timeSeriesHierarchyNames,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteByName)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyNames, nameof(timeSeriesHierarchyNames));
+
+                var batchRequest = new HierarchiesBatchRequest
+                {
+                    Delete = new HierarchiesRequestBatchGetDelete()
+                };
+
+                foreach (string timeSeriesName in timeSeriesHierarchyNames)
+                {
+                    batchRequest.Delete.Names.Add(timeSeriesName);
+                }
+
+                Response<HierarchiesBatchResponse> executeBatchResponse = _hierarchiesRestClient
+                    .ExecuteBatch(batchRequest, null, cancellationToken);
+
+                return Response.FromValue(executeBatchResponse.Value.Delete.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes Time Series Insights types by type Ids asynchronously.
+        /// </summary>
+        /// <param name="timeSeriesHierarchyIds">List of Time Series type Ids of the Time Series types to delete.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
+        /// </returns>
+        /// <remarks>
+        /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/timeseriesinsights/Azure.IoT.TimeSeriesInsights/samples">our repo samples</see>.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
+        /// </exception>
+        public virtual async Task<Response<TimeSeriesOperationError[]>> DeleteByIdAsync(
+            IEnumerable<string> timeSeriesHierarchyIds,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteById)}");
+            scope.Start();
+
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
+
+                var batchRequest = new HierarchiesBatchRequest
+                {
+                    Delete = new HierarchiesRequestBatchGetDelete()
+                };
+
+                foreach (string typeId in timeSeriesHierarchyIds)
+                {
+                    batchRequest.Delete.HierarchyIds.Add(typeId);
+                }
+
+                Response<HierarchiesBatchResponse> executeBatchResponse = await _hierarchiesRestClient
+                    .ExecuteBatchAsync(batchRequest, null, cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(executeBatchResponse.Value.Delete.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes Time Series instances from the environment by Time Series Ids synchronously.
+        /// </summary>
+        /// <param name="timeSeriesHierarchyIds">List of Ids of the Time Series instances to delete.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>
+        /// List of error objects corresponding by position to the input array in the request. null when the operation is successful.
+        /// </returns>
+        /// <seealso cref="DeleteByIdAsync(IEnumerable{string}, CancellationToken)">
+        /// See the asynchronous version of this method for examples.
+        /// </seealso>
+        /// <exception cref="ArgumentNullException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is <c>null</c>.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// The exception is thrown when <paramref name="timeSeriesHierarchyIds"/> is empty.
+        /// </exception>
+        public virtual Response<TimeSeriesOperationError[]> DeleteById(
+            IEnumerable<string> timeSeriesHierarchyIds,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(TimeSeriesInsightsClient)}.{nameof(DeleteById)}");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(timeSeriesHierarchyIds, nameof(timeSeriesHierarchyIds));
+
+                var batchRequest = new HierarchiesBatchRequest
+                {
+                    Delete = new HierarchiesRequestBatchGetDelete()
+                };
+
+                foreach (string typeId in timeSeriesHierarchyIds ?? Enumerable.Empty<string>())
+                {
+                    batchRequest.Delete.HierarchyIds.Add(typeId);
+                }
+                Response<HierarchiesBatchResponse> executeBatchResponse = _hierarchiesRestClient
+                    .ExecuteBatch(batchRequest, null, cancellationToken);
+                return Response.FromValue(executeBatchResponse.Value.Delete.ToArray(), executeBatchResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }
