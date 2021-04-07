@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Elastic.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -83,5 +84,46 @@ namespace Microsoft.Azure.Management.Elastic.Models
         [JsonProperty(PropertyName = "companyInfo")]
         public CompanyInfo CompanyInfo { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (FirstName != null)
+            {
+                if (FirstName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "FirstName", 50);
+                }
+            }
+            if (LastName != null)
+            {
+                if (LastName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "LastName", 50);
+                }
+            }
+            if (CompanyName != null)
+            {
+                if (CompanyName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "CompanyName", 50);
+                }
+            }
+            if (EmailAddress != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(EmailAddress, "^([^<>()\\[\\]\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\.,;:\\s@\"]+)*)@(([a-zA-Z-_0-9]+\\.)+[a-zA-Z]{2,})$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "EmailAddress", "^([^<>()\\[\\]\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\.,;:\\s@\"]+)*)@(([a-zA-Z-_0-9]+\\.)+[a-zA-Z]{2,})$");
+                }
+            }
+            if (CompanyInfo != null)
+            {
+                CompanyInfo.Validate();
+            }
+        }
     }
 }

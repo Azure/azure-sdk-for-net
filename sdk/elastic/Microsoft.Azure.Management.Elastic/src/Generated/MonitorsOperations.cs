@@ -881,6 +881,10 @@ namespace Microsoft.Azure.Management.Elastic
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "monitorName");
             }
+            if (body != null)
+            {
+                body.Validate();
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

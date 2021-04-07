@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Elastic.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -80,5 +81,49 @@ namespace Microsoft.Azure.Management.Elastic.Models
         [JsonProperty(PropertyName = "country")]
         public string Country { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Domain != null)
+            {
+                if (Domain.Length > 250)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Domain", 250);
+                }
+            }
+            if (Business != null)
+            {
+                if (Business.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Business", 50);
+                }
+            }
+            if (EmployeesNumber != null)
+            {
+                if (EmployeesNumber.Length > 20)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "EmployeesNumber", 20);
+                }
+            }
+            if (State != null)
+            {
+                if (State.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "State", 50);
+                }
+            }
+            if (Country != null)
+            {
+                if (Country.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Country", 50);
+                }
+            }
+        }
     }
 }

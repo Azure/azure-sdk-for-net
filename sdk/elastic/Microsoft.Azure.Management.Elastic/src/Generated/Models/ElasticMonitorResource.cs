@@ -118,5 +118,26 @@ namespace Microsoft.Azure.Management.Elastic.Models
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+            if (Sku != null)
+            {
+                Sku.Validate();
+            }
+            if (Properties != null)
+            {
+                Properties.Validate();
+            }
+        }
     }
 }
