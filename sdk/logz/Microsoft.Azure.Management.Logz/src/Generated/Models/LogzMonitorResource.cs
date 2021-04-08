@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Logz.Models
+namespace Microsoft.Azure.Management.Logz.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -97,5 +97,22 @@ namespace Microsoft.Logz.Models
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+            if (Properties != null)
+            {
+                Properties.Validate();
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Logz.Models
+namespace Microsoft.Azure.Management.Logz.Models
 {
     using Newtonsoft.Json;
     using System.Linq;
@@ -105,5 +105,22 @@ namespace Microsoft.Logz.Models
         [JsonProperty(PropertyName = "liftrResourcePreference")]
         public int? LiftrResourcePreference { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (UserInfo != null)
+            {
+                UserInfo.Validate();
+            }
+            if (PlanData != null)
+            {
+                PlanData.Validate();
+            }
+        }
     }
 }

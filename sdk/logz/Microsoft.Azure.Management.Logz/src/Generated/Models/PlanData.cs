@@ -8,8 +8,9 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Logz.Models
+namespace Microsoft.Azure.Management.Logz.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -72,5 +73,35 @@ namespace Microsoft.Logz.Models
         [JsonProperty(PropertyName = "effectiveDate")]
         public System.DateTime? EffectiveDate { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (UsageType != null)
+            {
+                if (UsageType.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "UsageType", 50);
+                }
+            }
+            if (BillingCycle != null)
+            {
+                if (BillingCycle.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "BillingCycle", 50);
+                }
+            }
+            if (PlanDetails != null)
+            {
+                if (PlanDetails.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "PlanDetails", 50);
+                }
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Logz
+namespace Microsoft.Azure.Management.Logz
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;

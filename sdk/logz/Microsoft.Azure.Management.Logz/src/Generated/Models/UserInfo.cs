@@ -8,8 +8,9 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Logz.Models
+namespace Microsoft.Azure.Management.Logz.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -72,5 +73,42 @@ namespace Microsoft.Logz.Models
         [JsonProperty(PropertyName = "phoneNumber")]
         public string PhoneNumber { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (FirstName != null)
+            {
+                if (FirstName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "FirstName", 50);
+                }
+            }
+            if (LastName != null)
+            {
+                if (LastName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "LastName", 50);
+                }
+            }
+            if (EmailAddress != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(EmailAddress, "^[A-Za-z0-9._%+-]+@(?:[A-Za-z0-9-]+\\.)+[A-Za-z]{2,}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "EmailAddress", "^[A-Za-z0-9._%+-]+@(?:[A-Za-z0-9-]+\\.)+[A-Za-z]{2,}$");
+                }
+            }
+            if (PhoneNumber != null)
+            {
+                if (PhoneNumber.Length > 40)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "PhoneNumber", 40);
+                }
+            }
+        }
     }
 }

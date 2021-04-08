@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Logz.Models
+namespace Microsoft.Azure.Management.Logz.Models
 {
 
     /// <summary>
