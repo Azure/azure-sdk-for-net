@@ -20,12 +20,10 @@ To send a SMS message, call the `Send` or `SendAsync` function from the SmsClien
 
 ```C# Snippet:Azure_Communication_Sms_Tests_Send
 SmsSendResult sendResult = smsClient.Send(
-    from: "<from-phone-number>",
-    to: "<to-phone-number>",
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: "<to-phone-number>", // E.164 formatted recipient phone number
     message: "Hi");
-
 Console.WriteLine($"Sms id: {sendResult.MessageId}");
-Console.WriteLine($"Send Result Successful: {sendResult.Successful}");
 ```
 
 ## Send SMS to multiple recipients with options
@@ -34,12 +32,12 @@ To send a SMS message to a list of recipients, call the `Send` or `SendAsync` fu
 
 ```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
 var response = smsClient.Send(
-    from: "<from-phone-number>",
-    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" },
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
     message: "Weekly Promotion!",
-    options: new SmsSendOptions(enableDeliveryReport: true)
+    options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
     {
-        Tag = "marketing",
+        Tag = "marketing", // custom tags
     });
 foreach (SmsSendResult result in response.Value)
 {
