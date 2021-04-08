@@ -30,7 +30,7 @@ Console.WriteLine($"Send Result Successful: {sendResult.Successful}");
 
 ## Send SMS to multiple recipients with options
 
-To send a SMS message to a list of recipients, call the Send or SendAsync function from the SmsClient with a list of recipient's phone numbers. You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags. The returned value is a collection of `SmsSendResult` objects -- one for each of the receipients.
+To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the SmsClient with a list of recipient's phone numbers. You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags. The returned value is a collection of `SmsSendResult` objects -- one for each of the receipients.
 
 ```C# Snippet:SendingGroupSMSMessageWithOptions
 var response = await smsClient.SendAsync(
