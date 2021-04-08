@@ -1,18 +1,18 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873?api-version=2021-03-01",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage8942.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys4523\"\r\n    },\r\n    \"sqlAdministratorLoginPassword\": \"Password1!8530\",\r\n    \"sqlAdministratorLogin\": \"sshuser423\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"eastus2euap\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage7533.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys7169\"\r\n    },\r\n    \"sqlAdministratorLoginPassword\": \"Password1!8594\",\r\n    \"sqlAdministratorLogin\": \"sshuser9110\"\r\n  },\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\"\r\n  },\r\n  \"location\": \"eastus2euap\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7fb3366c-12d5-49e6-a9b0-0d4bb82d85cc"
+          "1d037d1c-2e04-4a41-ba32-7ec1aa2ec19c"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -21,7 +21,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "371"
+          "372"
         ]
       },
       "ResponseHeaders": {
@@ -35,28 +35,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://eastus2euap.management.azure.com/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationStatuses/7656b26d-faa5-4668-99c2-077750e6c4da?api-version=2020-12-01"
+          "https://eastus2euap.management.azure.com/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/0edefcc8-5543-467f-81cb-145467453e5c?api-version=2021-03-01"
         ],
         "x-ms-request-id": [
-          "defc7aa1-b56a-47e7-bb95-e6425588d47a"
+          "5f114a04-3322-4017-84b4-9fd7525cdd09"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "afacdca4-c8a3-498a-bc5b-7f1412694adb"
+          "06196b97-1840-435a-9a1d-5b8fef7f90be"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T125726Z:afacdca4-c8a3-498a-bc5b-7f1412694adb"
+          "EASTUS2EUAP:20210330T081421Z:06196b97-1840-435a-9a1d-5b8fef7f90be"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 12:57:25 GMT"
+          "Tue, 30 Mar 2021 08:14:21 GMT"
         ],
         "Content-Length": [
           "1285"
@@ -68,16 +68,16 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784\",\r\n  \"location\": \"eastus2euap\",\r\n  \"name\": \"synapsesdkworkspace8784\",\r\n  \"type\": \"Microsoft.Synapse/workspaces\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"principalId\": \"73cd2c53-1de2-4048-928a-c986ba0238a3\"\r\n  },\r\n  \"properties\": {\r\n    \"connectivityEndpoints\": {\r\n      \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2fbc522b53-8506-4739-8f13-998a2e69a084%2fresourceGroups%2fsynapsesdkrp7464%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace8784\",\r\n      \"dev\": \"https://synapsesdkworkspace8784.dev.azuresynapse.net\",\r\n      \"sqlOnDemand\": \"synapsesdkworkspace8784-ondemand.sql.azuresynapse.net\",\r\n      \"sql\": \"synapsesdkworkspace8784.sql.azuresynapse.net\"\r\n    },\r\n    \"managedResourceGroupName\": \"synapseworkspace-managedrg-00df4c01-a05e-4bcb-b56b-2e4a240146c0\",\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage8942.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys4523\"\r\n    },\r\n    \"privateEndpointConnections\": [],\r\n    \"workspaceUID\": \"fdef5603-5f01-4f5c-9654-48846d8880cb\",\r\n    \"extraProperties\": {\r\n      \"IsScopeEnabled\": false,\r\n      \"WorkspaceType\": \"Normal\"\r\n    },\r\n    \"encryption\": {\r\n      \"doubleEncryptionEnabled\": false\r\n    },\r\n    \"provisioningState\": \"Provisioning\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.Synapse/workspaces\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"connectivityEndpoints\": {\r\n      \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2fe7f223b4-b62e-4129-b47c-4c14ebb03154%2fresourceGroups%2fsynapsesdkrp9107%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace9873\",\r\n      \"dev\": \"https://synapsesdkworkspace9873.dev.azuresynapse.net\",\r\n      \"sqlOnDemand\": \"synapsesdkworkspace9873-ondemand.sql.azuresynapse.net\",\r\n      \"sql\": \"synapsesdkworkspace9873.sql.azuresynapse.net\"\r\n    },\r\n    \"managedResourceGroupName\": \"synapseworkspace-managedrg-97b1ae0d-fb4e-44c0-8b10-ae88a005974b\",\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage7533.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys7169\"\r\n    },\r\n    \"privateEndpointConnections\": [],\r\n    \"workspaceUID\": \"5993b979-40ca-428e-9dc0-cc28cb2ecddf\",\r\n    \"extraProperties\": {\r\n      \"IsScopeEnabled\": false,\r\n      \"WorkspaceType\": \"Normal\"\r\n    },\r\n    \"encryption\": {\r\n      \"doubleEncryptionEnabled\": false\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873\",\r\n  \"location\": \"eastus2euap\",\r\n  \"name\": \"synapsesdkworkspace9873\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"principalId\": \"e8819bb9-b804-4492-8a2a-5449b09615cd\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationStatuses/7656b26d-faa5-4668-99c2-077750e6c4da?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/0edefcc8-5543-467f-81cb-145467453e5c?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -94,25 +94,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "87127cbe-bd13-40a0-8f89-7b600ad09402"
+          "b827811a-6b44-4c72-9d86-a345166f1d27"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11983"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "7fc75f0f-fede-4788-8f2f-8de7111f5e78"
+          "4d253949-cddb-47e1-8560-5209392e8cf2"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T125756Z:7fc75f0f-fede-4788-8f2f-8de7111f5e78"
+          "EASTUS2EUAP:20210330T081451Z:4d253949-cddb-47e1-8560-5209392e8cf2"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 12:57:55 GMT"
+          "Tue, 30 Mar 2021 08:14:51 GMT"
         ],
         "Content-Length": [
           "23"
@@ -128,12 +128,12 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationStatuses/7656b26d-faa5-4668-99c2-077750e6c4da?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/0edefcc8-5543-467f-81cb-145467453e5c?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -150,25 +150,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "db87753c-ab9a-45ec-89b7-15b487548a2f"
+          "14dbef3e-db7d-4990-9e60-58b899da25d4"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11982"
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "738b8dde-3aa8-4eea-a093-3fc8232f4a4f"
+          "b6fa448f-4062-49c7-a81d-cebf5b30f7ef"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T125826Z:738b8dde-3aa8-4eea-a093-3fc8232f4a4f"
+          "EASTUS2EUAP:20210330T081522Z:b6fa448f-4062-49c7-a81d-cebf5b30f7ef"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 12:58:26 GMT"
+          "Tue, 30 Mar 2021 08:15:22 GMT"
         ],
         "Content-Length": [
           "23"
@@ -184,12 +184,12 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationStatuses/7656b26d-faa5-4668-99c2-077750e6c4da?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/0edefcc8-5543-467f-81cb-145467453e5c?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -206,25 +206,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "44f8c971-139a-4151-aa2a-ef9b05c58255"
+          "56de5c1c-125d-4990-9522-0da5c9d919f1"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11981"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "33dc8692-7ecb-4a1b-a921-9bea7beaa388"
+          "31577f63-4d67-472d-a738-22928746bca9"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T125856Z:33dc8692-7ecb-4a1b-a921-9bea7beaa388"
+          "EASTUS2EUAP:20210330T081552Z:31577f63-4d67-472d-a738-22928746bca9"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 12:58:56 GMT"
+          "Tue, 30 Mar 2021 08:15:51 GMT"
         ],
         "Content-Length": [
           "23"
@@ -240,12 +240,12 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationStatuses/7656b26d-faa5-4668-99c2-077750e6c4da?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/0edefcc8-5543-467f-81cb-145467453e5c?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -262,25 +262,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "b75dfb97-5c5f-4aae-a8b0-1e5f4aaef0ec"
+          "d59524fe-0751-4c71-8259-44a5cd3d140b"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11980"
+          "11996"
         ],
         "x-ms-correlation-request-id": [
-          "4968a33b-504d-420c-a492-03dd6d40ee74"
+          "002efebb-26b7-4b58-a2db-d263617e1cc4"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T125926Z:4968a33b-504d-420c-a492-03dd6d40ee74"
+          "EASTUS2EUAP:20210330T081622Z:002efebb-26b7-4b58-a2db-d263617e1cc4"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 12:59:26 GMT"
+          "Tue, 30 Mar 2021 08:16:21 GMT"
         ],
         "Content-Length": [
           "23"
@@ -296,12 +296,12 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationStatuses/7656b26d-faa5-4668-99c2-077750e6c4da?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/0edefcc8-5543-467f-81cb-145467453e5c?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -318,25 +318,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "98f96b4d-300f-4901-acca-079244e8d7a1"
+          "769ec549-d2bb-4dc0-a905-1690954efaa7"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11979"
+          "11995"
         ],
         "x-ms-correlation-request-id": [
-          "a026e180-1b63-492a-b03f-a7197ddde0c1"
+          "8830cafa-b9f2-4054-ac3b-b9cc25f84e8e"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T125956Z:a026e180-1b63-492a-b03f-a7197ddde0c1"
+          "EASTUS2EUAP:20210330T081652Z:8830cafa-b9f2-4054-ac3b-b9cc25f84e8e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 12:59:56 GMT"
+          "Tue, 30 Mar 2021 08:16:51 GMT"
         ],
         "Content-Length": [
           "23"
@@ -352,12 +352,12 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationStatuses/7656b26d-faa5-4668-99c2-077750e6c4da?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/0edefcc8-5543-467f-81cb-145467453e5c?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -374,25 +374,81 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "e3154656-4981-47a5-a9aa-66368c840930"
+          "2cd931b0-8a1e-4ee3-a427-829d343a5575"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11984"
+          "11994"
         ],
         "x-ms-correlation-request-id": [
-          "70107da0-fde7-45c0-8c6b-d5193c1e740b"
+          "2a1ec323-6028-450c-ac5d-d02ef3a0e4c1"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130026Z:70107da0-fde7-45c0-8c6b-d5193c1e740b"
+          "EASTUS2EUAP:20210330T081722Z:2a1ec323-6028-450c-ac5d-d02ef3a0e4c1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:00:26 GMT"
+          "Tue, 30 Mar 2021 08:17:22 GMT"
+        ],
+        "Content-Length": [
+          "23"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/0edefcc8-5543-467f-81cb-145467453e5c?api-version=2021-03-01",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.29812.02",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "eeab7e23-8ef6-49e6-9c4b-b8a35162e434"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-correlation-request-id": [
+          "0e5c815e-7eab-4419-892b-9c0e75faed61"
+        ],
+        "x-ms-routing-request-id": [
+          "EASTUS2EUAP:20210330T081752Z:0e5c815e-7eab-4419-892b-9c0e75faed61"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 30 Mar 2021 08:17:51 GMT"
         ],
         "Content-Length": [
           "22"
@@ -408,12 +464,12 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -430,28 +486,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "d96886e0-9796-49c9-93e1-d8d5e825dda5"
+          "12405050-ffc6-4cee-939d-0822ac35b1d5"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11983"
+          "11992"
         ],
         "x-ms-correlation-request-id": [
-          "d731254c-8b6c-4698-b4b5-82f6956f34fe"
+          "4f966c12-f4da-40f5-9a5f-c73ad119c0ca"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130027Z:d731254c-8b6c-4698-b4b5-82f6956f34fe"
+          "EASTUS2EUAP:20210330T081752Z:4f966c12-f4da-40f5-9a5f-c73ad119c0ca"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:00:26 GMT"
+          "Tue, 30 Mar 2021 08:17:51 GMT"
         ],
         "Content-Length": [
-          "1319"
+          "1320"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -460,22 +516,22 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784\",\r\n  \"location\": \"eastus2euap\",\r\n  \"name\": \"synapsesdkworkspace8784\",\r\n  \"type\": \"Microsoft.Synapse/workspaces\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"principalId\": \"73cd2c53-1de2-4048-928a-c986ba0238a3\"\r\n  },\r\n  \"properties\": {\r\n    \"connectivityEndpoints\": {\r\n      \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2fbc522b53-8506-4739-8f13-998a2e69a084%2fresourceGroups%2fsynapsesdkrp7464%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace8784\",\r\n      \"dev\": \"https://synapsesdkworkspace8784.dev.azuresynapse.net\",\r\n      \"sqlOnDemand\": \"synapsesdkworkspace8784-ondemand.sql.azuresynapse.net\",\r\n      \"sql\": \"synapsesdkworkspace8784.sql.azuresynapse.net\"\r\n    },\r\n    \"managedResourceGroupName\": \"synapseworkspace-managedrg-00df4c01-a05e-4bcb-b56b-2e4a240146c0\",\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage8942.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys4523\"\r\n    },\r\n    \"sqlAdministratorLogin\": \"sshuser423\",\r\n    \"privateEndpointConnections\": [],\r\n    \"workspaceUID\": \"fdef5603-5f01-4f5c-9654-48846d8880cb\",\r\n    \"extraProperties\": {\r\n      \"IsScopeEnabled\": false,\r\n      \"WorkspaceType\": \"Normal\"\r\n    },\r\n    \"encryption\": {\r\n      \"doubleEncryptionEnabled\": false\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.Synapse/workspaces\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"connectivityEndpoints\": {\r\n      \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2fe7f223b4-b62e-4129-b47c-4c14ebb03154%2fresourceGroups%2fsynapsesdkrp9107%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace9873\",\r\n      \"dev\": \"https://synapsesdkworkspace9873.dev.azuresynapse.net\",\r\n      \"sqlOnDemand\": \"synapsesdkworkspace9873-ondemand.sql.azuresynapse.net\",\r\n      \"sql\": \"synapsesdkworkspace9873.sql.azuresynapse.net\"\r\n    },\r\n    \"managedResourceGroupName\": \"synapseworkspace-managedrg-97b1ae0d-fb4e-44c0-8b10-ae88a005974b\",\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage7533.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys7169\"\r\n    },\r\n    \"sqlAdministratorLogin\": \"sshuser9110\",\r\n    \"privateEndpointConnections\": [],\r\n    \"workspaceUID\": \"5993b979-40ca-428e-9dc0-cc28cb2ecddf\",\r\n    \"extraProperties\": {\r\n      \"IsScopeEnabled\": false,\r\n      \"WorkspaceType\": \"Normal\"\r\n    },\r\n    \"encryption\": {\r\n      \"doubleEncryptionEnabled\": false\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873\",\r\n  \"location\": \"eastus2euap\",\r\n  \"name\": \"synapsesdkworkspace9873\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"principalId\": \"e8819bb9-b804-4492-8a2a-5449b09615cd\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f97f7d91-628d-4bb2-8225-fd3e0dd3ee65"
+          "70e779df-e1d6-4114-8599-9fb6501ffdc8"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -492,28 +548,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "243acc4d-b3f0-4b10-bec5-6df87f2da4a4"
+          "9fca588a-d4d2-48cc-9485-45298bd6eba0"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11982"
+          "11991"
         ],
         "x-ms-correlation-request-id": [
-          "52cebc12-c894-4038-a4f2-031379ad561a"
+          "08e0c4b0-70b6-4644-82c8-ed0275715864"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130027Z:52cebc12-c894-4038-a4f2-031379ad561a"
+          "EASTUS2EUAP:20210330T081753Z:08e0c4b0-70b6-4644-82c8-ed0275715864"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:00:26 GMT"
+          "Tue, 30 Mar 2021 08:17:53 GMT"
         ],
         "Content-Length": [
-          "1319"
+          "1320"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -522,22 +578,22 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784\",\r\n  \"location\": \"eastus2euap\",\r\n  \"name\": \"synapsesdkworkspace8784\",\r\n  \"type\": \"Microsoft.Synapse/workspaces\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"principalId\": \"73cd2c53-1de2-4048-928a-c986ba0238a3\"\r\n  },\r\n  \"properties\": {\r\n    \"connectivityEndpoints\": {\r\n      \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2fbc522b53-8506-4739-8f13-998a2e69a084%2fresourceGroups%2fsynapsesdkrp7464%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace8784\",\r\n      \"dev\": \"https://synapsesdkworkspace8784.dev.azuresynapse.net\",\r\n      \"sqlOnDemand\": \"synapsesdkworkspace8784-ondemand.sql.azuresynapse.net\",\r\n      \"sql\": \"synapsesdkworkspace8784.sql.azuresynapse.net\"\r\n    },\r\n    \"managedResourceGroupName\": \"synapseworkspace-managedrg-00df4c01-a05e-4bcb-b56b-2e4a240146c0\",\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage8942.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys4523\"\r\n    },\r\n    \"sqlAdministratorLogin\": \"sshuser423\",\r\n    \"privateEndpointConnections\": [],\r\n    \"workspaceUID\": \"fdef5603-5f01-4f5c-9654-48846d8880cb\",\r\n    \"extraProperties\": {\r\n      \"IsScopeEnabled\": false,\r\n      \"WorkspaceType\": \"Normal\"\r\n    },\r\n    \"encryption\": {\r\n      \"doubleEncryptionEnabled\": false\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"type\": \"Microsoft.Synapse/workspaces\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"connectivityEndpoints\": {\r\n      \"web\": \"https://web.azuresynapse.net?workspace=%2fsubscriptions%2fe7f223b4-b62e-4129-b47c-4c14ebb03154%2fresourceGroups%2fsynapsesdkrp9107%2fproviders%2fMicrosoft.Synapse%2fworkspaces%2fsynapsesdkworkspace9873\",\r\n      \"dev\": \"https://synapsesdkworkspace9873.dev.azuresynapse.net\",\r\n      \"sqlOnDemand\": \"synapsesdkworkspace9873-ondemand.sql.azuresynapse.net\",\r\n      \"sql\": \"synapsesdkworkspace9873.sql.azuresynapse.net\"\r\n    },\r\n    \"managedResourceGroupName\": \"synapseworkspace-managedrg-97b1ae0d-fb4e-44c0-8b10-ae88a005974b\",\r\n    \"defaultDataLakeStorage\": {\r\n      \"accountUrl\": \"https://synapsesdkstorage7533.dfs.core.windows.net\",\r\n      \"filesystem\": \"synapsesdkfilesys7169\"\r\n    },\r\n    \"sqlAdministratorLogin\": \"sshuser9110\",\r\n    \"privateEndpointConnections\": [],\r\n    \"workspaceUID\": \"5993b979-40ca-428e-9dc0-cc28cb2ecddf\",\r\n    \"extraProperties\": {\r\n      \"IsScopeEnabled\": false,\r\n      \"WorkspaceType\": \"Normal\"\r\n    },\r\n    \"encryption\": {\r\n      \"doubleEncryptionEnabled\": false\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873\",\r\n  \"location\": \"eastus2euap\",\r\n  \"name\": \"synapsesdkworkspace9873\",\r\n  \"identity\": {\r\n    \"type\": \"SystemAssigned\",\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"principalId\": \"e8819bb9-b804-4492-8a2a-5449b09615cd\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554?api-version=2020-12-01&force=false",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821?api-version=2021-03-01&force=false",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"nodeCount\": 3,\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\"\r\n  },\r\n  \"location\": \"eastus2euap\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1751ce2c-33bf-430e-8d54-e5ae183b7e0d"
+          "c80eadfa-d37c-453a-a32a-e9e8bbed81be"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -557,13 +613,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://eastus2euap.management.azure.com/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationResults/3670b6b2-344a-4ea8-b7a5-8de8e3534b16?api-version=2020-12-01"
+          "https://eastus2euap.management.azure.com/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationResults/c0e31070-4612-4f69-aeb8-0f595cba06f3?api-version=2021-03-01"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://eastus2euap.management.azure.com/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationStatuses/3670b6b2-344a-4ea8-b7a5-8de8e3534b16?api-version=2020-12-01"
+          "https://eastus2euap.management.azure.com/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/c0e31070-4612-4f69-aeb8-0f595cba06f3?api-version=2021-03-01"
         ],
         "Access-Control-Allow-Headers": [
           "Location"
@@ -572,28 +628,28 @@
           "Location"
         ],
         "x-ms-request-id": [
-          "4de38ec7-fd78-4c68-8298-402ffc99caba"
+          "caf66080-0405-4d30-a454-c9a4a3d4487d"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "348f185a-c30e-48a3-b993-cae82faff9fb"
+          "19575a54-46cd-42fd-a19c-c831b72778d1"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130027Z:348f185a-c30e-48a3-b993-cae82faff9fb"
+          "EASTUS2EUAP:20210330T081753Z:19575a54-46cd-42fd-a19c-c831b72778d1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:00:26 GMT"
+          "Tue, 30 Mar 2021 08:17:53 GMT"
         ],
         "Content-Length": [
-          "591"
+          "596"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -602,22 +658,22 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-01-28T13:00:27.73Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 3,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"provisioningState\": \"Provisioning\"\r\n  },\r\n  \"id\": \"/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554\",\r\n  \"name\": \"sparkpool6554\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-03-30T08:17:53.4533333Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 3,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"provisioningState\": \"Provisioning\"\r\n  },\r\n  \"id\": \"/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821\",\r\n  \"name\": \"sparkpool1821\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\"\r\n}",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554?api-version=2020-12-01&force=false",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821?api-version=2021-03-01&force=false",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"autoScale\": {\r\n      \"minNodeCount\": 3,\r\n      \"enabled\": true,\r\n      \"maxNodeCount\": 6\r\n    },\r\n    \"autoPause\": {\r\n      \"delayInMinutes\": 15,\r\n      \"enabled\": true\r\n    },\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\"\r\n  },\r\n  \"location\": \"eastus2euap\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b9d92a7e-f3a6-40d0-a85e-324bc4aecc46"
+          "7ce96b29-0f8b-40a7-99d4-e1a5bf67906c"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -637,13 +693,13 @@
           "no-cache"
         ],
         "Location": [
-          "https://eastus2euap.management.azure.com/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationResults/f9ba5c0a-07c1-4420-8552-179a7d970d9d?api-version=2020-12-01"
+          "https://eastus2euap.management.azure.com/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationResults/37512180-066f-4a5a-a934-da233beec97b?api-version=2021-03-01"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Azure-AsyncOperation": [
-          "https://eastus2euap.management.azure.com/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationStatuses/f9ba5c0a-07c1-4420-8552-179a7d970d9d?api-version=2020-12-01"
+          "https://eastus2euap.management.azure.com/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/37512180-066f-4a5a-a934-da233beec97b?api-version=2021-03-01"
         ],
         "Access-Control-Allow-Headers": [
           "Location"
@@ -652,28 +708,28 @@
           "Location"
         ],
         "x-ms-request-id": [
-          "c7725fa6-cc0d-436e-a16e-bfaa3042d9f4"
-        ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "b08ed216-c5e9-4bf6-a5ed-b0e25e3fc8ac"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
         "x-ms-correlation-request-id": [
-          "f14f8751-506b-4071-9008-89c0cb41f761"
+          "dac77fe2-6e6c-4fb2-8f87-bec28c4232be"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130129Z:f14f8751-506b-4071-9008-89c0cb41f761"
+          "EASTUS2EUAP:20210330T081855Z:dac77fe2-6e6c-4fb2-8f87-bec28c4232be"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:01:28 GMT"
+          "Tue, 30 Mar 2021 08:18:55 GMT"
         ],
         "Content-Length": [
-          "759"
+          "764"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -682,16 +738,16 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-01-28T13:00:27.73Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 0,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"autoScale\": {\r\n      \"enabled\": true,\r\n      \"minNodeCount\": 3,\r\n      \"maxNodeCount\": 6\r\n    },\r\n    \"autoPause\": {\r\n      \"enabled\": true,\r\n      \"delayInMinutes\": 15\r\n    },\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-01-28T13:00:33.5633333Z\",\r\n    \"provisioningState\": \"Provisioning\"\r\n  },\r\n  \"id\": \"/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554\",\r\n  \"name\": \"sparkpool6554\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-03-30T08:17:53.4533333Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 0,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"autoScale\": {\r\n      \"enabled\": true,\r\n      \"minNodeCount\": 3,\r\n      \"maxNodeCount\": 6\r\n    },\r\n    \"autoPause\": {\r\n      \"enabled\": true,\r\n      \"delayInMinutes\": 15\r\n    },\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-03-30T08:17:58.8466667Z\",\r\n    \"provisioningState\": \"Provisioning\"\r\n  },\r\n  \"id\": \"/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821\",\r\n  \"name\": \"sparkpool1821\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\"\r\n}",
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationStatuses/3670b6b2-344a-4ea8-b7a5-8de8e3534b16?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/c0e31070-4612-4f69-aeb8-0f595cba06f3?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -708,25 +764,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "84b8c2ff-0c6a-491b-a48f-8402fa208225"
+          "69ba7193-82a9-40d2-ac4e-642f6d20530e"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11981"
+          "11990"
         ],
         "x-ms-correlation-request-id": [
-          "1624bd60-59dd-44af-a7fe-b92626d7eb62"
+          "724fa43a-de90-47f1-9b10-8e428f5ecc31"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130058Z:1624bd60-59dd-44af-a7fe-b92626d7eb62"
+          "EASTUS2EUAP:20210330T081823Z:724fa43a-de90-47f1-9b10-8e428f5ecc31"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:00:58 GMT"
+          "Tue, 30 Mar 2021 08:18:23 GMT"
         ],
         "Content-Length": [
           "22"
@@ -742,12 +798,12 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554?api-version=2020-12-01&force=false",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821?api-version=2021-03-01&force=false",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -764,28 +820,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "189078d0-506e-4f32-8045-d021fd0f3dd1"
+          "a256d912-265e-494f-ac18-b18f4c10eb21"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11980"
+          "11989"
         ],
         "x-ms-correlation-request-id": [
-          "44410808-7561-4841-bbd7-300089b79063"
+          "d121bfd2-3b1d-4d72-ab75-1fb60dab6309"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130058Z:44410808-7561-4841-bbd7-300089b79063"
+          "EASTUS2EUAP:20210330T081823Z:d121bfd2-3b1d-4d72-ab75-1fb60dab6309"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:00:58 GMT"
+          "Tue, 30 Mar 2021 08:18:23 GMT"
         ],
         "Content-Length": [
-          "644"
+          "649"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -794,16 +850,16 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-01-28T13:00:27.73Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 3,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-01-28T13:00:33.5633333Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554\",\r\n  \"name\": \"sparkpool6554\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-03-30T08:17:53.4533333Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 3,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-03-30T08:17:58.8466667Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821\",\r\n  \"name\": \"sparkpool1821\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554?api-version=2020-12-01&force=false",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821?api-version=2021-03-01&force=false",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -820,28 +876,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "86ec4141-5cff-401e-b179-2224e62ec7c4"
+          "af16e693-093f-4c03-91c4-5a51ce1bf579"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11976"
+          "11985"
         ],
         "x-ms-correlation-request-id": [
-          "1c715e73-0894-4632-b287-aeed8bb077be"
+          "055c851f-7fc2-4994-9aab-eb0a57757c17"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130159Z:1c715e73-0894-4632-b287-aeed8bb077be"
+          "EASTUS2EUAP:20210330T081925Z:055c851f-7fc2-4994-9aab-eb0a57757c17"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:01:59 GMT"
+          "Tue, 30 Mar 2021 08:19:24 GMT"
         ],
         "Content-Length": [
-          "751"
+          "761"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -850,22 +906,22 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-01-28T13:00:27.73Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 0,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"autoScale\": {\r\n      \"enabled\": true,\r\n      \"minNodeCount\": 3,\r\n      \"maxNodeCount\": 6\r\n    },\r\n    \"autoPause\": {\r\n      \"enabled\": true,\r\n      \"delayInMinutes\": 15\r\n    },\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-01-28T13:01:35.95Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554\",\r\n  \"name\": \"sparkpool6554\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-03-30T08:17:53.4533333Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 0,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"autoScale\": {\r\n      \"enabled\": true,\r\n      \"minNodeCount\": 3,\r\n      \"maxNodeCount\": 6\r\n    },\r\n    \"autoPause\": {\r\n      \"enabled\": true,\r\n      \"delayInMinutes\": 15\r\n    },\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-03-30T08:19:00.5466667Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821\",\r\n  \"name\": \"sparkpool1821\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fd95ba4e-676f-44f0-8ac9-68d6b8d5783a"
+          "97282751-bd1a-4141-8b14-ae543f05bdfa"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -882,28 +938,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "1eb2b354-f475-494d-93db-1bf42c26d030"
+          "cc57051f-a5cc-4d8e-b795-f74c8a734bb2"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11979"
+          "11988"
         ],
         "x-ms-correlation-request-id": [
-          "6e404a42-44e6-4091-8b70-9ec3dd1c3a83"
+          "7be61850-cdb5-4a55-9df1-295b95544cd9"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130058Z:6e404a42-44e6-4091-8b70-9ec3dd1c3a83"
+          "EASTUS2EUAP:20210330T081823Z:7be61850-cdb5-4a55-9df1-295b95544cd9"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:00:58 GMT"
+          "Tue, 30 Mar 2021 08:18:23 GMT"
         ],
         "Content-Length": [
-          "644"
+          "649"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -912,22 +968,22 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-01-28T13:00:27.73Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 3,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-01-28T13:00:33.5633333Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554\",\r\n  \"name\": \"sparkpool6554\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-03-30T08:17:53.4533333Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 3,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-03-30T08:17:58.8466667Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821\",\r\n  \"name\": \"sparkpool1821\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "27266d94-e573-491d-b76e-499c1f0a8d53"
+          "f88e8358-1ac8-4463-9c78-7e87696c057e"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -944,28 +1000,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "3f17a64d-daa6-4809-b354-5515aec1a215"
+          "5a30d226-c4cc-4b13-b4bf-38fc34afb4e4"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11978"
+          "11987"
         ],
         "x-ms-correlation-request-id": [
-          "080be0b1-45e4-4609-882c-60cdaf134632"
+          "1af5a4c6-83a9-4684-9822-6772a8ff2b62"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130058Z:080be0b1-45e4-4609-882c-60cdaf134632"
+          "EASTUS2EUAP:20210330T081824Z:1af5a4c6-83a9-4684-9822-6772a8ff2b62"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:00:58 GMT"
+          "Tue, 30 Mar 2021 08:18:24 GMT"
         ],
         "Content-Length": [
-          "676"
+          "681"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -974,22 +1030,22 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-01-28T13:00:27.73Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 3,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-01-28T13:00:33.5633333Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554\",\r\n  \"name\": \"sparkpool6554\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"TestTag\": \"TestUpdate\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-03-30T08:17:53.4533333Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 3,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-03-30T08:17:58.8466667Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821\",\r\n  \"name\": \"sparkpool1821\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"TestTag\": \"TestUpdate\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821?api-version=2021-03-01",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"tags\": {\r\n    \"TestTag\": \"TestUpdate\"\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "002d39ee-a0b0-4bcb-903d-8946ad36022e"
+          "afdef0d8-42a3-4391-87ea-6040db13af9b"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -1012,28 +1068,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "11fd0e4e-9168-4b00-822d-1eed6516ea7d"
+          "e426bbda-33ee-4257-81d1-0ac48cf80659"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
-        ],
         "x-ms-correlation-request-id": [
-          "609457da-d30a-455d-977b-27dd22381b01"
+          "b5ae6de2-a5b9-4896-9feb-7e75857f2107"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130058Z:609457da-d30a-455d-977b-27dd22381b01"
+          "EASTUS2EUAP:20210330T081824Z:b5ae6de2-a5b9-4896-9feb-7e75857f2107"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:00:58 GMT"
+          "Tue, 30 Mar 2021 08:18:24 GMT"
         ],
         "Content-Length": [
-          "676"
+          "681"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1042,16 +1098,16 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-01-28T13:00:27.73Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 3,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-01-28T13:00:33.5633333Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554\",\r\n  \"name\": \"sparkpool6554\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"TestTag\": \"TestUpdate\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"creationDate\": \"2021-03-30T08:17:53.4533333Z\",\r\n    \"sparkVersion\": \"2.4\",\r\n    \"nodeCount\": 3,\r\n    \"nodeSize\": \"Small\",\r\n    \"nodeSizeFamily\": \"MemoryOptimized\",\r\n    \"isComputeIsolationEnabled\": false,\r\n    \"sessionLevelPackagesEnabled\": false,\r\n    \"cacheSize\": 0,\r\n    \"dynamicExecutorAllocation\": {\r\n      \"enabled\": false\r\n    },\r\n    \"lastSucceededTimestamp\": \"2021-03-30T08:17:58.8466667Z\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"id\": \"/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821\",\r\n  \"name\": \"sparkpool1821\",\r\n  \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n  \"location\": \"eastus2euap\",\r\n  \"tags\": {\r\n    \"TestTag\": \"TestUpdate\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationStatuses/f9ba5c0a-07c1-4420-8552-179a7d970d9d?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationStatuses/37512180-066f-4a5a-a934-da233beec97b?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -1068,25 +1124,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "7ee305c8-7542-4b25-b803-21beed1dc30a"
+          "695216ae-aa3e-4961-8725-430b8a1ee503"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11977"
+          "11986"
         ],
         "x-ms-correlation-request-id": [
-          "5eb671d3-ac61-402d-b873-be23904a770e"
+          "123109d0-99e2-48c3-8b98-830554bf1861"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130159Z:5eb671d3-ac61-402d-b873-be23904a770e"
+          "EASTUS2EUAP:20210330T081925Z:123109d0-99e2-48c3-8b98-830554bf1861"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:01:59 GMT"
+          "Tue, 30 Mar 2021 08:19:24 GMT"
         ],
         "Content-Length": [
           "22"
@@ -1102,18 +1158,18 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9136a3bc-9431-4f05-9a1c-574a43008b72"
+          "1ff0a46c-cfbe-4bf2-a745-b785ab5e8ff8"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -1130,28 +1186,28 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "99253963-cd8b-42d7-af9b-46dca21d0f2d"
+          "3e4d711d-6e71-4dd8-9fe8-43fefa99c386"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11975"
+          "11984"
         ],
         "x-ms-correlation-request-id": [
-          "aac92007-4579-4ab0-a35a-efe20a038c05"
+          "62481773-fbe6-4e0a-b861-84418534c4be"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130159Z:aac92007-4579-4ab0-a35a-efe20a038c05"
+          "EASTUS2EUAP:20210330T081925Z:62481773-fbe6-4e0a-b861-84418534c4be"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:01:59 GMT"
+          "Tue, 30 Mar 2021 08:19:25 GMT"
         ],
         "Content-Length": [
-          "763"
+          "773"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1160,22 +1216,22 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"creationDate\": \"2021-01-28T13:00:27.73Z\",\r\n        \"sparkVersion\": \"2.4\",\r\n        \"nodeCount\": 0,\r\n        \"nodeSize\": \"Small\",\r\n        \"nodeSizeFamily\": \"MemoryOptimized\",\r\n        \"autoScale\": {\r\n          \"enabled\": true,\r\n          \"minNodeCount\": 3,\r\n          \"maxNodeCount\": 6\r\n        },\r\n        \"autoPause\": {\r\n          \"enabled\": true,\r\n          \"delayInMinutes\": 15\r\n        },\r\n        \"isComputeIsolationEnabled\": false,\r\n        \"sessionLevelPackagesEnabled\": false,\r\n        \"cacheSize\": 0,\r\n        \"dynamicExecutorAllocation\": {\r\n          \"enabled\": false\r\n        },\r\n        \"lastSucceededTimestamp\": \"2021-01-28T13:01:35.95Z\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554\",\r\n      \"name\": \"sparkpool6554\",\r\n      \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n      \"location\": \"eastus2euap\"\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"properties\": {\r\n        \"creationDate\": \"2021-03-30T08:17:53.4533333Z\",\r\n        \"sparkVersion\": \"2.4\",\r\n        \"nodeCount\": 0,\r\n        \"nodeSize\": \"Small\",\r\n        \"nodeSizeFamily\": \"MemoryOptimized\",\r\n        \"autoScale\": {\r\n          \"enabled\": true,\r\n          \"minNodeCount\": 3,\r\n          \"maxNodeCount\": 6\r\n        },\r\n        \"autoPause\": {\r\n          \"enabled\": true,\r\n          \"delayInMinutes\": 15\r\n        },\r\n        \"isComputeIsolationEnabled\": false,\r\n        \"sessionLevelPackagesEnabled\": false,\r\n        \"cacheSize\": 0,\r\n        \"dynamicExecutorAllocation\": {\r\n          \"enabled\": false\r\n        },\r\n        \"lastSucceededTimestamp\": \"2021-03-30T08:19:00.5466667Z\",\r\n        \"provisioningState\": \"Succeeded\"\r\n      },\r\n      \"id\": \"/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821\",\r\n      \"name\": \"sparkpool1821\",\r\n      \"type\": \"Microsoft.Synapse/workspaces/bigDataPools\",\r\n      \"location\": \"eastus2euap\"\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "858dc78b-ad30-4712-b595-1ec0c5e0a4e0"
+          "377534a7-d390-4f72-9dc0-1f19874daab2"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -1192,25 +1248,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "c6b826a3-79b5-4bda-9211-e73b9edc9390"
+          "416aebeb-633a-4c84-b545-d5e22e08c1e8"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11972"
+          "11981"
         ],
         "x-ms-correlation-request-id": [
-          "1a4fc7d2-eb3c-40a1-998f-dda7c9769669"
+          "b95c6803-0267-49e0-a107-b75f2bf33fc5"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130230Z:1a4fc7d2-eb3c-40a1-998f-dda7c9769669"
+          "EASTUS2EUAP:20210330T081956Z:b95c6803-0267-49e0-a107-b75f2bf33fc5"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:02:30 GMT"
+          "Tue, 30 Mar 2021 08:19:55 GMT"
         ],
         "Content-Length": [
           "12"
@@ -1226,18 +1282,18 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/bigDataPools/sparkpool6554?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/bigDataPools/sparkpool1821?api-version=2021-03-01",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5739b0d4-e469-4740-9e6e-a825a1349376"
+          "c89215a2-8975-444b-98c3-656c226c95aa"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -1251,7 +1307,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://eastus2euap.management.azure.com/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationResults/c74311f1-a7bd-4c33-80c5-b2c607cd6e77?api-version=2020-12-01"
+          "https://eastus2euap.management.azure.com/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationResults/9e26c902-9293-4bb6-85a3-1de269fc55af?api-version=2021-03-01"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1263,7 +1319,7 @@
           "Location"
         ],
         "x-ms-request-id": [
-          "85bc4ace-04a4-41bb-a81e-fe4d763efc71"
+          "71e0f800-c4fb-4094-8238-ba48f49d729a"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -1272,16 +1328,16 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "bc79c513-8ee8-4362-8dd8-a8d619871c6f"
+          "51f849b2-316f-4c73-884d-283282de2be7"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130159Z:bc79c513-8ee8-4362-8dd8-a8d619871c6f"
+          "EASTUS2EUAP:20210330T081925Z:51f849b2-316f-4c73-884d-283282de2be7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:01:59 GMT"
+          "Tue, 30 Mar 2021 08:19:25 GMT"
         ],
         "Expires": [
           "-1"
@@ -1294,12 +1350,12 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationResults/c74311f1-a7bd-4c33-80c5-b2c607cd6e77?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationResults/9e26c902-9293-4bb6-85a3-1de269fc55af?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -1316,25 +1372,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "df4e147f-00b7-4d0a-a29e-0d32e703ad44"
+          "3e104b13-56d2-4337-8169-83044fad1d89"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11974"
+          "11983"
         ],
         "x-ms-correlation-request-id": [
-          "61b9c498-06fe-4141-824b-0f6b84ba745f"
+          "68d5aefc-f121-4d7a-bcc6-5360f80fe83e"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130230Z:61b9c498-06fe-4141-824b-0f6b84ba745f"
+          "EASTUS2EUAP:20210330T081955Z:68d5aefc-f121-4d7a-bcc6-5360f80fe83e"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:02:29 GMT"
+          "Tue, 30 Mar 2021 08:19:55 GMT"
         ],
         "Expires": [
           "-1"
@@ -1344,12 +1400,12 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/subscriptions/bc522b53-8506-4739-8f13-998a2e69a084/resourceGroups/synapsesdkrp7464/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace8784/operationResults/c74311f1-a7bd-4c33-80c5-b2c607cd6e77?api-version=2020-12-01",
+      "RequestUri": "/subscriptions/e7f223b4-b62e-4129-b47c-4c14ebb03154/resourceGroups/synapsesdkrp9107/providers/Microsoft.Synapse/workspaces/synapsesdkworkspace9873/operationResults/9e26c902-9293-4bb6-85a3-1de269fc55af?api-version=2021-03-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "FxVersion/4.6.29518.01",
+          "FxVersion/4.6.29812.02",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.19042.",
           "Microsoft.Azure.Management.Synapse.SynapseManagementClient/1.0.0.0"
@@ -1366,25 +1422,25 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "97de1140-3a5d-439d-8bc9-602ffe9be8a3"
+          "c42d30c4-b33b-4dfe-8330-368636ff60af"
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11973"
+          "11982"
         ],
         "x-ms-correlation-request-id": [
-          "05dceba3-30fa-466c-95b5-ef79203c8017"
+          "3bd0fd86-384e-46af-a9db-657714de8450"
         ],
         "x-ms-routing-request-id": [
-          "EASTUS2EUAP:20210128T130230Z:05dceba3-30fa-466c-95b5-ef79203c8017"
+          "EASTUS2EUAP:20210330T081955Z:3bd0fd86-384e-46af-a9db-657714de8450"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Thu, 28 Jan 2021 13:02:29 GMT"
+          "Tue, 30 Mar 2021 08:19:55 GMT"
         ],
         "Expires": [
           "-1"
@@ -1396,21 +1452,21 @@
   ],
   "Names": {
     ".ctor": [
-      "synapsesdkrp7464",
-      "synapsesdkstorage8942",
-      "sshuser423",
-      "Password1!8530",
-      "synapsesdkfilesys4523"
+      "synapsesdkrp9107",
+      "synapsesdkstorage7533",
+      "sshuser9110",
+      "Password1!8594",
+      "synapsesdkfilesys7169"
     ],
     "TestInitialize": [
-      "bc522b53-8506-4739-8f13-998a2e69a084"
+      "e7f223b4-b62e-4129-b47c-4c14ebb03154"
     ],
     "TestSparkPoolLifeCycle": [
-      "synapsesdkworkspace8784",
-      "sparkpool6554"
+      "synapsesdkworkspace9873",
+      "sparkpool1821"
     ]
   },
   "Variables": {
-    "SubscriptionId": "bc522b53-8506-4739-8f13-998a2e69a084"
+    "SubscriptionId": "e7f223b4-b62e-4129-b47c-4c14ebb03154"
   }
 }

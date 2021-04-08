@@ -162,6 +162,15 @@ namespace Azure.Search.Documents
         [CodeGenMember("scoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
 
+        /// <summary> A value that specifies the language of the search query. </summary>
+        internal QueryLanguage? QueryLanguage { get; set; }
+
+        /// <summary> A value that specified the type of the speller to use to spell-correct individual search query terms. </summary>
+        internal Speller? Speller { get; set; }
+
+        /// <summary> A value that specifies whether answers should be returned as part of the search response. </summary>
+        internal Answers? Answers { get; set; }
+
         /// <summary>
         /// Shallow copy one SearchOptions instance to another.
         /// </summary>

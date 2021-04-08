@@ -77,7 +77,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorRequiresTheOptions()
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             Assert.That(() => new AmqpClient("my.eventhub.com", "somePath", credential.Object, null), Throws.InstanceOf<ArgumentException>());
         }
 
@@ -90,7 +90,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubConnectionOptions();
             var endpoint = new Uri("http://my.endpoint.com");
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient(endpoint.Host, "somePath", credential.Object, options);
 
             Assert.That(client.ConnectionEndpoint.Host, Is.EqualTo(endpoint.Host), "The connection endpoint should have used the namespace URI.");
@@ -106,7 +106,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var options = new EventHubConnectionOptions { CustomEndpointAddress = new Uri("sb://iam.custom.net") };
             var endpoint = new Uri("http://my.endpoint.com");
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient(endpoint.Host, "somePath", credential.Object, options);
 
             Assert.That(client.ConnectionEndpoint.Host, Is.EqualTo(options.CustomEndpointAddress.Host), "The connection endpoint should have used the custom endpoint URI from the options.");
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task CloseMarksTheClientAsClosed()
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             Assert.That(client.IsClosed, Is.False, "The client should not be closed on creation");
 
@@ -137,7 +137,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CloseRespectsTheCancellationToken()
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             using var cancellationSource = new CancellationTokenSource();
 
@@ -153,7 +153,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task DisposeClosesTheClient()
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             Assert.That(client.IsClosed, Is.False, "The client should not be closed on creation");
 
@@ -172,7 +172,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             Assert.That(async () => await client.GetPropertiesAsync(Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
@@ -187,7 +187,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var cancellationSource = new CancellationTokenSource();
 
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             Assert.That(async () => await client.GetPropertiesAsync(null, cancellationSource.Token), Throws.ArgumentNullException);
         }
@@ -202,7 +202,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var cancellationSource = new CancellationTokenSource();
 
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
@@ -220,7 +220,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var eventHubName = "myName";
             var tokenValue = "123ABC";
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
 
             using var cancellationSource = new CancellationTokenSource();
 
@@ -260,7 +260,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new Mock<AmqpConnectionScope>();
 
             using var cancellationSource = new CancellationTokenSource();
@@ -297,7 +297,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var retriableException = new OperationCanceledException();
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new Mock<AmqpConnectionScope>();
 
             using var cancellationSource = new CancellationTokenSource();
@@ -334,7 +334,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new Mock<AmqpConnectionScope>();
 
             using var cancellationSource = new CancellationTokenSource();
@@ -370,7 +370,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var embeddedException = new OperationCanceledException("", new ArgumentNullException());
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new Mock<AmqpConnectionScope>();
 
             using var cancellationSource = new CancellationTokenSource();
@@ -406,7 +406,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new Mock<AmqpConnectionScope>();
 
             using var cancellationSource = new CancellationTokenSource();
@@ -441,7 +441,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             ExactTypeConstraint typeConstraint = partition is null ? Throws.ArgumentNullException : Throws.ArgumentException;
 
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             Assert.That(async () => await client.GetPartitionPropertiesAsync(partition, Mock.Of<EventHubsRetryPolicy>(), CancellationToken.None), typeConstraint);
         }
@@ -454,7 +454,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetPartitionPropertiesAsyncValidatesTheRetryPolicy()
         {
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             Assert.That(async () => await client.GetPartitionPropertiesAsync("1", null, CancellationToken.None), Throws.ArgumentNullException);
         }
@@ -470,7 +470,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             Assert.That(async () => await client.GetPartitionPropertiesAsync("Fred", Mock.Of<EventHubsRetryPolicy>(), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
@@ -485,7 +485,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var cancellationSource = new CancellationTokenSource();
 
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
@@ -504,7 +504,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "Barney";
             var tokenValue = "123ABC";
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
 
             using var cancellationSource = new CancellationTokenSource();
 
@@ -545,7 +545,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var retriableException = new EventHubsException(true, "Test");
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new Mock<AmqpConnectionScope>();
 
             using var cancellationSource = new CancellationTokenSource();
@@ -583,7 +583,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var retriableException = new OperationCanceledException();
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new Mock<AmqpConnectionScope>();
 
             using var cancellationSource = new CancellationTokenSource();
@@ -621,7 +621,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new Mock<AmqpConnectionScope>();
 
             using var cancellationSource = new CancellationTokenSource();
@@ -658,7 +658,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var embeddedException = new OperationCanceledException("", new ArgumentNullException());
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new Mock<AmqpConnectionScope>();
 
             using var cancellationSource = new CancellationTokenSource();
@@ -695,7 +695,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
             var mockConverter = new Mock<AmqpMessageConverter>();
-            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var mockCredential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var mockScope = new Mock<AmqpConnectionScope>();
 
             using var cancellationSource = new CancellationTokenSource();
@@ -728,7 +728,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var cancellationSource = new CancellationTokenSource();
 
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 
@@ -745,7 +745,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var cancellationSource = new CancellationTokenSource();
 
-            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
             var client = new AmqpClient("my.eventhub.com", "somePath", credential.Object, new EventHubConnectionOptions());
             await client.CloseAsync(cancellationSource.Token);
 

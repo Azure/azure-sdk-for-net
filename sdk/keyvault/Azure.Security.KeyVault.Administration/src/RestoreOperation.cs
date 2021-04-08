@@ -53,6 +53,9 @@ namespace Azure.Security.KeyVault.Administration
             _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, RestoreResult, RestoreDetailsInternal>(value, response, client);
         }
 
+        /// <summary> Initializes a new instance of <see cref="RestoreOperation" /> for mocking. </summary>
+        protected RestoreOperation() {}
+
         /// <summary>
         /// The start time of the restore operation.
         /// </summary>

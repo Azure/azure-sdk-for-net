@@ -24,6 +24,6 @@ extends:
     ServiceDirectory: iot
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Iot.Hub.Service
-      safeName: AzureIotHubService
+    - name: Azure.IoT.Hub.Service
+      safeName: AzureIoTHubService
       

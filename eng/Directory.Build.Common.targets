@@ -1,0 +1,244 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="ValidateTargetFrameworks" BeforeTargets="Build">
+    <ItemGroup>
+      <RequiredTargetFrameworks Include="$(RequiredTargetFrameworks)" />
+      <ConfiguredTargetFrameworks Include="$(TargetFrameworks)" />
+      <MissingTargetFrameworks Include="@(RequiredTargetFrameworks)" Exclude="@(ConfiguredTargetFrameworks)" />
+    </ItemGroup>
+
+    <Error Condition="'@(RequiredTargetFrameworks)' == ''" Text="List of required target frameworks is empty something must have messed up property RequiredTargetFrameworks[$(RequiredTargetFrameworks)]." />
+    <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
+  </Target>
+
+  <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
+  <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformationFromSourceControlManager" Condition="'$(IsShippingLibrary)' == 'true' and '$(SourceRevisionId)' != ''">
+    <Error Condition="'$(IsClientLibrary)' == 'true' and '$(PackageReleaseNotes)' != ''" Text="Do NOT set PackageReleaseNotes property in the project. Release notes are added automatically from package changelog" />
+    <PropertyGroup>
+      <PackageRootPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))</PackageRootPath>
+      <DirectoryPartofPath>$(PackageRootPath.Replace($(RepoRoot), ''))</DirectoryPartofPath>
+      <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
+      <PackageProjectUrl Condition="Exists('$(PackageRootPath)/README.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)README.md).Uri)</PackageProjectUrl>
+      <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md') and '$(SkipDevBuildNumber)' != 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(SourceRevisionId)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
+      <PackageReleaseNotes Condition="Exists('$(PackageRootPath)/CHANGELOG.md') and '$(SkipDevBuildNumber)' == 'true'">$([System.UriBuilder]::new($(RepositoryUrl)/blob/$(PackageId)_$(Version)/$(DirectoryPartofPath)CHANGELOG.md).Uri)</PackageReleaseNotes>
+    </PropertyGroup>
+  </Target>
+
+  <!-- Validates that there is a release note entry for the current package version -->
+  <Target Name="ValidateReleaseNotes" BeforeTargets="SetPackageProjectUrlandReleaseNotes" Condition="'$(IsShippingLibrary)' == 'true'" >
+    <PropertyGroup>
+      <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common/scripts/Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
+      <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
+    </PropertyGroup>
+    <Exec ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="Low" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
+      <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
+    </Exec>
+    <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="No entry for version [$(_VersionInProject)] found in the ChangeLog [$(ChangeLogPath)]. " />
+  </Target>
+
+  <!--Run Aggregate Updates to Source -->
+  <Target Name="UpdateSourceOnBuild" AfterTargets="Build" Condition="'$(UpdateSourceOnBuild)' == 'true' and '$(IsShippingClientLibrary)' == 'true'" >
+    <PropertyGroup>
+      <CodeChecksScriptPath Condition=" '$(CodeChecksScriptPath)'=='' ">$(MSBuildThisFileDirectory)scripts/CodeChecks.ps1</CodeChecksScriptPath>
+    </PropertyGroup>
+    <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ProjectDirectory $(MSBuildProjectDirectory)"/>
+  </Target>
+
+  <!-- This allows us to build .NET Framework targets on non-windows
+    TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
+  -->
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true' and '$(OS)' != 'Windows_NT'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" IsImplicitlyDefined="true" />
+  </ItemGroup>
+
+  <!-- Add Client SDK Tools -->
+  <ItemGroup>
+    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
+
+    <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
+
+    <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
+
+    <PackageReference Condition="'$(EnableFxCopAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!-- Add Package Icon to DataPlane Packages -->
+  <ItemGroup Condition="'$(IsTestProject)' != 'true'">
+    <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
+    <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
+    <None Condition="Exists('$(MSBuildProjectDirectory)/../README.md')" Include="$(MSBuildProjectDirectory)/../README.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
+
+  <!-- Add App.config to enable server GC in net461 perf and stress projects -->
+  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net461'">
+    <None Include="$(RepoRoot)/common/PerfStressShared/App.config" />
+  </ItemGroup>
+
+  <!-- Add StyleCop Analyzers -->
+  <ItemGroup Condition="'$(EnableStyleCopAnalyzers)' == 'true'"  >
+    <PackageReference Include="StyleCop.Analyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <AdditionalFiles Include="$(RepoEngPath)\stylecop.json">
+      <Visible>false</Visible>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <!-- Enable SourceLink -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <ImportDefaultReferences Condition="'$(ImportDefaultReferences)' == ''">true</ImportDefaultReferences>
+    <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
+    <DefaultReferenceTargets Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">AzSdk.test.reference.targets</DefaultReferenceTargets>
+
+    <!-- Disable running of tests for test helper libraries -->
+    <IsTestProject Condition="'$(IsTestSupportProject)' == 'true'">false</IsTestProject>
+  </PropertyGroup>
+
+  <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
+
+  <Import Project="Versioning.targets" />
+
+  <Import Project="ApiListing.targets" />
+
+  <Import Project="CodeCoverage.targets" />
+
+  <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
+
+  <Import Project="TestFramework.targets" Condition="'$(IsTestProject)' == 'true'"/>
+
+  <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
+
+  <!-- CentralPackageVersions properties -->
+  <PropertyGroup>
+    <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>
+    <CentralPackageVersionPackagePath>$(MSBuildThisFileDirectory)Microsoft.Build.CentralPackageVersions\2.0.46\Sdk</CentralPackageVersionPackagePath>
+    <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
+    <!-- Find all non-management projects -->
+    <AzureProjects Include="$(RepoRoot)/sdk/**/src/*.csproj" Exclude="$(RepoRoot)/sdk/**/src/*.Management.*.csproj" ProjectPath="%(Identity)" />
+    <PossibleProjectsToConvert Include="@(AzureProjects -> '%(Filename)')"/>
+
+    <!-- Compute set of projects that intersect with the PackageReference's -->
+    <_NotPackageReferences Include="@(PossibleProjectsToConvert)" Exclude="@(PackageReference)" />
+    <_NotPackageReferences Include="@(ExcludeFromProjectReferenceToConversion)" />
+    <ProjectsToConvert Include="@(PossibleProjectsToConvert)" Exclude="@(_NotPackageReferences)" />
+
+    <!-- Remove PackageReferences -->
+    <PackageReference Remove="@(ProjectsToConvert)" />
+
+    <!-- Add ProjectReferences -->
+    <ProjectReference Include="@(ProjectsToConvert -> '%(ProjectPath)')" />
+  </ItemGroup>
+
+  <!-- *********** Management Client Library Override section ************* -->
+  <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
+    <PackageReference Include="System.Text.Json" />
+
+    <!-- TODO: Review these file references-->
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <!-- Management Client TEST Project Specific Overrides -->
+  <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'">
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+  </ItemGroup>
+  <!-- *********** END OF Management Client Library Override section ************* -->
+
+  <!-- Added layer of checks to make sure we correctly switched to project references -->
+  <Target Name="VerifyProjectReferencesReferences" AfterTargets="Build">
+    <ItemGroup>
+      <AzureReferences Include="@(ReferencePath)" Condition="$([System.String]::Copy('%(Filename)').StartsWith('Azure.'))" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseProjectReferenceToAzureClients)' == 'true'">
+      <ShouldBeProjectReference Include="@(AzureReferences)" Exclude="@(AzureReferences->HasMetadata('MSBuildSourceProjectFile'))" />
+    </ItemGroup>
+
+    <Error Condition="'$(UseProjectReferenceToAzureClients)' == 'true' and '@(ShouldBeProjectReference)' != ''"
+           Text="When UseProjectReferenceToAzureClients=true all Azure.* references should be Project References, but the following are not [@(ShouldBeProjectReference)]" />
+  </Target>
+
+  <!-- Added layer of checks to make sure release packages don't have preview dependencies -->
+  <Target Name="VerifyProjectReferencesReferences" Condition="'$(HasReleaseVersion)' == 'true' AND '$(IsPackable)' == 'true'" BeforeTargets="GenerateNuspec">
+
+    <Msbuild
+      Projects="@(_ProjectReferencesFromAssetsFile)"
+      Targets="_GetProjectVersion"
+      SkipNonexistentTargets="true"
+      SkipNonexistentProjects="true"
+      Properties="BuildProjectReferences=false;SkipDevBuildNumber=true">
+      <Output
+        TaskParameter="TargetOutputs"
+        ItemName="_ProjectReferencesWithoutDevVersions"/>
+    </Msbuild>
+
+    <ItemGroup>
+      <_AllReferencesWithVersions Include="@(_ProjectReferencesWithoutDevVersions)" Version="%(ProjectVersion)" />
+      <_AllReferencesWithVersions Include="@(PackageReference)" Condition="!$([System.String]::Copy('%(PackageReference.PrivateAssets)').ToLower().Equals('all'))"/>
+
+      <PreviewPackageReferences Include="@(_AllReferencesWithVersions)" Condition="$([System.String]::Copy('%(Version)').Contains('-'))" />
+    </ItemGroup>
+
+    <Error Condition="'@(PreviewPackageReferences)' != ''" Text="When the project has a release version it shouldn't reference any pre-release libraries. Found the following pre-release references: @(PreviewPackageReferences, ', ')" />
+  </Target>
+
+  <!-- InheritDoc-->
+  <ItemGroup Condition="'$(InheritDocEnabled)' != 'false'">
+    <PackageReference Include="SauceControl.InheritDoc" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Fixup netstandard2.malformed docs issue https://github.com/saucecontrol/InheritDoc#bad-netstandard-docs -->
+  <ItemGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageDownload Include="NETStandard.Library.Ref" />
+    <InheritDocReference Include="$(NugetPackageRoot)\netstandard.library.ref\2.1.0\ref\netstandard2.1\netstandard.xml" />
+  </ItemGroup>
+
+<!-- Additional PackageReferences should be placed above this PropertyGroup -->
+  <PropertyGroup>
+    <ApiCompatExcludeAttributeList>$(MSBuildThisFileDirectory)ApiListing.exclude-attributes.txt</ApiCompatExcludeAttributeList>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(ApiCompatVersion)' != ''">
+    <PackageDownload Include="$(PackageId)" Version="[$(ApiCompatVersion)]" />
+    <PackageReference Include="Microsoft.DotNet.ApiCompat" PrivateAssets="all" />
+  </ItemGroup>
+
+  <Target Name="_ResolveResolvedMatchingContract" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
+    <ItemGroup>
+      <_ReferencePathDirectories Include="@(ReferencePath -> '%(RootDir)%(Directory)')"  />
+      <ResolvedMatchingContract Include="$(NuGetPackageRoot)\$(PackageId.ToLower())\$(ApiCompatVersion)\lib\$(TargetFramework)\$(TargetFileName)">
+        <DependencyPaths>@(_ReferencePathDirectories->Distinct(), ',')</DependencyPaths>
+      </ResolvedMatchingContract>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="ApiCompatFinishedMessage" AfterTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
+     <Message Text="Ran ApiCompat against %(ResolvedMatchingContract.Identity) using assemblies from $(IntermediateOutputPath)" Importance="High" />
+  </Target>
+
+  <Target Name="RunApiCompat" DependsOnTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
+  </Target>
+
+  <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
+</Project>

@@ -37,6 +37,11 @@ namespace Azure.AI.TextAnalytics
         public int ActionsSucceeded => _actionSucceeded;
 
         /// <summary>
+        /// Total actions executed in the operation.
+        /// </summary>
+        public int ActionsTotal => _actionsTotal;
+
+        /// <summary>
         /// Time when the operation was created on.
         /// </summary>
         public DateTimeOffset CreatedOn => _createdOn;
@@ -62,11 +67,6 @@ namespace Azure.AI.TextAnalytics
         public TextAnalyticsOperationStatus Status => _status;
 
         /// <summary>
-        /// Total actions executed in the operation
-        /// </summary>
-        public int TotalActions => _totalActions;
-
-        /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
         /// of the long-running operation.
         /// </summary>
@@ -90,7 +90,7 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         private bool _hasCompleted;
 
-        private int _totalActions;
+        private int _actionsTotal;
         private int _actionsFailed;
         private int _actionSucceeded;
         private int _actionsInProgress;
@@ -248,7 +248,7 @@ namespace Azure.AI.TextAnalytics
                     _actionsFailed = update.Value.Tasks.Failed;
                     _actionsInProgress = update.Value.Tasks.InProgress;
                     _actionSucceeded = update.Value.Tasks.Completed;
-                    _totalActions = update.Value.Tasks.Total;
+                    _actionsTotal = update.Value.Tasks.Total;
 
                     // TODO - Remove PartiallySucceeded once service deploys this to WestUS2
                     if (update.Value.Status == TextAnalyticsOperationStatus.Succeeded ||

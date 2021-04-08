@@ -12,48 +12,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents service-level resource counters and quotas. </summary>
     public partial class SearchServiceCounters
     {
-        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
-        /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
-        /// <param name="indexCounter"> Total number of indexes. </param>
-        /// <param name="indexerCounter"> Total number of indexers. </param>
-        /// <param name="dataSourceCounter"> Total number of data sources. </param>
-        /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
-        /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="documentCounter"/>, <paramref name="indexCounter"/>, <paramref name="indexerCounter"/>, <paramref name="dataSourceCounter"/>, <paramref name="storageSizeCounter"/>, or <paramref name="synonymMapCounter"/> is null. </exception>
-        internal SearchServiceCounters(SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter)
-        {
-            if (documentCounter == null)
-            {
-                throw new ArgumentNullException(nameof(documentCounter));
-            }
-            if (indexCounter == null)
-            {
-                throw new ArgumentNullException(nameof(indexCounter));
-            }
-            if (indexerCounter == null)
-            {
-                throw new ArgumentNullException(nameof(indexerCounter));
-            }
-            if (dataSourceCounter == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceCounter));
-            }
-            if (storageSizeCounter == null)
-            {
-                throw new ArgumentNullException(nameof(storageSizeCounter));
-            }
-            if (synonymMapCounter == null)
-            {
-                throw new ArgumentNullException(nameof(synonymMapCounter));
-            }
-
-            DocumentCounter = documentCounter;
-            IndexCounter = indexCounter;
-            IndexerCounter = indexerCounter;
-            DataSourceCounter = dataSourceCounter;
-            StorageSizeCounter = storageSizeCounter;
-            SynonymMapCounter = synonymMapCounter;
-        }
 
         /// <summary> Total number of documents across all indexes in the service. </summary>
         public SearchResourceCounter DocumentCounter { get; }
@@ -67,5 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public SearchResourceCounter StorageSizeCounter { get; }
         /// <summary> Total number of synonym maps. </summary>
         public SearchResourceCounter SynonymMapCounter { get; }
+        /// <summary> Total number of skillsets. </summary>
+        public SearchResourceCounter SkillsetCounter { get; }
     }
 }

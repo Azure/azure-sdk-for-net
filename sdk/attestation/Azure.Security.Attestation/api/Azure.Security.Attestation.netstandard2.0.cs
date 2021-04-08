@@ -6,18 +6,18 @@ namespace Azure.Security.Attestation
         public AttestationAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public AttestationAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Security.Attestation.AttestationClientOptions options) { }
         public System.Uri Endpoint { get { throw null; } }
-        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.PolicyCertificatesModificationResult> AddPolicyManagementCertificate(Azure.Security.Attestation.SecuredAttestationToken certificateToAdd, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.PolicyCertificatesModificationResult>> AddPolicyManagementCertificateAsync(Azure.Security.Attestation.SecuredAttestationToken certificateToAdd, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.StoredAttestationPolicy> GetPolicy(Azure.Security.Attestation.Models.AttestationType attestationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.StoredAttestationPolicy>> GetPolicyAsync(Azure.Security.Attestation.Models.AttestationType attestationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.PolicyCertificatesResult> GetPolicyManagementCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.PolicyCertificatesResult>> GetPolicyManagementCertificatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.PolicyCertificatesModificationResult> RemovePolicyManagementCertificate(Azure.Security.Attestation.SecuredAttestationToken certificateToAdd, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.PolicyCertificatesModificationResult>> RemovePolicyManagementCertificateAsync(Azure.Security.Attestation.SecuredAttestationToken certificateToAdd, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.PolicyResult> ResetPolicy(Azure.Security.Attestation.Models.AttestationType attestationType, Azure.Security.Attestation.AttestationToken authorizationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.PolicyResult>> ResetPolicyAsync(Azure.Security.Attestation.Models.AttestationType attestationType, Azure.Security.Attestation.AttestationToken authorizationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.PolicyResult> SetPolicy(Azure.Security.Attestation.Models.AttestationType attestationType, Azure.Security.Attestation.AttestationToken policyToSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.PolicyResult>> SetPolicyAsync(Azure.Security.Attestation.Models.AttestationType attestationType, Azure.Security.Attestation.AttestationToken policyToSet, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesModificationResult> AddPolicyManagementCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2 newSigningCertificate, System.Security.Cryptography.AsymmetricAlgorithm existingSigningKey, System.Security.Cryptography.X509Certificates.X509Certificate2 existingSigningCertificate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesModificationResult>> AddPolicyManagementCertificateAsync(System.Security.Cryptography.X509Certificates.X509Certificate2 newSigningCertificate, System.Security.Cryptography.AsymmetricAlgorithm existingSigningKey, System.Security.Cryptography.X509Certificates.X509Certificate2 existingSigningCertificate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<string> GetPolicy(Azure.Security.Attestation.AttestationType attestationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<string>> GetPolicyAsync(Azure.Security.Attestation.AttestationType attestationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesResult> GetPolicyManagementCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesResult>> GetPolicyManagementCertificatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesModificationResult> RemovePolicyManagementCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2 certificateToRemove, System.Security.Cryptography.AsymmetricAlgorithm existingSigningKey, System.Security.Cryptography.X509Certificates.X509Certificate2 existingSigningCertificate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesModificationResult>> RemovePolicyManagementCertificateAsync(System.Security.Cryptography.X509Certificates.X509Certificate2 certificateToRemove, System.Security.Cryptography.AsymmetricAlgorithm existingSigningKey, System.Security.Cryptography.X509Certificates.X509Certificate2 existingSigningCertificate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyResult> ResetPolicy(Azure.Security.Attestation.AttestationType attestationType, System.Security.Cryptography.AsymmetricAlgorithm signingKey = null, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyResult>> ResetPolicyAsync(Azure.Security.Attestation.AttestationType attestationType, System.Security.Cryptography.AsymmetricAlgorithm signingKey = null, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyResult> SetPolicy(Azure.Security.Attestation.AttestationType attestationType, string policyToSet, System.Security.Cryptography.AsymmetricAlgorithm signingKey = null, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyResult>> SetPolicyAsync(Azure.Security.Attestation.AttestationType attestationType, string policyToSet, System.Security.Cryptography.AsymmetricAlgorithm signingKey = null, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AttestationClient
     {
@@ -25,19 +25,19 @@ namespace Azure.Security.Attestation
         public AttestationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public AttestationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Security.Attestation.AttestationClientOptions options) { }
         public System.Uri Endpoint { get { throw null; } }
-        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.AttestationResult> AttestOpenEnclave(System.ReadOnlyMemory<byte> report, System.BinaryData initTimeData, bool initTimeDataIsObject, System.BinaryData runTimeData, bool runTimeDataIsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.AttestationResult>> AttestOpenEnclaveAsync(System.ReadOnlyMemory<byte> report, System.BinaryData initTimeData, bool initTimeDataIsObject, System.BinaryData runTimeData, bool runTimeDataIsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.AttestationResult> AttestSgxEnclave(System.ReadOnlyMemory<byte> quote, System.BinaryData initTimeData, bool initTimeDataIsObject, System.BinaryData runTimeData, bool runTimeDataIsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.Models.AttestationResult>> AttestSgxEnclaveAsync(System.ReadOnlyMemory<byte> quote, System.BinaryData initTimeData, bool initTimeDataIsObject, System.BinaryData runTimeData, bool runTimeDataIsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestOpenEnclave(System.ReadOnlyMemory<byte> report, System.BinaryData initTimeData, bool initTimeDataIsObject, System.BinaryData runTimeData, bool runTimeDataIsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestOpenEnclaveAsync(System.ReadOnlyMemory<byte> report, System.BinaryData initTimeData, bool initTimeDataIsObject, System.BinaryData runTimeData, bool runTimeDataIsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestSgxEnclave(System.ReadOnlyMemory<byte> quote, System.BinaryData initTimeData, bool initTimeDataIsObject, System.BinaryData runTimeData, bool runTimeDataIsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestSgxEnclaveAsync(System.ReadOnlyMemory<byte> quote, System.BinaryData initTimeData, bool initTimeDataIsObject, System.BinaryData runTimeData, bool runTimeDataIsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.BinaryData> AttestTpm(System.BinaryData request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> AttestTpmAsync(System.BinaryData request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.Models.AttestationSigner>> GetSigningCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.Models.AttestationSigner>>> GetSigningCertificatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner>> GetSigningCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner>>> GetSigningCertificatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AttestationClientOptions : Azure.Core.ClientOptions
     {
-        public AttestationClientOptions(Azure.Security.Attestation.AttestationClientOptions.ServiceVersion version = Azure.Security.Attestation.AttestationClientOptions.ServiceVersion.V2020_10_01, System.Func<Azure.Security.Attestation.AttestationToken, Azure.Security.Attestation.Models.AttestationSigner, bool> validationCallback = null, bool validateAttestationTokens = true) { }
-        public System.Func<Azure.Security.Attestation.AttestationToken, Azure.Security.Attestation.Models.AttestationSigner, bool> ValidationCallback { get { throw null; } }
+        public AttestationClientOptions(Azure.Security.Attestation.AttestationClientOptions.ServiceVersion version = Azure.Security.Attestation.AttestationClientOptions.ServiceVersion.V2020_10_01, System.Func<Azure.Security.Attestation.AttestationToken, Azure.Security.Attestation.AttestationSigner, bool> validationCallback = null, bool validateAttestationTokens = true) { }
+        public System.Func<Azure.Security.Attestation.AttestationToken, Azure.Security.Attestation.AttestationSigner, bool> ValidationCallback { get { throw null; } }
         public enum ServiceVersion
         {
             V2020_10_01 = 1,
@@ -50,37 +50,6 @@ namespace Azure.Security.Attestation
         public override T Value { get { throw null; } }
         public override Azure.Response GetRawResponse() { throw null; }
     }
-    public partial class AttestationToken
-    {
-        protected AttestationToken() { }
-        public string CertificateThumbprint { get { throw null; } }
-        public System.DateTimeOffset ExpirationTime { get { throw null; } }
-        public System.DateTimeOffset IssuedAtTime { get { throw null; } }
-        public System.DateTimeOffset NotBeforeTime { get { throw null; } }
-        public string TokenBody { get { throw null; } }
-        public System.ReadOnlyMemory<byte> TokenBodyBytes { get { throw null; } }
-        public string TokenHeader { get { throw null; } }
-        public System.ReadOnlyMemory<byte> TokenHeaderBytes { get { throw null; } }
-        public System.ReadOnlyMemory<byte> TokenSignatureBytes { get { throw null; } }
-        public T GetBody<T>() where T : class { throw null; }
-        public override string ToString() { throw null; }
-        public virtual bool ValidateToken(System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.Models.AttestationSigner> attestationSigningCertificates, System.Func<Azure.Security.Attestation.AttestationToken, Azure.Security.Attestation.Models.AttestationSigner, bool> validationCallback = null) { throw null; }
-    }
-    public partial class SecuredAttestationToken : Azure.Security.Attestation.AttestationToken
-    {
-        public SecuredAttestationToken(object body, System.Security.Cryptography.AsymmetricAlgorithm signingKey, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate) { }
-        public SecuredAttestationToken(object body, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate) { }
-        public SecuredAttestationToken(System.Security.Cryptography.AsymmetricAlgorithm signingKey, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate) { }
-        public SecuredAttestationToken(System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate) { }
-    }
-    public partial class UnsecuredAttestationToken : Azure.Security.Attestation.AttestationToken
-    {
-        public UnsecuredAttestationToken() { }
-        public UnsecuredAttestationToken(object body) { }
-    }
-}
-namespace Azure.Security.Attestation.Models
-{
     public partial class AttestationResult
     {
         internal AttestationResult() { }
@@ -123,52 +92,73 @@ namespace Azure.Security.Attestation.Models
         public string CertificateKeyId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.Security.Cryptography.X509Certificates.X509Certificate2> SigningCertificates { get { throw null; } }
     }
+    public partial class AttestationToken
+    {
+        protected AttestationToken() { }
+        public string Algorithm { get { throw null; } }
+        public string CertificateThumbprint { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public bool? Critical { get { throw null; } }
+        public System.DateTimeOffset ExpirationTime { get { throw null; } }
+        public System.DateTimeOffset IssuedAtTime { get { throw null; } }
+        public string KeyId { get { throw null; } }
+        public System.Uri KeyUrl { get { throw null; } }
+        public System.DateTimeOffset NotBeforeTime { get { throw null; } }
+        public string TokenBody { get { throw null; } }
+        public System.ReadOnlyMemory<byte> TokenBodyBytes { get { throw null; } }
+        public string TokenHeader { get { throw null; } }
+        public System.ReadOnlyMemory<byte> TokenHeaderBytes { get { throw null; } }
+        public System.ReadOnlyMemory<byte> TokenSignatureBytes { get { throw null; } }
+        public string Type { get { throw null; } }
+        public System.Security.Cryptography.X509Certificates.X509Certificate2[] X509CertificateChain { get { throw null; } }
+        public string X509CertificateSha256Thumbprint { get { throw null; } }
+        public string X509CertificateThumbprint { get { throw null; } }
+        public System.Uri X509Url { get { throw null; } }
+        public T GetBody<T>() where T : class { throw null; }
+        public override string ToString() { throw null; }
+        public virtual bool ValidateToken(System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner> attestationSigningCertificates, System.Func<Azure.Security.Attestation.AttestationToken, Azure.Security.Attestation.AttestationSigner, bool> validationCallback = null) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AttestationType : System.IEquatable<Azure.Security.Attestation.Models.AttestationType>
+    public readonly partial struct AttestationType : System.IEquatable<Azure.Security.Attestation.AttestationType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AttestationType(string value) { throw null; }
-        public static Azure.Security.Attestation.Models.AttestationType OpenEnclave { get { throw null; } }
-        public static Azure.Security.Attestation.Models.AttestationType SgxEnclave { get { throw null; } }
-        public static Azure.Security.Attestation.Models.AttestationType Tpm { get { throw null; } }
-        public bool Equals(Azure.Security.Attestation.Models.AttestationType other) { throw null; }
+        public static Azure.Security.Attestation.AttestationType OpenEnclave { get { throw null; } }
+        public static Azure.Security.Attestation.AttestationType SgxEnclave { get { throw null; } }
+        public static Azure.Security.Attestation.AttestationType Tpm { get { throw null; } }
+        public bool Equals(Azure.Security.Attestation.AttestationType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Security.Attestation.Models.AttestationType left, Azure.Security.Attestation.Models.AttestationType right) { throw null; }
-        public static implicit operator Azure.Security.Attestation.Models.AttestationType (string value) { throw null; }
-        public static bool operator !=(Azure.Security.Attestation.Models.AttestationType left, Azure.Security.Attestation.Models.AttestationType right) { throw null; }
+        public static bool operator ==(Azure.Security.Attestation.AttestationType left, Azure.Security.Attestation.AttestationType right) { throw null; }
+        public static implicit operator Azure.Security.Attestation.AttestationType (string value) { throw null; }
+        public static bool operator !=(Azure.Security.Attestation.AttestationType left, Azure.Security.Attestation.AttestationType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CertificateModification : System.IEquatable<Azure.Security.Attestation.Models.CertificateModification>
+    public readonly partial struct CertificateModification : System.IEquatable<Azure.Security.Attestation.CertificateModification>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CertificateModification(string value) { throw null; }
-        public static Azure.Security.Attestation.Models.CertificateModification IsAbsent { get { throw null; } }
-        public static Azure.Security.Attestation.Models.CertificateModification IsPresent { get { throw null; } }
-        public bool Equals(Azure.Security.Attestation.Models.CertificateModification other) { throw null; }
+        public static Azure.Security.Attestation.CertificateModification IsAbsent { get { throw null; } }
+        public static Azure.Security.Attestation.CertificateModification IsPresent { get { throw null; } }
+        public bool Equals(Azure.Security.Attestation.CertificateModification other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Security.Attestation.Models.CertificateModification left, Azure.Security.Attestation.Models.CertificateModification right) { throw null; }
-        public static implicit operator Azure.Security.Attestation.Models.CertificateModification (string value) { throw null; }
-        public static bool operator !=(Azure.Security.Attestation.Models.CertificateModification left, Azure.Security.Attestation.Models.CertificateModification right) { throw null; }
+        public static bool operator ==(Azure.Security.Attestation.CertificateModification left, Azure.Security.Attestation.CertificateModification right) { throw null; }
+        public static implicit operator Azure.Security.Attestation.CertificateModification (string value) { throw null; }
+        public static bool operator !=(Azure.Security.Attestation.CertificateModification left, Azure.Security.Attestation.CertificateModification right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class PolicyCertificateModification
-    {
-        public PolicyCertificateModification(System.Security.Cryptography.X509Certificates.X509Certificate2 bodyCertificate) { }
-        public System.Security.Cryptography.X509Certificates.X509Certificate2 PolicyCertificate { get { throw null; } }
     }
     public partial class PolicyCertificatesModificationResult
     {
         internal PolicyCertificatesModificationResult() { }
-        public Azure.Security.Attestation.Models.CertificateModification? CertificateResolution { get { throw null; } }
+        public Azure.Security.Attestation.CertificateModification? CertificateResolution { get { throw null; } }
         public string CertificateThumbprint { get { throw null; } }
     }
     public partial class PolicyCertificatesResult
@@ -177,29 +167,36 @@ namespace Azure.Security.Attestation.Models
         public System.Collections.Generic.IReadOnlyList<System.Security.Cryptography.X509Certificates.X509Certificate2> GetPolicyCertificates() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyModification : System.IEquatable<Azure.Security.Attestation.Models.PolicyModification>
+    public readonly partial struct PolicyModification : System.IEquatable<Azure.Security.Attestation.PolicyModification>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public PolicyModification(string value) { throw null; }
-        public static Azure.Security.Attestation.Models.PolicyModification Removed { get { throw null; } }
-        public static Azure.Security.Attestation.Models.PolicyModification Updated { get { throw null; } }
-        public bool Equals(Azure.Security.Attestation.Models.PolicyModification other) { throw null; }
+        public static Azure.Security.Attestation.PolicyModification Removed { get { throw null; } }
+        public static Azure.Security.Attestation.PolicyModification Updated { get { throw null; } }
+        public bool Equals(Azure.Security.Attestation.PolicyModification other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Security.Attestation.Models.PolicyModification left, Azure.Security.Attestation.Models.PolicyModification right) { throw null; }
-        public static implicit operator Azure.Security.Attestation.Models.PolicyModification (string value) { throw null; }
-        public static bool operator !=(Azure.Security.Attestation.Models.PolicyModification left, Azure.Security.Attestation.Models.PolicyModification right) { throw null; }
+        public static bool operator ==(Azure.Security.Attestation.PolicyModification left, Azure.Security.Attestation.PolicyModification right) { throw null; }
+        public static implicit operator Azure.Security.Attestation.PolicyModification (string value) { throw null; }
+        public static bool operator !=(Azure.Security.Attestation.PolicyModification left, Azure.Security.Attestation.PolicyModification right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class PolicyResult
     {
         public PolicyResult() { }
-        public Azure.Security.Attestation.Models.PolicyModification PolicyResolution { get { throw null; } }
-        public Azure.Security.Attestation.Models.AttestationSigner PolicySigner { get { throw null; } }
+        public Azure.Security.Attestation.PolicyModification PolicyResolution { get { throw null; } }
+        public Azure.Security.Attestation.AttestationSigner PolicySigner { get { throw null; } }
         public byte[] PolicyTokenHash { get { throw null; } }
+    }
+    public partial class SecuredAttestationToken : Azure.Security.Attestation.AttestationToken
+    {
+        public SecuredAttestationToken(object body, System.Security.Cryptography.AsymmetricAlgorithm signingKey, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate) { }
+        public SecuredAttestationToken(object body, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate) { }
+        public SecuredAttestationToken(System.Security.Cryptography.AsymmetricAlgorithm signingKey, System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate) { }
+        public SecuredAttestationToken(System.Security.Cryptography.X509Certificates.X509Certificate2 signingCertificate) { }
     }
     public partial class StoredAttestationPolicy
     {
@@ -215,5 +212,10 @@ namespace Azure.Security.Attestation.Models
     {
         internal TpmAttestationResponse() { }
         public System.ReadOnlyMemory<byte> Data { get { throw null; } }
+    }
+    public partial class UnsecuredAttestationToken : Azure.Security.Attestation.AttestationToken
+    {
+        public UnsecuredAttestationToken() { }
+        public UnsecuredAttestationToken(object body) { }
     }
 }

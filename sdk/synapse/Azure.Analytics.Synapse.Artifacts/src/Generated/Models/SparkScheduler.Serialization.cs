@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(SparkSchedulerConverter))]
     public partial class SparkScheduler
     {
         internal static SparkScheduler DeserializeSparkScheduler(JsonElement element)
@@ -74,6 +76,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new SparkScheduler(Optional.ToNullable(submittedAt), Optional.ToNullable(scheduledAt), Optional.ToNullable(endedAt), Optional.ToNullable(cancellationRequestedAt), Optional.ToNullable(currentState));
+        }
+
+        internal partial class SparkSchedulerConverter : JsonConverter<SparkScheduler>
+        {
+            public override void Write(Utf8JsonWriter writer, SparkScheduler model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override SparkScheduler Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSparkScheduler(document.RootElement);
+            }
         }
     }
 }

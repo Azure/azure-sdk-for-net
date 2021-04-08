@@ -6,9 +6,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.DataLake.Models;
@@ -32,7 +34,7 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="resource"> The value must be &quot;filesystem&quot; for all filesystem operations. </param>
         /// <param name="version"> Specifies the version of the operation to use for this request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="fileSystem"/>, <paramref name="resource"/>, or <paramref name="version"/> is null. </exception>
-        public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string fileSystem, string resource = "filesystem", string version = "2020-02-10")
+        public FileSystemRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string fileSystem, string resource = "filesystem", string version = "2020-06-12")
         {
             if (url == null)
             {
@@ -395,6 +397,196 @@ namespace Azure.Storage.Files.DataLake
                         PathList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = PathList.DeserializePathList(document.RootElement);
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListBlobHierarchySegmentRequest(string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(fileSystem, true);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "list", true);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (delimiter != null)
+            {
+                uri.AppendQuery("delimiter", delimiter, true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxResults != null)
+            {
+                uri.AppendQuery("maxResults", maxResults.Value, true);
+            }
+            if (include != null)
+            {
+                uri.AppendQueryDelimited("include", include, ",", true);
+            }
+            uri.AppendQuery("showonly", "deleted", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
+        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentAsync(string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListBlobHierarchySegmentRequest(prefix, delimiter, marker, maxResults, include, timeout);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new FileSystemListBlobHierarchySegmentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListBlobsHierarchySegmentResponse value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                        {
+                            value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
+        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> ListBlobHierarchySegment(string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateListBlobHierarchySegmentRequest(prefix, delimiter, marker, maxResults, include, timeout);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new FileSystemListBlobHierarchySegmentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListBlobsHierarchySegmentResponse value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                        {
+                            value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListBlobHierarchySegmentNextPageRequest(string nextLink, string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(url, false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", version);
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
+        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentNextPageAsync(string nextLink, string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, prefix, delimiter, marker, maxResults, include, timeout);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new FileSystemListBlobHierarchySegmentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListBlobsHierarchySegmentResponse value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                        {
+                            value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
+        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
+        /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=&quot;https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations&quot;&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> ListBlobHierarchySegmentNextPage(string nextLink, string prefix = null, string delimiter = null, string marker = null, int? maxResults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, prefix, delimiter, marker, maxResults, include, timeout);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new FileSystemListBlobHierarchySegmentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ListBlobsHierarchySegmentResponse value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
+                        {
+                            value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement);
+                        }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:

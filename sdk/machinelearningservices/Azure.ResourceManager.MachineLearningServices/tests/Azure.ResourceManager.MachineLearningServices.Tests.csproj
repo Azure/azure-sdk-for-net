@@ -5,6 +5,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\src\Microsoft.Azure.Management.MachineLearningServices.csproj" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.MachineLearningServices.csproj" />
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
 </Project>

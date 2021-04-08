@@ -1,6 +1,9 @@
 parameters:
 - name: AdditionalParameters
   type: object
+- name: DependsOn
+  type: object
+  default: null
 - name: CloudConfig
   type: object
   default: {}
@@ -37,6 +40,8 @@ jobs:
     name: ${{ parameters.Pool }}
     vmImage: ${{ parameters.OsVmImage }}
   displayName: Generate Job Matrix
+  ${{ if parameters.DependsOn }}:
+    dependsOn: ${{ parameters.DependsOn }}
   steps:
     # Skip sparse checkout for the `azure-sdk-for-<lang>-pr` private mirrored repositories
     # as we require the github service connection to be loaded.
@@ -58,10 +63,10 @@ jobs:
             arguments: >
               -ConfigPath ${{ config.Path }}
               -Selection ${{ config.Selection }}
-              -DisplayNameFilter "$(displayNameFilter)"
-              -Filters "${{ join('","', parameters.MatrixFilters) }}","container=^$","SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}"
-              -Replace "${{ join('","', parameters.MatrixReplace) }}"
-              -NonSparseParameters "${{ join('","', config.NonSparseParameters) }}"
+              -DisplayNameFilter '$(displayNameFilter)'
+              -Filters '${{ join(''',''', parameters.MatrixFilters) }}','container=^$','SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}'
+              -Replace '${{ join(''',''', parameters.MatrixReplace) }}'
+              -NonSparseParameters '${{ join(''',''', config.NonSparseParameters) }}'
           displayName: Generate VM Job Matrix ${{ config.Name }}
           name: generate_vm_job_matrix_${{ config.Name }}
 
@@ -73,9 +78,9 @@ jobs:
             arguments: >
               -ConfigPath ${{ config.Path }}
               -Selection ${{ config.Selection }}
-              -DisplayNameFilter "$(displayNameFilter)"
-              -Filters "${{ join('","', parameters.MatrixFilters) }}", "container=.*", "SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}"
-              -NonSparseParameters "${{ join('","', config.NonSparseParameters) }}"
+              -DisplayNameFilter '$(displayNameFilter)'
+              -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=.*', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}'
+              -NonSparseParameters '${{ join(''',''', config.NonSparseParameters) }}'
           displayName: Generate Container Job Matrix
           name: generate_container_job_matrix_${{ config.Name }}
 

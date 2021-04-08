@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.AI.TextAnalytics
+namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The TasksStateTasks. </summary>
     internal partial class AnalyzeTasks
@@ -40,7 +40,7 @@ namespace Azure.AI.TextAnalytics
         /// <param name="entityRecognitionPiiTasks"> . </param>
         /// <param name="keyPhraseExtractionTasks"> . </param>
         /// <param name="entityLinkingTasks"> . </param>
-        internal AnalyzeTasks(TasksStateTasksDetailsInternal details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks)
+        internal AnalyzeTasks(TasksStateTasksDetails details, int completed, int failed, int inProgress, int total, IReadOnlyList<EntityRecognitionTasksItem> entityRecognitionTasks, IReadOnlyList<EntityRecognitionPiiTasksItem> entityRecognitionPiiTasks, IReadOnlyList<KeyPhraseExtractionTasksItem> keyPhraseExtractionTasks, IReadOnlyList<EntityLinkingTasksItem> entityLinkingTasks)
         {
             Details = details;
             Completed = completed;
@@ -52,6 +52,15 @@ namespace Azure.AI.TextAnalytics
             KeyPhraseExtractionTasks = keyPhraseExtractionTasks;
             EntityLinkingTasks = entityLinkingTasks;
         }
+
+        public TasksStateTasksDetails Details { get; }
+        public int Completed { get; }
+        public int Failed { get; }
+        public int InProgress { get; }
+        public int Total { get; }
+        public IReadOnlyList<EntityRecognitionTasksItem> EntityRecognitionTasks { get; }
+        public IReadOnlyList<EntityRecognitionPiiTasksItem> EntityRecognitionPiiTasks { get; }
+        public IReadOnlyList<KeyPhraseExtractionTasksItem> KeyPhraseExtractionTasks { get; }
         public IReadOnlyList<EntityLinkingTasksItem> EntityLinkingTasks { get; }
     }
 }
