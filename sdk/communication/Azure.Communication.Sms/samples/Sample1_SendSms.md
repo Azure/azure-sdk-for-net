@@ -8,7 +8,7 @@ To get started you'll need a Communication Service Resource.  See [README][READM
 
 SMS clients can be authenticated using the connection string acquired from an Azure Communication Resource in the Azure Portal. Alternatively, SMS clients can also be authenticated using a valid token credential.
 
-```C# Snippet:CreateSmsClientWithToken
+```C# Snippet:Azure_Communication_Sms_Tests_Samples_CreateSmsClientWithToken
 string endpoint = "<endpoint_url>";
 TokenCredential tokenCredential = new DefaultAzureCredential();
 SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
@@ -47,5 +47,7 @@ foreach (SmsSendResult result in response.Value)
     Console.WriteLine($"Send Result Successful: {result.Successful}");
 }
 ```
+* [Send SMS to single recipient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/tests/samples/Sample1_SmsClient.cs)
+* [Send SMS to multiple recipients with options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/tests/samples/Sample1_SmsClient.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/README.md#getting-started
