@@ -1,36 +1,24 @@
 namespace Azure.Monitory.Query
 {
-    public partial class LogsQueryClient
+    public partial class LogsClient
     {
-        protected LogsQueryClient() { }
-        public LogsQueryClient(Azure.Core.TokenCredential credential) { }
-        public LogsQueryClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.MonitorQueryClientOptions options) { }
+        protected LogsClient() { }
+        public LogsClient(Azure.Core.TokenCredential credential) { }
+        public LogsClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.MonitorQueryClientOptions options) { }
         public virtual Azure.Response<Azure.Monitory.Query.Models.QueryResults> Query(string workspace, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.QueryResults>> QueryAsync(string workspace, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MetricsQueryClient
+    public partial class MetricsClient
     {
-        protected MetricsQueryClient() { }
-        public MetricsQueryClient(Azure.Core.TokenCredential credential) { }
-        public MetricsQueryClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.MonitorQueryClientOptions options) { }
+        protected MetricsClient() { }
+        public MetricsClient(Azure.Core.TokenCredential credential) { }
+        public MetricsClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.MonitorQueryClientOptions options) { }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricNamespace>> GetMetricNamespaces(string resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricNamespace>>> GetMetricNamespacesAsync(string resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricDefinition>> GetMetrics(string resource, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricDefinition>>> GetMetricsAsync(string resource, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public enum MetricUnit
-    {
-        Count = 0,
-        Bytes = 1,
-        Seconds = 2,
-        CountPerSecond = 3,
-        BytesPerSecond = 4,
-        Percent = 5,
-        MilliSeconds = 6,
-        ByteSeconds = 7,
-        Unspecified = 8,
-        Cores = 9,
-        MilliCores = 10,
-        NanoCores = 11,
-        BitsPerSecond = 12,
+        public virtual Azure.Response<Azure.Monitory.Query.Models.MetricQueryResult> Query(string resource, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.TimeSpan interval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.MetricQueryResult>> QueryAsync(string resource, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.TimeSpan interval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MonitorQueryClientOptions : Azure.Core.ClientOptions
     {
@@ -39,19 +27,6 @@ namespace Azure.Monitory.Query
         {
             V1 = 0,
         }
-    }
-    public partial class QueryResultColumn
-    {
-        internal QueryResultColumn() { }
-        public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
-    }
-    public partial class QueryResultTable
-    {
-        internal QueryResultTable() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.QueryResultColumn> Columns { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> Rows { get { throw null; } }
     }
 }
 namespace Azure.Monitory.Query.Models
@@ -359,7 +334,7 @@ namespace Azure.Monitory.Query.Models
         public Azure.Monitory.Query.Models.LocalizableString Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.TimeSeriesElement> Timeseries { get { throw null; } }
         public string Type { get { throw null; } }
-        public Azure.Monitory.Query.MetricUnit Unit { get { throw null; } }
+        public Azure.Monitory.Query.Models.MetricUnit Unit { get { throw null; } }
     }
     public partial class MetricAvailability
     {
@@ -379,7 +354,7 @@ namespace Azure.Monitory.Query.Models
         public Azure.Monitory.Query.Models.AggregationType? PrimaryAggregationType { get { throw null; } }
         public string ResourceId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.AggregationType> SupportedAggregationTypes { get { throw null; } }
-        public Azure.Monitory.Query.MetricUnit? Unit { get { throw null; } }
+        public Azure.Monitory.Query.Models.MetricUnit? Unit { get { throw null; } }
     }
     public partial class MetricNamespace
     {
@@ -393,6 +368,32 @@ namespace Azure.Monitory.Query.Models
     {
         internal MetricNamespaceName() { }
         public string MetricNamespaceNameValue { get { throw null; } }
+    }
+    public partial class MetricQueryResult
+    {
+        internal MetricQueryResult() { }
+        public int? Cost { get { throw null; } }
+        public System.TimeSpan? Interval { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.Metric> Metrics { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public string Resourceregion { get { throw null; } }
+        public string Timespan { get { throw null; } }
+    }
+    public enum MetricUnit
+    {
+        Count = 0,
+        Bytes = 1,
+        Seconds = 2,
+        CountPerSecond = 3,
+        BytesPerSecond = 4,
+        Percent = 5,
+        MilliSeconds = 6,
+        ByteSeconds = 7,
+        Unspecified = 8,
+        Cores = 9,
+        MilliCores = 10,
+        NanoCores = 11,
+        BitsPerSecond = 12,
     }
     public partial class MetricValue
     {
@@ -411,10 +412,23 @@ namespace Azure.Monitory.Query.Models
         public string Timespan { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Workspaces { get { throw null; } }
     }
+    public partial class QueryResultColumn
+    {
+        internal QueryResultColumn() { }
+        public string Name { get { throw null; } }
+        public string Type { get { throw null; } }
+    }
     public partial class QueryResults
     {
         internal QueryResults() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.QueryResultTable> Tables { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.QueryResultTable> Tables { get { throw null; } }
+    }
+    public partial class QueryResultTable
+    {
+        internal QueryResultTable() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.QueryResultColumn> Columns { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> Rows { get { throw null; } }
     }
     public enum ResultType
     {
