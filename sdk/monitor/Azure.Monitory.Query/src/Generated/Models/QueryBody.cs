@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </summary>
-    public partial class QueryBody
+    internal partial class QueryBody
     {
         /// <summary> Initializes a new instance of QueryBody. </summary>
         /// <param name="query"> The query to execute. </param>

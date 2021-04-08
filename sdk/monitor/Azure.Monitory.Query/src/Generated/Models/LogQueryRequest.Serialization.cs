@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Monitory.Query.Models
 {
-    public partial class LogQueryRequest : IUtf8JsonSerializable
+    internal partial class LogQueryRequest : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

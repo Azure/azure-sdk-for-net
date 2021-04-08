@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Monitory.Query;
+using Azure.Monitory.Query.Models;
 using NUnit.Framework;
 
 namespace Azure.Template.Tests
@@ -33,7 +34,22 @@ namespace Azure.Template.Tests
 
             var resultTable = results.Value.Tables.Single();
             CollectionAssert.IsNotEmpty(resultTable.Columns);
-            CollectionAssert.IsEmpty(resultTable.Rows);
+         }
+
+        [Test]
+        public async Task CanQueryBatch()
+        {
+            var client = CreateClient();
+            LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
+            string id1 = batch.Query(TestEnvironment.WorkspaceId, "Heartbeat");
+            string id2 = batch.Query(TestEnvironment.WorkspaceId, "Heartbeat");
+            Response<LogsBatchQueryResult> response = await batch.ExecuteAsync();
+
+            var result1 = response.Value.GetResult(id1);
+            var result2 = response.Value.GetResult(id2);
+
+            CollectionAssert.IsNotEmpty(result1.Tables[0].Columns);
+            CollectionAssert.IsNotEmpty(result2.Tables[0].Columns);
         }
     }
 }

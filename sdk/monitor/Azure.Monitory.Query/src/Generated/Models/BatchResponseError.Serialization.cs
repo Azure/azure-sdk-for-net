@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Monitory.Query.Models
 {
-    public partial class BatchResponseError
+    internal partial class BatchResponseError
     {
         internal static BatchResponseError DeserializeBatchResponseError(JsonElement element)
         {

@@ -16,7 +16,7 @@ namespace Azure.Monitory.Query.Models
         /// <summary> Initializes a new instance of MetricDefinition. </summary>
         internal MetricDefinition()
         {
-            SupportedAggregationTypes = new ChangeTrackingList<AggregationType>();
+            SupportedAggregationTypes = new ChangeTrackingList<MetricAggregationType>();
             MetricAvailabilities = new ChangeTrackingList<MetricAvailability>();
             Dimensions = new ChangeTrackingList<LocalizableString>();
         }
@@ -32,7 +32,7 @@ namespace Azure.Monitory.Query.Models
         /// <param name="metricAvailabilities"> the collection of what aggregation intervals are available to be queried. </param>
         /// <param name="id"> the resource identifier of the metric definition. </param>
         /// <param name="dimensions"> the name and the display name of the dimension, i.e. it is a localizable string. </param>
-        internal MetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString name, MetricUnit? unit, AggregationType? primaryAggregationType, IReadOnlyList<AggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> dimensions)
+        internal MetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString name, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IReadOnlyList<MetricAggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> dimensions)
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
@@ -57,9 +57,9 @@ namespace Azure.Monitory.Query.Models
         /// <summary> the unit of the metric. </summary>
         public MetricUnit? Unit { get; }
         /// <summary> the primary aggregation type value defining how to use the values for display. </summary>
-        public AggregationType? PrimaryAggregationType { get; }
+        public MetricAggregationType? PrimaryAggregationType { get; }
         /// <summary> the collection of what aggregation types are supported. </summary>
-        public IReadOnlyList<AggregationType> SupportedAggregationTypes { get; }
+        public IReadOnlyList<MetricAggregationType> SupportedAggregationTypes { get; }
         /// <summary> the collection of what aggregation intervals are available to be queried. </summary>
         public IReadOnlyList<MetricAvailability> MetricAvailabilities { get; }
         /// <summary> the resource identifier of the metric definition. </summary>

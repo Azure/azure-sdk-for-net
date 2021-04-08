@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.Monitory.Query.Models
 {
-    public partial class QueryResultTable
+    public partial class LogsQueryResultTable
     {
-        internal static QueryResultTable DeserializeQueryResultTable(JsonElement element)
+        internal static LogsQueryResultTable DeserializeLogsQueryResultTable(JsonElement element)
         {
             string name = default;
-            IReadOnlyList<QueryResultColumn> columns = default;
+            IReadOnlyList<LogsQueryResultColumn> columns = default;
             IReadOnlyList<IList<string>> rows = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.Monitory.Query.Models
                 }
                 if (property.NameEquals("columns"))
                 {
-                    List<QueryResultColumn> array = new List<QueryResultColumn>();
+                    List<LogsQueryResultColumn> array = new List<LogsQueryResultColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryResultColumn.DeserializeQueryResultColumn(item));
+                        array.Add(LogsQueryResultColumn.DeserializeLogsQueryResultColumn(item));
                     }
                     columns = array;
                     continue;
@@ -51,7 +51,7 @@ namespace Azure.Monitory.Query.Models
                     continue;
                 }
             }
-            return new QueryResultTable(name, columns, rows);
+            return new LogsQueryResultTable(name, columns, rows);
         }
     }
 }

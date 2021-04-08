@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Monitory.Query.Models
 {
-    [CodeGenModel("Column")]
-    public partial class LogsQueryResultColumn
+    [CodeGenModel("QueryResults")]
+    public partial class LogsQueryResult
     {
     }
 }

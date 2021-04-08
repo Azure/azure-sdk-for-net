@@ -11,25 +11,25 @@ using Azure.Core;
 
 namespace Azure.Monitory.Query.Models
 {
-    public partial class QueryResults
+    public partial class LogsQueryResult
     {
-        internal static QueryResults DeserializeQueryResults(JsonElement element)
+        internal static LogsQueryResult DeserializeLogsQueryResult(JsonElement element)
         {
-            IReadOnlyList<QueryResultTable> tables = default;
+            IReadOnlyList<LogsQueryResultTable> tables = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tables"))
                 {
-                    List<QueryResultTable> array = new List<QueryResultTable>();
+                    List<LogsQueryResultTable> array = new List<LogsQueryResultTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryResultTable.DeserializeQueryResultTable(item));
+                        array.Add(LogsQueryResultTable.DeserializeLogsQueryResultTable(item));
                     }
                     tables = array;
                     continue;
                 }
             }
-            return new QueryResults(tables);
+            return new LogsQueryResult(tables);
         }
     }
 }

@@ -8,7 +8,7 @@
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The ErrorDetails. </summary>
-    public partial class ErrorDetails
+    internal partial class ErrorDetails
     {
         /// <summary> Initializes a new instance of ErrorDetails. </summary>
         internal ErrorDetails()

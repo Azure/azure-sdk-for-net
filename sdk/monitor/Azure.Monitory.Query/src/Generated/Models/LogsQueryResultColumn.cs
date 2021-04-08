@@ -8,17 +8,17 @@
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> A column in a table. </summary>
-    public partial class QueryResultColumn
+    public partial class LogsQueryResultColumn
     {
-        /// <summary> Initializes a new instance of QueryResultColumn. </summary>
-        internal QueryResultColumn()
+        /// <summary> Initializes a new instance of LogsQueryResultColumn. </summary>
+        internal LogsQueryResultColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of QueryResultColumn. </summary>
+        /// <summary> Initializes a new instance of LogsQueryResultColumn. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
-        internal QueryResultColumn(string name, string type)
+        internal LogsQueryResultColumn(string name, string type)
         {
             Name = name;
             Type = type;

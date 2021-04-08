@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> An array of requests. </summary>
-    public partial class BatchRequest
+    internal partial class BatchRequest
     {
         /// <summary> Initializes a new instance of BatchRequest. </summary>
         public BatchRequest()

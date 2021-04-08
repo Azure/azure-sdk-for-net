@@ -61,7 +61,7 @@ namespace Azure.Monitory.Query
         /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="query"/> is null. </exception>
-        public async Task<Response<QueryResults>> GetAsync(string workspaceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogsQueryResult>> GetAsync(string workspaceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
             {
@@ -78,9 +78,9 @@ namespace Azure.Monitory.Query
             {
                 case 200:
                     {
-                        QueryResults value = default;
+                        LogsQueryResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QueryResults.DeserializeQueryResults(document.RootElement);
+                        value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +94,7 @@ namespace Azure.Monitory.Query
         /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="query"/> is null. </exception>
-        public Response<QueryResults> Get(string workspaceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
+        public Response<LogsQueryResult> Get(string workspaceId, string query, TimeSpan? timespan = null, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
             {
@@ -111,9 +111,9 @@ namespace Azure.Monitory.Query
             {
                 case 200:
                     {
-                        QueryResults value = default;
+                        LogsQueryResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QueryResults.DeserializeQueryResults(document.RootElement);
+                        value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -150,7 +150,7 @@ namespace Azure.Monitory.Query
         /// <param name="prefer"> Optional. The prefer header to set server timeout,. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="body"/> is null. </exception>
-        public async Task<Response<QueryResults>> ExecuteAsync(string workspaceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
+        public async Task<Response<LogsQueryResult>> ExecuteAsync(string workspaceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
             {
@@ -167,9 +167,9 @@ namespace Azure.Monitory.Query
             {
                 case 200:
                     {
-                        QueryResults value = default;
+                        LogsQueryResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QueryResults.DeserializeQueryResults(document.RootElement);
+                        value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,7 +183,7 @@ namespace Azure.Monitory.Query
         /// <param name="prefer"> Optional. The prefer header to set server timeout,. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> or <paramref name="body"/> is null. </exception>
-        public Response<QueryResults> Execute(string workspaceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
+        public Response<LogsQueryResult> Execute(string workspaceId, QueryBody body, string prefer = null, CancellationToken cancellationToken = default)
         {
             if (workspaceId == null)
             {
@@ -200,9 +200,9 @@ namespace Azure.Monitory.Query
             {
                 case 200:
                     {
-                        QueryResults value = default;
+                        LogsQueryResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QueryResults.DeserializeQueryResults(document.RootElement);
+                        value = LogsQueryResult.DeserializeLogsQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -231,7 +231,7 @@ namespace Azure.Monitory.Query
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public async Task<Response<BatchResponse>> BatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
+        public async Task<Response<LogsBatchQueryResult>> BatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -244,9 +244,9 @@ namespace Azure.Monitory.Query
             {
                 case 200:
                     {
-                        BatchResponse value = default;
+                        LogsBatchQueryResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BatchResponse.DeserializeBatchResponse(document.RootElement);
+                        value = LogsBatchQueryResult.DeserializeLogsBatchQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -258,7 +258,7 @@ namespace Azure.Monitory.Query
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public Response<BatchResponse> Batch(BatchRequest body, CancellationToken cancellationToken = default)
+        public Response<LogsBatchQueryResult> Batch(BatchRequest body, CancellationToken cancellationToken = default)
         {
             if (body == null)
             {
@@ -271,9 +271,9 @@ namespace Azure.Monitory.Query
             {
                 case 200:
                     {
-                        BatchResponse value = default;
+                        LogsBatchQueryResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BatchResponse.DeserializeBatchResponse(document.RootElement);
+                        value = LogsBatchQueryResult.DeserializeLogsBatchQueryResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -8,7 +8,7 @@
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The LogQueryResponse. </summary>
-    public partial class LogQueryResponse
+    internal partial class LogQueryResponse
     {
         /// <summary> Initializes a new instance of LogQueryResponse. </summary>
         internal LogQueryResponse()
@@ -19,7 +19,7 @@ namespace Azure.Monitory.Query.Models
         /// <param name="id"> . </param>
         /// <param name="status"> . </param>
         /// <param name="body"> Contains the tables, columns &amp; rows resulting from a query. </param>
-        internal LogQueryResponse(string id, int? status, QueryResults body)
+        internal LogQueryResponse(string id, int? status, LogsQueryResult body)
         {
             Id = id;
             Status = status;
@@ -29,6 +29,6 @@ namespace Azure.Monitory.Query.Models
         public string Id { get; }
         public int? Status { get; }
         /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
-        public QueryResults Body { get; }
+        public LogsQueryResult Body { get; }
     }
 }

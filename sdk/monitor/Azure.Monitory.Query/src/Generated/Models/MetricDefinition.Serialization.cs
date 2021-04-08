@@ -20,8 +20,8 @@ namespace Azure.Monitory.Query.Models
             Optional<string> @namespace = default;
             Optional<LocalizableString> name = default;
             Optional<MetricUnit> unit = default;
-            Optional<AggregationType> primaryAggregationType = default;
-            Optional<IReadOnlyList<AggregationType>> supportedAggregationTypes = default;
+            Optional<MetricAggregationType> primaryAggregationType = default;
+            Optional<IReadOnlyList<MetricAggregationType>> supportedAggregationTypes = default;
             Optional<IReadOnlyList<MetricAvailability>> metricAvailabilities = default;
             Optional<string> id = default;
             Optional<IReadOnlyList<LocalizableString>> dimensions = default;
@@ -74,7 +74,7 @@ namespace Azure.Monitory.Query.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryAggregationType = property.Value.GetString().ToAggregationType();
+                    primaryAggregationType = property.Value.GetString().ToMetricAggregationType();
                     continue;
                 }
                 if (property.NameEquals("supportedAggregationTypes"))
@@ -84,10 +84,10 @@ namespace Azure.Monitory.Query.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AggregationType> array = new List<AggregationType>();
+                    List<MetricAggregationType> array = new List<MetricAggregationType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToAggregationType());
+                        array.Add(item.GetString().ToMetricAggregationType());
                     }
                     supportedAggregationTypes = array;
                     continue;

@@ -8,7 +8,7 @@
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> Error response for a batch request. </summary>
-    public partial class BatchResponseError
+    internal partial class BatchResponseError
     {
         /// <summary> Initializes a new instance of BatchResponseError. </summary>
         internal BatchResponseError()

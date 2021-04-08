@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Monitory.Query.Models
 {
-    public partial class BatchResponse
+    public partial class LogsBatchQueryResult
     {
-        internal static BatchResponse DeserializeBatchResponse(JsonElement element)
+        internal static LogsBatchQueryResult DeserializeLogsBatchQueryResult(JsonElement element)
         {
             Optional<IReadOnlyList<LogQueryResponse>> responses = default;
             Optional<BatchResponseError> error = default;
@@ -45,7 +45,7 @@ namespace Azure.Monitory.Query.Models
                     continue;
                 }
             }
-            return new BatchResponse(Optional.ToList(responses), error.Value);
+            return new LogsBatchQueryResult(Optional.ToList(responses), error.Value);
         }
     }
 }

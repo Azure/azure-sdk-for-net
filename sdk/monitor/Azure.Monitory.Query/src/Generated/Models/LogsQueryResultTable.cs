@@ -12,14 +12,14 @@ using System.Linq;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> Contains the columns and rows for one table in a query response. </summary>
-    public partial class QueryResultTable
+    public partial class LogsQueryResultTable
     {
-        /// <summary> Initializes a new instance of QueryResultTable. </summary>
+        /// <summary> Initializes a new instance of LogsQueryResultTable. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
         /// <param name="rows"> The resulting rows from this query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="columns"/>, or <paramref name="rows"/> is null. </exception>
-        internal QueryResultTable(string name, IEnumerable<QueryResultColumn> columns, IEnumerable<IList<string>> rows)
+        internal LogsQueryResultTable(string name, IEnumerable<LogsQueryResultColumn> columns, IEnumerable<IList<string>> rows)
         {
             if (name == null)
             {
@@ -39,11 +39,11 @@ namespace Azure.Monitory.Query.Models
             Rows = rows.ToList();
         }
 
-        /// <summary> Initializes a new instance of QueryResultTable. </summary>
+        /// <summary> Initializes a new instance of LogsQueryResultTable. </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns in this table. </param>
         /// <param name="rows"> The resulting rows from this query. </param>
-        internal QueryResultTable(string name, IReadOnlyList<QueryResultColumn> columns, IReadOnlyList<IList<string>> rows)
+        internal LogsQueryResultTable(string name, IReadOnlyList<LogsQueryResultColumn> columns, IReadOnlyList<IList<string>> rows)
         {
             Name = name;
             Columns = columns;
@@ -53,7 +53,7 @@ namespace Azure.Monitory.Query.Models
         /// <summary> The name of the table. </summary>
         public string Name { get; }
         /// <summary> The list of columns in this table. </summary>
-        public IReadOnlyList<QueryResultColumn> Columns { get; }
+        public IReadOnlyList<LogsQueryResultColumn> Columns { get; }
         /// <summary> The resulting rows from this query. </summary>
         public IReadOnlyList<IList<string>> Rows { get; }
     }

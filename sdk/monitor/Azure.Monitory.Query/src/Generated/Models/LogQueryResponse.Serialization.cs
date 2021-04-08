@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.Monitory.Query.Models
 {
-    public partial class LogQueryResponse
+    internal partial class LogQueryResponse
     {
         internal static LogQueryResponse DeserializeLogQueryResponse(JsonElement element)
         {
             Optional<string> id = default;
             Optional<int> status = default;
-            Optional<QueryResults> body = default;
+            Optional<LogsQueryResult> body = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -41,7 +41,7 @@ namespace Azure.Monitory.Query.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    body = QueryResults.DeserializeQueryResults(property.Value);
+                    body = LogsQueryResult.DeserializeLogsQueryResult(property.Value);
                     continue;
                 }
             }

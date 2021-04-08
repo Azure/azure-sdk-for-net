@@ -8,7 +8,7 @@
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> An single request in a batch. </summary>
-    public partial class LogQueryRequest
+    internal partial class LogQueryRequest
     {
         /// <summary> Initializes a new instance of LogQueryRequest. </summary>
         public LogQueryRequest()

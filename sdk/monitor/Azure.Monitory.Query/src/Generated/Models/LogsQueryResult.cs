@@ -12,12 +12,12 @@ using System.Linq;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
-    public partial class QueryResults
+    public partial class LogsQueryResult
     {
-        /// <summary> Initializes a new instance of QueryResults. </summary>
+        /// <summary> Initializes a new instance of LogsQueryResult. </summary>
         /// <param name="tables"> The list of tables, columns and rows. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tables"/> is null. </exception>
-        internal QueryResults(IEnumerable<QueryResultTable> tables)
+        internal LogsQueryResult(IEnumerable<LogsQueryResultTable> tables)
         {
             if (tables == null)
             {
@@ -27,14 +27,14 @@ namespace Azure.Monitory.Query.Models
             Tables = tables.ToList();
         }
 
-        /// <summary> Initializes a new instance of QueryResults. </summary>
+        /// <summary> Initializes a new instance of LogsQueryResult. </summary>
         /// <param name="tables"> The list of tables, columns and rows. </param>
-        internal QueryResults(IReadOnlyList<QueryResultTable> tables)
+        internal LogsQueryResult(IReadOnlyList<LogsQueryResultTable> tables)
         {
             Tables = tables;
         }
 
         /// <summary> The list of tables, columns and rows. </summary>
-        public IReadOnlyList<QueryResultTable> Tables { get; }
+        public IReadOnlyList<LogsQueryResultTable> Tables { get; }
     }
 }

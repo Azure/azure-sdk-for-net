@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The BatchResponseErrorInnerError. </summary>
-    public partial class BatchResponseErrorInnerError
+    internal partial class BatchResponseErrorInnerError
     {
         /// <summary> Initializes a new instance of BatchResponseErrorInnerError. </summary>
         internal BatchResponseErrorInnerError()

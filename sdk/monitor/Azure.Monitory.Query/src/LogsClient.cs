@@ -35,13 +35,13 @@ namespace Azure.Monitory.Query
         {
         }
 
-        public virtual Response<QueryResults> Query(string workspace, string query, CancellationToken cancellationToken = default)
+        public virtual Response<LogsQueryResult> Query(string workspace, string query, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return _queryClient.Get(workspace, query, null, cancellationToken);
+                return _queryClient.Execute(workspace, new QueryBody(query), null, cancellationToken);
             }
             catch (Exception e)
             {
@@ -50,19 +50,24 @@ namespace Azure.Monitory.Query
             }
         }
 
-        public virtual async Task<Response<QueryResults>> QueryAsync(string workspace, string query, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspace, string query, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return await _queryClient.GetAsync(workspace, query, null, cancellationToken).ConfigureAwait(false);
+                return await _queryClient.ExecuteAsync(workspace, new QueryBody(query), null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        public virtual LogsBatchQuery CreateBatchQuery()
+        {
+            return new LogsBatchQuery(_clientDiagnostics, _queryClient);
         }
     }
 }
