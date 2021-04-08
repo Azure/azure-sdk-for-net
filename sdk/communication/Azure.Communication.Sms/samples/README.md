@@ -16,11 +16,11 @@ To get started you will need to have an Azure Subscription. Once you have this y
 
 This client library allows to do following operations:
  - Send SMS to one or more recipients
- - Spcify optional paramters while sending SMS
+ - Specify optional paramters while sending SMS
 
  #### You can find samples for each of these functions below.
- - [Send SMS to a single recipient][sample_sms]
- - [Send SMS to multiple recipients with options][sample_sms]
+ - Send SMS Messages [synchronously][sample_sms] or [asynchronously][sample_sms_async]
  
 <!-- LINKS -->
-[sample_sms]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Sms/samples/Sample1_SmsClient.md
+[sample_sms]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Sms/samples/Sample1_SendSms.md
+[sample_sms_async]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/communication/Azure.Communication.Sms/samples/Sample1_SendSmsAsync.md

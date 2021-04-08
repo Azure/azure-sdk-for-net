@@ -19,7 +19,7 @@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 To send a SMS message, call the `Send` or `SendAsync` function from the SmsClient. The returned value is `SmsSendResult` objects that contains the status and associated error codes in case of a failure.
 
 ```C# Snippet:SendingSMSMessage
-SmsSendResult sendResult = smsClient.Send(
+SmsSendResult sendResult = await smsClient.SendAsync(
     from: "<from-phone-number>",
     to: "<to-phone-number>",
     message: "Hi");
@@ -33,7 +33,7 @@ Console.WriteLine($"Send Result Successful: {sendResult.Successful}");
 To send a SMS message to a list of recipients, call the Send or SendAsync function from the SmsClient with a list of recipient's phone numbers. You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags. The returned value is a collection of `SmsSendResult` objects -- one for each of the receipients.
 
 ```C# Snippet:SendingGroupSMSMessageWithOptions
-var response = smsClient.Send(
+var response = await smsClient.SendAsync(
     from: "<from-phone-number>",
     to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" },
     message: "Weekly Promotion!",
@@ -47,5 +47,10 @@ foreach (SmsSendResult result in response.Value)
     Console.WriteLine($"Send Result Successful: {result.Successful}");
 }
 ```
+
+To see the full example source files, see:
+
+* [Send SMS to single recipient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/tests/samples/Sample1_SmsClient.cs)
+* [Send SMS to multiple recipients with options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/tests/samples/Sample1_SmsClient.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/communication/Azure.Communication.Sms/README.md#getting-started
