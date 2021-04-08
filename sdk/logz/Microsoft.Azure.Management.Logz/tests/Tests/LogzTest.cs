@@ -1,7 +1,6 @@
-﻿using Microsoft.Azure.Management.Resources;
+﻿using Microsoft.Azure.Management.Logz.Models;
+using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Logz;
-using Microsoft.Logz.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 
