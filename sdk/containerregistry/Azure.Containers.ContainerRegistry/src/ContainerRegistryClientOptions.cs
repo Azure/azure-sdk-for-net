@@ -9,18 +9,18 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary>
     /// The options for <see cref="ContainerRegistryClient"/>
     /// </summary>
-    public class ContainerRegistryClientOptions : ClientOptions
+    public partial class ContainerRegistryClientOptions : ClientOptions
     {
         internal string Version { get; }
 
         /// <summary>
         /// </summary>
         /// <param name="version"></param>
-        public ContainerRegistryClientOptions(ServiceVersion version = ServiceVersion.V1_0)
+        public ContainerRegistryClientOptions(ServiceVersion version = ServiceVersion.V2019_08_15_preview)
         {
             Version = version switch
             {
-                ServiceVersion.V1_0 => "1.0",
+                ServiceVersion.V2019_08_15_preview => "V2019_08_15_preview",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
             AddHeadersAndQueryParameters();
@@ -37,15 +37,15 @@ namespace Azure.Containers.ContainerRegistry
             Diagnostics.LoggedQueryParameters.Add("digest");
         }
 
-        /// <summary>
-        /// </summary>
-        public enum ServiceVersion
-        {
-            /// <summary>
-            /// </summary>
-#pragma warning disable CA1707 // Remove the underscores from member name
-            V1_0 = 1
-#pragma warning restore
-        }
+//        /// <summary>
+//        /// </summary>
+//        public enum ServiceVersion
+//        {
+//            /// <summary>
+//            /// </summary>
+//#pragma warning disable CA1707 // Remove the underscores from member name
+//            V1_0 = 1
+//#pragma warning restore
+//        }
     }
 }

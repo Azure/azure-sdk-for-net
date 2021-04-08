@@ -59,6 +59,7 @@
                 ],
                 "description": "Tells whether this Docker Registry instance supports Docker Registry HTTP API v2",
                 "operationId": "ContainerRegistry_CheckDockerV2Support",
+                "x-accessibility":  "internal",
                 "x-ms-examples": {
                     "Check Docker Registry V2 Support": {
                         "$ref": "./examples/GetDockerRegistryV2Support.json"

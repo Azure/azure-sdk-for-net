@@ -10,8 +10,6 @@
     <Compile Remove="Authentication\AuthenticationRestClient.cs" />
     <Compile Remove="Authentication\ContainerRegistryChallengeAuthenticationPolicy.cs" />
     <Compile Remove="Authentication\IContainerRegistryAuthenticationClient.cs" />
-    <Compile Remove="ContainerRegistryClient.cs" />
-    <Compile Remove="ContainerRegistryClientOptions.cs" />
     <Compile Remove="Models\AcrManifests.cs" />
     <Compile Remove="Models\GetRegistryArtifactsOptions.cs" />
     <Compile Remove="Models\GetTagsOptions.cs" />
