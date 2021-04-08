@@ -174,7 +174,7 @@ namespace Azure.Search.Documents.Tests
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
 
             SearchClient client = resources.GetQueryClient(
-                new SearchClientOptions(SearchClientOptions.ServiceVersion.V2020_06_30)
+                new SearchClientOptions(ServiceVersion)
                 {
                     Serializer = new JsonObjectSerializer(
                         new JsonSerializerOptions()
