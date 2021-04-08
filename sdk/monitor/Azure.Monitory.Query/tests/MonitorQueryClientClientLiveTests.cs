@@ -20,9 +20,7 @@ namespace Azure.Template.Tests
         {
             return InstrumentClient(new MonitorQueryClient(
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MonitorQueryClientOptions()
-                {Diagnostics = { LoggedHeaderNames = { "*" }}
-                })
+                InstrumentClientOptions(new MonitorQueryClientOptions())
             ));
         }
 
