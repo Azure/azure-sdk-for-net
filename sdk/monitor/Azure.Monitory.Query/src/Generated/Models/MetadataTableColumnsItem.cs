@@ -10,7 +10,7 @@ using System;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The MetadataTableColumnsItem. </summary>
-    public partial class MetadataTableColumnsItem
+    internal partial class MetadataTableColumnsItem
     {
         /// <summary> Initializes a new instance of MetadataTableColumnsItem. </summary>
         /// <param name="name"> The name of the column. </param>
@@ -25,21 +25,6 @@ namespace Azure.Monitory.Query.Models
 
             Name = name;
             Type = type;
-        }
-
-        /// <summary> Initializes a new instance of MetadataTableColumnsItem. </summary>
-        /// <param name="name"> The name of the column. </param>
-        /// <param name="description"> The description of the column. </param>
-        /// <param name="type"> The data type of the column. </param>
-        /// <param name="isPreferredFacet"> A flag indicating this column is a preferred facet. </param>
-        /// <param name="source"> an indication of the source of the column, used only when multiple workspaces have conflicting definition for the column. </param>
-        internal MetadataTableColumnsItem(string name, string description, MetadataColumnDataType type, bool? isPreferredFacet, object source)
-        {
-            Name = name;
-            Description = description;
-            Type = type;
-            IsPreferredFacet = isPreferredFacet;
-            Source = source;
         }
 
         /// <summary> The name of the column. </summary>

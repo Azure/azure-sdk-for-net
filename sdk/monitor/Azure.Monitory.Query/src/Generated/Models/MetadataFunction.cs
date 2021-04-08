@@ -10,7 +10,7 @@ using System;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> Functions are stored Kusto queries that can be specified as part of queries by using their name. </summary>
-    public partial class MetadataFunction
+    internal partial class MetadataFunction
     {
         /// <summary> Initializes a new instance of MetadataFunction. </summary>
         /// <param name="id"> The ID of the function. </param>
@@ -35,29 +35,6 @@ namespace Azure.Monitory.Query.Models
             Id = id;
             Name = name;
             Body = body;
-        }
-
-        /// <summary> Initializes a new instance of MetadataFunction. </summary>
-        /// <param name="id"> The ID of the function. </param>
-        /// <param name="name"> The name of the function, to be used in queries. </param>
-        /// <param name="parameters"> The parameters/arguments of the function, if any. </param>
-        /// <param name="displayName"> The display name of the function. </param>
-        /// <param name="description"> The description of the function. </param>
-        /// <param name="body"> The KQL body of the function. </param>
-        /// <param name="tags"> The tags associated with the function. </param>
-        /// <param name="properties"> The properties of the function. </param>
-        /// <param name="related"> The related metadata items for the function. </param>
-        internal MetadataFunction(string id, string name, string parameters, string displayName, string description, string body, object tags, object properties, MetadataFunctionRelated related)
-        {
-            Id = id;
-            Name = name;
-            Parameters = parameters;
-            DisplayName = displayName;
-            Description = description;
-            Body = body;
-            Tags = tags;
-            Properties = properties;
-            Related = related;
         }
 
         /// <summary> The ID of the function. </summary>

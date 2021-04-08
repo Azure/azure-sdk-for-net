@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The data type of the column. </summary>
-    public readonly partial struct MetadataColumnDataType : IEquatable<MetadataColumnDataType>
+    internal readonly partial struct MetadataColumnDataType : IEquatable<MetadataColumnDataType>
     {
         private readonly string _value;
 

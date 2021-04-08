@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The related metadata items for the resource-type. </summary>
-    public partial class MetadataResourceTypeRelated
+    internal partial class MetadataResourceTypeRelated
     {
         /// <summary> Initializes a new instance of MetadataResourceTypeRelated. </summary>
         internal MetadataResourceTypeRelated()
@@ -22,23 +22,6 @@ namespace Azure.Monitory.Query.Models
             Queries = new ChangeTrackingList<string>();
             Workspaces = new ChangeTrackingList<string>();
             Resources = new ChangeTrackingList<string>();
-        }
-
-        /// <summary> Initializes a new instance of MetadataResourceTypeRelated. </summary>
-        /// <param name="tables"> The tables related to the resource-type. </param>
-        /// <param name="functions"> The functions related to the resource-type. </param>
-        /// <param name="categories"> The categories related to the resource-type. </param>
-        /// <param name="queries"> The queries related to the resource-type. </param>
-        /// <param name="workspaces"> The Log Analytics workspaces related to the resource-type. </param>
-        /// <param name="resources"> The Azure resources related to the resource-type. </param>
-        internal MetadataResourceTypeRelated(IReadOnlyList<string> tables, IReadOnlyList<string> functions, IReadOnlyList<string> categories, IReadOnlyList<string> queries, IReadOnlyList<string> workspaces, IReadOnlyList<string> resources)
-        {
-            Tables = tables;
-            Functions = functions;
-            Categories = categories;
-            Queries = queries;
-            Workspaces = workspaces;
-            Resources = resources;
         }
 
         /// <summary> The tables related to the resource-type. </summary>

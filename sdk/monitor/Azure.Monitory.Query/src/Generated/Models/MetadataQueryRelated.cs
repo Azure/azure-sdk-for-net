@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The related metadata items for the query. </summary>
-    public partial class MetadataQueryRelated
+    internal partial class MetadataQueryRelated
     {
         /// <summary> Initializes a new instance of MetadataQueryRelated. </summary>
         internal MetadataQueryRelated()
@@ -20,19 +20,6 @@ namespace Azure.Monitory.Query.Models
             Solutions = new ChangeTrackingList<string>();
             ResourceTypes = new ChangeTrackingList<string>();
             Tables = new ChangeTrackingList<string>();
-        }
-
-        /// <summary> Initializes a new instance of MetadataQueryRelated. </summary>
-        /// <param name="categories"> The related categories for the query. </param>
-        /// <param name="solutions"> The related Log Analytics solutions for the query. </param>
-        /// <param name="resourceTypes"> The related resource types for the query. </param>
-        /// <param name="tables"> The related tables for the query. </param>
-        internal MetadataQueryRelated(IReadOnlyList<string> categories, IReadOnlyList<string> solutions, IReadOnlyList<string> resourceTypes, IReadOnlyList<string> tables)
-        {
-            Categories = categories;
-            Solutions = solutions;
-            ResourceTypes = resourceTypes;
-            Tables = tables;
         }
 
         /// <summary> The related categories for the query. </summary>

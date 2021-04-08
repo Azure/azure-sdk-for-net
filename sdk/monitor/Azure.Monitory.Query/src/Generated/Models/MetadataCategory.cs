@@ -10,7 +10,7 @@ using System;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> Categories are used to group other metadata entities. </summary>
-    public partial class MetadataCategory
+    internal partial class MetadataCategory
     {
         /// <summary> Initializes a new instance of MetadataCategory. </summary>
         /// <param name="id"> The ID of the category. </param>
@@ -29,19 +29,6 @@ namespace Azure.Monitory.Query.Models
 
             Id = id;
             DisplayName = displayName;
-        }
-
-        /// <summary> Initializes a new instance of MetadataCategory. </summary>
-        /// <param name="id"> The ID of the category. </param>
-        /// <param name="displayName"> The display name of the category. </param>
-        /// <param name="description"> The description of the category. </param>
-        /// <param name="related"> The related metadata items for the category. </param>
-        internal MetadataCategory(string id, string displayName, string description, MetadataCategoryRelated related)
-        {
-            Id = id;
-            DisplayName = displayName;
-            Description = description;
-            Related = related;
         }
 
         /// <summary> The ID of the category. </summary>

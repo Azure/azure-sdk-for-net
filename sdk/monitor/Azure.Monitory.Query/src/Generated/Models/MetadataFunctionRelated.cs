@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The related metadata items for the function. </summary>
-    public partial class MetadataFunctionRelated
+    internal partial class MetadataFunctionRelated
     {
         /// <summary> Initializes a new instance of MetadataFunctionRelated. </summary>
         internal MetadataFunctionRelated()
@@ -21,21 +21,6 @@ namespace Azure.Monitory.Query.Models
             ResourceTypes = new ChangeTrackingList<string>();
             Categories = new ChangeTrackingList<string>();
             Workspaces = new ChangeTrackingList<string>();
-        }
-
-        /// <summary> Initializes a new instance of MetadataFunctionRelated. </summary>
-        /// <param name="tables"> The related tables for the function. </param>
-        /// <param name="solutions"> The related Log Analytics solutions for the function. </param>
-        /// <param name="resourceTypes"> The related resource types for the function. </param>
-        /// <param name="categories"> The related categories for the function. </param>
-        /// <param name="workspaces"> The related workspaces for the function. </param>
-        internal MetadataFunctionRelated(IReadOnlyList<string> tables, IReadOnlyList<string> solutions, IReadOnlyList<string> resourceTypes, IReadOnlyList<string> categories, IReadOnlyList<string> workspaces)
-        {
-            Tables = tables;
-            Solutions = solutions;
-            ResourceTypes = resourceTypes;
-            Categories = categories;
-            Workspaces = workspaces;
         }
 
         /// <summary> The related tables for the function. </summary>

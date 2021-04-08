@@ -10,7 +10,7 @@ using System;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The MetadataPermissionsApplicationsItem. </summary>
-    public partial class MetadataPermissionsApplicationsItem
+    internal partial class MetadataPermissionsApplicationsItem
     {
         /// <summary> Initializes a new instance of MetadataPermissionsApplicationsItem. </summary>
         /// <param name="resourceId"> The resource ID on the permission indication. </param>

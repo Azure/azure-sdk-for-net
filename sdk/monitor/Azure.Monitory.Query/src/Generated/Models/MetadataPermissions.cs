@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> Permission information for the metadata call, includes apps/workspaces/resource the user didn&apos;t have access to. </summary>
-    public partial class MetadataPermissions
+    internal partial class MetadataPermissions
     {
         /// <summary> Initializes a new instance of MetadataPermissions. </summary>
         /// <param name="workspaces"> The permission indication for the workspaces on the metadata request. </param>
@@ -28,17 +28,6 @@ namespace Azure.Monitory.Query.Models
             Workspaces = workspaces.ToList();
             Resources = new ChangeTrackingList<MetadataPermissionsResourcesItem>();
             Applications = new ChangeTrackingList<MetadataPermissionsApplicationsItem>();
-        }
-
-        /// <summary> Initializes a new instance of MetadataPermissions. </summary>
-        /// <param name="workspaces"> The permission indication for the workspaces on the metadata request. </param>
-        /// <param name="resources"> The permission indication for the Azure resources on the metadata request. </param>
-        /// <param name="applications"> The permission indication for the Application Insights apps on the metadata request. </param>
-        internal MetadataPermissions(IReadOnlyList<MetadataPermissionsWorkspacesItem> workspaces, IReadOnlyList<MetadataPermissionsResourcesItem> resources, IReadOnlyList<MetadataPermissionsApplicationsItem> applications)
-        {
-            Workspaces = workspaces;
-            Resources = resources;
-            Applications = applications;
         }
 
         /// <summary> The permission indication for the workspaces on the metadata request. </summary>

@@ -12,3 +12,18 @@ input-file:
 modelerfour:
     lenient-model-deduplication: true
 ```
+
+### Remove metadata operations
+
+``` yaml
+directive:
+- from: swagger-document
+  where: $.paths
+  transform: >
+    for (var path in $)
+    {
+        if ($[path].get?.operationId.startsWith("Metadata_"))
+        {
+            delete $[path];
+        }
+    }
