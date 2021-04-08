@@ -86,6 +86,14 @@
         "WORKSPACE_ID": {
             "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceName')), '2020-10-01').customerId]",
             "type": "string"
+        },
+        "METRICS_RESOURCE_ID": {
+            "value": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceName'))]",
+            "type": "string"
+        },
+        "METRICS_RESOURCE_NAMESPACE": {
+            "value": "Microsoft.OperationalInsights/workspaces",
+            "type": "string"
         }
     }
 }

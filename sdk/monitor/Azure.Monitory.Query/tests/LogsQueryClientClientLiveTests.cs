@@ -10,15 +10,15 @@ using NUnit.Framework;
 
 namespace Azure.Template.Tests
 {
-    public class MonitorQueryClientClientLiveTests: RecordedTestBase<MonitorQueryClientTestEnvironment>
+    public class LogsQueryClientClientLiveTests: RecordedTestBase<MonitorQueryClientTestEnvironment>
     {
-        public MonitorQueryClientClientLiveTests(bool isAsync) : base(isAsync)
+        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
-        private MonitorQueryClient CreateClient()
+        private LogsQueryClient CreateClient()
         {
-            return InstrumentClient(new MonitorQueryClient(
+            return InstrumentClient(new LogsQueryClient(
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MonitorQueryClientOptions())
             ));

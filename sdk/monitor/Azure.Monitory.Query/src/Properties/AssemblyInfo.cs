@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 // Replace with test project/test project public key and uncomment to make internal members visible to
@@ -11,3 +12,5 @@ using System.Runtime.CompilerServices;
 // See https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-services-resource-providers
 // for the list of possible values.
 [assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.Insights")]
+
+[assembly: SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "<Pending>", Scope = "type", Target = "~T:Azure.Monitory.Query.Models.Metric")]

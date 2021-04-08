@@ -10,22 +10,17 @@ using Azure.Monitory.Query.Models;
 
 namespace Azure.Monitory.Query
 {
-    public class MonitorQueryClient
+    public class LogsQueryClient
     {
         private readonly QueryRestClient _queryClient;
-        private readonly MetadataRestClient _metadataClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        public MonitorQueryClient(TokenCredential credential) : this(credential, null)
+        public LogsQueryClient(TokenCredential credential) : this(credential, null)
         {
         }
 
-        protected MonitorQueryClient()
-        {
-        }
-
-        public MonitorQueryClient(TokenCredential credential, MonitorQueryClientOptions options)
+        public LogsQueryClient(TokenCredential credential, MonitorQueryClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -34,12 +29,15 @@ namespace Azure.Monitory.Query
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://api.loganalytics.io//.default"));
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline);
-            _metadataClient = new MetadataRestClient(_clientDiagnostics, _pipeline);
+        }
+
+        protected LogsQueryClient()
+        {
         }
 
         public virtual Response<QueryResults> Query(string workspace, string query, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MonitorQueryClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
@@ -54,7 +52,7 @@ namespace Azure.Monitory.Query
 
         public virtual async Task<Response<QueryResults>> QueryAsync(string workspace, string query, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MonitorQueryClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
