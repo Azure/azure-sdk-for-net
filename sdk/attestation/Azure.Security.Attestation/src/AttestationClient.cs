@@ -209,7 +209,7 @@ namespace Azure.Security.Attestation
         private async Task<AttestationResponse<AttestationResult>> AttestOpenEnclaveInternalAsync(ReadOnlyMemory<byte> report, BinaryData initTimeData, bool initTimeDataIsObject, BinaryData runTimeData, bool runTimeDataIsObject, bool async, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(runTimeData, nameof(runTimeData));
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestSgxEnclave)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(AttestationClient)}.{nameof(AttestOpenEnclave)}");
             scope.Start();
             try
             {

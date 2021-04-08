@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "1135",
         "Content-Type": "text/plain",
-        "traceparent": "00-9c5b9bbca4c4a145a93fb2f89611419b-9d49065e1f35cf47-00",
+        "traceparent": "00-95f3c99e24933443a5e7519ef8993b01-49ccaa87061cf34b-00",
         "User-Agent": [
-          "azsdk-net-Security.Attestation/1.0.0-alpha.20210406.1",
+          "azsdk-net-Security.Attestation/1.0.0-alpha.20210408.1",
           "(.NET 5.0.4; Microsoft Windows 10.0.19043)"
         ],
         "x-ms-client-request-id": "0e751e98e77b2ca8d15ae46755e35c32",
@@ -21,10 +21,10 @@
       "ResponseHeaders": {
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 06 Apr 2021 19:24:31 GMT",
+        "Date": "Thu, 08 Apr 2021 21:25:03 GMT",
         "Server": "Kestrel",
-        "x-ms-maa-service-version": "1.10.01543.0002",
-        "x-ms-request-id": "00-9c5b9bbca4c4a145a93fb2f89611419b-9d49065e1f35cf47-00"
+        "x-ms-maa-service-version": "1.10.01546.0008",
+        "x-ms-request-id": "00-95f3c99e24933443a5e7519ef8993b01-49ccaa87061cf34b-00"
       },
       "ResponseBody": {
         "error": {
