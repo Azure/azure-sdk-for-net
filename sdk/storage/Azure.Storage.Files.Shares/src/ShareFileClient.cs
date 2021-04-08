@@ -2243,13 +2243,12 @@ namespace Azure.Storage.Files.Shares
                 return new LazyLoadingReadOnlyStream<ShareFileRequestConditions, ShareFileProperties>(
                     async (HttpRange range,
                     ShareFileRequestConditions conditions,
-                    bool rangeGetContentHash,
                     bool async,
                     CancellationToken cancellationToken) =>
                     {
                         Response<ShareFileDownloadInfo> response = await DownloadInternal(
                             range,
-                            rangeGetContentHash,
+                            default,
                             conditions,
                             async,
                             cancellationToken).ConfigureAwait(false);

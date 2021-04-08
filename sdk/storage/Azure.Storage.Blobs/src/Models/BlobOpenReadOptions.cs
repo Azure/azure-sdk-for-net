@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Models;
 
 namespace Azure.Storage.Blobs.Models
 {

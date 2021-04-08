@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Models;
 
 namespace Azure.Storage.Blobs
 {
@@ -80,6 +81,7 @@ namespace Azure.Storage.Blobs
         public async Task<Response> DownloadToAsync(
             Stream destination,
             BlobRequestConditions conditions,
+            DownloadTransactionalHashingOptions hashingOptions,
             CancellationToken cancellationToken)
         {
             // Wrap the download range calls in a Download span for distributed
@@ -96,9 +98,12 @@ namespace Azure.Storage.Blobs
                 var initialRange = new HttpRange(0, _initialRangeSize);
                 Task<Response<BlobDownloadStreamingResult>> initialResponseTask =
                     _client.DownloadStreamingAsync(
-                        initialRange,
-                        conditions,
-                        rangeGetContentHash: false,
+                        new BlobBaseDownloadOptions
+                        {
+                            Range = initialRange,
+                            Conditions = conditions,
+                            HashingOptions = hashingOptions
+                        },
                         cancellationToken);
 
                 Response<BlobDownloadStreamingResult> initialResponse = null;
@@ -109,9 +114,12 @@ namespace Azure.Storage.Blobs
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
                     initialResponse = await _client.DownloadStreamingAsync(
-                        range: default,
-                        conditions,
-                        false,
+                        new BlobBaseDownloadOptions
+                        {
+                            Range = default,
+                            Conditions = conditions,
+                            HashingOptions = hashingOptions
+                        },
                         cancellationToken)
                         .ConfigureAwait(false);
                 }
@@ -157,9 +165,12 @@ namespace Azure.Storage.Blobs
                     // Add the next Task (which will start the download but
                     // return before it's completed downloading)
                     runningTasks.Enqueue(_client.DownloadStreamingAsync(
-                        httpRange,
-                        conditionsWithEtag,
-                        rangeGetContentHash: false,
+                        new BlobBaseDownloadOptions
+                        {
+                            Range = httpRange,
+                            Conditions = conditionsWithEtag,
+                            HashingOptions = hashingOptions
+                        },
                         cancellationToken));
 
                     // If we have fewer tasks than alotted workers, then just
@@ -217,6 +228,7 @@ namespace Azure.Storage.Blobs
         public Response DownloadTo(
             Stream destination,
             BlobRequestConditions conditions,
+            DownloadTransactionalHashingOptions hashingOptions,
             CancellationToken cancellationToken)
         {
             // Wrap the download range calls in a Download span for distributed
@@ -236,18 +248,24 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     initialResponse = _client.DownloadStreaming(
-                        initialRange,
-                        conditions,
-                        rangeGetContentHash: false,
+                        new BlobBaseDownloadOptions
+                        {
+                            Range = initialRange,
+                            Conditions = conditions,
+                            HashingOptions = hashingOptions
+                        },
                         cancellationToken);
                 }
                 catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
                 {
                     initialResponse = _client.DownloadStreaming(
-                    range: default,
-                    conditions,
-                    rangeGetContentHash: false,
-                    cancellationToken);
+                        new BlobBaseDownloadOptions
+                        {
+                            Range = default,
+                            Conditions = conditions,
+                            HashingOptions = hashingOptions
+                        },
+                        cancellationToken);
                 }
 
                 // If the initial request returned no content (i.e., a 304),
@@ -281,9 +299,12 @@ namespace Azure.Storage.Blobs
                     // condition will turn into a 412 and throw a proper
                     // RequestFailedException
                     Response<BlobDownloadStreamingResult> result = _client.DownloadStreaming(
-                        httpRange,
-                        conditionsWithEtag,
-                        rangeGetContentHash: false,
+                        new BlobBaseDownloadOptions
+                        {
+                            Range = httpRange,
+                            Conditions = conditionsWithEtag,
+                            HashingOptions = hashingOptions
+                        },
                         cancellationToken);
                     CopyTo(result.Value, destination, cancellationToken);
                 }

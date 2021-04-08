@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Cryptography;
+using Azure.Storage.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -1628,6 +1629,126 @@ namespace Azure.Storage.Blobs.Specialized
                 .ConfigureAwait(false);
 
         /// <summary>
+        /// The <see cref="DownloadTo(Stream, BlobDownloadOptions, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DownloadTo(
+            Stream destination,
+            BlobDownloadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadTo(string, BlobDownloadOptions, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">
+        /// A file path to write the downloaded content to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response DownloadTo(
+            string path,
+            BlobDownloadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadToAsync(Stream, BlobDownloadOptions, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="destination">
+        /// A <see cref="Stream"/> to write the downloaded content to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Task<Response> DownloadToAsync(
+            Stream destination,
+            BlobDownloadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The <see cref="DownloadToAsync(string, BlobDownloadOptions, CancellationToken)"/> operation
+        /// downloads a blob using parallel requests,
+        /// and writes the content to <paramref name="path"/>.
+        /// </summary>
+        /// <param name="path">
+        /// A file path to write the downloaded content to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> describing the operation.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Task<Response> DownloadToAsync(
+            string path,
+            BlobDownloadOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// The <see cref="DownloadTo(Stream, BlobRequestConditions, StorageTransferOptions, CancellationToken)"/>
         /// operation downloads a blob using parallel requests,
         /// and writes the content to <paramref name="destination"/>.
@@ -1654,21 +1775,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response DownloadTo(
             Stream destination,
             BlobRequestConditions conditions = default,
-            ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{Long}"/> to provide
-            ///// progress updates about data transfers.
-            ///// </param>
-            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             StagedDownloadAsync(
                 destination,
-                conditions,
-                //progressHandler, // TODO: #8506
-                transferOptions: transferOptions,
+                new BlobDownloadOptions
+                {
+                    Conditions = conditions,
+                    TransferOptions = transferOptions
+                },
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -1700,23 +1819,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response DownloadTo(
             string path,
             BlobRequestConditions conditions = default,
-            ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{Long}"/> to provide
-            ///// progress updates about data transfers.
-            ///// </param>
-            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
             using Stream destination = File.Create(path);
             return StagedDownloadAsync(
                 destination,
-                conditions,
-                //progressHandler, // TODO: #8506
-                transferOptions: transferOptions,
+                new BlobDownloadOptions
+                {
+                    Conditions = conditions,
+                    TransferOptions = transferOptions
+                },
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -1749,21 +1866,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DownloadToAsync(
             Stream destination,
             BlobRequestConditions conditions = default,
-            ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{Long}"/> to provide
-            ///// progress updates about data transfers.
-            ///// </param>
-            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default) =>
             await StagedDownloadAsync(
                 destination,
-                conditions,
-                //progressHandler, // TODO: #8506
-                transferOptions: transferOptions,
+                new BlobDownloadOptions
+                {
+                    Conditions = conditions,
+                    TransferOptions = transferOptions
+                },
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -1795,23 +1910,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DownloadToAsync(
             string path,
             BlobRequestConditions conditions = default,
-            ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{Long}"/> to provide
-            ///// progress updates about data transfers.
-            ///// </param>
-            //IProgress<long> progressHandler = default,
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
             using Stream destination = File.Create(path);
             return await StagedDownloadAsync(
                 destination,
-                conditions,
-                //progressHandler, // TODO: #8506
-                transferOptions: transferOptions,
+                new BlobDownloadOptions
+                {
+                    Conditions = conditions,
+                    TransferOptions = transferOptions
+                },
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -1820,18 +1933,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// <summary>
         /// This operation will download a blob of arbitrary size by downloading it as individually staged
         /// partitions if it's larger than the
-        /// <paramref name="transferOptions"/> MaximumTransferLength.
+        /// <paramref name="options"/>'s <see cref="BlobDownloadOptions.TransferOptions"/>
+        /// <see cref="StorageTransferOptions.MaximumTransferSize"/>.
         /// </summary>
         /// <param name="destination">
         /// A <see cref="Stream"/> to write the downloaded content to.
         /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// the creation of this new block blob.
-        /// </param>
-        /// <param name="transferOptions">
-        /// Optional <see cref="StorageTransferOptions"/> to configure
-        /// parallel transfer behavior.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1849,17 +1958,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         internal async Task<Response> StagedDownloadAsync(
             Stream destination,
-            BlobRequestConditions conditions = default,
-            ///// <param name="progressHandler">
-            ///// Optional <see cref="IProgress{Long}"/> to provide
-            ///// progress updates about data transfers.
-            ///// </param>
-            //IProgress<long> progressHandler, // TODO: #8506
-            StorageTransferOptions transferOptions = default,
+            BlobDownloadOptions options = default,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions);
+            PartitionedDownloader downloader = new PartitionedDownloader(this, options.TransferOptions);
 
             if (async)
             {
@@ -2149,7 +2252,6 @@ namespace Azure.Storage.Blobs.Specialized
                     return new LazyLoadingReadOnlyStream<BlobRequestConditions, BlobProperties>(
                         async (HttpRange range,
                         BlobRequestConditions conditions,
-                        bool rangeGetContentHash,
                         bool async,
                         CancellationToken cancellationToken) =>
                         {
@@ -2159,12 +2261,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 {
                                     Range = range,
                                     Conditions = conditions,
-                                    HashingOptions = rangeGetContentHash
-                                        ? new DownloadTransactionalHashingOptions()
-                                        {
-                                            Algorithm = TransactionalHashAlgorithm.MD5
-                                        }
-                                        : hashingOptions
+                                    HashingOptions = hashingOptions
                                 },
                                 operationName,
                                 async,

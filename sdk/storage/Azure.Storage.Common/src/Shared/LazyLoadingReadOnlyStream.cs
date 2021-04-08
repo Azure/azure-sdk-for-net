@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Models;
 using Azure.Storage.Shared;
 
 namespace Azure.Storage
@@ -27,9 +28,6 @@ namespace Azure.Storage
         /// <param name="serviceRequestConditions">
         /// Request conditions specific to the service.
         /// </param>
-        /// <param name="rangeGetContentHash">
-        /// Whether to request a transactional MD5 for the ranged download.
-        /// </param>
         /// <param name="async">
         /// Whether to perform the operation asynchronously.
         /// </param>
@@ -42,7 +40,6 @@ namespace Azure.Storage
         public delegate Task<Response<IDownloadedContent>> DownloadInternalAsync(
             HttpRange range,
             TRequestConditions serviceRequestConditions,
-            bool rangeGetContentHash,
             bool async,
             CancellationToken cancellationToken);
 
@@ -224,7 +221,7 @@ namespace Azure.Storage
             HttpRange range = new HttpRange(_position, _bufferSize);
 
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-            response = await _downloadInternalFunc(range, _requestConditions, default, async, cancellationToken).ConfigureAwait(false);
+            response = await _downloadInternalFunc(range, _requestConditions, async, cancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 
             using Stream networkStream = response.Value.Content;
