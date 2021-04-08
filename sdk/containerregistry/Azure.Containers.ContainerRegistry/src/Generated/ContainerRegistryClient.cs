@@ -99,7 +99,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Create Request for <see cref="GetRepositories"/> and <see cref="GetRepositoriesAsync"/> operations. </summary>
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
-        protected Request CreateGetRepositoriesRequest(string last = null, int? n = null)
+        public Request CreateGetRepositoriesRequest(string last = null, int? n = null)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;

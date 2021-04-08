@@ -5,4 +5,13 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Azure.Core.Experimental" Version="0.1.0-preview.11" />
+    <PackageReference Include="Azure.Identity" Version="1.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.Containers.ContainerRegistry.csproj" />
+  </ItemGroup>
+
 </Project>
