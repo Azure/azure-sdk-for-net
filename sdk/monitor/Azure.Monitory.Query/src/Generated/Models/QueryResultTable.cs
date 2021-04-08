@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Monitory.Query
+namespace Azure.Monitory.Query.Models
 {
     /// <summary> Contains the columns and rows for one table in a query response. </summary>
     public partial class QueryResultTable

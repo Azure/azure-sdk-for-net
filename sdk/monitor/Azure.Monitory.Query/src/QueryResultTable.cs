@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Monitory.Query
+namespace Azure.Monitory.Query.Models
 {
     [CodeGenModel("Table")]
     public partial class QueryResultTable

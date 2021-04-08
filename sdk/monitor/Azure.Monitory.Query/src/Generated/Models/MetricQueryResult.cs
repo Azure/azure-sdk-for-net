@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Monitory.Query.Models;
 
-namespace Azure.Monitory.Query
+namespace Azure.Monitory.Query.Models
 {
     /// <summary> The response to a metrics query. </summary>
     public partial class MetricQueryResult

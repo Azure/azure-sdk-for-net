@@ -16,9 +16,9 @@ namespace Azure.Template.Tests
         {
         }
 
-        private LogsQueryClient CreateClient()
+        private LogsClient CreateClient()
         {
-            return InstrumentClient(new LogsQueryClient(
+            return InstrumentClient(new LogsClient(
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MonitorQueryClientOptions())
             ));

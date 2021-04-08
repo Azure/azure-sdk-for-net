@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Monitory.Query
+namespace Azure.Monitory.Query.Models
 {
     internal static partial class MetricUnitExtensions
     {

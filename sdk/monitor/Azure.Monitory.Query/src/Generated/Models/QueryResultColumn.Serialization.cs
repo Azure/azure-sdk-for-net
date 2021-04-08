@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Monitory.Query
+namespace Azure.Monitory.Query.Models
 {
     public partial class QueryResultColumn
     {

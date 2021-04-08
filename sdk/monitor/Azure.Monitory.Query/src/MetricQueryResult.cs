@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.Monitory.Query.Models;
 
-namespace Azure.Monitory.Query
+namespace Azure.Monitory.Query.Models
 {
     [CodeGenModel("Response")]
     public partial class MetricQueryResult

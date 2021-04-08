@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Monitory.Query
+namespace Azure.Monitory.Query.Models
 {
     /// <summary> the unit of the metric. </summary>
     [CodeGenModel("Unit")]

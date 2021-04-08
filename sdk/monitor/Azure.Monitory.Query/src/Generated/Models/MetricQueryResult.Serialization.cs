@@ -9,9 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Monitory.Query.Models;
 
-namespace Azure.Monitory.Query
+namespace Azure.Monitory.Query.Models
 {
     public partial class MetricQueryResult
     {

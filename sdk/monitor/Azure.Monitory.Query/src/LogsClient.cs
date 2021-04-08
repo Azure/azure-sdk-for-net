@@ -10,17 +10,17 @@ using Azure.Monitory.Query.Models;
 
 namespace Azure.Monitory.Query
 {
-    public class LogsQueryClient
+    public class LogsClient
     {
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        public LogsQueryClient(TokenCredential credential) : this(credential, null)
+        public LogsClient(TokenCredential credential) : this(credential, null)
         {
         }
 
-        public LogsQueryClient(TokenCredential credential, MonitorQueryClientOptions options)
+        public LogsClient(TokenCredential credential, MonitorQueryClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -31,13 +31,13 @@ namespace Azure.Monitory.Query
             _queryClient = new QueryRestClient(_clientDiagnostics, _pipeline);
         }
 
-        protected LogsQueryClient()
+        protected LogsClient()
         {
         }
 
         public virtual Response<QueryResults> Query(string workspace, string query, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
@@ -52,7 +52,7 @@ namespace Azure.Monitory.Query
 
         public virtual async Task<Response<QueryResults>> QueryAsync(string workspace, string query, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsQueryClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {

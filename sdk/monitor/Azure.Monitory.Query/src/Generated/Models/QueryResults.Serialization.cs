@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Monitory.Query;
 
 namespace Azure.Monitory.Query.Models
 {

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Monitory.Query
+namespace Azure.Monitory.Query.Models
 {
     /// <summary> A column in a table. </summary>
     public partial class QueryResultColumn
