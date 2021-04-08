@@ -16,9 +16,13 @@ The `Azure.Identity` library is recommended for identity-based authentication ac
 
 **Role Assignments** 
 
-Once your environment is configured, you'll need to ensure that the principal that you've chosen has access to your Event Hubs resources in Azure.  To do so, they will be assigned the [Azure Event Hubs Data Owner](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-owner) role.  For those not familiar with role assignments, it is recommended to follow [these steps](https://docs.microsoft.com/azure/event-hubs/authenticate-managed-identity?tabs=latest#to-assign-azure-roles-using-the-azure-portal) in the Azure portal for the most intuitive experience.  
+Once your environment is configured, you'll need to ensure that the principal that you've chosen has access to your Event Hubs resources in Azure.  To do so, they will need to be assigned the appropriate role.  For those unfamiliar with role assignments, it is recommended to follow [these steps](https://docs.microsoft.com/azure/event-hubs/authenticate-managed-identity?tabs=latest#to-assign-azure-roles-using-the-azure-portal) in the Azure portal for the most intuitive experience.  Roles may also be assigned via the [Azure CLI](https://docs.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az_role_assignment_create) or [PowerShell](https://docs.microsoft.com/powershell/module/az.resources/new-azroleassignment), though these require more in-depth knowledge of the Azure platform and may be difficult for developers exploring Azure for the first time.  
 
-Roles may also be assigned via the [Azure CLI](https://docs.microsoft.com/cli/azure/role/assignment?view=azure-cli-latest#az_role_assignment_create) or [PowerShell](https://docs.microsoft.com/powershell/module/az.resources/new-azroleassignment), though these require more in-depth knowledge of the Azure platform and may be difficult for developers exploring Azure for the first time.  
+The available role choices for Event Hubs are: 
+
+- [Azure Event Hubs Data Owner](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-owner) for full access to read and publish events.
+- [Azure Event Hubs Data Receiver](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-receiver) for the ability to read events but not publish them.
+- [Azure Event Hubs Data Sender](https://docs.microsoft.com/azure/role-based-access-control/built-in-roles#azure-event-hubs-data-sender) for the ability to publish events but not read them.
 
 ### Event Hubs Shared Access Signature authorization
 

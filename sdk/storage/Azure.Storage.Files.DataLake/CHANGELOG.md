@@ -5,6 +5,7 @@
 - Added support for Soft Delete for Hierarchical-Namespace enabled accounts.
 - Added support for File Query Parquet input format.
 - Aligned storage URL parsing with other platforms.
+- Fixed bug where clients would sometimes throw a NullReferenceException when calling GenerateSas() with a DataLakeSasBuilder parameter.
 
 ## 12.6.1 (2021-03-29)
 - Fixed bug where ClientDiagnostics's DiagnosticListener was leaking resources.

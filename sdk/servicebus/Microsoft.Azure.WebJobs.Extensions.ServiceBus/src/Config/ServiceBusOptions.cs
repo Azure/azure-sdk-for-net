@@ -25,11 +25,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the Azure ServiceBus connection string.
-        /// </summary>
-        public string ConnectionString { get; set; }
-
-        /// <summary>
         /// Gets or sets the PrefetchCount that will be used when receiving messages. The default value is 0.
         /// </summary>
         public int PrefetchCount { get; set; }

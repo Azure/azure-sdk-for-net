@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.13.0-beta.1</Version>
+    <Version>1.13.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.12.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
@@ -14,6 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Buffers" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
@@ -21,6 +25,7 @@
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 

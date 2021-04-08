@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using Azure.Communication.Pipeline;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -84,6 +85,12 @@ namespace Azure.Communication.PhoneNumbers.Tests
             return TestEnvironment.Mode == RecordedTestMode.Playback
                 ? RecordedTestSanitizer.SanitizeValue
                 : TestEnvironment.CommunicationTestPhoneNumber;
+        }
+
+        protected void SleepIfNotInPlaybackMode()
+        {
+            if (TestEnvironment.Mode != RecordedTestMode.Playback)
+                Thread.Sleep(2000);
         }
     }
 }
