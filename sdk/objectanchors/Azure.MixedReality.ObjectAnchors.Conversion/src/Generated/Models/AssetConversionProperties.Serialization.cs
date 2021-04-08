@@ -44,7 +44,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         {
             Optional<string> clientErrorDetails = default;
             Optional<string> serverErrorDetails = default;
-            ConversionErrorCode errorCode = default;
+            Optional<ConversionErrorCode> errorCode = default;
             Optional<Guid> jobId = default;
             Optional<string> outputModelUri = default;
             Optional<AssetConversionStatus> jobStatus = default;
@@ -66,7 +66,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 }
                 if (property.NameEquals("errorCode"))
                 {
-                    errorCode = property.Value.GetString().ToConversionErrorCode();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    errorCode = new ConversionErrorCode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("jobId"))
