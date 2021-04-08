@@ -40,10 +40,6 @@
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" Link="SharedSource\Azure.Core\PageResponseEnumerator.cs" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="SharedSource\Azure.Core\AzureResourceProviderNamespaceAttribute.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <!--This is temporary until the new version of Azure.Core.Amqp is released.-->
-    <ProjectReference Include="..\..\..\core\Azure.Core.Amqp\src\Azure.Core.Amqp.csproj" />
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Resources.Designer.cs">

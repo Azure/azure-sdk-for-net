@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "1135",
         "Content-Type": "text/plain",
-        "traceparent": "00-eaff06cf6b39d8408e7cca96dc606543-a88407c5a9bc9640-00",
-        "User-Agent": "azsdk-net-Security.Attestation/1.0.3-alpha.20201123.1 (.NET Framework 4.8.4250.0; Microsoft Windows 10.0.19042 )",
+        "traceparent": "00-11e53a8f3a43784fba303476091e2300-19e510bac93d924c-00",
+        "User-Agent": "azsdk-net-Security.Attestation/1.0.0-alpha.20210330.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19043 )",
         "x-ms-client-request-id": "0e751e98e77b2ca8d15ae46755e35c32",
         "x-ms-return-client-request-id": "true"
       },
@@ -18,15 +18,15 @@
       "ResponseHeaders": {
         "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 24 Nov 2020 22:17:57 GMT",
+        "Date": "Tue, 30 Mar 2021 23:42:34 GMT",
         "Server": "Kestrel",
-        "x-ms-maa-service-version": "1.10.01419.0005",
-        "x-ms-request-id": "00-eaff06cf6b39d8408e7cca96dc606543-a88407c5a9bc9640-00"
+        "x-ms-maa-service-version": "1.10.01516.0001",
+        "x-ms-request-id": "00-11e53a8f3a43784fba303476091e2300-19e510bac93d924c-00"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidOperation",
-          "message": "Native operation failed with 74: ..\\Enclave\\enclave.cpp(2379)\\(null)!: (caller: ) Exception(0) 83FF004A Bad message    Msg:[Unsigned JWS specified but enclave is configured with signing certificates.] \n\r\n..\\Enclave\\api.cpp(663)\\(null)!: (caller: ) LogHr(0) 83FF004A Bad message    Msg:[Unhandled Enclave Exception: \u0022Bad message\u0022] \n\r\n"
+          "message": "Native operation failed with 74: ..\\Enclave\\enclave.cpp(2359)\\(null)!: (caller: ) Exception(0) 83FF004A Bad message    Msg:[Unsigned JWS specified but enclave is configured with signing certificates.] \n\r\n..\\Enclave\\api.cpp(663)\\(null)!: (caller: ) LogHr(0) 83FF004A Bad message    Msg:[Unhandled Enclave Exception: \u0022Bad message\u0022] \n\r\n"
         }
       }
     }

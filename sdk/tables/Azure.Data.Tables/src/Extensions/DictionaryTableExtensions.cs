@@ -40,6 +40,7 @@ namespace Azure.Data.Tables
                 switch (item.Value)
                 {
                     case byte[] _:
+                    case BinaryData _:
                         annotatedDictionary[item.Key.ToOdataTypeString()] = TableConstants.Odata.EdmBinary;
                         break;
                     case long _:
@@ -223,6 +224,7 @@ namespace Azure.Data.Tables
         private static Dictionary<Type, Action<PropertyInfo, object, object>> typeActions = new Dictionary<Type, Action<PropertyInfo, object, object>>
         {
             {typeof(byte[]), (property, propertyValue, result) =>  property.SetValue(result, Convert.FromBase64String(propertyValue as string))},
+            {typeof(BinaryData), (property, propertyValue, result) =>  property.SetValue(result, BinaryData.FromBytes(Convert.FromBase64String(propertyValue as string)))},
             {typeof(long), (property, propertyValue, result) =>  property.SetValue(result, long.Parse(propertyValue as string, CultureInfo.InvariantCulture))},
             {typeof(long?), (property, propertyValue, result) =>  property.SetValue(result, long.Parse(propertyValue as string, CultureInfo.InvariantCulture))},
             {typeof(double), (property, propertyValue, result) =>  property.SetValue(result, propertyValue)},

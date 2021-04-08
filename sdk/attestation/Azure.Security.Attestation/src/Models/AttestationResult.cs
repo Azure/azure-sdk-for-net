@@ -2,15 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Security.Cryptography.X509Certificates;
 using Azure.Core;
-using System.Text.Json.Serialization;
 
-namespace Azure.Security.Attestation.Models
+namespace Azure.Security.Attestation
 {
-    [JsonConverter(typeof(AttestationResultConverter))]
+    [CodeGenModel("AttestationResult")]
     public partial class AttestationResult
     {
         internal AttestationResult()

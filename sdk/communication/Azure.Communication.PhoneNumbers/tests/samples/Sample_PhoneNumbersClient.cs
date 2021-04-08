@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
@@ -190,12 +189,6 @@ namespace Azure.Communication.PhoneNumbers.Tests.Samples
             purchasedPhoneNumbers = client.GetPurchasedPhoneNumbers();
             var afterReleaseNumberCount = purchasedPhoneNumbers.Count();
             Assert.AreEqual(1, beforeReleaseNumberCount - afterReleaseNumberCount);
-        }
-
-        private void SleepIfNotInPlaybackMode()
-        {
-            if (TestEnvironment.Mode != RecordedTestMode.Playback)
-                Thread.Sleep(2000);
         }
     }
 }

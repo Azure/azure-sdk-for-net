@@ -2,11 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure;
 using Azure.Core;
-using Azure.Security.Attestation.Models;
 
 namespace Azure.Security.Attestation
 {
