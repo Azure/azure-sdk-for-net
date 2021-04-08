@@ -541,6 +541,10 @@ namespace Azure.Security.Attestation
         /// <exception cref="Exception">Thrown if the attestation token is not value.</exception>
         private bool ValidateCommonProperties(TokenValidationOptions options)
         {
+            if ((options?.ValidateIssuer).GetValueOrDefault())
+            {
+                Argument.AssertNotNull(options?.ExpectedIssuer, nameof(options.ExpectedIssuer));
+            }
             DateTimeOffset timeNow = DateTimeOffset.Now;
             if (Payload.ExpirationTime.HasValue && (options?.ValidateExpirationTime ?? true))
             {
@@ -631,8 +635,6 @@ namespace Azure.Security.Attestation
             if (body != null)
             {
                 string bodyString = JsonSerializer.Serialize(body);
-
-                // Either base64 or json encode the policy depending on the setting of the encodePolicyBody parameter.
                 encodedDocument = Base64Url.EncodeString(bodyString);
             }
             else
@@ -699,7 +701,7 @@ namespace Azure.Security.Attestation
             }
             else
             {
-                throw new JsonException();
+                throw new ArgumentException("Signing Key must be either RSA or ECDsa. Unknown signing key found");
             }
             string jwt = signedData + '.' + Base64Url.Encode(signature);
 

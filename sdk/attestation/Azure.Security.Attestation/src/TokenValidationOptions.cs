@@ -52,22 +52,22 @@ namespace Azure.Security.Attestation
         public bool ValidateToken { get; }
 
         /// <summary>
-        /// Specifies whether or not the validation logic should validate token expiration times.
+        /// Specifies whether or not the validation logic should validate token expiration times, if present.
         /// </summary>
         public bool ValidateExpirationTime { get; }
 
         /// <summary>
-        /// Specifies whether or not the validation logic should validate token NotBefore time.
+        /// Specifies whether or not the validation logic should validate token NotBefore time, if present.
         /// </summary>
         public bool ValidateNotBeforeTime { get; }
 
         /// <summary>
-        /// Specifies whether or not the validation logic should validate the Issuer of the token.
+        /// Specifies whether or not the validation logic should validate the Issuer of the token, if present.
         /// </summary>
         public bool ValidateIssuer { get; }
 
         /// <summary>
-        /// Expected Issuer for the token.
+        /// Expected Issuer for the token, if present.
         /// </summary>
         public string ExpectedIssuer { get; }
 

@@ -67,43 +67,59 @@ namespace Azure.Security.Attestation
                 throw new ArgumentException($"Signer key algorithm {signer.SignatureAlgorithm} does not match certificate key algorithm {certificate.PublicKey.Key.SignatureAlgorithm}");
             }
 
-            if (signer is RSA rsaKey)
+            // Try to match the public key in the certificate and the signer. If the platform
+            // supports the ToXmlString API, then use that since it the simplest solution and is relatively fast.
+            try
             {
-                var certificateKey = certificate.PublicKey.Key as RSA;
-                RSAParameters signerParameters = rsaKey.ExportParameters(false);
-                RSAParameters certificateParameters = certificateKey.ExportParameters(false);
-                if (!signerParameters.Modulus.SequenceEqual(certificateParameters.Modulus) ||
-                    !signerParameters.Exponent.SequenceEqual(certificateParameters.Exponent))
+                string signerKey = signer.ToXmlString(false);
+                string certificateKey = certificate.PublicKey.Key.ToXmlString(false);
+                if (signerKey != certificateKey)
                 {
-                    throw new ArgumentException($"Signer key {signer} does not match certificate key {certificateKey}");
+                    throw new ArgumentException($"Signer key {signerKey} does not match certificate key {certificateKey}");
                 }
             }
-#if false
-            else if (signer is ECDsa ecdh)
+            catch (System.PlatformNotSupportedException)
             {
-                var certificateKey = certificate.PublicKey.Key as ECDsa;
-                ECParameters signerParameters = ecdh.ExportParameters(false);
-                ECParameters certificateParameters = certificateKey.ExportParameters(false);
-                if (!signerParameters.Curve.Equals(certificateParameters.Curve) ||
-                    !signerParameters.Q.Equals(certificateParameters.Q))
-                {
-                    throw new ArgumentException($"Signer key {signer} does not match certificate key {certificateKey}");
-                }
-            }
-#endif
-            else
-            {
-                throw new ArgumentException("Unknown crypto algorithm for signer and certificate");
-            }
-#if false
+                // Unfortunately, the platform doesn't support ToXmlString.
+                // Try signing a document with the signer and verifying it with the key in the certificate.
+                byte[] testDataToSign = { 1, 2, 3, 4, 5, 6, 7 };
 
-            string signerKey = signer.ToXmlString(false);
-            string certificateKey = certificate.PublicKey.Key.ToXmlString(false);
-            if (signerKey != certificateKey)
-            {
-                throw new ArgumentException($"Signer key {signerKey} does not match certificate key {certificateKey}");
+                byte[] signature;
+                if (signer is RSA rsaKey)
+                {
+                    signature = rsaKey.SignData(testDataToSign, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+                }
+                else if (signer is ECDsa ecdh)
+                {
+                    signature = ecdh.SignData(testDataToSign, HashAlgorithmName.SHA256);
+                }
+                else
+                {
+                    throw new ArgumentException("Signing Key must be either RSA or ECDsa. Unknown signing key found");
+                }
+
+                AsymmetricAlgorithm verifyingAlgorithm = certificate.PublicKey.Key;
+                if (verifyingAlgorithm is RSA verifyingRsa)
+                {
+                    if (!verifyingRsa.VerifyData(
+                        testDataToSign,
+                        signature,
+                        HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1))
+                    {
+                        throw new ArgumentException("Provided certificate cannot verify buffer signed with signing key.");
+                    }
+                }
+                else if (verifyingAlgorithm is ECDsa verifyingEcdsa)
+                {
+                    if (!verifyingEcdsa.VerifyData(
+                        testDataToSign,
+                        signature,
+                        HashAlgorithmName.SHA256))
+                    {
+                        throw new ArgumentException("Provided certificate cannot verify buffer signed with signing key.");
+                    }
+                }
             }
-#endif
         }
     }
 }

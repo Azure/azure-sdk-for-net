@@ -123,7 +123,7 @@ namespace Azure.Security.Attestation.Tests.Samples
                 // Collect quote and runtime data from OpenEnclave enclave.
 
                 var attestationResult = client.AttestSgxEnclave(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false).Value;
-                Assert.AreEqual(binaryRuntimeData, attestationResult.DeprecatedEnclaveHeldData);
+                Assert.AreEqual(binaryRuntimeData, attestationResult.EnclaveHeldData);
                 // VERIFY ATTESTATIONRESULT.
                 // Encrypt Data using DeprecatedEnclaveHeldData
                 // Send to enclave.
