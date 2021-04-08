@@ -15,9 +15,9 @@ namespace Azure.Template.Tests
         {
         }
 
-        private MetricsQueryClient CreateClient()
+        private MetricsClient CreateClient()
         {
-            return InstrumentClient(new MetricsQueryClient(
+            return InstrumentClient(new MetricsClient(
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MonitorQueryClientOptions())
             ));
@@ -45,6 +45,17 @@ namespace Azure.Template.Tests
                 TimeSpan.FromMinutes(1));
 
             CollectionAssert.IsNotEmpty(results.Value.Metrics);
+        }
+
+        [Test]
+        public async Task CanListNamespacesMetrics()
+        {
+            var client = CreateClient();
+
+            var results = await client.GetMetricNamespacesAsync(
+                TestEnvironment.MetricsResource);
+
+            CollectionAssert.IsNotEmpty(results.Value);
         }
     }
 }

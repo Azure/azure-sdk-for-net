@@ -11,18 +11,19 @@ using Azure.Monitory.Query.Models;
 
 namespace Azure.Monitory.Query
 {
-    public class MetricsQueryClient
+    public class MetricsClient
     {
         private readonly MetricDefinitionsRestClient _metricDefinitionsClient;
         private readonly MetricsRestClient _metricsRestClient;
+        private readonly MetricNamespacesRestClient _namespacesRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
-        public MetricsQueryClient(TokenCredential credential) : this(credential, null)
+        public MetricsClient(TokenCredential credential) : this(credential, null)
         {
         }
 
-        public MetricsQueryClient(TokenCredential credential, MonitorQueryClientOptions options)
+        public MetricsClient(TokenCredential credential, MonitorQueryClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
@@ -32,15 +33,16 @@ namespace Azure.Monitory.Query
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com//.default"));
             _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, _pipeline);
             _metricsRestClient = new MetricsRestClient(_clientDiagnostics, _pipeline);
+            _namespacesRestClient = new MetricNamespacesRestClient(_clientDiagnostics, _pipeline);
         }
 
-        protected MetricsQueryClient()
+        protected MetricsClient()
         {
         }
 
         public virtual Response<MetricQueryResult> Query(string resource, DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan interval, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
@@ -55,7 +57,7 @@ namespace Azure.Monitory.Query
 
         public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resource, DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan interval, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
@@ -70,7 +72,7 @@ namespace Azure.Monitory.Query
 
         public virtual Response<IReadOnlyList<MetricDefinition>> GetMetrics(string resource, string metricsNamespace, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetrics)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetrics)}");
             scope.Start();
             try
             {
@@ -87,11 +89,45 @@ namespace Azure.Monitory.Query
 
         public virtual async Task<Response<IReadOnlyList<MetricDefinition>>> GetMetricsAsync(string resource, string metricsNamespace, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(GetMetrics)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetrics)}");
             scope.Start();
             try
             {
                 var response = await _metricDefinitionsClient.ListAsync(resource, metricsNamespace, cancellationToken).ConfigureAwait(false);
+
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual Response<IReadOnlyList<MetricNamespace>> GetMetricNamespaces(string resource, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetricNamespaces)}");
+            scope.Start();
+            try
+            {
+                var response = _namespacesRestClient.List(resource, cancellationToken: cancellationToken);
+
+                return Response.FromValue(response.Value.Value, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual async Task<Response<IReadOnlyList<MetricNamespace>>> GetMetricNamespacesAsync(string resource, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsClient)}.{nameof(GetMetricNamespaces)}");
+            scope.Start();
+            try
+            {
+                var response = await _namespacesRestClient.ListAsync(resource, cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(response.Value.Value, response.GetRawResponse());
             }
