@@ -18,7 +18,7 @@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 
 To send a SMS message, call the `Send` or `SendAsync` function from the SmsClient. The returned value is `SmsSendResult` objects that contains the status and associated error codes in case of a failure.
 
-```C# Snippet:SendingSMSMessage
+```C# Snippet:Azure_Communication_Sms_Tests_Send
 SmsSendResult sendResult = smsClient.Send(
     from: "<from-phone-number>",
     to: "<to-phone-number>",
@@ -32,7 +32,7 @@ Console.WriteLine($"Send Result Successful: {sendResult.Successful}");
 
 To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the SmsClient with a list of recipient's phone numbers. You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags. The returned value is a collection of `SmsSendResult` objects -- one for each of the receipients.
 
-```C# Snippet:SendingGroupSMSMessageWithOptions
+```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
 var response = smsClient.Send(
     from: "<from-phone-number>",
     to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" },

@@ -45,7 +45,8 @@ namespace Azure.Communication.Sms.Tests.samples
         }
 
         [Test]
-        public async Task SendingSMSMessage()
+        [AsyncOnly]
+        public async Task SendingSMSMessageAsync()
         {
             SmsClient smsClient = CreateSmsClient();
             #region Snippet:Azure_Communication_Sms_Tests_SendAsync
@@ -61,11 +62,53 @@ namespace Azure.Communication.Sms.Tests.samples
         }
 
         [Test]
-        public async Task SendingGroupSMSMessageWithOptions()
+        [AsyncOnly]
+        public async Task SendingGroupSMSMessageWithOptionsAsync()
+        {
+            SmsClient smsClient = CreateSmsClient();
+            #region Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptionsAsync
+            var response = await smsClient.SendAsync(
+                //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+                //@@ to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
+                /*@@*/ from: TestEnvironment.FromPhoneNumber,
+                /*@@*/ to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
+                message: "Weekly Promotion!",
+                options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
+                {
+                    Tag = "marketing", // custom tags
+                });
+            foreach (SmsSendResult result in response.Value)
+            {
+                Console.WriteLine($"Sms id: {result.MessageId}");
+                Console.WriteLine($"Send Result Successful: {result.Successful}");
+            }
+            #endregion Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptionsAsync
+        }
+
+        [Test]
+        [SyncOnly]
+        public void SendingSMSMessage()
+        {
+            SmsClient smsClient = CreateSmsClient();
+            #region Snippet:Azure_Communication_Sms_Tests_Send
+            SmsSendResult sendResult = smsClient.Send(
+                //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+                //@@ to: "<to-phone-number>", // E.164 formatted recipient phone number
+                /*@@*/ from: TestEnvironment.FromPhoneNumber,
+                /*@@*/ to: TestEnvironment.ToPhoneNumber,
+                message: "Hi");
+            Console.WriteLine($"Sms id: {sendResult.MessageId}");
+            #endregion Snippet:Azure_Communication_Sms_Tests_SendAsync
+            Console.WriteLine($"Send Result Successful: {sendResult.Successful}");
+        }
+
+        [Test]
+        [SyncOnly]
+        public void SendingGroupSMSMessageWithOptions()
         {
             SmsClient smsClient = CreateSmsClient();
             #region Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptions
-            var response = await smsClient.SendAsync(
+            var response = smsClient.Send(
                 //@@ from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
                 //@@ to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }, // E.164 formatted recipient phone numbers
                 /*@@*/ from: TestEnvironment.FromPhoneNumber,
