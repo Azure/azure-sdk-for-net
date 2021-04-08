@@ -150,6 +150,6 @@ For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or conta
 [digital_twins_client]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/digitaltwins/Azure.DigitalTwins.Core/src/DigitalTwinsClient.cs
 [digital_twins_documentation]: https://docs.microsoft.com/azure/digital-twins/
 [iot_cli_extension]: https://github.com/Azure/azure-iot-cli-extension/releases
-[iot_cli_doc]: https://docs.microsoft.com/en-us/cli/azure/azure-cli-reference-for-iot
+[iot_cli_doc]: https://docs.microsoft.com/cli/azure/azure-cli-reference-for-iot
 [http_status_code]: https://docs.microsoft.com/dotnet/api/system.net.httpstatuscode?view=netcore-3.1
 [adt_nuget]: https://www.nuget.org/packages/Azure.DigitalTwins.Core
