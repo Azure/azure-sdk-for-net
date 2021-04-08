@@ -4,6 +4,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="samples\Sample1_SendSms.md" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
@@ -18,5 +21,9 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" Link="Shared\\ConnectionString.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\samples\README.md" Link="samples\README.md" />
+    <None Include="..\samples\Sample1_SendSms.md" Link="samples\Sample1_SendSms.md" />
   </ItemGroup>
 </Project>
