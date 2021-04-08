@@ -19,7 +19,7 @@ namespace Azure.Template.Tests
         {
             return InstrumentClient(new MetricsClient(
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MonitorQueryClientOptions())
+                InstrumentClientOptions(new MetricsClientOptions())
             ));
         }
 

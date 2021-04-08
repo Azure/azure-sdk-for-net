@@ -23,11 +23,11 @@ namespace Azure.Monitory.Query
         {
         }
 
-        public MetricsClient(TokenCredential credential, MonitorQueryClientOptions options)
+        public MetricsClient(TokenCredential credential, MetricsClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MonitorQueryClientOptions();
+            options ??= new MetricsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com//.default"));

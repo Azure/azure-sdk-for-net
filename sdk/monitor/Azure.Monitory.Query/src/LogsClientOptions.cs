@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Monitory.Query
 {
-    public class MonitorQueryClientOptions: ClientOptions
+    public class LogsClientOptions: ClientOptions
     {
         private readonly ServiceVersion _version;
 
@@ -15,13 +15,13 @@ namespace Azure.Monitory.Query
         internal const ServiceVersion LatestVersion = ServiceVersion.V1;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MonitorQueryClientOptions"/> class.
+        /// Initializes a new instance of the <see cref="LogsClientOptions"/> class.
         /// </summary>
         /// <param name="version">
         /// The <see cref="ServiceVersion"/> of the service API used when
         /// making requests.
         /// </param>
-        public MonitorQueryClientOptions(ServiceVersion version = LatestVersion)
+        public LogsClientOptions(ServiceVersion version = LatestVersion)
         {
             _version = version;
         }

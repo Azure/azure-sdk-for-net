@@ -11,16 +11,24 @@ namespace Azure.Monitory.Query
     {
         protected LogsClient() { }
         public LogsClient(Azure.Core.TokenCredential credential) { }
-        public LogsClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.MonitorQueryClientOptions options) { }
+        public LogsClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.LogsClientOptions options) { }
         public virtual Azure.Monitory.Query.LogsBatchQuery CreateBatchQuery() { throw null; }
         public virtual Azure.Response<Azure.Monitory.Query.Models.LogsQueryResult> Query(string workspaceId, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.LogsQueryResult>> QueryAsync(string workspaceId, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class LogsClientOptions : Azure.Core.ClientOptions
+    {
+        public LogsClientOptions(Azure.Monitory.Query.LogsClientOptions.ServiceVersion version = Azure.Monitory.Query.LogsClientOptions.ServiceVersion.V1) { }
+        public enum ServiceVersion
+        {
+            V1 = 0,
+        }
     }
     public partial class MetricsClient
     {
         protected MetricsClient() { }
         public MetricsClient(Azure.Core.TokenCredential credential) { }
-        public MetricsClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.MonitorQueryClientOptions options) { }
+        public MetricsClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.MetricsClientOptions options) { }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricNamespace>> GetMetricNamespaces(string resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricNamespace>>> GetMetricNamespacesAsync(string resource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricDefinition>> GetMetrics(string resource, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -28,12 +36,12 @@ namespace Azure.Monitory.Query
         public virtual Azure.Response<Azure.Monitory.Query.Models.MetricQueryResult> Query(string resource, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.TimeSpan interval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.MetricQueryResult>> QueryAsync(string resource, System.DateTimeOffset startTime, System.DateTimeOffset endTime, System.TimeSpan interval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MonitorQueryClientOptions : Azure.Core.ClientOptions
+    public partial class MetricsClientOptions : Azure.Core.ClientOptions
     {
-        public MonitorQueryClientOptions(Azure.Monitory.Query.MonitorQueryClientOptions.ServiceVersion version = Azure.Monitory.Query.MonitorQueryClientOptions.ServiceVersion.V1) { }
+        public MetricsClientOptions(Azure.Monitory.Query.MetricsClientOptions.ServiceVersion version = Azure.Monitory.Query.MetricsClientOptions.ServiceVersion.V2018_01_01) { }
         public enum ServiceVersion
         {
-            V1 = 0,
+            V2018_01_01 = 0,
         }
     }
 }

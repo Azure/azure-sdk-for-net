@@ -21,7 +21,7 @@ namespace Azure.Template.Tests
         {
             return InstrumentClient(new LogsClient(
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MonitorQueryClientOptions())
+                InstrumentClientOptions(new LogsClientOptions())
             ));
         }
 

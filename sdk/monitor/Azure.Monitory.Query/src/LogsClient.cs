@@ -20,11 +20,11 @@ namespace Azure.Monitory.Query
         {
         }
 
-        public LogsClient(TokenCredential credential, MonitorQueryClientOptions options)
+        public LogsClient(TokenCredential credential, LogsClientOptions options)
         {
             Argument.AssertNotNull(credential, nameof(credential));
 
-            options ??= new MonitorQueryClientOptions();
+            options ??= new LogsClientOptions();
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://api.loganalytics.io//.default"));
