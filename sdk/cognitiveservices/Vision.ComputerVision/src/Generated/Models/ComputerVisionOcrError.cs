@@ -15,33 +15,30 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// The API request error.
+    /// Details about the API request error.
     /// </summary>
-    public partial class ComputerVisionError
+    public partial class ComputerVisionOcrError
     {
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionError class.
+        /// Initializes a new instance of the ComputerVisionOcrError class.
         /// </summary>
-        public ComputerVisionError()
+        public ComputerVisionOcrError()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionError class.
+        /// Initializes a new instance of the ComputerVisionOcrError class.
         /// </summary>
-        /// <param name="code">The error code. Possible values include:
-        /// 'InvalidRequest', 'InvalidArgument', 'InternalServerError',
-        /// 'ServiceUnavailable'</param>
+        /// <param name="code">The error code.</param>
         /// <param name="message">A message explaining the error reported by
         /// the service.</param>
-        /// <param name="innererror">Inner error contains more specific
-        /// information.</param>
-        public ComputerVisionError(string code, string message, ComputerVisionInnerError innererror = default(ComputerVisionInnerError))
+        /// <param name="requestId">A unique request identifier.</param>
+        public ComputerVisionOcrError(object code, string message, string requestId = default(string))
         {
             Code = code;
             Message = message;
-            Innererror = innererror;
+            RequestId = requestId;
             CustomInit();
         }
 
@@ -51,12 +48,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the error code. Possible values include:
-        /// 'InvalidRequest', 'InvalidArgument', 'InternalServerError',
-        /// 'ServiceUnavailable'
+        /// Gets or sets the error code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public object Code { get; set; }
 
         /// <summary>
         /// Gets or sets a message explaining the error reported by the
@@ -66,10 +61,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public string Message { get; set; }
 
         /// <summary>
-        /// Gets or sets inner error contains more specific information.
+        /// Gets or sets a unique request identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "innererror")]
-        public ComputerVisionInnerError Innererror { get; set; }
+        [JsonProperty(PropertyName = "requestId")]
+        public string RequestId { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -86,10 +81,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
             if (Message == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Message");
-            }
-            if (Innererror != null)
-            {
-                Innererror.Validate();
             }
         }
     }

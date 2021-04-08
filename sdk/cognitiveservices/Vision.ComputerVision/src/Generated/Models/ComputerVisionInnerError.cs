@@ -15,33 +15,34 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// The API request error.
+    /// Details about the API request error.
     /// </summary>
-    public partial class ComputerVisionError
+    public partial class ComputerVisionInnerError
     {
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionError class.
+        /// Initializes a new instance of the ComputerVisionInnerError class.
         /// </summary>
-        public ComputerVisionError()
+        public ComputerVisionInnerError()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ComputerVisionError class.
+        /// Initializes a new instance of the ComputerVisionInnerError class.
         /// </summary>
         /// <param name="code">The error code. Possible values include:
-        /// 'InvalidRequest', 'InvalidArgument', 'InternalServerError',
-        /// 'ServiceUnavailable'</param>
-        /// <param name="message">A message explaining the error reported by
-        /// the service.</param>
-        /// <param name="innererror">Inner error contains more specific
-        /// information.</param>
-        public ComputerVisionError(string code, string message, ComputerVisionInnerError innererror = default(ComputerVisionInnerError))
+        /// 'InvalidImageFormat', 'UnsupportedMediaType', 'InvalidImageUrl',
+        /// 'NotSupportedFeature', 'NotSupportedImage', 'Timeout',
+        /// 'InternalServerError', 'InvalidImageSize', 'BadArgument',
+        /// 'DetectFaceError', 'NotSupportedLanguage', 'InvalidThumbnailSize',
+        /// 'InvalidDetails', 'InvalidModel', 'CancelledRequest',
+        /// 'NotSupportedVisualFeature', 'FailedToProcess', 'Unspecified',
+        /// 'StorageException'</param>
+        /// <param name="message">Error message.</param>
+        public ComputerVisionInnerError(string code, string message)
         {
             Code = code;
             Message = message;
-            Innererror = innererror;
             CustomInit();
         }
 
@@ -52,24 +53,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 
         /// <summary>
         /// Gets or sets the error code. Possible values include:
-        /// 'InvalidRequest', 'InvalidArgument', 'InternalServerError',
-        /// 'ServiceUnavailable'
+        /// 'InvalidImageFormat', 'UnsupportedMediaType', 'InvalidImageUrl',
+        /// 'NotSupportedFeature', 'NotSupportedImage', 'Timeout',
+        /// 'InternalServerError', 'InvalidImageSize', 'BadArgument',
+        /// 'DetectFaceError', 'NotSupportedLanguage', 'InvalidThumbnailSize',
+        /// 'InvalidDetails', 'InvalidModel', 'CancelledRequest',
+        /// 'NotSupportedVisualFeature', 'FailedToProcess', 'Unspecified',
+        /// 'StorageException'
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets a message explaining the error reported by the
-        /// service.
+        /// Gets or sets error message.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
-
-        /// <summary>
-        /// Gets or sets inner error contains more specific information.
-        /// </summary>
-        [JsonProperty(PropertyName = "innererror")]
-        public ComputerVisionInnerError Innererror { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -86,10 +85,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
             if (Message == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Message");
-            }
-            if (Innererror != null)
-            {
-                Innererror.Validate();
             }
         }
     }
