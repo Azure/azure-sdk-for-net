@@ -14,6 +14,7 @@ namespace Azure.Monitory.Query
     public class MetricsQueryClient
     {
         private readonly MetricDefinitionsRestClient _metricDefinitionsClient;
+        private readonly MetricsRestClient _metricsRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private HttpPipeline _pipeline;
 
@@ -30,10 +31,41 @@ namespace Azure.Monitory.Query
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, "https://management.azure.com//.default"));
             _metricDefinitionsClient = new MetricDefinitionsRestClient(_clientDiagnostics, _pipeline);
+            _metricsRestClient = new MetricsRestClient(_clientDiagnostics, _pipeline);
         }
 
         protected MetricsQueryClient()
         {
+        }
+
+        public virtual Response<MetricQueryResult> Query(string resource, DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan interval, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return _metricsRestClient.List(resource, $"{startTime:O}/{endTime:O}", interval, cancellationToken: cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        public virtual async Task<Response<MetricQueryResult>> QueryAsync(string resource, DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan interval, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MetricsQueryClient)}.{nameof(Query)}");
+            scope.Start();
+            try
+            {
+                return await _metricsRestClient.ListAsync(resource, $"{startTime:O}/{endTime:O}", interval, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         public virtual Response<IReadOnlyList<MetricDefinition>> GetMetrics(string resource, string metricsNamespace, CancellationToken cancellationToken = default)

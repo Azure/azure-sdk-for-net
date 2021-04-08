@@ -13,9 +13,9 @@ using Azure.Monitory.Query.Models;
 
 namespace Azure.Monitory.Query
 {
-    internal partial class MetricListResponse
+    public partial class MetricQueryResult
     {
-        internal static MetricListResponse DeserializeMetricListResponse(JsonElement element)
+        internal static MetricQueryResult DeserializeMetricQueryResult(JsonElement element)
         {
             Optional<int> cost = default;
             string timespan = default;
@@ -71,7 +71,7 @@ namespace Azure.Monitory.Query
                     continue;
                 }
             }
-            return new MetricListResponse(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
+            return new MetricQueryResult(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
         }
     }
 }

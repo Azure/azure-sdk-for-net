@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Monitory.Query;
@@ -30,6 +31,20 @@ namespace Azure.Template.Tests
             var results = await client.GetMetricsAsync(TestEnvironment.MetricsResource, TestEnvironment.MetricsNamespace);
 
             CollectionAssert.IsNotEmpty(results.Value);
+        }
+
+        [Test]
+        public async Task CanQueryMetrics()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryAsync(
+                TestEnvironment.MetricsResource,
+                Recording.Now.AddHours(-1),
+                Recording.Now,
+                TimeSpan.FromMinutes(1));
+
+            CollectionAssert.IsNotEmpty(results.Value.Metrics);
         }
     }
 }
