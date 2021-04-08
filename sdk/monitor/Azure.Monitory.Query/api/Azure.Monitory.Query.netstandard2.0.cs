@@ -1,12 +1,36 @@
 namespace Azure.Monitory.Query
 {
-    public partial class MonitorQueryClient
+    public partial class LogsQueryClient
     {
-        protected MonitorQueryClient() { }
-        public MonitorQueryClient(Azure.Core.TokenCredential credential) { }
-        public MonitorQueryClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.MonitorQueryClientOptions options) { }
+        protected LogsQueryClient() { }
+        public LogsQueryClient(Azure.Core.TokenCredential credential) { }
+        public LogsQueryClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.MonitorQueryClientOptions options) { }
         public virtual Azure.Response<Azure.Monitory.Query.Models.QueryResults> Query(string workspace, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.QueryResults>> QueryAsync(string workspace, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MetricsQueryClient
+    {
+        protected MetricsQueryClient() { }
+        public MetricsQueryClient(Azure.Core.TokenCredential credential) { }
+        public MetricsQueryClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.MonitorQueryClientOptions options) { }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricDefinition>> GetMetrics(string resource, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricDefinition>>> GetMetricsAsync(string resource, string metricsNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public enum MetricUnit
+    {
+        Count = 0,
+        Bytes = 1,
+        Seconds = 2,
+        CountPerSecond = 3,
+        BytesPerSecond = 4,
+        Percent = 5,
+        MilliSeconds = 6,
+        ByteSeconds = 7,
+        Unspecified = 8,
+        Cores = 9,
+        MilliCores = 10,
+        NanoCores = 11,
+        BitsPerSecond = 12,
     }
     public partial class MonitorQueryClientOptions : Azure.Core.ClientOptions
     {
@@ -32,6 +56,15 @@ namespace Azure.Monitory.Query
 }
 namespace Azure.Monitory.Query.Models
 {
+    public enum AggregationType
+    {
+        None = 0,
+        Average = 1,
+        Count = 2,
+        Minimum = 3,
+        Maximum = 4,
+        Total = 5,
+    }
     public partial class BatchRequest
     {
         public BatchRequest() { }
@@ -63,6 +96,12 @@ namespace Azure.Monitory.Query.Models
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
         public string Target { get { throw null; } }
+    }
+    public partial class LocalizableString
+    {
+        internal LocalizableString() { }
+        public string LocalizedValue { get { throw null; } }
+        public string Value { get { throw null; } }
     }
     public partial class LogQueryRequest
     {
@@ -289,6 +328,12 @@ namespace Azure.Monitory.Query.Models
         public System.Collections.Generic.IReadOnlyList<string> Solutions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Workspaces { get { throw null; } }
     }
+    public partial class MetadataValue
+    {
+        internal MetadataValue() { }
+        public Azure.Monitory.Query.Models.LocalizableString Name { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
     public partial class MetadataWorkspace
     {
         internal MetadataWorkspace() { }
@@ -307,6 +352,58 @@ namespace Azure.Monitory.Query.Models
         public System.Collections.Generic.IReadOnlyList<string> Solutions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Tables { get { throw null; } }
     }
+    public partial class Metric
+    {
+        internal Metric() { }
+        public string Id { get { throw null; } }
+        public Azure.Monitory.Query.Models.LocalizableString Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.TimeSeriesElement> Timeseries { get { throw null; } }
+        public string Type { get { throw null; } }
+        public Azure.Monitory.Query.MetricUnit Unit { get { throw null; } }
+    }
+    public partial class MetricAvailability
+    {
+        internal MetricAvailability() { }
+        public System.TimeSpan? Retention { get { throw null; } }
+        public System.TimeSpan? TimeGrain { get { throw null; } }
+    }
+    public partial class MetricDefinition
+    {
+        internal MetricDefinition() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.LocalizableString> Dimensions { get { throw null; } }
+        public string Id { get { throw null; } }
+        public bool? IsDimensionRequired { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricAvailability> MetricAvailabilities { get { throw null; } }
+        public Azure.Monitory.Query.Models.LocalizableString Name { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public Azure.Monitory.Query.Models.AggregationType? PrimaryAggregationType { get { throw null; } }
+        public string ResourceId { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.AggregationType> SupportedAggregationTypes { get { throw null; } }
+        public Azure.Monitory.Query.MetricUnit? Unit { get { throw null; } }
+    }
+    public partial class MetricNamespace
+    {
+        internal MetricNamespace() { }
+        public string Id { get { throw null; } }
+        public string Name { get { throw null; } }
+        public Azure.Monitory.Query.Models.MetricNamespaceName Properties { get { throw null; } }
+        public string Type { get { throw null; } }
+    }
+    public partial class MetricNamespaceName
+    {
+        internal MetricNamespaceName() { }
+        public string MetricNamespaceNameValue { get { throw null; } }
+    }
+    public partial class MetricValue
+    {
+        internal MetricValue() { }
+        public double? Average { get { throw null; } }
+        public double? Count { get { throw null; } }
+        public double? Maximum { get { throw null; } }
+        public double? Minimum { get { throw null; } }
+        public System.DateTimeOffset TimeStamp { get { throw null; } }
+        public double? Total { get { throw null; } }
+    }
     public partial class QueryBody
     {
         public QueryBody(string query) { }
@@ -318,5 +415,16 @@ namespace Azure.Monitory.Query.Models
     {
         internal QueryResults() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.QueryResultTable> Tables { get { throw null; } }
+    }
+    public enum ResultType
+    {
+        Data = 0,
+        Metadata = 1,
+    }
+    public partial class TimeSeriesElement
+    {
+        internal TimeSeriesElement() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricValue> Data { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetadataValue> Metadatavalues { get { throw null; } }
     }
 }
