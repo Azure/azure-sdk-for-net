@@ -412,7 +412,7 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Creates Time Series Insights types asynchronously. If a provided type is already in use, then this will attempt to replace the existing type with the provided Time Series type.
+        /// Creates Time Series Insights types synchronously. If a provided type is already in use, then this will attempt to replace the existing type with the provided Time Series type.
         /// </summary>
         /// <param name="timeSeriesTypes">The Time Series Insights types to be created or replaced.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
@@ -513,7 +513,7 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary>
-        /// Deletes Time Series Insights types by type names asynchronously.
+        /// Deletes Time Series Insights types by type names synchronously.
         /// </summary>
         /// <param name="timeSeriesTypeNames">List of names of the Time Series types to delete.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
