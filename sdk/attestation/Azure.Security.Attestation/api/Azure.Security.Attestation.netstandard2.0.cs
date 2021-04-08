@@ -1,6 +1,6 @@
 namespace Azure.Security.Attestation
 {
-    public partial class AttestationAdministrationClient
+    public partial class AttestationAdministrationClient : System.IDisposable
     {
         protected AttestationAdministrationClient() { }
         public AttestationAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -8,6 +8,8 @@ namespace Azure.Security.Attestation
         public System.Uri Endpoint { get { throw null; } }
         public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesModificationResult> AddPolicyManagementCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2 newSigningCertificate, Azure.Security.Attestation.TokenSigningKey existingSigningKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesModificationResult>> AddPolicyManagementCertificateAsync(System.Security.Cryptography.X509Certificates.X509Certificate2 newSigningCertificate, Azure.Security.Attestation.TokenSigningKey existingSigningKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
         public virtual Azure.Security.Attestation.AttestationResponse<string> GetPolicy(Azure.Security.Attestation.AttestationType attestationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<string>> GetPolicyAsync(Azure.Security.Attestation.AttestationType attestationType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyCertificatesResult> GetPolicyManagementCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -19,7 +21,7 @@ namespace Azure.Security.Attestation
         public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyResult> SetPolicy(Azure.Security.Attestation.AttestationType attestationType, string policyToSet, Azure.Security.Attestation.TokenSigningKey signingKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.PolicyResult>> SetPolicyAsync(Azure.Security.Attestation.AttestationType attestationType, string policyToSet, Azure.Security.Attestation.TokenSigningKey signingKey = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AttestationClient
+    public partial class AttestationClient : System.IDisposable
     {
         protected AttestationClient() { }
         public AttestationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -31,6 +33,8 @@ namespace Azure.Security.Attestation
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestSgxEnclaveAsync(System.ReadOnlyMemory<byte> quote, System.BinaryData initTimeData, bool initTimeDataIsObject, System.BinaryData runTimeData, bool runTimeDataIsObject, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.BinaryData> AttestTpm(System.BinaryData request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> AttestTpmAsync(System.BinaryData request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner>> GetSigningCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner>>> GetSigningCertificatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

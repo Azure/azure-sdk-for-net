@@ -18,7 +18,7 @@ namespace Azure.Security.Attestation
     ///
     /// The Attestation client contains the implementation of the "Attest" family of MAA apis.
     /// </summary>
-    public class AttestationAdministrationClient
+    public class AttestationAdministrationClient : IDisposable
     {
         private readonly AttestationClientOptions _options;
         private readonly HttpPipeline _pipeline;
@@ -28,7 +28,8 @@ namespace Azure.Security.Attestation
         private readonly AttestationClient _attestationClient;
 
         private IReadOnlyList<AttestationSigner> _signers;
-        private object _statelock = new object();
+        private SemaphoreSlim _statelock = new SemaphoreSlim(1, 1);
+        private bool _disposedValue;
 
         // Default scope for data plane APIs.
         private const string DefaultScope = "https://attest.azure.net/.default";
@@ -109,7 +110,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(cancellationToken), cancellationToken);
                 }
 
                 using var document = JsonDocument.Parse(token.TokenBody);
@@ -148,7 +149,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
                 }
                 using var document = JsonDocument.Parse(token.TokenBody);
                 PolicyResult policyResult = PolicyResult.DeserializePolicyResult(document.RootElement);
@@ -233,7 +234,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(cancellationToken), cancellationToken);
                 }
                 return new AttestationResponse<PolicyResult>(result.GetRawResponse(), token);
             }
@@ -315,7 +316,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyResult>(result.GetRawResponse(), token);
             }
@@ -356,7 +357,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(cancellationToken), cancellationToken);
                 }
                 return new AttestationResponse<PolicyResult>(result.GetRawResponse(), token);
             }
@@ -396,7 +397,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyResult>(result.GetRawResponse(), token);
             }
@@ -424,7 +425,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(cancellationToken), cancellationToken);
                 }
                 return new AttestationResponse<PolicyCertificatesResult>(result.GetRawResponse(), token);
             }
@@ -452,7 +453,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyCertificatesResult>(result.GetRawResponse(), token);
             }
@@ -491,7 +492,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(cancellationToken), cancellationToken);
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }
@@ -528,7 +529,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }
@@ -563,7 +564,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    token.ValidateToken(_options.TokenOptions, GetSigners(), cancellationToken);
+                    token.ValidateToken(_options.TokenOptions, GetSigners(cancellationToken), cancellationToken);
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }
@@ -598,7 +599,7 @@ namespace Azure.Security.Attestation
                 var token = new AttestationToken(result.Value.Token);
                 if (_options.TokenOptions.ValidateToken)
                 {
-                    await token.ValidateTokenAsync(_options.TokenOptions, GetSigners(), cancellationToken).ConfigureAwait(false);
+                    await token.ValidateTokenAsync(_options.TokenOptions, await GetSignersAsync(cancellationToken).ConfigureAwait(false), cancellationToken).ConfigureAwait(false);
                 }
                 return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
             }
@@ -609,17 +610,67 @@ namespace Azure.Security.Attestation
             }
         }
 
-        private IReadOnlyList<AttestationSigner> GetSigners()
+        private async Task<IReadOnlyList<AttestationSigner>> GetSignersAsync(CancellationToken cancellationToken)
         {
-            lock (_statelock)
+            await _statelock.WaitAsync(cancellationToken).ConfigureAwait(false);
+            try
             {
                 if (_signers == null)
                 {
-                    _signers = _attestationClient.GetSigningCertificates().Value;
+                    _signers = (await _attestationClient.GetSigningCertificatesAsync(cancellationToken).ConfigureAwait(false)).Value;
                 }
 
                 return _signers;
             }
+            finally
+            {
+                _statelock.Release();
+            }
+        }
+
+        private IReadOnlyList<AttestationSigner> GetSigners(CancellationToken cancellationToken)
+        {
+            _statelock.Wait(cancellationToken);
+            try
+            {
+                if (_signers == null)
+                {
+                    _signers = _attestationClient.GetSigningCertificates(cancellationToken).Value;
+                }
+
+                return _signers;
+            }
+            finally
+            {
+                _statelock.Release();
+            }
+        }
+
+        /// <summary>
+        /// Dispose this object.
+        /// </summary>
+        /// <param name="disposing">True if the caller wants us to dispose our underlying objects.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    // Dispose managed state (managed objects)
+                    _statelock.Dispose();
+                    _attestationClient.Dispose();
+                }
+
+                _disposedValue = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

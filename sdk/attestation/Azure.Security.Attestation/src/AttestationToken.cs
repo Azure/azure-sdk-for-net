@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
 using System.ComponentModel;
+using Azure.Core.Pipeline;
 
 namespace Azure.Security.Attestation
 {
@@ -268,55 +269,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         public virtual async Task<bool> ValidateTokenAsync(TokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
-        {
-            // Early out if the caller doesn't want us to validate the token.
-            if (!options.ValidateToken)
-            {
-                return true;
-            }
-
-            // Before we waste a lot of time, see if the token is unsecured. If it is, then validation is simple.
-            if (Header.Algorithm.Equals("none", StringComparison.OrdinalIgnoreCase))
-            {
-                if (!ValidateCommonProperties(options))
-                {
-                    return false;
-                }
-                if (options.ValidationCallback != null)
-                {
-                    return options.ValidationCallback(this, null);
-                }
-                return true;
-            }
-
-            // This token is a secured attestation token. If the caller provided signing certificates, then
-            // they need to have provided at least one certificate.
-            if (attestationSigningCertificates != null)
-            {
-                Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
-            }
-
-            var possibleCertificates = await GetCandidateSigningCertificatesAsync(attestationSigningCertificates, cancellationToken).ConfigureAwait(false);
-            if (possibleCertificates.Length == 0)
-            {
-                throw new Exception($"Unable to find any certificates which can be used to validate the token.");
-            }
-
-            if (!ValidateTokenSignature(possibleCertificates))
-            {
-                throw new Exception($"Could not find a certificate which was used to sign the token.");
-            }
-
-            if (!ValidateCommonProperties(options))
-            {
-                return false;
-            }
-            if (options.ValidationCallback != null)
-            {
-                return options.ValidationCallback(this, SigningCertificate);
-            }
-            return true;
-        }
+            => await ValidateTokenInternalAsync(options, attestationSigningCertificates, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Validate a JSON Web Token returned by the MAA.
@@ -332,6 +285,23 @@ namespace Azure.Security.Attestation
         /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
         /// <exception cref="Exception">Thrown if validation fails.</exception>
         public virtual bool ValidateToken(TokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, CancellationToken cancellationToken = default)
+            => ValidateTokenInternalAsync(options, attestationSigningCertificates, false, cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Validate a JSON Web Token returned by the MAA.
+        /// <para/>
+        /// If the caller provides a set of signers, than that set of signers will be used as the complete set of candidates for signing.
+        /// If the caller does not provide a set of signers, then the <see cref="ValidateTokenAsync(TokenValidationOptions, IReadOnlyList{AttestationSigner}, CancellationToken)"/>
+        /// API will a set of callers derived from the contents of the attestation token.
+        /// </summary>
+        /// <param name="options">Options used while validating the attestation token.</param>
+        /// <param name="attestationSigningCertificates">Signing Certificates used to validate the token.</param>
+        /// <param name="async">If true, execute the function asynchronously.</param>
+        /// <param name="cancellationToken">Token used to cancel this operation if necessary.</param>
+        /// <returns>true if the token was valid, false otherwise.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if the signing certificates provided are invalid.</exception>
+        /// <exception cref="Exception">Thrown if validation fails.</exception>
+        internal async Task<bool> ValidateTokenInternalAsync(TokenValidationOptions options, IReadOnlyList<AttestationSigner> attestationSigningCertificates, bool async, CancellationToken cancellationToken = default)
         {
             // Early out if the caller doesn't want us to validate the token.
             if (!options.ValidateToken)
@@ -360,7 +330,7 @@ namespace Azure.Security.Attestation
                 Argument.AssertNotNull(attestationSigningCertificates[0], nameof(attestationSigningCertificates));
             }
 
-            var possibleCertificates = GetCandidateSigningCertificates(attestationSigningCertificates, cancellationToken);
+            AttestationSigner[] possibleCertificates = await GetCandidateSigningCertificatesInternalAsync(attestationSigningCertificates, async, cancellationToken).ConfigureAwait(false);
             if (possibleCertificates.Length == 0)
             {
                 throw new Exception($"Unable to find any certificates which can be used to validate the token.");
@@ -384,26 +354,12 @@ namespace Azure.Security.Attestation
 
         /// <summary>
         /// Returns a set of candidate signing certificates based on the contents of the token.
-        /// <para/>
-        /// If the caller provides a set of signers, than that set of signers will be used as the complete set of candidates for signing.
-        /// If the caller does not provide a set of signers, then the <see cref="GetCandidateSigningCertificates(IReadOnlyList{AttestationSigner}, CancellationToken)"/>
-        /// API will a set of callers derived from the contents of the attestation token.
         /// </summary>
         /// <param name="attestationSigners">The desired set of signers for this token - if present, then this is the exclusive set of signers for the token.</param>
+        /// <param name="async">true if this operation is asynchronous.</param>
         /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
         /// <returns>The set of <see cref="AttestationSigner"/> which might be used to sign the attestation token.</returns>
-        private Task<AttestationSigner[]> GetCandidateSigningCertificatesAsync(IReadOnlyList<AttestationSigner> attestationSigners, CancellationToken cancellationToken = default)
-        {
-            return Task.FromResult(GetCandidateSigningCertificates(attestationSigners, cancellationToken));
-        }
-
-        /// <summary>
-        /// Returns a set of candidate signing certificates based on the contents of the token.
-        /// </summary>
-        /// <param name="attestationSigners">The desired set of signers for this token - if present, then this is the exclusive set of signers for the token.</param>
-        /// <param name="cancellationToken">Cancellation token used to cancel this operation.</param>
-        /// <returns>The set of <see cref="AttestationSigner"/> which might be used to sign the attestation token.</returns>
-        private AttestationSigner[] GetCandidateSigningCertificates(IReadOnlyList<AttestationSigner> attestationSigners, CancellationToken cancellationToken = default)
+        private async Task<AttestationSigner[]> GetCandidateSigningCertificatesInternalAsync(IReadOnlyList<AttestationSigner> attestationSigners, bool async, CancellationToken cancellationToken = default)
         {
             string desiredKeyId = Header.KeyId;
 
@@ -411,6 +367,13 @@ namespace Azure.Security.Attestation
             {
                 throw new OperationCanceledException();
             }
+
+            // Reference the async parameter. If/when JKU/X5U support is added, remove this.
+            if (async)
+            {
+                await Task.Yield();
+            }
+
             List<AttestationSigner> candidateCertificates = new List<AttestationSigner>();
             if (desiredKeyId != null)
             {
@@ -470,6 +433,7 @@ namespace Azure.Security.Attestation
                     }
                 }
             }
+
             return candidateCertificates.ToArray();
         }
 
