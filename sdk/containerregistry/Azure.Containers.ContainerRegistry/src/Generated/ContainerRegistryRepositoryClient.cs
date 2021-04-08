@@ -14,7 +14,7 @@ using Azure.Core.Pipeline;
 
 #pragma warning disable AZC0007
 
-namespace Azure.Containers.ContainerRegistry.Protocol
+namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The ContainerRegistryRepository service client. </summary>
     public partial class ContainerRegistryRepositoryClient
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry.Protocol
         /// <param name="url"> Registry login URL. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal ContainerRegistryRepositoryClient(string url, TokenCredential credential, ContainerRegistryProtocolClientOptions options = null)
+        internal ContainerRegistryRepositoryClient(string url, TokenCredential credential, ContainerRegistryClientOptions options = null)
         {
             if (url == null)
             {
@@ -45,7 +45,7 @@ namespace Azure.Containers.ContainerRegistry.Protocol
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            options ??= new ContainerRegistryProtocolClientOptions();
+            options ??= new ContainerRegistryClientOptions();
             Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
             this.url = url;
         }
