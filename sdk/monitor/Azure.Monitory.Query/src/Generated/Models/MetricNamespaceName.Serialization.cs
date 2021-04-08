@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Monitory.Query.Models
 {
-    public partial class MetricNamespaceName
+    internal partial class MetricNamespaceName
     {
         internal static MetricNamespaceName DeserializeMetricNamespaceName(JsonElement element)
         {

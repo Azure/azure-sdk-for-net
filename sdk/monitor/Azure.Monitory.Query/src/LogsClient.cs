@@ -14,7 +14,7 @@ namespace Azure.Monitory.Query
     {
         private readonly QueryRestClient _queryClient;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private HttpPipeline _pipeline;
+        private readonly HttpPipeline _pipeline;
 
         public LogsClient(TokenCredential credential) : this(credential, null)
         {
@@ -35,13 +35,13 @@ namespace Azure.Monitory.Query
         {
         }
 
-        public virtual Response<LogsQueryResult> Query(string workspace, string query, CancellationToken cancellationToken = default)
+        public virtual Response<LogsQueryResult> Query(string workspaceId, string query, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return _queryClient.Execute(workspace, new QueryBody(query), null, cancellationToken);
+                return _queryClient.Execute(workspaceId, new QueryBody(query), null, cancellationToken);
             }
             catch (Exception e)
             {
@@ -50,13 +50,13 @@ namespace Azure.Monitory.Query
             }
         }
 
-        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspace, string query, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsQueryResult>> QueryAsync(string workspaceId, string query, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsClient)}.{nameof(Query)}");
             scope.Start();
             try
             {
-                return await _queryClient.ExecuteAsync(workspace, new QueryBody(query), null, cancellationToken).ConfigureAwait(false);
+                return await _queryClient.ExecuteAsync(workspaceId, new QueryBody(query), null, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -1,12 +1,20 @@
 namespace Azure.Monitory.Query
 {
+    public partial class LogsBatchQuery
+    {
+        protected LogsBatchQuery() { }
+        public virtual Azure.Response<Azure.Monitory.Query.Models.LogsBatchQueryResult> Execute(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.LogsBatchQueryResult>> ExecuteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual string Query(string workspaceId, string query) { throw null; }
+    }
     public partial class LogsClient
     {
         protected LogsClient() { }
         public LogsClient(Azure.Core.TokenCredential credential) { }
         public LogsClient(Azure.Core.TokenCredential credential, Azure.Monitory.Query.MonitorQueryClientOptions options) { }
-        public virtual Azure.Response<Azure.Monitory.Query.Models.QueryResults> Query(string workspace, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.QueryResults>> QueryAsync(string workspace, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Monitory.Query.LogsBatchQuery CreateBatchQuery() { throw null; }
+        public virtual Azure.Response<Azure.Monitory.Query.Models.LogsQueryResult> Query(string workspaceId, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.LogsQueryResult>> QueryAsync(string workspaceId, string query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MetricsClient
     {
@@ -31,68 +39,36 @@ namespace Azure.Monitory.Query
 }
 namespace Azure.Monitory.Query.Models
 {
-    public enum AggregationType
-    {
-        None = 0,
-        Average = 1,
-        Count = 2,
-        Minimum = 3,
-        Maximum = 4,
-        Total = 5,
-    }
-    public partial class BatchRequest
-    {
-        public BatchRequest() { }
-        public System.Collections.Generic.IList<Azure.Monitory.Query.Models.LogQueryRequest> Requests { get { throw null; } }
-    }
-    public partial class BatchResponse
-    {
-        internal BatchResponse() { }
-        public Azure.Monitory.Query.Models.BatchResponseError Error { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.LogQueryResponse> Responses { get { throw null; } }
-    }
-    public partial class BatchResponseError
-    {
-        internal BatchResponseError() { }
-        public string Code { get { throw null; } }
-        public Azure.Monitory.Query.Models.BatchResponseErrorInnerError InnerError { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class BatchResponseErrorInnerError
-    {
-        internal BatchResponseErrorInnerError() { }
-        public string Code { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.ErrorDetails> Details { get { throw null; } }
-        public string Message { get { throw null; } }
-    }
-    public partial class ErrorDetails
-    {
-        internal ErrorDetails() { }
-        public string Code { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Target { get { throw null; } }
-    }
     public partial class LocalizableString
     {
         internal LocalizableString() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        public static implicit operator string (Azure.Monitory.Query.Models.LocalizableString localizableString) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public partial class LogQueryRequest
+    public partial class LogsBatchQueryResult
     {
-        public LogQueryRequest() { }
-        public Azure.Monitory.Query.Models.QueryBody Body { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-        public string Method { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
-        public string Workspace { get { throw null; } set { } }
+        internal LogsBatchQueryResult() { }
+        public Azure.Monitory.Query.Models.LogsQueryResult GetResult(string queryId) { throw null; }
     }
-    public partial class LogQueryResponse
+    public partial class LogsQueryResult
     {
-        internal LogQueryResponse() { }
-        public Azure.Monitory.Query.Models.QueryResults Body { get { throw null; } }
-        public string Id { get { throw null; } }
-        public int? Status { get { throw null; } }
+        internal LogsQueryResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.LogsQueryResultTable> Tables { get { throw null; } }
+    }
+    public partial class LogsQueryResultColumn
+    {
+        internal LogsQueryResultColumn() { }
+        public string Name { get { throw null; } }
+        public string Type { get { throw null; } }
+    }
+    public partial class LogsQueryResultTable
+    {
+        internal LogsQueryResultTable() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.LogsQueryResultColumn> Columns { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> Rows { get { throw null; } }
     }
     public partial class MetadataValue
     {
@@ -109,6 +85,15 @@ namespace Azure.Monitory.Query.Models
         public string Type { get { throw null; } }
         public Azure.Monitory.Query.Models.MetricUnit Unit { get { throw null; } }
     }
+    public enum MetricAggregationType
+    {
+        None = 0,
+        Average = 1,
+        Count = 2,
+        Minimum = 3,
+        Maximum = 4,
+        Total = 5,
+    }
     public partial class MetricAvailability
     {
         internal MetricAvailability() { }
@@ -124,23 +109,18 @@ namespace Azure.Monitory.Query.Models
         public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricAvailability> MetricAvailabilities { get { throw null; } }
         public Azure.Monitory.Query.Models.LocalizableString Name { get { throw null; } }
         public string Namespace { get { throw null; } }
-        public Azure.Monitory.Query.Models.AggregationType? PrimaryAggregationType { get { throw null; } }
+        public Azure.Monitory.Query.Models.MetricAggregationType? PrimaryAggregationType { get { throw null; } }
         public string ResourceId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.AggregationType> SupportedAggregationTypes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.MetricAggregationType> SupportedAggregationTypes { get { throw null; } }
         public Azure.Monitory.Query.Models.MetricUnit? Unit { get { throw null; } }
     }
     public partial class MetricNamespace
     {
         internal MetricNamespace() { }
+        public string FullyQualifiedName { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.Monitory.Query.Models.MetricNamespaceName Properties { get { throw null; } }
         public string Type { get { throw null; } }
-    }
-    public partial class MetricNamespaceName
-    {
-        internal MetricNamespaceName() { }
-        public string MetricNamespaceNameValue { get { throw null; } }
     }
     public partial class MetricQueryResult
     {
@@ -177,36 +157,6 @@ namespace Azure.Monitory.Query.Models
         public double? Minimum { get { throw null; } }
         public System.DateTimeOffset TimeStamp { get { throw null; } }
         public double? Total { get { throw null; } }
-    }
-    public partial class QueryBody
-    {
-        public QueryBody(string query) { }
-        public string Query { get { throw null; } }
-        public string Timespan { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Workspaces { get { throw null; } }
-    }
-    public partial class QueryResultColumn
-    {
-        internal QueryResultColumn() { }
-        public string Name { get { throw null; } }
-        public string Type { get { throw null; } }
-    }
-    public partial class QueryResults
-    {
-        internal QueryResults() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.QueryResultTable> Tables { get { throw null; } }
-    }
-    public partial class QueryResultTable
-    {
-        internal QueryResultTable() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.QueryResultColumn> Columns { get { throw null; } }
-        public string Name { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<string>> Rows { get { throw null; } }
-    }
-    public enum ResultType
-    {
-        Data = 0,
-        Metadata = 1,
     }
     public partial class TimeSeriesElement
     {

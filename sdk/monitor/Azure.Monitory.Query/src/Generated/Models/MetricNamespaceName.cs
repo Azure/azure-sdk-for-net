@@ -8,7 +8,7 @@
 namespace Azure.Monitory.Query.Models
 {
     /// <summary> The fully qualified metric namespace name. </summary>
-    public partial class MetricNamespaceName
+    internal partial class MetricNamespaceName
     {
         /// <summary> Initializes a new instance of MetricNamespaceName. </summary>
         internal MetricNamespaceName()

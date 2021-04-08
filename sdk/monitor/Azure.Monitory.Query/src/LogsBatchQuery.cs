@@ -28,7 +28,7 @@ namespace Azure.Monitory.Query
         {
         }
 
-        public virtual string Query(string workspace, string query)
+        public virtual string Query(string workspaceId, string query)
         {
             var id = _counter.ToString("G", CultureInfo.InvariantCulture);
             _counter++;
@@ -36,7 +36,7 @@ namespace Azure.Monitory.Query
             {
                 Id = id,
                 Body = new QueryBody(query),
-                Workspace = workspace
+                Workspace = workspaceId
             });
             return id;
         }

@@ -34,7 +34,5 @@ namespace Azure.Monitory.Query.Models
         public string Type { get; }
         /// <summary> The name of the namespace. </summary>
         public string Name { get; }
-        /// <summary> Properties which include the fully qualified namespace name. </summary>
-        public MetricNamespaceName Properties { get; }
     }
 }
