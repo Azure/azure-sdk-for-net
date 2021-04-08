@@ -17,11 +17,13 @@ using Azure.Core.Pipeline;
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The Authentication service client. </summary>
-    internal partial class AuthenticationClient
+    public partial class AuthenticationClient
     {
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         protected HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://management.core.windows.net/.default" };
         private string url;
+        private readonly string apiVersion;
 
         /// <summary> Initializes a new instance of AuthenticationClient for mocking. </summary>
         protected AuthenticationClient()
@@ -32,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="url"> Registry login URL. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal AuthenticationClient(string url, TokenCredential credential, ContainerRegistryClientOptions options = null)
+        public AuthenticationClient(string url, TokenCredential credential, ContainerRegistryClientOptions options = null)
         {
             if (url == null)
             {
@@ -46,6 +48,7 @@ namespace Azure.Containers.ContainerRegistry
             options ??= new ContainerRegistryClientOptions();
             Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
             this.url = url;
+            apiVersion = options.Version;
         }
 
         /// <summary> Exchange AAD tokens for an ACR refresh Token. </summary>
@@ -70,7 +73,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="requestBody"> The request body. </param>
         protected Request CreateExchangeAadAccessTokenForAcrRefreshTokenRequest(RequestContent requestBody)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -81,6 +85,7 @@ namespace Azure.Containers.ContainerRegistry
             request.Content = requestBody;
             return request;
         }
+
         /// <summary> Exchange ACR Refresh token for an ACR Access Token. </summary>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,7 +108,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="requestBody"> The request body. </param>
         protected Request CreateExchangeAcrRefreshTokenForAcrAccessTokenRequest(RequestContent requestBody)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);

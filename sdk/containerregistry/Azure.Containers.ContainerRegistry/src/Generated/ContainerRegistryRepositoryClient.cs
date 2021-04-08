@@ -19,11 +19,11 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> The ContainerRegistryRepository service client. </summary>
     public partial class ContainerRegistryRepositoryClient
     {
-        /// <summary>
-        /// </summary>
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         protected HttpPipeline Pipeline { get; }
         private readonly string[] AuthorizationScopes = { "https://management.core.windows.net/.default" };
         private string url;
+        private readonly string apiVersion;
 
         /// <summary> Initializes a new instance of ContainerRegistryRepositoryClient for mocking. </summary>
         protected ContainerRegistryRepositoryClient()
@@ -34,7 +34,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="url"> Registry login URL. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal ContainerRegistryRepositoryClient(string url, TokenCredential credential, ContainerRegistryClientOptions options = null)
+        public ContainerRegistryRepositoryClient(string url, TokenCredential credential, ContainerRegistryClientOptions options = null)
         {
             if (url == null)
             {
@@ -48,40 +48,39 @@ namespace Azure.Containers.ContainerRegistry
             options ??= new ContainerRegistryClientOptions();
             Pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes));
             this.url = url;
+            apiVersion = options.Version;
         }
 
         /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetManifestAsync(RequestContent requestBody, string name, string reference, string accept = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetManifestAsync(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetManifestRequest(requestBody, name, reference, accept);
+            Request req = CreateGetManifestRequest(name, reference, accept);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetManifest(RequestContent requestBody, string name, string reference, string accept = null, CancellationToken cancellationToken = default)
+        public virtual Response GetManifest(string name, string reference, string accept = null, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetManifestRequest(requestBody, name, reference, accept);
+            Request req = CreateGetManifestRequest(name, reference, accept);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="GetManifest"/> and <see cref="GetManifestAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         /// <param name="accept"> Accept header string delimited by comma. For example, application/vnd.docker.distribution.manifest.v2+json. </param>
-        protected Request CreateGetManifestRequest(RequestContent requestBody, string name, string reference, string accept = null)
+        protected Request CreateGetManifestRequest(string name, string reference, string accept = null)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -95,9 +94,9 @@ namespace Azure.Containers.ContainerRegistry
                 request.Headers.Add("accept", accept);
             }
             request.Headers.Add("Accept", "application/json");
-            request.Content = requestBody;
             return request;
         }
+
         /// <summary> Put the manifest identified by `name` and `reference` where `reference` can be a tag or digest. </summary>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
@@ -126,7 +125,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> A tag or a digest, pointing to a specific image. </param>
         protected Request CreateCreateManifestRequest(RequestContent requestBody, string name, string reference)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -140,35 +140,34 @@ namespace Azure.Containers.ContainerRegistry
             request.Content = requestBody;
             return request;
         }
+
         /// <summary> Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteManifestAsync(RequestContent requestBody, string name, string reference, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteManifestAsync(string name, string reference, CancellationToken cancellationToken = default)
         {
-            Request req = CreateDeleteManifestRequest(requestBody, name, reference);
+            Request req = CreateDeleteManifestRequest(name, reference);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Delete the manifest identified by `name` and `reference`. Note that a manifest can _only_ be deleted by `digest`. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteManifest(RequestContent requestBody, string name, string reference, CancellationToken cancellationToken = default)
+        public virtual Response DeleteManifest(string name, string reference, CancellationToken cancellationToken = default)
         {
-            Request req = CreateDeleteManifestRequest(requestBody, name, reference);
+            Request req = CreateDeleteManifestRequest(name, reference);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="DeleteManifest"/> and <see cref="DeleteManifestAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Digest of a BLOB. </param>
-        protected Request CreateDeleteManifestRequest(RequestContent requestBody, string name, string reference)
+        protected Request CreateDeleteManifestRequest(string name, string reference)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -178,35 +177,33 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath(reference, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Content = requestBody;
             return request;
         }
+
         /// <summary> Get repository attributes. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetPropertiesAsync(RequestContent requestBody, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetPropertiesAsync(string name, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetPropertiesRequest(requestBody, name);
+            Request req = CreateGetPropertiesRequest(name);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get repository attributes. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetProperties(RequestContent requestBody, string name, CancellationToken cancellationToken = default)
+        public virtual Response GetProperties(string name, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetPropertiesRequest(requestBody, name);
+            Request req = CreateGetPropertiesRequest(name);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="GetProperties"/> and <see cref="GetPropertiesAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
-        protected Request CreateGetPropertiesRequest(RequestContent requestBody, string name)
+        protected Request CreateGetPropertiesRequest(string name)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -214,9 +211,9 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath(name, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Content = requestBody;
             return request;
         }
+
         /// <summary> Update the attribute identified by `name` where `reference` is the name of the repository. </summary>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
@@ -242,7 +239,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="name"> Name of the image (including the namespace). </param>
         protected Request CreateSetPropertiesRequest(RequestContent requestBody, string name)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -254,44 +252,43 @@ namespace Azure.Containers.ContainerRegistry
             request.Content = requestBody;
             return request;
         }
+
         /// <summary> List tags of a repository. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="digest"> filter by digest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetTagsAsync(RequestContent requestBody, string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetTagsAsync(string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetTagsRequest(requestBody, name, last, n, orderby, digest);
+            Request req = CreateGetTagsRequest(name, last, n, orderby, digest);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> List tags of a repository. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="digest"> filter by digest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetTags(RequestContent requestBody, string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
+        public virtual Response GetTags(string name, string last = null, int? n = null, string orderby = null, string digest = null, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetTagsRequest(requestBody, name, last, n, orderby, digest);
+            Request req = CreateGetTagsRequest(name, last, n, orderby, digest);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="GetTags"/> and <see cref="GetTagsAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="digest"> filter by digest. </param>
-        protected Request CreateGetTagsRequest(RequestContent requestBody, string name, string last = null, int? n = null, string orderby = null, string digest = null)
+        protected Request CreateGetTagsRequest(string name, string last = null, int? n = null, string orderby = null, string digest = null)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -316,38 +313,36 @@ namespace Azure.Containers.ContainerRegistry
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Content = requestBody;
             return request;
         }
+
         /// <summary> Get tag attributes by tag. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetTagPropertiesAsync(RequestContent requestBody, string name, string reference, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetTagPropertiesAsync(string name, string reference, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetTagPropertiesRequest(requestBody, name, reference);
+            Request req = CreateGetTagPropertiesRequest(name, reference);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get tag attributes by tag. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetTagProperties(RequestContent requestBody, string name, string reference, CancellationToken cancellationToken = default)
+        public virtual Response GetTagProperties(string name, string reference, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetTagPropertiesRequest(requestBody, name, reference);
+            Request req = CreateGetTagPropertiesRequest(name, reference);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="GetTagProperties"/> and <see cref="GetTagPropertiesAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
-        protected Request CreateGetTagPropertiesRequest(RequestContent requestBody, string name, string reference)
+        protected Request CreateGetTagPropertiesRequest(string name, string reference)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -357,9 +352,9 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath(reference, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Content = requestBody;
             return request;
         }
+
         /// <summary> Update tag attributes. </summary>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
@@ -388,7 +383,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="reference"> Tag name. </param>
         protected Request CreateUpdateTagAttributesRequest(RequestContent requestBody, string name, string reference)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -402,35 +398,34 @@ namespace Azure.Containers.ContainerRegistry
             request.Content = requestBody;
             return request;
         }
+
         /// <summary> Delete tag. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteTagAsync(RequestContent requestBody, string name, string reference, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteTagAsync(string name, string reference, CancellationToken cancellationToken = default)
         {
-            Request req = CreateDeleteTagRequest(requestBody, name, reference);
+            Request req = CreateDeleteTagRequest(name, reference);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Delete tag. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeleteTag(RequestContent requestBody, string name, string reference, CancellationToken cancellationToken = default)
+        public virtual Response DeleteTag(string name, string reference, CancellationToken cancellationToken = default)
         {
-            Request req = CreateDeleteTagRequest(requestBody, name, reference);
+            Request req = CreateDeleteTagRequest(name, reference);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="DeleteTag"/> and <see cref="DeleteTagAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="reference"> Tag name. </param>
-        protected Request CreateDeleteTagRequest(RequestContent requestBody, string name, string reference)
+        protected Request CreateDeleteTagRequest(string name, string reference)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -440,44 +435,42 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath(reference, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Content = requestBody;
             return request;
         }
+
         /// <summary> List manifests of a repository. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetManifestsAsync(RequestContent requestBody, string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetManifestsAsync(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetManifestsRequest(requestBody, name, last, n, orderby);
+            Request req = CreateGetManifestsRequest(name, last, n, orderby);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> List manifests of a repository. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="orderby"> orderby query parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetManifests(RequestContent requestBody, string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Response GetManifests(string name, string last = null, int? n = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetManifestsRequest(requestBody, name, last, n, orderby);
+            Request req = CreateGetManifestsRequest(name, last, n, orderby);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="GetManifests"/> and <see cref="GetManifestsAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="last"> Query parameter for the last item in previous query. Result set will include values lexically after last. </param>
         /// <param name="n"> query parameter for max number of items. </param>
         /// <param name="orderby"> orderby query parameter. </param>
-        protected Request CreateGetManifestsRequest(RequestContent requestBody, string name, string last = null, int? n = null, string orderby = null)
+        protected Request CreateGetManifestsRequest(string name, string last = null, int? n = null, string orderby = null)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -498,38 +491,36 @@ namespace Azure.Containers.ContainerRegistry
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Content = requestBody;
             return request;
         }
+
         /// <summary> Get manifest attributes. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetRegistryArtifactPropertiesAsync(RequestContent requestBody, string name, string digest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetRegistryArtifactPropertiesAsync(string name, string digest, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetRegistryArtifactPropertiesRequest(requestBody, name, digest);
+            Request req = CreateGetRegistryArtifactPropertiesRequest(name, digest);
             return await Pipeline.SendRequestAsync(req, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get manifest attributes. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetRegistryArtifactProperties(RequestContent requestBody, string name, string digest, CancellationToken cancellationToken = default)
+        public virtual Response GetRegistryArtifactProperties(string name, string digest, CancellationToken cancellationToken = default)
         {
-            Request req = CreateGetRegistryArtifactPropertiesRequest(requestBody, name, digest);
+            Request req = CreateGetRegistryArtifactPropertiesRequest(name, digest);
             return Pipeline.SendRequest(req, cancellationToken);
         }
 
         /// <summary> Create Request for <see cref="GetRegistryArtifactProperties"/> and <see cref="GetRegistryArtifactPropertiesAsync"/> operations. </summary>
-        /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
         /// <param name="digest"> Digest of a BLOB. </param>
-        protected Request CreateGetRegistryArtifactPropertiesRequest(RequestContent requestBody, string name, string digest)
+        protected Request CreateGetRegistryArtifactPropertiesRequest(string name, string digest)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
@@ -539,9 +530,9 @@ namespace Azure.Containers.ContainerRegistry
             uri.AppendPath(digest, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Content = requestBody;
             return request;
         }
+
         /// <summary> Update attributes of a manifest. </summary>
         /// <param name="requestBody"> The request body. </param>
         /// <param name="name"> Name of the image (including the namespace). </param>
@@ -570,7 +561,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Digest of a BLOB. </param>
         protected Request CreateUpdateManifestAttributesRequest(RequestContent requestBody, string name, string digest)
         {
-            var request = Pipeline.CreateRequest();
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(url, false);
