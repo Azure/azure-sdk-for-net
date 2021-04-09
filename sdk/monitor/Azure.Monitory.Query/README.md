@@ -14,12 +14,11 @@ LogsClient client = new LogsClient(new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
 
-foreach (var table in response.Value.Tables)
+LogsQueryResultTable table = response.Value.PrimaryTable;
+
+foreach (var row in table.Rows)
 {
-    foreach (var row in table.Rows)
-    {
-        Console.WriteLine(row["OperationName"] + " " + row["ResourceGroup"]);
-    }
+    Console.WriteLine(row["OperationName"] + " " + row["ResourceGroup"]);
 }
 ```
 
@@ -102,23 +101,23 @@ LogsClient client = new LogsClient(new DefaultAzureCredential());
 string workspaceId = "<workspace_id>";
 Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
 
-foreach (var table in response.Value.Tables)
+LogsQueryResultTable table = response.Value.PrimaryTable;
+
+foreach (var column in table.Columns)
 {
-    foreach (var column in table.Columns)
+    Console.Write(column.Name + ";");
+}
+
+Console.WriteLine();
+
+var columnCount = table.Columns.Count;
+foreach (var row in table.Rows)
+{
+    for (int i = 0; i < columnCount; i++)
     {
-        Console.Write(column.Name + ";");
+        Console.Write(row[i] + ";");
     }
 
     Console.WriteLine();
-
-    var columnCount = table.Columns.Count;
-    foreach (var row in table.Rows)
-    {
-        for (int i = 0; i < columnCount; i++)
-        {
-            Console.Write(row[i] + ";");
-        }
-        Console.WriteLine();
-    }
 }
 ```

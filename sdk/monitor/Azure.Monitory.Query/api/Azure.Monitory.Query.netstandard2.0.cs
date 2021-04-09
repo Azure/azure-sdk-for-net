@@ -66,6 +66,7 @@ namespace Azure.Monitory.Query.Models
     public partial class LogsQueryResult
     {
         internal LogsQueryResult() { }
+        public Azure.Monitory.Query.Models.LogsQueryResultTable PrimaryTable { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Monitory.Query.Models.LogsQueryResultTable> Tables { get { throw null; } }
     }
     public partial class LogsQueryResultColumn
@@ -78,6 +79,8 @@ namespace Azure.Monitory.Query.Models
     {
         internal LogsQueryResultRow() { }
         public int Count { get { throw null; } }
+        public object this[int index] { get { throw null; } }
+        public object this[string name] { get { throw null; } }
         public bool GetBoolean(int index) { throw null; }
         public bool GetBoolean(string name) { throw null; }
         public decimal GetDecimal(int index) { throw null; }
@@ -87,6 +90,7 @@ namespace Azure.Monitory.Query.Models
         public long GetInt64(int index) { throw null; }
         public long GetInt64(string name) { throw null; }
         public object GetObject(int index) { throw null; }
+        public object GetObject(string name) { throw null; }
         public float GetSingle(int index) { throw null; }
         public float GetSingle(string name) { throw null; }
         public string GetString(int index) { throw null; }
