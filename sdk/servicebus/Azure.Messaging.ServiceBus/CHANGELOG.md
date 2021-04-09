@@ -1,5 +1,9 @@
 # Release History
 
+## 7.1.2 (2021-04-09)
+- Updated dependency on Microsoft.Azure.Amqp to benefit from a performance enhancement involving message settlement.
+- Updated dependency on System.Text.Encodings.Web
+
 ## 7.1.1 (2021-03-10)
 
 ### Key Bug Fixes
