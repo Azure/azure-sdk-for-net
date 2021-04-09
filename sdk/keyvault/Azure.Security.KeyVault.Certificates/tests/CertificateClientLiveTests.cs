@@ -907,7 +907,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 Assert.IsTrue(publicKey.VerifyData(plaintext, result.Signature, keyCurveName.GetHashAlgorithmName()));
             }
-            catch (CryptographicException) when (IsExpectedP256KException(certificate, keyCurveName))
+            catch (Exception ex) when (IsExpectedP256KException(ex, keyCurveName))
             {
                 Assert.Ignore("The curve is not supported by the current platform");
             }
@@ -961,7 +961,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
                 Assert.IsTrue(result.IsValid);
             }
-            catch (CryptographicException) when (IsExpectedP256KException(certificate, keyCurveName))
+            catch (Exception ex) when (IsExpectedP256KException(ex, keyCurveName))
             {
                 Assert.Ignore("The curve is not supported by the current platform");
             }
@@ -991,9 +991,11 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 )
             );
 
-        private static bool IsExpectedP256KException(X509Certificate2 certificate, CertificateKeyCurveName keyCurveName) =>
-            certificate is null &&
-            RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
+        private static bool IsExpectedP256KException(Exception ex, CertificateKeyCurveName keyCurveName) =>
+            // OpenSSL-based implementations do not support P256K.
+            // TODO: Remove this entire check when https://github.com/Azure/azure-sdk-for-net/issues/20244 is resolved.
+            (ex is CryptographicException || ex is TargetInvocationException tiex && tiex.InnerException is ArgumentException {  ParamName: "privateKey" }) &&
+            !RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
             keyCurveName == CertificateKeyCurveName.P256K;
 
         private static CertificatePolicy DefaultPolicy => new CertificatePolicy
