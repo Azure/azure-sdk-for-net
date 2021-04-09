@@ -21,7 +21,7 @@ namespace Azure.Monitory.Query.Models
 
         public IReadOnlyList<T> GetResult<T>(string queryId)
         {
-            return LogsClient.BindResults<T>(GetResult(queryId));
+            return RowBinder.BindResults<T>(GetResult(queryId));
         }
     }
 }
