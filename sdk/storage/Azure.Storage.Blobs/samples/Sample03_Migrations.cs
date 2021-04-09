@@ -553,7 +553,7 @@ namespace Azure.Storage.Blobs.Samples
         public async Task ListBlobsHierarchy()
         {
             string data = "hello world";
-            string virtualDirName = Randomize("sample-virtual-dir");
+            string virtualDirName = Randomize("sample-virtual-dir") + "/";
             string containerName = Randomize("sample-container");
             var containerClient = new BlobContainerClient(ConnectionString, containerName);
 
@@ -561,7 +561,7 @@ namespace Azure.Storage.Blobs.Samples
             {
                 containerClient.Create();
 
-                foreach (var blobName in new List<string> { "foo.txt", "bar.txt", virtualDirName + "/fizz.txt", virtualDirName + "/buzz.txt" })
+                foreach (var blobName in new List<string> { "foo.txt", "bar.txt", virtualDirName + "fizz.txt", virtualDirName + "buzz.txt" })
                 {
                     containerClient.GetBlobClient(blobName).Upload(BinaryData.FromString(data));
                 }
@@ -586,7 +586,7 @@ namespace Azure.Storage.Blobs.Samples
                 string blobPrefix = null;
 
                 #region Snippet:SampleSnippetsBlobMigration_ListHierarchy
-                IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix);
+                IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix,delimiter: "/");
                 await foreach (BlobHierarchyItem item in results)
                 {
                     MyConsumeBlobItemFunc(item);
