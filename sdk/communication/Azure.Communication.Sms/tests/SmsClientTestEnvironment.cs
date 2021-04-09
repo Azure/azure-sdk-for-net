@@ -10,7 +10,7 @@ namespace Azure.Communication.Sms.Tests
         // please find the allowed package value in tests.yml
         private const string SmsTestPackagesEnabled = "sms";
 
-        public override string TestPackagesEnabledValue { get { return SmsTestPackagesEnabled; } }
+        public override string ExpectedTestPackagesEnabled { get { return SmsTestPackagesEnabled; } }
 
         public string ToPhoneNumber => GetRecordedVariable(AzurePhoneNumber);
 

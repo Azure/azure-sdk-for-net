@@ -12,6 +12,6 @@ namespace Azure.Communication.Chat.Tests
     {
         // please find the allowed package value in tests.yml
         private const string ChatTestPackagesEnabled = "chat";
-        public override string TestPackagesEnabledValue { get { return ChatTestPackagesEnabled; } }
+        public override string ExpectedTestPackagesEnabled { get { return ChatTestPackagesEnabled; } }
     }
 }

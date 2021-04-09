@@ -10,6 +10,6 @@ namespace Azure.Communication.PhoneNumbers.Tests
     {
         // please find the allowed package value in tests.yml
         private const string PhoneNumberTestPackagesEnabled = "phonenumber";
-        public override string TestPackagesEnabledValue { get { return PhoneNumberTestPackagesEnabled; } }
+        public override string ExpectedTestPackagesEnabled { get { return PhoneNumberTestPackagesEnabled; } }
     }
 }

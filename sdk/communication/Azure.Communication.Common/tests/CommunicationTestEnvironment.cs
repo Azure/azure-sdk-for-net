@@ -28,10 +28,10 @@ namespace Azure.Communication.Tests
 
         public string CommunicationTestPhoneNumber => GetVariable(AzurePhoneNumber);
 
-        public virtual string TestPackagesEnabledValue { get { return TestPackagesEnabledDefaultValue; } }
+        public virtual string ExpectedTestPackagesEnabled { get { return TestPackagesEnabledDefaultValue; } }
 
         public bool ShouldIgnoreTests => TestPackagesEnabled != TestPackagesEnabledDefaultValue
-            && TestPackagesEnabled != TestPackagesEnabledValue;
+            && TestPackagesEnabled != ExpectedTestPackagesEnabled;
 
         public string TestPackagesEnabled => GetTestPackageEnabled();
 
