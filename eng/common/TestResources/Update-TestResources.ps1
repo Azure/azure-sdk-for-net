@@ -10,7 +10,7 @@
 
 [CmdletBinding(DefaultParameterSetName = 'Default')]
 param (
-    [Parameter(ParameterSetName = 'Default', Mandatory = $true, Position = 0)]
+    [Parameter(ParameterSetName = 'Default', Position = 0)]
     [string] $ServiceDirectory,
 
     [Parameter(ParameterSetName = 'Default')]
