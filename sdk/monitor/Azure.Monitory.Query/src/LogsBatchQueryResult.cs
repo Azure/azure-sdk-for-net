@@ -18,5 +18,10 @@ namespace Azure.Monitory.Query.Models
             // TODO check status, add error message
             return Responses.Single(r => r.Id == queryId).Body;
         }
+
+        public IReadOnlyList<T> GetResult<T>(string queryId)
+        {
+            return LogsClient.BindResults<T>(GetResult(queryId));
+        }
     }
 }
