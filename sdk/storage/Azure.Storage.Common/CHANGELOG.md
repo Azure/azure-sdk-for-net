@@ -1,16 +1,19 @@
 # Release History
 
+## 12.8.0-beta.4 (Unreleased)
+
+
 ## 12.8.0-beta.3 (2021-04-09)
 - Fixed bug in SasQueryParameters causing services (ss) reorder when parsing externally provided URI.
-
-## 12.7.1 (2021-03-29)
-- This release contains bug fixes to improve quality.
 
 ## 12.8.0-beta.2 (2021-03-09)
 - This release contains bug fixes to improve quality.
 
 ## 12.8.0-beta.1 (2021-02-09)
 - Aligned storage URL parsing with other platforms
+
+## 12.7.1 (2021-03-29)
+- This release contains bug fixes to improve quality.
 
 ## 12.7.0 (2021-01-12)
 - Includes all features from 12.7.0-beta.1
