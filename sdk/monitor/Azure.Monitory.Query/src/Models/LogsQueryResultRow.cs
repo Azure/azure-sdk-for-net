@@ -64,5 +64,10 @@ namespace Azure.Monitory.Query.Models
                     throw new NotSupportedException($"Unsupported value kind {element.ValueKind}");
             }
         }
+
+        public object GetObject(string name) => GetObject(_columns[name]);
+
+        public object this[int index] => GetObject(index);
+        public object this[string name] => GetObject(name);
     }
 }
