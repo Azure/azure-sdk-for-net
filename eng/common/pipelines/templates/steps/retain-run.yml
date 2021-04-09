@@ -1,3 +1,8 @@
+parameters:
+  - name: DaysValid
+    default: 365
+    type: number
+
 steps:
   - task: PowerShell@2
     displayName: Retain pipeline run
@@ -11,6 +16,6 @@ steps:
         -DefinitionId $(System.DefinitionId)
         -RunId $(Build.BuildId)
         -OwnerId Pipeline
-        -DaysValid 365
+        -DaysValid ${{parameters.DaysValid}}
         -Base64EncodedAuthToken $(System.AccessToken)
         -Debug
