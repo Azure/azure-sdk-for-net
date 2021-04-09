@@ -192,7 +192,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        [Ignore("test")]
+        // [Ignore("test")]
         public async Task BindToPoco()
         {
             var (jobHost, host) = BuildHost<ServiceBusArgumentBindingJob>();
