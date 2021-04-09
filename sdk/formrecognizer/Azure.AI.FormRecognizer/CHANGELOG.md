@@ -1,5 +1,10 @@
 # Release History
 
+## 3.0.1 (2021-04-09)
+
+### Key Bug Fixes
+- Updated dependency versions.
+
 ## 3.0.0 (2020-08-20)
 
 - First stable release of the Azure.AI.FormRecognizer package.
