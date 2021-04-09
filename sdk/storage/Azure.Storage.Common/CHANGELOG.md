@@ -1,7 +1,6 @@
 # Release History
 
-## 12.8.0-beta.3 (Unreleased)
-- Added ability to specify server timeout.
+## 12.8.0-beta.3 (2021-04-09)
 - Fixed bug in SasQueryParameters causing services (ss) reorder when parsing externally provided URI.
 
 ## 12.7.1 (2021-03-29)
