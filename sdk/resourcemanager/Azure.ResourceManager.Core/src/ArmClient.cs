@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Core
             if (credential is null)
                 throw new ArgumentNullException(nameof(credential));
 
-            ClientOptions = options ?? new ArmClientOptions();
+            ClientOptions = options?.Clone() ?? new ArmClientOptions();
             DefaultSubscription = string.IsNullOrWhiteSpace(defaultSubscriptionId)
                 ? GetDefaultSubscription()
                 : GetSubscriptionOperations(defaultSubscriptionId).Get().Value;

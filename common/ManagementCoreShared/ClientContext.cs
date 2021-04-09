@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Core
 {
@@ -27,16 +28,23 @@ namespace Azure.ResourceManager.Core
         public Uri BaseUri { get; set; }
 
         /// <summary>
+        /// pipeline transport
+        /// </summary>
+        public HttpPipelineTransport Transport { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ClientContext"/> class.
         /// </summary>
         /// <param name="clientOptions"></param>
         /// <param name="credential"></param>
         /// <param name="uri"></param>
-        internal ClientContext(ArmClientOptions clientOptions, TokenCredential credential, Uri uri)
+        /// <param name="transport"></param>
+        internal ClientContext(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipelineTransport transport = default)
         {
             ClientOptions = clientOptions;
             Credential = credential;
             BaseUri = uri;
+            Transport = transport;
         }
     }
 }

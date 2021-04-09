@@ -27,20 +27,18 @@ namespace Azure.ResourceManager.Core.Tests
             var client1 = GetArmClient(options1);
             
             Console.WriteLine("-----Client 1-----");
-            await foreach (var sub in client1.GetSubscriptions().ListAsync())
-            {
-                Console.WriteLine($"Check 1: Found {sub.Data.DisplayName}");
-            }
-            Assert.AreEqual(2, dummyPolicy1.numMsgGot);
+            var assetName = Recording.GenerateAssetName("testrg");
+            ResourceGroup rg = await Client.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            _ = client1.GetResourceGroupOperations(client1.DefaultSubscription.Id, assetName);
+            
+            Assert.AreEqual(1, dummyPolicy1.numMsgGot);
 
             options1.AddPolicy(dummyPolicy2, HttpPipelinePosition.PerCall);
-            await foreach (var sub in client1.GetSubscriptions().ListAsync())
-            {
-                Console.WriteLine($"Check 2: Found {sub.Data.DisplayName}");
-            }
 
-            Assert.AreEqual(3, dummyPolicy1.numMsgGot);
-            //Assert.AreEqual(0, dummyPolicy2.numMsgGot); uncomment for ADO #5572
+            _ = await client1.DefaultSubscription.GetResourceGroups().Construct(LocationData.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("test2Rg-"));
+            
+            Assert.AreEqual(2, dummyPolicy1.numMsgGot);
+            Assert.AreEqual(0, dummyPolicy2.numMsgGot);
         }
 
         private class dummyPolicy : HttpPipelineSynchronousPolicy
@@ -61,6 +59,29 @@ namespace Azure.ResourceManager.Core.Tests
             {
                 Interlocked.Add(ref numMsgGot, 2);
             }
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public void ValidateOptionsTestLocation()
+        {
+            var x = new ArmClientOptions();
+            var y = x.Clone();
+            Assert.IsTrue(ReferenceEquals(x.DefaultLocation, y.DefaultLocation));
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public void ValidateOptionsTestApiVersions()
+        {
+            var x = new ArmClientOptions();
+            var y = x.Clone();
+            Assert.IsFalse(ReferenceEquals(x.ApiVersions, y.ApiVersions));
+            Assert.AreEqual(x.ApiVersions.TryGetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}"), y.ApiVersions.TryGetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}"));
+
+            x.ApiVersions.SetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}", "1500-10-10");
+            Assert.IsFalse(ReferenceEquals(x.ApiVersions, y.ApiVersions));
+            Assert.AreNotEqual(x.ApiVersions, y.ApiVersions);
         }
     }
 }
