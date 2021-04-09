@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs/providers/microsoft.insights/metricNamespaces?api-version=2017-12-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-79e7585d92ec03418854a9633a6f9177-7c51b59dfdd31340-00",
+        "User-Agent": "azsdk-net-Monitory.Query/1.0.0-alpha.20210408.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "8c8a93ce2d9a92f0bb494f5dcc2d2c0b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "Request-Context",
+        "Cache-Control": "no-cache",
+        "Content-Length": "464",
+        "Content-Type": "application/json",
+        "Date": "Thu, 08 Apr 2021 18:44:21 GMT",
+        "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
+        "Server": "Microsoft-IIS/10.0",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "04c756d7-e061-4f1c-8f1a-224df71453cb",
+        "x-ms-ratelimit-remaining-subscription-reads": "11993",
+        "x-ms-request-id": "{04c756d7-e061-4f1c-8f1a-224df71453cb}",
+        "x-ms-routing-request-id": "WESTCENTRALUS:20210408T184422Z:04c756d7-e061-4f1c-8f1a-224df71453cb",
+        "X-Powered-By": "ASP.NET"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "id": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs/providers/microsoft.insights/metricNamespaces/Microsoft.OperationalInsights-workspaces",
+            "name": "Microsoft.OperationalInsights-workspaces",
+            "type": "Microsoft.Insights/metricNamespaces",
+            "classification": "Platform",
+            "properties": {
+              "metricNamespaceName": "Microsoft.OperationalInsights/workspaces"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs",
+    "RandomSeed": "986176634"
+  }
+}
