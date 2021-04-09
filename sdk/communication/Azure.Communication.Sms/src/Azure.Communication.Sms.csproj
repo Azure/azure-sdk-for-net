@@ -6,7 +6,9 @@
       Microsoft Azure Communication Sms quickstart - https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/send?pivots=programming-language-csharp
     </Description>
     <AssemblyTitle>Azure Communication Sms Service</AssemblyTitle>
-    <Version>1.0.0-beta.4</Version>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Sms Service;Microsoft;Azure;Azure Communication Service;Azure Communication Sms Service;Sms;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableApiCompat>false</EnableApiCompat>
@@ -18,7 +20,6 @@
   <ItemGroup>
     <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
-    <Compile Include="..\..\Shared\src\StaticTokenCredential.cs" Link="Shared\Communication\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" Link="Shared\Core\%(RecursiveDir)\%(Filename)%(Extension)" />
@@ -30,9 +31,6 @@
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" Link="Shared\%(RecursiveDir)\%(Filename)%(Extension)" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
   </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />

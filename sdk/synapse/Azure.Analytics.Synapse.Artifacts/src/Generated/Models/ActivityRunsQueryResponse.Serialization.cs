@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(ActivityRunsQueryResponseConverter))]
     public partial class ActivityRunsQueryResponse
     {
         internal static ActivityRunsQueryResponse DeserializeActivityRunsQueryResponse(JsonElement element)
@@ -36,6 +39,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new ActivityRunsQueryResponse(value, continuationToken.Value);
+        }
+
+        internal partial class ActivityRunsQueryResponseConverter : JsonConverter<ActivityRunsQueryResponse>
+        {
+            public override void Write(Utf8JsonWriter writer, ActivityRunsQueryResponse model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override ActivityRunsQueryResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeActivityRunsQueryResponse(document.RootElement);
+            }
         }
     }
 }

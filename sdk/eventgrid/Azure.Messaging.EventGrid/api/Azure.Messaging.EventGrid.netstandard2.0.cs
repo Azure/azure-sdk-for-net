@@ -66,9 +66,9 @@ namespace Azure.Messaging.EventGrid
         public const string AcsChatMessageEditedInThread = "Microsoft.Communication.ChatMessageEditedInThread";
         public const string AcsChatMessageReceived = "Microsoft.Communication.ChatMessageReceived";
         public const string AcsChatMessageReceivedInThread = "Microsoft.Communication.ChatMessageReceivedInThread";
-        public const string AcsChatParticipantAddedToThread = "Microsoft.Communication.ChatParticipantAddedToThread";
+        public const string AcsChatParticipantAddedToThread = "Microsoft.Communication.ChatThreadParticipantAdded";
         public const string AcsChatParticipantAddedToThreadWithUser = "Microsoft.Communication.ChatParticipantAddedToThreadWithUser";
-        public const string AcsChatParticipantRemovedFromThread = "Microsoft.Communication.ChatParticipantRemovedFromThread";
+        public const string AcsChatParticipantRemovedFromThread = "Microsoft.Communication.ChatThreadParticipantRemoved";
         public const string AcsChatParticipantRemovedFromThreadWithUser = "Microsoft.Communication.ChatParticipantRemovedFromThreadWithUser";
         public const string AcsChatThreadCreated = "Microsoft.Communication.ChatThreadCreated";
         public const string AcsChatThreadCreatedWithUser = "Microsoft.Communication.ChatThreadCreatedWithUser";
@@ -76,8 +76,9 @@ namespace Azure.Messaging.EventGrid
         public const string AcsChatThreadPropertiesUpdated = "Microsoft.Communication.ChatThreadPropertiesUpdated";
         public const string AcsChatThreadPropertiesUpdatedPerUser = "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser";
         public const string AcsChatThreadWithUserDeleted = "Microsoft.Communication.ChatThreadWithUserDeleted";
+        public const string AcsRecordingFileStatusUpdated = "Microsoft.Communication.RecordingFileStatusUpdated";
         public const string AcsSmsDeliveryReportReceived = "Microsoft.Communication.SMSDeliveryReportReceived";
-        public const string ACSSMSReceived = "Microsoft.Communication.SMSReceived";
+        public const string AcsSmsReceived = "Microsoft.Communication.SMSReceived";
         public const string AppConfigurationKeyValueDeleted = "Microsoft.AppConfiguration.KeyValueDeleted";
         public const string AppConfigurationKeyValueModified = "Microsoft.AppConfiguration.KeyValueModified";
         public const string ContainerRegistryChartDeleted = "Microsoft.ContainerRegistry.ChartDeleted";
@@ -87,10 +88,10 @@ namespace Azure.Messaging.EventGrid
         public const string EventGridSubscriptionDeleted = "Microsoft.EventGrid.SubscriptionDeletedEvent";
         public const string EventGridSubscriptionValidation = "Microsoft.EventGrid.SubscriptionValidationEvent";
         public const string EventHubCaptureFileCreated = "Microsoft.EventHub.CaptureFileCreated";
-        public const string IoTHubDeviceConnected = "Microsoft.Devices.DeviceConnected";
-        public const string IoTHubDeviceCreated = "Microsoft.Devices.DeviceCreated";
-        public const string IoTHubDeviceDeleted = "Microsoft.Devices.DeviceDeleted";
-        public const string IoTHubDeviceDisconnected = "Microsoft.Devices.DeviceDisconnected";
+        public const string IotHubDeviceConnected = "Microsoft.Devices.DeviceConnected";
+        public const string IotHubDeviceCreated = "Microsoft.Devices.DeviceCreated";
+        public const string IotHubDeviceDeleted = "Microsoft.Devices.DeviceDeleted";
+        public const string IotHubDeviceDisconnected = "Microsoft.Devices.DeviceDisconnected";
         public const string IotHubDeviceTelemetry = "Microsoft.Devices.DeviceTelemetry";
         public const string KeyVaultAccessPolicyChanged = "Microsoft.KeyVault.VaultAccessPolicyChanged";
         public const string KeyVaultCertificateExpired = "Microsoft.KeyVault.CertificateExpired";
@@ -134,8 +135,8 @@ namespace Azure.Messaging.EventGrid
         public const string MediaLiveEventIncomingVideoStreamsOutOfSync = "Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync";
         public const string MediaLiveEventIngestHeartbeat = "Microsoft.Media.LiveEventIngestHeartbeat";
         public const string MediaLiveEventTrackDiscontinuityDetected = "Microsoft.Media.LiveEventTrackDiscontinuityDetected";
-        public const string RedisExportRDBCompleted = "Microsoft.Cache.ExportRDBCompleted";
-        public const string RedisImportRDBCompleted = "Microsoft.Cache.ImportRDBCompleted";
+        public const string RedisExportRdbCompleted = "Microsoft.Cache.ExportRDBCompleted";
+        public const string RedisImportRdbCompleted = "Microsoft.Cache.ImportRDBCompleted";
         public const string RedisPatchingCompleted = "Microsoft.Cache.PatchingCompleted";
         public const string RedisScalingCompleted = "Microsoft.Cache.ScalingCompleted";
         public const string ResourceActionCancel = "Microsoft.Resources.ResourceActionCancel";
@@ -188,6 +189,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AcsChatEventInThreadBaseProperties() { }
         public string ThreadId { get { throw null; } }
+        public string TransactionId { get { throw null; } }
     }
     public partial class AcsChatMessageDeletedEventData : Azure.Messaging.EventGrid.SystemEvents.AcsChatMessageEventBaseProperties
     {
@@ -329,6 +331,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.CommunicationIdentifierModel DeletedByCommunicationIdentifier { get { throw null; } }
         public System.DateTimeOffset? DeleteTime { get { throw null; } }
     }
+    public partial class AcsRecordingChunkInfoProperties
+    {
+        internal AcsRecordingChunkInfoProperties() { }
+        public string DocumentId { get { throw null; } }
+        public string EndReason { get { throw null; } }
+        public long? Index { get { throw null; } }
+    }
+    public partial class AcsRecordingFileStatusUpdatedEventData
+    {
+        internal AcsRecordingFileStatusUpdatedEventData() { }
+        public long? RecordingDurationMs { get { throw null; } }
+        public System.DateTimeOffset? RecordingStartTime { get { throw null; } }
+        public Azure.Messaging.EventGrid.SystemEvents.AcsRecordingStorageInfoProperties RecordingStorageInfo { get { throw null; } }
+        public string SessionEndReason { get { throw null; } }
+    }
+    public partial class AcsRecordingStorageInfoProperties
+    {
+        internal AcsRecordingStorageInfoProperties() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.AcsRecordingChunkInfoProperties> RecordingChunks { get { throw null; } }
+    }
     public partial class AcsSmsDeliveryAttemptProperties
     {
         internal AcsSmsDeliveryAttemptProperties() { }
@@ -343,6 +365,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string DeliveryStatus { get { throw null; } }
         public string DeliveryStatusDetails { get { throw null; } }
         public System.DateTimeOffset? ReceivedTimestamp { get { throw null; } }
+        public string Tag { get { throw null; } }
     }
     public partial class AcsSmsEventBaseProperties
     {
@@ -1082,16 +1105,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal PhoneNumberIdentifierModel() { }
         public string Value { get { throw null; } }
     }
-    public partial class RedisExportRDBCompletedEventData
+    public partial class RedisExportRdbCompletedEventData
     {
-        internal RedisExportRDBCompletedEventData() { }
+        internal RedisExportRdbCompletedEventData() { }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
     }
-    public partial class RedisImportRDBCompletedEventData
+    public partial class RedisImportRdbCompletedEventData
     {
-        internal RedisImportRDBCompletedEventData() { }
+        internal RedisImportRdbCompletedEventData() { }
         public string Name { get { throw null; } }
         public string Status { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }

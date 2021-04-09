@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(CosmosDbMongoDbApiSinkConverter))]
     public partial class CosmosDbMongoDbApiSink : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -138,6 +141,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new CosmosDbMongoDbApiSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, writeBehavior.Value);
+        }
+
+        internal partial class CosmosDbMongoDbApiSinkConverter : JsonConverter<CosmosDbMongoDbApiSink>
+        {
+            public override void Write(Utf8JsonWriter writer, CosmosDbMongoDbApiSink model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override CosmosDbMongoDbApiSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCosmosDbMongoDbApiSink(document.RootElement);
+            }
         }
     }
 }

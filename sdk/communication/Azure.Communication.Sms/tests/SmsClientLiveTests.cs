@@ -60,7 +60,7 @@ namespace Azure.Communication.Sms.Tests
             }
             SmsClient client = InstrumentClient(
                 new SmsClient(
-                    new Uri(ConnectionString.Parse(TestEnvironment.LiveTestConnectionString, allowEmptyValues: true).GetRequired("endpoint")),
+                    TestEnvironment.LiveTestEndpoint,
                     tokenCredential,
                     InstrumentClientOptions(new SmsClientOptions())));
 
@@ -172,7 +172,7 @@ namespace Azure.Communication.Sms.Tests
                     InstrumentClientOptions(new SmsClientOptions())));
             try
             {
-                Response<IEnumerable<SmsSendResult>> response = await client.SendAsync(
+                var response = await client.SendAsync(
                     from: TestEnvironment.FromPhoneNumber,
                     to: new string[] { TestEnvironment.ToPhoneNumber, TestEnvironment.ToPhoneNumber },
                    message: "Hi",
@@ -180,8 +180,7 @@ namespace Azure.Communication.Sms.Tests
                    {
                        Tag = "marketing", // custom tags
                    });
-                IEnumerable<SmsSendResult> results = response.Value;
-                foreach (SmsSendResult result in results)
+                foreach (SmsSendResult result in response.Value)
                 {
                     Console.WriteLine($"Sms id: {result.MessageId}");
                     assertHappyPath(result);

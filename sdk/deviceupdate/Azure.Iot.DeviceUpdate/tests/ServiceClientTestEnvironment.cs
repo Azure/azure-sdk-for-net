@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.Iot.DeviceUpdate.Tests
+namespace Azure.IoT.DeviceUpdate.Tests
 {
     /// <summary>
     /// A service client test environment.

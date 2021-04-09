@@ -11,11 +11,12 @@ using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class Repositories
+    internal partial class Repositories
     {
         internal static Repositories DeserializeRepositories(JsonElement element)
         {
             Optional<IReadOnlyList<string>> repositories = default;
+            Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("repositories"))
@@ -33,8 +34,13 @@ namespace Azure.Containers.ContainerRegistry
                     repositories = array;
                     continue;
                 }
+                if (property.NameEquals("link"))
+                {
+                    link = property.Value.GetString();
+                    continue;
+                }
             }
-            return new Repositories(Optional.ToList(repositories));
+            return new Repositories(Optional.ToList(repositories), link.Value);
         }
     }
 }

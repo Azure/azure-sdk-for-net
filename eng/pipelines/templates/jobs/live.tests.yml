@@ -1,0 +1,136 @@
+parameters:
+- name: PreSteps
+  type: object
+  default: []
+- name: PostSteps
+  type: object
+  default: []
+- name: EnvVars
+  type: object
+  default: {}
+- name: MaxParallel
+  type: number
+  default: 0
+- name: BuildInParallel
+  type: boolean
+  default: true
+- name: TimeoutInMinutes
+  type: number
+  default: 60
+- name: Location
+  type: string
+  default: ''
+- name: SDKType
+  type: string
+  default: all
+- name: ServiceDirectory
+  type: string
+  default: not-specified
+- name: TestSetupSteps
+  type: stepList
+  default: []
+- name: CloudConfig
+  type: object
+  default: {}
+- name: Platforms
+  type: object
+  default: {}
+- name: Matrix
+  type: string
+- name: DependsOn
+  type: string
+  default: ''
+- name: UsePlatformContainer
+  type: boolean
+  default: false
+
+jobs:
+  - job:
+    dependsOn: ${{ parameters.DependsOn }}
+    condition: ne(${{ parameters.Matrix }}, '{}')
+    strategy:
+      maxParallel: ${{ parameters.MaxParallel }}
+      matrix: $[ ${{ parameters.Matrix }} ]
+
+    variables:
+      # ServiceDirectory references must get passed down by the caller as variable references
+      - name: ServiceDirectory
+        value: ${{ parameters.ServiceDirectory }}
+      - name: AdditionalTestArguments
+        value: ''
+      - name: ArmTemplateParameters
+        value: '@{}'
+      - name: TestMode
+        value: 'None'
+
+    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+
+    pool:
+      name: $(Pool)
+      vmImage: $(OSVmImage)
+
+    ${{ if eq(parameters.UsePlatformContainer, 'true') }}:
+      # Add a default so the job doesn't fail when the matrix is empty
+      container: $[ variables['Container'] ]
+
+    steps:
+      - ${{ parameters.PreSteps }}
+
+      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+        parameters:
+          AgentImage: $(OSVmImage)
+
+      - ${{ each step in parameters.TestSetupSteps }}:
+        - ${{ each pair in step }}:
+            ${{ pair.key }}: ${{ pair.value }}
+
+      - template: /eng/common/TestResources/deploy-test-resources.yml
+        parameters:
+          ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
+            Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
+          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+          SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
+          ArmTemplateParameters: $(ArmTemplateParameters)
+
+      - pwsh: |
+          if ($env:SupportsRecording -and $env:Record) {
+            Write-Host "Enabling Record mode"
+            Write-Host "##vso[task.setvariable variable=TestMode]Record"
+          }
+        displayName: Set Test Mode
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - pwsh: >
+          dotnet test eng/service.proj
+          --framework $(TestTargetFramework)
+          --filter "TestCategory!=Manually"
+          --logger "trx"
+          --logger:"console;verbosity=normal"
+          /p:SDKType=${{ parameters.SDKType }}
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
+          /p:BuildInParallel=${{ parameters.BuildInParallel }}
+          $(AdditionalTestArguments)
+
+        displayName: "Build & Test (all tests for $(TestTargetFramework))"
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          AZURE_TEST_MODE: $(TestMode)
+          ${{ each var in parameters.EnvVars }}:
+            ${{ var.key }}: ${{ var.value }}
+
+      - template: /eng/common/TestResources/remove-test-resources.yml
+        parameters:
+          ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+          SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
+
+      - task: PublishTestResults@2
+        condition: always()
+        displayName: "Publish Results ($(TestTargetFramework))"
+        inputs:
+          testResultsFiles: "**/*.trx"
+          testRunTitle: "$(TestTargetFramework)"
+          testResultsFormat: "VSTest"
+          mergeTestResults: true
+
+      - ${{ parameters.PostSteps }}

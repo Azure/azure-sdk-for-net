@@ -12,7 +12,7 @@
         "x-ms-client-request-id": "9f19c243-b033-8df3-56fd-5c15360807ae",
         "x-ms-return-client-request-id": "true",
         "x-ms-share-quota": "1",
-        "x-ms-version": "2020-06-12",
+         "x-ms-version": "2020-08-04",
         "Accept": "application/xml"
       },
       "RequestBody": null,
@@ -28,7 +28,7 @@
         "x-ms-client-request-id": "9f19c243-b033-8df3-56fd-5c15360807ae",
         "x-ms-error-code": "AuthorizationFailure",
         "x-ms-request-id": "40853caa-601a-0010-7252-3888c8000000",
-        "x-ms-version": "2020-06-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": [
         "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>AuthorizationFailure</Code><Message>This request is not authorized to perform this operation.\n",

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Communication
 
         internal CommunicationServiceCreateOrUpdateOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new ArmOperationHelpers<CommunicationServiceResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "CommunicationServiceCreateOrUpdateOperation");
+            _operation = new ArmOperationHelpers<CommunicationServiceResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.AzureAsyncOperation, "CommunicationServiceCreateOrUpdateOperation");
         }
         /// <inheritdoc />
         public override string Id => _operation.Id;

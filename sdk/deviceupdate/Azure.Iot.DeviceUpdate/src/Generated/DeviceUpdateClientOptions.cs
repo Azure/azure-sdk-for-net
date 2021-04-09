@@ -8,7 +8,7 @@
 using System;
 using Azure.Core;
 
-namespace Azure.Iot.DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> Client options for DeviceUpdateClient. </summary>
     public partial class DeviceUpdateClientOptions : ClientOptions

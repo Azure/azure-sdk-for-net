@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Communication.PhoneNumbers.Models
+namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The result of a phone number search operation. </summary>
     public partial class PhoneNumberSearchResult

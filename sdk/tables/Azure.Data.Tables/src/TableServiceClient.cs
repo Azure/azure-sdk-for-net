@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,8 +25,26 @@ namespace Azure.Data.Tables
         private readonly ServiceRestClient _secondaryServiceOperations;
         private readonly OdataMetadataFormat _format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata;
         private readonly string _version;
-        internal readonly bool _isPremiumEndpoint;
+        internal readonly bool _isCosmosEndpoint;
         private readonly QueryOptions _defaultQueryOptions = new QueryOptions() { Format = OdataMetadataFormat.ApplicationJsonOdataMinimalmetadata };
+        private string _accountName;
+        private readonly Uri _endpoint;
+
+        /// <summary>
+        /// The name of the table account with which this client instance will interact.
+        /// </summary>
+        public virtual string AccountName
+        {
+            get
+            {
+                if (_accountName == null)
+                {
+                    var builder = new TableUriBuilder(_endpoint);
+                    _accountName = builder.AccountName;
+                }
+                return _accountName;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified <see cref="Uri" /> containing a shared access signature (SAS)
@@ -130,37 +150,42 @@ namespace Azure.Data.Tables
             Argument.AssertNotNull(connectionString, nameof(connectionString));
 
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
+            _accountName = connString._accountName;
 
             options ??= new TableClientOptions();
             var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
             var secondaryEndpoint = connString.TableStorageUri.SecondaryUri?.AbsoluteUri;
+            _isCosmosEndpoint = TableServiceClient.IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
+            var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
 
             TableSharedKeyPipelinePolicy policy = connString.Credentials switch
             {
                 TableSharedKeyCredential credential => new TableSharedKeyPipelinePolicy(credential),
                 _ => default
             };
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier());
 
             _version = options.VersionString;
             _diagnostics = new ClientDiagnostics(options);
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
-            _isPremiumEndpoint = IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
         }
 
         internal TableServiceClient(Uri endpoint, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
 
+            _endpoint = endpoint;
             options ??= new TableClientOptions();
+            _isCosmosEndpoint = IsPremiumEndpoint(endpoint);
+            var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             var endpointString = endpoint.AbsoluteUri;
             string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(endpoint)?.AbsoluteUri;
             HttpPipeline pipeline = sasCredential switch
             {
-                null => HttpPipelineBuilder.Build(options, policy),
-                _ => HttpPipelineBuilder.Build(options, policy, new AzureSasCredentialSynchronousPolicy(sasCredential))
+                null => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new[] { policy }, new ResponseClassifier()),
+                _ => HttpPipelineBuilder.Build(options, perCallPolicies: perCallPolicies, perRetryPolicies: new HttpPipelinePolicy[] { policy, new AzureSasCredentialSynchronousPolicy(sasCredential) }, new ResponseClassifier())
             };
 
             _version = options.VersionString;
@@ -168,7 +193,6 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, pipeline, endpointString, _version);
             _serviceOperations = new ServiceRestClient(_diagnostics, pipeline, endpointString, _version);
             _secondaryServiceOperations = new ServiceRestClient(_diagnostics, pipeline, secondaryEndpoint, _version);
-            _isPremiumEndpoint = IsPremiumEndpoint(endpoint);
         }
 
         /// <summary>
@@ -220,7 +244,7 @@ namespace Azure.Data.Tables
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
 
-            return new TableClient(tableName, _tableOperations, _version, _diagnostics, _isPremiumEndpoint);
+            return new TableClient(tableName, _tableOperations, _version, _diagnostics, _isCosmosEndpoint, _endpoint);
         }
 
         /// <summary>
@@ -325,6 +349,64 @@ namespace Azure.Data.Tables
                     }
                 },
                 maxPerPage);
+        }
+
+        /// <summary>
+        /// Gets a list of tables from the storage account.
+        /// </summary>
+        /// <param name="filter">
+        /// Returns only tables that satisfy the specified filter expression.
+        /// For example, the following expression would filter tables with a TableName of 'foo': <c>e => e.TableName == "foo"</c>.
+        /// </param>
+        /// <param name="maxPerPage">
+        /// The maximum number of entities that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AsyncPageable{T}"/> containing a collection of <see cref="TableItem"/>s.</returns>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual AsyncPageable<TableItem> GetTablesAsync(Expression<Func<TableItem, bool>> filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetTables)}");
+            scope.Start();
+            try
+            {
+                return GetTablesAsync(TableClient.Bind(filter), maxPerPage, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of tables from the storage account.
+        /// </summary>
+        /// <param name="filter">
+        /// Returns only tables that satisfy the specified filter expression.
+        /// For example, the following expression would filter tables with a TableName of 'foo': <c>e => e.TableName == "foo"</c>.
+        /// </param>
+        /// <param name="maxPerPage">
+        /// The maximum number of entities that will be returned per page.
+        /// Note: This value does not limit the total number of results if the result is fully enumerated.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="Pageable{T}"/> containing a collection of <see cref="TableItem"/>.</returns>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Pageable<TableItem> GetTables(Expression<Func<TableItem, bool>> filter, int? maxPerPage = null, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(GetTables)}");
+            scope.Start();
+            try
+            {
+                return GetTables(TableClient.Bind(filter), maxPerPage, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
         }
 
         /// <summary>
@@ -583,9 +665,16 @@ namespace Azure.Data.Tables
 
         internal static bool IsPremiumEndpoint(Uri endpoint)
         {
-            string absoluteUri = endpoint.OriginalString.ToLowerInvariant();
             return (endpoint.Host.Equals("localhost", StringComparison.OrdinalIgnoreCase) && endpoint.Port != 10002) ||
-                absoluteUri.Contains(TableConstants.CosmosTableDomain) || absoluteUri.Contains(TableConstants.LegacyCosmosTableDomain);
+                endpoint.Host.IndexOf(TableConstants.CosmosTableDomain, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                endpoint.Host.IndexOf(TableConstants.LegacyCosmosTableDomain, StringComparison.OrdinalIgnoreCase) >= 0;
         }
+
+        /// <summary>
+        /// Creates an OData filter query string from the provided expression.
+        /// </summary>
+        /// <param name="filter">A filter expression.</param>
+        /// <returns>The string representation of the filter expression.</returns>
+        public static string CreateQueryFilter(Expression<Func<TableItem, bool>> filter) => TableClient.Bind(filter);
     }
 }

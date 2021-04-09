@@ -69,7 +69,7 @@ namespace Azure.Storage.Blobs
         public override int Read(byte[] buffer, int offset, int count)
             => ReadInternal(async: false, buffer, offset, count).EnsureCompleted();
 
-        /// <inheritdoc/>
+        /// <inheritdoc cref="Stream.ReadAsync(byte[],int,int)"/>
         public new async Task<int> ReadAsync(byte[] buffer, int offset, int count)
             => await ReadInternal(async: true, buffer, offset, count).ConfigureAwait(false);
 

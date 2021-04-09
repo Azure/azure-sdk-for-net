@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Samples
             #endregion
 
             #region Snippet:CreateLinkedServiceClient
-            LinkedServiceClient client = new LinkedServiceClient(endpoint: endpoint, credential: new DefaultAzureCredential());
+            LinkedServiceClient client = new LinkedServiceClient(endpoint: new Uri(endpoint), credential: new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreateLinkedService

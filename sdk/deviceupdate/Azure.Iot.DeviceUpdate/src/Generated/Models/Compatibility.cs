@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Iot.DeviceUpdate.Models
+namespace Azure.IoT.DeviceUpdate.Models
 {
     /// <summary> Update compatibility information. </summary>
     public partial class Compatibility

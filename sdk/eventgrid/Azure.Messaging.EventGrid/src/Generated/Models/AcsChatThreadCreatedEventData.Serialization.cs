@@ -23,6 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<IReadOnlyList<AcsChatThreadParticipantProperties>> participants = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
+            Optional<string> transactionId = default;
             Optional<string> threadId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -86,20 +87,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     version = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("transactionId"))
+                {
+                    transactionId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("threadId"))
                 {
                     threadId = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsChatThreadCreatedEventData(threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), createdByCommunicationIdentifier.Value, Optional.ToDictionary(properties), Optional.ToList(participants));
+            return new AcsChatThreadCreatedEventData(transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), createdByCommunicationIdentifier.Value, Optional.ToDictionary(properties), Optional.ToList(participants));
         }
 
         internal partial class AcsChatThreadCreatedEventDataConverter : JsonConverter<AcsChatThreadCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsChatThreadCreatedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                throw new NotImplementedException();
             }
             public override AcsChatThreadCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

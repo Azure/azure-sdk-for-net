@@ -60,6 +60,7 @@ namespace Azure.Storage.Blobs
             V2020_02_10 = 4,
             V2020_04_08 = 5,
             V2020_06_12 = 6,
+            V2020_08_04 = 7,
         }
     }
     public partial class BlobContainerClient
@@ -825,6 +826,10 @@ namespace Azure.Storage.Blobs.Models
         public Azure.Storage.Blobs.Models.BlobQueryTextOptions OutputTextConfiguration { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public event System.Action<Azure.Storage.Blobs.Models.BlobQueryError> ErrorHandler { add { } remove { } }
+    }
+    public partial class BlobQueryParquetTextOptions : Azure.Storage.Blobs.Models.BlobQueryTextOptions
+    {
+        public BlobQueryParquetTextOptions() { }
     }
     public abstract partial class BlobQueryTextOptions
     {

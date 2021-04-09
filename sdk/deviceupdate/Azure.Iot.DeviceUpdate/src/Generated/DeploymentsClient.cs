@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Iot.DeviceUpdate.Models;
+using Azure.IoT.DeviceUpdate.Models;
 
-namespace Azure.Iot.DeviceUpdate
+namespace Azure.IoT.DeviceUpdate
 {
     /// <summary> The Deployments service client. </summary>
     public partial class DeploymentsClient

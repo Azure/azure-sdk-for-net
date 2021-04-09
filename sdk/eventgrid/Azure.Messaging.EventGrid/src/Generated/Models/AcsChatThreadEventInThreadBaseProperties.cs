@@ -18,10 +18,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> Initializes a new instance of AcsChatThreadEventInThreadBaseProperties. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
-        internal AcsChatThreadEventInThreadBaseProperties(string threadId, DateTimeOffset? createTime, long? version) : base(threadId)
+        internal AcsChatThreadEventInThreadBaseProperties(string transactionId, string threadId, DateTimeOffset? createTime, long? version) : base(transactionId, threadId)
         {
             CreateTime = createTime;
             Version = version;

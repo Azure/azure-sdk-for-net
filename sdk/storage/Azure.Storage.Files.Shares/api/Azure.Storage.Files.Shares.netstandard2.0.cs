@@ -105,6 +105,7 @@ namespace Azure.Storage.Files.Shares
             V2020_02_10 = 4,
             V2020_04_08 = 5,
             V2020_06_12 = 6,
+            V2020_08_04 = 7,
         }
     }
     public partial class ShareDirectoryClient
@@ -940,6 +941,7 @@ namespace Azure.Storage.Files.Shares.Specialized
     {
         public static readonly System.TimeSpan InfiniteLeaseDuration;
         protected ShareLeaseClient() { }
+        public ShareLeaseClient(Azure.Storage.Files.Shares.ShareClient client, string leaseId = null) { }
         public ShareLeaseClient(Azure.Storage.Files.Shares.ShareFileClient client, string leaseId = null) { }
         protected virtual Azure.Storage.Files.Shares.ShareFileClient FileClient { get { throw null; } }
         public virtual string LeaseId { get { throw null; } }

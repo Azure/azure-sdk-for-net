@@ -14,7 +14,6 @@ namespace Microsoft.Azure.Management.Automation
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Azure.OData;
     using Models;
-    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -42,7 +41,7 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='clientRequestId'>
             /// Identifies this specific client request.
             /// </param>
-            public static Stream GetOutput(this IJobOperations operations, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = default(string))
+            public static string GetOutput(this IJobOperations operations, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = default(string))
             {
                 return operations.GetOutputAsync(resourceGroupName, automationAccountName, jobName, clientRequestId).GetAwaiter().GetResult();
             }
@@ -69,11 +68,12 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Stream> GetOutputAsync(this IJobOperations operations, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> GetOutputAsync(this IJobOperations operations, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetOutputWithHttpMessagesAsync(resourceGroupName, automationAccountName, jobName, clientRequestId, null, cancellationToken).ConfigureAwait(false);
-                _result.Request.Dispose();
-                return _result.Body;
+                using (var _result = await operations.GetOutputWithHttpMessagesAsync(resourceGroupName, automationAccountName, jobName, clientRequestId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='clientRequestId'>
             /// Identifies this specific client request.
             /// </param>
-            public static Stream GetRunbookContent(this IJobOperations operations, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = default(string))
+            public static string GetRunbookContent(this IJobOperations operations, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = default(string))
             {
                 return operations.GetRunbookContentAsync(resourceGroupName, automationAccountName, jobName, clientRequestId).GetAwaiter().GetResult();
             }
@@ -122,11 +122,12 @@ namespace Microsoft.Azure.Management.Automation
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Stream> GetRunbookContentAsync(this IJobOperations operations, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> GetRunbookContentAsync(this IJobOperations operations, string resourceGroupName, string automationAccountName, string jobName, string clientRequestId = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                var _result = await operations.GetRunbookContentWithHttpMessagesAsync(resourceGroupName, automationAccountName, jobName, clientRequestId, null, cancellationToken).ConfigureAwait(false);
-                _result.Request.Dispose();
-                return _result.Body;
+                using (var _result = await operations.GetRunbookContentWithHttpMessagesAsync(resourceGroupName, automationAccountName, jobName, clientRequestId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
