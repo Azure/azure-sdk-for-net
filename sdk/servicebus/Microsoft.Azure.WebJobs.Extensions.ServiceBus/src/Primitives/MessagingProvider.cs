@@ -27,9 +27,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         {
         }
 
-        public MessagingProvider(IOptions<ServiceBusOptions> options)
+        public MessagingProvider(IOptions<ServiceBusOptions> options, AzureEventSourceLogForwarder forwarder)
         {
             _options = options?.Value ?? throw new ArgumentNullException(nameof(options));
+            forwarder.Start();
         }
 
         public virtual ServiceBusClient CreateClient(string connectionString)

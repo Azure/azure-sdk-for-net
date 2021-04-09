@@ -12,6 +12,7 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.ServiceBus.Bindings;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
@@ -29,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Bindings
 
             Mock<INameResolver> mockResolver = new Mock<INameResolver>(MockBehavior.Strict);
             ServiceBusOptions config = new ServiceBusOptions();
-            var messagingProvider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(config));
+            var messagingProvider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(config), new AzureEventSourceLogForwarder(new NullLoggerFactory()));
             var factory = new ServiceBusClientFactory(_configuration, new Mock<AzureComponentFactory>().Object, messagingProvider);
             _provider = new ServiceBusAttributeBindingProvider(mockResolver.Object, messagingProvider, factory);
         }

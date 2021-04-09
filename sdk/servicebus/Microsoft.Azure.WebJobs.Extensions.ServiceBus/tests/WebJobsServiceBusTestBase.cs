@@ -172,6 +172,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             await using ServiceBusClient client = new ServiceBusClient(connectionString ?? ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
             var sender = client.CreateSender(queueName ?? _firstQueueScope.QueueName);
+            TestContext.Progress.WriteLine($"Sending to {sender.EntityPath}");
             ServiceBusMessage messageObj = new ServiceBusMessage(message);
             if (!string.IsNullOrEmpty(sessionId))
             {
@@ -196,6 +197,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
             var sender = client.CreateSender(_firstQueueScope.QueueName);
+            TestContext.Progress.WriteLine($"Sending to {sender.EntityPath}");
             ServiceBusMessage messageObj = new ServiceBusMessage(payload);
             if (!string.IsNullOrEmpty(sessionId))
             {
@@ -208,6 +210,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         {
             await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
             var sender = client.CreateSender(_topicScope.TopicName);
+            TestContext.Progress.WriteLine($"Sending to {sender.EntityPath}");
             ServiceBusMessage messageObj = new ServiceBusMessage(message);
             if (!string.IsNullOrEmpty(sessionId))
             {

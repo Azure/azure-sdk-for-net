@@ -41,6 +41,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        // [Ignore("test")]
         public async Task ServiceBusEndToEnd()
         {
             var (jobHost, host) = BuildHost<ServiceBusTestJobs>(startHost: false);
@@ -51,6 +52,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        // [Ignore("test")]
         public async Task ServiceBusEndToEndTokenCredential()
         {
             var (jobHost, host) = BuildHost<ServiceBusTestJobs>(startHost: false, useTokenCredential: true);
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        // [Ignore("test")]
         public async Task ServiceBusBinderTest()
         {
             var (jobHost, host) = BuildHost<BinderTestJobs>();
@@ -105,6 +108,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        // [Ignore("test")]
         public async Task CustomMessageProcessorTest()
         {
             var (jobHost, host) = BuildHost<ServiceBusTestJobs>(host =>
@@ -130,6 +134,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        // [Ignore("test")]
         public async Task MultipleAccountTest()
         {
             var (jobHost, host) = BuildHost<ServiceBusTestJobs>(host =>
@@ -159,7 +164,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [Test]
         public async Task TestBatch_String()
         {
-            await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToStringArray>();
+            // for (int i = 0; i < 100; i++)
+            // {
+            //     TestContext.Progress.WriteLine(i);
+            //     await FixtureSetUp();
+                await TestMultiple<ServiceBusMultipleMessagesTestJob_BindToStringArray>();
+                // await FixtureTearDown();
+            // }
         }
 
         [Test]
@@ -181,6 +192,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        [Ignore("test")]
         public async Task BindToPoco()
         {
             var (jobHost, host) = BuildHost<ServiceBusArgumentBindingJob>();
@@ -198,6 +210,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        // [Ignore("test")]
         public async Task BindToString()
         {
             var (jobHost, host) = BuildHost<ServiceBusArgumentBindingJob>();
@@ -216,30 +229,35 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        // [Ignore("test")]
         public async Task MessageDrainingQueue()
         {
             await TestSingleDrainMode<DrainModeTestJobQueue>(true);
         }
 
         [Test]
+        // [Ignore("test")]
         public async Task MessageDrainingTopic()
         {
             await TestSingleDrainMode<DrainModeTestJobTopic>(false);
         }
 
         [Test]
+        // [Ignore("test")]
         public async Task MessageDrainingQueueBatch()
         {
             await TestMultipleDrainMode<DrainModeTestJobQueueBatch>(true);
         }
 
         [Test]
+        // [Ignore("test")]
         public async Task MessageDrainingTopicBatch()
         {
             await TestMultipleDrainMode<DrainModeTestJobTopicBatch>(false);
         }
 
         [Test]
+        // [Ignore("test")]
         public async Task MultipleFunctionsBindingToSameEntity()
         {
             await TestMultiple<ServiceBusSingleMessageTestJob_BindMultipleFunctionsToSameEntity>();
@@ -309,6 +327,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _topicSubscriptionCalled1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await jobHost.StopAsync();
+                var loggerProvider = host.GetTestLoggerProvider();
+                IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
+                    .GetAllLogMessages();
+                foreach (LogMessage message in logMessages)
+                {
+                    TestContext.Progress.WriteLine($"{message.Timestamp}: {message.FormattedMessage}");
+                }
             }
         }
 
@@ -590,22 +615,27 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public static void ProcessMessages(string[] messages)
             {
+                TestContext.Progress.WriteLine(messages.Length);
                 if (messages.Contains("{'Name': 'Test1', 'Value': 'Value'}"))
                 {
+                    TestContext.Progress.WriteLine("first received");
                     firstReceived = true;
                 }
                 if (messages.Contains("{'Name': 'Test2', 'Value': 'Value'}"))
                 {
+                    TestContext.Progress.WriteLine("second received");
                     secondReceived = true;
                 }
 
                 if (firstReceived && secondReceived)
                 {
+                    TestContext.Progress.WriteLine("both received");
                     // reset for the next test
                     firstReceived = false;
                     secondReceived = false;
                     _topicSubscriptionCalled1.Set();
                 }
+                TestContext.Progress.WriteLine("exit");
             }
         }
 
@@ -789,8 +819,9 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             public CustomMessagingProvider(
                 IOptions<ServiceBusOptions> serviceBusOptions,
-                ILoggerFactory loggerFactory)
-                : base(serviceBusOptions)
+                ILoggerFactory loggerFactory,
+                AzureEventSourceLogForwarder forwarder)
+                : base(serviceBusOptions, forwarder)
             {
                 _options = serviceBusOptions.Value;
                 _logger = loggerFactory?.CreateLogger(CustomMessagingCategory);

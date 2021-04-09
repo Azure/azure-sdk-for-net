@@ -264,6 +264,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                                 continue;
                             }
                         }
+                        _logger.LogInformation($"receiving from {receiver.EntityPath}");
 
                         IReadOnlyList<ServiceBusReceivedMessage> messages =
                             await receiver.ReceiveMessagesAsync(_serviceBusOptions.MaxMessages).ConfigureAwait(false);

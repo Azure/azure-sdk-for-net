@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var options = new ServiceBusOptions();
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", _defaultConnection));
 
-            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
+            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options), new AzureEventSourceLogForwarder(new NullLoggerFactory()));
 
             var receiver = provider.CreateBatchMessageReceiver(_client, "entityPath");
             Assert.AreEqual("entityPath", receiver.EntityPath);
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
         {
             var options = new ServiceBusOptions();
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", _defaultConnection));
-            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
+            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options), new AzureEventSourceLogForwarder(new NullLoggerFactory()));
 
             var processor = provider.CreateProcessor(_client, "entityPath");
             Assert.AreEqual("entityPath", processor.EntityPath);
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests
             var options = new ServiceBusOptions();
 
             var configuration = CreateConfiguration(new KeyValuePair<string, string>("connection", defaultConnection));
-            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options));
+            var provider = new MessagingProvider(new OptionsWrapper<ServiceBusOptions>(options), new AzureEventSourceLogForwarder(new NullLoggerFactory()));
 
             var sender = provider.CreateMessageSender(_client, "entityPath");
             Assert.AreEqual("entityPath", sender.EntityPath);
