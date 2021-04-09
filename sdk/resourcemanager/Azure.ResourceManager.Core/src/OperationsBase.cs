@@ -32,14 +32,11 @@ namespace Azure.ResourceManager.Core
             Credential = clientContext.Credential;
             BaseUri = clientContext.BaseUri;
             Diagnostics = new ClientDiagnostics(ClientOptions);
-            Transport = (HttpClientTransport)clientContext.Transport;
             
             Validate(id);
         }
 
         internal ClientDiagnostics Diagnostics { get; }
-
-        internal HttpClientTransport Transport { get; }
 
         /// <summary>
         /// Gets the resource identifier.

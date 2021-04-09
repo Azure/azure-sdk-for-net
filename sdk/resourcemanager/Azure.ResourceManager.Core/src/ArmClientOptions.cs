@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Core
             ApiVersions = new ApiVersions(this);
         }
 
-        internal ArmClientOptions(LocationData location, IList<HttpPipelinePolicy> perCallPolicies, IList<HttpPipelinePolicy> perRetryPolicies)
+        private ArmClientOptions(LocationData location, IList<HttpPipelinePolicy> perCallPolicies, IList<HttpPipelinePolicy> perRetryPolicies)
         {
             if (location is null)
                 throw new ArgumentNullException(nameof(location));

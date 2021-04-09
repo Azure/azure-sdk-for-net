@@ -28,23 +28,16 @@ namespace Azure.ResourceManager.Core
         public Uri BaseUri { get; set; }
 
         /// <summary>
-        /// pipeline transport
-        /// </summary>
-        public HttpPipelineTransport Transport { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ClientContext"/> class.
         /// </summary>
         /// <param name="clientOptions"></param>
         /// <param name="credential"></param>
         /// <param name="uri"></param>
-        /// <param name="transport"></param>
-        internal ClientContext(ArmClientOptions clientOptions, TokenCredential credential, Uri uri, HttpPipelineTransport transport = default)
+        internal ClientContext(ArmClientOptions clientOptions, TokenCredential credential, Uri uri)
         {
             ClientOptions = clientOptions;
             Credential = credential;
             BaseUri = uri;
-            Transport = transport;
         }
     }
 }

@@ -35,12 +35,6 @@ namespace Azure.ResourceManager.Core.Tests
 
             x.Transport = new MyTransport();
             Assert.IsFalse(ReferenceEquals(y.Transport, x.Transport));
-
-            var z = new ArmClientOptions();
-            ArmClient client = GetArmClient(z);
-            var sub = client.DefaultSubscription;
-            z.Transport = new MyTransport();
-            Assert.IsFalse(ReferenceEquals(y.Transport, sub.Transport));
         }
 
         private class MyTransport : HttpPipelineTransport
