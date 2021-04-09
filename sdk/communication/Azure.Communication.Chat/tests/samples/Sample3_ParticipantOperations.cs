@@ -33,7 +33,7 @@ namespace Azure.Communication.Chat.Tests.samples
             var chatParticipant = new ChatParticipant(josh)
             {
                 DisplayName = "Josh",
-                ShareHistoryTime = DateTime.MinValue
+                ShareHistoryTime = DateTimeOffset.MinValue
             };
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(createChatThreadResult.ChatThread.Id);
