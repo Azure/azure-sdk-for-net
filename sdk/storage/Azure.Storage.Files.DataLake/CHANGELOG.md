@@ -1,5 +1,8 @@
 # Release History
 
+## 12.7.0-beta.4 (Unreleased)
+
+
 ## 12.7.0-beta.3 (2021-04-09)
 - Aligned storage URL parsing with other platforms.
 
