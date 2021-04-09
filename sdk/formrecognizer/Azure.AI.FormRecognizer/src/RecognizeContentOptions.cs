@@ -29,6 +29,13 @@ namespace Azure.AI.FormRecognizer
         public FormContentType? ContentType { get; set; }
 
         /// <summary>
+        /// When set, specifies the order in which the recognized text lines are returned. As the sorting
+        /// order depends on the detected text, it may change across images and OCR version updates. Thus,
+        /// business logic should be built upon the actual line location instead of order.
+        /// </summary>
+        public ReadingOrder? ReadingOrder { get; set; }
+
+        /// <summary>
         /// The BCP-47 language code of the text in the document.
         /// Recognize Content supports auto language identification and multi language documents, so only
         /// provide a language code if you would like to force the documented to be processed as

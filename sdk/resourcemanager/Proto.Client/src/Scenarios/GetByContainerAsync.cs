@@ -19,8 +19,8 @@ namespace Proto.Client
             var createMultipleVms = new CreateMultipleVms(Context);
             createMultipleVms.Execute();
 
-            var sub = new ArmClient(new DefaultAzureCredential()).GetSubscriptionOperations(Context.SubscriptionId);
-            var rg = sub.GetResourceGroupOperations(Context.RgName);
+            var sub = new ArmClient(new DefaultAzureCredential()).GetSubscriptions().TryGet(Context.SubscriptionId);
+            var rg = sub.GetResourceGroups().Get(Context.RgName).Value;
             var virtualMachineContainer = rg.GetVirtualMachines();
             await foreach (var response in virtualMachineContainer.ListAsync())
             {

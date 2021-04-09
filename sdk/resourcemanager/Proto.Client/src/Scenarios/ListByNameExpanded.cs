@@ -14,7 +14,9 @@ namespace Proto.Client
             var createMultipleVms = new CreateMultipleVms(Context);
             createMultipleVms.Execute();
 
-            var rg = new ArmClient(new DefaultAzureCredential()).GetResourceGroupOperations(Context.SubscriptionId, Context.RgName).Get().Value;
+            var client = new ArmClient(new DefaultAzureCredential());
+            var sub = client.GetSubscriptions().TryGet(Context.SubscriptionId);
+            var rg = sub.GetResourceGroups().Get(Context.RgName).Value;
             foreach (var availabilitySet in rg.GetAvailabilitySets().ListAsGenericResource(Environment.UserName))
             {
                 Console.WriteLine($"--------AvailabilitySet operation id--------: {availabilitySet.Id}");
