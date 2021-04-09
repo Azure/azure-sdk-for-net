@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -94,6 +95,44 @@ namespace Azure.Template.Tests
                 new TestModel() { Age = 1, Name = "a"},
                 new TestModel() { Age = 3, Name = "b"},
                 new TestModel() { Age = 1, Name = "c"}
+            }, results.Value);
+        }
+
+        [Test]
+        public async Task CanQueryIntoDictionary()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryAsync<Dictionary<string, object>>(TestEnvironment.WorkspaceId,
+                $"{LogsTestData.TableAName} |" +
+                $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
+                $"project Name, Age |" +
+                $"order by Name asc");
+
+            CollectionAssert.AreEqual(new[]
+            {
+                new Dictionary<string, object>() { {"Age", 1}, {"Name", "a"}},
+                new Dictionary<string, object>() { {"Age", 3}, {"Name", "b"}},
+                new Dictionary<string, object>() { {"Age", 1}, {"Name", "c"}}
+            }, results.Value);
+        }
+
+        [Test]
+        public async Task CanQueryIntoIDictionary()
+        {
+            var client = CreateClient();
+
+            var results = await client.QueryAsync<IDictionary<string, object>>(TestEnvironment.WorkspaceId,
+                $"{LogsTestData.TableAName} |" +
+                $"project-rename Name = {LogsTestData.StringColumnName}, Age = {LogsTestData.IntColumnName} |" +
+                $"project Name, Age |" +
+                $"order by Name asc");
+
+            CollectionAssert.AreEqual(new[]
+            {
+                new Dictionary<string, object>() { {"Age", 1}, {"Name", "a"}},
+                new Dictionary<string, object>() { {"Age", 3}, {"Name", "b"}},
+                new Dictionary<string, object>() { {"Age", 1}, {"Name", "c"}}
             }, results.Value);
         }
 

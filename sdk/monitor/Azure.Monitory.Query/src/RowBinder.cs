@@ -22,7 +22,8 @@ namespace Azure.Monitory.Query
                 {
                     foreach (var row in table.Rows)
                     {
-                        IDictionary<string, object> rowObject = (IDictionary<string, object>) Activator.CreateInstance<T>();
+                        IDictionary<string, object> rowObject =
+                            typeof(T).IsInterface ? new Dictionary<string, object>() : (IDictionary<string, object>) Activator.CreateInstance<T>();
 
                         for (var i = 0; i < row.Count; i++)
                         {

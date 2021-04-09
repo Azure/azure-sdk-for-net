@@ -1,15 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs/providers/microsoft.insights/metrics?timespan=2021-04-09T13%3A53%3A28.7747627-07%3A00%2F2021-04-09T14%3A53%3A28.7747627-07%3A00\u0026interval=PT1M\u0026api-version=2018-01-01",
+      "RequestUri": "https://management.azure.com/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs/providers/microsoft.insights/metrics?timespan=2021-04-09T15%3A09%3A04.5498138-07%3A00%2F2021-04-09T16%3A09%3A04.5498138-07%3A00\u0026interval=PT1M\u0026api-version=2018-01-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-49a26593f591d843a5858748c02496c9-98282c4708fb1344-00",
+        "traceparent": "00-0e8189b8cdb39d4980aaa2710b027531-3516af42e69f344e-00",
         "User-Agent": [
           "azsdk-net-Monitory.Query/1.0.0-alpha.20210409.1",
-          "(.NET 5.0.4; Microsoft Windows 10.0.19042)"
+          "(.NET Core 4.6.29812.02; Microsoft Windows 10.0.19042 )"
         ],
         "x-ms-client-request-id": "df7775edb4762b4c410ebe8367cd7956",
         "x-ms-return-client-request-id": "true"
@@ -21,22 +21,22 @@
         "Cache-Control": "no-cache",
         "Content-Length": "606",
         "Content-Type": "application/json",
-        "Date": "Fri, 09 Apr 2021 21:53:29 GMT",
+        "Date": "Fri, 09 Apr 2021 23:09:04 GMT",
         "Request-Context": "appId=cid-v1:b021da79-5252-4375-9df5-2e17c1dcd822",
         "Server": "Microsoft-IIS/10.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-AspNet-Version": "4.0.30319",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "dc78ffec-8b76-4faf-bebf-9c74ac589407",
+        "x-ms-correlation-request-id": "b004c8f3-d0ec-454a-9a65-214b1ba9eb81",
         "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "{dc78ffec-8b76-4faf-bebf-9c74ac589407}",
-        "x-ms-routing-request-id": "WESTCENTRALUS:20210409T215329Z:dc78ffec-8b76-4faf-bebf-9c74ac589407",
+        "x-ms-request-id": "{b004c8f3-d0ec-454a-9a65-214b1ba9eb81}",
+        "x-ms-routing-request-id": "WESTUS:20210409T230904Z:b004c8f3-d0ec-454a-9a65-214b1ba9eb81",
         "X-Powered-By": "ASP.NET"
       },
       "ResponseBody": {
         "cost": 59,
-        "timespan": "2021-04-09T20:53:28Z/2021-04-09T21:53:28Z",
+        "timespan": "2021-04-09T22:09:04Z/2021-04-09T23:09:04Z",
         "interval": "PT1M",
         "value": [
           {
@@ -58,7 +58,7 @@
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2021-04-09T14:53:28.7747627-07:00",
+    "DateTimeOffsetNow": "2021-04-09T16:09:04.5498138-07:00",
     "METRICS_RESOURCE_ID": "/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-pakrymmonitor/providers/Microsoft.OperationalInsights/workspaces/pakrymmonitor-logs",
     "RandomSeed": "2009786302"
   }

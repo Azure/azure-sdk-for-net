@@ -37,6 +37,39 @@ namespace Azure.Template.Tests
         }
 
         [Test]
+        public async Task QueryLogsAsTablePrintAll()
+        {
+            #region Snippet:QueryLogsPrintTable
+
+            LogsClient client = new LogsClient(new DefaultAzureCredential());
+            /*@@*/string workspaceId = TestEnvironment.WorkspaceId;
+            //@@string workspaceId = "<workspace_id>";
+            Response<LogsQueryResult> response = await client.QueryAsync(workspaceId, "AzureActivity | top 10 by TimeGenerated");
+
+            foreach (var table in response.Value.Tables)
+            {
+                foreach (var column in table.Columns)
+                {
+                    Console.Write(column.Name + ";");
+                }
+
+                Console.WriteLine();
+
+                var columnCount = table.Columns.Count;
+                foreach (var row in table.Rows)
+                {
+                    for (int i = 0; i < columnCount; i++)
+                    {
+                        Console.Write(row[i] + ";");
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            #endregion
+        }
+
+        [Test]
         public async Task QueryLogsAsPrimitive()
         {
             #region Snippet:QueryLogsAsPrimitive
