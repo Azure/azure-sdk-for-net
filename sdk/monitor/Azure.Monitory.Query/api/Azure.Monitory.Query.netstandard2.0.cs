@@ -3,9 +3,9 @@ namespace Azure.Monitory.Query
     public partial class LogsBatchQuery
     {
         protected LogsBatchQuery() { }
-        public virtual Azure.Response<Azure.Monitory.Query.Models.LogsBatchQueryResult> Execute(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.LogsBatchQueryResult>> ExecuteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual string Query(string workspaceId, string query) { throw null; }
+        public virtual string AddQuery(string workspaceId, string query) { throw null; }
+        public virtual Azure.Response<Azure.Monitory.Query.Models.LogsBatchQueryResult> Submit(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitory.Query.Models.LogsBatchQueryResult>> SubmitAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LogsClient
     {

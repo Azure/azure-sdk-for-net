@@ -41,9 +41,9 @@ namespace Azure.Template.Tests
         {
             var client = CreateClient();
             LogsBatchQuery batch = InstrumentClient(client.CreateBatchQuery());
-            string id1 = batch.Query(TestEnvironment.WorkspaceId, "Heartbeat");
-            string id2 = batch.Query(TestEnvironment.WorkspaceId, "Heartbeat");
-            Response<LogsBatchQueryResult> response = await batch.ExecuteAsync();
+            string id1 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat");
+            string id2 = batch.AddQuery(TestEnvironment.WorkspaceId, "Heartbeat");
+            Response<LogsBatchQueryResult> response = await batch.SubmitAsync();
 
             var result1 = response.Value.GetResult(id1);
             var result2 = response.Value.GetResult(id2);

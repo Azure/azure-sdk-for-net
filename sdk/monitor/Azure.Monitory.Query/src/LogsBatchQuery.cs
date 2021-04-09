@@ -28,7 +28,7 @@ namespace Azure.Monitory.Query
         {
         }
 
-        public virtual string Query(string workspaceId, string query)
+        public virtual string AddQuery(string workspaceId, string query)
         {
             var id = _counter.ToString("G", CultureInfo.InvariantCulture);
             _counter++;
@@ -41,9 +41,9 @@ namespace Azure.Monitory.Query
             return id;
         }
 
-        public virtual Response<LogsBatchQueryResult> Execute(CancellationToken cancellationToken = default)
+        public virtual Response<LogsBatchQueryResult> Submit(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsBatchQuery)}.{nameof(Execute)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsBatchQuery)}.{nameof(Submit)}");
             scope.Start();
             try
             {
@@ -56,9 +56,9 @@ namespace Azure.Monitory.Query
             }
         }
 
-        public virtual async Task<Response<LogsBatchQueryResult>> ExecuteAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogsBatchQueryResult>> SubmitAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsBatchQuery)}.{nameof(Execute)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(LogsBatchQuery)}.{nameof(Submit)}");
             scope.Start();
             try
             {
