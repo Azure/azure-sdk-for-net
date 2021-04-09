@@ -421,7 +421,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             using (jobHost)
             {
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
-                Assert.True(result);
                 await jobHost.StopAsync();
                 var loggerProvider = host.GetTestLoggerProvider();
                 IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
@@ -430,6 +429,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     TestContext.Progress.WriteLine($"{message.Timestamp}: {message.FormattedMessage}");
                 }
+                Assert.True(result);
             }
         }
 
