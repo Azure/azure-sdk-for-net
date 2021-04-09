@@ -12,11 +12,13 @@ namespace Microsoft.Azure.Management.GuestConfiguration.Models
 {
 
     /// <summary>
-    /// Defines values for AllowModuleOverwrite.
+    /// Defines values for CreatedByType.
     /// </summary>
-    public static class AllowModuleOverwrite
+    public static class CreatedByType
     {
-        public const string True = "True";
-        public const string False = "False";
+        public const string User = "User";
+        public const string Application = "Application";
+        public const string ManagedIdentity = "ManagedIdentity";
+        public const string Key = "Key";
     }
 }
