@@ -41,8 +41,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="endTime">End timestamp of the time range. Events that match this timestamp are excluded.</param>
         /// <param name="options">Optional parameters to use when querying for events.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
-        public virtual AsyncPageable<QueryResultPage> GetEventsAsync(
+        /// <returns>The pageable list <see cref="AsyncPageable{QueryAsyncResults}"/> of query result frames.</returns>
+        public virtual QueryAsyncResults GetEventsAsync(
             TimeSeriesId timeSeriesId,
             DateTimeOffset startTime,
             DateTimeOffset endTime,
@@ -62,7 +62,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildEventsRequestOptions(options, queryRequest);
 
-                return QueryInternalAsync(queryRequest, options?.StoreType?.ToString(), cancellationToken);
+                return new QueryAsyncResults(_queryRestClient, queryRequest, options?.StoreType?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="options">Optional parameters to use when querying for events.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The pageable list <see cref="AsyncPageable{QueryResultPage}"/> of query result frames.</returns>
-        public virtual Pageable<QueryResultPage> GetEvents(
+        public virtual QueryResults GetEvents(
             TimeSeriesId timeSeriesId,
             DateTimeOffset startTime,
             DateTimeOffset endTime,
@@ -100,7 +100,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
                 BuildEventsRequestOptions(options, queryRequest);
 
-                return QueryInternal(queryRequest, options?.StoreType?.ToString(), cancellationToken);
+                return new QueryResults(_queryRestClient, queryRequest, options?.StoreType?.ToString(), cancellationToken);
             }
             catch (Exception ex)
             {

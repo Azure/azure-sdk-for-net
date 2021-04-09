@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.IoT.TimeSeriesInsights.Tests
 {
-    [LiveOnly]
+    //[LiveOnly]
     public class TimeSeriesInsightsQueryEventsTests : E2eTestBase
     {
         private static readonly TimeSpan s_retryDelay = TimeSpan.FromSeconds(30);
@@ -47,7 +47,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         deviceClient,
                         tsiId,
                         modelSettings.TimeSeriesIdProperties.ToArray(),
-                        2)
+                        50)
                     .ConfigureAwait(false);
 
                 // Act
@@ -60,128 +60,137 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 // This retry logic was added as the TSI instance are not immediately available after creation
                 await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
                 {
-                    AsyncPageable<QueryResultPage> queryEventsPages = tsiClient.Query.GetEventsAsync(tsiId, startTime, endTime);
+                    QueryAsyncResults queryEventsPages = tsiClient.Query.GetEventsAsync(tsiId, startTime, endTime);
 
-                    await foreach (QueryResultPage eventPage in queryEventsPages)
+                    await foreach (TimeSeriesPoint timeSeriesPoint in queryEventsPages.GetPageableResultsAsync())
                     {
-                        eventPage.Timestamps.Should().HaveCount(2);
-                        eventPage.Timestamps.Should().OnlyContain(timeStamp => timeStamp >= startTime).And.OnlyContain(timeStamp => timeStamp <= endTime);
-                        eventPage.Properties.Should().NotBeEmpty();
-                        eventPage.Properties.First().Should().NotBeNull();
+                        Console.WriteLine($"{timeSeriesPoint.Timestamp}: {timeSeriesPoint.GetValue("Temperature")}");
                     }
+
+                    foreach (var property in queryEventsPages.GetProperties())
+                    {
+                        Console.WriteLine($"Property: {property.Name} - {property.Type}");
+                    }
+
+                    foreach (var property in queryEventsPages.GetUniquePropertyNames())
+                    {
+                        Console.WriteLine($"Unique Property: {property}");
+                    }
+
+                    Console.WriteLine($"Values: {string.Join(",", queryEventsPages.GetValues("Temperature"))}");
 
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);
 
-                // Send more events to the hub
-                await QueryTestsHelper.SendEventsToHubAsync(
-                        deviceClient,
-                        tsiId,
-                        modelSettings.TimeSeriesIdProperties.ToArray(),
-                        2)
-                    .ConfigureAwait(false);
+                //// Send more events to the hub
+                //await QueryTestsHelper.SendEventsToHubAsync(
+                //        deviceClient,
+                //        tsiId,
+                //        modelSettings.TimeSeriesIdProperties.ToArray(),
+                //        2)
+                //    .ConfigureAwait(false);
 
-                // This retry logic was added as the TSI instance are not immediately available after creation
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
-                {
-                    AsyncPageable<QueryResultPage> queryEventsPages = tsiClient.Query.GetEventsAsync(tsiId, startTime, endTime);
+                //// This retry logic was added as the TSI instance are not immediately available after creation
+                //await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                //{
+                //    AsyncPageable<QueryResultPage> queryEventsPages = tsiClient.Query.GetEventsAsync(tsiId, startTime, endTime);
 
-                    await foreach (QueryResultPage eventPage in queryEventsPages)
-                    {
-                        eventPage.Timestamps.Should().HaveCount(4);
-                        eventPage.Timestamps.Should()
-                        .OnlyContain(timeStamp => timeStamp >= startTime)
-                        .And
-                         .OnlyContain(timeStamp => timeStamp <= endTime);
-                        eventPage.Properties.Should().NotBeEmpty();
-                        eventPage.Properties.First().Should().NotBeNull();
-                    }
+                //    await foreach (QueryResultPage eventPage in queryEventsPages)
+                //    {
+                //        eventPage.Timestamps.Should().HaveCount(4);
+                //        eventPage.Timestamps.Should()
+                //        .OnlyContain(timeStamp => timeStamp >= startTime)
+                //        .And
+                //         .OnlyContain(timeStamp => timeStamp <= endTime);
+                //        eventPage.Properties.Should().NotBeEmpty();
+                //        eventPage.Properties.First().Should().NotBeNull();
+                //    }
 
-                    return null;
-                }, MaxNumberOfRetries, s_retryDelay);
+                //    return null;
+                //}, MaxNumberOfRetries, s_retryDelay);
 
-                // Send 2 events with a special condition that can be used later to query on
-                IDictionary<string, object> messageBase = QueryTestsHelper.BuildMessageBase(modelSettings.TimeSeriesIdProperties.ToArray(), tsiId);
-                messageBase[QueryTestsHelper.Temperature] = 1.2;
-                messageBase[QueryTestsHelper.Humidity] = 3.4;
-                string messageBody = JsonSerializer.Serialize(messageBase);
-                var message = new Message(Encoding.ASCII.GetBytes(messageBody))
-                {
-                    ContentType = "application/json",
-                    ContentEncoding = "utf-8",
-                };
+                //// Send 2 events with a special condition that can be used later to query on
+                //IDictionary<string, object> messageBase = QueryTestsHelper.BuildMessageBase(modelSettings.TimeSeriesIdProperties.ToArray(), tsiId);
+                //messageBase[QueryTestsHelper.Temperature] = 1.2;
+                //messageBase[QueryTestsHelper.Humidity] = 3.4;
+                //string messageBody = JsonSerializer.Serialize(messageBase);
+                //var message = new Message(Encoding.ASCII.GetBytes(messageBody))
+                //{
+                //    ContentType = "application/json",
+                //    ContentEncoding = "utf-8",
+                //};
 
-                Func<Task> sendEventAct = async () => await deviceClient.SendEventAsync(message).ConfigureAwait(false);
-                await sendEventAct.Should().NotThrowAsync();
+                //Func<Task> sendEventAct = async () => await deviceClient.SendEventAsync(message).ConfigureAwait(false);
+                //await sendEventAct.Should().NotThrowAsync();
 
-                // Send it again
-                sendEventAct.Should().NotThrow();
+                //// Send it again
+                //sendEventAct.Should().NotThrow();
 
-                // Query for the two events with a filter
+                //// Query for the two events with a filter
 
-                // Only project Temperature and one of the Id properties
-                var queryRequestOptions = new QueryEventsRequestOptions
-                {
-                    Filter = "$event.Temperature.Double = 1.2",
-                    StoreType = StoreType.WarmStore,
-                };
-                queryRequestOptions.ProjectedProperties.Add(
-                    new EventProperty
-                    {
-                        Name = QueryTestsHelper.Temperature,
-                        Type = "Double",
-                    });
-                queryRequestOptions.ProjectedProperties.Add(
-                    new EventProperty
-                    {
-                        Name = modelSettings.TimeSeriesIdProperties.First().Name,
-                        Type = modelSettings.TimeSeriesIdProperties.First().Type.ToString(),
-                    });
+                //// Only project Temperature and one of the Id properties
+                //var queryRequestOptions = new QueryEventsRequestOptions
+                //{
+                //    Filter = "$event.Temperature.Double = 1.2",
+                //    StoreType = StoreType.WarmStore,
+                //};
+                //queryRequestOptions.ProjectedProperties.Add(
+                //    new EventProperty
+                //    {
+                //        Name = QueryTestsHelper.Temperature,
+                //        Type = "Double",
+                //    });
+                //queryRequestOptions.ProjectedProperties.Add(
+                //    new EventProperty
+                //    {
+                //        Name = modelSettings.TimeSeriesIdProperties.First().Name,
+                //        Type = modelSettings.TimeSeriesIdProperties.First().Type.ToString(),
+                //    });
 
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
-                {
-                    AsyncPageable<QueryResultPage> queryEventsPages = tsiClient.Query.GetEventsAsync(tsiId, startTime, endTime, queryRequestOptions);
-                    await foreach (QueryResultPage eventPage in queryEventsPages)
-                    {
-                        eventPage.Timestamps.Should().HaveCount(2);
-                        eventPage.Properties.Should().HaveCount(2);
-                        eventPage.Properties.First().Should().NotBeNull();
-                        eventPage.Properties.First().Name.Should().Be(QueryTestsHelper.Temperature);
-                        eventPage.Properties[1].Name.Should().Be(modelSettings.TimeSeriesIdProperties.First().Name);
-                    }
+                //await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                //{
+                //    AsyncPageable<QueryResultPage> queryEventsPages = tsiClient.Query.GetEventsAsync(tsiId, startTime, endTime, queryRequestOptions);
+                //    await foreach (QueryResultPage eventPage in queryEventsPages)
+                //    {
+                //        eventPage.Timestamps.Should().HaveCount(2);
+                //        eventPage.Properties.Should().HaveCount(2);
+                //        eventPage.Properties.First().Should().NotBeNull();
+                //        eventPage.Properties.First().Name.Should().Be(QueryTestsHelper.Temperature);
+                //        eventPage.Properties[1].Name.Should().Be(modelSettings.TimeSeriesIdProperties.First().Name);
+                //    }
 
-                    return null;
-                }, MaxNumberOfRetries, s_retryDelay);
+                //    return null;
+                //}, MaxNumberOfRetries, s_retryDelay);
 
-                // Query for the two events with a filter, but only take 1
-                queryRequestOptions.MaximumNumberOfEvents = 1;
-                AsyncPageable<QueryResultPage> queryEventsPagesWithFilter = tsiClient.Query.GetEventsAsync(tsiId, startTime, endTime, queryRequestOptions);
-                await foreach (QueryResultPage eventPage in queryEventsPagesWithFilter)
-                {
-                    eventPage.Timestamps.Should().HaveCount(1);
-                    eventPage.Properties.Should().HaveCount(2);
-                    eventPage.Properties.First().Should().NotBeNull();
-                    eventPage.Properties.First().Name.Should().Be(QueryTestsHelper.Temperature);
-                    eventPage.Properties[1].Name.Should().Be(modelSettings.TimeSeriesIdProperties.First().Name);
-                }
+                //// Query for the two events with a filter, but only take 1
+                //queryRequestOptions.MaximumNumberOfEvents = 1;
+                //AsyncPageable<QueryResultPage> queryEventsPagesWithFilter = tsiClient.Query.GetEventsAsync(tsiId, startTime, endTime, queryRequestOptions);
+                //await foreach (QueryResultPage eventPage in queryEventsPagesWithFilter)
+                //{
+                //    eventPage.Timestamps.Should().HaveCount(1);
+                //    eventPage.Properties.Should().HaveCount(2);
+                //    eventPage.Properties.First().Should().NotBeNull();
+                //    eventPage.Properties.First().Name.Should().Be(QueryTestsHelper.Temperature);
+                //    eventPage.Properties[1].Name.Should().Be(modelSettings.TimeSeriesIdProperties.First().Name);
+                //}
 
-                await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
-                {
-                    // Query for all the events using a timespan
-                    AsyncPageable<QueryResultPage> queryEventsPagesWithTimespan = tsiClient.Query.GetEventsAsync(tsiId, TimeSpan.FromMinutes(20), endTime);
-                    await foreach (QueryResultPage eventPage in queryEventsPagesWithTimespan)
-                    {
-                        eventPage.Timestamps.Should().HaveCount(6);
-                        eventPage.Timestamps.Should()
-                            .OnlyContain(timeStamp => timeStamp >= startTime)
-                            .And
-                             .OnlyContain(timeStamp => timeStamp <= endTime);
-                        eventPage.Properties.Should().NotBeEmpty();
-                        eventPage.Properties.First().Should().NotBeNull();
-                    }
+                //await TestRetryHelper.RetryAsync<AsyncPageable<QueryResultPage>>(async () =>
+                //{
+                //    // Query for all the events using a timespan
+                //    AsyncPageable<QueryResultPage> queryEventsPagesWithTimespan = tsiClient.Query.GetEventsAsync(tsiId, TimeSpan.FromMinutes(20), endTime);
+                //    await foreach (QueryResultPage eventPage in queryEventsPagesWithTimespan)
+                //    {
+                //        eventPage.Timestamps.Should().HaveCount(6);
+                //        eventPage.Timestamps.Should()
+                //            .OnlyContain(timeStamp => timeStamp >= startTime)
+                //            .And
+                //             .OnlyContain(timeStamp => timeStamp <= endTime);
+                //        eventPage.Properties.Should().NotBeEmpty();
+                //        eventPage.Properties.First().Should().NotBeNull();
+                //    }
 
-                    return null;
-                }, MaxNumberOfRetries, s_retryDelay);
+                //    return null;
+                //}, MaxNumberOfRetries, s_retryDelay);
             }
             finally
             {
