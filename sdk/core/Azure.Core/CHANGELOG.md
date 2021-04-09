@@ -2,16 +2,6 @@
 
 ## 1.14.0-beta.1 (Unreleased)
 
-### Added
-
-- `Operation` base class for operations that do not return a value.
-- `AzureNamedKeyCredential` has been implemented to cover scenarios where services require that a shared key name and the key value be used as a component of the algorithm to form the authorization token.
-
-### Key Bug Fixes
-
-- Check the `JsonIgnoreAttribute.Condition` property added in .NET 5 when discovering members with `JsonObjectSerializer`.
-- `ETag` now returns `string.Empty` if it is constructed with a null value.
-- Keep-Alive connections are recycled every 300 seconds to observe DNS changes. 
 
 ## 1.13.0 (2021-04-07)
 
