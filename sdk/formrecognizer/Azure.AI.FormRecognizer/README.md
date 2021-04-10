@@ -25,7 +25,7 @@ dotnet add package Azure.AI.FormRecognizer
 * An existing Cognitive Services or Form Recognizer resource.
 
 #### Create a Cognitive Services or Form Recognizer resource
-Form Recognizer supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Form Recognizer access only, create a Form Recognizer resource. Please note that you will need a single-service resource if you intend to use [Azure Active Directory authentication][#create-formrecognizerclient-with-azure-active-directory-credential].
+Form Recognizer supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Form Recognizer access only, create a Form Recognizer resource. Please note that you will need a single-service resource if you intend to use [Azure Active Directory authentication](#create-formrecognizerclient-with-azure-active-directory-credential).
 
 You can create either resource using: 
 
