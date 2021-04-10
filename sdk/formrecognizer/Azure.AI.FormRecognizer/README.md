@@ -61,7 +61,7 @@ In order to interact with the Form Recognizer service, you'll need to create an 
 
 You can obtain the endpoint from the resource information in the [Azure Portal][azure_portal].
 
-Azure Cognitive Services support regional endpoints and custom subdomains.
+You can use either a regional endpoint or a custom subdomain for authentication.
 
 A regional endpoint is the same for every resource in a region and is formatted as `https://<region>.api.cognitive.microsoft.com/`. The service differentiates resources based on the API key provided.
 
