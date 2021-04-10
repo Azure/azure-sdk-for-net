@@ -38,7 +38,7 @@ param (
     [Parameter(ParameterSetName = 'ResourceGroup+Provisioner', Mandatory = $true)]
     [string] $ProvisionerApplicationSecret,
 
-    [Parameter(ParameterSetName = 'Default', Mandatory = $true, Position = 0)]
+    [Parameter(ParameterSetName = 'Default', Position = 0)]
     [Parameter(ParameterSetName = 'Default+Provisioner')]
     [Parameter(ParameterSetName = 'ResourceGroup')]
     [Parameter(ParameterSetName = 'ResourceGroup+Provisioner')]
