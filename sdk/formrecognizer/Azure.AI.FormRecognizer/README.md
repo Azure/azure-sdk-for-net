@@ -65,7 +65,7 @@ Azure Cognitive Services support regional endpoints and custom subdomains.
 
 A regional endpoint is the same for every resource in a region and is formatted as `https://<region>.api.cognitive.microsoft.com/`. The service differentiates resources based on the API key provided.
 
-You can consult a complete list of available regional endpoints [here][regional_endpoints]. Please note that regional endpoints do not support AAD authentication.
+You can consult a complete list of supported regional endpoints [here][regional_endpoints]. Please note that regional endpoints do not support AAD authentication.
 
 A custom subdomain, on the other hand, is a name that is unique to the Form Recognizer resource. They are formatted as `https://<name>.cognitiveservices.azure.com/` and can only be used by [single-service resources][cognitive_resource_portal].
 
