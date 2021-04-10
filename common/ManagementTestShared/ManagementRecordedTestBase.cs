@@ -3,11 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-#if RESOURCES_RP
 using Azure.ResourceManager.Resources;
-#else
-using Azure.Management.Resources;
-#endif
 using System;
 using System.Linq;
 using System.Threading;
@@ -43,7 +39,7 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ResourcesManagementClient GetResourceManagementClient()
         {
-            var options = Recording.InstrumentClientOptions(new ResourcesManagementClientOptions());
+            var options = InstrumentClientOptions(new ResourcesManagementClientOptions());
             CleanupPolicy = new ResourceGroupCleanupPolicy();
             options.AddPolicy(CleanupPolicy, HttpPipelinePosition.PerCall);
 

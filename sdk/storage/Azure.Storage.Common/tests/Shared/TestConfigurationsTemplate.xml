@@ -7,10 +7,11 @@
   <TargetKeyVault>ClientsideEncryptionKeyvault</TargetKeyVault>
   <TargetHierarchicalNamespaceTenant>NamespaceTenant</TargetHierarchicalNamespaceTenant>
   <TargetManagedDiskTenant>ManagedDiskTenant</TargetManagedDiskTenant>
-    <TargetBlobAndContainerSoftDeleteTenant>SoftDeleteTenant</TargetBlobAndContainerSoftDeleteTenant>
+  <TargetBlobAndContainerSoftDeleteTenant>SoftDeleteTenant</TargetBlobAndContainerSoftDeleteTenant>
+  <TargetPremiumFileTenant>PremiumFileTenant</TargetPremiumFileTenant>
 
   <TenantConfigurations>
-    <!-- A storage account with an Encryption Scope and Blob Versioning enabled -->
+    <!-- A storage account with an Encryption Scope, Blob Versioning, and Last Access Time enabled -->
     <!-- Replace [ACCOUNT] and [ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>ProductionTenant</TenantName>
@@ -68,9 +69,9 @@
       <FileServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[OAUTH-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-	
+
     <!-- A storage account with premium preformance enabled -->
-	<!-- Replace [RAGRS-ACCOUNT] and [RAGRS-ACCOUNT-KEY] -->
+    <!-- Replace [RAGRS-ACCOUNT] and [RAGRS-ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>PremiumBlobTenant</TenantName>
       <TenantType>Cloud</TenantType>
@@ -85,8 +86,8 @@
       <FileServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[PREMIUM-ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
-    
-    <!-- A storge account with hierarchical namespace enabled and OAuth access -->
+
+    <!-- A storge account with hierarchical namespace enabled, OAuth access, and blob soft delete enabled -->
     <!-- Replace [NAMESPACE-ACCOUNT] and [NAMESPACE-ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>NamespaceTenant</TenantName>
@@ -131,6 +132,24 @@
     <!-- Replace [ACCOUNT] and [ACCOUNT-KEY] -->
     <TenantConfiguration>
       <TenantName>SoftDeleteTenant</TenantName>
+      <TenantType>Cloud</TenantType>
+      <AccountName>[ACCOUNT]</AccountName>
+      <AccountKey>[ACCOUNT-KEY]</AccountKey>
+
+      <BlobServiceEndpoint>http://[ACCOUNT].blob.core.windows.net</BlobServiceEndpoint>
+      <QueueServiceEndpoint>http://[ACCOUNT].queue.core.windows.net</QueueServiceEndpoint>
+      <TableServiceEndpoint>http://[ACCOUNT].table.core.windows.net</TableServiceEndpoint>
+      <FileServiceEndpoint>http://[ACCOUNT].file.core.windows.net</FileServiceEndpoint>
+      <BlobServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
+      <QueueServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
+      <TableServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
+    </TenantConfiguration>
+
+    <!-- A Premium FileStorage account -->
+    <!-- Replace [ACCOUNT] and [ACCOUNT-KEY] -->
+    <TenantConfiguration>
+      <TenantName>PremiumFileTenant</TenantName>
       <TenantType>Cloud</TenantType>
       <AccountName>[ACCOUNT]</AccountName>
       <AccountKey>[ACCOUNT-KEY]</AccountKey>

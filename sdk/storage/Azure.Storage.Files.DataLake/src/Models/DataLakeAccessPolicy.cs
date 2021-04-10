@@ -21,7 +21,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public DateTimeOffset? PolicyExpiresOn { get; set; }
 
-
         /// <summary>
         /// The <see cref="DateTimeOffset"/> the policy becomes active.
         /// This value is non-nullable, please use <see cref="PolicyStartsOn"/>.
@@ -32,8 +31,8 @@ namespace Azure.Storage.Files.DataLake.Models
             get
             {
                 return PolicyStartsOn == default ?
-                    StartsOn :
-                    (DateTimeOffset)PolicyStartsOn;
+                    new DateTimeOffset() :
+                    PolicyStartsOn.Value;
             }
             set
             {
@@ -51,8 +50,8 @@ namespace Azure.Storage.Files.DataLake.Models
             get
             {
                 return PolicyExpiresOn == default ?
-                    ExpiresOn :
-                    (DateTimeOffset)PolicyExpiresOn;
+                    new DateTimeOffset() :
+                    PolicyExpiresOn.Value;
             }
             set
             {

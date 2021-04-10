@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -8,17 +9,10 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientSecretCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class ClientSecretCredentialLiveTests : IdentityRecordedTestBase
     {
         public ClientSecretCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
         }
 
         [SetUp]
@@ -35,9 +29,10 @@ namespace Azure.Identity.Tests
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var secret = TestEnvironment.ServicePrincipalClientSecret;
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var cache = new MemoryTokenCache();
+            var options = InstrumentClientOptions(new ClientSecretCredentialOptions() { TokenCachePersistenceOptions = cache });
 
-            var credential = new ClientSecretCredential(tenantId, clientId, secret, options);
+            var credential = InstrumentClient(new ClientSecretCredential(tenantId, clientId, secret, options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
 
@@ -45,6 +40,8 @@ namespace Azure.Identity.Tests
             AccessToken token = await credential.GetTokenAsync(tokenRequestContext);
 
             Assert.IsNotNull(token.Token);
+            Assert.That(cache.CacheReadCount, Is.Not.Zero);
+            Assert.That(cache.CacheUpdatedCount, Is.Not.Zero);
 
             // ensure subsequent calls before the token expires are served from the token cache
             AccessToken cachedToken = await credential.GetTokenAsync(tokenRequestContext);
@@ -69,14 +66,34 @@ namespace Azure.Identity.Tests
             var clientId = TestEnvironment.ServicePrincipalClientId;
             var secret = "badsecret";
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
-            var credential = new ClientSecretCredential(tenantId, clientId, secret, options);
+            var credential = InstrumentClient(new ClientSecretCredential(tenantId, clientId, secret, options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(AzureAuthorityHosts.AzurePublicCloud) });
 
             // ensure we can initially acquire a  token
             Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext));
+        }
+
+        public class MemoryTokenCache : UnsafeTokenCacheOptions
+        {
+            private ReadOnlyMemory<byte> Data = new ReadOnlyMemory<byte>();
+            public int CacheReadCount;
+            public int CacheUpdatedCount;
+
+            protected internal override Task<ReadOnlyMemory<byte>> RefreshCacheAsync()
+            {
+                CacheReadCount++;
+                return Task.FromResult(Data);
+            }
+
+            protected internal override Task TokenCacheUpdatedAsync(TokenCacheUpdatedArgs tokenCacheUpdatedArgs)
+            {
+                CacheUpdatedCount++;
+                Data = tokenCacheUpdatedArgs.UnsafeCacheData;
+                return Task.CompletedTask;
+            }
         }
     }
 }

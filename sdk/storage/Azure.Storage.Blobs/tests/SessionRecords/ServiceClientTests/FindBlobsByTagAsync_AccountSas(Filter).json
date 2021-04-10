@@ -1,141 +1,143 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-929b4e8e-4b81-26db-e740-3c6a2b961c6b?restype=container",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-929b4e8e-4b81-26db-e740-3c6a2b961c6b?restype=container",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-2d91beba4bccd447b808dd6478259fdc-998ca467919c0b4a-00",
+        "traceparent": "00-da7b1c2f6445e945a224dc93cf3e24b3-1fb1227d9d19dd43-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.5.0-dev.20200624.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210217.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-blob-public-access": "container",
         "x-ms-client-request-id": "55c720fa-2099-2111-268e-f3aec048c1c4",
-        "x-ms-date": "Wed, 24 Jun 2020 22:05:10 GMT",
+        "x-ms-date": "Wed, 17 Feb 2021 19:04:49 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 24 Jun 2020 22:05:10 GMT",
-        "ETag": "\u00220x8D8188AA9F0930E\u0022",
-        "Last-Modified": "Wed, 24 Jun 2020 22:05:10 GMT",
+        "Date": "Wed, 17 Feb 2021 19:04:49 GMT",
+        "ETag": "\u00220x8D8D376E69C3E88\u0022",
+        "Last-Modified": "Wed, 17 Feb 2021 19:04:50 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "55c720fa-2099-2111-268e-f3aec048c1c4",
-        "x-ms-request-id": "cba00425-301e-0050-3373-4a8ff0000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-request-id": "6980231d-701e-0001-185f-05851e000000",
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-929b4e8e-4b81-26db-e740-3c6a2b961c6b/test-blob-2089e652-9980-a06c-c4ba-3c82c55fee1d",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-929b4e8e-4b81-26db-e740-3c6a2b961c6b/test-blob-2089e652-9980-a06c-c4ba-3c82c55fee1d",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "Content-Length": "0",
-        "traceparent": "00-15525d488b2761409ee7f7b06e43d2d9-ba69fc7eeb94eb4e-00",
+        "traceparent": "00-737ed3cbbc8b284ba16ad3a589ae56f2-de42486d47a0484a-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.5.0-dev.20200624.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210217.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-blob-type": "AppendBlob",
         "x-ms-client-request-id": "5029c23d-2540-603c-b426-90dee48f5cc7",
-        "x-ms-date": "Wed, 24 Jun 2020 22:05:10 GMT",
+        "x-ms-date": "Wed, 17 Feb 2021 19:04:50 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-tags": "myTagKey=myTagValue",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 24 Jun 2020 22:05:10 GMT",
-        "ETag": "\u00220x8D8188AAA042BB3\u0022",
-        "Last-Modified": "Wed, 24 Jun 2020 22:05:10 GMT",
+        "Date": "Wed, 17 Feb 2021 19:04:49 GMT",
+        "ETag": "\u00220x8D8D376E6A66609\u0022",
+        "Last-Modified": "Wed, 17 Feb 2021 19:04:50 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "5029c23d-2540-603c-b426-90dee48f5cc7",
-        "x-ms-request-id": "cba0043a-301e-0050-4273-4a8ff0000000",
+        "x-ms-request-id": "69802331-701e-0001-255f-05851e000000",
         "x-ms-request-server-encrypted": "true",
-        "x-ms-version": "2019-12-12",
-        "x-ms-version-id": "2020-06-24T22:05:10.9878707Z"
+         "x-ms-version": "2020-08-04",
+        "x-ms-version-id": "2021-02-17T19:04:50.2191625Z"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://seanmcccanary.blob.core.windows.net/?sv=2019-12-12\u0026ss=b\u0026srt=sco\u0026st=2020-06-24T21%3A05%3A12Z\u0026se=2020-06-24T23%3A05%3A12Z\u0026sp=f\u0026sig=Sanitized\u0026comp=blobs\u0026where=\u0022myTagKey\u0022%3D%27myTagValue%27",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/?sv=2020-06-12\u0026ss=b\u0026srt=sco\u0026st=2021-02-17T18%3A04%3A52Z\u0026se=2021-02-17T20%3A04%3A52Z\u0026sp=f\u0026sig=Sanitized\u0026comp=blobs\u0026where=\u0022myTagKey\u0022%3D%27myTagValue%27",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.5.0-dev.20200624.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210217.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "02442e9a-9d36-d5dc-420f-56a837f24183",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "1157",
         "Content-Type": "application/xml",
-        "Date": "Wed, 24 Jun 2020 22:05:12 GMT",
+        "Date": "Wed, 17 Feb 2021 19:04:52 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "Vary": "Origin",
+        "Transfer-Encoding": "chunked",
         "x-ms-client-request-id": "02442e9a-9d36-d5dc-420f-56a837f24183",
-        "x-ms-request-id": "5f79f650-d01e-0048-7c73-4a5097000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-request-id": "0f6b999e-b01e-006c-365f-053155000000",
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n",
-        "\u003CEnumerationResults ServiceEndpoint=\u0022https://seanmcccanary.blob.core.windows.net/\u0022\u003E\u003CWhere\u003E\u0026quot;myTagKey\u0026quot;=\u0026apos;myTagValue\u0026apos;\u003C/Where\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-07b3b646-05d6-e6c7-f12d-2c0d3c4c0b5b\u003C/Name\u003E\u003CContainerName\u003Etest-container-67ad9e4c-3276-384b-3efd-80c943578550\u003C/ContainerName\u003E\u003CTagValue\u003EmyTagValue\u003C/TagValue\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-1c6359c5-fe90-995f-4c03-caedbf8e732d\u003C/Name\u003E\u003CContainerName\u003Etest-container-76bd7c7e-8eed-aa5a-1888-71d723c21a74\u003C/ContainerName\u003E\u003CTagValue\u003EmyTagValue\u003C/TagValue\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-2089e652-9980-a06c-c4ba-3c82c55fee1d\u003C/Name\u003E\u003CContainerName\u003Etest-container-929b4e8e-4b81-26db-e740-3c6a2b961c6b\u003C/ContainerName\u003E\u003CTagValue\u003EmyTagValue\u003C/TagValue\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-2089e652-9980-a06c-c4ba-3c82c55fee1d\u003C/Name\u003E\u003CContainerName\u003Etest-container-929b4e8e-4b81-26db-e740-3c6a2b961c6b\u003C/ContainerName\u003E\u003CTagValue\u003EmyTagValue\u003C/TagValue\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-fbacb2ad-17c4-dcb4-60ff-48cfc3d356be\u003C/Name\u003E\u003CContainerName\u003Etest-container-95bacbdb-89b8-ff1f-6237-3b1491d42a0a\u003C/ContainerName\u003E\u003CTagValue\u003EmyTagValue\u003C/TagValue\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker/\u003E\u003C/EnumerationResults\u003E"
+        "\u003CEnumerationResults ServiceEndpoint=\u0022https://seanmcccanary3.blob.core.windows.net/\u0022\u003E\u003CWhere\u003E\u0026quot;myTagKey\u0026quot;=\u0026apos;myTagValue\u0026apos;\u003C/Where\u003E\u003CBlobs\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-70110f30-6131-4172-b447-30b71531e9e2\u003C/Name\u003E\u003CContainerName\u003Etest-container-07072690-b157-4f0d-b181-ae13cea580f7\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-35920e8a-22ae-4351-9020-437e82bbbea4\u003C/Name\u003E\u003CContainerName\u003Etest-container-08abadb8-4c8a-4de6-8613-dda802ec38ee\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-b03ccbc2-6853-4219-b92b-0574e1ef8f9e\u003C/Name\u003E\u003CContainerName\u003Etest-container-12685732-ef1d-4afd-bb4d-b348801f8a3f\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-cfb31012-cf06-4ffb-97c6-6d9c9f5bcab1\u003C/Name\u003E\u003CContainerName\u003Etest-container-16b7cb0c-1fa4-47b2-94e6-6471b56c3113\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-448baced-6ac0-430a-aa67-1cf0c0e75041\u003C/Name\u003E\u003CContainerName\u003Etest-container-17f7cb9c-905c-4126-906b-5602befb0741\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-9a6ef55a-b793-4d51-a61b-622f755715a9\u003C/Name\u003E\u003CContainerName\u003Etest-container-1cf7e437-cef7-469a-9ae5-95b7fdc3e484\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-0b866c00-1c54-4ba4-b426-f630d371b8ef\u003C/Name\u003E\u003CContainerName\u003Etest-container-1fa7dc17-b863-4d5c-a256-7604836c4bf6\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-b2de18a7-2875-4406-9ed2-efa3597fa7ff\u003C/Name\u003E\u003CContainerName\u003Etest-container-29506a80-6458-46a6-81ff-272648d2df45\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-a221457d-db2a-48f3-ab60-b031a684c652\u003C/Name\u003E\u003CContainerName\u003Etest-container-2e4ad71d-ff9b-45fa-a65a-f43004ea830b\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-d341c776-79d8-4dea-9870-1a9aa04d1abb\u003C/Name\u003E\u003CContainerName\u003Etest-container-32bd6a07-29fd-4bbb-b2a1-1a5d5313612b\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-4d2355ea-1b95-4362-8d95-ed23850cae63\u003C/Name\u003E\u003CContainerName\u003Etest-container-3af15d5c-b9ff-46e7-ad42-2c55c70e7dd1\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-62f6967b-a446-473d-886f-c90c8fa45efc\u003C/Name\u003E\u003CContainerName\u003Etest-container-43227fd4-2499-4db3-8b0b-7d574010dc4e\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-0d13efaf-3669-4532-9c0e-9b7747a1b1f1\u003C/Name\u003E\u003CContainerName\u003Etest-container-4c8073fb-a282-45bd-ad3a-41555c98c476\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-8631a693-d95f-4908-ab0d-0560fd0199fe\u003C/Name\u003E\u003CContainerName\u003Etest-container-54fd69a2-5b71-4b0f-8aa2-f2b8a5033b2f\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-b96efff1-4f2c-4f4b-86e8-b785a5fe7877\u003C/Name\u003E\u003CContainerName\u003Etest-container-590ecdaf-a832-45f3-a95e-9891d7797876\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-74c8df2a-f9e3-4e5a-a3eb-02f27f1b3162\u003C/Name\u003E\u003CContainerName\u003Etest-container-60ea5fc6-8066-4cd4-aebb-5a11344cc64f\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-07b3b646-05d6-e6c7-f12d-2c0d3c4c0b5b\u003C/Name\u003E\u003CContainerName\u003Etest-container-67ad9e4c-3276-384b-3efd-80c943578550\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-aebe2e2e-ac42-4c4d-8062-f1e475e15680\u003C/Name\u003E\u003CContainerName\u003Etest-container-68947127-b18b-44f1-9cd7-3c5a1d747c39\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-1c6359c5-fe90-995f-4c03-caedbf8e732d\u003C/Name\u003E\u003CContainerName\u003Etest-container-76bd7c7e-8eed-aa5a-1888-71d723c21a74\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-fcb8d87f-438a-83eb-7e0f-040288f24417\u003C/Name\u003E\u003CContainerName\u003Etest-container-7713691e-e349-a963-4890-e015c373a347\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-5f1ae78d-3570-4af9-90a6-e5aa58236230\u003C/Name\u003E\u003CContainerName\u003Etest-container-879741d4-b69c-4c21-b280-39febf5bc617\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-a542a07a-2adf-446e-b2ac-ef4f96fd1c24\u003C/Name\u003E\u003CContainerName\u003Etest-container-8ced49da-c4c9-48be-9653-61d75c4e4fd3\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-b28df5bb-6916-4c9a-b288-4d20bacf27ed\u003C/Name\u003E\u003CContainerName\u003Etest-container-8fb4af41-038b-4266-83a8-f058e2ee2fd9\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-2089e652-9980-a06c-c4ba-3c82c55fee1d\u003C/Name\u003E\u003CContainerName\u003Etest-container-929b4e8e-4b81-26db-e740-3c6a2b961c6b\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-2089e652-9980-a06c-c4ba-3c82c55fee1d\u003C/Name\u003E\u003CContainerName\u003Etest-container-929b4e8e-4b81-26db-e740-3c6a2b961c6b\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-fbacb2ad-17c4-dcb4-60ff-48cfc3d356be\u003C/Name\u003E\u003CContainerName\u003Etest-container-95bacbdb-89b8-ff1f-6237-3b1491d42a0a\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-07481652-0b0c-45ef-8ad4-6f4a13e28094\u003C/Name\u003E\u003CContainerName\u003Etest-container-97365b27-bba6-4d76-b491-ca5d560999a6\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-9384f653-124a-25e1-1eab-752339880a2b\u003C/Name\u003E\u003CContainerName\u003Etest-container-cb730b79-43a0-8e4d-4016-ecd1e4a25264\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-8198f4bc-72f7-4b7e-a387-412f4d00b67e\u003C/Name\u003E\u003CContainerName\u003Etest-container-d22f59af-5a35-4c4d-981e-001ea2de2160\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-b27f9336-2286-43a2-b8c1-cb29cdd38a5f\u003C/Name\u003E\u003CContainerName\u003Etest-container-d3b52f29-885d-49ab-89e4-4a61fa48f37c\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-608301ae-d8bb-4cd9-99f3-45084e8dceae\u003C/Name\u003E\u003CContainerName\u003Etest-container-d7b84df2-1e05-4093-8758-1ad43d5b83fe\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-962e7c1d-eeaf-483a-8650-c250266b8ece\u003C/Name\u003E\u003CContainerName\u003Etest-container-f39add80-878e-4b09-b1bf-e91acacbaee1\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-b39370a1-c095-4026-9c32-12671a09c156\u003C/Name\u003E\u003CContainerName\u003Etest-container-f912bd1f-be03-40d6-b9b6-6d8970cd6b9f\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003CBlob\u003E\u003CName\u003Etest-blob-5eac4ec7-172a-4f7a-81e8-4d82caf45a47\u003C/Name\u003E\u003CContainerName\u003Etest-container-fbeb119a-f97c-4ff1-a831-c438b0e85127\u003C/ContainerName\u003E\u003CTags\u003E\u003CTagSet\u003E\u003CTag\u003E\u003CKey\u003EmyTagKey\u003C/Key\u003E\u003CValue\u003EmyTagValue\u003C/Value\u003E\u003C/Tag\u003E\u003C/TagSet\u003E\u003C/Tags\u003E\u003C/Blob\u003E\u003C/Blobs\u003E\u003CNextMarker/\u003E\u003C/EnumerationResults\u003E"
       ]
     },
     {
-      "RequestUri": "https://seanmcccanary.blob.core.windows.net/test-container-929b4e8e-4b81-26db-e740-3c6a2b961c6b?restype=container",
+      "RequestUri": "https://seanmcccanary3.blob.core.windows.net/test-container-929b4e8e-4b81-26db-e740-3c6a2b961c6b?restype=container",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-4bd94e530b7dbe40bc148c2524e3d78c-e23abf187eda1841-00",
+        "traceparent": "00-9b9d83115df8ec4db381b86be6012193-0a980ccc05a00a48-00",
         "User-Agent": [
-          "azsdk-net-Storage.Blobs/12.5.0-dev.20200624.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Blobs/12.9.0-alpha.20210217.1",
+          "(.NET 5.0.3; Microsoft Windows 10.0.19042)"
         ],
         "x-ms-client-request-id": "b544a781-594b-0290-f8de-fec85f4c5322",
-        "x-ms-date": "Wed, 24 Jun 2020 22:05:13 GMT",
+        "x-ms-date": "Wed, 17 Feb 2021 19:04:52 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "Content-Length": "0",
-        "Date": "Wed, 24 Jun 2020 22:05:13 GMT",
+        "Date": "Wed, 17 Feb 2021 19:04:52 GMT",
         "Server": [
           "Windows-Azure-Blob/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-client-request-id": "b544a781-594b-0290-f8de-fec85f4c5322",
-        "x-ms-request-id": "5f79f653-d01e-0048-7f73-4a5097000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-request-id": "698025ed-701e-0001-705f-05851e000000",
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     }
   ],
   "Variables": {
-    "DateTimeOffsetNow": "2020-06-24T17:05:12.9850254-05:00",
+    "DateTimeOffsetNow": "2021-02-17T13:04:52.2498501-06:00",
     "RandomSeed": "481648561",
-    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary\nU2FuaXRpemVk\nhttps://seanmcccanary.blob.core.windows.net\nhttps://seanmcccanary.file.core.windows.net\nhttps://seanmcccanary.queue.core.windows.net\nhttps://seanmcccanary.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary-secondary.blob.core.windows.net\nhttps://seanmcccanary-secondary.file.core.windows.net\nhttps://seanmcccanary-secondary.queue.core.windows.net\nhttps://seanmcccanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary.queue.core.windows.net/;FileEndpoint=https://seanmcccanary.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary-secondary.file.core.windows.net/;AccountName=seanmcccanary;AccountKey=Sanitized\nseanscope1"
+    "Storage_TestConfigDefault": "ProductionTenant\nseanmcccanary3\nU2FuaXRpemVk\nhttps://seanmcccanary3.blob.core.windows.net\nhttps://seanmcccanary3.file.core.windows.net\nhttps://seanmcccanary3.queue.core.windows.net\nhttps://seanmcccanary3.table.core.windows.net\n\n\n\n\nhttps://seanmcccanary3-secondary.blob.core.windows.net\nhttps://seanmcccanary3-secondary.file.core.windows.net\nhttps://seanmcccanary3-secondary.queue.core.windows.net\nhttps://seanmcccanary3-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=https://seanmcccanary3.blob.core.windows.net/;QueueEndpoint=https://seanmcccanary3.queue.core.windows.net/;FileEndpoint=https://seanmcccanary3.file.core.windows.net/;BlobSecondaryEndpoint=https://seanmcccanary3-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seanmcccanary3-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seanmcccanary3-secondary.file.core.windows.net/;AccountName=seanmcccanary3;AccountKey=Kg==;\nseanscope1"
   }
 }

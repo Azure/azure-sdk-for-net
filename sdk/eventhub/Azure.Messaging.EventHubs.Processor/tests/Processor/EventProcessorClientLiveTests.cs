@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
@@ -47,7 +48,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-           cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Send a set of events.
 
@@ -79,7 +80,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -97,7 +98,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
             using var cancellationSource = new CancellationTokenSource();
-           cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Send a set of events.
 
@@ -129,7 +130,107 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventsCanBeReadByOneProcessorClientUsingTheSharedKeyCredential()
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Send a set of events.
+
+            var sourceEvents = EventGenerator.CreateEvents(50).ToList();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
+
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
+
+            // Attempt to read back the events.
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var processor = CreateProcessorWithSharedAccessKey(scope.ConsumerGroups.First(), scope.EventHubName, options: options);
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  { processedEvents.Count } events were processed.");
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
+
+            // Validate the events that were processed.
+
+            foreach (var sourceEvent in sourceEvents)
+            {
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
+                Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventsCanBeReadByOneProcessorClientUsingTheSasCredential()
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Send a set of events.
+
+            var sourceEvents = EventGenerator.CreateEvents(50).ToList();
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
+
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
+
+            // Attempt to read back the events.
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var processor = CreateProcessorWithSharedAccessSignature(scope.ConsumerGroups.First(), scope.EventHubName, options: options);
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += CreateEventTrackingHandler(sentCount, processedEvents, completionSource, cancellationSource.Token);
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, $"The cancellation token should not have been signaled.  { processedEvents.Count } events were processed.");
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            cancellationSource.Cancel();
+
+            // Validate the events that were processed.
+
+            foreach (var sourceEvent in sourceEvents)
+            {
+                var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -193,7 +294,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -237,7 +338,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var processedEvents = new ConcurrentDictionary<string, EventData>();
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var storageManager = new InMemoryStorageManager(_ => {});
+            var storageManager = new InMemoryStorageManager(_ => { });
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
             var processor = CreateProcessorWithIdentity(scope.ConsumerGroups.First(), scope.EventHubName, storageManager, options);
 
@@ -295,7 +396,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await using (var consumer = new EventHubConsumerClient(scope.ConsumerGroups.First(), connectionString))
             {
-                await foreach  (var partitionEvent in consumer.ReadEventsAsync(new ReadEventOptions { MaximumWaitTime = null }, cancellationSource.Token))
+                await foreach (var partitionEvent in consumer.ReadEventsAsync(new ReadEventOptions { MaximumWaitTime = null }, cancellationSource.Token))
                 {
                     if (partitionEvent.Data.IsEquivalentTo(lastSourceEvent))
                     {
@@ -342,7 +443,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in sourceEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -387,7 +488,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var beforeCheckpointProcessHandler = CreateEventTrackingHandler(segmentEventCount, processedEvents, completionSource, cancellationSource.Token, processedEventCallback);
             var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
-            var storageManager = new InMemoryStorageManager(_ => {});
+            var storageManager = new InMemoryStorageManager(_ => { });
             var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, storageManager, options);
 
             processor.ProcessErrorAsync += CreateAssertingErrorHandler();
@@ -425,7 +526,7 @@ namespace Azure.Messaging.EventHubs.Tests
             foreach (var sourceEvent in afterCheckpointEvents)
             {
                 var sourceId = sourceEvent.Properties[EventGenerator.IdPropertyName].ToString();
-                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed." );
+                Assert.That(processedEvents.TryGetValue(sourceId, out var processedEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                 Assert.That(sourceEvent.IsEquivalentTo(processedEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
             }
         }
@@ -449,7 +550,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             EventHubConnection createConnection() => new EventHubConnection(connectionString);
 
-            storageManager ??= new InMemoryStorageManager(_=> {});
+            storageManager ??= new InMemoryStorageManager(_ => { });
             return new TestEventProcessorClient(storageManager, consumerGroup, "fakeNamespace", "fakeEventHub", Mock.Of<TokenCredential>(), createConnection, options);
         }
 
@@ -473,7 +574,70 @@ namespace Azure.Messaging.EventHubs.Tests
             var credential = EventHubsTestEnvironment.Instance.Credential;
             EventHubConnection createConnection() => new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
 
-            storageManager ??= new InMemoryStorageManager(_=> {});
+            storageManager ??= new InMemoryStorageManager(_ => { });
+            return new TestEventProcessorClient(storageManager, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
+        }
+
+        /// <summary>
+        ///   Creates an <see cref="EventProcessorClient" /> that uses mock storage and
+        ///   a connection based on an identity credential.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The consumer group for the processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub for the processor.</param>
+        /// <param name="options">The set of client options to pass.</param>
+        ///
+        /// <returns>The processor instance.</returns>
+        ///
+        private EventProcessorClient CreateProcessorWithSharedAccessKey(string consumerGroup,
+                                                                        string eventHubName,
+                                                                        StorageManager storageManager = default,
+                                                                        EventProcessorOptions options = default)
+        {
+            var credential = new AzureNamedKeyCredential(EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+            EventHubConnection createConnection() => new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
+
+            storageManager ??= new InMemoryStorageManager(_ => { });
+            return new TestEventProcessorClient(storageManager, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
+        }
+
+        /// <summary>
+        ///   Creates an <see cref="EventProcessorClient" /> that uses mock storage and
+        ///   a connection based on an identity credential.
+        /// </summary>
+        ///
+        /// <param name="consumerGroup">The consumer group for the processor.</param>
+        /// <param name="eventHubName">The name of the Event Hub for the processor.</param>
+        /// <param name="options">The set of client options to pass.</param>
+        ///
+        /// <returns>The processor instance.</returns>
+        ///
+        private EventProcessorClient CreateProcessorWithSharedAccessSignature(string consumerGroup,
+                                                                              string eventHubName,
+                                                                              StorageManager storageManager = default,
+                                                                              EventProcessorOptions options = default)
+        {
+            var builder = new UriBuilder(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace)
+            {
+                Scheme = "amqps://",
+                Path = eventHubName,
+                Port = -1,
+                Fragment = string.Empty,
+                Password = string.Empty,
+                UserName = string.Empty,
+            };
+
+            if (builder.Path.EndsWith("/", StringComparison.Ordinal))
+            {
+                builder.Path = builder.Path.TrimEnd('/');
+            }
+
+            var resource =  builder.Uri.AbsoluteUri.ToLowerInvariant();
+            var signature = new SharedAccessSignature(resource, EventHubsTestEnvironment.Instance.SharedAccessKeyName, EventHubsTestEnvironment.Instance.SharedAccessKey);
+            var credential = new AzureSasCredential(signature.Value);
+            EventHubConnection createConnection() => new EventHubConnection(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential);
+
+            storageManager ??= new InMemoryStorageManager(_ => { });
             return new TestEventProcessorClient(storageManager, consumerGroup, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, eventHubName, credential, createConnection, options);
         }
 
@@ -546,7 +710,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                         if (processedEvents.Count >= targetCount)
                         {
-                           completionSource.TrySetResult(true);
+                            completionSource.TrySetResult(true);
                         }
                     }
                 }
@@ -580,6 +744,28 @@ namespace Azure.Messaging.EventHubs.Tests
                                               string fullyQualifiedNamespace,
                                               string eventHubName,
                                               TokenCredential credential,
+                                              Func<EventHubConnection> connectionFactory,
+                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
+            {
+                InjectedConnectionFactory = connectionFactory;
+            }
+
+            internal TestEventProcessorClient(StorageManager storageManager,
+                                              string consumerGroup,
+                                              string fullyQualifiedNamespace,
+                                              string eventHubName,
+                                              AzureNamedKeyCredential credential,
+                                              Func<EventHubConnection> connectionFactory,
+                                              EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
+            {
+                InjectedConnectionFactory = connectionFactory;
+            }
+
+            internal TestEventProcessorClient(StorageManager storageManager,
+                                              string consumerGroup,
+                                              string fullyQualifiedNamespace,
+                                              string eventHubName,
+                                              AzureSasCredential credential,
                                               Func<EventHubConnection> connectionFactory,
                                               EventProcessorOptions options) : base(storageManager, consumerGroup, fullyQualifiedNamespace, eventHubName, 100, credential, options)
             {

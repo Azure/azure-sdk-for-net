@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// and the unauthenticated client
         /// action is set to "RedirectToLoginPage". Possible values include:
         /// 'AzureActiveDirectory', 'Facebook', 'Google', 'MicrosoftAccount',
-        /// 'Twitter'</param>
+        /// 'Twitter', 'Github'</param>
         /// <param name="tokenRefreshExtensionHours">The number of hours after
         /// session token expiration that a session token can be used to
         /// call the token refresh API. The default is 72 hours.</param>
@@ -87,6 +87,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// authenticate end users.
         /// More information on OpenID Connect:
         /// http://openid.net/specs/openid-connect-core-1_0.html</param>
+        /// <param name="clientSecretSettingName">The app setting name that
+        /// contains the client secret of the relying party
+        /// application.</param>
         /// <param name="clientSecretCertificateThumbprint">An alternative to
         /// the client secret, that is the thumbprint of a certificate used for
         /// signing purposes. This property acts as
@@ -110,6 +113,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form
         /// "key=value".</param>
+        /// <param name="aadClaimsAuthorization">Gets a JSON string containing
+        /// the Azure AD Acl settings.</param>
         /// <param name="googleClientId">The OpenID Connect Client ID for the
         /// Google web application.
         /// This setting is required for enabling Google Sign-In.
@@ -120,6 +125,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// This setting is required for enabling Google Sign-In.
         /// Google Sign-In documentation:
         /// https://developers.google.com/identity/sign-in/web/</param>
+        /// <param name="googleClientSecretSettingName">The app setting name
+        /// that contains the client secret associated with
+        /// the Google web application.</param>
         /// <param name="googleOAuthScopes">The OAuth 2.0 scopes that will be
         /// requested as part of Google Sign-In authentication.
         /// This setting is optional. If not specified, "openid", "profile",
@@ -136,11 +144,25 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// This setting is required for enabling Facebook Login.
         /// Facebook Login documentation:
         /// https://developers.facebook.com/docs/facebook-login</param>
+        /// <param name="facebookAppSecretSettingName">The app setting name
+        /// that contains the app secret used for Facebook Login.</param>
         /// <param name="facebookOAuthScopes">The OAuth 2.0 scopes that will be
         /// requested as part of Facebook Login authentication.
         /// This setting is optional.
         /// Facebook Login documentation:
         /// https://developers.facebook.com/docs/facebook-login</param>
+        /// <param name="gitHubClientId">The Client Id of the GitHub app used
+        /// for login.
+        /// This setting is required for enabling Github login</param>
+        /// <param name="gitHubClientSecret">The Client Secret of the GitHub
+        /// app used for Github Login.
+        /// This setting is required for enabling Github login.</param>
+        /// <param name="gitHubClientSecretSettingName">The app setting name
+        /// that contains the client secret of the Github
+        /// app used for GitHub Login.</param>
+        /// <param name="gitHubOAuthScopes">The OAuth 2.0 scopes that will be
+        /// requested as part of GitHub Login authentication.
+        /// This setting is optional</param>
         /// <param name="twitterConsumerKey">The OAuth 1.0a consumer key of the
         /// Twitter application used for sign-in.
         /// This setting is required for enabling Twitter Sign-In.
@@ -151,6 +173,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// This setting is required for enabling Twitter Sign-In.
         /// Twitter Sign-In documentation:
         /// https://dev.twitter.com/web/sign-in</param>
+        /// <param name="twitterConsumerSecretSettingName">The app setting name
+        /// that contains the OAuth 1.0a consumer secret of the Twitter
+        /// application used for sign-in.</param>
         /// <param name="microsoftAccountClientId">The OAuth 2.0 client ID that
         /// was created for the app used for authentication.
         /// This setting is required for enabling Microsoft Account
@@ -163,13 +188,24 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// authentication.
         /// Microsoft Account OAuth documentation:
         /// https://dev.onedrive.com/auth/msa_oauth.htm</param>
+        /// <param name="microsoftAccountClientSecretSettingName">The app
+        /// setting name containing the OAuth 2.0 client secret that was
+        /// created for the
+        /// app used for authentication.</param>
         /// <param name="microsoftAccountOAuthScopes">The OAuth 2.0 scopes that
         /// will be requested as part of Microsoft Account authentication.
         /// This setting is optional. If not specified, "wl.basic" is used as
         /// the default scope.
         /// Microsoft Account Scopes and permissions documentation:
         /// https://msdn.microsoft.com/en-us/library/dn631845.aspx</param>
-        public SiteAuthSettings(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), string runtimeVersion = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), double? tokenRefreshExtensionHours = default(double?), string clientId = default(string), string clientSecret = default(string), string clientSecretCertificateThumbprint = default(string), string issuer = default(string), bool? validateIssuer = default(bool?), IList<string> allowedAudiences = default(IList<string>), IList<string> additionalLoginParams = default(IList<string>), string googleClientId = default(string), string googleClientSecret = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>))
+        /// <param name="isAuthFromFile">"true" if the auth config settings
+        /// should be read from a file,
+        /// "false" otherwise</param>
+        /// <param name="authFilePath">The path of the config file containing
+        /// auth settings.
+        /// If the path is relative, base will the site's root
+        /// directory.</param>
+        public SiteAuthSettings(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), string runtimeVersion = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), double? tokenRefreshExtensionHours = default(double?), string clientId = default(string), string clientSecret = default(string), string clientSecretSettingName = default(string), string clientSecretCertificateThumbprint = default(string), string issuer = default(string), bool? validateIssuer = default(bool?), IList<string> allowedAudiences = default(IList<string>), IList<string> additionalLoginParams = default(IList<string>), string aadClaimsAuthorization = default(string), string googleClientId = default(string), string googleClientSecret = default(string), string googleClientSecretSettingName = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), string facebookAppSecretSettingName = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string gitHubClientId = default(string), string gitHubClientSecret = default(string), string gitHubClientSecretSettingName = default(string), IList<string> gitHubOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string twitterConsumerSecretSettingName = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), string microsoftAccountClientSecretSettingName = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>), string isAuthFromFile = default(string), string authFilePath = default(string))
             : base(id, name, kind, type)
         {
             Enabled = enabled;
@@ -181,22 +217,34 @@ namespace Microsoft.Azure.Management.WebSites.Models
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;
             ClientId = clientId;
             ClientSecret = clientSecret;
+            ClientSecretSettingName = clientSecretSettingName;
             ClientSecretCertificateThumbprint = clientSecretCertificateThumbprint;
             Issuer = issuer;
             ValidateIssuer = validateIssuer;
             AllowedAudiences = allowedAudiences;
             AdditionalLoginParams = additionalLoginParams;
+            AadClaimsAuthorization = aadClaimsAuthorization;
             GoogleClientId = googleClientId;
             GoogleClientSecret = googleClientSecret;
+            GoogleClientSecretSettingName = googleClientSecretSettingName;
             GoogleOAuthScopes = googleOAuthScopes;
             FacebookAppId = facebookAppId;
             FacebookAppSecret = facebookAppSecret;
+            FacebookAppSecretSettingName = facebookAppSecretSettingName;
             FacebookOAuthScopes = facebookOAuthScopes;
+            GitHubClientId = gitHubClientId;
+            GitHubClientSecret = gitHubClientSecret;
+            GitHubClientSecretSettingName = gitHubClientSecretSettingName;
+            GitHubOAuthScopes = gitHubOAuthScopes;
             TwitterConsumerKey = twitterConsumerKey;
             TwitterConsumerSecret = twitterConsumerSecret;
+            TwitterConsumerSecretSettingName = twitterConsumerSecretSettingName;
             MicrosoftAccountClientId = microsoftAccountClientId;
             MicrosoftAccountClientSecret = microsoftAccountClientSecret;
+            MicrosoftAccountClientSecretSettingName = microsoftAccountClientSecretSettingName;
             MicrosoftAccountOAuthScopes = microsoftAccountOAuthScopes;
+            IsAuthFromFile = isAuthFromFile;
+            AuthFilePath = authFilePath;
             CustomInit();
         }
 
@@ -259,7 +307,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// and the unauthenticated client
         /// action is set to "RedirectToLoginPage". Possible values include:
         /// 'AzureActiveDirectory', 'Facebook', 'Google', 'MicrosoftAccount',
-        /// 'Twitter'
+        /// 'Twitter', 'Github'
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultProvider")]
         public BuiltInAuthenticationProvider? DefaultProvider { get; set; }
@@ -297,6 +345,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.clientSecret")]
         public string ClientSecret { get; set; }
+
+        /// <summary>
+        /// Gets or sets the app setting name that contains the client secret
+        /// of the relying party application.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientSecretSettingName")]
+        public string ClientSecretSettingName { get; set; }
 
         /// <summary>
         /// Gets or sets an alternative to the client secret, that is the
@@ -346,6 +401,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public IList<string> AdditionalLoginParams { get; set; }
 
         /// <summary>
+        /// Gets a JSON string containing the Azure AD Acl settings.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.aadClaimsAuthorization")]
+        public string AadClaimsAuthorization { get; set; }
+
+        /// <summary>
         /// Gets or sets the OpenID Connect Client ID for the Google web
         /// application.
         /// This setting is required for enabling Google Sign-In.
@@ -364,6 +425,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.googleClientSecret")]
         public string GoogleClientSecret { get; set; }
+
+        /// <summary>
+        /// Gets or sets the app setting name that contains the client secret
+        /// associated with
+        /// the Google web application.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.googleClientSecretSettingName")]
+        public string GoogleClientSecretSettingName { get; set; }
 
         /// <summary>
         /// Gets or sets the OAuth 2.0 scopes that will be requested as part of
@@ -396,6 +465,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string FacebookAppSecret { get; set; }
 
         /// <summary>
+        /// Gets or sets the app setting name that contains the app secret used
+        /// for Facebook Login.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.facebookAppSecretSettingName")]
+        public string FacebookAppSecretSettingName { get; set; }
+
+        /// <summary>
         /// Gets or sets the OAuth 2.0 scopes that will be requested as part of
         /// Facebook Login authentication.
         /// This setting is optional.
@@ -404,6 +480,37 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.facebookOAuthScopes")]
         public IList<string> FacebookOAuthScopes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Client Id of the GitHub app used for login.
+        /// This setting is required for enabling Github login
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.gitHubClientId")]
+        public string GitHubClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Client Secret of the GitHub app used for Github
+        /// Login.
+        /// This setting is required for enabling Github login.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.gitHubClientSecret")]
+        public string GitHubClientSecret { get; set; }
+
+        /// <summary>
+        /// Gets or sets the app setting name that contains the client secret
+        /// of the Github
+        /// app used for GitHub Login.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.gitHubClientSecretSettingName")]
+        public string GitHubClientSecretSettingName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the OAuth 2.0 scopes that will be requested as part of
+        /// GitHub Login authentication.
+        /// This setting is optional
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.gitHubOAuthScopes")]
+        public IList<string> GitHubOAuthScopes { get; set; }
 
         /// <summary>
         /// Gets or sets the OAuth 1.0a consumer key of the Twitter application
@@ -422,6 +529,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.twitterConsumerSecret")]
         public string TwitterConsumerSecret { get; set; }
+
+        /// <summary>
+        /// Gets or sets the app setting name that contains the OAuth 1.0a
+        /// consumer secret of the Twitter
+        /// application used for sign-in.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.twitterConsumerSecretSettingName")]
+        public string TwitterConsumerSecretSettingName { get; set; }
 
         /// <summary>
         /// Gets or sets the OAuth 2.0 client ID that was created for the app
@@ -446,6 +561,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string MicrosoftAccountClientSecret { get; set; }
 
         /// <summary>
+        /// Gets or sets the app setting name containing the OAuth 2.0 client
+        /// secret that was created for the
+        /// app used for authentication.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.microsoftAccountClientSecretSettingName")]
+        public string MicrosoftAccountClientSecretSettingName { get; set; }
+
+        /// <summary>
         /// Gets or sets the OAuth 2.0 scopes that will be requested as part of
         /// Microsoft Account authentication.
         /// This setting is optional. If not specified, "wl.basic" is used as
@@ -455,6 +578,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.microsoftAccountOAuthScopes")]
         public IList<string> MicrosoftAccountOAuthScopes { get; set; }
+
+        /// <summary>
+        /// Gets or sets "true" if the auth config settings should be read from
+        /// a file,
+        /// "false" otherwise
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isAuthFromFile")]
+        public string IsAuthFromFile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the path of the config file containing auth settings.
+        /// If the path is relative, base will the site's root directory.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.authFilePath")]
+        public string AuthFilePath { get; set; }
 
     }
 }

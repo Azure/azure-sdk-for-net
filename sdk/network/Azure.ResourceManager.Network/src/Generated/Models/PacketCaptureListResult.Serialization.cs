@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PacketCaptureListResult
+    internal partial class PacketCaptureListResult
     {
         internal static PacketCaptureListResult DeserializePacketCaptureListResult(JsonElement element)
         {
@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PacketCaptureResult> array = new List<PacketCaptureResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

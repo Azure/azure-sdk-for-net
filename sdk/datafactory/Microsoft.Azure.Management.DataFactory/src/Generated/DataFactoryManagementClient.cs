@@ -151,6 +151,31 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual IDataFlowDebugSessionOperations DataFlowDebugSession { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedVirtualNetworksOperations.
+        /// </summary>
+        public virtual IManagedVirtualNetworksOperations ManagedVirtualNetworks { get; private set; }
+
+        /// <summary>
+        /// Gets the IManagedPrivateEndpointsOperations.
+        /// </summary>
+        public virtual IManagedPrivateEndpointsOperations ManagedPrivateEndpoints { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndPointConnectionsOperations.
+        /// </summary>
+        public virtual IPrivateEndPointConnectionsOperations PrivateEndPointConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateEndpointConnectionOperations.
+        /// </summary>
+        public virtual IPrivateEndpointConnectionOperations PrivateEndpointConnection { get; private set; }
+
+        /// <summary>
+        /// Gets the IPrivateLinkResourcesOperations.
+        /// </summary>
+        public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the DataFactoryManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -406,6 +431,11 @@ namespace Microsoft.Azure.Management.DataFactory
             TriggerRuns = new TriggerRunsOperations(this);
             DataFlows = new DataFlowsOperations(this);
             DataFlowDebugSession = new DataFlowDebugSessionOperations(this);
+            ManagedVirtualNetworks = new ManagedVirtualNetworksOperations(this);
+            ManagedPrivateEndpoints = new ManagedPrivateEndpointsOperations(this);
+            PrivateEndPointConnections = new PrivateEndPointConnectionsOperations(this);
+            PrivateEndpointConnection = new PrivateEndpointConnectionOperations(this);
+            PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-06-01";
             AcceptLanguage = "en-US";
@@ -489,6 +519,8 @@ namespace Microsoft.Azure.Management.DataFactory
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CustomSetupBase>("type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SsisObjectMetadata>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SsisObjectMetadata>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CopyTranslator>("type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CopyTranslator>("type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

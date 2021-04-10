@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = new DiskEncryptionSetIdentityType(property.Value.GetString());
                     continue;
                 }

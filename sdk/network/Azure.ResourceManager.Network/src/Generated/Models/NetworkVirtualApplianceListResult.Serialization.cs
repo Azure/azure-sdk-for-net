@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkVirtualApplianceListResult
+    internal partial class NetworkVirtualApplianceListResult
     {
         internal static NetworkVirtualApplianceListResult DeserializeNetworkVirtualApplianceListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<NetworkVirtualAppliance> array = new List<NetworkVirtualAppliance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

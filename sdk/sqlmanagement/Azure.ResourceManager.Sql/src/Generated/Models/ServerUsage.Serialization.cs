@@ -41,11 +41,21 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("currentValue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     currentValue = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("limit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     limit = property.Value.GetDouble();
                     continue;
                 }
@@ -56,6 +66,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("nextResetTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     nextResetTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

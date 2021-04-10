@@ -194,5 +194,14 @@ namespace Microsoft.Azure.Management.Monitor
         /// </summary>
         IPrivateLinkScopedResourcesOperations PrivateLinkScopedResources { get; }
 
+        /// <summary>
+        /// Gets the IDataCollectionRules.
+        /// </summary>
+        IDataCollectionRules DataCollectionRules { get; }
+
+        /// <summary>
+        /// Gets the IDataCollectionRuleAssociations.
+        /// </summary>
+        IDataCollectionRuleAssociations DataCollectionRuleAssociations { get; }
     }
 }

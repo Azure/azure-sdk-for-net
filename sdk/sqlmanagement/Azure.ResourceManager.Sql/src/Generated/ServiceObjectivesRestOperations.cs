@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(serviceObjectiveName, true);
             uri.AppendQuery("api-version", "2014-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -153,6 +154,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/serviceObjectives", false);
             uri.AppendQuery("api-version", "2014-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

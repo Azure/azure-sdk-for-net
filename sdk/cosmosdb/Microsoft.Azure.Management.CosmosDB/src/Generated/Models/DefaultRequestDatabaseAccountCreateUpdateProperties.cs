@@ -72,8 +72,16 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// enable storage analytics.</param>
         /// <param name="backupPolicy">The object representing the policy for
         /// taking backups on an account.</param>
-        public DefaultRequestDatabaseAccountCreateUpdateProperties(IList<Location> locations, ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy))
-            : base(locations, consistencyPolicy, ipRules, isVirtualNetworkFilterEnabled, enableAutomaticFailover, capabilities, virtualNetworkRules, enableMultipleWriteLocations, enableCassandraConnector, connectorOffer, disableKeyBasedMetadataWriteAccess, keyVaultKeyUri, publicNetworkAccess, enableFreeTier, apiProperties, enableAnalyticalStorage, backupPolicy)
+        /// <param name="cors">The CORS policy for the Cosmos DB database
+        /// account.</param>
+        /// <param name="networkAclBypass">Indicates what services are allowed
+        /// to bypass firewall checks. Possible values include: 'None',
+        /// 'AzureServices'</param>
+        /// <param name="networkAclBypassResourceIds">An array that contains
+        /// the Resource Ids for Network Acl Bypass for the Cosmos DB
+        /// account.</param>
+        public DefaultRequestDatabaseAccountCreateUpdateProperties(IList<Location> locations, ConsistencyPolicy consistencyPolicy = default(ConsistencyPolicy), IList<IpAddressOrRange> ipRules = default(IList<IpAddressOrRange>), bool? isVirtualNetworkFilterEnabled = default(bool?), bool? enableAutomaticFailover = default(bool?), IList<Capability> capabilities = default(IList<Capability>), IList<VirtualNetworkRule> virtualNetworkRules = default(IList<VirtualNetworkRule>), bool? enableMultipleWriteLocations = default(bool?), bool? enableCassandraConnector = default(bool?), string connectorOffer = default(string), bool? disableKeyBasedMetadataWriteAccess = default(bool?), string keyVaultKeyUri = default(string), string publicNetworkAccess = default(string), bool? enableFreeTier = default(bool?), ApiProperties apiProperties = default(ApiProperties), bool? enableAnalyticalStorage = default(bool?), BackupPolicy backupPolicy = default(BackupPolicy), IList<CorsPolicy> cors = default(IList<CorsPolicy>), NetworkAclBypass? networkAclBypass = default(NetworkAclBypass?), IList<string> networkAclBypassResourceIds = default(IList<string>))
+            : base(locations, consistencyPolicy, ipRules, isVirtualNetworkFilterEnabled, enableAutomaticFailover, capabilities, virtualNetworkRules, enableMultipleWriteLocations, enableCassandraConnector, connectorOffer, disableKeyBasedMetadataWriteAccess, keyVaultKeyUri, publicNetworkAccess, enableFreeTier, apiProperties, enableAnalyticalStorage, backupPolicy, cors, networkAclBypass, networkAclBypassResourceIds)
         {
             CustomInit();
         }

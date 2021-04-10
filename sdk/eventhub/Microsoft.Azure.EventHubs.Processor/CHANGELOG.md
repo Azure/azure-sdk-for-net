@@ -1,6 +1,14 @@
 # Release History
 
-## 4.3.1 (Unreleased)
+## 4.4.0-beta.1 (Unreleased)
+
+
+## 4.3.1 (2020-10-29)
+### Breaking Changes
+None
+
+### Bug fixes
+- Fixed a regression in 4.3.0 release in which processor host was not able to checkpoint during CloseAsync call. (https://github.com/Azure/azure-sdk-for-net/pull/15262)
 
 ## 4.3.0 (2020-08-11)
 ### Breaking Changes
@@ -26,7 +34,7 @@
 - Don't block PartitionManager loop on close pump call. This avoids expiry of all leases due to blocking renew lease cycle. (https://github.com/Azure/azure-sdk-for-net/pull/10188)
 
 ## 4.1.0
-## Breaking Changes
+### Breaking Changes
 None
 
 ### Improvements

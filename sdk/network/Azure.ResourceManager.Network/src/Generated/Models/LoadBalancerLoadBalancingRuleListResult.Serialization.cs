@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerLoadBalancingRuleListResult
+    internal partial class LoadBalancerLoadBalancingRuleListResult
     {
         internal static LoadBalancerLoadBalancingRuleListResult DeserializeLoadBalancerLoadBalancingRuleListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<LoadBalancingRule> array = new List<LoadBalancingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

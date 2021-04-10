@@ -178,7 +178,6 @@ namespace ResourceGroups.Tests
             {
                 Assert.IsTrue(ex.Message.Contains("InvalidTemplate"));
             }
-
         }
 
         [Test]
@@ -463,6 +462,7 @@ File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembl
         {
             string groupName = "SDK-test-01";
             string deploymentName = Recording.GenerateAssetName("csmd");
+            string accountName = Recording.GenerateAssetName("sdktestaccount");
             var templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ScenarioTests", "simple-storage-account.json"));
 
             var parameters = new Deployment
@@ -470,7 +470,7 @@ File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembl
                 new DeploymentProperties(DeploymentMode.Incremental)
                 {
                     Template = templateString,
-                    Parameters = "{'storageAccountName': {'value': 'tianotest105'}}".Replace("'", "\"")
+                    Parameters = ("{'storageAccountName': {'value': '"+ accountName + "'}}").Replace("'", "\"")
                 }
             ){
                 Tags = { { "tagKey1", "tagValue1" } }

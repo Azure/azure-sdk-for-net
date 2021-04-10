@@ -9,13 +9,8 @@ namespace Azure.Identity
     public class UsernamePasswordCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
     {
         /// <summary>
-        /// If set to true the credential will store tokens in a persistent cache shared by other user credentials.
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. If not options are specified, the token cache will not be persisted.
         /// </summary>
-        public bool EnablePersistentCache { get; set; }
-
-        /// <summary>
-        /// If set to true the credential will fall back to storing tokens in an unencrypted file if no OS level user encryption is available.
-        /// </summary>
-        public bool AllowUnencryptedCache { get; set; }
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; set; }
     }
 }

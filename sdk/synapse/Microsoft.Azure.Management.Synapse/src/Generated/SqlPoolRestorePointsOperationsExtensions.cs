@@ -126,6 +126,107 @@ namespace Microsoft.Azure.Management.Synapse
             }
 
             /// <summary>
+            /// Gets a restore point.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='restorePointName'>
+            /// The name of the restore point.
+            /// </param>
+            public static RestorePoint Get(this ISqlPoolRestorePointsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string restorePointName)
+            {
+                return operations.GetAsync(resourceGroupName, workspaceName, sqlPoolName, restorePointName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a restore point.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='restorePointName'>
+            /// The name of the restore point.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RestorePoint> GetAsync(this ISqlPoolRestorePointsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string restorePointName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, restorePointName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a restore point.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='restorePointName'>
+            /// The name of the restore point.
+            /// </param>
+            public static void Delete(this ISqlPoolRestorePointsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string restorePointName)
+            {
+                operations.DeleteAsync(resourceGroupName, workspaceName, sqlPoolName, restorePointName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a restore point.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='restorePointName'>
+            /// The name of the restore point.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this ISqlPoolRestorePointsOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, string restorePointName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, restorePointName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates a restore point for a data warehouse.
             /// </summary>
             /// <param name='operations'>

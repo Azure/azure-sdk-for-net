@@ -26,7 +26,6 @@ namespace Azure.Messaging.ServiceBus
     ///
     public abstract class ServiceBusRetryPolicy
     {
-
         private static readonly TimeSpan ServerBusyBaseSleepTime = TimeSpan.FromSeconds(10);
 
         private readonly object serverBusyLock = new object();
@@ -103,20 +102,25 @@ namespace Azure.Messaging.ServiceBus
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => base.ToString();
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="operation"></param>
-        /// <param name="scope"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        internal async Task RunOperation(
-            Func<TimeSpan, Task> operation,
+        internal async ValueTask RunOperation<T1>(
+            Func<T1, TimeSpan, CancellationToken, ValueTask> operation,
+            T1 t1,
+            TransportConnectionScope scope,
+            CancellationToken cancellationToken) =>
+            await RunOperation(static async (value, timeout, token) =>
+            {
+                var (t1, operation) = value;
+                await operation(t1, timeout, token).ConfigureAwait(false);
+                return default(object);
+            }, (t1, operation), scope, cancellationToken).ConfigureAwait(false);
+
+        internal async ValueTask<TResult> RunOperation<T1, TResult>(
+            Func<T1, TimeSpan, CancellationToken, ValueTask<TResult>> operation,
+            T1 t1,
             TransportConnectionScope scope,
             CancellationToken cancellationToken)
-        {
+      {
             var failedAttemptCount = 0;
-
 
             TimeSpan tryTimeout = CalculateTryTimeout(0);
             if (IsServerBusy && tryTimeout < ServerBusyBaseSleepTime)
@@ -137,8 +141,7 @@ namespace Azure.Messaging.ServiceBus
 
                 try
                 {
-                    await operation(tryTimeout).ConfigureAwait(false);
-                    return;
+                    return await operation(t1, tryTimeout, cancellationToken).ConfigureAwait(false);
                 }
 
                 catch (Exception ex)

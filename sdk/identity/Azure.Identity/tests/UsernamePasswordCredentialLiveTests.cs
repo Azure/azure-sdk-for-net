@@ -38,19 +38,12 @@ namespace Azure.Identity.Tests
     //   "AADSTS50034: The user account {EmailHidden} does not exist in the
     //   <tenantId> directory."
     //
-    public class UsernamePasswordCredentialLiveTests : RecordedTestBase<IdentityTestEnvironment>
+    public class UsernamePasswordCredentialLiveTests : IdentityRecordedTestBase
     {
         private const string ClientId = "04b07795-8ddb-461a-bbee-02f9e1bf7b46";
 
         public UsernamePasswordCredentialLiveTests(bool isAsync) : base(isAsync)
         {
-            Matcher.ExcludeHeaders.Add("Content-Length");
-            Matcher.ExcludeHeaders.Add("client-request-id");
-            Matcher.ExcludeHeaders.Add("x-client-OS");
-            Matcher.ExcludeHeaders.Add("x-client-SKU");
-            Matcher.ExcludeHeaders.Add("x-client-CPU");
-
-            Sanitizer = new IdentityRecordedTestSanitizer();
         }
 
         [SetUp]
@@ -75,7 +68,7 @@ namespace Azure.Identity.Tests
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
 
@@ -91,7 +84,7 @@ namespace Azure.Identity.Tests
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
 
@@ -110,7 +103,7 @@ namespace Azure.Identity.Tests
             var username = TestEnvironment.Username;
             var password = TestEnvironment.TestPassword;
 
-            var options = Recording.InstrumentClientOptions(new TokenCredentialOptions());
+            var options = InstrumentClientOptions(new TokenCredentialOptions());
 
             var cred = InstrumentClient(new UsernamePasswordCredential(username, password, tenantId, ClientId, options));
 

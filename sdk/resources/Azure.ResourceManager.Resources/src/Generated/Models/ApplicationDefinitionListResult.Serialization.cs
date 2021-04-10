@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ApplicationDefinitionListResult
+    internal partial class ApplicationDefinitionListResult
     {
         internal static ApplicationDefinitionListResult DeserializeApplicationDefinitionListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationDefinition> array = new List<ApplicationDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

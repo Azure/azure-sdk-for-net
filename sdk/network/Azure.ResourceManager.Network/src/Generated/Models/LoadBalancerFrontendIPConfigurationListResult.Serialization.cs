@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class LoadBalancerFrontendIPConfigurationListResult
+    internal partial class LoadBalancerFrontendIPConfigurationListResult
     {
         internal static LoadBalancerFrontendIPConfigurationListResult DeserializeLoadBalancerFrontendIPConfigurationListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<FrontendIPConfiguration> array = new List<FrontendIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

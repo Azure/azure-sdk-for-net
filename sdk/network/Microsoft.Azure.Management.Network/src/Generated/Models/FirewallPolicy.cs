@@ -55,10 +55,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Off'</param>
         /// <param name="threatIntelWhitelist">ThreatIntel Whitelist for
         /// Firewall Policy.</param>
+        /// <param name="insights">Insights on Firewall Policy.</param>
+        /// <param name="snat">The private IP addresses/IP ranges to which
+        /// traffic will not be SNAT.</param>
         /// <param name="dnsSettings">DNS Proxy Settings definition.</param>
+        /// <param name="intrusionDetection">The configuration for Intrusion
+        /// detection.</param>
+        /// <param name="transportSecurity">TLS Configuration
+        /// definition.</param>
+        /// <param name="sku">The Firewall Policy SKU.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public FirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResource> ruleCollectionGroups = default(IList<SubResource>), string provisioningState = default(string), SubResource basePolicy = default(SubResource), IList<SubResource> firewalls = default(IList<SubResource>), IList<SubResource> childPolicies = default(IList<SubResource>), string threatIntelMode = default(string), FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default(FirewallPolicyThreatIntelWhitelist), DnsSettings dnsSettings = default(DnsSettings), string etag = default(string))
+        /// <param name="identity">The identity of the firewall policy.</param>
+        public FirewallPolicy(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<SubResource> ruleCollectionGroups = default(IList<SubResource>), string provisioningState = default(string), SubResource basePolicy = default(SubResource), IList<SubResource> firewalls = default(IList<SubResource>), IList<SubResource> childPolicies = default(IList<SubResource>), string threatIntelMode = default(string), FirewallPolicyThreatIntelWhitelist threatIntelWhitelist = default(FirewallPolicyThreatIntelWhitelist), FirewallPolicyInsights insights = default(FirewallPolicyInsights), FirewallPolicySNAT snat = default(FirewallPolicySNAT), DnsSettings dnsSettings = default(DnsSettings), FirewallPolicyIntrusionDetection intrusionDetection = default(FirewallPolicyIntrusionDetection), FirewallPolicyTransportSecurity transportSecurity = default(FirewallPolicyTransportSecurity), FirewallPolicySku sku = default(FirewallPolicySku), string etag = default(string), ManagedServiceIdentity identity = default(ManagedServiceIdentity))
             : base(id, name, type, location, tags)
         {
             RuleCollectionGroups = ruleCollectionGroups;
@@ -68,8 +77,14 @@ namespace Microsoft.Azure.Management.Network.Models
             ChildPolicies = childPolicies;
             ThreatIntelMode = threatIntelMode;
             ThreatIntelWhitelist = threatIntelWhitelist;
+            Insights = insights;
+            Snat = snat;
             DnsSettings = dnsSettings;
+            IntrusionDetection = intrusionDetection;
+            TransportSecurity = transportSecurity;
+            Sku = sku;
             Etag = etag;
+            Identity = identity;
             CustomInit();
         }
 
@@ -126,10 +141,41 @@ namespace Microsoft.Azure.Management.Network.Models
         public FirewallPolicyThreatIntelWhitelist ThreatIntelWhitelist { get; set; }
 
         /// <summary>
+        /// Gets or sets insights on Firewall Policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.insights")]
+        public FirewallPolicyInsights Insights { get; set; }
+
+        /// <summary>
+        /// Gets or sets the private IP addresses/IP ranges to which traffic
+        /// will not be SNAT.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.snat")]
+        public FirewallPolicySNAT Snat { get; set; }
+
+        /// <summary>
         /// Gets or sets DNS Proxy Settings definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.dnsSettings")]
         public DnsSettings DnsSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the configuration for Intrusion detection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.intrusionDetection")]
+        public FirewallPolicyIntrusionDetection IntrusionDetection { get; set; }
+
+        /// <summary>
+        /// Gets or sets TLS Configuration definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.transportSecurity")]
+        public FirewallPolicyTransportSecurity TransportSecurity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Firewall Policy SKU.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sku")]
+        public FirewallPolicySku Sku { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
@@ -137,6 +183,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the firewall policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
     }
 }

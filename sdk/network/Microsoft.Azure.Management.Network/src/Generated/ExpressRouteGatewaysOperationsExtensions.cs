@@ -130,6 +130,52 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Updates express route gateway tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the ExpressRouteGateway.
+            /// </param>
+            /// <param name='expressRouteGatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='expressRouteGatewayParameters'>
+            /// Parameters supplied to update a virtual wan express route gateway tags.
+            /// </param>
+            public static ExpressRouteGateway UpdateTags(this IExpressRouteGatewaysOperations operations, string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters)
+            {
+                return operations.UpdateTagsAsync(resourceGroupName, expressRouteGatewayName, expressRouteGatewayParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates express route gateway tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the ExpressRouteGateway.
+            /// </param>
+            /// <param name='expressRouteGatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='expressRouteGatewayParameters'>
+            /// Parameters supplied to update a virtual wan express route gateway tags.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ExpressRouteGateway> UpdateTagsAsync(this IExpressRouteGatewaysOperations operations, string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateTagsWithHttpMessagesAsync(resourceGroupName, expressRouteGatewayName, expressRouteGatewayParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Fetches the details of a ExpressRoute gateway in a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -251,6 +297,52 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<ExpressRouteGateway> BeginCreateOrUpdateAsync(this IExpressRouteGatewaysOperations operations, string resourceGroupName, string expressRouteGatewayName, ExpressRouteGateway putExpressRouteGatewayParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, expressRouteGatewayName, putExpressRouteGatewayParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates express route gateway tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the ExpressRouteGateway.
+            /// </param>
+            /// <param name='expressRouteGatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='expressRouteGatewayParameters'>
+            /// Parameters supplied to update a virtual wan express route gateway tags.
+            /// </param>
+            public static ExpressRouteGateway BeginUpdateTags(this IExpressRouteGatewaysOperations operations, string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters)
+            {
+                return operations.BeginUpdateTagsAsync(resourceGroupName, expressRouteGatewayName, expressRouteGatewayParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates express route gateway tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the ExpressRouteGateway.
+            /// </param>
+            /// <param name='expressRouteGatewayName'>
+            /// The name of the gateway.
+            /// </param>
+            /// <param name='expressRouteGatewayParameters'>
+            /// Parameters supplied to update a virtual wan express route gateway tags.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ExpressRouteGateway> BeginUpdateTagsAsync(this IExpressRouteGatewaysOperations operations, string resourceGroupName, string expressRouteGatewayName, TagsObject expressRouteGatewayParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateTagsWithHttpMessagesAsync(resourceGroupName, expressRouteGatewayName, expressRouteGatewayParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

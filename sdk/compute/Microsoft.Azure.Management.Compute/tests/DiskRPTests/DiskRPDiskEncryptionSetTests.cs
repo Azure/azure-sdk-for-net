@@ -17,13 +17,13 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void DiskEncryptionSet_CRUD()
         {
-            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD", EncryptionType.EncryptionAtRestWithCustomerKey, location: supportedZoneLocation);
+            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD", DiskEncryptionSetType.EncryptionAtRestWithCustomerKey, location: supportedZoneLocation);
         }
 
         [Fact]
         public void DiskEncryptionSet_CRUD_EncryptionWithPlatformAndCustomerKeys()
         {
-            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD_EncryptionWithPlatformAndCustomerKeys", EncryptionType.EncryptionAtRestWithPlatformAndCustomerKeys, location: supportedZoneLocation);
+            DiskEncryptionSet_CRUD_Execute("DiskEncryptionSet_CRUD_EncryptionWithPlatformAndCustomerKeys", DiskEncryptionSetType.EncryptionAtRestWithPlatformAndCustomerKeys, location: supportedZoneLocation);
         }
 
         [Fact]
@@ -35,13 +35,19 @@ namespace Compute.Tests.DiskRPTests
         [Fact]
         public void DiskEncryptionSet_CreateDisk()
         {
-            DiskEncryptionSet_CreateDisk_Execute("DiskEncryptionSet_CreateDisk", location: supportedZoneLocation);
+            DiskEncryptionSet_CreateDisk_Execute("DiskEncryptionSet_CreateDisk", location: "centraluseuap");
         }
 
         [Fact]
         public void DiskEncryptionSet_AddDESToExistingDisk()
         {
-            DiskEncryptionSet_UpdateDisk_Execute("DiskEncryptionSet_AddDESToExistingDisk", location: supportedZoneLocation);
+            DiskEncryptionSet_UpdateDisk_Execute("DiskEncryptionSet_AddDESToExistingDisk", location: "centraluseuap");
+        }
+
+        [Fact]
+        public void DiskEncryptionSet_CRD_RotationToLatestKeyVersionEnabled()
+        {
+            DiskEncryptionSet_WithRotationToLatestKeyVersionEnabled_CRD_Execute("DiskEncryptionSet_CRD_RotationToLatestKeyVersionEnabled", DiskEncryptionSetType.EncryptionAtRestWithCustomerKey, location: supportedZoneLocation);
         }
     }
 }

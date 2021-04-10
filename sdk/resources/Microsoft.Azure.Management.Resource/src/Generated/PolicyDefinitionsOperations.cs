@@ -94,14 +94,11 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -111,6 +108,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyDefinitionName", policyDefinitionName);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -120,9 +118,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{policyDefinitionName}", System.Uri.EscapeDataString(policyDefinitionName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -289,14 +287,11 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyDefinitionName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -305,6 +300,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyDefinitionName", policyDefinitionName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
@@ -314,9 +310,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{policyDefinitionName}", System.Uri.EscapeDataString(policyDefinitionName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -462,14 +458,11 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyDefinitionName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -478,6 +471,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyDefinitionName", policyDefinitionName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -487,9 +481,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             _url = _url.Replace("{policyDefinitionName}", System.Uri.EscapeDataString(policyDefinitionName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -653,10 +647,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyDefinitionName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -665,6 +656,7 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyDefinitionName", policyDefinitionName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetBuiltIn", tracingParameters);
             }
@@ -673,9 +665,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}").ToString();
             _url = _url.Replace("{policyDefinitionName}", System.Uri.EscapeDataString(policyDefinitionName));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -849,14 +841,11 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (managementGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupId");
             }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -866,19 +855,20 @@ namespace Microsoft.Azure.Management.ResourceManager
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyDefinitionName", policyDefinitionName);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("managementGroupId", managementGroupId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateAtManagementGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementgroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}").ToString();
             _url = _url.Replace("{policyDefinitionName}", System.Uri.EscapeDataString(policyDefinitionName));
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1048,14 +1038,11 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyDefinitionName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (managementGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupId");
             }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1064,19 +1051,20 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyDefinitionName", policyDefinitionName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("managementGroupId", managementGroupId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteAtManagementGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementgroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}").ToString();
             _url = _url.Replace("{policyDefinitionName}", System.Uri.EscapeDataString(policyDefinitionName));
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1225,14 +1213,11 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyDefinitionName");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (managementGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupId");
             }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1241,19 +1226,20 @@ namespace Microsoft.Azure.Management.ResourceManager
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyDefinitionName", policyDefinitionName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("managementGroupId", managementGroupId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAtManagementGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementgroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}").ToString();
             _url = _url.Replace("{policyDefinitionName}", System.Uri.EscapeDataString(policyDefinitionName));
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1385,8 +1371,35 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         /// <remarks>
         /// This operation retrieves a list of all the policy definitions in a given
-        /// subscription.
+        /// subscription that match the optional given $filter. Valid values for
+        /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+        /// '{value}''. If $filter is not provided, the unfiltered list includes all
+        /// policy definitions associated with the subscription, including those that
+        /// apply directly or from management groups that contain the given
+        /// subscription. If $filter=atExactScope() is provided, the returned list only
+        /// includes all policy definitions that at the given subscription. If
+        /// $filter='policyType -eq {value}' is provided, the returned list only
+        /// includes all policy definitions whose type match the {value}. Possible
+        /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+        /// $filter='category -eq {value}' is provided, the returned list only includes
+        /// all policy definitions whose category match the {value}.
         /// </remarks>
+        /// <param name='filter'>
+        /// The filter to apply on the operation. Valid values for $filter are:
+        /// 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If
+        /// $filter is not provided, no filtering is performed. If
+        /// $filter=atExactScope() is provided, the returned list only includes all
+        /// policy definitions that at the given scope. If $filter='policyType -eq
+        /// {value}' is provided, the returned list only includes all policy
+        /// definitions whose type match the {value}. Possible policyType values are
+        /// NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq
+        /// {value}' is provided, the returned list only includes all policy
+        /// definitions whose category match the {value}.
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of records to return. When the $top filter is not provided,
+        /// it will return 500 records.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1408,16 +1421,21 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListWithHttpMessagesAsync(string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (top > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+            }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1425,6 +1443,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -1433,9 +1454,17 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", filter));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1566,8 +1595,30 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Retrieve built-in policy definitions
         /// </summary>
         /// <remarks>
-        /// This operation retrieves a list of all the built-in policy definitions.
+        /// This operation retrieves a list of all the built-in policy definitions that
+        /// match the optional given $filter. If $filter='policyType -eq {value}' is
+        /// provided, the returned list only includes all built-in policy definitions
+        /// whose type match the {value}. Possible policyType values are NotSpecified,
+        /// BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided,
+        /// the returned list only includes all built-in policy definitions whose
+        /// category match the {value}.
         /// </remarks>
+        /// <param name='filter'>
+        /// The filter to apply on the operation. Valid values for $filter are:
+        /// 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If
+        /// $filter is not provided, no filtering is performed. If
+        /// $filter=atExactScope() is provided, the returned list only includes all
+        /// policy definitions that at the given scope. If $filter='policyType -eq
+        /// {value}' is provided, the returned list only includes all policy
+        /// definitions whose type match the {value}. Possible policyType values are
+        /// NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq
+        /// {value}' is provided, the returned list only includes all policy
+        /// definitions whose category match the {value}.
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of records to return. When the $top filter is not provided,
+        /// it will return 500 records.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1580,21 +1631,20 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListBuiltInWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListBuiltInWithHttpMessagesAsync(string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
+            if (top > 1000)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
             }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+            }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1602,6 +1652,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListBuiltIn", tracingParameters);
             }
@@ -1609,9 +1662,17 @@ namespace Microsoft.Azure.Management.ResourceManager
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Authorization/policyDefinitions").ToString();
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", filter));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1743,10 +1804,37 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         /// <remarks>
         /// This operation retrieves a list of all the policy definitions in a given
-        /// management group.
+        /// management group that match the optional given $filter. Valid values for
+        /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+        /// '{value}''. If $filter is not provided, the unfiltered list includes all
+        /// policy definitions associated with the management group, including those
+        /// that apply directly or from management groups that contain the given
+        /// management group. If $filter=atExactScope() is provided, the returned list
+        /// only includes all policy definitions that at the given management group. If
+        /// $filter='policyType -eq {value}' is provided, the returned list only
+        /// includes all policy definitions whose type match the {value}. Possible
+        /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+        /// $filter='category -eq {value}' is provided, the returned list only includes
+        /// all policy definitions whose category match the {value}.
         /// </remarks>
         /// <param name='managementGroupId'>
         /// The ID of the management group.
+        /// </param>
+        /// <param name='filter'>
+        /// The filter to apply on the operation. Valid values for $filter are:
+        /// 'atExactScope()', 'policyType -eq {value}' or 'category eq '{value}''. If
+        /// $filter is not provided, no filtering is performed. If
+        /// $filter=atExactScope() is provided, the returned list only includes all
+        /// policy definitions that at the given scope. If $filter='policyType -eq
+        /// {value}' is provided, the returned list only includes all policy
+        /// definitions whose type match the {value}. Possible policyType values are
+        /// NotSpecified, BuiltIn, Custom, and Static. If $filter='category -eq
+        /// {value}' is provided, the returned list only includes all policy
+        /// definitions whose category match the {value}.
+        /// </param>
+        /// <param name='top'>
+        /// Maximum number of records to return. When the $top filter is not provided,
+        /// it will return 500 records.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1769,16 +1857,21 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListByManagementGroupWithHttpMessagesAsync(string managementGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<PolicyDefinition>>> ListByManagementGroupWithHttpMessagesAsync(string managementGroupId, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (managementGroupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupId");
             }
+            if (top > 1000)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "top", 1000);
+            }
+            if (top < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "top", 1);
+            }
+            string apiVersion = "2020-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1786,18 +1879,29 @@ namespace Microsoft.Azure.Management.ResourceManager
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("managementGroupId", managementGroupId);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByManagementGroup", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementgroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policyDefinitions").ToString();
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", filter));
+            }
+            if (top != null)
+            {
+                _queryParameters.Add(string.Format("$top={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(top, Client.SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1929,7 +2033,18 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         /// <remarks>
         /// This operation retrieves a list of all the policy definitions in a given
-        /// subscription.
+        /// subscription that match the optional given $filter. Valid values for
+        /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+        /// '{value}''. If $filter is not provided, the unfiltered list includes all
+        /// policy definitions associated with the subscription, including those that
+        /// apply directly or from management groups that contain the given
+        /// subscription. If $filter=atExactScope() is provided, the returned list only
+        /// includes all policy definitions that at the given subscription. If
+        /// $filter='policyType -eq {value}' is provided, the returned list only
+        /// includes all policy definitions whose type match the {value}. Possible
+        /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+        /// $filter='category -eq {value}' is provided, the returned list only includes
+        /// all policy definitions whose category match the {value}.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2105,7 +2220,13 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// Retrieve built-in policy definitions
         /// </summary>
         /// <remarks>
-        /// This operation retrieves a list of all the built-in policy definitions.
+        /// This operation retrieves a list of all the built-in policy definitions that
+        /// match the optional given $filter. If $filter='policyType -eq {value}' is
+        /// provided, the returned list only includes all built-in policy definitions
+        /// whose type match the {value}. Possible policyType values are NotSpecified,
+        /// BuiltIn, Custom, and Static. If $filter='category -eq {value}' is provided,
+        /// the returned list only includes all built-in policy definitions whose
+        /// category match the {value}.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2282,7 +2403,18 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// </summary>
         /// <remarks>
         /// This operation retrieves a list of all the policy definitions in a given
-        /// management group.
+        /// management group that match the optional given $filter. Valid values for
+        /// $filter are: 'atExactScope()', 'policyType -eq {value}' or 'category eq
+        /// '{value}''. If $filter is not provided, the unfiltered list includes all
+        /// policy definitions associated with the management group, including those
+        /// that apply directly or from management groups that contain the given
+        /// management group. If $filter=atExactScope() is provided, the returned list
+        /// only includes all policy definitions that at the given management group. If
+        /// $filter='policyType -eq {value}' is provided, the returned list only
+        /// includes all policy definitions whose type match the {value}. Possible
+        /// policyType values are NotSpecified, BuiltIn, Custom, and Static. If
+        /// $filter='category -eq {value}' is provided, the returned list only includes
+        /// all policy definitions whose category match the {value}.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

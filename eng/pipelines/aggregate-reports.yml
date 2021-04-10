@@ -1,5 +1,21 @@
+resources:
+  pipelines:
+  - pipeline: net-core
+    project: internal
+    source: net - core
+    branch: master
+    tags: 
+    - scheduled
+
 trigger: none
-pr: none
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - eng/pipelines/aggregate-reports.yml
 
 jobs:
   - job: GenerateReports
@@ -10,29 +26,23 @@ jobs:
     pool:
       vmImage: 'windows-2019'
 
+    timeoutInMinutes: 120
     steps:
-      - task: UseDotNet@2
-        displayName: 'Use .NET Core sdk $(DotNetCoreSDKVersion)'
-        inputs:
-          version: '$(DotNetCoreSDKVersion)'
+      - download: net-core
+        artifact: packages
+        patterns: '*'
 
       - template: /eng/common/pipelines/templates/steps/verify-links.yml
         parameters:
           Directory: ""
-
-      - pwsh: mkdir '$(System.ArtifactsDirectory)/BuildArtifacts'
+          CheckLinkGuidance: $true
+          
+      - pwsh: |
+          mkdir "$(System.ArtifactsDirectory)/BuildArtifacts"
+          ls "$(PIPELINE.WORKSPACE)/net-core/packages"
+          Copy-Item -Path "$(PIPELINE.WORKSPACE)/net-core/packages/*" -Destination "$(System.ArtifactsDirectory)/BuildArtifacts"
         displayName: Create Artifact Directory
 
-      - task: DownloadPipelineArtifact@2
-        displayName: 'Download Pipeline Artifact'
-        inputs:
-          buildType: specific
-          project: $(TargetPipelineProjectId)
-          definition: $(TargetPipelineDefinition)
-          buildVersionToDownload: latestFromBranch
-          tags: scheduled
-          artifactName: packages
-          targetPath: '$(System.ArtifactsDirectory)/BuildArtifacts'
 
       - pwsh: |
           mkdir '$(System.ArtifactsDirectory)/Packages'
@@ -107,3 +117,31 @@ jobs:
           storage: azuresdkartifacts
           containerName: 'azure-sdk-for-net'
           blobPrefix: dependencies
+
+      - task: PowerShell@2
+        displayName: "Verify Repository Resource Refs"
+        inputs:
+          pwsh: true
+          workingDirectory: $(Build.SourcesDirectory)
+          filePath: eng/common/scripts/Verify-Resource-Ref.ps1
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
+        displayName: 'Run CredScan'
+        inputs:
+          suppressionsFile: 'eng\CredScanSuppression.json'
+        condition: succeededOrFailed()
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2
+        displayName: 'Post Analysis'
+        inputs:
+          GdnBreakAllTools: false
+          GdnBreakGdnToolCredScan: true
+          GdnBreakGdnToolCredScanSeverity: Error
+          GdnBreakBaselineFiles: $(Build.SourcesDirectory)\eng\dotnet.gdnbaselines
+          GdnBreakBaselines: baseline  
+          # Used for generating baseline file
+          # GdnBreakOutputBaselineFile: dotnet
+          # GdnBreakOutputBaseline: baseline
+        condition: succeededOrFailed()
+        continueOnError: true
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+        displayName: 'Publish Security Analysis Logs'
+        condition: succeededOrFailed()

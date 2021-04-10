@@ -67,6 +67,16 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("queryType");
                 writer.WriteStringValue(QueryType.Value.ToSerialString());
             }
+            if (Optional.IsDefined(ScoringStatistics))
+            {
+                writer.WritePropertyName("scoringStatistics");
+                writer.WriteStringValue(ScoringStatistics.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(SessionId))
+            {
+                writer.WritePropertyName("sessionId");
+                writer.WriteStringValue(SessionId);
+            }
             if (Optional.IsCollectionDefined(ScoringParameters))
             {
                 writer.WritePropertyName("scoringParameters");
@@ -97,6 +107,21 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("searchMode");
                 writer.WriteStringValue(SearchMode.Value.ToSerialString());
             }
+            if (Optional.IsDefined(QueryLanguage))
+            {
+                writer.WritePropertyName("queryLanguage");
+                writer.WriteStringValue(QueryLanguage.Value.ToString());
+            }
+            if (Optional.IsDefined(QuerySpeller))
+            {
+                writer.WritePropertyName("speller");
+                writer.WriteStringValue(QuerySpeller.Value.ToString());
+            }
+            if (Optional.IsDefined(QueryAnswerRaw))
+            {
+                writer.WritePropertyName("answers");
+                writer.WriteStringValue(QueryAnswerRaw);
+            }
             if (Optional.IsDefined(SelectRaw))
             {
                 writer.WritePropertyName("select");
@@ -126,11 +151,16 @@ namespace Azure.Search.Documents
             Optional<double> minimumCoverage = default;
             Optional<string> orderby = default;
             Optional<SearchQueryType> queryType = default;
+            Optional<ScoringStatistics> scoringStatistics = default;
+            Optional<string> sessionId = default;
             Optional<IList<string>> scoringParameters = default;
             Optional<string> scoringProfile = default;
             Optional<string> search = default;
             Optional<string> searchFields = default;
             Optional<SearchMode> searchMode = default;
+            Optional<QueryLanguage> queryLanguage = default;
+            Optional<QuerySpeller> speller = default;
+            Optional<string> answers = default;
             Optional<string> select = default;
             Optional<int> skip = default;
             Optional<int> top = default;
@@ -138,11 +168,21 @@ namespace Azure.Search.Documents
             {
                 if (property.NameEquals("count"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     count = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("facets"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -173,6 +213,11 @@ namespace Azure.Search.Documents
                 }
                 if (property.NameEquals("minimumCoverage"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minimumCoverage = property.Value.GetDouble();
                     continue;
                 }
@@ -183,11 +228,36 @@ namespace Azure.Search.Documents
                 }
                 if (property.NameEquals("queryType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     queryType = property.Value.GetString().ToSearchQueryType();
+                    continue;
+                }
+                if (property.NameEquals("scoringStatistics"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    scoringStatistics = property.Value.GetString().ToScoringStatistics();
+                    continue;
+                }
+                if (property.NameEquals("sessionId"))
+                {
+                    sessionId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("scoringParameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -213,7 +283,37 @@ namespace Azure.Search.Documents
                 }
                 if (property.NameEquals("searchMode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     searchMode = property.Value.GetString().ToSearchMode();
+                    continue;
+                }
+                if (property.NameEquals("queryLanguage"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    queryLanguage = new QueryLanguage(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("speller"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    speller = new QuerySpeller(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("answers"))
+                {
+                    answers = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("select"))
@@ -223,16 +323,26 @@ namespace Azure.Search.Documents
                 }
                 if (property.NameEquals("skip"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     skip = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("top"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     top = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToList(scoringParameters), scoringProfile.Value, search.Value, searchFields.Value, Optional.ToNullable(searchMode), select.Value, Optional.ToNullable(skip), Optional.ToNullable(top));
+            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), answers.Value, select.Value, Optional.ToNullable(skip), Optional.ToNullable(top));
         }
     }
 }

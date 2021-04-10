@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,26 +37,30 @@ namespace Azure.Core.Pipeline
         /// message, code, and details in a service specific manner.
         /// </summary>
         /// <param name="content">The error content.</param>
+        /// <param name="responseHeaders">The response headers.</param>
         /// <param name="message">The error message.</param>
         /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
+#pragma warning disable CA1822 // Member can be static
         partial void ExtractFailureContent(
             string? content,
+            ResponseHeaders responseHeaders,
             ref string? message,
             ref string? errorCode,
             ref IDictionary<string, string>? additionalInfo);
+#pragma warning restore CA1822
 
         public async ValueTask<RequestFailedException> CreateRequestFailedExceptionAsync(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             var content = await ReadContentAsync(response, true).ConfigureAwait(false);
-            ExtractFailureContent(content, ref message, ref errorCode, ref additionalInfo);
+            ExtractFailureContent(content, response.Headers, ref message, ref errorCode, ref additionalInfo);
             return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
         }
 
         public RequestFailedException CreateRequestFailedException(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null, Exception? innerException = null)
         {
             string? content = ReadContentAsync(response, false).EnsureCompleted();
-            ExtractFailureContent(content, ref message, ref errorCode, ref additionalInfo);
+            ExtractFailureContent(content, response.Headers, ref message, ref errorCode, ref additionalInfo);
             return CreateRequestFailedExceptionWithContent(response, message, content, errorCode, additionalInfo, innerException);
         }
 
@@ -81,20 +86,9 @@ namespace Azure.Core.Pipeline
             return exception;
         }
 
-        public ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message = null, string? errorCode= null, IDictionary<string, string>? additionalInfo = null)
-        {
-            return CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, true);
-        }
-
-        public string CreateRequestFailedMessage(Response response, string? message = null, string? errorCode = null, IDictionary<string, string>? additionalInfo = null)
-        {
-            return CreateRequestFailedMessageAsync(response, message, errorCode, additionalInfo, false).EnsureCompleted();
-        }
-
-        private async ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message, string? errorCode, IDictionary<string, string>? additionalInfo, bool async)
+        public async ValueTask<string> CreateRequestFailedMessageAsync(Response response, string? message, string? errorCode, IDictionary<string, string>? additionalInfo, bool async)
         {
             var content = await ReadContentAsync(response, async).ConfigureAwait(false);
-
             return CreateRequestFailedMessageWithContent(response, message, content, errorCode, additionalInfo);
         }
 

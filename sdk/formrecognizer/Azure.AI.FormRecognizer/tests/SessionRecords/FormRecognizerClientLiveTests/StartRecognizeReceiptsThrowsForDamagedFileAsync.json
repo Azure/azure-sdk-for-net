@@ -1,36 +1,34 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/prebuilt/receipt/analyze?includeTextDetails=false",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyze?includeTextDetails=false",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Content-Length": "7",
         "Content-Type": "application/pdf",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-5979b97715495f4b9c455c283b4625f0-557c292949943a4a-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "76af4195a8df118aa02a2c39bacd31b2",
+        "traceparent": "00-82d58d6ca646094f98af81b13fb8f500-6681306c0f8e6e4f-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "10e778d4031e215651dbb0787631ded2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "JVBERlVVVQ==",
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "6c25fb3f-72dc-4bc4-a461-c952f8d078ad",
+        "apim-request-id": "7035c262-f360-4556-aaa6-644ff37c8975",
+        "Content-Length": "161",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:23:58 GMT",
+        "Date": "Tue, 23 Mar 2021 00:32:08 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "4"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "3"
       },
       "ResponseBody": {
         "error": {
           "code": "BadArgument",
           "innerError": {
-            "requestId": "6c25fb3f-72dc-4bc4-a461-c952f8d078ad"
+            "requestId": "7035c262-f360-4556-aaa6-644ff37c8975"
           },
           "message": "Bad or unrecognizable request JSON or binary file."
         }
@@ -39,7 +37,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
-    "RandomSeed": "1203141018"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "RandomSeed": "41234871"
   }
 }

@@ -36,18 +36,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="sku">Gets the SKU.</param>
         /// <param name="kind">Gets the Kind. Possible values include:
         /// 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
         /// 'BlockBlobStorage'</param>
         /// <param name="identity">The identity of the resource.</param>
+        /// <param name="extendedLocation">The extendedLocation of the
+        /// resource.</param>
         /// <param name="provisioningState">Gets the status of the storage
         /// account at the time the operation was called. Possible values
         /// include: 'Creating', 'ResolvingDNS', 'Succeeded'</param>
@@ -78,6 +80,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// storage account in UTC.</param>
         /// <param name="customDomain">Gets the custom domain the user assigned
         /// to this storage account.</param>
+        /// <param name="sasPolicy">SasPolicy assigned to the storage
+        /// account.</param>
+        /// <param name="keyPolicy">KeyPolicy assigned to the storage
+        /// account.</param>
+        /// <param name="keyCreationTime">Gets the list of storage account keys
+        /// creation time.</param>
         /// <param name="secondaryEndpoints">Gets the URLs that are used to
         /// perform a retrieval of a public blob, queue, or table object from
         /// the secondary location of the storage account. Only available if
@@ -112,12 +120,21 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// permitted on requests to storage. The default interpretation is TLS
         /// 1.0 for this property. Possible values include: 'TLS1_0', 'TLS1_1',
         /// 'TLS1_2'</param>
-        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), string largeFileSharesState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), RoutingPreference routingPreference = default(RoutingPreference), BlobRestoreStatus blobRestoreStatus = default(BlobRestoreStatus), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string))
+        /// <param name="allowSharedKeyAccess">Indicates whether the storage
+        /// account permits requests to be authorized with the account access
+        /// key via Shared Key. If false, then all requests, including shared
+        /// access signatures, must be authorized with Azure Active Directory
+        /// (Azure AD). The default value is null, which is equivalent to
+        /// true.</param>
+        /// <param name="enableNfsV3">NFS 3.0 protocol support enabled if set
+        /// to true.</param>
+        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ExtendedLocation extendedLocation = default(ExtendedLocation), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), SasPolicy sasPolicy = default(SasPolicy), KeyPolicy keyPolicy = default(KeyPolicy), IDictionary<string, System.DateTime?> keyCreationTime = default(IDictionary<string, System.DateTime?>), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), AzureFilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication = default(AzureFilesIdentityBasedAuthentication), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), string largeFileSharesState = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), RoutingPreference routingPreference = default(RoutingPreference), BlobRestoreStatus blobRestoreStatus = default(BlobRestoreStatus), bool? allowBlobPublicAccess = default(bool?), string minimumTlsVersion = default(string), bool? allowSharedKeyAccess = default(bool?), bool? enableNfsV3 = default(bool?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
             Kind = kind;
             Identity = identity;
+            ExtendedLocation = extendedLocation;
             ProvisioningState = provisioningState;
             PrimaryEndpoints = primaryEndpoints;
             PrimaryLocation = primaryLocation;
@@ -127,6 +144,9 @@ namespace Microsoft.Azure.Management.Storage.Models
             StatusOfSecondary = statusOfSecondary;
             CreationTime = creationTime;
             CustomDomain = customDomain;
+            SasPolicy = sasPolicy;
+            KeyPolicy = keyPolicy;
+            KeyCreationTime = keyCreationTime;
             SecondaryEndpoints = secondaryEndpoints;
             Encryption = encryption;
             AccessTier = accessTier;
@@ -142,6 +162,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             BlobRestoreStatus = blobRestoreStatus;
             AllowBlobPublicAccess = allowBlobPublicAccess;
             MinimumTlsVersion = minimumTlsVersion;
+            AllowSharedKeyAccess = allowSharedKeyAccess;
+            EnableNfsV3 = enableNfsV3;
             CustomInit();
         }
 
@@ -168,6 +190,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public Identity Identity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the extendedLocation of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary>
         /// Gets the status of the storage account at the time the operation
@@ -238,6 +266,24 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.customDomain")]
         public CustomDomain CustomDomain { get; private set; }
+
+        /// <summary>
+        /// Gets sasPolicy assigned to the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sasPolicy")]
+        public SasPolicy SasPolicy { get; private set; }
+
+        /// <summary>
+        /// Gets keyPolicy assigned to the storage account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyPolicy")]
+        public KeyPolicy KeyPolicy { get; private set; }
+
+        /// <summary>
+        /// Gets the list of storage account keys creation time.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.keyCreationTime")]
+        public IDictionary<string, System.DateTime?> KeyCreationTime { get; private set; }
 
         /// <summary>
         /// Gets the URLs that are used to perform a retrieval of a public
@@ -346,6 +392,22 @@ namespace Microsoft.Azure.Management.Storage.Models
         public string MinimumTlsVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets indicates whether the storage account permits requests
+        /// to be authorized with the account access key via Shared Key. If
+        /// false, then all requests, including shared access signatures, must
+        /// be authorized with Azure Active Directory (Azure AD). The default
+        /// value is null, which is equivalent to true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowSharedKeyAccess")]
+        public bool? AllowSharedKeyAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets NFS 3.0 protocol support enabled if set to true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isNfsV3Enabled")]
+        public bool? EnableNfsV3 { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -358,9 +420,21 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 Sku.Validate();
             }
+            if (Identity != null)
+            {
+                Identity.Validate();
+            }
             if (CustomDomain != null)
             {
                 CustomDomain.Validate();
+            }
+            if (SasPolicy != null)
+            {
+                SasPolicy.Validate();
+            }
+            if (KeyPolicy != null)
+            {
+                KeyPolicy.Validate();
             }
             if (Encryption != null)
             {

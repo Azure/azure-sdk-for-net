@@ -1,0 +1,146 @@
+parameters:
+- name: AdditionalPlatforms
+  type: object
+  default: {}
+- name: Clouds
+  type: string
+  default: 'Public'
+- name: SupportedClouds
+  type: string
+  default: 'Public,Canary'
+- name: UnsupportedClouds
+  type: string
+  default: ''
+- name: PreSteps
+  type: object
+  default: []
+- name: PostSteps
+  type: object
+  default: []
+- name: EnvVars
+  type: object
+  default: {}
+- name: MaxParallel
+  type: number
+  default: 0
+- name: BuildInParallel
+  type: boolean
+  default: true
+- name: TimeoutInMinutes
+  type: number
+  default: 60
+- name: Location
+  type: string
+  default: ''
+- name: SDKType
+  type: string
+  default: all
+- name: ServiceDirectory
+  type: string
+  default: not-specified
+- name: TestSetupSteps
+  type: stepList
+  default: []
+- name: CloudConfig
+  type: object
+  default:
+    Public:
+      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+    Preview:
+      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+    Canary:
+      SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+      Location: 'eastus2euap'
+    UsGov:
+      SubscriptionConfiguration: $(sub-config-gov-test-resources)
+    China:
+      SubscriptionConfiguration: $(sub-config-cn-test-resources)
+- name: MatrixConfigs
+  type: object
+  default:
+    - Name: NET_live_test_base
+      Path: eng/pipelines/templates/stages/platform-matrix.json
+      Selection: sparse
+      NonSparseParameters: AdditionalTestArguments
+      GenerateVMJobs: true
+- name: AdditionalMatrixConfigs
+  type: object
+  default: []
+- name: MatrixFilters
+  type: object
+  default: []
+- name: MatrixReplace
+  type: object
+  default: []
+- name: PlatformPreSteps
+  type: object
+  default:
+    - template: /eng/common/pipelines/templates/steps/bypass-local-dns.yml
+- name: PlatformPostSteps
+  type: object
+  default:
+    - task: CopyFiles@2
+      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
+      displayName: "Copy Test Recordings"
+      inputs:
+        sourceFolder: '$(Build.SourcesDirectory)'
+        # NOTE: ServiceDirectory cannot be passed as a compile time value, because it cannot be rendered
+        # in the context of a parameter definition.
+        contents: 'sdk/$(ServiceDirectory)/**/SessionRecords/**/*.json'
+        targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+    - task: PublishBuildArtifacts@1
+      condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
+      displayName: "Publish Test Recordings"
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+        artifactName: SessionRecords
+
+variables:
+  - template: ../variables/globals.yml
+
+stages:
+- ${{ each cloud in parameters.CloudConfig }}:
+  # TODO: re-enable tests-weekly allow filter once sovereign cloud live tests are stable: https://github.com/Azure/azure-sdk/issues/2074
+  # Run all clouds by default for weekly test pipeline, except for clouds specifically unsupported by the calling pipeline
+  # - ${{ if or(contains(parameters.Clouds, cloud.key), contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
+  - ${{ if or(contains(parameters.Clouds, cloud.key), and(contains(variables['Build.DefinitionName'], 'tests-weekly'), contains(parameters.SupportedClouds, cloud.key))) }}:
+    - ${{ if not(contains(parameters.UnsupportedClouds, cloud.key)) }}:
+      - stage: ${{ cloud.key }}
+        dependsOn: []
+        jobs:
+        - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+          parameters:
+            JobTemplatePath: /eng/pipelines/templates/jobs/live.tests.yml
+            AdditionalParameters:
+              PreSteps:
+                - ${{ parameters.PlatformPreSteps }}
+                - ${{ parameters.PreSteps }}
+              PostSteps:
+                - ${{ parameters.PlatformPostSteps }}
+                - ${{ parameters.PostSteps }}
+              EnvVars: ${{ parameters.EnvVars }}
+              MaxParallel: ${{ parameters.MaxParallel }}
+              BuildInParallel: ${{ parameters.BuildInParallel }}
+              TimeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+              Location: ${{ parameters.Location }}
+              SDKType: ${{ parameters.SDKType }}
+              ServiceDirectory: ${{ parameters.ServiceDirectory }}
+              TestSetupSteps: ${{ parameters.TestSetupSteps }}
+            MatrixConfigs:
+              # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
+              - ${{ each config in parameters.MatrixConfigs }}:
+                -  ${{ config }}
+              - ${{ each config in parameters.AdditionalMatrixConfigs }}:
+                -  ${{ config }}
+            MatrixFilters:
+              - ${{ each cloudFilter in cloud.value.MatrixFilters }}:
+                - ${{ cloudFilter }}
+              - ${{ parameters.MatrixFilters }}
+            MatrixReplace:
+              - ${{ each cloudReplace in cloud.value.MatrixReplace }}:
+                - ${{ cloudReplace }}
+              - ${{ parameters.MatrixReplace }}
+            CloudConfig:
+              SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
+              Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
+              Cloud: ${{ cloud.key }}

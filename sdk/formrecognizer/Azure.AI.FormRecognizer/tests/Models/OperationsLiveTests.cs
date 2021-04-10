@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Tests
@@ -27,49 +29,70 @@ namespace Azure.AI.FormRecognizer.Tests
         {
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeContentOperationCanPollFromNewObject()
         {
-            // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
-            // making the test fail.
-
-            var client = CreateFormRecognizerClient(skipInstrumenting: true);
+            var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
 
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Blank);
             var operation = await client.StartRecognizeContentFromUriAsync(uri);
 
-            var sameOperation = new RecognizeContentOperation(operation.Id, client);
+            var sameOperation = new RecognizeContentOperation(operation.Id, nonInstrumentedClient);
             await sameOperation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(1, sameOperation.Value.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task RecognizeReceiptsOperationCanPollFromNewObject()
         {
-            // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
-            // making the test fail.
-
-            var client = CreateFormRecognizerClient(skipInstrumenting: true);
+            var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
 
             var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Blank);
             var operation = await client.StartRecognizeReceiptsFromUriAsync(uri);
 
-            var sameOperation = new RecognizeReceiptsOperation(operation.Id, client);
+            var sameOperation = new RecognizeReceiptsOperation(operation.Id, nonInstrumentedClient);
             await sameOperation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(1, sameOperation.Value.Count);
         }
 
-        [Test]
+        [RecordedTest]
+        public async Task RecognizeInvoicesOperationCanPollFromNewObject()
+        {
+            var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
+
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Blank);
+            var operation = await client.StartRecognizeInvoicesFromUriAsync(uri);
+
+            var sameOperation = new RecognizeInvoicesOperation(operation.Id, nonInstrumentedClient);
+            await sameOperation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(sameOperation.HasValue);
+            Assert.AreEqual(1, sameOperation.Value.Count);
+        }
+
+        [RecordedTest]
+        public async Task RecognizeIdDocumentsOperationCanPollFromNewObject()
+        {
+            var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
+
+            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Blank);
+            var operation = await client.StartRecognizeIdDocumentsFromUriAsync(uri);
+
+            var sameOperation = new RecognizeIdDocumentsOperation(operation.Id, nonInstrumentedClient);
+            await sameOperation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(sameOperation.HasValue);
+            Assert.AreEqual(0, sameOperation.Value.Count);
+        }
+
+        [RecordedTest]
         public async Task RecognizeCustomFormsOperationCanPollFromNewObject()
         {
-            // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
-            // making the test fail.
-
-            var client = CreateFormRecognizerClient(skipInstrumenting: true);
+            var client = CreateFormRecognizerClient(out var nonInstrumentedClient);
             RecognizeCustomFormsOperation operation;
 
             await using var trainedModel = await CreateDisposableTrainedModelAsync(useTrainingLabels: false);
@@ -80,38 +103,49 @@ namespace Azure.AI.FormRecognizer.Tests
                 operation = await client.StartRecognizeCustomFormsAsync(trainedModel.ModelId, stream);
             }
 
-            var sameOperation = new RecognizeCustomFormsOperation(operation.Id, client);
+            var sameOperation = new RecognizeCustomFormsOperation(operation.Id, nonInstrumentedClient);
             await sameOperation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(1, sameOperation.Value.Count);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TrainingOperationCanPollFromNewObject()
         {
-            // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
-            // making the test fail.
-
-            var client = CreateFormTrainingClient(skipInstrumenting: true);
+            var client = CreateFormTrainingClient(out var nonInstrumentedClient);
             var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             var operation = await client.StartTrainingAsync(trainingFilesUri, useTrainingLabels: false);
 
-            var sameOperation = new TrainingOperation(operation.Id, client);
+            var sameOperation = new TrainingOperation(operation.Id, nonInstrumentedClient);
             await sameOperation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(sameOperation.HasValue);
             Assert.AreEqual(CustomFormModelStatus.Ready, sameOperation.Value.Status);
         }
 
-        [Test]
+        [RecordedTest]
+        public async Task CreateComposedModelOperationCanPollFromNewObject()
+        {
+            var client = CreateFormTrainingClient(out var nonInstrumentedClient);
+
+            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            await using var trainedModelB = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+
+            var operation = await client.StartCreateComposedModelAsync(new List<string> { trainedModelA.ModelId, trainedModelB.ModelId });
+
+            var sameOperation = new CreateComposedModelOperation(operation.Id, nonInstrumentedClient);
+            await sameOperation.WaitForCompletionAsync(PollingInterval);
+
+            Assert.IsTrue(sameOperation.HasValue);
+            Assert.AreEqual(CustomFormModelStatus.Ready, sameOperation.Value.Status);
+        }
+
+        [RecordedTest]
         public async Task CopyModelOperationCanPollFromNewObject()
         {
-            // Skip instrumenting here because the internal service client passed to the operation object would be made null otherwise,
-            // making the test fail.
-
-            var client = CreateFormTrainingClient(skipInstrumenting: true);
+            var client = CreateFormTrainingClient(out var nonInstrumentedClient);
             var resourceId = TestEnvironment.TargetResourceId;
             var region = TestEnvironment.TargetResourceRegion;
 
@@ -120,7 +154,7 @@ namespace Azure.AI.FormRecognizer.Tests
 
             var operation = await client.StartCopyModelAsync(trainedModel.ModelId, targetAuth);
 
-            var sameOperation = new CopyModelOperation(operation.Id, targetAuth.ModelId, client);
+            var sameOperation = new CopyModelOperation(operation.Id, targetAuth.ModelId, nonInstrumentedClient);
             await sameOperation.WaitForCompletionAsync(PollingInterval);
 
             Assert.IsTrue(sameOperation.HasValue);

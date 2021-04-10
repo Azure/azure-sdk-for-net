@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListVpnConnectionsResult
+    internal partial class ListVpnConnectionsResult
     {
         internal static ListVpnConnectionsResult DeserializeListVpnConnectionsResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VpnConnection> array = new List<VpnConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

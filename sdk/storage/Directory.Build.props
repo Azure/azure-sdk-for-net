@@ -2,8 +2,33 @@
   <!--
   Import our Directory.Build.props and /eng infrastructure
   -->
+  <PropertyGroup Condition="$(MSBuildProjectName.Contains('Azure.WebJobs'))">
+    <IsClientLibrary>true</IsClientLibrary>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+    <IsWebjobsProject>true</IsWebjobsProject>
+    <SupportsNetStandard20>true</SupportsNetStandard20>
+  </PropertyGroup>
+  
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
-
+  
+  <PropertyGroup Condition="'$(IsWebjobsProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
+    <NoWarn>
+      $(NoWarn);
+      AZC0001;
+      AZC0006;
+      AZC0007;
+    </NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(IsWebjobsProject)' == 'true' and ('$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true')">
+    <NoWarn>
+      $(NoWarn);
+      AZC0100;
+      CA1307;
+      CS1591;
+      SA1402;
+      SA1649;
+    </NoWarn>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(IsClientLibrary)' == 'true'">
     <!--
     These analyzers are blocked by https://github.com/Azure/azure-sdk-tools/issues/127
@@ -22,6 +47,13 @@
     <PackageProjectUrl>http://go.microsoft.com/fwlink/?LinkId=235168</PackageProjectUrl>
     -->
   </PropertyGroup>
+  <PropertyGroup Condition="'$(HasReleaseVersion)' != 'true'">
+    <!-- Verify that latest service version is used only when we ship release. -->
+    <NoWarn>
+      $(NoWarn);
+      AZC0010;
+    </NoWarn>
+  </PropertyGroup>
 
 
   <!-- DEBUG specific settings -->
@@ -29,8 +61,6 @@
     <!-- Turn on the DEBUG constant -->
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
-
-  <Import Condition="'$(IsClientLibrary)' == 'true' AND '$(IsMgmtClientLibrary)' != 'true'" Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
 
   <!-- Add references for CLIENT LIBRARY projects -->
   <ItemGroup Condition="'$(IsTestProject)' != 'true' and '$(IsClientLibrary)' == 'true'">
@@ -43,7 +73,7 @@
   <!-- Add references for TEST projects -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="nunit" />
+    <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
@@ -51,10 +81,13 @@
     <PackageReference Include="System.Text.Json" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
-
   
   <!--Add shared storage properties-->
   <PropertyGroup>
     <AzureStorageSharedSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\src\Shared\</AzureStorageSharedSources>
+    <AzureStorageSharedTestSources>$(MSBuildThisFileDirectory)\Azure.Storage.Common\tests\Shared\</AzureStorageSharedTestSources>
+    <AzureStorageWebjobsExtensionSharedSources>$(MSBuildThisFileDirectory)\Microsoft.Azure.WebJobs.Extensions.Storage.Common\src\Shared\</AzureStorageWebjobsExtensionSharedSources>
+    <AzureStorageWebjobsExtensionSharedTestSources>$(MSBuildThisFileDirectory)\Microsoft.Azure.WebJobs.Extensions.Storage.Common\tests\Shared\</AzureStorageWebjobsExtensionSharedTestSources>
+    <MicrosoftAzureWebJobsExtensionsClientsSources>$(MSBuildThisFileDirectory)..\extensions\Microsoft.Azure.WebJobs.Extensions.Clients\src\Shared\</MicrosoftAzureWebJobsExtensionsClientsSources>
   </PropertyGroup>
 </Project>

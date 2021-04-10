@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SensitivityLabelListResult
+    internal partial class SensitivityLabelListResult
     {
         internal static SensitivityLabelListResult DeserializeSensitivityLabelListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<SensitivityLabel> array = new List<SensitivityLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

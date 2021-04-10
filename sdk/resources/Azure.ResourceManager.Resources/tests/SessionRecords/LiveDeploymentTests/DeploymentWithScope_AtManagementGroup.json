@@ -4,6 +4,7 @@
       "RequestUri": "https://management.azure.com//providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest6052/validate?api-version=2019-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "2091",
         "Content-Type": "application/json",
@@ -233,6 +234,7 @@
       "RequestUri": "https://management.azure.com//providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest6052?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "2091",
         "Content-Type": "application/json",
@@ -1609,6 +1611,7 @@
       "RequestUri": "https://management.azure.com//providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest6052?api-version=2019-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-ad11914cc2ed1f469cc2921be77fd764-43d8660b8d4d334f-00",
         "User-Agent": [
@@ -1720,6 +1723,7 @@
       "RequestUri": "https://management.azure.com//providers/Microsoft.Management/managementGroups/tag-mg1/providers/Microsoft.Resources/deployments/csharpsdktest6052/operations?api-version=2019-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "User-Agent": [
           "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",

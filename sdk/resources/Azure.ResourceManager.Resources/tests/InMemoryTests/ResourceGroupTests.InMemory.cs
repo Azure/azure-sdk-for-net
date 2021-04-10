@@ -149,7 +149,8 @@ namespace ResourceGroups.Tests
             Assert.IsNull(request.Content);
 
             // Validate response
-            Assert.AreEqual(404, result.Status);
+            Assert.AreEqual(false, result.Value);
+            Assert.AreEqual(404, result.GetRawResponse().Status);
         }
 
         [Test]

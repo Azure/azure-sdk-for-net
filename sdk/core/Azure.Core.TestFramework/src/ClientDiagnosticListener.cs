@@ -6,25 +6,29 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 namespace Azure.Core.Tests
 {
     public class ClientDiagnosticListener : IObserver<KeyValuePair<string, object>>, IObserver<DiagnosticListener>, IDisposable
     {
         private readonly Func<string, bool> _sourceNameFilter;
+        private readonly AsyncLocal<bool> _collectThisStack;
 
         private List<IDisposable> _subscriptions = new List<IDisposable>();
 
         public List<ProducedDiagnosticScope> Scopes { get; } = new List<ProducedDiagnosticScope>();
 
-        public ClientDiagnosticListener(string name)
+        public ClientDiagnosticListener(string name, bool asyncLocal = false): this(n => n == name, asyncLocal)
         {
-            _sourceNameFilter = n => n == name;
-            DiagnosticListener.AllListeners.Subscribe(this);
         }
 
-        public ClientDiagnosticListener(Func<string, bool> filter)
+        public ClientDiagnosticListener(Func<string, bool> filter, bool asyncLocal = false)
         {
+            if (asyncLocal)
+            {
+                _collectThisStack = new AsyncLocal<bool> { Value = true };
+            }
             _sourceNameFilter = filter;
             DiagnosticListener.AllListeners.Subscribe(this);
         }
@@ -39,8 +43,13 @@ namespace Azure.Core.Tests
 
         public void OnNext(KeyValuePair<string, object> value)
         {
+            if (_collectThisStack?.Value == false) return;
+
             lock (Scopes)
             {
+                // Check for disposal
+                if (_subscriptions == null) return;
+
                 var startSuffix = ".Start";
                 var stopSuffix = ".Stop";
                 var exceptionSuffix = ".Exception";
@@ -48,7 +57,7 @@ namespace Azure.Core.Tests
                 if (value.Key.EndsWith(startSuffix))
                 {
                     var name = value.Key.Substring(0, value.Key.Length - startSuffix.Length);
-                    PropertyInfo propertyInfo = value.Value.GetType().GetProperty("Links");
+                    PropertyInfo propertyInfo = value.Value.GetType().GetTypeInfo().GetDeclaredProperty("Links");
                     var links = propertyInfo?.GetValue(value.Value) as IEnumerable<Activity> ?? Array.Empty<Activity>();
 
                     var scope = new ProducedDiagnosticScope()
@@ -95,12 +104,14 @@ namespace Azure.Core.Tests
 
         public void OnNext(DiagnosticListener value)
         {
-            List<IDisposable> subscriptions = _subscriptions;
-            if (_sourceNameFilter(value.Name) && subscriptions != null)
+            if (_sourceNameFilter(value.Name) && _subscriptions != null)
             {
-                lock (subscriptions)
+                lock (Scopes)
                 {
-                    subscriptions.Add(value.Subscribe(this));
+                    if (_subscriptions != null)
+                    {
+                        _subscriptions.Add(value.Subscribe(this));
+                    }
                 }
             }
         }
@@ -113,7 +124,7 @@ namespace Azure.Core.Tests
             }
 
             List<IDisposable> subscriptions;
-            lock (_subscriptions)
+            lock (Scopes)
             {
                 subscriptions = _subscriptions;
                 _subscriptions = null;

@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("disableTraceRoute"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     disableTraceRoute = property.Value.GetBoolean();
                     continue;
                 }

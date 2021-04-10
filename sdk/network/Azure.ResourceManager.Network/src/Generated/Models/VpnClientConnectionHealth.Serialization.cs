@@ -23,21 +23,41 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("totalIngressBytesTransferred"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     totalIngressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("totalEgressBytesTransferred"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     totalEgressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("vpnClientConnectionsCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     vpnClientConnectionsCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("allocatedIpAddresses"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

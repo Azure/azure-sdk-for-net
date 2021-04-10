@@ -59,30 +59,60 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("action"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             action = property0.Value.GetString().ToRecommendedIndexAction();
                             continue;
                         }
                         if (property0.NameEquals("state"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             state = property0.Value.GetString().ToRecommendedIndexState();
                             continue;
                         }
                         if (property0.NameEquals("created"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             created = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("lastModified"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             lastModified = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("indexType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             indexType = property0.Value.GetString().ToRecommendedIndexType();
                             continue;
                         }
@@ -98,6 +128,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("columns"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -108,6 +143,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("includedColumns"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -123,6 +163,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("estimatedImpact"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<OperationImpact> array = new List<OperationImpact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -133,6 +178,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("reportedImpact"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<OperationImpact> array = new List<OperationImpact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {

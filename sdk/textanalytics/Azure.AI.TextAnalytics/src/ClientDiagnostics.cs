@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
+using Azure.AI.TextAnalytics.Models;
 
 #nullable enable
 
@@ -20,16 +21,20 @@ namespace Azure.Core.Pipeline
         /// attempting to parse them as <see cref="TextAnalyticsError"/>s.
         /// </summary>
         /// <param name="content">The error content.</param>
+        /// <param name="responseHeaders">The response headers.</param>
         /// <param name="message">The error message.</param>
         /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
+#pragma warning disable CA1822 // Member can be static
+#pragma warning disable CA1801 // Remove unused parameter
         partial void ExtractFailureContent(
             string? content,
+            ResponseHeaders responseHeaders,
             ref string? message,
             ref string? errorCode,
-#pragma warning disable CA1801 // Remove unused parameter
             ref IDictionary<string, string>? additionalInfo)
 #pragma warning restore CA1801 // Remove unused parameter
+#pragma warning restore CA1822 // Member can be static
         {
             if (!string.IsNullOrEmpty(content))
             {
@@ -40,7 +45,7 @@ namespace Azure.Core.Pipeline
                     using JsonDocument doc = JsonDocument.Parse(content);
                     if (doc.RootElement.TryGetProperty("error", out JsonElement errorElement))
                     {
-                        TextAnalyticsError error = TextAnalyticsServiceSerializer.ReadTextAnalyticsError(errorElement);
+                        TextAnalyticsError error = Transforms.ConvertToError(TextAnalyticsErrorInternal.DeserializeTextAnalyticsErrorInternal(errorElement));
                         message = error.Message;
                         errorCode = error.ErrorCode.ToString();
                     }

@@ -6,7 +6,7 @@
 
 ### APIs
 
- For a full list of APIs under Language, please see our [list of language APIs](https://azure.microsoft.com/en-us/services/cognitive-services/?v=17.29#lang).
+ For a full list of APIs under Language, please see our [list of language APIs](https://azure.microsoft.com/services/cognitive-services/?v=17.29#lang).
 
 ### Target Frameworks:
 

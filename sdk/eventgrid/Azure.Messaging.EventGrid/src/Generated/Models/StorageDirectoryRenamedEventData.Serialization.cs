@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(StorageDirectoryRenamedEventDataConverter))]
     public partial class StorageDirectoryRenamedEventData
     {
         internal static StorageDirectoryRenamedEventData DeserializeStorageDirectoryRenamedEventData(JsonElement element)
@@ -61,11 +64,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("storageDiagnostics"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     storageDiagnostics = property.Value.GetObject();
                     continue;
                 }
             }
             return new StorageDirectoryRenamedEventData(api.Value, clientRequestId.Value, requestId.Value, sourceUrl.Value, destinationUrl.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+        }
+
+        internal partial class StorageDirectoryRenamedEventDataConverter : JsonConverter<StorageDirectoryRenamedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, StorageDirectoryRenamedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override StorageDirectoryRenamedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeStorageDirectoryRenamedEventData(document.RootElement);
+            }
         }
     }
 }

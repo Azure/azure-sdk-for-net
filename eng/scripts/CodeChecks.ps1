@@ -4,12 +4,16 @@
 param (
     [Parameter(Position=0)]
     [string] $ServiceDirectory,
-    [string] $ProjectDirectory
+
+    [Parameter()]
+    [string] $ProjectDirectory,
+
+    [Parameter()]
+    [string] $SDKType = "all"
 )
 
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version 1
-
 
 [string[]] $errors = @()
 
@@ -72,21 +76,18 @@ try {
 
         Write-Host "Re-generating clients"
         Invoke-Block {
-            & dotnet msbuild $PSScriptRoot\..\service.proj /t:GenerateCode /p:ServiceDirectory=$ServiceDirectory
-
-            # https://github.com/Azure/azure-sdk-for-net/issues/8584
-            # & $repoRoot\storage\generate.ps1
+            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
         }
     }
 
-    Write-Host "Re-generating readmes"
+    Write-Host "Re-generating snippets"
     Invoke-Block {
         & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
     }
 
     Write-Host "Re-generating listings"
     Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory
+        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType
     }
 
     if (-not $ProjectDirectory)
@@ -97,7 +98,11 @@ try {
         if ($LastExitCode -ne 0) {
             $status = git status -s | Out-String
             $status = $status -replace "`n","`n    "
-            LogError "Generated code is not up to date. You may need to run eng\scripts\Update-Snippets.ps1 or sdk\storage\generate.ps1 or eng\scripts\Export-API.ps1"
+            LogError "Generated code is not up to date.`n" + `
+                "You may need to rebase on the latest master, `n" + `
+                "run 'eng\scripts\Update-Snippets.ps1' if you modified sample snippets or other *.md files (https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md#updating-sample-snippets), `n" + `
+                "run 'eng\scripts\Export-API.ps1' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md#public-api-additions) `n" +
+                "run 'dotnet build /t:GenerateCode' to update the generated code."
         }
     }
 }

@@ -33,12 +33,13 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         /// </summary>
         /// <param name="restoreMode">Describes the mode of the restore.
         /// Possible values include: 'PointInTime'</param>
-        /// <param name="restoreSource">Path of the source account from which
-        /// the restore has to be initiated</param>
+        /// <param name="restoreSource">The id of the restorable database
+        /// account from which the restore has to be initiated. For example:
+        /// /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}</param>
         /// <param name="restoreTimestampInUtc">Time to which the account has
         /// to be restored (ISO-8601 format).</param>
-        /// <param name="databasesToRestore">List of specific databases to
-        /// restore.</param>
+        /// <param name="databasesToRestore">List of specific databases
+        /// available for restore.</param>
         public RestoreParameters(string restoreMode = default(string), string restoreSource = default(string), System.DateTime? restoreTimestampInUtc = default(System.DateTime?), IList<DatabaseRestoreResource> databasesToRestore = default(IList<DatabaseRestoreResource>))
         {
             RestoreMode = restoreMode;
@@ -61,8 +62,9 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public string RestoreMode { get; set; }
 
         /// <summary>
-        /// Gets or sets path of the source account from which the restore has
-        /// to be initiated
+        /// Gets or sets the id of the restorable database account from which
+        /// the restore has to be initiated. For example:
+        /// /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}
         /// </summary>
         [JsonProperty(PropertyName = "restoreSource")]
         public string RestoreSource { get; set; }
@@ -75,7 +77,7 @@ namespace Microsoft.Azure.Management.CosmosDB.Models
         public System.DateTime? RestoreTimestampInUtc { get; set; }
 
         /// <summary>
-        /// Gets or sets list of specific databases to restore.
+        /// Gets or sets list of specific databases available for restore.
         /// </summary>
         [JsonProperty(PropertyName = "databasesToRestore")]
         public IList<DatabaseRestoreResource> DatabasesToRestore { get; set; }

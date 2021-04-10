@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The current state of the VirtualHub to vnet connection. </summary>
-    public readonly partial struct HubVirtualNetworkConnectionStatus : IEquatable<HubVirtualNetworkConnectionStatus>
+    internal readonly partial struct HubVirtualNetworkConnectionStatus : IEquatable<HubVirtualNetworkConnectionStatus>
     {
         private readonly string _value;
 

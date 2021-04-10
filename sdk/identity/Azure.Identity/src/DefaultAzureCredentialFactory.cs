@@ -34,7 +34,7 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateInteractiveBrowserCredential(string tenantId)
         {
-            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions { EnablePersistentCache = true }, Pipeline);
+            return new InteractiveBrowserCredential(tenantId, Constants.DeveloperSignOnClientId, new InteractiveBrowserCredentialOptions { TokenCachePersistenceOptions = new TokenCachePersistenceOptions() }, Pipeline);
         }
 
         public virtual TokenCredential CreateAzureCliCredential()
@@ -50,6 +50,11 @@ namespace Azure.Identity
         public virtual TokenCredential CreateVisualStudioCodeCredential(string tenantId)
         {
             return new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { TenantId = tenantId }, Pipeline, default, default, default);
+        }
+
+        public virtual TokenCredential CreateAzurePowerShellCredential(bool useLegacyPowerShell)
+        {
+            return new AzurePowerShellCredential(new AzurePowerShellCredentialOptions { UseLegacyPowerShell = useLegacyPowerShell }, Pipeline, default);
         }
     }
 }

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A recoverable database. </summary>
-    public partial class RecoverableDatabase : Resource
+    public partial class RecoverableDatabase : ProxyResource
     {
         /// <summary> Initializes a new instance of RecoverableDatabase. </summary>
         public RecoverableDatabase()

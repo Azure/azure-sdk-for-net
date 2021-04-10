@@ -2,7 +2,7 @@ parameters:
   TargetFolder: ''
   RootFolder: ''
   BuildSHA: ''
-  RepoId: ''
+  RepoId: $(Build.Repository.Name)
 
 steps:
   - task: PythonScript@0

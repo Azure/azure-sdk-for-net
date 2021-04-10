@@ -50,12 +50,34 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="protocolTypes">protocolTypes</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="snapshotId">Snapshot ID</param>
+        /// <param name="backupId">Backup ID</param>
         /// <param name="baremetalTenantId">Baremetal Tenant ID</param>
         /// <param name="mountTargets">mountTargets</param>
         /// <param name="volumeType">What type of volume is this</param>
         /// <param name="dataProtection">DataProtection</param>
         /// <param name="isRestoring">Restoring</param>
-        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?))
+        /// <param name="snapshotDirectoryVisible">If enabled (true) the volume
+        /// will contain a read-only snapshot directory which provides access
+        /// to each of the volume's snapshots (default to true).</param>
+        /// <param name="kerberosEnabled">Describe if a volume is
+        /// KerberosEnabled. To be use with swagger version 2020-05-01 or
+        /// later</param>
+        /// <param name="securityStyle">The security style of volume, default
+        /// unix, defaults to ntfs for dual protocol or CIFS protocol. Possible
+        /// values include: 'ntfs', 'unix'</param>
+        /// <param name="smbEncryption">Enables encryption for in-flight smb3
+        /// data. Only applicable for SMB/DualProtocol volume. To be used with
+        /// swagger version 2020-08-01 or later</param>
+        /// <param name="smbContinuouslyAvailable">Enables continuously
+        /// available share property for smb volume. Only applicable for SMB
+        /// volume</param>
+        /// <param name="throughputMibps">Maximum throughput in Mibps that can
+        /// be achieved by this volume</param>
+        /// <param name="encryptionKeySource">Encryption Key Source. Possible
+        /// values are: 'Microsoft.NetApp'</param>
+        /// <param name="ldapEnabled">Specifies whether LDAP is enabled or not
+        /// for a given NFS volume.</param>
+        public Volume(string location, string creationToken, long usageThreshold, string subnetId, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string fileSystemId = default(string), string serviceLevel = default(string), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), IList<string> protocolTypes = default(IList<string>), string provisioningState = default(string), string snapshotId = default(string), string backupId = default(string), string baremetalTenantId = default(string), IList<MountTargetProperties> mountTargets = default(IList<MountTargetProperties>), string volumeType = default(string), VolumePropertiesDataProtection dataProtection = default(VolumePropertiesDataProtection), bool? isRestoring = default(bool?), bool? snapshotDirectoryVisible = default(bool?), bool? kerberosEnabled = default(bool?), string securityStyle = default(string), bool? smbEncryption = default(bool?), bool? smbContinuouslyAvailable = default(bool?), double? throughputMibps = default(double?), string encryptionKeySource = default(string), bool? ldapEnabled = default(bool?))
         {
             Location = location;
             Id = id;
@@ -70,12 +92,21 @@ namespace Microsoft.Azure.Management.NetApp.Models
             ProtocolTypes = protocolTypes;
             ProvisioningState = provisioningState;
             SnapshotId = snapshotId;
+            BackupId = backupId;
             BaremetalTenantId = baremetalTenantId;
             SubnetId = subnetId;
             MountTargets = mountTargets;
             VolumeType = volumeType;
             DataProtection = dataProtection;
             IsRestoring = isRestoring;
+            SnapshotDirectoryVisible = snapshotDirectoryVisible;
+            KerberosEnabled = kerberosEnabled;
+            SecurityStyle = securityStyle;
+            SmbEncryption = smbEncryption;
+            SmbContinuouslyAvailable = smbContinuouslyAvailable;
+            ThroughputMibps = throughputMibps;
+            EncryptionKeySource = encryptionKeySource;
+            LdapEnabled = ldapEnabled;
             CustomInit();
         }
 
@@ -166,7 +197,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Gets or sets protocolTypes
         /// </summary>
         /// <remarks>
-        /// Set of protocol types
+        /// Set of protocol types, default NFSv3, CIFS fro SMB protocol
         /// </remarks>
         [JsonProperty(PropertyName = "properties.protocolTypes")]
         public IList<string> ProtocolTypes { get; set; }
@@ -187,6 +218,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string SnapshotId { get; set; }
 
         /// <summary>
+        /// Gets or sets backup ID
+        /// </summary>
+        /// <remarks>
+        /// UUID v4 or resource identifier used to identify the Backup.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.backupId")]
+        public string BackupId { get; set; }
+
+        /// <summary>
         /// Gets baremetal Tenant ID
         /// </summary>
         /// <remarks>
@@ -203,13 +243,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string SubnetId { get; set; }
 
         /// <summary>
-        /// Gets or sets mountTargets
+        /// Gets mountTargets
         /// </summary>
         /// <remarks>
         /// List of mount targets
         /// </remarks>
         [JsonProperty(PropertyName = "properties.mountTargets")]
-        public IList<MountTargetProperties> MountTargets { get; set; }
+        public IList<MountTargetProperties> MountTargets { get; private set; }
 
         /// <summary>
         /// Gets or sets what type of volume is this
@@ -232,6 +272,65 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isRestoring")]
         public bool? IsRestoring { get; set; }
+
+        /// <summary>
+        /// Gets or sets if enabled (true) the volume will contain a read-only
+        /// snapshot directory which provides access to each of the volume's
+        /// snapshots (default to true).
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.snapshotDirectoryVisible")]
+        public bool? SnapshotDirectoryVisible { get; set; }
+
+        /// <summary>
+        /// Gets or sets describe if a volume is KerberosEnabled. To be use
+        /// with swagger version 2020-05-01 or later
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.kerberosEnabled")]
+        public bool? KerberosEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the security style of volume, default unix, defaults
+        /// to ntfs for dual protocol or CIFS protocol. Possible values
+        /// include: 'ntfs', 'unix'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityStyle")]
+        public string SecurityStyle { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables encryption for in-flight smb3 data. Only
+        /// applicable for SMB/DualProtocol volume. To be used with swagger
+        /// version 2020-08-01 or later
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.smbEncryption")]
+        public bool? SmbEncryption { get; set; }
+
+        /// <summary>
+        /// Gets or sets enables continuously available share property for smb
+        /// volume. Only applicable for SMB volume
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.smbContinuouslyAvailable")]
+        public bool? SmbContinuouslyAvailable { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum throughput in Mibps that can be achieved by
+        /// this volume
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.throughputMibps")]
+        public double? ThroughputMibps { get; set; }
+
+        /// <summary>
+        /// Gets or sets encryption Key Source. Possible values are:
+        /// 'Microsoft.NetApp'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.encryptionKeySource")]
+        public string EncryptionKeySource { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether LDAP is enabled or not for a given
+        /// NFS volume.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.ldapEnabled")]
+        public bool? LdapEnabled { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -306,19 +405,19 @@ namespace Microsoft.Azure.Management.NetApp.Models
                     throw new ValidationException(ValidationRules.Pattern, "SnapshotId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$");
                 }
             }
-            if (BaremetalTenantId != null)
+            if (BackupId != null)
             {
-                if (BaremetalTenantId.Length > 36)
+                if (BackupId.Length > 36)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "BaremetalTenantId", 36);
+                    throw new ValidationException(ValidationRules.MaxLength, "BackupId", 36);
                 }
-                if (BaremetalTenantId.Length < 36)
+                if (BackupId.Length < 36)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "BaremetalTenantId", 36);
+                    throw new ValidationException(ValidationRules.MinLength, "BackupId", 36);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(BaremetalTenantId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(BackupId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "BaremetalTenantId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
+                    throw new ValidationException(ValidationRules.Pattern, "BackupId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}|(\\\\?([^\\/]*[\\/])*)([^\\/]+)$");
                 }
             }
             if (MountTargets != null)
@@ -334,6 +433,17 @@ namespace Microsoft.Azure.Management.NetApp.Models
             if (DataProtection != null)
             {
                 DataProtection.Validate();
+            }
+            if (ThroughputMibps != null)
+            {
+                if (ThroughputMibps > 4500)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ThroughputMibps", 4500);
+                }
+                if (ThroughputMibps < 0)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ThroughputMibps", 0);
+                }
             }
         }
     }

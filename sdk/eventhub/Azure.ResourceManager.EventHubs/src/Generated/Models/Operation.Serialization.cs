@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("display"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     display = OperationDisplay.DeserializeOperationDisplay(property.Value);
                     continue;
                 }

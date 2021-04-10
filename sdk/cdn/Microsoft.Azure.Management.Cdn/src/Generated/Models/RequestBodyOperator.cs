@@ -25,5 +25,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public const string LessThanOrEqual = "LessThanOrEqual";
         public const string GreaterThan = "GreaterThan";
         public const string GreaterThanOrEqual = "GreaterThanOrEqual";
+        public const string RegEx = "RegEx";
     }
 }

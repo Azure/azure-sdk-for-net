@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RouteTableListResult
+    internal partial class RouteTableListResult
     {
         internal static RouteTableListResult DeserializeRouteTableListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<RouteTable> array = new List<RouteTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

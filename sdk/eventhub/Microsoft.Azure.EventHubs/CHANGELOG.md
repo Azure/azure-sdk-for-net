@@ -1,6 +1,19 @@
 # Release History
 
-## 4.3.1 (Unreleased)
+## 4.4.0-beta.1 (Unreleased)
+
+
+## 4.3.1 (2020-10-29)
+### Breaking Changes
+None
+
+### Improvements
+- AMQP connection idle timeout set to 60 seconds to detect broken or idle connections much quicker. (https://github.com/Azure/azure-sdk-for-net/pull/15926)
+
+### Bug Fixes
+- Diagnostics listener batch overhead allocation increased to avoid failures during batch sends. (https://github.com/Azure/azure-sdk-for-net/pull/15193)
+- Client now converts InvalidOperationException into a retriable EventHubsException thrown during AMQP link clouse. This helps upper layers to retry the failed operation instead of them bailing out. (https://github.com/Azure/azure-sdk-for-net/pull/15984)
+
 
 ## 4.3.0 (2020-08-11)
 ### Breaking Changes

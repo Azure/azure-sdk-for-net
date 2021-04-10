@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListVirtualWANsResult
+    internal partial class ListVirtualWANsResult
     {
         internal static ListVirtualWANsResult DeserializeListVirtualWANsResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VirtualWAN> array = new List<VirtualWAN>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

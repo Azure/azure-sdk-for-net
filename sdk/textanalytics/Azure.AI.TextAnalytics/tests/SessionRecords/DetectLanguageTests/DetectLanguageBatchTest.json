@@ -1,0 +1,100 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://ta-s-westeurope.cognitiveservices.azure.com/text/analytics/v3.1-preview.4/languages?model-version=2019-10-01\u0026showStats=false",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json, text/json",
+        "Content-Length": "225",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-7c36f78c2637044eb422aff258051b38-39f192b288bc1240-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.1.0-alpha.20210224.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "9ed49d935379ea824d7c2153a1e6e6e4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "documents": [
+          {
+            "id": "1",
+            "text": "Hello world",
+            "countryHint": "us"
+          },
+          {
+            "id": "2",
+            "text": "Bonjour tout le monde",
+            "countryHint": "fr"
+          },
+          {
+            "id": "3",
+            "text": "Hola mundo",
+            "countryHint": "es"
+          },
+          {
+            "id": "4",
+            "text": ":) :( :D",
+            "countryHint": "us"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "bf252008-8fe3-4455-a8fd-9cedfd224e4a",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.TextAnalytics.BatchScoring=4",
+        "Date": "Wed, 24 Feb 2021 16:55:47 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "9"
+      },
+      "ResponseBody": {
+        "documents": [
+          {
+            "id": "1",
+            "detectedLanguage": {
+              "name": "English",
+              "iso6391Name": "en",
+              "confidenceScore": 1.0
+            },
+            "warnings": []
+          },
+          {
+            "id": "2",
+            "detectedLanguage": {
+              "name": "French",
+              "iso6391Name": "fr",
+              "confidenceScore": 1.0
+            },
+            "warnings": []
+          },
+          {
+            "id": "3",
+            "detectedLanguage": {
+              "name": "Spanish",
+              "iso6391Name": "es",
+              "confidenceScore": 1.0
+            },
+            "warnings": []
+          },
+          {
+            "id": "4",
+            "detectedLanguage": {
+              "name": "(Unknown)",
+              "iso6391Name": "(Unknown)",
+              "confidenceScore": 0.0
+            },
+            "warnings": []
+          }
+        ],
+        "errors": [],
+        "modelVersion": "2019-10-01"
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1725013070",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://ta-s-westeurope.cognitiveservices.azure.com"
+  }
+}

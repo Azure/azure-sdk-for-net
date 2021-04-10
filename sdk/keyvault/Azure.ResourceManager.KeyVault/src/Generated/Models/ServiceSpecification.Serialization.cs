@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (property.NameEquals("logSpecifications"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<LogSpecification> array = new List<LogSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

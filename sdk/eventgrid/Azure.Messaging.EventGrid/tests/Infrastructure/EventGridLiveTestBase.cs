@@ -12,6 +12,7 @@ namespace Azure.Messaging.EventGrid.Tests
             Sanitizer = new RecordedTestSanitizer();
             Sanitizer.SanitizedHeaders.Add(Constants.SasKeyName);
             Sanitizer.SanitizedHeaders.Add(Constants.SasTokenName);
+            Sanitizer.JsonPathSanitizers.Add("$..traceparent");
         }
     }
 }

@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(IotHubDeviceDisconnectedEventDataConverter))]
     public partial class IotHubDeviceDisconnectedEventData
     {
         internal static IotHubDeviceDisconnectedEventData DeserializeIotHubDeviceDisconnectedEventData(JsonElement element)
@@ -37,11 +40,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("deviceConnectionStateEventInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     deviceConnectionStateEventInfo = DeviceConnectionStateEventInfo.DeserializeDeviceConnectionStateEventInfo(property.Value);
                     continue;
                 }
             }
             return new IotHubDeviceDisconnectedEventData(deviceId.Value, moduleId.Value, hubName.Value, deviceConnectionStateEventInfo.Value);
+        }
+
+        internal partial class IotHubDeviceDisconnectedEventDataConverter : JsonConverter<IotHubDeviceDisconnectedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, IotHubDeviceDisconnectedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override IotHubDeviceDisconnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeIotHubDeviceDisconnectedEventData(document.RootElement);
+            }
         }
     }
 }

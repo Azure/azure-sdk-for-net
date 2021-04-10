@@ -24,6 +24,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("code"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     code = property.Value.GetString().ToMediaJobErrorCode();
                     continue;
                 }
@@ -34,16 +39,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("category"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     category = property.Value.GetString().ToMediaJobErrorCategory();
                     continue;
                 }
                 if (property.NameEquals("retry"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     retry = property.Value.GetString().ToMediaJobRetry();
                     continue;
                 }
                 if (property.NameEquals("details"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MediaJobErrorDetail> array = new List<MediaJobErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

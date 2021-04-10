@@ -22,6 +22,58 @@ namespace Microsoft.Azure.Management.Synapse
     public static partial class SqlPoolSecurityAlertPoliciesOperationsExtensions
     {
             /// <summary>
+            /// List Sql pool's security alert policies
+            /// </summary>
+            /// <remarks>
+            /// Get a list of Sql pool's security alert policies.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            public static IPage<SqlPoolSecurityAlertPolicy> List(this ISqlPoolSecurityAlertPoliciesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName)
+            {
+                return operations.ListAsync(resourceGroupName, workspaceName, sqlPoolName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List Sql pool's security alert policies
+            /// </summary>
+            /// <remarks>
+            /// Get a list of Sql pool's security alert policies.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='workspaceName'>
+            /// The name of the workspace
+            /// </param>
+            /// <param name='sqlPoolName'>
+            /// SQL pool name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SqlPoolSecurityAlertPolicy>> ListAsync(this ISqlPoolSecurityAlertPoliciesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get a Sql pool's security alert policy
             /// </summary>
             /// <remarks>
@@ -126,6 +178,46 @@ namespace Microsoft.Azure.Management.Synapse
             public static async Task<SqlPoolSecurityAlertPolicy> CreateOrUpdateAsync(this ISqlPoolSecurityAlertPoliciesOperations operations, string resourceGroupName, string workspaceName, string sqlPoolName, SqlPoolSecurityAlertPolicy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, workspaceName, sqlPoolName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List Sql pool's security alert policies
+            /// </summary>
+            /// <remarks>
+            /// Get a list of Sql pool's security alert policies.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<SqlPoolSecurityAlertPolicy> ListNext(this ISqlPoolSecurityAlertPoliciesOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List Sql pool's security alert policies
+            /// </summary>
+            /// <remarks>
+            /// Get a list of Sql pool's security alert policies.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<SqlPoolSecurityAlertPolicy>> ListNextAsync(this ISqlPoolSecurityAlertPoliciesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

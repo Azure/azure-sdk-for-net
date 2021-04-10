@@ -6,7 +6,6 @@ using System.Globalization;
 
 namespace Azure.Data.Tables
 {
-
     /// <summary>
     /// Create exceptions for common error cases.
     /// </summary>

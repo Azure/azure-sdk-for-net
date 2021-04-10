@@ -22,16 +22,31 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("serviceLevelObjective"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     serviceLevelObjective = new ServiceObjectiveName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("serviceLevelObjectiveId"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     serviceLevelObjectiveId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("inRangeTimeRatio"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     inRangeTimeRatio = property.Value.GetDouble();
                     continue;
                 }

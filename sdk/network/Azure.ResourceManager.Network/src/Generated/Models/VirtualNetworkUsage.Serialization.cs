@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("currentValue"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     currentValue = property.Value.GetDouble();
                     continue;
                 }
@@ -33,11 +38,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("limit"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     limit = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     name = VirtualNetworkUsageName.DeserializeVirtualNetworkUsageName(property.Value);
                     continue;
                 }

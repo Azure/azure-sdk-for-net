@@ -284,6 +284,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/rollingUpgrades/latest", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

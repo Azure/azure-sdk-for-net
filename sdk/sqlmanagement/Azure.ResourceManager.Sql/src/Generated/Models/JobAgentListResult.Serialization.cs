@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobAgentListResult
+    internal partial class JobAgentListResult
     {
         internal static JobAgentListResult DeserializeJobAgentListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<JobAgent> array = new List<JobAgent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

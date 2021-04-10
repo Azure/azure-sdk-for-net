@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ListContainerItems
+    internal partial class ListContainerItems
     {
         internal static ListContainerItems DeserializeListContainerItems(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ListContainerItem> array = new List<ListContainerItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

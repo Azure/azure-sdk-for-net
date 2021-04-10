@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The current state of the tunnel. </summary>
-    public readonly partial struct TunnelConnectionStatus : IEquatable<TunnelConnectionStatus>
+    internal readonly partial struct TunnelConnectionStatus : IEquatable<TunnelConnectionStatus>
     {
         private readonly string _value;
 

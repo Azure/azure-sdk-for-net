@@ -176,7 +176,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
   ]
 }";
 
-
                 Assert.AreEqual(expectedJson, json.ToString());
             }
         }

@@ -55,7 +55,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorRequiresTheConnectionScope()
         {
-            Assert.That(() => new AmqpProducer("theMostAwesomeHubEvar", "0", null, Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>()), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpProducer("theMostAwesomeHubEvar", "0", null, Mock.Of<AmqpMessageConverter>(), Mock.Of<EventHubsRetryPolicy>(), TransportProducerFeatures.IdempotentPublishing), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorRequiresTheRetryPolicy()
         {
-            Assert.That(() => new AmqpProducer("theMostAwesomeHubEvar", null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), null), Throws.ArgumentNullException);
+            Assert.That(() => new AmqpProducer("theMostAwesomeHubEvar", null, Mock.Of<AmqpConnectionScope>(), Mock.Of<AmqpMessageConverter>(), null, TransportProducerFeatures.IdempotentPublishing, new PartitionPublishingOptions()), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -100,6 +100,81 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateLinkAndEnsureProducerStateAsyncRespectsPartitionOptions()
+        {
+            var expectedOptions = new PartitionPublishingOptions { ProducerGroupId = 1, OwnerLevel = 4, StartingSequenceNumber = 88 };
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.IdempotentPublishing, expectedOptions)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())));
+
+            await producer.Object.ReadInitializationPublishingPropertiesAsync(default);
+
+            Func<PartitionPublishingOptions, PartitionPublishingOptions, bool> areOptionsEqual = (first, second) =>
+                first.ProducerGroupId == second.ProducerGroupId
+                && first.OwnerLevel == second.OwnerLevel
+                && first.StartingSequenceNumber == second.StartingSequenceNumber;
+
+            producer
+                .Protected()
+                .Verify<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
+                    ItExpr.IsAny<string>(),
+                    ItExpr.Is<PartitionPublishingOptions>(options => areOptionsEqual(options, expectedOptions)),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreateLinkAndEnsureProducerStateAsyncClearsTheStartingSequenceNumberAfterInitialization()
+        {
+            var expectedOptions = new PartitionPublishingOptions { ProducerGroupId = 1, OwnerLevel = 4, StartingSequenceNumber = 88 };
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+            var mockConnectionScope = new Mock<AmqpConnectionScope>();
+
+            var producer = new Mock<AmqpProducer>("aHub", null, mockConnectionScope.Object, new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.IdempotentPublishing, expectedOptions)
+            {
+                CallBase = true
+            };
+
+            mockConnectionScope
+                .Setup(scope => scope.OpenProducerLinkAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<TransportProducerFeatures>(),
+                    It.Is<PartitionPublishingOptions>(options => options.StartingSequenceNumber == expectedOptions.StartingSequenceNumber),
+                    It.IsAny<TimeSpan>(),
+                    It.IsAny<CancellationToken>()))
+               .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings { MaxMessageSize = 512 })))
+               .Verifiable();
+
+            Assert.That(GetPartitionPublishingOptions(producer.Object).StartingSequenceNumber, Is.EqualTo(expectedOptions.StartingSequenceNumber), "The initial options should have the sequence number set.");
+
+            await producer.Object.ReadInitializationPublishingPropertiesAsync(default);
+            Assert.That(GetPartitionPublishingOptions(producer.Object).StartingSequenceNumber, Is.Null, "After initializing state, the active options should not have a sequence number.");
+
+            mockConnectionScope.VerifyAll();
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpProducer.CreateBatchAsync" />
         ///   method.
         /// </summary>
@@ -123,7 +198,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -134,6 +209,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     .Protected()
                     .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                         ItExpr.IsAny<string>(),
+                        ItExpr.IsAny<PartitionPublishingOptions>(),
                         ItExpr.IsAny<TimeSpan>(),
                         ItExpr.IsAny<CancellationToken>())
                     .Callback(() => SetMaximumMessageSize(producer.Object, 100))
@@ -157,7 +233,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task CreateBatchAsyncEnsuresMaximumMessageSizeIsPopulated()
         {
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -166,6 +242,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, 512))
@@ -188,7 +265,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { MaximumSizeInBytes = null };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -197,6 +274,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -219,7 +297,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { MaximumSizeInBytes = expectedMaximumSize };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -228,6 +306,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize + 27))
@@ -250,7 +329,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { MaximumSizeInBytes = 1024 };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -259,6 +338,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, linkMaximumSize))
@@ -279,7 +359,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { MaximumSizeInBytes = 512 };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -288,6 +368,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, options.MaximumSizeInBytes.Value + 982))
@@ -313,7 +394,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -322,6 +403,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, 100))
@@ -353,7 +435,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retriableException = new EventHubsException(true, "Test");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
 
-            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -362,6 +444,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                  .Throws(retriableException);
@@ -373,6 +456,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -390,7 +474,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retriableException = new OperationCanceledException();
             var retryPolicy = new BasicRetryPolicy(retryOptions);
 
-            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -399,6 +483,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -410,6 +495,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -427,7 +513,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
 
-            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -436,6 +522,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -447,6 +534,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -462,7 +550,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var embeddedException = new OperationCanceledException("", new ArgumentNullException());
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -471,6 +559,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -482,6 +571,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -497,7 +587,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -506,6 +596,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -517,6 +608,385 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ReadInitializationPublishingPropertiesAsyncEnsuresNotClosed(bool createLinkBeforehand)
+        {
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
+            {
+                CallBase = true
+            };
+
+            if (createLinkBeforehand)
+            {
+                producer
+                    .Protected()
+                    .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                        ItExpr.IsAny<string>(),
+                        ItExpr.IsAny<PartitionPublishingOptions>(),
+                        ItExpr.IsAny<TimeSpan>(),
+                        ItExpr.IsAny<CancellationToken>())
+                    .Callback(() =>
+                    {
+                        SetMaximumMessageSize(producer.Object, 100);
+                        SetInitializedPartitionProperties(producer.Object, new PartitionPublishingProperties(false, null, null, null));
+                    })
+                    .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
+                    .Verifiable();
+
+                Assert.That(async () => await producer.Object.CreateBatchAsync(new CreateBatchOptions(), CancellationToken.None), Throws.Nothing);
+            }
+
+            await producer.Object.CloseAsync(CancellationToken.None);
+            Assert.That(async () => await producer.Object.ReadInitializationPublishingPropertiesAsync(CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReadInitializationPublishingPropertiesAsyncEnsuresPropertiesArePopulated()
+        {
+            var expectedProperties = new PartitionPublishingProperties(false, null, null, null);
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(() => SetInitializedPartitionProperties(producer.Object, expectedProperties))
+                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
+                .Verifiable();
+
+            await producer.Object.ReadInitializationPublishingPropertiesAsync(default);
+            producer.VerifyAll();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReadInitializationPublishingPropertiesAsyncReturnsPropertiesOnInitialization()
+        {
+            var expectedProperties = new PartitionPublishingProperties(true, 3, 17, 32768);
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(() => SetInitializedPartitionProperties(producer.Object, expectedProperties))
+                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
+                .Verifiable();
+
+            var actualProperties = await producer.Object.ReadInitializationPublishingPropertiesAsync(default);
+            Assert.That(actualProperties, Is.SameAs(expectedProperties), "The correct instance of the properties should have been returned.");
+
+            producer.VerifyAll();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ReadInitializationPublishingPropertiesAsyncReturnsCachedProperties()
+        {
+            var expectedProperties = new PartitionPublishingProperties(true, 3, 17, 32768);
+            var callbackProperties = expectedProperties;
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(() =>
+                {
+                    SetInitializedPartitionProperties(producer.Object, callbackProperties);
+                    callbackProperties = new PartitionPublishingProperties(false, null, null, null);
+                })
+                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())));
+
+            // The first invocation should trigger initialization and return the new value.
+
+            var actualProperties = await producer.Object.ReadInitializationPublishingPropertiesAsync(default);
+            Assert.That(actualProperties, Is.SameAs(expectedProperties), "The correct instance of the properties should have been returned for the first call.");
+
+            // The subsequent invocations should not trigger link creation and should return the cached value.
+
+            actualProperties = await producer.Object.ReadInitializationPublishingPropertiesAsync(default);
+            Assert.That(actualProperties, Is.SameAs(expectedProperties), "The correct instance of the properties should have been returned for the second call.");
+
+            actualProperties = await producer.Object.ReadInitializationPublishingPropertiesAsync(default);
+            Assert.That(actualProperties, Is.SameAs(expectedProperties), "The correct instance of the properties should have been returned for the third call.");
+
+            producer
+                .Protected()
+                .Verify<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReadInitializationPublishingPropertiesAsyncRespectsTheCancellationTokenIfSetWhenCalled()
+        {
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(() => SetInitializedPartitionProperties(producer.Object, new PartitionPublishingProperties(false, null, null, null)))
+                .Returns(Task.FromResult(new SendingAmqpLink(new AmqpLinkSettings())))
+                .Verifiable();
+
+            using CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.Cancel();
+
+            Assert.That(async () => await producer.Object.ReadInitializationPublishingPropertiesAsync(cancellationTokenSource.Token), Throws.InstanceOf<TaskCanceledException>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void ReadInitializationPublishingPropertiesAsyncAppliesTheRetryPolicy(EventHubsRetryOptions retryOptions)
+        {
+            var partitionId = "testMe";
+            var retriableException = new EventHubsException(true, "Test");
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                 .Throws(retriableException);
+
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+            Assert.That(async () => await producer.Object.ReadInitializationPublishingPropertiesAsync(cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            producer
+                .Protected()
+                .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
+                    ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void ReadInitializationPublishingPropertiesAsyncConsidersOperationCanceledExceptionAsRetriable(EventHubsRetryOptions retryOptions)
+        {
+            var partitionId = "testMe";
+            var retriableException = new OperationCanceledException();
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Throws(retriableException);
+
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+            Assert.That(async () => await producer.Object.ReadInitializationPublishingPropertiesAsync(cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            producer
+                .Protected()
+                .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
+                    ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(RetryOptionTestCases))]
+        public void ReadInitializationPublishingPropertiesAsyncAppliesTheRetryPolicyForAmqpErrors(EventHubsRetryOptions retryOptions)
+        {
+            var partitionId = "testMe";
+            var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
+            var retryPolicy = new BasicRetryPolicy(retryOptions);
+
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Throws(retriableException);
+
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+            Assert.That(async () => await producer.Object.ReadInitializationPublishingPropertiesAsync(cancellationSource.Token), Throws.InstanceOf(retriableException.GetType()));
+
+            producer
+                .Protected()
+                .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
+                    ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReadInitializationPublishingPropertiesAsyncDetectsAnEmbeddedErrorForOperationCanceled()
+        {
+            var embeddedException = new OperationCanceledException("", new ArgumentNullException());
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Throws(embeddedException);
+
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+            Assert.That(async () => await producer.Object.ReadInitializationPublishingPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+
+            producer
+                .Protected()
+                .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
+                    ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>());
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpProducer.ReadInitializationPublishingPropertiesAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void ReadInitializationPublishingPropertiesAsyncDetectsAnEmbeddedAmqpErrorForOperationCanceled()
+        {
+            var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
+            var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
+
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
+            {
+                CallBase = true
+            };
+
+            producer
+                .Protected()
+                .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Throws(embeddedException);
+
+            using CancellationTokenSource cancellationSource = new CancellationTokenSource();
+            Assert.That(async () => await producer.Object.ReadInitializationPublishingPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<OperationCanceledException>());
+
+            producer
+                .Protected()
+                .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
+                    ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -529,7 +999,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void SendEnumerableValidatesTheEvents()
         {
-            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>());
+            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>(), TransportProducerFeatures.None);
             Assert.That(async () => await producer.SendAsync(null, new SendEventOptions(), CancellationToken.None), Throws.ArgumentNullException);
         }
 
@@ -541,7 +1011,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task SendEnumerableEnsuresNotClosed()
         {
-            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>());
+            var producer = new AmqpProducer("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>(), TransportProducerFeatures.IdempotentPublishing);
             await producer.CloseAsync(CancellationToken.None);
 
             Assert.That(async () => await producer.SendAsync(Enumerable.Empty<EventData>(), new SendEventOptions(), CancellationToken.None), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
@@ -559,7 +1029,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new SendEventOptions { PartitionKey = expectedPartitionKey };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -591,7 +1061,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var messageFactory = default(Func<AmqpMessage>);
             var events = new[] { new EventData(new byte[] { 0x15 }) };
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>())
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), Mock.Of<EventHubsRetryPolicy>(), TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -642,7 +1112,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retriableException = new EventHubsException(true, "Test");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
 
-            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -651,6 +1121,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                  .Throws(retriableException);
@@ -662,6 +1133,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -679,7 +1151,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retriableException = new OperationCanceledException();
             var retryPolicy = new BasicRetryPolicy(retryOptions);
 
-            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -688,6 +1160,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -699,6 +1172,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -716,7 +1190,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retriableException = AmqpError.CreateExceptionForError(new Error { Condition = AmqpError.ServerBusyError }, "dummy");
             var retryPolicy = new BasicRetryPolicy(retryOptions);
 
-            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", partitionId, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -725,6 +1199,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -736,6 +1211,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == partitionId),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -751,7 +1227,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var embeddedException = new OperationCanceledException("", new ArgumentNullException());
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -760,6 +1236,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -771,6 +1248,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -786,7 +1264,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var embeddedException = new OperationCanceledException("", new AmqpException(new Error { Condition = AmqpError.ArgumentError }));
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -795,6 +1273,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -806,6 +1285,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -834,7 +1314,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { MaximumSizeInBytes = null };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -843,6 +1323,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -867,7 +1348,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = expectedPartitionKey };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -876,6 +1357,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -912,7 +1394,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { PartitionKey = partitonKey };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -921,6 +1403,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -961,7 +1444,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions { MaximumSizeInBytes = null };
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -970,6 +1453,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -1006,7 +1490,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var options = new CreateBatchOptions();
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(17) });
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -1015,6 +1499,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Callback(() => SetMaximumMessageSize(producer.Object, expectedMaximumSize))
@@ -1042,7 +1527,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -1051,6 +1536,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                  .Throws(retriableException);
@@ -1062,6 +1548,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1081,7 +1568,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -1090,6 +1577,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -1101,6 +1589,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1120,7 +1609,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(retryOptions);
             var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -1129,6 +1618,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(retriableException);
@@ -1140,6 +1630,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Exactly(1 + retryOptions.MaximumRetries),
                     ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1158,7 +1649,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -1167,6 +1658,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -1178,6 +1670,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1196,7 +1689,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryPolicy = new BasicRetryPolicy(new EventHubsRetryOptions());
             var batch = new EventDataBatch(Mock.Of<TransportEventBatch>(), "ns", "eh", options);
 
-            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy)
+            var producer = new Mock<AmqpProducer>("aHub", null, Mock.Of<AmqpConnectionScope>(), new AmqpMessageConverter(), retryPolicy, TransportProducerFeatures.None, null)
             {
                 CallBase = true
             };
@@ -1205,6 +1698,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Setup<Task<SendingAmqpLink>>("CreateLinkAndEnsureProducerStateAsync",
                     ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>())
                 .Throws(embeddedException);
@@ -1216,6 +1710,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Protected()
                 .Verify("CreateLinkAndEnsureProducerStateAsync", Times.Once(),
                     ItExpr.Is<string>(value => value == null),
+                    ItExpr.IsAny<PartitionPublishingOptions>(),
                     ItExpr.IsAny<TimeSpan>(),
                     ItExpr.IsAny<CancellationToken>());
         }
@@ -1236,6 +1731,20 @@ namespace Azure.Messaging.EventHubs.Tests
                     .GetValue(batch);
 
         /// <summary>
+        ///   Gets the active set of publishing options for a partition by accessing its private field.
+        /// </summary>
+        ///
+        /// <param name="target">The producer to retrieve the options from.</param>
+        ///
+        /// <returns>The partition publishing options.</returns>
+        ///
+        private static PartitionPublishingOptions GetPartitionPublishingOptions(AmqpProducer target) =>
+            (PartitionPublishingOptions)
+                typeof(AmqpProducer)
+                    .GetProperty("ActiveOptions", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(target);
+
+        /// <summary>
         ///   Sets the maximum message size for the given producer, using its
         ///   private accessor.
         /// </summary>
@@ -1244,6 +1753,18 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             typeof(AmqpProducer)
                 .GetProperty("MaximumMessageSize", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetProperty)
+                .SetValue(target, value);
+        }
+
+        /// <summary>
+        ///   Sets the initialized partition properties for the given producer, using its
+        ///   private accessor.
+        /// </summary>
+        ///
+        private static void SetInitializedPartitionProperties(AmqpProducer target, PartitionPublishingProperties value)
+        {
+            typeof(AmqpProducer)
+                .GetProperty("InitializedPartitionProperties", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetProperty)
                 .SetValue(target, value);
         }
     }

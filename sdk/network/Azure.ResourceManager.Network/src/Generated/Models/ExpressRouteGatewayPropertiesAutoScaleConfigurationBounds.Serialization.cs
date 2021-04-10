@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("min"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     min = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("max"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     max = property.Value.GetInt32();
                     continue;
                 }

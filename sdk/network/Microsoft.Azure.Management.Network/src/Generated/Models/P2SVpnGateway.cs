@@ -54,9 +54,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// connection health status.</param>
         /// <param name="customDnsServers">List of all customer specified DNS
         /// servers IP addresses.</param>
+        /// <param name="isRoutingPreferenceInternet">Enable Routing Preference
+        /// property for the Public IP Interface of the P2SVpnGateway.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public P2SVpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), IList<P2SConnectionConfiguration> p2SConnectionConfigurations = default(IList<P2SConnectionConfiguration>), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), SubResource vpnServerConfiguration = default(SubResource), VpnClientConnectionHealth vpnClientConnectionHealth = default(VpnClientConnectionHealth), IList<string> customDnsServers = default(IList<string>), string etag = default(string))
+        public P2SVpnGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualHub = default(SubResource), IList<P2SConnectionConfiguration> p2SConnectionConfigurations = default(IList<P2SConnectionConfiguration>), string provisioningState = default(string), int? vpnGatewayScaleUnit = default(int?), SubResource vpnServerConfiguration = default(SubResource), VpnClientConnectionHealth vpnClientConnectionHealth = default(VpnClientConnectionHealth), IList<string> customDnsServers = default(IList<string>), bool? isRoutingPreferenceInternet = default(bool?), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualHub = virtualHub;
@@ -66,6 +68,7 @@ namespace Microsoft.Azure.Management.Network.Models
             VpnServerConfiguration = vpnServerConfiguration;
             VpnClientConnectionHealth = vpnClientConnectionHealth;
             CustomDnsServers = customDnsServers;
+            IsRoutingPreferenceInternet = isRoutingPreferenceInternet;
             Etag = etag;
             CustomInit();
         }
@@ -121,6 +124,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.customDnsServers")]
         public IList<string> CustomDnsServers { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable Routing Preference property for the Public IP
+        /// Interface of the P2SVpnGateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isRoutingPreferenceInternet")]
+        public bool? IsRoutingPreferenceInternet { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

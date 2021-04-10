@@ -40,6 +40,8 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="description">Integration runtime description.</param>
+        /// <param name="linkedInfo">Linked integration runtime type from data
+        /// factory</param>
         public SelfHostedIntegrationRuntime(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), LinkedIntegrationRuntimeType linkedInfo = default(LinkedIntegrationRuntimeType))
             : base(additionalProperties, description)
         {
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets linked integration runtime type from data factory
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.linkedInfo")]
         public LinkedIntegrationRuntimeType LinkedInfo { get; set; }

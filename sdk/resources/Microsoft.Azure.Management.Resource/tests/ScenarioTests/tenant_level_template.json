@@ -8,7 +8,7 @@
     },
     "subscriptionId": {
       "type": "string",
-      "defaultValue": "a93e8c5c-63cb-4635-933f-6d166ac25187"
+      "defaultValue": "ce7f58b7-53c8-4806-ad09-18b516f85d4a"
     },
     "roleDefinitionId": {
       "type": "string",
@@ -25,7 +25,7 @@
       "name": "[parameters('roleDefinitionId')]",
       "apiVersion": "2018-07-01",
       "properties": {
-        "roleName": "test-app",
+        "roleName": "test-role",
         "description": "something",
         "type": "CustomRole",
         "permissions": [

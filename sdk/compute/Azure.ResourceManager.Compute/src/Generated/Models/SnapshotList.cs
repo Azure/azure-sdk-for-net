@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Snapshots operation response. </summary>
-    public partial class SnapshotList
+    internal partial class SnapshotList
     {
         /// <summary> Initializes a new instance of SnapshotList. </summary>
         /// <param name="value"> A list of snapshots. </param>

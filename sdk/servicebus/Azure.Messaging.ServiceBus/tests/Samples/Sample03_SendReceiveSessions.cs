@@ -4,7 +4,6 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -38,23 +37,25 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 // create a session receiver that we can use to receive the message. Since we don't specify a
                 // particular session, we will get the next available session from the service.
-                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
+                #region Snippet:ServiceBusReceiveNextSession
+                ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(queueName);
 
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 Console.WriteLine(receivedMessage.SessionId);
+                #endregion
 
                 // we can also set arbitrary session state using this receiver
                 // the state is specific to the session, and not any particular message
-                await receiver.SetSessionStateAsync(Encoding.UTF8.GetBytes("some state"));
+                await receiver.SetSessionStateAsync(new BinaryData("some state"));
 
                 // the state can be retrieved for the session as well
-                byte[] state = await receiver.GetSessionStateAsync();
+                BinaryData state = await receiver.GetSessionStateAsync();
 
                 #endregion
-                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.Bytes.ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Hello world!"), receivedMessage.Body.ToArray());
                 Assert.AreEqual("mySessionId", receivedMessage.SessionId);
-                Assert.AreEqual(Encoding.UTF8.GetBytes("some state"), state);
+                Assert.AreEqual(Encoding.UTF8.GetBytes("some state"), state.ToArray());
             }
         }
 
@@ -89,19 +90,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 #region Snippet:ServiceBusReceiveFromSpecificSession
                 // create a receiver specifying a particular session
-                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
-                    queueName,
-                    new ServiceBusSessionReceiverOptions
-                    {
-                        SessionId = "Session2"
-                    });
+                ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(queueName, "Session2");
 
                 // the received message is a different type as it contains some service set properties
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
                 Console.WriteLine(receivedMessage.SessionId);
 
                 #endregion
-                Assert.AreEqual(Encoding.UTF8.GetBytes("Second"), receivedMessage.Body.Bytes.ToArray());
+                Assert.AreEqual(Encoding.UTF8.GetBytes("Second"), receivedMessage.Body.ToArray());
                 Assert.AreEqual("Session2", receivedMessage.SessionId);
             }
         }

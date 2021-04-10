@@ -103,6 +103,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("disabledRuleGroups"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationGatewayFirewallDisabledRuleGroup> array = new List<ApplicationGatewayFirewallDisabledRuleGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -113,26 +118,51 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("requestBodyCheck"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     requestBodyCheck = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("maxRequestBodySize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxRequestBodySize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxRequestBodySizeInKb"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxRequestBodySizeInKb = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("fileUploadLimitInMb"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     fileUploadLimitInMb = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("exclusions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationGatewayFirewallExclusion> array = new List<ApplicationGatewayFirewallExclusion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

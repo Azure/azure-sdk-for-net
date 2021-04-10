@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage" enabled="true">
+        <Configuration>
+          <Format>cobertura</Format>
+          <ExcludeByAttribute>ExcludeFromCodeCoverageAttribute,GeneratedCodeAttribute,Obsolete</ExcludeByAttribute>
+          <IncludeTestAssembly>false</IncludeTestAssembly>
+          <SingleHit>false</SingleHit>
+          <SkipAutoProps>true</SkipAutoProps>
+        </Configuration>
+      </DataCollector>
+      <!-- Enable logging to diagnose test host failures -->
+      <DataCollector friendlyName="blame" enabled="true" />
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

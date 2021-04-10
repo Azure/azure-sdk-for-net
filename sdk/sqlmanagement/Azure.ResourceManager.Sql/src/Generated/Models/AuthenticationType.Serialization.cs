@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    internal static class AuthenticationTypeExtensions
+    internal static partial class AuthenticationTypeExtensions
     {
         public static string ToSerialString(this AuthenticationType value) => value switch
         {

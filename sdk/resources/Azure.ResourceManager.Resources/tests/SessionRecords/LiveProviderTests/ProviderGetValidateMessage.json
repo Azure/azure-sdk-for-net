@@ -1,14 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler/register?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Scheduler/register?api-version=2019-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3a3900ce15527049bfd8871cba3b43b9-bef8e88267c75b44-00",
+        "traceparent": "00-516302dc5072f747801283aee084179f-f592a98625685a4b-00",
         "User-Agent": [
-          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
-          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "59a7bdbd8a7d86fbb2e162d57982d390",
         "x-ms-return-client-request-id": "true"
@@ -17,20 +18,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1834",
+        "Content-Length": "1938",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 02:47:45 GMT",
+        "Date": "Mon, 14 Sep 2020 09:13:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "058b6aec-bf40-4c5f-98aa-7d0a6c942fb9",
-        "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "058b6aec-bf40-4c5f-98aa-7d0a6c942fb9",
-        "x-ms-routing-request-id": "KOREASOUTH:20200529T024746Z:058b6aec-bf40-4c5f-98aa-7d0a6c942fb9"
+        "x-ms-correlation-request-id": "dc25aa2c-59a2-46ae-b32c-0731d688ece8",
+        "x-ms-ratelimit-remaining-subscription-writes": "1189",
+        "x-ms-request-id": "dc25aa2c-59a2-46ae-b32c-0731d688ece8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T091321Z:dc25aa2c-59a2-46ae-b32c-0731d688ece8"
       },
       "ResponseBody": {
-        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler",
+        "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Scheduler",
         "namespace": "Microsoft.Scheduler",
         "resourceTypes": [
           {
@@ -61,7 +62,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -98,7 +101,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -135,7 +140,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -145,19 +152,20 @@
             "capabilities": "None"
           }
         ],
-        "registrationState": "Registering",
+        "registrationState": "Registered",
         "registrationPolicy": "RegistrationRequired"
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Scheduler?api-version=2019-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-771385566e333440b63ee174e8062add-d330b2f5639d3d49-00",
+        "traceparent": "00-dcd5f7c71653b2498569e05c5a289dc5-6a8a38e20afafe4c-00",
         "User-Agent": [
-          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
-          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "64396eda338135ec5bcffa8268a2787b",
         "x-ms-return-client-request-id": "true"
@@ -166,20 +174,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1834",
+        "Content-Length": "1938",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 02:47:46 GMT",
+        "Date": "Mon, 14 Sep 2020 09:13:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f29117ee-2cf0-4400-b660-163f2f7c31f5",
-        "x-ms-ratelimit-remaining-subscription-reads": "11991",
-        "x-ms-request-id": "f29117ee-2cf0-4400-b660-163f2f7c31f5",
-        "x-ms-routing-request-id": "KOREASOUTH:20200529T024746Z:f29117ee-2cf0-4400-b660-163f2f7c31f5"
+        "x-ms-correlation-request-id": "661542be-daef-46b1-988c-2446987f0a15",
+        "x-ms-ratelimit-remaining-subscription-reads": "11936",
+        "x-ms-request-id": "661542be-daef-46b1-988c-2446987f0a15",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T091321Z:661542be-daef-46b1-988c-2446987f0a15"
       },
       "ResponseBody": {
-        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler",
+        "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Scheduler",
         "namespace": "Microsoft.Scheduler",
         "resourceTypes": [
           {
@@ -210,7 +218,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -247,7 +257,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -284,7 +296,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -294,13 +308,13 @@
             "capabilities": "None"
           }
         ],
-        "registrationState": "Registering",
+        "registrationState": "Registered",
         "registrationPolicy": "RegistrationRequired"
       }
     }
   ],
   "Variables": {
     "RandomSeed": "1761512831",
-    "SUBSCRIPTION_ID": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+    "SUBSCRIPTION_ID": "0b1f6471-1bf0-4dda-aec3-cb9272f09590"
   }
 }

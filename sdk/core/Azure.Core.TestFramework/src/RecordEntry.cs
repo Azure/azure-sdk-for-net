@@ -17,7 +17,7 @@ namespace Azure.Core.TestFramework
         private static readonly JsonWriterOptions RequestWriterOptions = new JsonWriterOptions();
         // Responses are usually formatted using Newtonsoft.Json that has more relaxed encoding rules
         // To enable us to store more responses as JSON instead of string in Recording files use
-        // relaxed settings for roundrip
+        // relaxed settings for roundtrip
         private static readonly JsonWriterOptions ResponseWriterOptions = new JsonWriterOptions()
         {
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
@@ -188,14 +188,17 @@ namespace Azure.Core.TestFramework
 
                     // We use array as a wrapper for string based serialization
                     // so if the root is an array we can't write it directly
-                    // fallback to generic string writing
-                    if (document.RootElement.ValueKind != JsonValueKind.Array)
+                    // fallback to generic string writing. Also, if the root is a string
+                    // we don't want to write it directly, as this would make matching
+                    // not work in libraries that allow passing JSON as a string.
+                    if (document.RootElement.ValueKind != JsonValueKind.Array &&
+                        document.RootElement.ValueKind != JsonValueKind.String)
                     {
                         // Make sure we can replay JSON is exactly the same as the source
                         // for the case where service response was pre-formatted
                         // fallback to generic string writing
                         using var memoryStream = new MemoryStream();
-                        // Settings of this writer should be in sync with the one used in deserialiation
+                        // Settings of this writer should be in sync with the one used in deserialization
                         using (var reformattedWriter = new Utf8JsonWriter(memoryStream, writerOptions))
                         {
                             document.RootElement.WriteTo(reformattedWriter);

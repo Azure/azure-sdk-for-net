@@ -1,6 +1,50 @@
 # Release History
 
-## 4.2.0-preview.1 (Unreleased)
+## 4.2.0-beta.6 (Unreleased)
+
+
+## 4.2.0-beta.5 (2021-03-09)
+
+### Changed
+
+- `DownloadCertificate` and `DownloadCertificateAsync` on `CertificateClient` now support PEM-encoded certificates and keys.
+
+## 4.2.0-beta.4 (2021-02-10)
+
+### Added
+
+- Added default constructor to `CertificatePolicy` to use when importing a PEM-encoded certificate ([#16217](https://github.com/Azure/azure-sdk-for-net/issues/16217)).
+- Added constructor to `KeyVaultCertificateIdentifier` to parse a `Uri`.
+- Added support for PEM files on .NET Core for `CertificateClient.DownloadCertificate` and `CertificateClient.DownloadCertificateAsync` ([#16897](https://github.com/Azure/azure-sdk-for-net/issues/16897))
+
+### Changed
+
+- The default service version is now "7.2" (still in preview).
+
+### Removed
+
+- Removed `KeyVaultCertificateIdentifier.Parse` and `KeyVaultCertificateIdentifier.TryParse` in favor of the added constructor.
+
+## 4.2.0-beta.3 (2020-11-12)
+
+### Added
+
+- Added `DownloadCertificate` and `DownloadCertificateAsync` methods to get `X509Certificate2` with private key if permitted ([#12083](https://github.com/Azure/azure-sdk-for-net/issues/12083))
+
+### Changed
+
+- Clarified in documentation that `LifetimeActions` requires a single value at this time.
+
+## 4.2.0-beta.2 (2020-10-06)
+
+- Bug fixes and performance improvements.
+
+## 4.2.0-beta.1 (2020-09-08)
+
+### Added
+
+- Added `KeyVaultCertificateIdentifier` to parse certificate URIs.
+- Added link to sample on `KeyVaultCertificate.Cer` to the private key.
 
 ## 4.1.0 (2020-08-11)
 
@@ -50,7 +94,7 @@
 
 - Challenge-based authentication requests are only sent over HTTPS.
 
-## 4.0.0-preview.8
+## 4.0.0-preview.8 (2019-12-20)
 
 ### Breaking changes
 
@@ -69,7 +113,7 @@
 
 - A constructor was added to `CertificateOperation`. You can use this to construct a `CertificateOperation` to cancel or delete it without certificates/get permission.
 
-## 4.0.0-preview.7
+## 4.0.0-preview.7 (2019-12-04)
 
 ### Breaking changes
 
@@ -92,7 +136,7 @@
 - A new `CertificatePolicy` constructor allows you to both pass in both the `subject` and `subjectAlternativeNames` parameters.
 - `CertificateIssuer.Provider` was added.
 
-## 4.0.0-preview.6 (2019-11)
+## 4.0.0-preview.6 (2019-11-01)
 
 ### Breaking changes
 

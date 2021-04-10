@@ -25,6 +25,14 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
 
         [JsonExtensionData]
         public IDictionary<string, object> AdditionalProperties { get; set; }
+
+        [JsonProperty("needVaccine")]
+        public bool NeedVaccine { get; set; }
+
+        public bool ShouldSerializeNeedVaccine()
+        {
+            return false;
+        }
     }
 
     [JsonObject("dog")]

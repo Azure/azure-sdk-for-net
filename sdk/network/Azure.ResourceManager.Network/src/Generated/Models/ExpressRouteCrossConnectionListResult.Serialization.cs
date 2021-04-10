@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCrossConnectionListResult
+    internal partial class ExpressRouteCrossConnectionListResult
     {
         internal static ExpressRouteCrossConnectionListResult DeserializeExpressRouteCrossConnectionListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ExpressRouteCrossConnection> array = new List<ExpressRouteCrossConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -32,10 +32,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the StreamingPolicy class.
         /// </summary>
-        /// <param name="id">Fully qualified resource ID for the
-        /// resource.</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="created">Creation time of Streaming Policy</param>
         /// <param name="defaultContentKeyPolicyName">Default ContentKey used
         /// by current Streaming Policy</param>
@@ -46,7 +48,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="commonEncryptionCbcs">Configuration of
         /// CommonEncryptionCbcs</param>
         /// <param name="noEncryption">Configurations of NoEncryption</param>
-        public StreamingPolicy(string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), string defaultContentKeyPolicyName = default(string), EnvelopeEncryption envelopeEncryption = default(EnvelopeEncryption), CommonEncryptionCenc commonEncryptionCenc = default(CommonEncryptionCenc), CommonEncryptionCbcs commonEncryptionCbcs = default(CommonEncryptionCbcs), NoEncryption noEncryption = default(NoEncryption))
+        /// <param name="systemData">The system metadata relating to this
+        /// resource.</param>
+        public StreamingPolicy(string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), string defaultContentKeyPolicyName = default(string), EnvelopeEncryption envelopeEncryption = default(EnvelopeEncryption), CommonEncryptionCenc commonEncryptionCenc = default(CommonEncryptionCenc), CommonEncryptionCbcs commonEncryptionCbcs = default(CommonEncryptionCbcs), NoEncryption noEncryption = default(NoEncryption), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             Created = created;
@@ -55,6 +59,7 @@ namespace Microsoft.Azure.Management.Media.Models
             CommonEncryptionCenc = commonEncryptionCenc;
             CommonEncryptionCbcs = commonEncryptionCbcs;
             NoEncryption = noEncryption;
+            SystemData = systemData;
             CustomInit();
         }
 
@@ -98,6 +103,12 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.noEncryption")]
         public NoEncryption NoEncryption { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to this resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "systemData")]
+        public SystemData SystemData { get; private set; }
 
         /// <summary>
         /// Validate the object.

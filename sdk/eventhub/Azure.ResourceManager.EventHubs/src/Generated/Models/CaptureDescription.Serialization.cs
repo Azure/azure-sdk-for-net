@@ -60,31 +60,61 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (property.NameEquals("enabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("encoding"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     encoding = property.Value.GetString().ToEncodingCaptureDescription();
                     continue;
                 }
                 if (property.NameEquals("intervalInSeconds"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     intervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("sizeLimitInBytes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sizeLimitInBytes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("destination"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     destination = Destination.DeserializeDestination(property.Value);
                     continue;
                 }
                 if (property.NameEquals("skipEmptyArchives"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     skipEmptyArchives = property.Value.GetBoolean();
                     continue;
                 }

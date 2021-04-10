@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceEncryptionProtectorListResult
+    internal partial class ManagedInstanceEncryptionProtectorListResult
     {
         internal static ManagedInstanceEncryptionProtectorListResult DeserializeManagedInstanceEncryptionProtectorListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedInstanceEncryptionProtector> array = new List<ManagedInstanceEncryptionProtector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -7,7 +7,7 @@ This sample demonstrates how to use the management client to manage entities wit
 ```C# Snippet:CreateQueue
 string connectionString = "<connection_string>";
 string queueName = "<queue_name>";
-var client = new ServiceBusManagementClient(connectionString);
+var client = new ServiceBusAdministrationClient(connectionString);
 var options = new CreateQueueOptions(queueName)
 {
     AutoDeleteOnIdle = TimeSpan.FromDays(7),
@@ -147,4 +147,4 @@ await client.DeleteTopicAsync(topicName);
 
 To see the full example source, see:
 
-* [Sample07_CrudOperations.cs](../tests/Samples/Sample07_CrudOperations.cs)
+* [Sample07_CrudOperations.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample07_CrudOperations.cs)

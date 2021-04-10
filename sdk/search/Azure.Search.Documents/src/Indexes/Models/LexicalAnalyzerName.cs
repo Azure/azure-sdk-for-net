@@ -5,7 +5,6 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public readonly partial struct LexicalAnalyzerName
     {
-#if EXPERIMENTAL_FIELDBUILDER
 #pragma warning disable CA1034 // Nested types should not be visible
         /// <summary>
         /// The values of all declared <see cref="LexicalAnalyzerName"/> properties as string constants.
@@ -187,20 +186,19 @@ namespace Azure.Search.Documents.Indexes.Models
             public const string ViMicrosoft = LexicalAnalyzerName.ViMicrosoftValue;
             /// <summary> Standard Lucene analyzer. </summary>
             public const string StandardLucene = LexicalAnalyzerName.StandardLuceneValue;
-            /// <summary> Standard ASCII Folding Lucene analyzer. See https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers. </summary>
+            /// <summary> Standard ASCII Folding Lucene analyzer. See <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers">Add custom analyzers to string fields in an Azure Cognitive Search index</see>. </summary>
             public const string StandardAsciiFoldingLucene = LexicalAnalyzerName.StandardAsciiFoldingLuceneValue;
-            /// <summary> Treats the entire content of a field as a single token. This is useful for data like zip codes, ids, and some product names. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html. </summary>
+            /// <summary> Treats the entire content of a field as a single token. This is useful for data like zip codes, ids, and some product names. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html">KeywordAnalyzer (Lucene API)</see>. </summary>
             public const string Keyword = LexicalAnalyzerName.KeywordValue;
-            /// <summary> Flexibly separates text into terms via a regular expression pattern. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/PatternAnalyzer.html. </summary>
+            /// <summary> Flexibly separates text into terms via a regular expression pattern. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/PatternAnalyzer.html">PatternAnalyzer (Lucene API)</see>. </summary>
             public const string Pattern = LexicalAnalyzerName.PatternValue;
-            /// <summary> Divides text at non-letters and converts them to lower case. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/SimpleAnalyzer.html. </summary>
+            /// <summary> Divides text at non-letters and converts them to lower case. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/SimpleAnalyzer.html">SimpleAnalyzer (Lucene API)</see>. </summary>
             public const string Simple = LexicalAnalyzerName.SimpleValue;
-            /// <summary> Divides text at non-letters; Applies the lowercase and stopword token filters. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html. </summary>
+            /// <summary> Divides text at non-letters; Applies the lowercase and stopword token filters. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html">StopAnalyzer (Lucene API)</see>. </summary>
             public const string Stop = LexicalAnalyzerName.StopValue;
-            /// <summary> An analyzer that uses the whitespace tokenizer. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html. </summary>
+            /// <summary> An analyzer that uses the whitespace tokenizer. See <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html">WhitespaceAnalyzer (Lucene API)</see>. </summary>
             public const string Whitespace = LexicalAnalyzerName.WhitespaceValue;
         }
 #pragma warning restore CA1034 // Nested types should not be visible
-#endif
     }
 }

@@ -42,11 +42,21 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("maxTokenCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxTokenCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("consumeAllTokens"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     consumeAllTokens = property.Value.GetBoolean();
                     continue;
                 }

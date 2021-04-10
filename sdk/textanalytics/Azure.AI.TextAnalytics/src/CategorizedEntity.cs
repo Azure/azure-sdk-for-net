@@ -1,22 +1,28 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.TextAnalytics.Models;
+
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
     /// A word or phrase identified as an entity that can be categorized
     /// as known type in a given taxonomy.  The set of categories recognized by the
     /// Text Analytics service is described at
-    /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+    /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
     /// </summary>
     public readonly struct CategorizedEntity
     {
-        internal CategorizedEntity(string text, string category, string subCategory, double score)
+        internal CategorizedEntity(Entity entity)
         {
-            Text = text;
-            Category = category;
-            SubCategory = subCategory;
-            ConfidenceScore = score;
+            // We shipped TA 5.0.0 Category == string.Empty if the service returned a null value for Category.
+            // Because we don't want to introduce a breaking change, we are transforming that null to string.Empty
+            Category = entity.Category ?? string.Empty;
+            Text = entity.Text;
+            SubCategory = entity.Subcategory;
+            ConfidenceScore = entity.ConfidenceScore;
+            Offset = entity.Offset;
+            Length = entity.Length;
         }
 
         /// <summary>
@@ -28,7 +34,7 @@ namespace Azure.AI.TextAnalytics
         /// Gets the entity category inferred by the Text Analytics service's
         /// named entity recognition model.  The list of available categories is
         /// described at
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// </summary>
         public EntityCategory Category { get; }
 
@@ -37,7 +43,7 @@ namespace Azure.AI.TextAnalytics
         /// named entity recognition model.  This property may not have a value if
         /// a sub category doesn't exist for this entity.  The list of available categories and
         /// subcategories is described at
-        /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
+        /// <a href="https://docs.microsoft.com/azure/cognitive-services/Text-Analytics/named-entity-types"/>.
         /// </summary>
         public string SubCategory { get; }
 
@@ -46,5 +52,15 @@ namespace Azure.AI.TextAnalytics
         /// text substring matches this inferred entity.
         /// </summary>
         public double ConfidenceScore { get; }
+
+        /// <summary>
+        /// Gets the starting position for the matching text in the input document.
+        /// </summary>
+        public int Offset { get; }
+
+        /// <summary>
+        /// Gets the length of the matching text in the input document.
+        /// </summary>
+        public int Length { get; }
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus.Tests
     {
         public ServiceBusTestEnvironment TestEnvironment { get; } = ServiceBusTestEnvironment.Instance;
 
-        protected ServiceBusClient GetNoRetryClient()
+        protected ServiceBusClient CreateNoRetryClient()
         {
             var options =
                 new ServiceBusClientOptions
@@ -29,7 +29,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 options);
         }
 
-        protected ServiceBusClient GetClient(int tryTimeout = 10)
+        protected ServiceBusClient CreateClient(int tryTimeout = 15)
         {
             var retryOptions = new ServiceBusRetryOptions();
             if (tryTimeout != default)

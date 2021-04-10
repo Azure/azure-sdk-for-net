@@ -16,7 +16,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
-                var client = GetClient();
+                await using var client = CreateClient();
                 string queueName = scope.QueueName;
                 #region Snippet:ServiceBusTransactionalSend
                 //@@ string connectionString = "<connection_string>";
@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
             {
-                var client = GetClient();
+                await using var client = CreateClient();
                 string queueName = scope.QueueName;
                 #region Snippet:ServiceBusTransactionalSetSessionState
                 //@@ string connectionString = "<connection_string>";
@@ -58,66 +58,116 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 ServiceBusSender sender = client.CreateSender(queueName);
 
                 await sender.SendMessageAsync(new ServiceBusMessage("my message") { SessionId = "sessionId" });
-                ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
+                ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(queueName);
                 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
 
                 var state = Encoding.UTF8.GetBytes("some state");
                 using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     await receiver.CompleteMessageAsync(receivedMessage);
-                    await receiver.SetSessionStateAsync(state);
+                    await receiver.SetSessionStateAsync(new BinaryData(state));
                     ts.Complete();
                 }
                 #endregion
                 var bytes = await receiver.GetSessionStateAsync();
-                Assert.AreEqual(state, bytes);
+                Assert.AreEqual(state, bytes.ToArray());
             };
         }
 
         [Test]
-        public async Task TransactionalSendVia()
+        public async Task TransactionGroup()
         {
-            await using (var scopeA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
-            {
-                var scopeB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
-                string connectionString = TestEnvironment.ServiceBusConnectionString;
-                string queueA = scopeA.QueueName;
-                string queueB = scopeB.QueueName;
-                await using var client = GetClient();
-
-                #region Snippet:ServiceBusTransactionalSendVia
-                //@@ string connectionString = "<connection_string>";
-                //@@ string queueA = "<queue_name>";
-                //@@ string queueB = "<other_queue_name>";
-                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
-                //@@ await using var client = new ServiceBusClient(connectionString);
-
-                ServiceBusSender senderA = client.CreateSender(queueA);
-                await senderA.SendMessageAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("First")));
-
-                ServiceBusSender senderBViaA = client.CreateSender(queueB, new ServiceBusSenderOptions
+            await using var client = new ServiceBusClient(
+                TestEnvironment.ServiceBusConnectionString,
+                new ServiceBusClientOptions
                 {
-                    ViaQueueOrTopicName = queueA
+                    EnableCrossEntityTransactions = true
                 });
+            await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
 
-                ServiceBusReceiver receiverA = client.CreateReceiver(queueA);
-                ServiceBusReceivedMessage firstMessage = await receiverA.ReceiveMessageAsync();
-                using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            // The first sender won't be part of our transaction and is
+            // used only to populate the queue.
+            ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
+            await senderA.SendMessageAsync(new ServiceBusMessage());
+
+            ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
+            ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
+            ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
+
+            #region Snippet:ServiceBusTransactionGroup
+            //@@ var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
+            //@@ await using var client = new ServiceBusClient(connectionString, options);
+
+            //@@ ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
+            //@@ ServiceBusSender senderB = client.CreateSender("queueB");
+            //@@ ServiceBusSender senderC = client.CreateSender("topicC");
+
+            ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
+
+            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                await receiverA.CompleteMessageAsync(receivedMessage);
+                await senderB.SendMessageAsync(new ServiceBusMessage());
+                await senderC.SendMessageAsync(new ServiceBusMessage());
+                ts.Complete();
+            }
+            #endregion
+
+            receivedMessage = await receiverA.ReceiveMessageAsync();
+            Assert.IsNull(receivedMessage);
+        }
+
+        [Test]
+        [Ignore("Only verifying that it compiles.")]
+        public async Task TransactionGroupWrongOrder()
+        {
+            await using var client = new ServiceBusClient(
+                TestEnvironment.ServiceBusConnectionString,
+                new ServiceBusClientOptions
                 {
-                    await receiverA.CompleteMessageAsync(firstMessage);
-                    await senderBViaA.SendMessageAsync(new ServiceBusMessage(Encoding.UTF8.GetBytes("Second")));
-                    ts.Complete();
-                }
-                #endregion
+                    EnableCrossEntityTransactions = true
+                });
+            await using var queueA = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var queueB = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false);
+            await using var topicC = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false);
 
-                ServiceBusReceivedMessage secondMessage = await receiverA.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
+            // The first sender won't be part of our transaction and is
+            // used only to populate the queue.
+            ServiceBusSender senderA = client.CreateSender(queueA.QueueName);
+            await senderA.SendMessageAsync(new ServiceBusMessage());
 
-                Assert.Null(secondMessage);
-                ServiceBusReceiver receiverB = client.CreateReceiver(queueB);
-                secondMessage = await receiverB.ReceiveMessageAsync(TimeSpan.FromSeconds(5));
-                Assert.NotNull(secondMessage);
-                await receiverB.CompleteMessageAsync(secondMessage);
-            };
+            ServiceBusReceiver receiverA = client.CreateReceiver(queueA.QueueName);
+            ServiceBusSender senderB = client.CreateSender(queueB.QueueName);
+            ServiceBusSender senderC = client.CreateSender(topicC.TopicName);
+
+            #region Snippet:ServiceBusTransactionGroupWrongOrder
+            //@@ var options = new ServiceBusClientOptions { EnableCrossEntityTransactions = true };
+            //@@ await using var client = new ServiceBusClient(connectionString, options);
+
+            //@@ ServiceBusReceiver receiverA = client.CreateReceiver("queueA");
+            //@@ ServiceBusSender senderB = client.CreateSender("queueB");
+            //@@ ServiceBusSender senderC = client.CreateSender("topicC");
+
+            // SenderB becomes the entity through which subsequent "sends" are routed through.
+            await senderB.SendMessageAsync(new ServiceBusMessage());
+
+            ServiceBusReceivedMessage receivedMessage = await receiverA.ReceiveMessageAsync();
+
+            using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                // This will through an InvalidOperationException because a "receive" cannot be
+                // routed through a different entity.
+                await receiverA.CompleteMessageAsync(receivedMessage);
+                await senderB.SendMessageAsync(new ServiceBusMessage());
+                await senderC.SendMessageAsync(new ServiceBusMessage());
+                ts.Complete();
+            }
+            #endregion
+
+            receivedMessage = await receiverA.ReceiveMessageAsync();
+            Assert.IsNull(receivedMessage);
         }
     }
 }

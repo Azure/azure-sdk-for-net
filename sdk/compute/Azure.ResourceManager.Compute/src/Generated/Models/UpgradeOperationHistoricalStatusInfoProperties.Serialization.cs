@@ -24,31 +24,61 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("runningStatus"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     runningStatus = UpgradeOperationHistoryStatus.DeserializeUpgradeOperationHistoryStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("progress"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     error = ApiError.DeserializeApiError(property.Value);
                     continue;
                 }
                 if (property.NameEquals("startedBy"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     startedBy = property.Value.GetString().ToUpgradeOperationInvoker();
                     continue;
                 }
                 if (property.NameEquals("targetImageReference"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     targetImageReference = ImageReference.DeserializeImageReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("rollbackInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     rollbackInfo = RollbackStatusInfo.DeserializeRollbackStatusInfo(property.Value);
                     continue;
                 }

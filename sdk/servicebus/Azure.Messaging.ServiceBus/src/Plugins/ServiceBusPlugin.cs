@@ -4,6 +4,8 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Amqp;
+using Azure.Messaging.ServiceBus.Amqp;
 
 namespace Azure.Messaging.ServiceBus.Plugins
 {
@@ -37,18 +39,18 @@ namespace Azure.Messaging.ServiceBus.Plugins
 #pragma warning disable CA1822 // Mark members as static
         protected void SetBody(ServiceBusReceivedMessage message, BinaryData body)
         {
-            message.SentMessage.Body = body;
+            message.AmqpMessage.Body = new AmqpMessageBody(new ReadOnlyMemory<byte>[] { body });
         }
 
         /// <summary>
-        /// Set a key/value pair on the <see cref="ServiceBusReceivedMessage.Properties"/>.
+        /// Set a key/value pair on the <see cref="ServiceBusReceivedMessage.ApplicationProperties"/>.
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="key">The key to add or update the value of.</param>
         /// <param name="value">The value to set for the associated key.</param>
         protected void SetUserProperty(ServiceBusReceivedMessage message, string key, object value)
         {
-            message.SentMessage.Properties[key] = value;
+            message.AmqpMessage.ApplicationProperties[key] = value;
         }
 
         /// <summary>
@@ -61,7 +63,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetContentType(ServiceBusReceivedMessage message, string contentType)
         {
-            message.SentMessage.ContentType = contentType;
+            message.AmqpMessage.Properties.ContentType = contentType;
         }
 
         /// <summary>
@@ -73,18 +75,18 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetCorrelationId(ServiceBusReceivedMessage message, string correlationId)
         {
-            message.SentMessage.CorrelationId = correlationId;
+            message.AmqpMessage.Properties.CorrelationId = new AmqpMessageId(correlationId);
         }
 
         /// <summary>
-        /// Sets the <see cref="ServiceBusReceivedMessage.Label"/>.
+        /// Sets the <see cref="ServiceBusReceivedMessage.Subject"/>.
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="label">The label to set on the message.</param>
 
         protected void SetLabel(ServiceBusReceivedMessage message, string label)
         {
-            message.SentMessage.Label = label;
+            message.AmqpMessage.Properties.Subject = label;
         }
 
         /// <summary>
@@ -95,7 +97,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetMessageId(ServiceBusReceivedMessage message, string messageId)
         {
-            message.SentMessage.MessageId = messageId;
+            message.AmqpMessage.Properties.MessageId = new AmqpMessageId(messageId);
         }
 
         /// <summary>
@@ -106,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetPartitionKey(ServiceBusReceivedMessage message, string partitionKey)
         {
-            message.SentMessage.PartitionKey = partitionKey;
+            message.AmqpMessage.MessageAnnotations[AmqpMessageConstants.PartitionKeyName] = partitionKey;
         }
 
         /// <summary>
@@ -117,7 +119,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetReplyTo(ServiceBusReceivedMessage message, string replyTo)
         {
-            message.SentMessage.ReplyTo = replyTo;
+            message.AmqpMessage.Properties.ReplyTo = new AmqpAddress(replyTo);
         }
 
         /// <summary>
@@ -128,7 +130,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetReplyToSessionId(ServiceBusReceivedMessage message, string replyToSessionId)
         {
-            message.SentMessage.ReplyToSessionId = replyToSessionId;
+            message.AmqpMessage.Properties.ReplyToGroupId = replyToSessionId;
         }
 
         /// <summary>
@@ -138,7 +140,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <param name="sessionId">The session ID to set on the message.</param>
         protected void SetSessionId(ServiceBusReceivedMessage message, string sessionId)
         {
-            message.SentMessage.SessionId = sessionId;
+            message.AmqpMessage.Properties.GroupId = sessionId;
         }
 
         /// <summary>
@@ -148,7 +150,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <param name="scheduledEnqueueTime">The scheduled enqueue time to set on the message.</param>
         protected void SetScheduledEnqueueTime(ServiceBusReceivedMessage message, DateTimeOffset scheduledEnqueueTime)
         {
-            message.SentMessage.ScheduledEnqueueTime = scheduledEnqueueTime;
+            message.AmqpMessage.MessageAnnotations[AmqpMessageConstants.ScheduledEnqueueTimeUtcName] = scheduledEnqueueTime.UtcDateTime;
         }
 
         /// <summary>
@@ -159,7 +161,7 @@ namespace Azure.Messaging.ServiceBus.Plugins
 
         protected void SetTimeToLive(ServiceBusReceivedMessage message, TimeSpan timeToLive)
         {
-            message.SentMessage.TimeToLive = timeToLive;
+            message.AmqpMessage.Header.TimeToLive = timeToLive;
         }
 
         /// <summary>
@@ -169,17 +171,17 @@ namespace Azure.Messaging.ServiceBus.Plugins
         /// <param name="to">The to value to set on the message.</param>
         protected void SetTo(ServiceBusReceivedMessage message, string to)
         {
-            message.SentMessage.To = to;
+            message.AmqpMessage.Properties.To = new AmqpAddress(to);
         }
 
         /// <summary>
-        /// Sets the <see cref="ServiceBusReceivedMessage.ViaPartitionKey"/>.
+        /// Sets the <see cref="ServiceBusReceivedMessage.TransactionPartitionKey"/>.
         /// </summary>
         /// <param name="message">The message to modify.</param>
         /// <param name="viaPartitionKey">The via partition key to set on the message.</param>
         protected void SetViaPartitionKey(ServiceBusReceivedMessage message, string viaPartitionKey)
         {
-            message.SentMessage.ViaPartitionKey = viaPartitionKey;
+            message.AmqpMessage.MessageAnnotations[AmqpMessageConstants.ViaPartitionKeyName] = viaPartitionKey;
         }
 #pragma warning restore CA1822 // Mark members as static
     }

@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Threading;
+using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
@@ -16,11 +17,11 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [TestCase(default(Uri))]
         public void CtorValidatesArgs(object arg)
         {
-            Assert.That(() => new RoleAssignmentScope(default(string)), Throws.ArgumentNullException);
-            Assert.That(() => new RoleAssignmentScope(default(Uri)), Throws.ArgumentNullException);
+            Assert.That(() => new KeyVaultRoleScope(default(string)), Throws.ArgumentNullException);
+            Assert.That(() => new KeyVaultRoleScope(default(Uri)), Throws.ArgumentNullException);
 
-            Assert.That(() => new RoleAssignmentScope("someScope"), Throws.Nothing);
-            Assert.That(() => new RoleAssignmentScope(new Uri("https://myvault.vault.azure.net/keys/keyName")), Throws.Nothing);
+            Assert.That(() => new KeyVaultRoleScope("someScope"), Throws.Nothing);
+            Assert.That(() => new KeyVaultRoleScope(new Uri("https://myvault.vault.azure.net/keys/keyName")), Throws.Nothing);
         }
 
         [Test]
@@ -29,7 +30,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         [TestCase("https://myvault.vault.azure.net/foo/fooName", "/foo/fooName")]
         public void CtorValidatesArgs(string id, string expectedValue)
         {
-            var ras = new RoleAssignmentScope(new Uri(id));
+            var ras = new KeyVaultRoleScope(new Uri(id));
             Assert.That(ras.ToString(), Is.EqualTo(expectedValue));
         }
     }

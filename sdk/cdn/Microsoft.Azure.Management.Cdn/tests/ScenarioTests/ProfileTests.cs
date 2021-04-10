@@ -601,7 +601,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 var usageAfterCreation = subscriptionLevelUsages.First();
                 Assert.Equal(existingSubscriptionUsageLimit, usageAfterCreation.Limit);
-                Assert.Equal(existingSubscriptionUsageCurrentValue, usageAfterCreation.CurrentValue);
+                Assert.Equal(existingSubscriptionUsageCurrentValue + 1, usageAfterCreation.CurrentValue);
 
                 // test Profile level usage - usage for endpoints under the profile
                 var profileLevelUsages = cdnMgmtClient.Profiles.ListResourceUsage(resourceGroupName, profileName);

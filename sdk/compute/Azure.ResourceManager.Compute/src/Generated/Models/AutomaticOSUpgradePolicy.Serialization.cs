@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("enableAutomaticOSUpgrade"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enableAutomaticOSUpgrade = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("disableAutomaticRollback"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     disableAutomaticRollback = property.Value.GetBoolean();
                     continue;
                 }

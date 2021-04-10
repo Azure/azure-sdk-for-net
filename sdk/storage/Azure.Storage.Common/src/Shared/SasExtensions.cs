@@ -183,7 +183,7 @@ namespace Azure.Storage.Sas
         /// <returns></returns>
         internal static string FormatTimesForSasSigning(DateTimeOffset time) =>
             // "yyyy-MM-ddTHH:mm:ssZ"
-            (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture);
+            (time == new DateTimeOffset()) ? "" : time.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
 
         /// <summary>
         /// Helper method to add query param key value pairs to StringBuilder
@@ -197,97 +197,6 @@ namespace Azure.Storage.Sas
             .Append(key)
             .Append('=')
             .Append(value);
-
-        /// <summary>
-        /// Builds the query parameter string for the SasQueryParameters instance.
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="stringBuilder">
-        /// StringBuilder instance to add the query params to
-        /// </param>
-        internal static void AppendProperties(this SasQueryParameters parameters, StringBuilder stringBuilder)
-        {
-            if (!string.IsNullOrWhiteSpace(parameters.Version))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Version, parameters.Version);
-            }
-
-            if (parameters.Services != null)
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Services, parameters.Services.Value.ToPermissionsString());
-            }
-
-            if (parameters.ResourceTypes != null)
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ResourceTypes, parameters.ResourceTypes.Value.ToPermissionsString());
-            }
-
-            if (parameters.Protocol != default)
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Protocol, parameters.Protocol.ToProtocolString());
-            }
-
-            if (parameters.StartsOn != DateTimeOffset.MinValue)
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.StartTime, WebUtility.UrlEncode(parameters.StartsOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
-            }
-
-            if (parameters.ExpiresOn != DateTimeOffset.MinValue)
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ExpiryTime, WebUtility.UrlEncode(parameters.ExpiresOn.ToString(Constants.SasTimeFormat, CultureInfo.InvariantCulture)));
-            }
-
-            var ipr = parameters.IPRange.ToString();
-            if (ipr.Length > 0)
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.IPRange, ipr);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Identifier))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Identifier, parameters.Identifier);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Resource))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Resource, parameters.Resource);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Permissions))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Permissions, parameters.Permissions);
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.CacheControl))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.CacheControl, WebUtility.UrlEncode(parameters.CacheControl));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentDisposition))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentDisposition, WebUtility.UrlEncode(parameters.ContentDisposition));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentEncoding))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentEncoding, WebUtility.UrlEncode(parameters.ContentEncoding));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentLanguage))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentLanguage, WebUtility.UrlEncode(parameters.ContentLanguage));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.ContentType))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ContentType, WebUtility.UrlEncode(parameters.ContentType));
-            }
-
-            if (!string.IsNullOrWhiteSpace(parameters.Signature))
-            {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Signature, WebUtility.UrlEncode(parameters.Signature));
-            }
-        }
 
         internal static string ValidateAndSanitizeRawPermissions(string permissions,
             List<char> validPermissionsInOrder)

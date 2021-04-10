@@ -19,6 +19,59 @@ namespace Azure.Storage
     internal class LazyLoadingReadOnlyStream<TRequestConditions, TProperties> : Stream
     {
         /// <summary>
+        /// Delegate for a resource's direct REST download method.
+        /// </summary>
+        /// <param name="range">
+        /// Content range to download.
+        /// </param>
+        /// <param name="serviceRequestConditions">
+        /// Request conditions specific to the service.
+        /// </param>
+        /// <param name="rangeGetContentHash">
+        /// Whether to request a transactional MD5 for the ranged download.
+        /// </param>
+        /// <param name="async">
+        /// Whether to perform the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for cancelling the download request.
+        /// </param>
+        /// <returns>
+        /// Downloaded resource content.
+        /// </returns>
+        public delegate Task<Response<IDownloadedContent>> DownloadInternalAsync(
+            HttpRange range,
+            TRequestConditions serviceRequestConditions,
+            bool rangeGetContentHash,
+            bool async,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delegate for getting service-specific request contitions for etag locking.
+        /// </summary>
+        /// <param name="etag">
+        /// Etag to lock on.
+        /// </param>
+        /// <returns>
+        /// Created request conditions.
+        /// </returns>
+        public delegate TRequestConditions CreateRequestConditions(ETag? etag);
+
+        /// <summary>
+        /// Delegate for getting properties for the target resource.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to perform the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for cancelling the download request.
+        /// </param>
+        /// <returns>
+        /// Resource properties.
+        /// </returns>
+        public delegate Task<Response<TProperties>> GetPropertiesAsync(bool async, CancellationToken cancellationToken);
+
+        /// <summary>
         /// The current position within the blob or file.
         /// </summary>
         private long _position;
@@ -51,7 +104,12 @@ namespace Azure.Storage
         /// <summary>
         /// If we are allowing the blob to be modifed while we read it.
         /// </summary>
-        private bool _allowBlobModifications;
+        private readonly bool _allowBlobModifications;
+
+        /// <summary>
+        /// Indicated the user has called Seek() since the last Read() call, and the new position is outside _buffer.
+        /// </summary>
+        private bool _bufferInvalidated;
 
         /// <summary>
         /// Request conditions to send on the download requests.
@@ -61,22 +119,23 @@ namespace Azure.Storage
         /// <summary>
         /// Download() function.
         /// </summary>
-        private readonly Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<IDownloadedContent>>> _downloadInternalFunc;
+        private readonly DownloadInternalAsync _downloadInternalFunc;
 
         /// <summary>
         /// Function to create RequestConditions.
         /// </summary>
-        private readonly Func<ETag?, TRequestConditions> _createRequestConditionsFunc;
+        private readonly CreateRequestConditions _createRequestConditionsFunc;
 
         /// <summary>
         /// Function to get properties.
         /// </summary>
-        private readonly Func<bool, CancellationToken, Task<Response<TProperties>>> _getPropertiesInternalFunc;
+        private readonly GetPropertiesAsync _getPropertiesInternalFunc;
 
         public LazyLoadingReadOnlyStream(
-            Func<HttpRange, TRequestConditions, bool, bool, CancellationToken, Task<Response<IDownloadedContent>>> downloadInternalFunc,
-            Func<ETag?, TRequestConditions> createRequestConditionsFunc,
-            Func<bool, CancellationToken, Task<Response<TProperties>>> getPropertiesFunc,
+            DownloadInternalAsync downloadInternalFunc,
+            CreateRequestConditions createRequestConditionsFunc,
+            GetPropertiesAsync getPropertiesFunc,
+            long initialLenght,
             long position = 0,
             int? bufferSize = default,
             TRequestConditions requestConditions = default)
@@ -90,8 +149,9 @@ namespace Azure.Storage
             _bufferPosition = 0;
             _bufferLength = 0;
             _requestConditions = requestConditions;
-            _length = -1;
+            _length = initialLenght;
             _allowBlobModifications = !(_requestConditions == null && _createRequestConditionsFunc != null);
+            _bufferInvalidated = false;
         }
 
         public override int Read(byte[] buffer, int offset, int count)
@@ -132,16 +192,16 @@ namespace Azure.Storage
                 {
                     return 0;
                 }
-
             }
 
-            if (_bufferPosition == 0 || _bufferPosition == _buffer.Length)
+            if (_bufferPosition == 0 || _bufferPosition == _bufferLength || _bufferInvalidated)
             {
                 int lastDownloadedBytes = await DownloadInternal(async, cancellationToken).ConfigureAwait(false);
                 if (lastDownloadedBytes == 0)
                 {
                     return 0;
                 }
+                _bufferInvalidated = false;
             }
 
             int remainingBytesInBuffer = _bufferLength - _bufferPosition;
@@ -152,6 +212,7 @@ namespace Azure.Storage
             Array.Copy(_buffer, _bufferPosition, buffer, offset, bytesToWrite);
 
             _position += bytesToWrite;
+            _bufferPosition += bytesToWrite;
 
             return bytesToWrite;
         }
@@ -168,26 +229,43 @@ namespace Azure.Storage
 
             using Stream networkStream = response.Value.Content;
 
+            // The number of bytes we just downloaded.
+            long downloadSize = GetResponseRange(response.GetRawResponse()).Length.Value;
+
+            // The number of bytes we copied in the last loop.
             int copiedBytes;
 
-            if (async)
+            // Bytes we have copied so far.
+            int totalCopiedBytes = 0;
+
+            // Bytes remaining to copy.  It is save to truncate the long because we asked for a max of int _buffer size bytes.
+            int remainingBytes = (int)downloadSize;
+
+            do
             {
-                copiedBytes = await networkStream.ReadAsync(
-                    buffer: _buffer,
-                    offset: 0,
-                    count: _buffer.Length,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (async)
+                {
+                    copiedBytes = await networkStream.ReadAsync(
+                        buffer: _buffer,
+                        offset: totalCopiedBytes,
+                        count: remainingBytes,
+                        cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    copiedBytes = networkStream.Read(
+                        buffer: _buffer,
+                        offset: totalCopiedBytes,
+                        count: remainingBytes);
+                }
+
+                totalCopiedBytes += copiedBytes;
+                remainingBytes -= copiedBytes;
             }
-            else
-            {
-                copiedBytes = networkStream.Read(
-                    buffer: _buffer,
-                    offset: 0,
-                    count: _buffer.Length);
-            }
+            while (copiedBytes != 0);
 
             _bufferPosition = 0;
-            _bufferLength = copiedBytes;
+            _bufferLength = totalCopiedBytes;
             _length = GetBlobLengthFromResponse(response.GetRawResponse());
 
             // Set _requestConditions If-Match if we are not allowing the blob to be modified.
@@ -196,7 +274,7 @@ namespace Azure.Storage
                 _requestConditions = _createRequestConditionsFunc(response.GetRawResponse().Headers.ETag);
             }
 
-            return response.GetRawResponse().Headers.ContentLength.GetValueOrDefault();
+            return totalCopiedBytes;
         }
 
         private static void ValidateReadParameters(byte[] buffer, int offset, int count)
@@ -208,22 +286,23 @@ namespace Azure.Storage
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} cannot be less than 0.");
             }
 
             if (offset > buffer.Length)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(offset)} cannot exceed {nameof(buffer)} length.");
+                throw new ArgumentOutOfRangeException(nameof(offset), $"{nameof(offset)} cannot exceed {nameof(buffer)} length.");
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException($"{nameof(count)} cannot be less than 0.");
+                throw new ArgumentOutOfRangeException(nameof(count), $"{nameof(count)} cannot be less than 0.");
             }
         }
 
         protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             // Return the buffer to the pool if we're called from Dispose or a finalizer
             if (_buffer != null)
             {
@@ -242,7 +321,7 @@ namespace Azure.Storage
 
             if (lengthString == null)
             {
-                throw new ArgumentException($"{HttpHeader.Names.ContentLength} header is mssing on get properties response.");
+                throw new ArgumentException($"{HttpHeader.Names.ContentLength} header is missing on get properties response.");
             }
 
             return Convert.ToInt64(lengthString, CultureInfo.InvariantCulture);
@@ -254,16 +333,35 @@ namespace Azure.Storage
 
             if (lengthString == null)
             {
-                throw new ArgumentException("Content-Range header is mssing on download response.");
+                throw new ArgumentException("Content-Range header is missing on download response.");
             }
 
             string[] split = lengthString.Split('/');
             return Convert.ToInt64(split[1], CultureInfo.InvariantCulture);
         }
 
+        private static HttpRange GetResponseRange(Response response)
+        {
+            response.Headers.TryGetValue("Content-Range", out string rangeString);
+
+            if (rangeString == null)
+            {
+                throw new InvalidOperationException("Content-Range header is missing on download response.");
+            }
+
+            string[] split = rangeString.Split('/');
+            string[] rangeSplit = split[0].Split('-');
+            string[] firstbyteSplit = rangeSplit[0].Split(' ');
+
+            long firstByte = Convert.ToInt64(firstbyteSplit[1], CultureInfo.InvariantCulture);
+            long lastByte = Convert.ToInt64(rangeSplit[1], CultureInfo.InvariantCulture);
+
+            return new HttpRange(firstByte, lastByte - firstByte + 1);
+        }
+
         public override bool CanRead => true;
 
-        public override bool CanSeek => false;
+        public override bool CanSeek => true;
 
         public override bool CanWrite => false;
 
@@ -272,12 +370,74 @@ namespace Azure.Storage
         public override long Position
         {
             get => _position;
-            set => throw new NotSupportedException();
+            set => Seek(value, SeekOrigin.Begin);
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            throw new NotSupportedException();
+            long newPosition = CalculateNewPosition(offset, origin);
+
+            if (newPosition == _position)
+            {
+                return _position;
+            }
+
+            // newPosition < 0
+            if (newPosition < 0)
+            {
+                throw new ArgumentException($"New {nameof(offset)} cannot be less than 0.  Value was {newPosition}", nameof(offset));
+            }
+
+            // newPosition > _length
+            if (newPosition > _length)
+            {
+                throw new ArgumentException("You cannot seek past the last known length of the underlying blob or file.", nameof(offset));
+            }
+
+            // newPosition is less than _position, but within _buffer.
+            long beginningOfBuffer = _position - _bufferPosition;
+            if (newPosition < _position && newPosition > beginningOfBuffer)
+            {
+                _bufferPosition = (int)(newPosition - beginningOfBuffer);
+                _position = newPosition;
+                return newPosition;
+            }
+
+            // newPosition is greater than _position, but within _buffer.
+            long endOfBuffer = _position + (_bufferLength - _bufferPosition);
+            if (newPosition > _position && newPosition < endOfBuffer)
+            {
+                _bufferPosition = (int)(newPosition - beginningOfBuffer);
+                _position = newPosition;
+                return newPosition;
+            }
+
+            // newPosition is outside of _buffer, we will need to re-download.
+            _bufferInvalidated = true;
+            _position = newPosition;
+            return newPosition;
+        }
+
+        internal long CalculateNewPosition(long offset, SeekOrigin origin)
+        {
+            switch (origin)
+            {
+                case SeekOrigin.Begin:
+                    return offset;
+                case SeekOrigin.Current:
+                    return _position + offset;
+                case SeekOrigin.End:
+                    if (_allowBlobModifications)
+                    {
+                        throw new ArgumentException($"Cannot {nameof(Seek)} with {nameof(SeekOrigin)}.{nameof(SeekOrigin.End)} on a growing blob or file.  Call Stream.Seek(Stream.Length, SeekOrigin.Begin) to get to the end of known data.", nameof(origin));
+                    }
+                    else
+                    {
+                        return _length + offset;
+                    }
+                default:
+                    throw new ArgumentException($"Unknown ${nameof(SeekOrigin)} value", nameof(origin));
+            }
         }
 
         public override void SetLength(long value)

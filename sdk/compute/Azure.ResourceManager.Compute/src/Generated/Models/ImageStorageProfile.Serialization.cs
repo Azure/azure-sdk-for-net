@@ -48,11 +48,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("osDisk"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     osDisk = ImageOSDisk.DeserializeImageOSDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ImageDataDisk> array = new List<ImageDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -63,6 +73,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("zoneResilient"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     zoneResilient = property.Value.GetBoolean();
                     continue;
                 }

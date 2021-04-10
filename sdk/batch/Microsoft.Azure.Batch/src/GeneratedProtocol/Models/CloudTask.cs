@@ -75,6 +75,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Task.</param>
         /// <param name="constraints">The execution constraints that apply to
         /// this Task.</param>
+        /// <param name="requiredSlots">The number of scheduling slots that the
+        /// Task required to run.</param>
         /// <param name="userIdentity">The user identity under which the Task
         /// runs.</param>
         /// <param name="executionInfo">Information about the execution of the
@@ -93,7 +95,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="authenticationTokenSettings">The settings for an
         /// authentication token that the Task can use to perform Batch service
         /// operations.</param>
-        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), TaskState? previousState = default(TaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), string commandLine = default(string), TaskContainerSettings containerSettings = default(TaskContainerSettings), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), UserIdentity userIdentity = default(UserIdentity), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
+        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), TaskState? previousState = default(TaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), string commandLine = default(string), TaskContainerSettings containerSettings = default(TaskContainerSettings), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<OutputFile> outputFiles = default(IList<OutputFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), int? requiredSlots = default(int?), UserIdentity userIdentity = default(UserIdentity), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), AuthenticationTokenSettings authenticationTokenSettings = default(AuthenticationTokenSettings))
         {
             Id = id;
             DisplayName = displayName;
@@ -113,6 +115,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             EnvironmentSettings = environmentSettings;
             AffinityInfo = affinityInfo;
             Constraints = constraints;
+            RequiredSlots = requiredSlots;
             UserIdentity = userIdentity;
             ExecutionInfo = executionInfo;
             NodeInfo = nodeInfo;
@@ -310,6 +313,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of scheduling slots that the Task required
+        /// to run.
+        /// </summary>
+        /// <remarks>
+        /// The default is 1. A Task can only be scheduled to run on a compute
+        /// node if the node has enough free scheduling slots available. For
+        /// multi-instance Tasks, this must be 1.
+        /// </remarks>
+        [JsonProperty(PropertyName = "requiredSlots")]
+        public int? RequiredSlots { get; set; }
 
         /// <summary>
         /// Gets or sets the user identity under which the Task runs.

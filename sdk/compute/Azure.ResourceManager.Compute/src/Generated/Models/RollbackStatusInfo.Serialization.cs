@@ -21,16 +21,31 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("successfullyRolledbackInstanceCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     successfullyRolledbackInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("failedRolledbackInstanceCount"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     failedRolledbackInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("rollbackError"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     rollbackError = ApiError.DeserializeApiError(property.Value);
                     continue;
                 }

@@ -9,13 +9,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Azure.Core;
-#if EXPERIMENTAL_SERIALIZER
 using Azure.Core.Serialization;
-#endif
 using Azure.Search.Documents.Indexes.Models;
-#if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
-#endif
+using Azure.Core.GeoJson;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -37,9 +33,7 @@ namespace Azure.Search.Documents.Indexes
                     [typeof(bool)] = SearchFieldDataType.Boolean,
                     [typeof(DateTime)] = SearchFieldDataType.DateTimeOffset,
                     [typeof(DateTimeOffset)] = SearchFieldDataType.DateTimeOffset,
-#if EXPERIMENTAL_SPATIAL
-                    [typeof(PointGeometry)] = SearchFieldDataType.GeographyPoint,
-#endif
+                    [typeof(GeoPoint)] = SearchFieldDataType.GeographyPoint,
                 });
 
         private static readonly ISet<Type> s_unsupportedTypes =
@@ -57,7 +51,7 @@ namespace Azure.Search.Documents.Indexes
 
         /// <summary>
         /// Gets or sets the <see cref="ObjectSerializer"/> to use to generate field names that match JSON property names.
-        /// You should use hte same value as <see cref="SearchClientOptions.Serializer"/>.
+        /// You should use the same value as <see cref="SearchClientOptions.Serializer"/>.
         /// <see cref="JsonObjectSerializer"/> will be used if no value is provided.
         /// </summary>
         public ObjectSerializer Serializer { get; set; }
@@ -71,7 +65,19 @@ namespace Azure.Search.Documents.Indexes
         /// </param>
         /// <returns>A collection of fields.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="modelType"/>.</exception>
-        public IList<SearchField> Build(Type modelType)
+        public IList<SearchField> Build(Type modelType) =>
+            BuildMapping(modelType).Values.ToList();
+
+        /// <summary>
+        /// Creates a dictionary mapping property names to the <see cref="SearchField"/> objects corresponding to the properties of the type supplied.
+        /// </summary>
+        /// <param name="modelType">
+        /// The type for which fields will be created, based on its properties.
+        /// </param>
+        /// <returns>A collection of fields.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="modelType"/>.</exception>
+        /// <remarks>This overload is used to find the Key field of a SearchIndex so we can associate indexing failures with actions.</remarks>
+        internal IDictionary<string, SearchField> BuildMapping(Type modelType)
         {
             Argument.AssertNotNull(modelType, nameof(modelType));
 
@@ -101,7 +107,7 @@ namespace Azure.Search.Documents.Indexes
             throw FailOnNonObjectDataType();
         }
 
-        private static IList<SearchField> Build(
+        private static IDictionary<string, SearchField> Build(
             Type modelType,
             ObjectInfo info,
             IMemberNameConverter nameProvider,
@@ -131,7 +137,7 @@ namespace Azure.Search.Documents.Indexes
                     try
                     {
                         IList<SearchField> subFields =
-                            Build(underlyingClrType, info, nameProvider, processedTypes);
+                            Build(underlyingClrType, info, nameProvider, processedTypes).Values.ToList();
 
                         if (prop.SerializedName is null)
                         {
@@ -216,7 +222,10 @@ namespace Azure.Search.Documents.Indexes
                     onComplexDataType: CreateComplexField);
             }
 
-            return info.Properties.Select(BuildField).Where(field => field != null).ToList();
+            return info.Properties
+                .Select(prop => (prop.Name, BuildField(prop)))
+                .Where(pair => pair.Item2 != null)
+                .ToDictionary(pair => pair.Name, pair => pair.Item2);
         }
 
         private static IDataTypeInfo GetDataTypeInfo(Type propertyType, IMemberNameConverter nameProvider)
@@ -224,9 +233,13 @@ namespace Azure.Search.Documents.Indexes
             static bool IsNullableType(Type type) =>
                 type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 
-            if (s_primitiveTypeMap.TryGetValue(propertyType, out SearchFieldDataType SearchFieldDataType))
+            if (s_primitiveTypeMap.TryGetValue(propertyType, out SearchFieldDataType searchFieldDataType))
             {
-                return DataTypeInfo.Simple(SearchFieldDataType);
+                return DataTypeInfo.Simple(searchFieldDataType);
+            }
+            else if (SpatialProxyFactory.IsSupportedPoint(propertyType))
+            {
+                return DataTypeInfo.Simple(SearchFieldDataType.GeographyPoint);
             }
             else if (IsNullableType(propertyType))
             {
@@ -364,7 +377,12 @@ namespace Azure.Search.Documents.Indexes
             public static bool TryGet(Type type, IMemberNameConverter nameProvider, out ObjectInfo info)
             {
                 // Close approximation to Newtonsoft.Json.Serialization.DefaultContractResolver that was used in Microsoft.Azure.Search.
-                if (!type.IsPrimitive && !type.IsEnum && !s_unsupportedTypes.Contains(type) && !s_primitiveTypeMap.ContainsKey(type) && !typeof(IEnumerable).IsAssignableFrom(type))
+                if (!type.IsPrimitive &&
+                    !type.IsEnum &&
+                    !s_unsupportedTypes.Contains(type) &&
+                    !s_primitiveTypeMap.ContainsKey(type) &&
+                    !SpatialProxyFactory.IsSupportedPoint(type) &&
+                    !typeof(IEnumerable).IsAssignableFrom(type))
                 {
                     const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 

@@ -17,13 +17,22 @@ namespace Azure.Messaging.EventHubs
     public class EventProcessorClientOptions
     {
         /// <summary>The maximum amount of time to wait for an event to become available before emitting an <c>null</c> value.</summary>
-        private TimeSpan? _maximumWaitTime = null;
+        private TimeSpan? _maximumWaitTime;
 
         /// <summary>The event catch count to use when reading events.</summary>
         private int _cacheEventCount = 100;
 
         /// <summary>The prefetch count to use when reading events.</summary>
         private int _prefetchCount = 300;
+
+        /// <summary>The prefetch size limit to use for the partition receiver.</summary>
+        private long? _prefetchSizeInBytes;
+
+        /// <summary>The desired amount of time to allow between load balancing verification attempts.</summary>
+        private TimeSpan _loadBalancingUpdateInterval = TimeSpan.FromSeconds(10);
+
+        /// <summary>The desired amount of time to consider a partition owned by a specific event processor.</summary>
+        private TimeSpan _partitionOwnershipExpirationInterval = TimeSpan.FromSeconds(30);
 
         /// <summary>The set of options to use for configuring the connection to the Event Hubs service.</summary>
         private EventHubConnectionOptions _connectionOptions = new EventHubConnectionOptions();
@@ -114,9 +123,9 @@ namespace Azure.Messaging.EventHubs
         ///   improve throughput.  This comes at the cost of additional memory use and potentially increases network I/O.
         ///
         ///   For scenarios where the size of events is small and many events are flowing through the system, using a larger
-        ///   <see cref="CacheEventCount"/> and <see cref="PrefetchCount" /> may help improve throughput.  For scenarios where
+        ///   <see cref="CacheEventCount" /> and <see cref="PrefetchCount" /> may help improve throughput.  For scenarios where
         ///   the size of events is larger or when processing of events is expected to be a heavier and slower operation, using
-        ///   a smaller size <see cref="CacheEventCount"/> and <see cref="PrefetchCount"/> may help manage resource use without
+        ///   a smaller size <see cref="CacheEventCount" /> and <see cref="PrefetchCount" /> may help manage resource use without
         ///   incurring a non-trivial cost to throughput.
         ///
         ///   Regardless of the values, it is generally recommended that the <see cref="PrefetchCount" /> be at least 2-3
@@ -135,9 +144,9 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   The number of events that will be eagerly requested from the Event Hubs service and staged locally without regard to
-        ///   whether a reader is currently active, intended to help maximize throughput by buffering service operations rather than
-        ///   readers needing to wait for service operations to complete.
+        ///   The number of events that will be eagerly requested from the Event Hubs service and queued locally without regard to
+        ///   whether a read operation is currently active, intended to help maximize throughput by allowing events to be read from
+        ///   from a local cache rather than waiting on a service request.
         /// </summary>
         ///
         /// <value>
@@ -147,14 +156,14 @@ namespace Azure.Messaging.EventHubs
         /// </value>
         ///
         /// <remarks>
-        ///   The size of the prefetch count has an influence on the efficiency of reading events from the Event Hubs service.  The
-        ///   larger the size of the cache, the more efficiently service operations can be buffered in the background to
+        ///   The size of the prefetch count has an influence on the efficiency of reading events from the Event Hubs service.
+        ///   The larger the size of the cache, the more efficiently service operations can be buffered in the background to
         ///   improve throughput.  This comes at the cost of additional memory use and potentially increases network I/O.
         ///
         ///   For scenarios where the size of events is small and many events are flowing through the system, using a larger
-        ///   <see cref="CacheEventCount"/> and <see cref="PrefetchCount" /> may help improve throughput.  For scenarios where
+        ///   <see cref="CacheEventCount" /> and <see cref="PrefetchCount" /> may help improve throughput.  For scenarios where
         ///   the size of events is larger or when processing of events is expected to be a heavier and slower operation, using
-        ///   a smaller size <see cref="CacheEventCount"/> and <see cref="PrefetchCount"/> may help manage resource use without
+        ///   a smaller size <see cref="CacheEventCount" /> and <see cref="PrefetchCount" /> may help manage resource use without
         ///   incurring a non-trivial cost to throughput.
         ///
         ///   Regardless of the values, it is generally recommended that the <see cref="PrefetchCount" /> be at least 2-3
@@ -169,6 +178,87 @@ namespace Azure.Messaging.EventHubs
             {
                 Argument.AssertAtLeast(value, 0, nameof(PrefetchCount));
                 _prefetchCount = value;
+            }
+        }
+
+        /// <summary>
+        ///   The desired number of bytes to attempt to eagerly request from the Event Hubs service and queued locally without regard to
+        ///   whether a read operation is currently active, intended to help maximize throughput by allowing events to be read from
+        ///   from a local cache rather than waiting on a service request.
+        /// </summary>
+        ///
+        /// <value>
+        ///   <para>When set to <c>null</c>, the option is considered disabled; otherwise, it will be considered enabled and take
+        ///   precedence over any value specified for the <see cref="PrefetchCount" />The <see cref="PrefetchSizeInBytes" /> is an
+        ///   advanced control that developers can use to help tune performance in some scenarios; it is recommended to prefer using
+        ///   the <see cref="PrefetchCount" /> over this option where possible for more accurate control and more predictable throughput.</para>
+        ///
+        ///   <para>This size should be considered a statement of intent rather than a guaranteed limit; the local cache may be larger or
+        ///   smaller than the number of bytes specified, and will always contain at least one event when the <see cref="PrefetchSizeInBytes" />
+        ///   is specified.  A heuristic is used to predict the average event size to use for size calculations, which should be expected to fluctuate
+        ///   as traffic passes through the system.  Consequently, the resulting resource use will fluctuate as well.</para>
+        /// </value>
+        ///
+        public long? PrefetchSizeInBytes
+        {
+            get => _prefetchSizeInBytes;
+
+            set
+            {
+                if (value.HasValue)
+                {
+                    Argument.AssertAtLeast(value.Value, 0, nameof(PrefetchSizeInBytes));
+                }
+                _prefetchSizeInBytes = value;
+            }
+        }
+
+        /// <summary>
+        ///   The desired amount of time to allow between load balancing verification attempts.
+        /// </summary>
+        ///
+        /// <value>If not specified, a load balancing interval of 10 seconds will be assumed.</value>
+        ///
+        /// <remarks>
+        ///   Because load balancing holds less priority than processing events, this interval
+        ///   should be considered the minimum time that will elapse between verification attempts; operations
+        ///   with higher priority may cause a minor delay longer than this interval for load balancing.
+        /// </remarks>
+        ///
+        public TimeSpan LoadBalancingUpdateInterval
+        {
+            get => _loadBalancingUpdateInterval;
+
+            set
+            {
+                Argument.AssertNotNegative(value, nameof(LoadBalancingUpdateInterval));
+                _loadBalancingUpdateInterval = value;
+            }
+        }
+
+        /// <summary>
+        ///   The desired amount of time to consider a partition owned by a specific event processor
+        ///   instance before the ownership is considered stale and the partition becomes eligible to be
+        ///   requested by another event processor that wishes to assume responsibility for processing it.
+        /// </summary>
+        ///
+        /// <value>If not specified, an ownership interval of 30 seconds will be assumed.</value>
+        ///
+        /// <remarks>
+        ///   As a general guideline, it is advised that this value be greater than the configured
+        ///   <see cref="LoadBalancingUpdateInterval" /> by at least a factor of two. It is recommended that
+        ///   this be a factor of three or more, unless there are application scenarios that require more
+        ///   aggressive ownership expiration.
+        /// </remarks>
+        ///
+        public TimeSpan PartitionOwnershipExpirationInterval
+        {
+            get => _partitionOwnershipExpirationInterval;
+
+            set
+            {
+                Argument.AssertNotNegative(value, nameof(PartitionOwnershipExpirationInterval));
+                _partitionOwnershipExpirationInterval = value;
             }
         }
 
@@ -246,6 +336,9 @@ namespace Azure.Messaging.EventHubs
                 _maximumWaitTime = _maximumWaitTime,
                 _cacheEventCount = _cacheEventCount,
                 _prefetchCount = _prefetchCount,
+                _prefetchSizeInBytes = _prefetchSizeInBytes,
+                _loadBalancingUpdateInterval = _loadBalancingUpdateInterval,
+                _partitionOwnershipExpirationInterval = _partitionOwnershipExpirationInterval,
                 _connectionOptions = ConnectionOptions.Clone(),
                 _retryOptions = RetryOptions.Clone()
             };

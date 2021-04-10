@@ -37,17 +37,17 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         /// Initializes a new instance of the
         /// ResourceModelWithAllowedPropertySet class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts..</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="location">The geo-location where the resource
         /// lives</param>
-        /// <param name="managedBy">The  fully qualified resource ID of the
+        /// <param name="managedBy">The fully qualified resource ID of the
         /// resource that manages this resource. Indicates if this resource is
-        /// managed by another azure resource. If this is present, complete
+        /// managed by another Azure resource. If this is present, complete
         /// mode deployment will not delete the resource if it is removed from
         /// the template since it is managed by another resource.</param>
         /// <param name="kind">Metadata used by portal/tooling/etc to render
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets fully qualified resource Id for the resource. Ex -
+        /// Gets fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
         /// </summary>
         [JsonProperty(PropertyName = "id")]
@@ -97,9 +97,9 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts..
+        /// Gets the type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
@@ -111,9 +111,9 @@ namespace Microsoft.Azure.Management.MixedReality.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the  fully qualified resource ID of the resource that
+        /// Gets or sets the fully qualified resource ID of the resource that
         /// manages this resource. Indicates if this resource is managed by
-        /// another azure resource. If this is present, complete mode
+        /// another Azure resource. If this is present, complete mode
         /// deployment will not delete the resource if it is removed from the
         /// template since it is managed by another resource.
         /// </summary>

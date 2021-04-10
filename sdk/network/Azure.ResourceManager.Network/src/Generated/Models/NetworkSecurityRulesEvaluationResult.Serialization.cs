@@ -29,26 +29,51 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("protocolMatched"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     protocolMatched = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("sourceMatched"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sourceMatched = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("sourcePortMatched"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sourcePortMatched = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("destinationMatched"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     destinationMatched = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("destinationPortMatched"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     destinationPortMatched = property.Value.GetBoolean();
                     continue;
                 }

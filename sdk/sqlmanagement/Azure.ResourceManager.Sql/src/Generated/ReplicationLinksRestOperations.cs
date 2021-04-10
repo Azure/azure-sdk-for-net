@@ -160,6 +160,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(linkId, true);
             uri.AppendQuery("api-version", "2014-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -576,6 +577,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/replicationLinks", false);
             uri.AppendQuery("api-version", "2014-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

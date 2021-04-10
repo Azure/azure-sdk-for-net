@@ -19,30 +19,32 @@ namespace Microsoft.Azure.Management.Media
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Media", "AccountFilters", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "AssetFilters", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "Assets", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "ContentKeyPolicies", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "Jobs", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "LiveEvents", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "LiveOutputs", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "Locations", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "Mediaservices", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "Operations", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "StreamingEndpoints", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "StreamingLocators", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "StreamingPolicies", "2018-07-01"),
-                new Tuple<string, string, string>("Media", "Transforms", "2018-07-01"),
+                new Tuple<string, string, string>("Media", "AccountFilters", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "AssetFilters", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "Assets", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "ContentKeyPolicies", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "Jobs", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "LiveEvents", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "LiveOutputs", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "Locations", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "Mediaservices", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "Operations", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "PrivateEndpointConnections", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "PrivateLinkResources", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "StreamingEndpoints", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "StreamingLocators", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "StreamingPolicies", "2020-05-01"),
+                new Tuple<string, string, string>("Media", "Transforms", "2020-05-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mediaservices/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --opt-in-extensible-enums --csharp-sdks-folder=D:\\GitHub\\giakasRepros\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@1.9.1";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/mediaservices/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --opt-in-extensible-enums --tag=package-2020-05 --csharp-sdks-folder=D:\\GitHub\\giakasRepros\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "48960215c4923808168e134563f726851b0f5128";
+      public static readonly String GithubCommidId = "9b54876963319fc1fd4e575ccff3ab95458d2625";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

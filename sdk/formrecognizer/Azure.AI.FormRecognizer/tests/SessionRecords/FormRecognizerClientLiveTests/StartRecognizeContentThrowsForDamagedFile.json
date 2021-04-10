@@ -1,42 +1,40 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/layout/analyze",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/layout/analyze",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Content-Length": "7",
         "Content-Type": "application/pdf",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-90ccfdadc52701449c8aef30afaab4b2-cbdfe4b50f7ca940-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "0fb03036fadf754c1d42beff29fab014",
+        "traceparent": "00-fb532f0f6bd47f4b9ab66995647dde87-8aa3602b537f2a42-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210322.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "4f12a39c2e25754c898fc0118dad94f6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": "JVBERlVVVQ==",
       "StatusCode": 400,
       "ResponseHeaders": {
-        "apim-request-id": "89d72a5b-9830-4870-acd0-2b16f65a9311",
+        "apim-request-id": "9c5fad3d-dea2-4593-adaa-2d46d486f7d3",
+        "Content-Length": "270",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:13:56 GMT",
+        "Date": "Tue, 23 Mar 2021 00:43:59 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "3"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "98"
       },
       "ResponseBody": {
         "error": {
           "code": "InvalidImage",
-          "message": "The input data is not a valid image or password protected."
+          "message": "The file submitted couldn\u0027t be parsed. This can be due to one of the following reasons: the file format is not supported ( Supported formats include JPEG, PNG, BMP, PDF and TIFF), the file is corrupted or password protected."
         }
       }
     }
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
-    "RandomSeed": "800865840"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "RandomSeed": "1402749806"
   }
 }

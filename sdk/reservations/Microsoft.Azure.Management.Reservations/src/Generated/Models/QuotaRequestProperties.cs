@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         /// <param name="provisioningState">The quota request status.</param>
         /// <param name="message">User friendly status message.</param>
-        /// <param name="requestSubmitTime">The quota request submit time. The
-        /// date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as
-        /// specified by the ISO 8601 standard.</param>
+        /// <param name="requestSubmitTime">The time when the quota request was
+        /// submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the
+        /// ISO 8601 standard.</param>
         /// <param name="value">The quotaRequests.</param>
         public QuotaRequestProperties(object provisioningState = default(object), string message = default(string), System.DateTime? requestSubmitTime = default(System.DateTime?), IList<SubRequest> value = default(IList<SubRequest>))
         {
@@ -64,9 +64,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string Message { get; private set; }
 
         /// <summary>
-        /// Gets the quota request submit time. The date conforms to the
-        /// following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601
-        /// standard.
+        /// Gets the time when the quota request was submitted using format:
+        /// yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard.
         /// </summary>
         [JsonProperty(PropertyName = "requestSubmitTime")]
         public System.DateTime? RequestSubmitTime { get; private set; }

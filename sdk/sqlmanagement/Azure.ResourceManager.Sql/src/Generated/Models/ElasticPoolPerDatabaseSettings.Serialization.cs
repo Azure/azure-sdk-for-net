@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("minCapacity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minCapacity = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("maxCapacity"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxCapacity = property.Value.GetDouble();
                     continue;
                 }

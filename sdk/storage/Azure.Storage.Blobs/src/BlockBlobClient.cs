@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs.Specialized
     /// The maximum size of a block blob is therefore approximately 190.73 TiB
     /// (4,000 MB X 50,000 blocks).  If you are writing a block blob that is
     /// no more than 5,000 MB in size, you can upload it in its entirety with a
-    /// single write operation; see <see cref="BlockBlobClient.UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>.
+    /// single write operation; see <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>.
     ///
     /// When you upload a block to a blob in your storage account, it is
     /// associated with the specified block blob, but it does not become part
@@ -93,7 +93,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlockBlobMaxUploadBlobLongBytes"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual int BlockBlobMaxUploadBlobBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+        public virtual int BlockBlobMaxUploadBlobBytes => ClientConfiguration.Version < BlobClientOptions.ServiceVersion.V2019_12_12
             ? Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes
             : int.MaxValue; // value is larger than can be represented by an int
 
@@ -101,7 +101,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>.
         /// </summary>
-        public virtual long BlockBlobMaxUploadBlobLongBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+        public virtual long BlockBlobMaxUploadBlobLongBytes => ClientConfiguration.Version < BlobClientOptions.ServiceVersion.V2019_12_12
             ? Constants.Blob.Block.Pre_2019_12_12_MaxUploadBytes
             : Constants.Blob.Block.MaxUploadBytes;
 
@@ -112,7 +112,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// <see cref="BlockBlobMaxStageBlockLongBytes"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual int BlockBlobMaxStageBlockBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+        public virtual int BlockBlobMaxStageBlockBytes => ClientConfiguration.Version < BlobClientOptions.ServiceVersion.V2019_12_12
             ? Constants.Blob.Block.Pre_2019_12_12_MaxStageBytes
             : int.MaxValue; // value is larger than can be represented by an int
 
@@ -120,7 +120,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Gets the maximum number of bytes that can be sent in a call
         /// to <see cref="StageBlockAsync"/>.
         /// </summary>
-        public virtual long BlockBlobMaxStageBlockLongBytes => Version < BlobClientOptions.ServiceVersion.V2019_12_12
+        public virtual long BlockBlobMaxStageBlockLongBytes => ClientConfiguration.Version < BlobClientOptions.ServiceVersion.V2019_12_12
             ? Constants.Blob.Block.Pre_2019_12_12_MaxStageBytes
             : Constants.Blob.Block.MaxStageBytes;
 
@@ -128,6 +128,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// Gets the maximum number of blocks allowed in a block blob.
         /// </summary>
         public virtual int BlockBlobMaxBlocks => Constants.Blob.Block.MaxBlocks;
+
+        /// <summary>
+        /// BlockBlobRestClient.
+        /// </summary>
+        private readonly BlockBlobRestClient _blockBlobRestClient;
+
+        /// <summary>
+        /// BlockBlobRestClient.
+        /// </summary>
+        internal virtual BlockBlobRestClient BlockBlobRestClient => _blockBlobRestClient;
 
         #region ctors
         /// <summary>
@@ -160,6 +170,10 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(string connectionString, string containerName, string blobName)
             : base(connectionString, containerName, blobName)
         {
+            _blockBlobRestClient = BuildBlockBlobRestClient(
+                connectionString,
+                containerName,
+                blobName);
         }
 
         /// <summary>
@@ -189,6 +203,10 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(string connectionString, string blobContainerName, string blobName, BlobClientOptions options)
             : base(connectionString, blobContainerName, blobName, options)
         {
+            _blockBlobRestClient = BuildBlockBlobRestClient(
+                connectionString,
+                blobContainerName,
+                blobName);
             AssertNoClientSideEncryption(options);
         }
 
@@ -209,6 +227,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(Uri blobUri, BlobClientOptions options = default)
             : base(blobUri, options)
         {
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -232,6 +251,35 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
+            AssertNoClientSideEncryption(options);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBlobClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="blobUri">
+        /// A <see cref="Uri"/> referencing the blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// Must not contain shared access signature, which should be passed in the second parameter.
+        /// </param>
+        /// <param name="credential">
+        /// The shared access signature credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <remarks>
+        /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
+        /// </remarks>
+        public BlockBlobClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
+            : base(blobUri, credential, options)
+        {
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -255,6 +303,7 @@ namespace Azure.Storage.Blobs.Specialized
         public BlockBlobClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
             : base(blobUri, credential, options)
         {
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
             AssertNoClientSideEncryption(options);
         }
 
@@ -267,31 +316,18 @@ namespace Azure.Storage.Blobs.Specialized
         /// name of the account, the name of the container, and the name of
         /// the blob.
         /// </param>
-        /// <param name="pipeline">
-        /// The transport pipeline used to send every request.
+        /// <param name="clientConfiguration">
+        /// <see cref="BlobClientConfiguration"/>.
         /// </param>
-        /// <param name="version">
-        /// The version of the service to use when sending requests.
-        /// </param>
-        /// <param name="clientDiagnostics">Client diagnostics.</param>
-        /// <param name="customerProvidedKey">Customer provided key.</param>
-        /// <param name="encryptionScope">Encryption scope.</param>
         internal BlockBlobClient(
             Uri blobUri,
-            HttpPipeline pipeline,
-            BlobClientOptions.ServiceVersion version,
-            ClientDiagnostics clientDiagnostics,
-            CustomerProvidedKey? customerProvidedKey,
-            string encryptionScope)
+            BlobClientConfiguration clientConfiguration)
             : base(
                   blobUri,
-                  pipeline,
-                  version,
-                  clientDiagnostics,
-                  customerProvidedKey,
-                  clientSideEncryption: default,
-                  encryptionScope)
+                  clientConfiguration,
+                  clientSideEncryption: default)
         {
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
         }
 
         /// <summary>
@@ -316,7 +352,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// </returns>
         protected static BlockBlobClient CreateClient(Uri blobUri, BlobClientOptions options, HttpPipeline pipeline)
         {
-            return new BlockBlobClient(blobUri, pipeline, options.Version, new ClientDiagnostics(options), null, null);
+            return new BlockBlobClient(
+                blobUri,
+                new BlobClientConfiguration(
+                    pipeline,
+                    null,
+                    new ClientDiagnostics(options),
+                    options.Version,
+                    null,
+                    null));
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
@@ -325,6 +369,38 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
             }
+        }
+
+        private BlockBlobRestClient BuildBlockBlobRestClient(
+            string connectionString,
+            string blobContainerName,
+            string blobName)
+        {
+            StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(conn.BlobEndpoint)
+            {
+                BlobContainerName = blobContainerName,
+                BlobName = blobName
+            };
+            return BuildBlockBlobRestClient(uriBuilder);
+        }
+
+        private BlockBlobRestClient BuildBlockBlobRestClient(Uri uri)
+            => BuildBlockBlobRestClient(new BlobUriBuilder(uri));
+
+        private BlockBlobRestClient BuildBlockBlobRestClient(BlobUriBuilder uriBuilder)
+        {
+            string containerName = uriBuilder.BlobContainerName;
+            string blobName = uriBuilder.BlobName;
+            uriBuilder.BlobContainerName = null;
+            uriBuilder.BlobName = null;
+            return new BlockBlobRestClient(
+                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
+                pipeline: _clientConfiguration.Pipeline,
+                url: uriBuilder.ToUri().ToString(),
+                containerName: containerName,
+                blob: blobName.EscapePath(),
+                version: _clientConfiguration.Version.ToVersionString());
         }
         #endregion ctors
 
@@ -360,7 +436,7 @@ namespace Azure.Storage.Blobs.Specialized
         public new BlockBlobClient WithVersion(string versionId)
         {
             var builder = new BlobUriBuilder(Uri) { VersionId = versionId };
-            return new BlockBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new BlockBlobClient(builder.ToUri(), ClientConfiguration);
         }
 
         /// <summary>
@@ -374,7 +450,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             var builder = new BlobUriBuilder(Uri) { Snapshot = snapshot };
 
-            return new BlockBlobClient(builder.ToUri(), Pipeline, Version, ClientDiagnostics, CustomerProvidedKey, EncryptionScope);
+            return new BlockBlobClient(builder.ToUri(), ClientConfiguration);
         }
 
         ///// <summary>
@@ -396,8 +472,13 @@ namespace Azure.Storage.Blobs.Specialized
         #region Upload
         /// <summary>
         /// The <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>
-        /// operation creates a new block  blob,  or updates the content of an existing block blob.
-        /// Updating an existing block blob overwrites any existing metadata on the blob.
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// Partial updates are not supported with <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
@@ -446,8 +527,13 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>
-        /// operation creates a new block  blob,  or updates the content of an existing block blob.
-        /// Updating an existing block blob overwrites any existing metadata on the blob.
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobUploadOptions.Conditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// Partial updates are not supported with <see cref="UploadAsync(Stream, BlobUploadOptions, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
@@ -497,8 +583,13 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>
-        /// operation creates a new block  blob, or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// Partial updates are not supported with <see cref="Upload(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
@@ -567,8 +658,13 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>
-        /// operation creates a new block  blob, or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// Partial updates are not supported with <see cref="UploadAsync(Stream, BlobHttpHeaders, Metadata, BlobRequestConditions, AccessTier?, IProgress{long}, CancellationToken)"/>;
         /// the content of the existing blob is overwritten with the content
@@ -636,9 +732,14 @@ namespace Azure.Storage.Blobs.Specialized
                 cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="UploadInternal"/> operation creates a new block blob,
-        /// or updates the content of an existing block blob.  Updating an
-        /// existing block blob overwrites any existing metadata on the blob.
+        /// The <see cref="UploadInternal"/>
+        /// operation overwrites the contents of the blob, creating a new block
+        /// blob if none exists.  Overwriting an existing block blob replaces
+        /// any existing metadata on the blob.
+        ///
+        /// Set <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations">
+        /// access conditions</see> through <see cref="BlobRequestConditions"/>
+        /// to avoid overwriting existing data.
         ///
         /// Partial updates are not supported with <see cref="UploadInternal"/>;
         /// the content of the existing blob is overwritten with the content
@@ -706,9 +807,10 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             content = content?.WithNoDispose().WithProgress(progressHandler);
-            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
@@ -716,45 +818,79 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(conditions)}: {conditions}");
                 try
                 {
-                    return await BlobRestClient.BlockBlob.UploadAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        body: content,
-                        contentLength: content?.Length ?? 0,
-                        version: Version.ToVersionString(),
-                        blobContentType: blobHttpHeaders?.ContentType,
-                        blobContentEncoding: blobHttpHeaders?.ContentEncoding,
-                        blobContentLanguage: blobHttpHeaders?.ContentLanguage,
-                        blobContentHash: blobHttpHeaders?.ContentHash,
-                        blobCacheControl: blobHttpHeaders?.CacheControl,
-                        metadata: metadata,
-                        leaseId: conditions?.LeaseId,
-                        blobContentDisposition: blobHttpHeaders?.ContentDisposition,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        tier: accessTier,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        blobTagsString: tags?.ToTagsString(),
-                        async: async,
-                        operationName: operationName ?? $"{nameof(BlockBlobClient)}.{nameof(Upload)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    Errors.VerifyStreamPosition(content, nameof(content));
+
+                    ResponseWithHeaders<BlockBlobUploadHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlockBlobRestClient.UploadAsync(
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            body: content,
+                            blobContentType: blobHttpHeaders?.ContentType,
+                            blobContentEncoding: blobHttpHeaders?.ContentEncoding,
+                            blobContentLanguage: blobHttpHeaders?.ContentLanguage,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
+                            blobCacheControl: blobHttpHeaders?.CacheControl,
+                            metadata: metadata,
+                            leaseId: conditions?.LeaseId,
+                            blobContentDisposition: blobHttpHeaders?.ContentDisposition,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            tier: accessTier,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            blobTagsString: tags?.ToTagsString(),
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlockBlobRestClient.Upload(
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            body: content,
+                            blobContentType: blobHttpHeaders?.ContentType,
+                            blobContentEncoding: blobHttpHeaders?.ContentEncoding,
+                            blobContentLanguage: blobHttpHeaders?.ContentLanguage,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
+                            blobCacheControl: blobHttpHeaders?.CacheControl,
+                            metadata: metadata,
+                            leaseId: conditions?.LeaseId,
+                            blobContentDisposition: blobHttpHeaders?.ContentDisposition,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            tier: accessTier,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            blobTagsString: tags?.ToTagsString(),
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobContentInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -957,43 +1093,70 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(base64BlockId)}: {base64BlockId}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(StageBlock)}");
+
                 try
                 {
+                    scope.Start();
+
+                    Errors.VerifyStreamPosition(content, nameof(content));
                     content = content.WithNoDispose().WithProgress(progressHandler);
-                    return await BlobRestClient.BlockBlob.StageBlockAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        blockId: base64BlockId,
-                        body: content,
-                        contentLength: content.Length,
-                        version: Version.ToVersionString(),
-                        transactionalContentHash: transactionalContentHash,
-                        leaseId: conditions?.LeaseId,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        async: async,
-                        operationName: $"{nameof(BlockBlobClient)}.{nameof(StageBlock)}",
-                        cancellationToken: cancellationToken).ConfigureAwait(false);
+
+                    ResponseWithHeaders<BlockBlobStageBlockHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlockBlobRestClient.StageBlockAsync(
+                            blockId: base64BlockId,
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            body: content,
+                            transactionalContentMD5: transactionalContentHash,
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlockBlobRestClient.StageBlock(
+                            blockId: base64BlockId,
+                            contentLength: (content?.Length - content?.Position) ?? 0,
+                            body: content,
+                            transactionalContentMD5: transactionalContentHash,
+                            leaseId: conditions?.LeaseId,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlockInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1231,49 +1394,77 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(base64BlockId)}: {base64BlockId}\n" +
                     $"{nameof(sourceUri)}: {sourceUri}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(StageBlockFromUri)}");
+
                 try
                 {
-                    return await BlobRestClient.BlockBlob.StageBlockFromUriAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        contentLength: default,
-                        blockId: base64BlockId,
-                        sourceUri: sourceUri,
-                        version: Version.ToVersionString(),
-                        sourceRange: sourceRange.ToString(),
-                        sourceContentHash: sourceContentHash,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        leaseId: conditions?.LeaseId,
-                        sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
-                        sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
-                        sourceIfMatch: sourceConditions?.IfMatch,
-                        sourceIfNoneMatch: sourceConditions?.IfNoneMatch,
-                        async: async,
-                        operationName: $"{nameof(BlockBlobClient)}.{nameof(StageBlockFromUri)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlockBlobRestClient.StageBlockFromURLAsync(
+                            blockId: base64BlockId,
+                            contentLength: 0,
+                            sourceUrl: sourceUri.AbsoluteUri,
+                            sourceRange: sourceRange.ToString(),
+                            sourceContentMD5: sourceContentHash,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            leaseId: conditions?.LeaseId,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlockBlobRestClient.StageBlockFromURL(
+                            blockId: base64BlockId,
+                            contentLength: 0,
+                            sourceUrl: sourceUri.AbsoluteUri,
+                            sourceRange: sourceRange.ToString(),
+                            sourceContentMD5: sourceContentHash,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            leaseId: conditions?.LeaseId,
+                            sourceIfModifiedSince: sourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: sourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
+                            sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlockInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1600,56 +1791,91 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(base64BlockIds)}: {base64BlockIds}\n" +
                     $"{nameof(blobHttpHeaders)}: {blobHttpHeaders}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(CommitBlockList)}");
+
                 try
                 {
-                    var blocks = new BlockLookupList() { Latest = base64BlockIds.ToList() };
-                    return await BlobRestClient.BlockBlob.CommitBlockListAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        blocks,
-                        version: Version.ToVersionString(),
-                        blobCacheControl: blobHttpHeaders?.CacheControl,
-                        blobContentType: blobHttpHeaders?.ContentType,
-                        blobContentEncoding: blobHttpHeaders?.ContentEncoding,
-                        blobContentLanguage: blobHttpHeaders?.ContentLanguage,
-                        blobContentHash: blobHttpHeaders?.ContentHash,
-                        metadata: metadata,
-                        leaseId: conditions?.LeaseId,
-                        blobContentDisposition: blobHttpHeaders?.ContentDisposition,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        encryptionScope: EncryptionScope,
-                        tier: accessTier,
-                        ifModifiedSince: conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                        ifMatch: conditions?.IfMatch,
-                        ifNoneMatch: conditions?.IfNoneMatch,
-                        ifTags: conditions?.TagConditions,
-                        blobTagsString: tags?.ToTagsString(),
-                        async: async,
-                        operationName: $"{nameof(BlockBlobClient)}.{nameof(CommitBlockList)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+                    scope.Start();
+                    BlockLookupList blocks = new BlockLookupList() { Latest = base64BlockIds.ToList() };
+
+                    ResponseWithHeaders<BlockBlobCommitBlockListHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlockBlobRestClient.CommitBlockListAsync(
+                            blocks: blocks,
+                            blobCacheControl: blobHttpHeaders?.CacheControl,
+                            blobContentType: blobHttpHeaders?.ContentType,
+                            blobContentEncoding: blobHttpHeaders?.ContentEncoding,
+                            blobContentLanguage: blobHttpHeaders?.ContentLanguage,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
+                            metadata: metadata,
+                            leaseId: conditions?.LeaseId,
+                            blobContentDisposition: blobHttpHeaders?.ContentDisposition,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            tier: accessTier,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            blobTagsString: tags?.ToTagsString(),
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlockBlobRestClient.CommitBlockList(
+                            blocks: blocks,
+                            blobCacheControl: blobHttpHeaders?.CacheControl,
+                            blobContentType: blobHttpHeaders?.ContentType,
+                            blobContentEncoding: blobHttpHeaders?.ContentEncoding,
+                            blobContentLanguage: blobHttpHeaders?.ContentLanguage,
+                            blobContentMD5: blobHttpHeaders?.ContentHash,
+                            metadata: metadata,
+                            leaseId: conditions?.LeaseId,
+                            blobContentDisposition: blobHttpHeaders?.ContentDisposition,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            tier: accessTier,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                            ifTags: conditions?.TagConditions,
+                            blobTagsString: tags?.ToTagsString(),
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobContentInfo(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1806,40 +2032,57 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                Pipeline.LogMethodEnter(
+                ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlockBlobClient),
                     message:
                     $"{nameof(Uri)}: {Uri}\n" +
                     $"{nameof(blockListTypes)}: {blockListTypes}\n" +
                     $"{nameof(snapshot)}: {snapshot}\n" +
                     $"{nameof(conditions)}: {conditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(GetBlockList)}");
+
                 try
                 {
-                    return (await BlobRestClient.BlockBlob.GetBlockListAsync(
-                        ClientDiagnostics,
-                        Pipeline,
-                        Uri,
-                        listType: blockListTypes.ToBlockListType(),
-                        version: Version.ToVersionString(),
-                        snapshot: snapshot,
-                        leaseId: conditions?.LeaseId,
-                        ifTags: conditions?.TagConditions,
-                        async: async,
-                        operationName: $"{nameof(BlockBlobClient)}.{nameof(GetBlockList)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false))
-                        .ToBlockList();
+                    scope.Start();
+                    ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlockBlobRestClient.GetBlockListAsync(
+                            listType: blockListTypes.ToBlockListType(),
+                            snapshot: snapshot,
+                            leaseId: conditions?.LeaseId,
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlockBlobRestClient.GetBlockList(
+                            listType: blockListTypes.ToBlockListType(),
+                            snapshot: snapshot,
+                            leaseId: conditions?.LeaseId,
+                            ifTags: conditions?.TagConditions,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlockList(),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -1952,53 +2195,74 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            using (Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
             {
-                Pipeline.LogMethodEnter(nameof(BlockBlobClient), message: $"{nameof(Uri)}: {Uri}");
+                ClientConfiguration.Pipeline.LogMethodEnter(nameof(BlockBlobClient), message: $"{nameof(Uri)}: {Uri}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(Query)}");
 
                 try
                 {
+                    scope.Start();
+
                     QueryRequest queryRequest = new QueryRequest()
                     {
                         QueryType = Constants.QuickQuery.SqlQueryType,
                         Expression = querySqlExpression,
-                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(),
-                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization()
+                        InputSerialization = options?.InputTextConfiguration.ToQuickQuerySerialization(isInput: true),
+                        OutputSerialization = options?.OutputTextConfiguration.ToQuickQuerySerialization(isInput: false)
                     };
-                    (Response<BlobQueryResult> result, Stream stream) = await BlobRestClient.Blob.QueryAsync(
-                        clientDiagnostics: ClientDiagnostics,
-                        pipeline: Pipeline,
-                        resourceUri: Uri,
-                        version: Version.ToVersionString(),
-                        queryRequest: queryRequest,
-                        leaseId: options?.Conditions?.LeaseId,
-                        encryptionKey: CustomerProvidedKey?.EncryptionKey,
-                        encryptionKeySha256: CustomerProvidedKey?.EncryptionKeyHash,
-                        encryptionAlgorithm: CustomerProvidedKey?.EncryptionAlgorithm,
-                        ifModifiedSince: options?.Conditions?.IfModifiedSince,
-                        ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
-                        ifMatch: options?.Conditions?.IfMatch,
-                        ifNoneMatch: options?.Conditions?.IfNoneMatch,
-                        ifTags: options?.Conditions?.TagConditions,
-                        async: async,
-                        operationName: $"{nameof(BlockBlobClient)}.{nameof(Query)}",
-                        cancellationToken: cancellationToken)
-                        .ConfigureAwait(false);
+
+                    ResponseWithHeaders<Stream, BlobQueryHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlobRestClient.QueryAsync(
+                            leaseId: options?.Conditions?.LeaseId,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                            ifTags: options?.Conditions?.TagConditions,
+                            queryRequest: queryRequest,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlobRestClient.Query(
+                            leaseId: options?.Conditions?.LeaseId,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                            ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                            ifTags: options?.Conditions?.TagConditions,
+                            queryRequest: queryRequest,
+                            cancellationToken: cancellationToken);
+                    }
 
                     Action<BlobQueryError> errorHandler = options?._errorHandler;
-                    Stream parsedStream = new BlobQuickQueryStream(stream, options?.ProgressHandler, errorHandler);
-                    result.Value.Body = parsedStream;
-
-                    return Response.FromValue(result.Value.ToBlobDownloadInfo(), result.GetRawResponse());
+                    Stream parsedStream = new BlobQuickQueryStream(response.Value, options?.ProgressHandler, errorHandler);
+                    return Response.FromValue(
+                        BlobExtensions.ToBlobDownloadInfo(response, parsedStream),
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {
-                    Pipeline.LogException(ex);
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
                     throw;
                 }
                 finally
                 {
-                    Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
                 }
             }
         }
@@ -2102,7 +2366,8 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
-            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}");
+            string operationName = $"{nameof(BlockBlobClient)}.{nameof(OpenWrite)}";
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
             try
             {
@@ -2118,13 +2383,13 @@ namespace Azure.Storage.Blobs.Specialized
                 // Create Block Blob
                 Response<BlobContentInfo> response = await UploadInternal(
                     content: new MemoryStream(Array.Empty<byte>()),
-                    blobHttpHeaders: default,
-                    metadata: default,
-                    tags: default,
+                    blobHttpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    tags: options?.Tags,
                     conditions: options?.OpenConditions,
                     accessTier: default,
                     progressHandler: default,
-                    operationName: default,
+                    operationName: operationName,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2140,7 +2405,10 @@ namespace Azure.Storage.Blobs.Specialized
                     bufferSize: options?.BufferSize ?? Constants.DefaultBufferSize,
                     position: position,
                     conditions: conditions,
-                    progressHandler: options?.ProgressHandler);
+                    progressHandler: options?.ProgressHandler,
+                    blobHttpHeaders: options?.HttpHeaders,
+                    metadata: options?.Metadata,
+                    tags: options?.Tags);
             }
             catch (Exception ex)
             {
@@ -2153,6 +2421,324 @@ namespace Azure.Storage.Blobs.Specialized
             }
         }
         #endregion OpenWrite
+
+        #region SyncUploadFromUri
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite the existing blob.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> SyncUploadFromUri(
+            Uri copySource,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default)
+            => SyncUploadFromUriInternal(
+                copySource,
+                overwrite ? null : new BlobSyncUploadFromUriOptions{ DestinationConditions = new BlobRequestConditions
+                    { IfNoneMatch = new ETag(Constants.Wildcard) } },
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="overwrite">
+        /// Whether the upload should overwrite the existing blob.  The
+        /// default value is false.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
+            Uri copySource,
+            bool overwrite = false,
+            CancellationToken cancellationToken = default)
+            => await SyncUploadFromUriInternal(
+                copySource,
+                overwrite ? null : new BlobSyncUploadFromUriOptions { DestinationConditions = new BlobRequestConditions
+                    { IfNoneMatch = new ETag(Constants.Wildcard) } },
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<BlobContentInfo> SyncUploadFromUri(
+            Uri copySource,
+            BlobSyncUploadFromUriOptions options,
+            CancellationToken cancellationToken = default)
+            => SyncUploadFromUriInternal(
+                copySource,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriAsync(
+            Uri copySource,
+            BlobSyncUploadFromUriOptions options,
+            CancellationToken cancellationToken = default)
+            => await SyncUploadFromUriInternal(
+                copySource,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The Upload from Uri operation creates a new Block Blob where the contents of the
+        /// blob are read from a given URL.  This API is supported beginning with the 2020-04-08 version.
+        ///
+        /// Partial updates are not supported with Put Blob from URL; the content of an existing blob is
+        /// overwritten with the content of the new blob.  To perform partial updates to a block blob’s
+        /// contents using a source URL, use the Put Block from URL API in conjunction with Put Block List.
+        /// </summary>
+        /// <param name="copySource">
+        /// Required.  Specifies the URL of the source blob.  The source blob may be of any type,
+        /// including a block blob, append blob, or page blob.  The value may be a URL of up to 2
+        /// KiB in length that specifies a blob.  The value should be URL-encoded as it would appear
+        /// in a request URI.  The source blob must either be public or must be authorized via a
+        /// shared access signature.  If the source blob is public, no authorization is required
+        /// to perform the operation.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        internal virtual async Task<Response<BlobContentInfo>> SyncUploadFromUriInternal(
+            Uri copySource,
+            BlobSyncUploadFromUriOptions options,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlockBlobClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlockBlobClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(options.HttpHeaders)}: {options?.HttpHeaders}\n" +
+                    $"{nameof(options.DestinationConditions)}: {options?.DestinationConditions}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlockBlobClient)}.{nameof(SyncUploadFromUri)}");
+
+                try
+                {
+                    scope.Start();
+                    ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response;
+
+                    if (async)
+                    {
+                        response = await BlockBlobRestClient.PutBlobFromUrlAsync(
+                            contentLength: 0,
+                            copySource: copySource.AbsoluteUri,
+                            blobContentType: options?.HttpHeaders?.ContentType,
+                            blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
+                            blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
+                            blobContentMD5: options?.HttpHeaders?.ContentHash,
+                            blobCacheControl: options?.HttpHeaders?.CacheControl,
+                            // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
+                            // metadata: options?.Metadata,
+                            leaseId: options?.DestinationConditions?.LeaseId,
+                            blobContentDisposition: options?.HttpHeaders?.ContentDisposition,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            tier: options?.AccessTier,
+                            ifModifiedSince: options?.DestinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.DestinationConditions?.IfUnmodifiedSince,
+                            ifMatch: options?.DestinationConditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.DestinationConditions?.IfNoneMatch?.ToString(),
+                            ifTags: options?.DestinationConditions?.TagConditions,
+                            sourceIfModifiedSince: options?.SourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: options?.SourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: options?.SourceConditions?.IfMatch?.ToString(),
+                            sourceIfNoneMatch: options?.SourceConditions?.IfNoneMatch?.ToString(),
+                            sourceIfTags: options?.SourceConditions?.TagConditions,
+                            sourceContentMD5: options?.ContentHash,
+                            blobTagsString: options?.Tags?.ToTagsString(),
+                            copySourceBlobProperties: options?.CopySourceBlobProperties,
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = BlockBlobRestClient.PutBlobFromUrl(
+                            contentLength: 0,
+                            copySource: copySource.AbsoluteUri,
+                            blobContentType: options?.HttpHeaders?.ContentType,
+                            blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
+                            blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
+                            blobContentMD5: options?.HttpHeaders?.ContentHash,
+                            blobCacheControl: options?.HttpHeaders?.CacheControl,
+                            // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
+                            // metadata: options?.Metadata,
+                            leaseId: options?.DestinationConditions?.LeaseId,
+                            blobContentDisposition: options?.HttpHeaders?.ContentDisposition,
+                            encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
+                            encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
+                            encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            encryptionScope: ClientConfiguration.EncryptionScope,
+                            tier: options?.AccessTier,
+                            ifModifiedSince: options?.DestinationConditions?.IfModifiedSince,
+                            ifUnmodifiedSince: options?.DestinationConditions?.IfUnmodifiedSince,
+                            ifMatch: options?.DestinationConditions?.IfMatch?.ToString(),
+                            ifNoneMatch: options?.DestinationConditions?.IfNoneMatch?.ToString(),
+                            ifTags: options?.DestinationConditions?.TagConditions,
+                            sourceIfModifiedSince: options?.SourceConditions?.IfModifiedSince,
+                            sourceIfUnmodifiedSince: options?.SourceConditions?.IfUnmodifiedSince,
+                            sourceIfMatch: options?.SourceConditions?.IfMatch?.ToString(),
+                            sourceIfNoneMatch: options?.SourceConditions?.IfNoneMatch?.ToString(),
+                            sourceIfTags: options?.SourceConditions?.TagConditions,
+                            sourceContentMD5: options?.ContentHash,
+                            blobTagsString: options?.Tags?.ToTagsString(),
+                            copySourceBlobProperties: options?.CopySourceBlobProperties,
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.ToBlobContentInfo(),
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlockBlobClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion UploadFromUri
 
         #region PartitionedUploader
         internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
@@ -2172,36 +2758,36 @@ namespace Azure.Storage.Blobs.Specialized
                 SingleUpload = async (stream, args, progressHandler, operationName, async, cancellationToken)
                     => await client.UploadInternal(
                         stream,
-                        args.HttpHeaders,
-                        args.Metadata,
-                        args.Tags,
-                        args.Conditions,
-                        args.AccessTier,
+                        args?.HttpHeaders,
+                        args?.Metadata,
+                        args?.Tags,
+                        args?.Conditions,
+                        args?.AccessTier,
                         progressHandler,
                         operationName,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 UploadPartition = async (stream, offset, args, progressHandler, async, cancellationToken)
                     => await client.StageBlockInternal(
-                        StorageExtensions.GenerateBlockId(offset),
+                        Shared.StorageExtensions.GenerateBlockId(offset),
                         stream,
                         transactionalContentHash: default,
-                        args.Conditions,
+                        args?.Conditions,
                         progressHandler,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 CommitPartitionedUpload = async (partitions, args, async, cancellationToken)
                     => await client.CommitBlockListInternal(
-                        partitions.Select(partition => StorageExtensions.GenerateBlockId(partition.Offset)),
-                        args.HttpHeaders,
-                        args.Metadata,
-                        args.Tags,
-                        args.Conditions,
-                        args.AccessTier,
+                        partitions.Select(partition => Shared.StorageExtensions.GenerateBlockId(partition.Offset)),
+                        args?.HttpHeaders,
+                        args?.Metadata,
+                        args?.Tags,
+                        args?.Conditions,
+                        args?.AccessTier,
                         async,
                         cancellationToken).ConfigureAwait(false),
-                Scope = operationName => client.ClientDiagnostics.CreateScope(operationName
-                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(BlobClient.Upload)}")
+                Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName
+                    ?? $"{nameof(Azure)}.{nameof(Storage)}.{nameof(Blobs)}.{nameof(BlobClient)}.{nameof(Storage.Blobs.BlobClient.Upload)}")
             };
         }
         #endregion
@@ -2229,23 +2815,7 @@ namespace Azure.Storage.Blobs.Specialized
             this BlobContainerClient client,
             string blobName)
         {
-            if (client.ClientSideEncryption != default)
-            {
-                throw Errors.ClientSideEncryption.TypeNotSupported(typeof(BlockBlobClient));
-            }
-
-            BlobUriBuilder blobUriBuilder = new BlobUriBuilder(client.Uri)
-            {
-                BlobName = blobName
-            };
-
-            return new BlockBlobClient(
-                blobUriBuilder.ToUri(),
-                client.Pipeline,
-                client.Version,
-                client.ClientDiagnostics,
-                client.CustomerProvidedKey,
-                client.EncryptionScope);
+            return client.GetBlockBlobClientCore(blobName);
         }
     }
 }

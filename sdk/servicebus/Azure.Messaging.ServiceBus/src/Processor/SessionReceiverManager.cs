@@ -11,65 +11,53 @@ using Azure.Messaging.ServiceBus.Plugins;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Represents a thread-safe abstraction around a single session receiver that threads
-    /// spawned by the ServiceBusProcessor use to receive and process messages. Depending on how the
-    /// MaxConcurrentCalls and SessionIds options are configured, there may be multiple threads using the same
-    /// SessionReceiverManager (i.e. if MaxConcurrentCalls is greater than the number of specified sessions).
-    /// The manager will delegate to the user provided callbacks and handle automatic locking of sessions.
-    /// The receiver instance will only be closed when no other threads are using it, or when the user has
-    /// called StopProcessingAsync.
+    /// Represents a thread-safe abstraction around a single session receiver that threads spawned
+    /// by the <see cref="ServiceBusSessionProcessor"/> use to receive and process messages.
+    /// If <see cref="ServiceBusSessionProcessor.MaxConcurrentCallsPerSession"/> > 1, there may be
+    /// multiple threads using the same <see cref="SessionReceiverManager"/>. The manager will delegate
+    /// to the user provided callbacks and handle automatic locking of sessions.
+    /// The receiver instance will only be closed when no other threads are using it, or when the user
+    /// has called <see cref="ServiceBusSessionProcessor.StopProcessingAsync"/>.
     /// </summary>
 #pragma warning disable CA1001 // Types that own disposable fields should be disposable.
     // Doesn't own _concurrentAcceptSessionsSemaphore
     internal class SessionReceiverManager : ReceiverManager
 #pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
-        private int _threadCount = 0;
-        private readonly Func<ProcessSessionEventArgs, Task> _sessionInitHandler;
-        private readonly Func<ProcessSessionEventArgs, Task> _sessionCloseHandler;
-        private readonly Func<ProcessSessionMessageEventArgs, Task> _messageHandler;
+        private int _threadCount;
         private readonly SemaphoreSlim _concurrentAcceptSessionsSemaphore;
         private readonly int _maxCallsPerSession;
         private readonly ServiceBusSessionReceiverOptions _sessionReceiverOptions;
+        private readonly string _sessionId;
         private readonly bool _keepOpenOnReceiveTimeout;
         private ServiceBusSessionReceiver _receiver;
         private CancellationTokenSource _sessionLockRenewalCancellationSource;
         private Task _sessionLockRenewalTask;
         private CancellationTokenSource _sessionCancellationSource = new CancellationTokenSource();
+        private bool _receiveTimeout;
+
         protected override ServiceBusReceiver Receiver => _receiver;
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
         public SessionReceiverManager(
-            ServiceBusConnection connection,
-            string fullyQualifiedNamespace,
-            string entityPath,
-            string identifier,
+            ServiceBusProcessor processor,
             string sessionId,
-            ServiceBusProcessorOptions processorOptions,
-            Func<ProcessSessionEventArgs, Task> sessionInitHandler,
-            Func<ProcessSessionEventArgs, Task> sessionCloseHandler,
-            Func<ProcessSessionMessageEventArgs, Task> messageHandler,
-            Func<ProcessErrorEventArgs, Task> errorHandler,
             SemaphoreSlim concurrentAcceptSessionsSemaphore,
             EntityScopeFactory scopeFactory,
             IList<ServiceBusPlugin> plugins,
             int maxCallsPerSession,
             bool keepOpenOnReceiveTimeout)
-            : base(connection, fullyQualifiedNamespace, entityPath, identifier, processorOptions, default, errorHandler,
-                  scopeFactory, plugins)
+            : base(processor, scopeFactory, plugins)
         {
-            _sessionInitHandler = sessionInitHandler;
-            _sessionCloseHandler = sessionCloseHandler;
-            _messageHandler = messageHandler;
             _concurrentAcceptSessionsSemaphore = concurrentAcceptSessionsSemaphore;
             _maxCallsPerSession = maxCallsPerSession;
             _sessionReceiverOptions = new ServiceBusSessionReceiverOptions
             {
-                ReceiveMode = _processorOptions.ReceiveMode,
-                PrefetchCount = _processorOptions.PrefetchCount,
-                SessionId = sessionId
+                ReceiveMode = processor.Options.ReceiveMode,
+                PrefetchCount = processor.Options.PrefetchCount,
             };
+            _sessionId = sessionId;
             _keepOpenOnReceiveTimeout = keepOpenOnReceiveTimeout;
         }
 
@@ -80,10 +68,16 @@ namespace Azure.Messaging.ServiceBus
             {
                 await WaitSemaphore(cancellationToken).ConfigureAwait(false);
                 releaseSemaphore = true;
-                if (_threadCount >= _maxCallsPerSession)
+
+                // If a receive call timed out for this session, avoid adding more threads
+                // if we don't intend to leave the receiver open on receive timeouts. This
+                // will help ensure other sessions get a chance to be processed.
+                if (_threadCount >= _maxCallsPerSession ||
+                    (_receiveTimeout && !_keepOpenOnReceiveTimeout))
                 {
                     return false;
                 }
+
                 if (_receiver == null)
                 {
                     await CreateAndInitializeSessionReceiver(cancellationToken).ConfigureAwait(false);
@@ -125,10 +119,10 @@ namespace Azure.Messaging.ServiceBus
                 _sessionLockRenewalTask = RenewSessionLock();
             }
 
-            if (_sessionInitHandler != null)
+            if (Processor._sessionInitializingAsync != null)
             {
                 var args = new ProcessSessionEventArgs(_receiver, processorCancellationToken);
-                await _sessionInitHandler(args).ConfigureAwait(false);
+                await Processor.OnSessionInitializingAsync(args).ConfigureAwait(false);
             }
         }
 
@@ -142,10 +136,11 @@ namespace Azure.Messaging.ServiceBus
                 // otherwise SemaphoreFullException can occur.
                 releaseSemaphore = true;
                 _receiver = await ServiceBusSessionReceiver.CreateSessionReceiverAsync(
-                    entityPath: _entityPath,
-                    connection: _connection,
+                    entityPath: Processor.EntityPath,
+                    connection: Processor.Connection,
                     plugins: _plugins,
                     options: _sessionReceiverOptions,
+                    sessionId: _sessionId,
                     cancellationToken: processorCancellationToken).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
@@ -163,8 +158,14 @@ namespace Azure.Messaging.ServiceBus
         }
 
         public override async Task CloseReceiverIfNeeded(
-            CancellationToken processorCancellationToken)
+            CancellationToken processorCancellationToken,
+            bool forceClose = false)
         {
+            if (forceClose)
+            {
+                await CloseReceiver(processorCancellationToken).ConfigureAwait(false);
+                return;
+            }
             bool releaseSemaphore = false;
             try
             {
@@ -177,9 +178,9 @@ namespace Azure.Messaging.ServiceBus
                     return;
                 }
                 _threadCount--;
-                if (_threadCount == 0)
+                if (_threadCount == 0 && !processorCancellationToken.IsCancellationRequested)
                 {
-                    if (!_keepOpenOnReceiveTimeout ||
+                    if ((_receiveTimeout && !_keepOpenOnReceiveTimeout) ||
                         !AutoRenewLock ||
                         _sessionLockRenewalCancellationSource.IsCancellationRequested)
                     {
@@ -198,16 +199,16 @@ namespace Azure.Messaging.ServiceBus
 
         private async Task CloseReceiver(CancellationToken cancellationToken)
         {
-            if (_receiver == null || _receiver.IsDisposed)
+            if (_receiver == null || _receiver.IsClosed)
             {
                 return;
             }
             try
             {
-                if (_sessionCloseHandler != null)
+                if (Processor._sessionClosingAsync != null)
                 {
                     var args = new ProcessSessionEventArgs(_receiver, cancellationToken);
-                    await _sessionCloseHandler(args).ConfigureAwait(false);
+                    await Processor.OnSessionClosingAsync(args).ConfigureAwait(false);
                 }
             }
             catch (Exception exception)
@@ -215,9 +216,10 @@ namespace Azure.Messaging.ServiceBus
                 await RaiseExceptionReceived(
                     new ProcessErrorEventArgs(
                         exception,
-                        ServiceBusErrorSource.CloseMessageSession,
-                        _fullyQualifiedNamespace,
-                        _entityPath))
+                        ServiceBusErrorSource.CloseSession,
+                        Processor.FullyQualifiedNamespace,
+                        Processor.EntityPath,
+                        cancellationToken))
                     .ConfigureAwait(false);
             }
             finally
@@ -228,12 +230,13 @@ namespace Azure.Messaging.ServiceBus
                 // Always at least attempt to dispose. If this fails, it won't be retried.
                 await _receiver.DisposeAsync().ConfigureAwait(false);
                 _receiver = null;
+                _receiveTimeout = false;
             }
         }
 
         public override async Task ReceiveAndProcessMessagesAsync(CancellationToken processorCancellationToken)
         {
-            ServiceBusErrorSource errorSource = ServiceBusErrorSource.AcceptMessageSession;
+            ServiceBusErrorSource errorSource = ServiceBusErrorSource.AcceptSession;
             bool canProcess = false;
             try
             {
@@ -263,6 +266,7 @@ namespace Azure.Messaging.ServiceBus
                     {
                         // Break out of the loop to allow a new session to
                         // be processed.
+                        _receiveTimeout = true;
                         break;
                     }
                     await ProcessOneMessageWithinScopeAsync(
@@ -297,8 +301,9 @@ namespace Azure.Messaging.ServiceBus
                     new ProcessErrorEventArgs(
                         ex,
                         errorSource,
-                        _fullyQualifiedNamespace,
-                        _entityPath))
+                        Processor.FullyQualifiedNamespace,
+                        Processor.EntityPath,
+                        processorCancellationToken))
                     .ConfigureAwait(false);
             }
             finally
@@ -311,35 +316,38 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
         private async Task RenewSessionLock()
         {
             _sessionLockRenewalCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(
                 _sessionCancellationSource.Token);
-            _sessionLockRenewalCancellationSource.CancelAfter(_processorOptions.MaxAutoLockRenewalDuration);
+            _sessionLockRenewalCancellationSource.CancelAfter(ProcessorOptions.MaxAutoLockRenewalDuration);
             CancellationToken sessionLockRenewalCancellationToken = _sessionLockRenewalCancellationSource.Token;
             while (!sessionLockRenewalCancellationToken.IsCancellationRequested)
             {
                 try
                 {
-                    ServiceBusEventSource.Log.ProcessorRenewSessionLockStart(_identifier, _receiver.SessionId);
+                    ServiceBusEventSource.Log.ProcessorRenewSessionLockStart(Processor.Identifier, _receiver.SessionId);
                     TimeSpan delay = CalculateRenewDelay(_receiver.SessionLockedUntil);
 
-                    await Task.Delay(delay, sessionLockRenewalCancellationToken).ConfigureAwait(false);
-                    if (_receiver.IsDisposed)
+                    // We're awaiting the task created by 'ContinueWith' to avoid awaiting the Delay task which may be canceled
+                    // by the renewLockCancellationToken. This way we prevent a TaskCanceledException.
+                    Task delayTask = await Task.Delay(delay, sessionLockRenewalCancellationToken)
+                        .ContinueWith(
+                            (t, s) => t,
+                            TaskContinuationOptions.ExecuteSynchronously,
+                            TaskScheduler.Default)
+                        .ConfigureAwait(false);
+                    if (Receiver.IsClosed || delayTask.IsCanceled)
                     {
                         break;
                     }
                     await _receiver.RenewSessionLockAsync(sessionLockRenewalCancellationToken).ConfigureAwait(false);
-                    ServiceBusEventSource.Log.ProcessorRenewSessionLockComplete(_identifier);
+                    ServiceBusEventSource.Log.ProcessorRenewSessionLockComplete(Processor.Identifier);
                 }
 
                 catch (Exception ex) when (!(ex is TaskCanceledException))
                 {
-                    ServiceBusEventSource.Log.ProcessorRenewSessionLockException(_identifier, ex.ToString());
+                    ServiceBusEventSource.Log.ProcessorRenewSessionLockException(Processor.Identifier, ex.ToString());
                     await HandleRenewLockException(ex, sessionLockRenewalCancellationToken).ConfigureAwait(false);
 
                     // if the error was not transient, break out of the loop
@@ -359,7 +367,7 @@ namespace Azure.Messaging.ServiceBus
                 message,
                 _receiver,
                 cancellationToken);
-            await _messageHandler(args).ConfigureAwait(false);
+            await Processor.OnProcessSessionMessageAsync(args).ConfigureAwait(false);
         }
     }
 }

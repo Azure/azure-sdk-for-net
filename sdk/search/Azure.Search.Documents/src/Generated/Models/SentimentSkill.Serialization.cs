@@ -18,8 +18,15 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultLanguageCode))
             {
-                writer.WritePropertyName("defaultLanguageCode");
-                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                if (DefaultLanguageCode != null)
+                {
+                    writer.WritePropertyName("defaultLanguageCode");
+                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("defaultLanguageCode");
+                }
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(ODataType);
@@ -57,7 +64,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SentimentSkill DeserializeSentimentSkill(JsonElement element)
         {
-            Optional<SentimentSkillLanguage> defaultLanguageCode = default;
+            Optional<SentimentSkillLanguage?> defaultLanguageCode = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -68,6 +75,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("defaultLanguageCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        defaultLanguageCode = null;
+                        continue;
+                    }
                     defaultLanguageCode = new SentimentSkillLanguage(property.Value.GetString());
                     continue;
                 }

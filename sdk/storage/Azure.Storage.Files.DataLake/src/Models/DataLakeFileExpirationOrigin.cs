@@ -11,7 +11,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// Enum to specify when a file's ExpiriesOn time should be relative
     /// to.
     /// </summary>
-    internal enum DataLakeFileExpirationOrigin
+    public enum DataLakeFileExpirationOrigin
     {
         /// <summary>
         /// Files's ExpiriesOn property should be set relative to

@@ -58,6 +58,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("permissions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PreAuthorizedApplicationPermission> array = new List<PreAuthorizedApplicationPermission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -68,6 +73,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("extensions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PreAuthorizedApplicationExtension> array = new List<PreAuthorizedApplicationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

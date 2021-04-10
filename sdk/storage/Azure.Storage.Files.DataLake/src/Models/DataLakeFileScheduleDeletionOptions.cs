@@ -8,7 +8,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// Parameters for Schedule Deletion.
     /// </summary>
-    internal class DataLakeFileScheduleDeletionOptions
+    public class DataLakeFileScheduleDeletionOptions
     {
         /// <summary>
         /// Duration before file should be deleted.
@@ -62,11 +62,10 @@ namespace Azure.Storage.Files.DataLake.Models
         }
 
         /// <summary>
-        /// Constructor.  If the file. was scheduled for deletetion, the deletion will be cancelled.
+        /// Constructor.  If the file was scheduled for deletetion, the deletion will be cancelled.
         /// </summary>
         public DataLakeFileScheduleDeletionOptions()
         {
-
         }
     }
 }

@@ -124,6 +124,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("id"))
@@ -138,6 +143,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("ruleState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             ruleState = property0.Value.GetString().ToDataMaskingRuleState();
                             continue;
                         }
@@ -158,6 +168,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("maskingFunction"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             maskingFunction = property0.Value.GetString().ToDataMaskingFunction();
                             continue;
                         }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 },
                 createWithManagedDisks: hasManagedDisks,
                 zones: zones);
-            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks);
 
             var getInstanceViewResponse = await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName);

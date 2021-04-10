@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListVpnGatewaysResult
+    internal partial class ListVpnGatewaysResult
     {
         internal static ListVpnGatewaysResult DeserializeListVpnGatewaysResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VpnGateway> array = new List<VpnGateway>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

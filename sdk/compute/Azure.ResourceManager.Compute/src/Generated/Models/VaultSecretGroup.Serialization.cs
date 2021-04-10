@@ -42,11 +42,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("sourceVault"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sourceVault = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vaultCertificates"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VaultCertificate> array = new List<VaultCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

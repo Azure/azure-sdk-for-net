@@ -53,5 +53,45 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker
                 (await operations.ReplaceWithHttpMessagesAsync(wordAlterations, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
+            /// <summary>
+            /// Download alterations per Knowledgebase (QnAMaker Managed).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='kbId'>
+            /// Knowledgebase id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WordAlterationsDTO> GetAlterationsForKbAsync(this IAlterations operations, string kbId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetAlterationsForKbWithHttpMessagesAsync(kbId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Replace alterations data per Knowledgebase (QnAMaker Managed).
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='kbId'>
+            /// Knowledgebase id.
+            /// </param>
+            /// <param name='wordAlterations'>
+            /// New alterations data.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ReplaceAlterationsForKbAsync(this IAlterations operations, string kbId, WordAlterationsDTO wordAlterations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ReplaceAlterationsForKbWithHttpMessagesAsync(kbId, wordAlterations, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
     }
 }

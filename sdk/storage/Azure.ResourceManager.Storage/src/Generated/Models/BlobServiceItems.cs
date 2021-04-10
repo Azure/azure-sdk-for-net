@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The BlobServiceItems. </summary>
-    public partial class BlobServiceItems
+    internal partial class BlobServiceItems
     {
         /// <summary> Initializes a new instance of BlobServiceItems. </summary>
         internal BlobServiceItems()

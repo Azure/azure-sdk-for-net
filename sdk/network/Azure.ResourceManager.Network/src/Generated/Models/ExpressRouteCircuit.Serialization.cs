@@ -145,6 +145,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("sku"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     sku = ExpressRouteCircuitSku.DeserializeExpressRouteCircuitSku(property.Value);
                     continue;
                 }
@@ -175,6 +180,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -185,10 +195,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("allowClassicOperations"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             allowClassicOperations = property0.Value.GetBoolean();
                             continue;
                         }
@@ -199,11 +219,21 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("serviceProviderProvisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             serviceProviderProvisioningState = new ServiceProviderProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("authorizations"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ExpressRouteCircuitAuthorization> array = new List<ExpressRouteCircuitAuthorization>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -214,6 +244,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("peerings"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<ExpressRouteCircuitPeering> array = new List<ExpressRouteCircuitPeering>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -234,26 +269,51 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("serviceProviderProperties"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             serviceProviderProperties = ExpressRouteCircuitServiceProviderProperties.DeserializeExpressRouteCircuitServiceProviderProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("expressRoutePort"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             expressRoutePort = SubResource.DeserializeSubResource(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("bandwidthInGbps"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             bandwidthInGbps = property0.Value.GetSingle();
                             continue;
                         }
                         if (property0.NameEquals("stag"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             stag = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
@@ -264,6 +324,11 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("globalReachEnabled"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             globalReachEnabled = property0.Value.GetBoolean();
                             continue;
                         }

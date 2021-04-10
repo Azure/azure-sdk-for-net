@@ -1,3 +1,3 @@
-## 0.5.6 (Unreleased)
+## 0.5.6-beta.1 (Unreleased)
 
 

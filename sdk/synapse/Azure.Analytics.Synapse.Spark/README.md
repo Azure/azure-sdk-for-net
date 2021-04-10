@@ -1,6 +1,6 @@
 # Azure Synapse Spark client library for .NET
 
-This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/en-us/develop/net/).
+This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](https://azure.microsoft.com/develop/net/).
 
 Use the client library for Synapse to:
 
@@ -10,20 +10,20 @@ Azure Synapse is a limitless analytics service that brings together enterprise d
 
 ## Getting started
 
-The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](http://azure.microsoft.com/en-us/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
+The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](https://azure.microsoft.com/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes.
 
 ### Install the package
-Install the Spark client library for Azure Synapse Analytics for .NET with [NuGet][nuget]:
+Install the Spark client library for Azure Synapse Analytics for .NET with [NuGet](https://www.nuget.org/packages/Azure.Analytics.Synapse.Spark/):
 
 ```PowerShell
 dotnet add package Azure.Analytics.Synapse.Spark --version 0.1.0-preview.1
 ```
 
 ### Prerequisites
-* An [Azure subscription][azure_sub].
-* An existing Azure Synapse workspace. If you need to create an Azure Synapse workspace, you can use the Azure Portal or [Azure CLI][azure_cli].
+- **Azure Subscription:**  To use Azure services, including Azure Synapse, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
+- An existing Azure Synapse workspace. If you need to create an Azure Synapse workspace, you can use the [Azure Portal](https://portal.azure.com/) or [Azure CLI](https://docs.microsoft.com/cli/azure).
 
 If you use the Azure CLI, the command looks like below:
 
@@ -39,10 +39,10 @@ az synapse workspace create \
 ```
 
 ### Authenticate the client
-In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [SparkBatchClient][spark_batch_client_class] or [SparkSessionClient][spark_session_client_class] class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
+In order to interact with the Azure Synapse Analytics service, you'll need to create an instance of the [SparkBatchClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Spark/src/Generated/SparkBatchClient.cs) or [SparkSessionClient](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/synapse/Azure.Analytics.Synapse.Spark/src/Generated/SparkSessionClient.cs) class. You need a **workspace endpoint**, which you may see as "Development endpoint" in the portal,
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
-Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
+Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity). To use the [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity#defaultazurecredential) provider shown below,
 or other credential providers provided with the Azure SDK, you should install the Azure.Identity package:
 
 ```PowerShell
@@ -55,13 +55,13 @@ The Microsoft.Azure.Synapse supports the CRUD of spark batch job.
 ### Spark Batch Job examples
 * [List spark batch job](#list-spark-batch-job)
 * [Create spark batch job](#create-spark-batch-job)
-* [Delete spark batch job](#delete-spark-batch-job)
+* [Cancel spark batch job](#cancel-spark-batch-job)
 
 ### List spark batch job
 List the spark batch job under the specific spark pool of a specific synapse workspace
 
 ```C# Snippet:ListSparkBatchJobs
-Response<SparkBatchJobCollection> jobs = batchClient.GetSparkBatchJobs();
+Response<SparkBatchJobCollection> jobs = client.GetSparkBatchJobs();
 foreach (SparkBatchJob job in jobs.Value.Sessions)
 {
     Console.WriteLine(job.Name);
@@ -71,16 +71,16 @@ foreach (SparkBatchJob job in jobs.Value.Sessions)
 ### Create spark batch job
 Create spark batch job under specific workspace and spark pool.
 
-```C# Snippet:CreateBatchJob
-string name = $"batchSample";
-string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/wordcount.jar", fileSystem, storageAccount);
-SparkBatchJobOptions options = new SparkBatchJobOptions(name: name, file: file)
+```C# Snippet:SubmitSparkBatchJob
+string name = $"batch-{Guid.NewGuid()}";
+string file = string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/net/wordcount/wordcount.zip", fileSystem, storageAccount);
+SparkBatchJobOptions request = new SparkBatchJobOptions(name, file)
 {
     ClassName = "WordCount",
     Arguments =
     {
-        string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/shakespeare.txt", fileSystem, storageAccount),
-        string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/java/wordcount/result/", fileSystem, storageAccount),
+        string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/net/wordcount/shakespeare.txt", fileSystem, storageAccount),
+        string.Format("abfss://{0}@{1}.dfs.core.windows.net/samples/net/wordcount/result/", fileSystem, storageAccount),
     },
     DriverMemory = "28g",
     DriverCores = 4,
@@ -89,14 +89,20 @@ SparkBatchJobOptions options = new SparkBatchJobOptions(name: name, file: file)
     ExecutorCount = 2
 };
 
-SparkBatchJob jobCreated = batchClient.CreateSparkBatchJob(options);
+SparkBatchOperation createOperation = client.StartCreateSparkBatchJob(request);
+while (!createOperation.HasCompleted)
+{
+    System.Threading.Thread.Sleep(2000);
+    createOperation.UpdateStatus();
+}
+SparkBatchJob jobCreated = createOperation.Value;
 ```
 
 ### Cancel spark batch job
 Cancel a Spark batch job with Spark batch id under specific workspace and Spark pool.
 
-```C# Snippet:DeleteSparkBatchJob
-Response operation = batchClient.CancelSparkBatchJob(jobId);
+```C# Snippet:CancelSparkBatchJob
+Response operation = client.CancelSparkBatchJob(jobCreated.Id);
 ```
        
 ## To build
@@ -110,6 +116,20 @@ For information about the target frameworks of the Azure Synapse client library,
 ## Key concepts
 
 Submit Spark job.
+
+### Thread safety
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Troubleshooting
 

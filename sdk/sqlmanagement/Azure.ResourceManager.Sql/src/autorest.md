@@ -1,6 +1,6 @@
 # Generated code configuration
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 

@@ -7,10 +7,12 @@
 
 using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(RedisScalingCompletedEventDataConverter))]
     public partial class RedisScalingCompletedEventData
     {
         internal static RedisScalingCompletedEventData DeserializeRedisScalingCompletedEventData(JsonElement element)
@@ -22,6 +24,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("timestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -37,6 +44,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new RedisScalingCompletedEventData(Optional.ToNullable(timestamp), name.Value, status.Value);
+        }
+
+        internal partial class RedisScalingCompletedEventDataConverter : JsonConverter<RedisScalingCompletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, RedisScalingCompletedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override RedisScalingCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeRedisScalingCompletedEventData(document.RootElement);
+            }
         }
     }
 }

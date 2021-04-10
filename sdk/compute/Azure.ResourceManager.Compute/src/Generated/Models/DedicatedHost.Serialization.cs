@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -108,15 +113,30 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("platformFaultDomain"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             platformFaultDomain = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("autoReplaceOnFailure"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             autoReplaceOnFailure = property0.Value.GetBoolean();
                             continue;
                         }
@@ -127,6 +147,11 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("virtualMachines"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<SubResourceReadOnly> array = new List<SubResourceReadOnly>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -137,11 +162,21 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("licenseType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             licenseType = property0.Value.GetString().ToDedicatedHostLicenseTypes();
                             continue;
                         }
                         if (property0.NameEquals("provisioningTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
@@ -152,6 +187,11 @@ namespace Azure.ResourceManager.Compute.Models
                         }
                         if (property0.NameEquals("instanceView"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             instanceView = DedicatedHostInstanceView.DeserializeDedicatedHostInstanceView(property0.Value);
                             continue;
                         }

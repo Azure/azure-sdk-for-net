@@ -46,6 +46,27 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureDatabricksDeltaLakeTable = @"
+{
+    name: ""AzureDatabricksDeltaLakeDataset"",
+    properties:
+    {
+        type: ""AzureDatabricksDeltaLakeDataset"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {            
+             ""table"": ""test"",
+             ""database"": ""default""
+        }
+    }
+}
+";
+
+        [JsonSample]
         public const string AzureTable = @"
 {
     name: ""TableWithLatency"",
@@ -339,6 +360,29 @@ namespace DataFactory.Tests.JsonSamples
             collectionName: ""fake table""
         }
     }
+}
+";
+
+        [JsonSample]
+        public const string MongoDbAtlasCollection = @"
+{ 
+    name: ""MongoDbAtlasDbTable"", 
+    properties: { 
+        type: ""MongoDbAtlasCollection"", 
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties: { 
+           collection: ""fake table""
+        },
+        parameters: {
+           MyCollection: {
+             type: ""String""
+          }
+        }
+     }
 }
 ";
 
@@ -1260,6 +1304,31 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string BinaryWithTarGZipDataset = @"
+{
+  ""name"": ""BinaryDataset"",
+  ""properties"": {
+    ""type"": ""Binary"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""testTgz01""
+      },
+      ""compression"": {
+        ""type"": ""TarGZip"",
+        ""level"": ""Optimal""
+      }
+    }
+  }
+}";
+
+        [JsonSample]
         public const string OrcDataset = @"
 {
   ""name"": ""OrcDataset"",
@@ -1277,6 +1346,40 @@ namespace DataFactory.Tests.JsonSamples
         ""fileName"": ""data.orc""
       },
       ""orcCompressionCodec"": ""snappy""
+    },
+    ""schema"": [
+      {
+        ""name"": ""col1"",
+        ""type"": ""INT_32""
+      },
+      {
+        ""name"": ""col2"",
+        ""type"": ""Decimal"",
+        ""precision"": ""38"",
+        ""scale"": ""2""
+      }
+    ]
+  }
+}";
+
+        [JsonSample]
+        public const string OrcDatasetWithlzoCompressionCodec = @"
+{
+  ""name"": ""OrcDataset"",
+  ""properties"": {
+    ""type"": ""Orc"",
+    ""linkedServiceName"": {
+      ""referenceName"": ""AzureBlobStorageLinkedService"",
+      ""type"": ""LinkedServiceReference""
+    },
+    ""typeProperties"": {
+      ""location"": {
+        ""type"": ""AzureBlobStorageLocation"",
+        ""container"": ""ContainerName"",
+        ""folderPath"": ""dataflow/test/input"",
+        ""fileName"": ""data.orc""
+      },
+      ""orcCompressionCodec"": ""lzo""
     },
     ""schema"": [
       {
@@ -1912,6 +2015,60 @@ namespace DataFactory.Tests.JsonSamples
                 ""type"": ""GoogleCloudStorageLocation"",
                 ""bucketName"": ""bucketname"",
                 ""folderPath"": ""folder/subfolder""
+            },
+            ""columnDelimiter"": "","",
+            ""quoteChar"": ""\"""",
+            ""firstRowAsHeader"": true,
+            ""compressionCodec"": ""gzip""
+        },
+    }
+}";
+
+        [JsonSample]
+        public const string AmazonS3CompatibleDataset = @"
+{
+    name: ""AmazonS3CompatibleWithTextDataset"",
+    properties:
+    {
+        type: ""DelimitedText"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {
+            ""location"": {
+                ""type"": ""AmazonS3CompatibleLocation"",
+                ""bucketName"": ""bucketname"",
+                ""version"": ""version""
+            },
+            ""columnDelimiter"": "","",
+            ""quoteChar"": ""\"""",
+            ""firstRowAsHeader"": true,
+            ""compressionCodec"": ""gzip""
+        },
+    }
+}";
+
+        [JsonSample]
+        public const string OracleCloudStorageDataset = @"
+{
+    name: ""OracleCloudStorageWithTextDataset"",
+    properties:
+    {
+        type: ""DelimitedText"",
+        linkedServiceName: 
+        {  
+            referenceName : ""ls"",
+            type : ""LinkedServiceReference""
+        },
+        typeProperties:
+        {
+            ""location"": {
+                ""type"": ""OracleCloudStorageLocation"",
+                ""bucketName"": ""bucketname"",
+                ""version"": ""version""
             },
             ""columnDelimiter"": "","",
             ""quoteChar"": ""\"""",

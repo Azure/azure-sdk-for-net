@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("membershipType"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     membershipType = property.Value.GetString().ToJobTargetGroupMembershipType();
                     continue;
                 }

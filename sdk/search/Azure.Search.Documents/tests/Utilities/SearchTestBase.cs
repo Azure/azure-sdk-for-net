@@ -8,13 +8,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-#if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
-#endif
+using Azure.Core.GeoJson;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
+using Microsoft.Spatial;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
@@ -77,7 +76,7 @@ namespace Azure.Search.Documents.Tests
             options.Retry.Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1);
             options.Retry.MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 600);
             options.Transport = new HttpClientTransport(s_httpClient);
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         /// <summary>
@@ -148,24 +147,37 @@ namespace Azure.Search.Documents.Tests
         /// <param name="path">Optional expression path.</param>
         public static void AssertApproximate(object expected, object actual, string path = null)
         {
-            if (expected is SearchDocument e && actual is SearchDocument a)
+            if (expected is SearchDocument e)
             {
-                foreach (string key in e.Keys)
+                if (actual is SearchDocument a)
                 {
-                    object eValue = e[key];
-                    object aValue =
-                        (eValue is DateTimeOffset) ? a.GetDateTimeOffset(key) :
-                        (eValue is double) ? a.GetDouble(key) :
-                        a[key];
-                    AssertApproximate(eValue, aValue, path != null ? path + "." + key : key);
+                    foreach (string key in e.Keys)
+                    {
+                        object eValue = e[key];
+                        object aValue =
+                            (eValue is DateTimeOffset) ? a.GetDateTimeOffset(key) :
+                            (eValue is double) ? a.GetDouble(key) :
+                            a[key];
+                        AssertApproximate(eValue, aValue, path != null ? path + "." + key : key);
+                    }
+                }
+                else if (actual is GeoPoint agPt)
+                {
+                    var eValue = (double[])e["coordinates"];
+
+                    var expectedGeoPosition = new GeoPosition(eValue[0], eValue[1], eValue.Length == 3 ? eValue[2] : null);
+
+                    AssertEqual(expectedGeoPosition, agPt.Coordinates, path != null ? $"{path}.{nameof(GeoPoint.Coordinates)}" : nameof(GeoPoint.Coordinates));
                 }
             }
-#if EXPERIMENTAL_SPATIAL
-            else if (expected is PointGeometry ePt && actual is PointGeometry aPt)
+            else if (expected is GeoPoint ePt && actual is GeoPoint aPt)
             {
-                AssertEqual(ePt.Position, aPt.Position, path != null ? path + ".Position" : "Position");
+                AssertEqual(ePt.Coordinates, aPt.Coordinates, path != null ? $"{path}.{nameof(GeoPoint.Coordinates)}" : nameof(GeoPoint.Coordinates));
             }
-#endif
+            else if (expected is GeographyPoint eGpt && actual is GeographyPoint aGpt)
+            {
+                AssertEqual(eGpt, aGpt, path);
+            }
             else
             {
                 AssertEqual(expected, actual, path);
@@ -199,11 +211,20 @@ namespace Azure.Search.Documents.Tests
 
             while (true)
             {
-                await DelayAsync(delay, cancellationToken: cts.Token);
+                SearchIndexerStatus status = null;
+                try
+                {
+                    await DelayAsync(delay, cancellationToken: cts.Token);
 
-                SearchIndexerStatus status = await client.GetIndexerStatusAsync(
-                    indexerName,
-                    cancellationToken: cts.Token);
+                    status = await client.GetIndexerStatusAsync(
+                        indexerName,
+                        cancellationToken: cts.Token);
+                }
+                catch (TaskCanceledException)
+                {
+                    // TODO: Remove this when we figure out a more correlative way of checking status.
+                    Assert.Inconclusive("Timed out while waiting for the indexer to complete");
+                }
 
                 if (status.Status == IndexerStatus.Running)
                 {
@@ -236,6 +257,51 @@ namespace Azure.Search.Documents.Tests
 
                 // Exponentially increase the delay to mitigate server throttling.
                 delay = TimeSpan.FromSeconds(Math.Min(delay.TotalSeconds * 2, maxDelay.TotalSeconds));
+            }
+        }
+
+        /// <summary>
+        /// Wait until the document count for a given search index has crossed
+        /// a minimum value.  This only does simple linear retries for a fixed
+        /// number of attempts.
+        /// </summary>
+        /// <param name="searchClient">Client for the index.</param>
+        /// <param name="minimumCount">Minimum document count to verify indexing.</param>
+        /// <param name="attempts">Maximum number of attempts to retry.</param>
+        /// <param name="delay">Delay between attempts.</param>
+        /// <returns>A <see cref="Task"/> to await.</returns>
+        protected async Task WaitForDocumentCountAsync(
+            SearchClient searchClient,
+            int minimumCount,
+            int attempts = 10,
+            TimeSpan? delay = null)
+        {
+            delay ??= TimeSpan.FromSeconds(1);
+            int count = 0;
+            for (int i = 0; i < attempts; i++)
+            {
+                count = (int)await searchClient.GetDocumentCountAsync();
+                if (count >= minimumCount)
+                {
+                    // When using the free SKU, there may be enough load to prevent
+                    // immediately replication to all replicas and we get back the
+                    // wrong count. Wait a bit longer before checking again. We may
+                    // also upgrade to a basic SKU, but that will take longer to
+                    // provision.
+                    await DelayAsync(delay);
+
+                    return;
+                }
+                await DelayAsync(delay);
+            }
+
+            if (count == 0)
+            {
+                Assert.Inconclusive("Indexing failed to start.");
+            }
+            else
+            {
+                Assert.Fail($"Indexing only reached {count} documents and not the expected {minimumCount}!");
             }
         }
     }

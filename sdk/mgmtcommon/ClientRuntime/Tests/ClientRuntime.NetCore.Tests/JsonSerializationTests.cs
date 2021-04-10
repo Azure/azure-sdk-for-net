@@ -211,6 +211,49 @@ namespace Microsoft.Rest.ClientRuntime.Tests
         }
 
         [Fact]
+        public void PolymorphicShouldSerializeWorks()
+        {
+            Zoo zoo = new Zoo() { Id = 1 };
+            zoo.Animals.Add(new Dog()
+            {
+                Name = "Fido",
+                LikesDogfood = true,
+                NeedVaccine = true
+            });
+
+            zoo.Animals.Add(new Cat()
+            {
+                Name = "Felix",
+                LikesMice = false,
+                Dislikes = new Dog()
+                {
+                    Name = "Angry",
+                    LikesDogfood = true
+                },
+                BestFriend = new Animal()
+                {
+                    Name = "Rudy the Rabbit",
+                    BestFriend = new Cat()
+                    {
+                        Name = "Jango",
+                        LikesMice = true
+                    }
+                }
+            });
+            var serializeSettings = new JsonSerializerSettings();
+            serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Animal>("dType"));
+
+            var deserializeSettings = new JsonSerializerSettings();
+            deserializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Animal>("dType"));
+
+            var serializedJson = JsonConvert.SerializeObject(zoo, Formatting.Indented, serializeSettings);
+           
+            Assert.DoesNotContain("needVaccine", serializedJson);
+        }
+
+        [Fact]
         public void RawJsonIsSerialized()
         {
             var serializeSettings = new JsonSerializerSettings();

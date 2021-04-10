@@ -3,6 +3,8 @@
 
 using System;
 using Azure.Storage.Blobs.Specialized;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -27,5 +29,24 @@ namespace Azure.Storage.Blobs.Models
         /// progress updates about data transfers.
         /// </summary>
         public IProgress<long> ProgressHandler { get; set; }
+
+        /// <summary>
+        /// Optional standard HTTP header properties that can be set for this block blob.
+        /// </summary>
+        public BlobHttpHeaders HttpHeaders { get; set; }
+
+        /// <summary>
+        /// Optional custom metadata to set for this block blob.
+        /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
+        public Metadata Metadata { get; set; }
+#pragma warning restore CA2227 // Collection properties should be readonly
+
+        /// <summary>
+        /// Options tags to set for this block blob.
+        /// </summary>
+#pragma warning disable CA2227 // Collection properties should be readonly
+        public Tags Tags { get; set; }
+#pragma warning restore CA2227 // Collection properties should be readonly
     }
 }

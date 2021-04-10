@@ -131,9 +131,24 @@ namespace Azure.Core
             /// Returns. <code>"If-Unmodified-Since"</code>
             /// </summary>
             public static string IfUnmodifiedSince => "If-Unmodified-Since";
+            /// <summary>
+            /// Returns. <code>"Referer"</code>
+            /// </summary>
+            public static string Referer => "Referer";
+            /// <summary>
+            /// Returns. <code>"Host"</code>
+            /// </summary>
+            public static string Host => "Host";
 
-            internal static string Referer => "Referer";
-            internal static string Host => "Host";
+            /// <summary>
+            /// Returns <code>"Content-Disposition"</code>.
+            /// </summary>
+            public static string ContentDisposition => "Content-Disposition";
+
+            /// <summary>
+            /// Returns <code>"WWW-Authenticate"</code>.
+            /// </summary>
+            public static string WwwAuthenticate => "WWW-Authenticate";
         }
 
 #pragma warning disable CA1034 // Nested types should not be visible

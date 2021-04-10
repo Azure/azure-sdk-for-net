@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Compute.Tests
                     cs.AgentPoolProfiles[0].Count = 1;
                     cs.MasterProfile.Count = 1;
                 });
-            var containerService = getTwocontainerService.Item1;
-            inputContainerService = getTwocontainerService.Item2;
+            var containerService = getTwocontainerService.GetResponse;
+            inputContainerService = getTwocontainerService.InputContainerService;
             // Update Container Service with increased AgentPoolProfiles Count
             containerService.AgentPoolProfiles[0].Count = 2;
             UpdateContainerService(rgName, csName, containerService);

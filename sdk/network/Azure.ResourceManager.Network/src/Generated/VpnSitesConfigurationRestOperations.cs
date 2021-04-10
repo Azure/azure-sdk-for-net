@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/vpnConfiguration", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request0.Uri = uri;
+            request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(request);

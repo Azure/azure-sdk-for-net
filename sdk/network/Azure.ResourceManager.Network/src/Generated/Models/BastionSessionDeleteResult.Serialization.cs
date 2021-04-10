@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BastionSessionDeleteResult
+    internal partial class BastionSessionDeleteResult
     {
         internal static BastionSessionDeleteResult DeserializeBastionSessionDeleteResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<BastionSessionState> array = new List<BastionSessionState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(TriggerPipelineReferenceConverter))]
     public partial class TriggerPipelineReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -43,11 +46,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("pipelineReference"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     pipelineReference = PipelineReference.DeserializePipelineReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("parameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -58,6 +71,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new TriggerPipelineReference(pipelineReference.Value, Optional.ToDictionary(parameters));
+        }
+
+        internal partial class TriggerPipelineReferenceConverter : JsonConverter<TriggerPipelineReference>
+        {
+            public override void Write(Utf8JsonWriter writer, TriggerPipelineReference model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override TriggerPipelineReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeTriggerPipelineReference(document.RootElement);
+            }
         }
     }
 }

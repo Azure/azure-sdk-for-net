@@ -18,6 +18,7 @@ using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Queues.Specialized.Models;
 using Azure.Storage.Queues.Tests;
+using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
 using static Moq.It;
@@ -26,7 +27,6 @@ namespace Azure.Storage.Queues.Test
 {
     public class ClientSideEncryptionTests : QueueTestBase
     {
-
         private const string s_algorithmName = "some algorithm name";
         private static readonly CancellationToken s_cancellationToken = new CancellationTokenSource().Token;
 
@@ -265,25 +265,25 @@ namespace Azure.Storage.Queues.Test
                 ClientSideEncryption = options1
             });
 
-            Assert.AreEqual(options1.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
-            Assert.AreEqual(options1.KeyResolver, client.ClientSideEncryption.KeyResolver);
-            Assert.AreEqual(options1.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
+            Assert.AreEqual(options1.KeyEncryptionKey, client.ClientConfiguration.ClientSideEncryption.KeyEncryptionKey);
+            Assert.AreEqual(options1.KeyResolver, client.ClientConfiguration.ClientSideEncryption.KeyResolver);
+            Assert.AreEqual(options1.KeyWrapAlgorithm, client.ClientConfiguration.ClientSideEncryption.KeyWrapAlgorithm);
 
             Assert.AreEqual(0, options1EventCalled);
             Assert.AreEqual(0, options2EventCalled);
-            client.ClientSideEncryption.OnDecryptionFailed(default, default);
+            client.ClientConfiguration.ClientSideEncryption.OnDecryptionFailed(default, default);
             Assert.AreEqual(1, options1EventCalled);
             Assert.AreEqual(0, options2EventCalled);
 
             client = client.WithClientSideEncryptionOptions(options2);
 
-            Assert.AreEqual(options2.KeyEncryptionKey, client.ClientSideEncryption.KeyEncryptionKey);
-            Assert.AreEqual(options2.KeyResolver, client.ClientSideEncryption.KeyResolver);
-            Assert.AreEqual(options2.KeyWrapAlgorithm, client.ClientSideEncryption.KeyWrapAlgorithm);
+            Assert.AreEqual(options2.KeyEncryptionKey, client.ClientConfiguration.ClientSideEncryption.KeyEncryptionKey);
+            Assert.AreEqual(options2.KeyResolver, client.ClientConfiguration.ClientSideEncryption.KeyResolver);
+            Assert.AreEqual(options2.KeyWrapAlgorithm, client.ClientConfiguration.ClientSideEncryption.KeyWrapAlgorithm);
 
             Assert.AreEqual(1, options1EventCalled);
             Assert.AreEqual(0, options2EventCalled);
-            client.ClientSideEncryption.OnDecryptionFailed(default, default);
+            client.ClientConfiguration.ClientSideEncryption.OnDecryptionFailed(default, default);
             Assert.AreEqual(1, options1EventCalled);
             Assert.AreEqual(1, options2EventCalled);
         }
@@ -314,7 +314,7 @@ namespace Azure.Storage.Queues.Test
                 // download without decrypting
                 var receivedMessages = (await InstrumentClient(new QueueClient(queue.Uri, GetNewSharedKeyCredentials())).ReceiveMessagesAsync(cancellationToken: s_cancellationToken)).Value;
                 Assert.AreEqual(1, receivedMessages.Length);
-                var encryptedMessage = receivedMessages[0].MessageText; // json of message and metadata
+                var encryptedMessage = receivedMessages[0].Body; // json of message and metadata
                 var parsedEncryptedMessage = EncryptedMessageSerializer.Deserialize(encryptedMessage);
 
                 // encrypt original data manually for comparison
@@ -732,6 +732,63 @@ namespace Azure.Storage.Queues.Test
                     }
                 }
             }
+        }
+
+        [Test]
+        public void CanGenerateSas_WithClientSideEncryptionOptions_True()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+            var blobSecondaryEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account + "-secondary");
+            var storageConnectionString = new StorageConnectionString(constants.Sas.SharedKeyCredential, blobStorageUri: (blobEndpoint, blobSecondaryEndpoint));
+            string connectionString = storageConnectionString.ToString(true);
+
+            var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
+                KeyWrapAlgorithm = "bar"
+            };
+
+            // Create blob
+            QueueClient queue = new QueueClient(
+                connectionString,
+                GetNewQueueName());
+            Assert.IsTrue(queue.CanGenerateSasUri);
+
+            // Act
+            QueueClient queueEncrypted = queue.WithClientSideEncryptionOptions(options);
+
+            // Assert
+            Assert.IsTrue(queueEncrypted.CanGenerateSasUri);
+        }
+
+        [Test]
+        public void CanGenerateSas_WithClientSideEncryptionOptions_False()
+        {
+            // Arrange
+            var constants = new TestConstants(this);
+            var blobEndpoint = new Uri("https://127.0.0.1/" + constants.Sas.Account);
+
+            var options = new ClientSideEncryptionOptions(ClientSideEncryptionVersion.V1_0)
+            {
+                KeyEncryptionKey = GetIKeyEncryptionKey().Object,
+                KeyResolver = GetIKeyEncryptionKeyResolver(default).Object,
+                KeyWrapAlgorithm = "bar"
+            };
+
+            // Create blob
+            QueueClient queue = InstrumentClient(new QueueClient(
+                blobEndpoint,
+                GetOptions()));
+            Assert.IsFalse(queue.CanGenerateSasUri);
+
+            // Act
+            QueueClient queueEncrypted = queue.WithClientSideEncryptionOptions(options);
+
+            // Assert
+            Assert.IsFalse(queueEncrypted.CanGenerateSasUri);
         }
     }
 }

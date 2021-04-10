@@ -18,13 +18,13 @@ param (
   [switch]$continueOnError = $false
 )
 
-. (Join-Path $PSScriptRoot artifact-metadata-parsing.ps1)
+. (Join-Path $PSScriptRoot common.ps1)
 
 $apiUrl = "https://api.github.com/repos/$repoId"
 Write-Host "Using API URL $apiUrl"
 
 # VERIFY PACKAGES
-$pkgList = VerifyPackages -pkgRepository $packageRepository -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
+$pkgList = VerifyPackages -artifactLocation $artifactLocation -workingDirectory $workingDirectory -apiUrl $apiUrl -releaseSha $releaseSha -continueOnError $continueOnError
 
 if ($pkgList) {
   Write-Host "Given the visible artifacts, github releases will be created for the following:"

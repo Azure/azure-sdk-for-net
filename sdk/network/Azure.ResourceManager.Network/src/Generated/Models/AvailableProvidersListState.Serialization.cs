@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("providers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -37,6 +42,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("cities"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AvailableProvidersListCity> array = new List<AvailableProvidersListCity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

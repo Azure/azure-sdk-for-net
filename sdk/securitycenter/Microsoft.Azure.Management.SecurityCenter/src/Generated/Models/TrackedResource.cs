@@ -77,10 +77,10 @@ namespace Microsoft.Azure.Management.Security.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets location where the resource is stored
+        /// Gets or sets location where the resource is stored
         /// </summary>
         [JsonProperty(PropertyName = "location")]
-        public string Location { get; private set; }
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets kind of the resource

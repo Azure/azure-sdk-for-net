@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("level"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     level = property.Value.GetString().ToStatusLevelTypes();
                     continue;
                 }
@@ -75,6 +80,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("time"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     time = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

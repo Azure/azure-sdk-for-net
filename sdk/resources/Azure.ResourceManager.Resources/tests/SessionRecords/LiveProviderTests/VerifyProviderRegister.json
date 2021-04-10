@@ -1,14 +1,15 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler/register?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Scheduler/register?api-version=2019-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-45c3760221195a489eb17bba80a543e8-3faf6fbe93a5d141-00",
+        "traceparent": "00-6d79b8310de0a74aaf84d07705868564-b1565d8be97a4945-00",
         "User-Agent": [
-          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
-          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "77269582c13140bab56d55057b30a122",
         "x-ms-return-client-request-id": "true"
@@ -17,20 +18,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1833",
+        "Content-Length": "1938",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 02:47:55 GMT",
+        "Date": "Mon, 14 Sep 2020 09:13:29 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fb65793b-a3ea-4444-ae6e-532de87db5ca",
-        "x-ms-ratelimit-remaining-subscription-writes": "1196",
-        "x-ms-request-id": "fb65793b-a3ea-4444-ae6e-532de87db5ca",
-        "x-ms-routing-request-id": "KOREASOUTH:20200529T024756Z:fb65793b-a3ea-4444-ae6e-532de87db5ca"
+        "x-ms-correlation-request-id": "2511751a-79be-4d4a-a4dd-2ce1e50a67fa",
+        "x-ms-ratelimit-remaining-subscription-writes": "1187",
+        "x-ms-request-id": "2511751a-79be-4d4a-a4dd-2ce1e50a67fa",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T091329Z:2511751a-79be-4d4a-a4dd-2ce1e50a67fa"
       },
       "ResponseBody": {
-        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler",
+        "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Scheduler",
         "namespace": "Microsoft.Scheduler",
         "resourceTypes": [
           {
@@ -61,7 +62,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -98,7 +101,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -135,7 +140,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -150,14 +157,15 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler?api-version=2019-10-01",
+      "RequestUri": "https://management.azure.com/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Scheduler?api-version=2019-10-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-a098c627ef5c0348b89805494838b29e-ea425bb39acddf42-00",
+        "traceparent": "00-fc0194a0919e0443a2a8290402257c79-68b339c5b7bed446-00",
         "User-Agent": [
-          "azsdk-net-Management.Resources/1.0.0-dev.20200529.1",
-          "(.NET Framework 4.8.4180.0; Microsoft Windows 10.0.19041 )"
+          "azsdk-net-ResourceManager.Resources/1.0.0-alpha.20200914.1",
+          "(.NET Core 4.6.29130.01; Microsoft Windows 10.0.19041 )"
         ],
         "x-ms-client-request-id": "d74d1772fd4d34943d83e07921e195f8",
         "x-ms-return-client-request-id": "true"
@@ -166,20 +174,20 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1833",
+        "Content-Length": "1938",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 29 May 2020 02:47:56 GMT",
+        "Date": "Mon, 14 Sep 2020 09:13:29 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "be77e7d9-de6f-47a3-89c6-eb6c6241eab0",
-        "x-ms-ratelimit-remaining-subscription-reads": "11989",
-        "x-ms-request-id": "be77e7d9-de6f-47a3-89c6-eb6c6241eab0",
-        "x-ms-routing-request-id": "KOREASOUTH:20200529T024756Z:be77e7d9-de6f-47a3-89c6-eb6c6241eab0"
+        "x-ms-correlation-request-id": "4af38c4f-b6d0-446d-a561-7c9da8b316d1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11934",
+        "x-ms-request-id": "4af38c4f-b6d0-446d-a561-7c9da8b316d1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20200914T091329Z:4af38c4f-b6d0-446d-a561-7c9da8b316d1"
       },
       "ResponseBody": {
-        "id": "/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/providers/Microsoft.Scheduler",
+        "id": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/providers/Microsoft.Scheduler",
         "namespace": "Microsoft.Scheduler",
         "resourceTypes": [
           {
@@ -210,7 +218,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -247,7 +257,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -284,7 +296,9 @@
               "UK South",
               "UK West",
               "Korea Central",
-              "Korea South"
+              "Korea South",
+              "East US 2 EUAP",
+              "Central US EUAP"
             ],
             "apiVersions": [
               "2016-03-01",
@@ -301,6 +315,6 @@
   ],
   "Variables": {
     "RandomSeed": "1565033638",
-    "SUBSCRIPTION_ID": "b9f138a1-1d64-4108-8413-9ea3be1c1b2d"
+    "SUBSCRIPTION_ID": "0b1f6471-1bf0-4dda-aec3-cb9272f09590"
   }
 }

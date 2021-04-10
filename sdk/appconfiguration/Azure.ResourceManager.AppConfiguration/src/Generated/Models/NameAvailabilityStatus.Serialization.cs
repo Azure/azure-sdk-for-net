@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 if (property.NameEquals("nameAvailable"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     nameAvailable = property.Value.GetBoolean();
                     continue;
                 }

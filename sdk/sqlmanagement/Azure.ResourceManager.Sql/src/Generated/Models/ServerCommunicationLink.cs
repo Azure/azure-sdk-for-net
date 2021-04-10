@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Server communication link. </summary>
-    public partial class ServerCommunicationLink : Resource
+    public partial class ServerCommunicationLink : ProxyResource
     {
         /// <summary> Initializes a new instance of ServerCommunicationLink. </summary>
         public ServerCommunicationLink()

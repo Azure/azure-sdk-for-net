@@ -4,8 +4,8 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Storage.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 {
                     vm.DiagnosticsProfile = GetDiagnosticsProfile(storageAccountForBootDiagnosticsName);
                 });
-            inputVM = returnTwoVm.Item2;
-            string inputVMName = returnTwoVm.Item3;
+            inputVM = returnTwoVm.Input;
+            string inputVMName = returnTwoVm.Name;
             VirtualMachine getVMWithInstanceViewResponse = await VirtualMachinesOperations.GetAsync(resourceGroupName, inputVMName);
             ValidateVMInstanceView(inputVM, getVMWithInstanceViewResponse);
             ValidateBootDiagnosticsInstanceView(getVMWithInstanceViewResponse.InstanceView.BootDiagnostics, hasError: false);

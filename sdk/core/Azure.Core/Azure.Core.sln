@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "src\Azure.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests", "tests\Azure.Core.Tests.csproj", "{84491222-6C36-4FA7-BBAE-1FA804129151}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure", "..\Microsoft.Extensions.Azure\src\Microsoft.Extensions.Azure.csproj", "{F8945D73-B000-4129-AF58-896EC3DB49AC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.Azure.Tests", "..\Microsoft.Extensions.Azure\tests\Microsoft.Extensions.Azure.Tests.csproj", "{5B093527-8B04-4D2B-B23D-441D4B5EE305}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{EB0781C6-6C18-4C2A-8BDB-D61A1460AB09}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental", "..\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj", "{08159FC6-D991-4728-A12C-55A05C906465}"
@@ -20,6 +16,18 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.NewtonsoftJson", "..\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj", "{0CF90583-C79F-44F8-B81F-5558D90CF621}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.NewtonsoftJson.Tests", "..\Microsoft.Azure.Core.NewtonsoftJson\tests\Microsoft.Azure.Core.NewtonsoftJson.Tests.csproj", "{3F70FC18-5F83-4AEE-A9BD-AE100A0B1BF8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.NewtonsoftJson", "..\Microsoft.Azure.Core.Spatial.NewtonsoftJson\src\Microsoft.Azure.Core.Spatial.NewtonsoftJson.csproj", "{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests", "..\Microsoft.Azure.Core.Spatial.NewtonsoftJson\tests\Microsoft.Azure.Core.Spatial.NewtonsoftJson.Tests.csproj", "{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Core.Spatial", "..\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.csproj", "{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Azure.Core.Spatial.Tests", "..\Microsoft.Azure.Core.Spatial\tests\Microsoft.Azure.Core.Spatial.Tests.csproj", "{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Perf", "perf\Azure.Core.Perf.csproj", "{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{33A10110-D88A-459B-82C1-FECEF86A822A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,14 +43,6 @@ Global
 		{84491222-6C36-4FA7-BBAE-1FA804129151}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84491222-6C36-4FA7-BBAE-1FA804129151}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84491222-6C36-4FA7-BBAE-1FA804129151}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8945D73-B000-4129-AF58-896EC3DB49AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8945D73-B000-4129-AF58-896EC3DB49AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8945D73-B000-4129-AF58-896EC3DB49AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8945D73-B000-4129-AF58-896EC3DB49AC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B093527-8B04-4D2B-B23D-441D4B5EE305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B093527-8B04-4D2B-B23D-441D4B5EE305}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B093527-8B04-4D2B-B23D-441D4B5EE305}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B093527-8B04-4D2B-B23D-441D4B5EE305}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EB0781C6-6C18-4C2A-8BDB-D61A1460AB09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB0781C6-6C18-4C2A-8BDB-D61A1460AB09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB0781C6-6C18-4C2A-8BDB-D61A1460AB09}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,6 +63,30 @@ Global
 		{3F70FC18-5F83-4AEE-A9BD-AE100A0B1BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F70FC18-5F83-4AEE-A9BD-AE100A0B1BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F70FC18-5F83-4AEE-A9BD-AE100A0B1BF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{622772C8-A2CB-4F8B-82EB-2A46BCC21DAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36FF59A9-D6C9-4226-A0FE-47C879F3EB94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6D7909F-4DE6-4895-BF39-EF892BA64BA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33A10110-D88A-459B-82C1-FECEF86A822A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33A10110-D88A-459B-82C1-FECEF86A822A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33A10110-D88A-459B-82C1-FECEF86A822A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33A10110-D88A-459B-82C1-FECEF86A822A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

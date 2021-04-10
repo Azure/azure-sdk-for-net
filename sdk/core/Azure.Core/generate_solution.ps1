@@ -1,18 +1,43 @@
+Set-StrictMode -Version Latest
+
 $RepoRoot = Resolve-Path $PSScriptRoot\..\..\..
 $ObjDirectory = "$RepoRoot\artifacts\obj";
 dotnet restore $RepoRoot\eng\service.proj
 
-$slnName = "Azure.Core.All.sln";
+pushd $PSScriptRoot
 
-foreach ($projectName in Get-ChildItem -Directory $ObjDirectory)
+try
 {
-    Write-Host "Processing $projectName\project.assets.json"
-    $assets = Get-Content -Raw $projectName\project.assets.json;
-
-    if (($projectName.Name.StartsWith("Azure.")) -or ($assets -Match "Azure.Core"))
+    $slnName = "Azure.Core.All.sln";
+    if (!(Test-Path $slnName))
     {
-        $assetsJson = ConvertFrom-Json $assets;
-        $projectPath = $assetsJson.project.restore.projectPath;
-        dotnet sln $slnName add $projectPath
+        dotnet new sln -n "Azure.Core.All"
     }
+    $projects = Get-ChildItem -Directory $ObjDirectory | %{ 
+        $assetsFile = "$_\project.assets.json"
+
+        if (!(Test-Path $assetsFile))
+        {
+            return;
+        }
+
+        Write-Host "Processing $assetsFile"
+        $assets = Get-Content -Raw $assetsFile;
+
+        if (($_.Name.StartsWith("Azure.")) -or ($assets -Match "Azure.Core"))
+        {
+            $assetsJson = ConvertFrom-Json $assets;
+            $projectPath = $assetsJson.project.restore.projectPath
+            if (Test-Path $projectPath)
+            {
+                return $projectPath;
+            }
+        }
+    }
+
+    dotnet sln $slnName add $projects
+}
+finally
+{
+    popd
 }

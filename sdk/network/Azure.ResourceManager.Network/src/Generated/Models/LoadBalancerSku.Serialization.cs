@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("name"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     name = new LoadBalancerSkuName(property.Value.GetString());
                     continue;
                 }

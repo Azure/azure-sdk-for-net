@@ -79,16 +79,12 @@
 
         private static async Task<long> InvokeActionWithDummyStreamBatchClientAsync(Func<BatchClient, Stream, Task> asyncAction, long streamSizeInBytes)
         {
-            using(Stream readStream = new DummyReadStream(streamSizeInBytes))
-            {
-                using (Protocol.BatchServiceClient protoClient = CreateBatchRestClientThatAlwaysRespondsWithStream(readStream))
-                using (DummyWriteStream writeStream = new DummyWriteStream())
-                using (BatchClient batchCli = BatchClient.Open(protoClient))
-                {
-                    await asyncAction(batchCli, writeStream);
-                    return writeStream.Length;
-                }
-            }
+            using Stream readStream = new DummyReadStream(streamSizeInBytes);
+            using Protocol.BatchServiceClient protoClient = CreateBatchRestClientThatAlwaysRespondsWithStream(readStream);
+            using DummyWriteStream writeStream = new DummyWriteStream();
+            using BatchClient batchCli = BatchClient.Open(protoClient);
+            await asyncAction(batchCli, writeStream);
+            return writeStream.Length;
         }
 
         private class AlwaysRespondWithStreamHandler : DelegatingHandler

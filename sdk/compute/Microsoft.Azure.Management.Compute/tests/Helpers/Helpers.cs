@@ -43,6 +43,11 @@ namespace Compute.Tests
             return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.VMScaleSets, vmssName);
         }
 
+        public static string GetCloudServiceReferenceId(string subId, string resourceGrpName, string cloudServiceName)
+        {
+            return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.CloudServices, cloudServiceName);
+        }
+
         private static string GetEntityReferenceId(string subId, string resourceGrpName, string controllerName, string entityName)
         {
             return string.Format("/{0}/{1}/{2}/{3}/{4}/{5}/{6}/{7}",
@@ -90,6 +95,19 @@ namespace Compute.Tests
             vmSizeProperties = vmSizesPropertyList.FirstOrDefault(x => x.Name.Equals(expectedVMSizeProperties.Name, StringComparison.Ordinal));
             Assert.NotNull(vmSizeProperties);
             CompareVMSizes(expectedVMSizeProperties, vmSizeProperties);
+        }
+        
+        /// <summary>
+        /// Marks a data disk to be detached.
+        /// </summary>
+        public static void MarkDataDiskToBeDetached(DataDisk disk, string detachOption = null)
+        {
+            Assert.NotNull(disk);
+            disk.ToBeDetached = true;
+            if (!string.IsNullOrEmpty(detachOption))
+            {
+                disk.DetachOption = detachOption;
+            }
         }
 
         private static List<VirtualMachineSize> GetExpectedVirtualMachineSize(bool hasAZ, bool? writeAcceleratorEnabled = null, bool hasDiffDisks = false)

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         // create container
         // delete container
-        [Test]
+        [RecordedTest]
         public async Task BlobContainersCreateDeleteTest()
         {
             // Create resource group
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
 
         // update container
         // get container properties
-        [Test]
+        [RecordedTest]
         public async Task BlobContainersUpdateTest()
         {
             // Create resource group
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.IsEmpty(blobContainer.Value.Metadata);
             Assert.Null(blobContainer.Value.PublicAccess);
 
-            blobContainer.Value.Metadata.Add("metadata", "true" );
+            blobContainer.Value.Metadata.Add("metadata", "true");
 
             blobContainer.Value.PublicAccess = PublicAccess.Container;
             var container = new BlobContainer() { PublicAccess = blobContainer.Value.PublicAccess };
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // create/update container with EncryptionScope
-        [Test]
+        [RecordedTest]
         public async Task BlobContainersEncryptionScopeTest()
         {
             // Create resource group
@@ -128,7 +128,6 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             // Create storage account
             StorageAccount account = await CreateStorageAccountAsync(rgName, accountName);
             VerifyAccountProperties(account, true);
-
 
             // implement case
             //Create EcryptionScope
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // list containers
-        [Test]
+        [RecordedTest]
         public async Task BlobContainersListTest()
         {
             // Create resource group
@@ -230,7 +229,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.AreEqual(2, pages.Result.Count());
         }
 
-        [Test]
+        [RecordedTest]
         public async Task BlobContainersGetTest()
         {
             // Create resource group
@@ -260,7 +259,6 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.NotNull(immutabilityPolicy.Value.Name);
             Assert.AreEqual(3, immutabilityPolicy.Value.ImmutabilityPeriodSinceCreationInDays);
             Assert.AreEqual(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.Value.State);
-
 
             immutabilityPolicy = await BlobContainersClient.LockImmutabilityPolicyAsync(rgName, accountName, containerName, ifMatch: immutabilityPolicy.Value.Etag);
             Assert.NotNull(immutabilityPolicy.Value.Id);
@@ -297,7 +295,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // set/clear legal hold.
-        [Test]
+        [RecordedTest]
         public async Task BlobContainersSetLegalHoldTest()
         {
             // Create resource group
@@ -362,7 +360,6 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         //            LeaseContainerResponse leaseResponse = storageMgmtClient.BlobContainers.Lease(rgName, accountName, containerName);
         //            Assert.NotNull(leaseResponse.LeaseId);
 
-
         //            blobContainer = storageMgmtClient.BlobContainers.Get(rgName, accountName, containerName);
         //            Assert.Equal("Leased", blobContainer.LeaseState);
         //        }
@@ -377,7 +374,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         //}
 
         // create and delete immutability policies.
-        [Test]
+        [RecordedTest]
         public async Task BlobContainersCreateDeleteImmutabilityPolicyTest()
         {
             // Create resource group
@@ -412,7 +409,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // update and get immutability policies.
-        [Test]
+        [RecordedTest]
         public async Task BlobContainersUpdateImmutabilityPolicyTest()
         {
             // Create resource group
@@ -455,7 +452,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // create/update immutability policies with AllowProtectedAppendWrites.
-        [Test]
+        [RecordedTest]
         public async Task ImmutabilityPolicyTest_AllowProtectedAppendWrites()
         {
             // Create resource group
@@ -501,9 +498,8 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
             Assert.False(immutabilityPolicy.Value.AllowProtectedAppendWrites.Value);
         }
 
-
         // lock immutability policies.
-        [Test]
+        [RecordedTest]
         public async Task BlobContainersLockImmutabilityPolicyTest()
         {
             // Create resource group
@@ -540,7 +536,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // extend immutability policies.
-        [Test]
+        [RecordedTest]
         public async Task BlobContainersExtendImmutabilityPolicyTest()
         {
             // Create resource group
@@ -585,7 +581,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // Get/Set Blob Service Properties
-        [Test]
+        [RecordedTest]
         public async Task BlobServiceTest()
         {
             // Create resource group
@@ -618,7 +614,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // Get/Set Cors rules in Blob Service Properties
-        [Test]
+        [RecordedTest]
         public async Task BlobServiceCorsTest()
         {
             // Create resource group
@@ -642,11 +638,11 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
                 Cors = new CorsRules()
             };
             properties2.Cors.CorsRulesValue.Add(
-                    new CorsRule(allowedOrigins:new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
+                    new CorsRule(allowedOrigins: new string[] { "http://www.contoso.com", "http://www.fabrikam.com" },
                     allowedMethods: new CorsRuleAllowedMethodsItem[] { "GET", "HEAD", "POST", "OPTIONS", "MERGE", "PUT" },
-                    maxAgeInSeconds:100,
-                    exposedHeaders:new string[] { "x-ms-meta-*" },
-                    allowedHeaders:new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }));
+                    maxAgeInSeconds: 100,
+                    exposedHeaders: new string[] { "x-ms-meta-*" },
+                    allowedHeaders: new string[] { "x-ms-meta-abc", "x-ms-meta-data*", "x-ms-meta-target*" }));
 
             properties2.Cors.CorsRulesValue.Add(new CorsRule(allowedOrigins: new string[] { "*" },
                 allowedMethods: new CorsRuleAllowedMethodsItem[] { "GET" },
@@ -700,7 +696,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // List Blob Service
-        [Test]
+        [RecordedTest]
         public async Task ListBlobServiceTest()
         {
             // Create resource group
@@ -719,7 +715,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // Point In Time Restore test
-        [Test]
+        [RecordedTest]
         [Ignore("Track2: Response<BlobRestoreStatus> restoreStatusResponse = await WaitForCompletionAsync(restoreStatus); Always timeout")]
         public async Task PITRTest()
         {
@@ -781,7 +777,7 @@ namespace Azure.ResourceManager.Storage.Tests.Tests
         }
 
         // Object replication test
-        [Test]
+        [RecordedTest]
         public async Task ORSTest()
         {
             // Create resource group

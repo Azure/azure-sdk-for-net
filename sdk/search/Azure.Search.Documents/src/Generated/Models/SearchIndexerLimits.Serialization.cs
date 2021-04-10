@@ -22,16 +22,31 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("maxRunTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxRunTime = property.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (property.NameEquals("maxDocumentExtractionSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxDocumentExtractionSize = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("maxDocumentContentCharactersToExtract"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxDocumentContentCharactersToExtract = property.Value.GetInt64();
                     continue;
                 }

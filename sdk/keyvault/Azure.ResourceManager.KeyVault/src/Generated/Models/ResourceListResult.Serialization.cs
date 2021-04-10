@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ResourceListResult
+    internal partial class ResourceListResult
     {
         internal static ResourceListResult DeserializeResourceListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Resource> array = new List<Resource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

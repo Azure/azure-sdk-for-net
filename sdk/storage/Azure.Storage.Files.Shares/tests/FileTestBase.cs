@@ -18,7 +18,13 @@ namespace Azure.Storage.Files.Shares.Tests
     [ClientTestFixture(
         ShareClientOptions.ServiceVersion.V2019_02_02,
         ShareClientOptions.ServiceVersion.V2019_07_07,
-        ShareClientOptions.ServiceVersion.V2019_12_12)]
+        ShareClientOptions.ServiceVersion.V2019_12_12,
+        ShareClientOptions.ServiceVersion.V2020_02_10,
+        ShareClientOptions.ServiceVersion.V2020_04_08,
+        ShareClientOptions.ServiceVersion.V2020_06_12,
+        ShareClientOptions.ServiceVersion.V2020_08_04,
+        RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
+        LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion })]
     public class FileTestBase : StorageTestBase
     {
         protected readonly ShareClientOptions.ServiceVersion _serviceVersion;
@@ -39,24 +45,23 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public ShareClientOptions GetOptions()
         {
-            var options = new ShareClientOptions
+            var options = new ShareClientOptions(_serviceVersion)
             {
                 Diagnostics = { IsLoggingEnabled = true },
                 Retry =
                 {
                     Mode = RetryMode.Exponential,
                     MaxRetries = Constants.MaxReliabilityRetries,
-                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 0.5),
-                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 10)
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
                 },
-                Transport = GetTransport()
             };
             if (Mode != RecordedTestMode.Live)
             {
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
             }
 
-            return Recording.InstrumentClientOptions(options);
+            return InstrumentClientOptions(options);
         }
 
         public async Task<DisposingShare> GetTestShareAsync(ShareServiceClient service = default, string shareName = default, IDictionary<string, string> metadata = default)
@@ -123,6 +128,15 @@ namespace Azure.Storage.Files.Shares.Tests
                         TestConfigSoftDelete.AccountKey),
                     GetOptions()));
 
+        public ShareServiceClient GetServiceClient_PremiumFile()
+            => InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigPremiumFile.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigPremiumFile.AccountName,
+                        TestConfigPremiumFile.AccountKey),
+                    GetOptions()));
+
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new ShareServiceClient(
@@ -146,19 +160,21 @@ namespace Azure.Storage.Files.Shares.Tests
                 TestConfigDefault.AccountName,
                 TestConfigDefault.AccountKey);
 
-        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default)
+        public SasQueryParameters GetNewAccountSasCredentials(StorageSharedKeyCredential sharedKeyCredentials = default,
+            AccountSasResourceTypes resourceTypes = AccountSasResourceTypes.Container,
+            AccountSasPermissions permissions = AccountSasPermissions.Create | AccountSasPermissions.Delete)
         {
             var builder = new AccountSasBuilder
             {
                 Protocol = SasProtocol.None,
                 Services = AccountSasServices.Files,
-                ResourceTypes = AccountSasResourceTypes.Container,
+                ResourceTypes = resourceTypes,
                 StartsOn = Recording.UtcNow.AddHours(-1),
                 ExpiresOn = Recording.UtcNow.AddHours(+1),
                 IPRange = new SasIPRange(IPAddress.None, IPAddress.None)
             };
-            builder.SetPermissions(AccountSasPermissions.Create | AccountSasPermissions.Delete);
-            return builder.ToSasQueryParameters(sharedKeyCredentials);
+            builder.SetPermissions(permissions);
+            return builder.ToSasQueryParameters(sharedKeyCredentials ?? GetNewSharedKeyCredentials());
         }
 
         public SasQueryParameters GetNewFileServiceSasCredentialsShare(string shareName, StorageSharedKeyCredential sharedKeyCredentials = default)
@@ -274,7 +290,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
             {
-                await share.CreateAsync(metadata: metadata);
+                await share.CreateIfNotExistsAsync(metadata: metadata);
                 return new DisposingShare(share);
             }
 
@@ -289,7 +305,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 {
                     try
                     {
-                        await Share.DeleteAsync(true);
+                        await Share.DeleteIfExistsAsync();
                         Share = null;
                     }
                     catch
@@ -309,7 +325,7 @@ namespace Azure.Storage.Files.Shares.Tests
 
             public static async Task<DisposingDirectory> CreateAsync(DisposingShare test, ShareDirectoryClient directory)
             {
-                await directory.CreateAsync();
+                await directory.CreateIfNotExistsAsync();
                 return new DisposingDirectory(test, directory);
             }
 

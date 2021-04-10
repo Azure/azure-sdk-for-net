@@ -1,9 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TestHelperProjects>Rbac1.6;Resources201705;</TestHelperProjects>
+    <TestHelperProjects>Rbac1.6;</TestHelperProjects>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.KeyVault.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="D:\Azure\azure-sdk-for-net\eng\..\sdk\testcommon\Azure.Graph.Rbac\src\Generated\Models\ServicePrincipal.Serialization.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.Resources" />
+    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="$(MgmtAutorestVersion)" PrivateAssets="All" />
   </ItemGroup>
 </Project>
 

@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("protocol"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     protocol = new PcProtocol(property.Value.GetString());
                     continue;
                 }

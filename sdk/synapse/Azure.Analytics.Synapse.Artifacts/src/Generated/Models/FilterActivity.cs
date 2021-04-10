@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Filter and return results from input array based on the conditions. </summary>
-    public partial class FilterActivity : Activity
+    public partial class FilterActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of FilterActivity. </summary>
         /// <param name="name"> Activity name. </param>

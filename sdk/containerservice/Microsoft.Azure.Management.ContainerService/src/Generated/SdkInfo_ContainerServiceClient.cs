@@ -19,22 +19,23 @@ namespace Microsoft.Azure.Management.ContainerService
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ContainerService", "AgentPools", "2019-10-01"),
+                new Tuple<string, string, string>("ContainerService", "AgentPools", "2020-07-01"),
                 new Tuple<string, string, string>("ContainerService", "ContainerServices", "2017-07-01"),
                 new Tuple<string, string, string>("ContainerService", "ContainerServices", "2019-08-01"),
-                new Tuple<string, string, string>("ContainerService", "ManagedClusters", "2019-10-01"),
+                new Tuple<string, string, string>("ContainerService", "ManagedClusters", "2020-07-01"),
                 new Tuple<string, string, string>("ContainerService", "OpenShiftManagedClusters", "2019-04-30"),
-                new Tuple<string, string, string>("ContainerService", "Operations", "2019-10-01"),
+                new Tuple<string, string, string>("ContainerService", "Operations", "2020-07-01"),
+                new Tuple<string, string, string>("ContainerService", "PrivateEndpointConnections", "2020-07-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.0.6187";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/containerservice/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2019-10 --csharp-sdks-folder=C:\\AME\\erich-net-sdk\\sdk";
+      public static readonly String AutoRestVersion = "v2";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/containerservice/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\abelch\\src\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "6282f28ce35e515f544c4ad38e5f7b8eef69e817";
+      public static readonly String GithubCommidId = "122829cebe6e4177e9eb6ff349071d3e2034b0e7";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

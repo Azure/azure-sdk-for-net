@@ -46,12 +46,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='sourceControlConfigurationName'>
             /// Name of the Source Control Configuration.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
-            public static SourceControlConfiguration Get(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion)
+            public static SourceControlConfiguration Get(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName)
             {
-                return operations.GetAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, apiVersion).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -79,15 +76,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='sourceControlConfigurationName'>
             /// Name of the Source Control Configuration.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SourceControlConfiguration> GetAsync(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SourceControlConfiguration> GetAsync(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -118,15 +112,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='sourceControlConfigurationName'>
             /// Name of the Source Control Configuration.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
             /// <param name='sourceControlConfiguration'>
             /// Properties necessary to Create KubernetesConfiguration.
             /// </param>
-            public static SourceControlConfiguration CreateOrUpdate(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, SourceControlConfiguration sourceControlConfiguration)
+            public static SourceControlConfiguration CreateOrUpdate(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, SourceControlConfiguration sourceControlConfiguration)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, apiVersion, sourceControlConfiguration).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, sourceControlConfiguration).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -154,18 +145,15 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='sourceControlConfigurationName'>
             /// Name of the Source Control Configuration.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
             /// <param name='sourceControlConfiguration'>
             /// Properties necessary to Create KubernetesConfiguration.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SourceControlConfiguration> CreateOrUpdateAsync(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, SourceControlConfiguration sourceControlConfiguration, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SourceControlConfiguration> CreateOrUpdateAsync(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, SourceControlConfiguration sourceControlConfiguration, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, apiVersion, sourceControlConfiguration, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, sourceControlConfiguration, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -197,12 +185,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='sourceControlConfigurationName'>
             /// Name of the Source Control Configuration.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
-            public static void Delete(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion)
+            public static void Delete(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName)
             {
-                operations.DeleteAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, apiVersion).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -231,15 +216,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='sourceControlConfigurationName'>
             /// Name of the Source Control Configuration.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, apiVersion, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -264,12 +246,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='clusterName'>
             /// The name of the kubernetes cluster.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
-            public static IPage<SourceControlConfiguration> List(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string apiVersion)
+            public static IPage<SourceControlConfiguration> List(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName)
             {
-                return operations.ListAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, apiVersion).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -294,15 +273,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='clusterName'>
             /// The name of the kubernetes cluster.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SourceControlConfiguration>> ListAsync(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SourceControlConfiguration>> ListAsync(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -334,12 +310,9 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='sourceControlConfigurationName'>
             /// Name of the Source Control Configuration.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
-            public static void BeginDelete(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion)
+            public static void BeginDelete(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName)
             {
-                operations.BeginDeleteAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, apiVersion).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -368,15 +341,12 @@ namespace Microsoft.Azure.Management.KubernetesConfiguration
             /// <param name='sourceControlConfigurationName'>
             /// Name of the Source Control Configuration.
             /// </param>
-            /// <param name='apiVersion'>
-            /// The API version to be used with the HTTP request.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this ISourceControlConfigurationsOperations operations, string resourceGroupName, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, apiVersion, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

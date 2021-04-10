@@ -411,8 +411,8 @@
             request.ServiceRequestFunc = async (token) =>
             {
                 ++serviceRequestFuncCallCount;
-                
-                Action throwsAction = () => { throw new InvalidOperationException(); };
+
+                void throwsAction() { throw new InvalidOperationException(); }
                 Task throwsTask1 = Task.Factory.StartNew(throwsAction);
                 Task throwsTask2 = Task.Factory.StartNew(throwsAction);
                 await Task.WhenAll(throwsTask1, throwsTask2); //This will throw
@@ -463,7 +463,7 @@
             {
                 ++serviceRequestFuncCallCount;
 
-                Action throwsAction = () => { throw new ArgumentException(); };
+                void throwsAction() { throw new ArgumentException(); }
                 Task throwsTask1 = Task.Factory.StartNew(throwsAction);
                 Task throwsTask2 = Task.Factory.StartNew(throwsAction);
                 await Task.WhenAll(throwsTask1, throwsTask2); //This will throw
@@ -605,33 +605,31 @@
 
             int callCount = 0;
 
-            using (var client = BatchClient.Open(this.credentials))
-            {
-                client.JobScheduleOperations.CustomBehaviors.Add(new RequestInterceptor(
-                    (req) =>
-                    {
+            using var client = BatchClient.Open(this.credentials);
+            client.JobScheduleOperations.CustomBehaviors.Add(new RequestInterceptor(
+                (req) =>
+                {
                         //I wish I didn't have to cast here
                         var stronglyTypedRequest = (BatchRequest<
-                            JobScheduleListOptions,
-                            AzureOperationResponse<IPage<ProxyModels.CloudJobSchedule>, JobScheduleListHeaders>>)req;
+                        JobScheduleListOptions,
+                        AzureOperationResponse<IPage<ProxyModels.CloudJobSchedule>, JobScheduleListHeaders>>)req;
 
-                        stronglyTypedRequest.ServiceRequestFunc = (token) =>
-                                                                  {
-                                                                      ++callCount;
-                                                                      throw new TimeoutException();
-                                                                  };
-                    }));
+                    stronglyTypedRequest.ServiceRequestFunc = (token) =>
+                                                              {
+                                                                  ++callCount;
+                                                                  throw new TimeoutException();
+                                                              };
+                }));
 
-                client.JobScheduleOperations.CustomBehaviors.Add(new RetryPolicyProvider(new LinearRetry(deltaBackoff, maxRetries)));
+            client.JobScheduleOperations.CustomBehaviors.Add(new RetryPolicyProvider(new LinearRetry(deltaBackoff, maxRetries)));
 
-                await Assert.ThrowsAsync<TimeoutException>(async () =>
-                                                     {
-                                                         IPagedEnumerable<CloudJobSchedule> schedules = client.JobScheduleOperations.ListJobSchedules();
-                                                         await schedules.GetPagedEnumerator().MoveNextAsync();
-                                                     });
+            await Assert.ThrowsAsync<TimeoutException>(async () =>
+                                                 {
+                                                     IPagedEnumerable<CloudJobSchedule> schedules = client.JobScheduleOperations.ListJobSchedules();
+                                                     await schedules.GetPagedEnumerator().MoveNextAsync();
+                                                 });
 
-                Assert.Equal(maxRetries + 1, callCount);
-            }
+            Assert.Equal(maxRetries + 1, callCount);
         }
 
         #endregion
@@ -640,27 +638,25 @@
         {
             int callCount = 0;
 
-            using (BatchClient client = BatchClient.Open(this.credentials))
-            {
-                client.CustomBehaviors.Add(new RequestInterceptor(
-                    (req) =>
+            using BatchClient client = BatchClient.Open(this.credentials);
+            client.CustomBehaviors.Add(new RequestInterceptor(
+                (req) =>
+                {
+                    var stronglyTypedRequest = (Microsoft.Azure.Batch.Protocol.BatchRequests.JobAddBatchRequest)req;
+
+                    stronglyTypedRequest.ServiceRequestFunc = (token) =>
                     {
-                        var stronglyTypedRequest = (Microsoft.Azure.Batch.Protocol.BatchRequests.JobAddBatchRequest)req;
+                        ++callCount;
+                        throw new Microsoft.Rest.ValidationException();
+                    };
+                }));
 
-                        stronglyTypedRequest.ServiceRequestFunc = (token) =>
-                        {
-                            ++callCount;
-                            throw new Microsoft.Rest.ValidationException();
-                        };
-                    }));
+            client.CustomBehaviors.Add(new RetryPolicyProvider(policy));
 
-                client.CustomBehaviors.Add(new RetryPolicyProvider(policy));
+            CloudJob job = client.JobOperations.CreateJob();
+            await Assert.ThrowsAsync<Microsoft.Rest.ValidationException>(async () => await job.CommitAsync());
 
-                CloudJob job = client.JobOperations.CreateJob();
-                await Assert.ThrowsAsync<Microsoft.Rest.ValidationException>(async () => await job.CommitAsync());
-
-                Assert.Equal(1, callCount);
-            }
+            Assert.Equal(1, callCount);
         }
 
     }

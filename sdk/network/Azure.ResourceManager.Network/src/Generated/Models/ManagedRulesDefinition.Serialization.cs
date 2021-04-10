@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("exclusions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<OwaspCrsExclusionEntry> array = new List<OwaspCrsExclusionEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

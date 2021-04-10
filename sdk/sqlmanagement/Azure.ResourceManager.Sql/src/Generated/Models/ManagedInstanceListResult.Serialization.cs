@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceListResult
+    internal partial class ManagedInstanceListResult
     {
         internal static ManagedInstanceListResult DeserializeManagedInstanceListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedInstance> array = new List<ManagedInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

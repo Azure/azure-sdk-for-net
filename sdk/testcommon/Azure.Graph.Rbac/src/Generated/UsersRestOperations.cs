@@ -62,6 +62,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/users", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -139,6 +140,7 @@ namespace Azure.Graph.Rbac
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -197,6 +199,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(upnOrObjectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -267,6 +270,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(upnOrObjectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -341,6 +345,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(upnOrObjectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -402,6 +407,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/getMemberGroups", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -483,9 +489,10 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/", false);
             uri.AppendPath(tenantID, true);
             uri.AppendPath("/", false);
-            uri.AppendRaw(nextLink, false);
+            uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -552,6 +559,7 @@ namespace Azure.Graph.Rbac
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 

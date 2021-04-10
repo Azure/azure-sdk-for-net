@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("supportedServerVersions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ServerVersionCapability> array = new List<ServerVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -39,6 +44,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("supportedManagedInstanceVersions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedInstanceVersionCapability> array = new List<ManagedInstanceVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -49,6 +59,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = property.Value.GetString().ToCapabilityStatus();
                     continue;
                 }

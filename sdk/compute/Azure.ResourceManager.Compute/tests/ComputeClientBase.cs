@@ -4,9 +4,9 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Management.Network;
-using Azure.Management.Resources;
-using Azure.Management.Storage;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Compute.Tests;
 using Azure.ResourceManager.TestFramework;
@@ -134,19 +134,19 @@ namespace Azure.ResourceManager
         {
             return CreateClient<ComputeManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new ComputeManagementClientOptions()));
+                InstrumentClientOptions(new ComputeManagementClientOptions()));
         }
         internal NetworkManagementClient GetNetworkManagementClient()
         {
             return CreateClient<NetworkManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new NetworkManagementClientOptions()));
+                InstrumentClientOptions(new NetworkManagementClientOptions()));
         }
         internal StorageManagementClient GetStorageManagementClient()
         {
             return CreateClient<StorageManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new StorageManagementClientOptions()));
+                InstrumentClientOptions(new StorageManagementClientOptions()));
         }
 
         public void WaitSeconds(int seconds)

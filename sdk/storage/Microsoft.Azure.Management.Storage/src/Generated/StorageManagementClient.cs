@@ -90,6 +90,11 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IStorageAccountsOperations StorageAccounts { get; private set; }
 
         /// <summary>
+        /// Gets the IDeletedAccountsOperations.
+        /// </summary>
+        public virtual IDeletedAccountsOperations DeletedAccounts { get; private set; }
+
+        /// <summary>
         /// Gets the IUsagesOperations.
         /// </summary>
         public virtual IUsagesOperations Usages { get; private set; }
@@ -98,6 +103,11 @@ namespace Microsoft.Azure.Management.Storage
         /// Gets the IManagementPoliciesOperations.
         /// </summary>
         public virtual IManagementPoliciesOperations ManagementPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the IBlobInventoryPoliciesOperations.
+        /// </summary>
+        public virtual IBlobInventoryPoliciesOperations BlobInventoryPolicies { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -403,8 +413,10 @@ namespace Microsoft.Azure.Management.Storage
             Operations = new Operations(this);
             Skus = new SkusOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
+            DeletedAccounts = new DeletedAccountsOperations(this);
             Usages = new UsagesOperations(this);
             ManagementPolicies = new ManagementPoliciesOperations(this);
+            BlobInventoryPolicies = new BlobInventoryPoliciesOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             ObjectReplicationPolicies = new ObjectReplicationPoliciesOperations(this);
@@ -418,7 +430,7 @@ namespace Microsoft.Azure.Management.Storage
             TableServices = new TableServicesOperations(this);
             Table = new TableOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-06-01";
+            ApiVersion = "2021-02-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

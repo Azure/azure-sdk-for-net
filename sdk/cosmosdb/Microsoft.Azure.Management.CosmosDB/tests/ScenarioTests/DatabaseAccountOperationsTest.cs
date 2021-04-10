@@ -113,7 +113,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 Assert.NotNull(databaseAccountsByResourceGroupName);
 
                 DatabaseAccountListKeysResult databaseAccountListKeysResult = cosmosDBManagementClient.DatabaseAccounts.ListKeysWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
-                
+
                 Assert.NotNull(databaseAccountListKeysResult.PrimaryMasterKey);
                 Assert.NotNull(databaseAccountListKeysResult.SecondaryMasterKey);
                 Assert.NotNull(databaseAccountListKeysResult.PrimaryReadonlyMasterKey);
@@ -134,9 +134,6 @@ namespace CosmosDB.Tests.ScenarioTests
                 cosmosDBManagementClient.DatabaseAccounts.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, databaseAccountName, new DatabaseAccountRegenerateKeyParameters { KeyKind = "secondaryReadonly" });
 
                 DatabaseAccountListKeysResult databaseAccountListRegeneratedKeysResult = cosmosDBManagementClient.DatabaseAccounts.ListKeysWithHttpMessagesAsync(resourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
-
-                bool isNameExists = cosmosDBManagementClient.DatabaseAccounts.CheckNameExistsWithHttpMessagesAsync(databaseAccountName).GetAwaiter().GetResult().Body;
-                Assert.True(isNameExists);
 
                 cosmosDBManagementClient.DatabaseAccounts.DeleteWithHttpMessagesAsync(resourceGroupName, databaseAccountName);
             }
@@ -175,7 +172,7 @@ namespace CosmosDB.Tests.ScenarioTests
             Assert.Equal(actualValue.DefaultConsistencyLevel, expectedValue.DefaultConsistencyLevel);
 
             if (actualValue.DefaultConsistencyLevel == DefaultConsistencyLevel.BoundedStaleness)
-            { 
+            {
                 Assert.Equal(actualValue.MaxIntervalInSeconds, expectedValue.MaxIntervalInSeconds);
                 Assert.Equal(actualValue.MaxStalenessPrefix, expectedValue.MaxStalenessPrefix);
             }

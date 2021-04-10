@@ -1,6 +1,6 @@
 # Generated code configuration
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code.
 #TODO: update commit id back to e25881196fcf84fca4dfaedc9fc45a00db4e0541 (?) after merging /azure-rest-api-specs/pull/9800
 
 ``` yaml

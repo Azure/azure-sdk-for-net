@@ -115,7 +115,7 @@ For more details, visit the [SDK migration guide](https://docs.microsoft.com/azu
     - The ability to create skillsets with one or more predefined or customer skills.
     - Attach a cognitive service resource to the skillset to remove restrictions on document limit count for enrichments.
 - Support for [complex types](https://docs.microsoft.com/azure/search/search-howto-complex-data-types) that allows you to model almost any nested JSON structure in an Azure Search index. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
-- Introduction of [Autocomplete](https://docs.microsoft.com/en-us/azure/search/search-autocomplete-tutorial) as an alternative to the **Suggest API**. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
+- Introduction of [Autocomplete](https://docs.microsoft.com/azure/search/search-autocomplete-tutorial) as an alternative to the **Suggest API**. [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
 - General availability of [JsonLines parsing mode](https://docs.microsoft.com/azure/search/search-howto-index-json-blobs). [PR 6009](https://github.com/Azure/azure-sdk-for-net/pull/6009).
 
 ### Bug fixes
@@ -248,7 +248,7 @@ The list of breaking changes are identical to the breaking changes in [version 9
 
 ### Improvements
 
-- Introduces [Autocomplete](https://docs.microsoft.com/en-us/azure/search/search-autocomplete-tutorial) as an alternative to the **Suggest API**. [PR 4283](https://github.com/Azure/azure-sdk-for-net/pull/4283).
+- Introduces [Autocomplete](https://docs.microsoft.com/azure/search/search-autocomplete-tutorial) as an alternative to the **Suggest API**. [PR 4283](https://github.com/Azure/azure-sdk-for-net/pull/4283).
 
 ### Bug fixes
 

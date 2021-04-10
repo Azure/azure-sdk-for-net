@@ -308,7 +308,7 @@ namespace AzureCreateVMSample
 ## Code Samples
 
 More code samples for using the management library for .NET can be found in the following locations
-- [.NET Management Library Code Samples](https://docs.microsoft.com/en-us/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK&terms=managing%20using%20Azure%20.NET%20SDK)
+- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK&terms=managing%20using%20Azure%20.NET%20SDK)
 
 Need help?
 ----------

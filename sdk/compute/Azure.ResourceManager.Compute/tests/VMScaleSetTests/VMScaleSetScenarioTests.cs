@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 createWithManagedDisks: true,
                 createWithPublicIpAddress: false,
                 createWithHealthProbe: true);
-            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
 
             // Set Automatic Repairs to true
@@ -276,15 +276,14 @@ namespace Azure.ResourceManager.Compute.Tests
                 createWithPublicIpAddress: false,
                 createWithHealthProbe: true,
                 automaticRepairsPolicy: automaticRepairsPolicy);
-            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks: true);
             var getInstanceViewResponse = (await VirtualMachineScaleSetsOperations.GetInstanceViewAsync(rgName, vmssName)).Value;
 
             Assert.True(getInstanceViewResponse.OrchestrationServices.Count == 1);
             Assert.AreEqual("Running", getInstanceViewResponse.OrchestrationServices[0].ServiceState.ToString());
             Assert.AreEqual("AutomaticRepairs", getInstanceViewResponse.OrchestrationServices[0].ServiceName.ToString());
-
 
             ////TODO
             OrchestrationServiceStateInput orchestrationServiceStateInput = new OrchestrationServiceStateInput(OrchestrationServiceNames.AutomaticRepairs, OrchestrationServiceStateAction.Suspend);
@@ -301,7 +300,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
             await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartDeleteAsync(rgName, vmssName));
         }
-
 
         private async Task TestScaleSetOperationsInternal(string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true,
             bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false,
@@ -352,8 +350,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 ppgId: ppgId,
                 enableUltraSSD: enableUltraSSD,
                 diskEncryptionSetId: diskEncryptionSetId);
-            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet getResponse = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
             if (diskEncryptionSetId != null)
             {
                 Assert.True(getResponse.VirtualMachineProfile.StorageProfile.OsDisk.ManagedDisk.DiskEncryptionSet != null, "OsDisk.ManagedDisk.DiskEncryptionSet is null");

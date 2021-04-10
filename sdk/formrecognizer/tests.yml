@@ -1,6 +1,21 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: formrecognizer
+    TimeoutInMinutes: 90
+    CloudConfig:
+      Public:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: 'canadacentral'
+      Canary:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
+        Location: 'centraluseuap'
+      UsGov:
+        SubscriptionConfiguration: $(sub-config-gov-test-resources-test)
+        Location: 'usgovvirginia'
+      China:
+        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+        Location: 'chinaeast2'
+    SupportedClouds: 'Public,Canary,UsGov,China'

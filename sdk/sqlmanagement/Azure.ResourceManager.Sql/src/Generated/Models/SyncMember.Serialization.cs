@@ -107,10 +107,20 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("databaseType"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             databaseType = new SyncMemberDbType(property0.Value.GetString());
                             continue;
                         }
@@ -121,6 +131,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("sqlServerDatabaseId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             sqlServerDatabaseId = property0.Value.GetGuid();
                             continue;
                         }
@@ -131,6 +146,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("usePrivateLinkConnection"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             usePrivateLinkConnection = property0.Value.GetBoolean();
                             continue;
                         }
@@ -156,11 +176,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("syncDirection"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             syncDirection = new SyncDirection(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("syncState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             syncState = new SyncMemberState(property0.Value.GetString());
                             continue;
                         }

@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("paths"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AliasPath> array = new List<AliasPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -39,6 +44,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("type"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     type = property.Value.GetString().ToAliasType();
                     continue;
                 }
@@ -49,6 +59,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("defaultPattern"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     defaultPattern = AliasPattern.DeserializeAliasPattern(property.Value);
                     continue;
                 }

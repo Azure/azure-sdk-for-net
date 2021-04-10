@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Status of the Azure async operation. </summary>
-    public readonly partial struct NetworkOperationStatus : IEquatable<NetworkOperationStatus>
+    internal readonly partial struct NetworkOperationStatus : IEquatable<NetworkOperationStatus>
     {
         private readonly string _value;
 

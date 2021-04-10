@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("encryptionSettings"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<EncryptionSettingsElement> array = new List<EncryptionSettingsElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -1,28 +1,28 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/validateInputs?api-version=2019-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3ZhbGlkYXRlSW5wdXRzP2FwaS12ZXJzaW9uPTIwMTktMDktMDE=",
+      "RequestUri": "/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/providers/Microsoft.DataBox/locations/westus/validateInputs?api-version=2020-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZmE2ODA4MmYtOGZmNy00YTI1LTk1YzctY2U5ZGE1NDEyNDJmL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUJveC9sb2NhdGlvbnMvd2VzdHVzL3ZhbGlkYXRlSW5wdXRzP2FwaS12ZXJzaW9uPTIwMjAtMTEtMDE=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"validationCategory\": \"JobCreationValidation\",\r\n  \"individualRequestDetails\": [\r\n    {\r\n      \"validationType\": \"ValidateDataDestinationDetails\",\r\n      \"destinationAccountDetails\": [\r\n        {\r\n          \"dataDestinationType\": \"StorageAccount\",\r\n          \"accountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/databoxbvt/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount\"\r\n        }\r\n      ],\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateAddress\",\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"16 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"deviceType\": \"DataBox\",\r\n      \"transportPreferences\": {\r\n        \"preferredShipmentType\": \"MicrosoftManaged\"\r\n      }\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateSubscriptionIsAllowedToCreateJob\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateSkuAvailability\",\r\n      \"deviceType\": \"DataBox\",\r\n      \"country\": \"US\",\r\n      \"location\": \"westus\",\r\n      \"transferType\": \"ImportToAzure\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateCreateOrderLimit\",\r\n      \"deviceType\": \"DataBox\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidatePreferences\",\r\n      \"preference\": {\r\n        \"transportPreferences\": {\r\n          \"preferredShipmentType\": \"MicrosoftManaged\"\r\n        }\r\n      },\r\n      \"deviceType\": \"DataBox\"\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"validationCategory\": \"JobCreationValidation\",\r\n  \"individualRequestDetails\": [\r\n    {\r\n      \"validationType\": \"ValidateDataTransferDetails\",\r\n      \"dataImportDetails\": [\r\n        {\r\n          \"accountDetails\": {\r\n            \"dataAccountType\": \"StorageAccount\",\r\n            \"storageAccountId\": \"/subscriptions/fa68082f-8ff7-4a25-95c7-ce9da541242f/resourcegroups/databoxbvt/providers/Microsoft.Storage/storageAccounts/databoxbvttestaccount\"\r\n          }\r\n        }\r\n      ],\r\n      \"deviceType\": \"DataBox\",\r\n      \"transferType\": \"ImportToAzure\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateAddress\",\r\n      \"shippingAddress\": {\r\n        \"streetAddress1\": \"16 TOWNSEND ST\",\r\n        \"streetAddress2\": \"Unit 1\",\r\n        \"city\": \"San Francisco\",\r\n        \"stateOrProvince\": \"CA\",\r\n        \"country\": \"US\",\r\n        \"postalCode\": \"94107\",\r\n        \"companyName\": \"Microsoft\",\r\n        \"addressType\": \"Commercial\"\r\n      },\r\n      \"deviceType\": \"DataBox\",\r\n      \"transportPreferences\": {\r\n        \"preferredShipmentType\": \"MicrosoftManaged\"\r\n      }\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateSubscriptionIsAllowedToCreateJob\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateSkuAvailability\",\r\n      \"deviceType\": \"DataBox\",\r\n      \"transferType\": \"ImportToAzure\",\r\n      \"country\": \"US\",\r\n      \"location\": \"westus\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidateCreateOrderLimit\",\r\n      \"deviceType\": \"DataBox\"\r\n    },\r\n    {\r\n      \"validationType\": \"ValidatePreferences\",\r\n      \"preference\": {\r\n        \"transportPreferences\": {\r\n          \"preferredShipmentType\": \"MicrosoftManaged\"\r\n        }\r\n      },\r\n      \"deviceType\": \"DataBox\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "546cdd36-5032-48f8-9c71-0ebd9944b7bb"
+          "71a6bb43-fcd3-40db-a8e9-39d1f91e7b16"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.27817.01",
+          "FxVersion/4.6.29321.03",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.18362.",
-          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.0.1"
+          "OSVersion/Microsoft.Windows.10.0.19042.",
+          "Microsoft.Azure.Management.DataBox.DataBoxManagementClient/1.2.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1592"
+          "1675"
         ]
       },
       "ResponseHeaders": {
@@ -32,35 +32,35 @@
         "Pragma": [
           "no-cache"
         ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "x-ms-request-id": [
-          "ce8ca9f2-bd14-443c-804a-f17b67189068"
-        ],
-        "x-ms-client-request-id": [
-          "546cdd36-5032-48f8-9c71-0ebd9944b7bb"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
-        ],
-        "x-ms-correlation-request-id": [
-          "873a4a64-4e29-4c74-9c93-66180e7e962a"
-        ],
-        "x-ms-routing-request-id": [
-          "SOUTHINDIA:20191016T063647Z:873a4a64-4e29-4c74-9c93-66180e7e962a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "x-ms-request-id": [
+          "de1a778f-a9f2-4c3a-b337-487f248ae8b9"
+        ],
+        "x-ms-client-request-id": [
+          "71a6bb43-fcd3-40db-a8e9-39d1f91e7b16"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-correlation-request-id": [
+          "de1a778f-a9f2-4c3a-b337-487f248ae8b9"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUSEUAP:20201110T132437Z:de1a778f-a9f2-4c3a-b337-487f248ae8b9"
+        ],
         "Date": [
-          "Wed, 16 Oct 2019 06:36:47 GMT"
+          "Tue, 10 Nov 2020 13:24:36 GMT"
         ],
         "Content-Length": [
-          "1234"
+          "2065"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -69,7 +69,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"status\": \"AllValidToProceed\",\r\n    \"individualResponseDetails\": [\r\n      {\r\n        \"status\": \"Valid\",\r\n        \"validationType\": \"ValidateDataDestinationDetails\",\r\n        \"error\": {}\r\n      },\r\n      {\r\n        \"validationStatus\": \"Valid\",\r\n        \"alternateAddresses\": [\r\n          {\r\n            \"streetAddress1\": \"16 TOWNSEND ST\",\r\n            \"streetAddress2\": \"Unit 1\",\r\n            \"streetAddress3\": \"\",\r\n            \"city\": \"SAN FRANCISCO\",\r\n            \"stateOrProvince\": \"CA\",\r\n            \"country\": \"US\",\r\n            \"postalCode\": \"94107\",\r\n            \"addressType\": \"None\"\r\n          }\r\n        ],\r\n        \"validationType\": \"ValidateAddress\",\r\n        \"error\": {}\r\n      },\r\n      {\r\n        \"status\": \"Valid\",\r\n        \"validationType\": \"ValidateSubscriptionIsAllowedToCreateJob\",\r\n        \"error\": {}\r\n      },\r\n      {\r\n        \"status\": \"Valid\",\r\n        \"validationType\": \"ValidateSkuAvailability\",\r\n        \"error\": {}\r\n      },\r\n      {\r\n        \"status\": \"Valid\",\r\n        \"validationType\": \"ValidateCreateOrderLimit\",\r\n        \"error\": {}\r\n      },\r\n      {\r\n        \"status\": \"Valid\",\r\n        \"validationType\": \"ValidatePreferences\",\r\n        \"error\": {}\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"status\": \"AllValidToProceed\",\r\n    \"individualResponseDetails\": [\r\n      {\r\n        \"status\": \"Valid\",\r\n        \"validationType\": \"ValidateDataTransferDetails\",\r\n        \"error\": {\r\n          \"code\": \"Success\",\r\n          \"target\": \"KeyEncryptionKey\",\r\n          \"details\": [],\r\n          \"additionalInfo\": []\r\n        }\r\n      },\r\n      {\r\n        \"validationStatus\": \"Valid\",\r\n        \"alternateAddresses\": [\r\n          {\r\n            \"streetAddress1\": \"16 TOWNSEND ST\",\r\n            \"streetAddress2\": \"Unit 1\",\r\n            \"streetAddress3\": \"\",\r\n            \"city\": \"SAN FRANCISCO\",\r\n            \"stateOrProvince\": \"CA\",\r\n            \"country\": \"US\",\r\n            \"postalCode\": \"94107\",\r\n            \"addressType\": \"None\"\r\n          }\r\n        ],\r\n        \"validationType\": \"ValidateAddress\",\r\n        \"error\": {\r\n          \"code\": \"Success\",\r\n          \"target\": \"KeyEncryptionKey\",\r\n          \"details\": [],\r\n          \"additionalInfo\": []\r\n        }\r\n      },\r\n      {\r\n        \"status\": \"Valid\",\r\n        \"validationType\": \"ValidateSubscriptionIsAllowedToCreateJob\",\r\n        \"error\": {\r\n          \"code\": \"Success\",\r\n          \"target\": \"KeyEncryptionKey\",\r\n          \"details\": [],\r\n          \"additionalInfo\": []\r\n        }\r\n      },\r\n      {\r\n        \"status\": \"Valid\",\r\n        \"validationType\": \"ValidateSkuAvailability\",\r\n        \"error\": {\r\n          \"code\": \"Success\",\r\n          \"target\": \"KeyEncryptionKey\",\r\n          \"details\": [],\r\n          \"additionalInfo\": []\r\n        }\r\n      },\r\n      {\r\n        \"status\": \"Valid\",\r\n        \"validationType\": \"ValidateCreateOrderLimit\",\r\n        \"error\": {\r\n          \"code\": \"Success\",\r\n          \"target\": \"KeyEncryptionKey\",\r\n          \"details\": [],\r\n          \"additionalInfo\": []\r\n        }\r\n      },\r\n      {\r\n        \"status\": \"Valid\",\r\n        \"validationType\": \"ValidatePreferences\",\r\n        \"error\": {\r\n          \"code\": \"Success\",\r\n          \"target\": \"KeyEncryptionKey\",\r\n          \"details\": [],\r\n          \"additionalInfo\": []\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

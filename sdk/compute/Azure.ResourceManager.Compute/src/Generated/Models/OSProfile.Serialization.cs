@@ -104,16 +104,31 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("windowsConfiguration"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("linuxConfiguration"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("secrets"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VaultSecretGroup> array = new List<VaultSecretGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -124,11 +139,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("allowExtensionOperations"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     allowExtensionOperations = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("requireGuestProvisionSignal"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     requireGuestProvisionSignal = property.Value.GetBoolean();
                     continue;
                 }

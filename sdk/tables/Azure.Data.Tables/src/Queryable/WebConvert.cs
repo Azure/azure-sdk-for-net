@@ -16,14 +16,14 @@ namespace Azure.Data.Tables.Queryable
         {
             StringBuilder hexBuilder = new StringBuilder(3 + (byteArray.Length * 2));
             hexBuilder.Append(XmlConstants.XmlBinaryPrefix);
-            hexBuilder.Append("'");
+            hexBuilder.Append('\'');
             for (int i = 0; i < byteArray.Length; i++)
             {
                 hexBuilder.Append(HexValues[byteArray[i] >> 4]);
                 hexBuilder.Append(HexValues[byteArray[i] & 0x0F]);
             }
 
-            hexBuilder.Append("'");
+            hexBuilder.Append('\'');
             return hexBuilder.ToString();
         }
 

@@ -23,11 +23,21 @@ namespace Azure.AI.FormRecognizer.Models
             {
                 if (property.NameEquals("summary"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     summary = ModelsSummary.DeserializeModelsSummary(property.Value);
                     continue;
                 }
                 if (property.NameEquals("modelList"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<CustomFormModelInfo> array = new List<CustomFormModelInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

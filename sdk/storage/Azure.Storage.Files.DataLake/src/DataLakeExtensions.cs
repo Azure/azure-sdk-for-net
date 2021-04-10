@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
 
@@ -17,6 +18,8 @@ namespace Azure.Storage.Files.DataLake
             new FileSystemItem()
             {
                 Name = containerItem.Name,
+                IsDeleted = containerItem.IsDeleted,
+                VersionId = containerItem.VersionId,
                 Properties = containerItem.Properties.ToFileSystemProperties()
             };
 
@@ -35,7 +38,9 @@ namespace Azure.Storage.Files.DataLake
                     HasImmutabilityPolicy = containerProperties.HasImmutabilityPolicy,
                     HasLegalHold = containerProperties.HasLegalHold,
                     ETag = containerProperties.ETag,
-                    Metadata = containerProperties.Metadata
+                    Metadata = containerProperties.Metadata,
+                    DeletedOn = containerProperties.DeletedOn,
+                    RemainingRetentionDays = containerProperties.RemainingRetentionDays
                 };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties) =>
@@ -69,6 +74,15 @@ namespace Azure.Storage.Files.DataLake
                 Content = blobDownloadInfo.Content,
                 ContentHash = blobDownloadInfo.ContentHash,
                 Properties = blobDownloadInfo.Details.ToFileDownloadDetails()
+            };
+
+        internal static FileDownloadInfo ToFileDownloadInfo(this BlobDownloadStreamingResult blobDownloadStreamingResult) =>
+            new FileDownloadInfo()
+            {
+                ContentLength = blobDownloadStreamingResult.Details.ContentLength,
+                Content = blobDownloadStreamingResult.Content,
+                ContentHash = blobDownloadStreamingResult.Details.ContentHash,
+                Properties = blobDownloadStreamingResult.Details.ToFileDownloadDetails()
             };
 
         internal static PathProperties ToPathProperties(this BlobProperties blobProperties) =>
@@ -203,23 +217,6 @@ namespace Azure.Storage.Files.DataLake
             return pathItem;
         }
 
-        internal static PathContentInfo ToPathContentInfo(this PathUpdateResult pathUpdateResult) =>
-            new PathContentInfo()
-            {
-                ContentHash = pathUpdateResult.ContentMD5,
-                ETag = pathUpdateResult.ETag,
-                LastModified = pathUpdateResult.LastModified,
-                AcceptRanges = pathUpdateResult.AcceptRanges,
-                CacheControl = pathUpdateResult.CacheControl,
-                ContentDisposition = pathUpdateResult.ContentDisposition,
-                ContentEncoding = pathUpdateResult.ContentEncoding,
-                ContentLanguage = pathUpdateResult.ContentLanguage,
-                ContentLength = pathUpdateResult.ContentLength,
-                ContentRange = pathUpdateResult.ContentRange,
-                ContentType = pathUpdateResult.ContentType,
-                Metadata = ToMetadata(pathUpdateResult.Properties)
-            };
-
         private static IDictionary<string, string> ToMetadata(string rawMetdata)
         {
             if (rawMetdata == null)
@@ -344,8 +341,8 @@ namespace Azure.Storage.Files.DataLake
 
             BlobQueryOptions blobQueryOptions = new BlobQueryOptions
             {
-                InputTextConfiguration = options.InputTextConfiguration.ToBlobQueryTextConfiguration(),
-                OutputTextConfiguration = options.OutputTextConfiguration.ToBlobQueryTextConfiguration(),
+                InputTextConfiguration = options.InputTextConfiguration.ToBlobQueryTextConfiguration(isInput: true),
+                OutputTextConfiguration = options.OutputTextConfiguration.ToBlobQueryTextConfiguration(isInput: false),
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 ProgressHandler = options.ProgressHandler
             };
@@ -358,39 +355,124 @@ namespace Azure.Storage.Files.DataLake
             return blobQueryOptions;
         }
 
-        internal static BlobQueryTextOptions ToBlobQueryTextConfiguration(this DataLakeQueryTextOptions textConfiguration)
+        internal static BlobQueryTextOptions ToBlobQueryTextConfiguration(
+            this DataLakeQueryTextOptions textConfiguration,
+            bool isInput)
         {
             if (textConfiguration == null)
             {
                 return null;
             }
 
-            if (textConfiguration.GetType() == typeof(DataLakeQueryJsonTextOptions))
+            if (textConfiguration is DataLakeQueryJsonTextOptions dataLakeQueryJsonTexasOptions)
             {
-                return ((DataLakeQueryJsonTextOptions)textConfiguration).ToBlobQueryJsonTextConfiguration();
+                return dataLakeQueryJsonTexasOptions.ToBlobQueryJsonTextConfiguration();
             }
 
-            if (textConfiguration.GetType() == typeof(DataLakeQueryCsvTextOptions))
+            if (textConfiguration is DataLakeQueryCsvTextOptions dataLakeQueryCsvTextOptions)
             {
-                return ((DataLakeQueryCsvTextOptions)textConfiguration).ToBlobQueryCsvTextConfiguration();
+                return dataLakeQueryCsvTextOptions.ToBlobQueryCsvTextConfiguration();
+            }
+
+            if (textConfiguration is DataLakeQueryArrowOptions dataLakeQueryArrowOptions)
+            {
+                if (isInput)
+                {
+                    throw new ArgumentException($"{nameof(DataLakeQueryArrowOptions)} can only be used for output serialization.");
+                }
+
+                return dataLakeQueryArrowOptions.ToBlobQueryArrowOptions();
+            }
+            if (textConfiguration is DataLakeQueryParquetTextOptions dataLakeQueryParquetOptions)
+            {
+                if (!isInput)
+                {
+                    throw new ArgumentException($"{nameof(DataLakeQueryParquetTextOptions)} can only be used for input serialization.");
+                }
+
+                return dataLakeQueryParquetOptions.ToBlobQueryParquetTextOptions();
             }
 
             throw new ArgumentException("Invalid text configuration type");
         }
 
-        internal static BlobQueryJsonTextOptions ToBlobQueryJsonTextConfiguration(this DataLakeQueryJsonTextOptions textConfiguration)
+        internal static BlobQueryJsonTextOptions ToBlobQueryJsonTextConfiguration(this DataLakeQueryJsonTextOptions options)
             => new BlobQueryJsonTextOptions
             {
-                RecordSeparator = textConfiguration.RecordSeparator
+                RecordSeparator = options.RecordSeparator
             };
 
-        internal static BlobQueryCsvTextOptions ToBlobQueryCsvTextConfiguration(this DataLakeQueryCsvTextOptions textConfiguration)
+        internal static BlobQueryCsvTextOptions ToBlobQueryCsvTextConfiguration(this DataLakeQueryCsvTextOptions options)
             => new BlobQueryCsvTextOptions
             {
-                ColumnSeparator = textConfiguration.ColumnSeparator,
-                QuotationCharacter = textConfiguration.QuotationCharacter,
-                EscapeCharacter = textConfiguration.EscapeCharacter,
-                HasHeaders = textConfiguration.HasHeaders
+                ColumnSeparator = options.ColumnSeparator,
+                QuotationCharacter = options.QuotationCharacter,
+                EscapeCharacter = options.EscapeCharacter,
+                HasHeaders = options.HasHeaders
+            };
+
+        internal static BlobQueryArrowOptions ToBlobQueryArrowOptions(this DataLakeQueryArrowOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobQueryArrowOptions
+            {
+                Schema = options.Schema.ToBlobQueryArrowFields()
+            };
+        }
+
+        internal static BlobQueryParquetTextOptions ToBlobQueryParquetTextOptions (this DataLakeQueryParquetTextOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobQueryParquetTextOptions();
+        }
+
+        internal static IList<BlobQueryArrowField> ToBlobQueryArrowFields(this IList<DataLakeQueryArrowField> arrowFields)
+        {
+            if (arrowFields == null)
+            {
+                return null;
+            }
+
+            IList<BlobQueryArrowField> blobQueryArrowFields = new List<BlobQueryArrowField>();
+            arrowFields.ToList().ForEach(r => blobQueryArrowFields.Add(r.ToBlobQueryArrowField()));
+
+            return blobQueryArrowFields;
+        }
+
+        internal static BlobQueryArrowField ToBlobQueryArrowField(this DataLakeQueryArrowField arrowField)
+        {
+            if (arrowField == null)
+            {
+                return null;
+            }
+
+            return new BlobQueryArrowField
+            {
+                Type = arrowField.Type.ToBlobQueryArrowFieldType(),
+                Name = arrowField.Name,
+                Precision = arrowField.Precision,
+                Scale = arrowField.Scale
+            };
+        }
+
+        internal static BlobQueryArrowFieldType ToBlobQueryArrowFieldType(this DataLakeQueryArrowFieldType fieldType)
+            => fieldType switch
+            {
+                DataLakeQueryArrowFieldType.Bool => BlobQueryArrowFieldType.Bool,
+                DataLakeQueryArrowFieldType.Decimal => BlobQueryArrowFieldType.Decimal,
+                DataLakeQueryArrowFieldType.Double => BlobQueryArrowFieldType.Double,
+                DataLakeQueryArrowFieldType.Int64 => BlobQueryArrowFieldType.Int64,
+                DataLakeQueryArrowFieldType.String => BlobQueryArrowFieldType.String,
+                DataLakeQueryArrowFieldType.Timestamp => BlobQueryArrowFieldType.Timestamp,
+                _ => default,
             };
 
         internal static DataLakeQueryError ToDataLakeQueryError(this BlobQueryError error)
@@ -406,6 +488,314 @@ namespace Azure.Storage.Files.DataLake
                 Description = error.Description,
                 IsFatal = error.IsFatal,
                 Position = error.Position
+            };
+        }
+
+        internal static BlobOpenReadOptions ToBlobOpenReadOptions(this DataLakeOpenReadOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobOpenReadOptions(options.Conditions == null)
+            {
+                BufferSize = options.BufferSize,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+                Position = options.Position
+            };
+        }
+
+        internal static PathSegment ToPathSegment(this ResponseWithHeaders<PathList, FileSystemListPathsHeaders> response)
+            => new PathSegment
+            {
+                Continuation = response.Headers.Continuation,
+                Paths = response.Value.ToPathItems()
+            };
+
+        internal static IEnumerable<PathItem> ToPathItems(this PathList pathList)
+        {
+            if (pathList == null)
+            {
+                return null;
+            }
+
+            return pathList.Paths.Select(path => path.ToPathItem());
+        }
+
+        internal static PathItem ToPathItem(this Path path)
+        {
+            if (path == null)
+            {
+                return null;
+            }
+
+            return new PathItem
+            {
+                Name = path.Name,
+                IsDirectory = path.IsDirectory != null && bool.Parse(path.IsDirectory),
+                LastModified = path.LastModified.GetValueOrDefault(),
+                ETag = new ETag(path.ETag),
+                ContentLength = path.ContentLength == null ? 0 : long.Parse(path.ContentLength, CultureInfo.InvariantCulture),
+                Owner = path.Owner,
+                Group = path.Group,
+                Permissions = path.Permissions
+            };
+        }
+
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathCreateHeaders> response)
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
+
+        internal static PathAccessControl ToPathAccessControl(this ResponseWithHeaders<PathGetPropertiesHeaders> response)
+            => new PathAccessControl
+            {
+                Owner = response.Headers.Owner,
+                Group = response.Headers.Group,
+                Permissions = PathPermissions.ParseSymbolicPermissions(response.Headers.Permissions),
+                AccessControlList = PathAccessControlExtensions.ParseAccessControlList(response.Headers.ACL)
+            };
+
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetAccessControlHeaders> response)
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
+
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathFlushDataHeaders> response)
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
+
+        internal static PathInfo ToPathInfo(this ResponseWithHeaders<PathSetExpiryHeaders> response)
+            => new PathInfo
+            {
+                ETag = response.GetRawResponse().Headers.ETag.GetValueOrDefault(),
+                LastModified = response.Headers.LastModified.GetValueOrDefault()
+            };
+
+        internal static PathDeletedSegment ToPathDeletedSegment(this ResponseWithHeaders<ListBlobsHierarchySegmentResponse, FileSystemListBlobHierarchySegmentHeaders> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            return new PathDeletedSegment
+            {
+                Continuation = response.Value.NextMarker,
+                DeletedPaths = response.Value.Segment.BlobItems.Select(r => r.ToPathHierarchyDeletedItem())
+            };
+        }
+
+        internal static PathHierarchyDeletedItem ToPathHierarchyDeletedItem(this BlobItemInternal blobItemInternal)
+        {
+            if (blobItemInternal == null)
+            {
+                return null;
+            }
+
+            return new PathHierarchyDeletedItem
+            {
+                Path = new PathDeletedItem
+                {
+                    Name = blobItemInternal.Name,
+                    DeletionId = blobItemInternal.DeletionId,
+                    DeletedOn = blobItemInternal.Properties.DeletedTime,
+                    RemainingRetentionDays = blobItemInternal.Properties.RemainingRetentionDays
+                }
+            };
+        }
+
+        internal static DataLakeServiceProperties ToDataLakeServiceProperties(this BlobServiceProperties blobServiceProperties)
+        {
+            if (blobServiceProperties == null)
+            {
+                return null;
+            }
+
+            return new DataLakeServiceProperties
+            {
+                Logging = blobServiceProperties.Logging.ToDataLakeAnalyticsLogging(),
+                HourMetrics = blobServiceProperties.HourMetrics.ToDataLakeMetrics(),
+                MinuteMetrics = blobServiceProperties.MinuteMetrics.ToDataLakeMetrics(),
+                Cors = blobServiceProperties.Cors.ToDataLakeCorsRules(),
+                DefaultServiceVersion = blobServiceProperties.DefaultServiceVersion,
+                DeleteRetentionPolicy = blobServiceProperties.DeleteRetentionPolicy.ToDataLakeRetentionPolicy(),
+            };
+        }
+
+        internal static DataLakeAnalyticsLogging ToDataLakeAnalyticsLogging(this BlobAnalyticsLogging blobAnalyticsLogging)
+        {
+            if (blobAnalyticsLogging == null)
+            {
+                return null;
+            }
+
+            return new DataLakeAnalyticsLogging
+            {
+                Version = blobAnalyticsLogging.Version,
+                Delete = blobAnalyticsLogging.Delete,
+                Read = blobAnalyticsLogging.Read,
+                Write = blobAnalyticsLogging.Write,
+                RetentionPolicy = blobAnalyticsLogging.RetentionPolicy.ToDataLakeRetentionPolicy()
+            };
+        }
+
+        internal static DataLakeMetrics ToDataLakeMetrics(this BlobMetrics blobMetrics)
+        {
+            if (blobMetrics == null)
+            {
+                return null;
+            }
+
+            return new DataLakeMetrics
+            {
+                Version = blobMetrics.Version,
+                Enabled = blobMetrics.Enabled,
+                RetentionPolicy = blobMetrics.RetentionPolicy.ToDataLakeRetentionPolicy(),
+                IncludeApis = blobMetrics.IncludeApis
+            };
+        }
+
+        internal static DataLakeRetentionPolicy ToDataLakeRetentionPolicy(this BlobRetentionPolicy blobRetentionPolicy)
+        {
+            if (blobRetentionPolicy == null)
+            {
+                return null;
+            }
+
+            return new DataLakeRetentionPolicy
+            {
+                Enabled = blobRetentionPolicy.Enabled,
+                Days = blobRetentionPolicy.Days
+            };
+        }
+
+        internal static IList<DataLakeCorsRule> ToDataLakeCorsRules(this IList<BlobCorsRule> blobCorsRules)
+        {
+            if (blobCorsRules == null)
+            {
+                return null;
+            }
+
+            return blobCorsRules.Select(blobCorsRule => blobCorsRule.ToDataLakeCorsRule()).ToList();
+        }
+
+        internal static DataLakeCorsRule ToDataLakeCorsRule(this BlobCorsRule blobCorsRule)
+        {
+            if (blobCorsRule == null)
+            {
+                return null;
+            }
+
+            return new DataLakeCorsRule
+            {
+                AllowedOrigins = blobCorsRule.AllowedOrigins,
+                AllowedMethods = blobCorsRule.AllowedMethods,
+                AllowedHeaders = blobCorsRule.AllowedHeaders,
+                ExposedHeaders = blobCorsRule.ExposedHeaders,
+                MaxAgeInSeconds = blobCorsRule.MaxAgeInSeconds
+            };
+        }
+
+        internal static BlobServiceProperties ToBlobServiceProperties(this DataLakeServiceProperties dataLakeServiceProperties)
+        {
+            if (dataLakeServiceProperties == null)
+            {
+                return null;
+            }
+
+            return new BlobServiceProperties
+            {
+                Logging = dataLakeServiceProperties.Logging.ToBlobAnalyticsLogging(),
+                HourMetrics = dataLakeServiceProperties.HourMetrics.ToBlobMetrics(),
+                MinuteMetrics = dataLakeServiceProperties.MinuteMetrics.ToBlobMetrics(),
+                Cors = dataLakeServiceProperties.Cors.ToBlobCorsRules(),
+                DefaultServiceVersion = dataLakeServiceProperties.DefaultServiceVersion,
+                DeleteRetentionPolicy = dataLakeServiceProperties.DeleteRetentionPolicy.ToBlobRetentionPolicy(),
+                // HNS enabled accounts do not support static website.
+                StaticWebsite = null
+            };
+        }
+
+        internal static BlobMetrics ToBlobMetrics(this DataLakeMetrics dataLakeMetrics)
+        {
+            if (dataLakeMetrics == null)
+            {
+                return null;
+            }
+
+            return new BlobMetrics
+            {
+                Version = dataLakeMetrics.Version,
+                Enabled = dataLakeMetrics.Enabled,
+                RetentionPolicy = dataLakeMetrics.RetentionPolicy.ToBlobRetentionPolicy(),
+                IncludeApis = dataLakeMetrics.IncludeApis
+            };
+        }
+
+        internal static BlobRetentionPolicy ToBlobRetentionPolicy(this DataLakeRetentionPolicy dataLakeRetentionPolicy)
+        {
+            if (dataLakeRetentionPolicy == null)
+            {
+                return null;
+            }
+
+            return new BlobRetentionPolicy
+            {
+                Enabled = dataLakeRetentionPolicy.Enabled,
+                Days = dataLakeRetentionPolicy.Days
+            };
+        }
+
+        internal static IList<BlobCorsRule> ToBlobCorsRules(this IList<DataLakeCorsRule> dataLakeCorsRules)
+        {
+            if (dataLakeCorsRules == null)
+            {
+                return null;
+            }
+
+            return dataLakeCorsRules.Select(dataLakeCorsRule => dataLakeCorsRule.ToBlobCorsRule()).ToList();
+        }
+
+        internal static BlobCorsRule ToBlobCorsRule(this DataLakeCorsRule dataLakeCorsRule)
+        {
+            if (dataLakeCorsRule == null)
+            {
+                return null;
+            }
+
+            return new BlobCorsRule
+            {
+                AllowedOrigins = dataLakeCorsRule.AllowedOrigins,
+                AllowedMethods = dataLakeCorsRule.AllowedMethods,
+                AllowedHeaders = dataLakeCorsRule.AllowedHeaders,
+                ExposedHeaders = dataLakeCorsRule.ExposedHeaders,
+                MaxAgeInSeconds = dataLakeCorsRule.MaxAgeInSeconds
+            };
+        }
+
+        internal static BlobAnalyticsLogging ToBlobAnalyticsLogging(this DataLakeAnalyticsLogging dataLakeAnalyticsLogging)
+        {
+            if (dataLakeAnalyticsLogging == null)
+            {
+                return null;
+            }
+
+            return new BlobAnalyticsLogging
+            {
+                Version = dataLakeAnalyticsLogging.Version,
+                Delete = dataLakeAnalyticsLogging.Delete,
+                Read = dataLakeAnalyticsLogging.Read,
+                Write = dataLakeAnalyticsLogging.Write,
+                RetentionPolicy = dataLakeAnalyticsLogging.RetentionPolicy.ToBlobRetentionPolicy()
             };
         }
     }

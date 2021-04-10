@@ -40,7 +40,7 @@ namespace Azure.Graph.Rbac.Models
             if (Optional.IsDefined(CustomKeyIdentifier))
             {
                 writer.WritePropertyName("customKeyIdentifier");
-                writer.WriteBase64StringValue(CustomKeyIdentifier);
+                writer.WriteBase64StringValue(CustomKeyIdentifier, "D");
             }
             foreach (var item in AdditionalProperties)
             {
@@ -63,11 +63,21 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("startDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     startDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endDate"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     endDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -83,7 +93,12 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("customKeyIdentifier"))
                 {
-                    customKeyIdentifier = property.Value.GetBytesFromBase64();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    customKeyIdentifier = property.Value.GetBytesFromBase64("D");
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());

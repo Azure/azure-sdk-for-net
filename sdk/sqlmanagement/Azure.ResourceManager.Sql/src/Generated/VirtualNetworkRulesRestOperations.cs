@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(virtualNetworkRuleName, true);
             uri.AppendQuery("api-version", "2015-05-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -154,6 +155,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath(virtualNetworkRuleName, true);
             uri.AppendQuery("api-version", "2015-05-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -343,6 +345,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/virtualNetworkRules", false);
             uri.AppendQuery("api-version", "2015-05-01-preview", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -419,6 +422,7 @@ namespace Azure.ResourceManager.Sql
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

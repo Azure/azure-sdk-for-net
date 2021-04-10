@@ -25,7 +25,10 @@ namespace Microsoft.Azure.Management.CosmosDB
     {
         /// <summary>
         /// Lists all the restorable Azure Cosmos DB database accounts
-        /// available under the subscription and in a region.
+        /// available under the subscription and in a region.  This call
+        /// requires
+        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read'
+        /// permission.
         /// </summary>
         /// <param name='location'>
         /// Cosmos DB region, with spaces between words and each word
@@ -37,7 +40,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseUpdatedFormatException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -49,7 +52,9 @@ namespace Microsoft.Azure.Management.CosmosDB
         Task<AzureOperationResponse<IEnumerable<RestorableDatabaseAccountGetResult>>> ListByLocationWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all the restorable Azure Cosmos DB database accounts
-        /// available under the subscription.
+        /// available under the subscription. This call requires
+        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read'
+        /// permission.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -57,7 +62,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseUpdatedFormatException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -69,7 +74,9 @@ namespace Microsoft.Azure.Management.CosmosDB
         Task<AzureOperationResponse<IEnumerable<RestorableDatabaseAccountGetResult>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB restorable
-        /// database account.
+        /// database account.  This call requires
+        /// 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read/*'
+        /// permission.
         /// </summary>
         /// <param name='location'>
         /// Cosmos DB region, with spaces between words and each word
@@ -84,7 +91,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseUpdatedFormatException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

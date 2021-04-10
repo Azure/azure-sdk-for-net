@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AvailableDelegationsResult
+    internal partial class AvailableDelegationsResult
     {
         internal static AvailableDelegationsResult DeserializeAvailableDelegationsResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AvailableDelegation> array = new List<AvailableDelegation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -49,6 +49,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// set to a value greater than one for disks to allow attaching them
         /// to multiple VMs.</param>
         /// <param name="zones">The Logical zone list for Disk.</param>
+        /// <param name="extendedLocation">The extended location where the disk
+        /// will be created. Extended location cannot be changed.</param>
         /// <param name="timeCreated">The time when the disk was
         /// created.</param>
         /// <param name="osType">The Operating System type. Possible values
@@ -56,6 +58,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="hyperVGeneration">The hypervisor generation of the
         /// Virtual Machine. Applicable to OS disks only. Possible values
         /// include: 'V1', 'V2'</param>
+        /// <param name="purchasePlan">Purchase plan information for the the
+        /// image from which the OS disk was created. E.g. - {name:
+        /// 2019-Datacenter, publisher: MicrosoftWindowsServer, product:
+        /// WindowsServer}</param>
         /// <param name="diskSizeGB">If creationData.createOption is Empty,
         /// this field is mandatory and it indicates the size of the disk to
         /// create. If this field is present for updates or creation with other
@@ -101,16 +107,31 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'AllowAll', 'AllowPrivate', 'DenyAll'</param>
         /// <param name="diskAccessId">ARM id of the DiskAccess resource for
         /// using private endpoints on disks.</param>
-        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), IList<string> managedByExtended = default(IList<string>), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>), string networkAccessPolicy = default(string), string diskAccessId = default(string))
+        /// <param name="tier">Performance tier of the disk (e.g, P4, S10) as
+        /// described here:
+        /// https://azure.microsoft.com/en-us/pricing/details/managed-disks/.
+        /// Does not apply to Ultra disks.</param>
+        /// <param name="burstingEnabled">Set to true to enable bursting beyond
+        /// the provisioned performance target of the disk. Bursting is
+        /// disabled by default. Does not apply to Ultra disks.</param>
+        /// <param name="propertyUpdatesInProgress">Properties of the disk for
+        /// which update is pending.</param>
+        /// <param name="supportsHibernation">Indicates the OS on a disk
+        /// supports hibernation.</param>
+        /// <param name="securityProfile">Contains the security related
+        /// information for the resource.</param>
+        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), IList<string> managedByExtended = default(IList<string>), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), long? diskMBpsReadWrite = default(long?), long? diskIOPSReadOnly = default(long?), long? diskMBpsReadOnly = default(long?), string diskState = default(string), Encryption encryption = default(Encryption), int? maxShares = default(int?), IList<ShareInfoElement> shareInfo = default(IList<ShareInfoElement>), string networkAccessPolicy = default(string), string diskAccessId = default(string), string tier = default(string), bool? burstingEnabled = default(bool?), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), DiskSecurityProfile securityProfile = default(DiskSecurityProfile))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
             Sku = sku;
             Zones = zones;
+            ExtendedLocation = extendedLocation;
             TimeCreated = timeCreated;
             OsType = osType;
             HyperVGeneration = hyperVGeneration;
+            PurchasePlan = purchasePlan;
             CreationData = creationData;
             DiskSizeGB = diskSizeGB;
             DiskSizeBytes = diskSizeBytes;
@@ -127,6 +148,11 @@ namespace Microsoft.Azure.Management.Compute.Models
             ShareInfo = shareInfo;
             NetworkAccessPolicy = networkAccessPolicy;
             DiskAccessId = diskAccessId;
+            Tier = tier;
+            BurstingEnabled = burstingEnabled;
+            PropertyUpdatesInProgress = propertyUpdatesInProgress;
+            SupportsHibernation = supportsHibernation;
+            SecurityProfile = securityProfile;
             CustomInit();
         }
 
@@ -162,6 +188,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public IList<string> Zones { get; set; }
 
         /// <summary>
+        /// Gets or sets the extended location where the disk will be created.
+        /// Extended location cannot be changed.
+        /// </summary>
+        [JsonProperty(PropertyName = "extendedLocation")]
+        public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary>
         /// Gets the time when the disk was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
@@ -180,6 +213,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.hyperVGeneration")]
         public string HyperVGeneration { get; set; }
+
+        /// <summary>
+        /// Gets or sets purchase plan information for the the image from which
+        /// the OS disk was created. E.g. - {name: 2019-Datacenter, publisher:
+        /// MicrosoftWindowsServer, product: WindowsServer}
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.purchasePlan")]
+        public PurchasePlan PurchasePlan { get; set; }
 
         /// <summary>
         /// Gets or sets disk source information. CreationData information
@@ -258,12 +299,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public long? DiskMBpsReadOnly { get; set; }
 
         /// <summary>
-        /// Gets the state of the disk. Possible values include: 'Unattached',
-        /// 'Attached', 'Reserved', 'ActiveSAS', 'ReadyToUpload',
+        /// Gets or sets the state of the disk. Possible values include:
+        /// 'Unattached', 'Attached', 'Reserved', 'ActiveSAS', 'ReadyToUpload',
         /// 'ActiveUpload'
         /// </summary>
         [JsonProperty(PropertyName = "properties.diskState")]
-        public string DiskState { get; private set; }
+        public string DiskState { get; set; }
 
         /// <summary>
         /// Gets or sets encryption property can be used to encrypt data at
@@ -303,6 +344,42 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string DiskAccessId { get; set; }
 
         /// <summary>
+        /// Gets or sets performance tier of the disk (e.g, P4, S10) as
+        /// described here:
+        /// https://azure.microsoft.com/en-us/pricing/details/managed-disks/.
+        /// Does not apply to Ultra disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tier")]
+        public string Tier { get; set; }
+
+        /// <summary>
+        /// Gets or sets set to true to enable bursting beyond the provisioned
+        /// performance target of the disk. Bursting is disabled by default.
+        /// Does not apply to Ultra disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.burstingEnabled")]
+        public bool? BurstingEnabled { get; set; }
+
+        /// <summary>
+        /// Gets properties of the disk for which update is pending.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.propertyUpdatesInProgress")]
+        public PropertyUpdatesInProgress PropertyUpdatesInProgress { get; private set; }
+
+        /// <summary>
+        /// Gets or sets indicates the OS on a disk supports hibernation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.supportsHibernation")]
+        public bool? SupportsHibernation { get; set; }
+
+        /// <summary>
+        /// Gets or sets contains the security related information for the
+        /// resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.securityProfile")]
+        public DiskSecurityProfile SecurityProfile { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -314,6 +391,10 @@ namespace Microsoft.Azure.Management.Compute.Models
             if (CreationData == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "CreationData");
+            }
+            if (PurchasePlan != null)
+            {
+                PurchasePlan.Validate();
             }
             if (CreationData != null)
             {

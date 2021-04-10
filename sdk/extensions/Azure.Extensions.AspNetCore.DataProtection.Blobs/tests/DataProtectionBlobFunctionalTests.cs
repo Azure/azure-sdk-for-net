@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Azure.Core.TestFramework;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.DataProtection;
@@ -13,10 +15,9 @@ using NUnit.Framework;
 
 namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 {
-    public class DataProtectionBlobFunctionalTests
+    public class DataProtectionBlobFunctionalTests: LiveTestBase<DataProtectionTestEnvironment>
     {
         [Test]
-        [Category("Live")]
         public async Task PersistsKeysToAzureBlob()
         {
             var serviceCollection = new ServiceCollection();
@@ -35,7 +36,26 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
         }
 
         [Test]
-        [Category("Live")]
+        public async Task PersistsKeysToAzureBlobWhenBlobAlreadyExists()
+        {
+            var serviceCollection = new ServiceCollection();
+            var client = await GetBlobClient("testblob3");
+            await client.UploadAsync(Stream.Null, overwrite: true);
+
+            serviceCollection.AddDataProtection().PersistKeysToAzureBlobStorage(client);
+            var services = serviceCollection.BuildServiceProvider();
+
+            var dataProtector = services.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
+            var protectedText = dataProtector.Protect("Hello world!");
+
+            var anotherServices = serviceCollection.BuildServiceProvider();
+            var anotherDataProtector = anotherServices.GetService<IDataProtectionProvider>().CreateProtector("Fancy purpose");
+            var unprotectedText = anotherDataProtector.Unprotect(protectedText);
+
+            Assert.AreEqual("Hello world!", unprotectedText);
+        }
+
+        [Test]
         public async Task CanAddKeysIndependently()
         {
             var blobClient = await GetBlobClient("testblob2");
@@ -53,13 +73,13 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
             Assert.AreEqual(2, repository.GetAllElements().Count);
         }
 
-        private static async Task<BlobClient> GetBlobClient(string name)
+        private async Task<BlobClient> GetBlobClient(string name)
         {
             var client = new BlobServiceClient(
-                new Uri($"https://{DataProtectionTestEnvironment.Instance.StorageAccountName}.blob.core.windows.net/"),
+                new Uri($"https://{TestEnvironment.StorageAccountName}.blob.{TestEnvironment.StorageEndpointSuffix}/"),
                 new StorageSharedKeyCredential(
-                    DataProtectionTestEnvironment.Instance.StorageAccountName,
-                    DataProtectionTestEnvironment.Instance.StorageAccountKey));
+                    TestEnvironment.StorageAccountName,
+                    TestEnvironment.StorageAccountKey));
 
             var blobContainerClient = client.GetBlobContainerClient("testcontainer");
             await blobContainerClient.CreateIfNotExistsAsync();

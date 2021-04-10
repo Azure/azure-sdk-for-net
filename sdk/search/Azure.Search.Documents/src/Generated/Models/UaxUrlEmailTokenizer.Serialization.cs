@@ -36,6 +36,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("maxTokenLength"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxTokenLength = property.Value.GetInt32();
                     continue;
                 }

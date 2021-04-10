@@ -32,16 +32,31 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     value = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("includedMaxSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     includedMaxSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
                     continue;
                 }
                 if (property.NameEquals("supportedStorageSizes"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -52,16 +67,31 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("instancePoolSupported"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     instancePoolSupported = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("standaloneSupported"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     standaloneSupported = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("status"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     status = property.Value.GetString().ToCapabilityStatus();
                     continue;
                 }

@@ -3581,7 +3581,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TaskCounts,JobGetTaskCountsHeaders>> GetTaskCountsWithHttpMessagesAsync(string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TaskCountsResult,JobGetTaskCountsHeaders>> GetTaskCountsWithHttpMessagesAsync(string jobId, JobGetTaskCountsOptions jobGetTaskCountsOptions = default(JobGetTaskCountsOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.BatchUrl == null)
             {
@@ -3756,7 +3756,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<TaskCounts,JobGetTaskCountsHeaders>();
+            var _result = new AzureOperationResponse<TaskCountsResult,JobGetTaskCountsHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("request-id"))
@@ -3769,7 +3769,7 @@ namespace Microsoft.Azure.Batch.Protocol
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<TaskCounts>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<TaskCountsResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

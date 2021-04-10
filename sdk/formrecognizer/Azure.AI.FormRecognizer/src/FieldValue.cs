@@ -102,6 +102,17 @@ namespace Azure.AI.FormRecognizer.Models
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="FieldValue"/> structure.
+        /// </summary>
+        /// <param name="value">The actual field value.</param>
+        internal FieldValue(SelectionMarkState value)
+            : this()
+        {
+            ValueType = FieldValueType.SelectionMark;
+            ValueSelectionMark = value;
+        }
+
+        /// <summary>
         /// The data type of the field value.
         /// </summary>
         public FieldValueType ValueType { get; }
@@ -149,6 +160,18 @@ namespace Azure.AI.FormRecognizer.Models
         /// used for mocking.
         /// </summary>
         private IReadOnlyDictionary<string, FormField> ValueDictionary { get; }
+
+        /// <summary>
+        /// The <see cref="FieldValueSelectionMark"/> value of this instance. Values are usually extracted from
+        /// <see cref="_fieldValue"/>, so this property is exclusively used for mocking.
+        /// </summary>
+        private SelectionMarkState ValueSelectionMark { get; }
+
+        /// <summary>
+        /// The <see cref="FieldValueGender"/> value of this instance. Values are usually extracted from
+        /// <see cref="_fieldValue"/>, so this property is exclusively used for mocking.
+        /// </summary>
+        private FieldValueGender ValueGender { get; }
 
         /// <summary>
         /// Gets the value of the field as a <see cref="string"/>.
@@ -281,7 +304,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// Gets the value of the field as a phone number <see cref="string"/>.
         /// </summary>
         /// <returns>The value of the field converted to a phone number <see cref="string"/>.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.String"/>.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.PhoneNumber"/>.</exception>
         public string AsPhoneNumber()
         {
             if (ValueType != FieldValueType.PhoneNumber)
@@ -348,6 +371,76 @@ namespace Azure.AI.FormRecognizer.Models
             }
 
             return fieldDictionary;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as a <see cref="SelectionMarkState"/>.
+        /// </summary>
+        /// <returns>The value of the field converted to <see cref="SelectionMarkState"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.SelectionMark"/>.</exception>
+        public SelectionMarkState AsSelectionMarkState()
+        {
+            if (ValueType != FieldValueType.SelectionMark)
+            {
+                throw new InvalidOperationException($"Cannot get field as SelectionMark.  Field value's type is {ValueType}.");
+            }
+
+            if (_fieldValue == null)
+            {
+                return ValueSelectionMark;
+            }
+
+            if (!_fieldValue.ValueSelectionMark.HasValue)
+            {
+                throw new InvalidOperationException($"Field value is null.");
+            }
+
+            return _fieldValue.ValueSelectionMark.Value;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as an ISO 3166-1 alpha-3 country code <see cref="string"/>.
+        /// </summary>
+        /// <returns>The value of the field converted to an ISO 3166-1 alpha-3 country code <see cref="string"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Country"/>.</exception>
+        public string AsCountryCode()
+        {
+            if (ValueType != FieldValueType.Country)
+            {
+                throw new InvalidOperationException($"Cannot get field as country code.  Field value's type is {ValueType}.");
+            }
+
+            if (_fieldValue == null)
+            {
+                return ValueString;
+            }
+
+            return _fieldValue.ValueCountry;
+        }
+
+        /// <summary>
+        /// Gets the value of the field as a <see cref="FieldValueGender"/>.
+        /// </summary>
+        /// <returns>The value of the field converted to a <see cref="FieldValueGender"/>.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when <see cref="ValueType"/> is not <see cref="FieldValueType.Gender"/>.</exception>
+        public FieldValueGender AsGender()
+        {
+            if (ValueType != FieldValueType.Gender)
+            {
+                throw new InvalidOperationException($"Cannot get field as gender.  Field value's type is {ValueType}.");
+            }
+
+            if (_fieldValue == null)
+            {
+                return ValueGender;
+            }
+
+            if (!_fieldValue.ValueGender.HasValue)
+            {
+                throw new InvalidOperationException($"Field value is null.");
+            }
+
+            return _fieldValue.ValueGender.Value;
         }
     }
 }

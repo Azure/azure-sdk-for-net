@@ -51,11 +51,14 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// message are deserialized this collection</param>
         /// <param name="metricNamespace">Namespace of the metric.</param>
         /// <param name="dimensions">List of dimension conditions.</param>
+        /// <param name="skipMetricValidation">Allows creating an alert rule on
+        /// a custom metric that isn't yet emitted, by causing the metric
+        /// validation to be skipped.</param>
         /// <param name="ignoreDataBefore">Use this option to set the date from
         /// which to start learning the metric historical data and calculate
         /// the dynamic thresholds (in ISO8601 format)</param>
-        public DynamicMetricCriteria(string name, string metricName, object timeAggregation, string operatorProperty, string alertSensitivity, DynamicThresholdFailingPeriods failingPeriods, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), System.DateTime? ignoreDataBefore = default(System.DateTime?))
-            : base(name, metricName, timeAggregation, additionalProperties, metricNamespace, dimensions)
+        public DynamicMetricCriteria(string name, string metricName, object timeAggregation, string operatorProperty, string alertSensitivity, DynamicThresholdFailingPeriods failingPeriods, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>), bool? skipMetricValidation = default(bool?), System.DateTime? ignoreDataBefore = default(System.DateTime?))
+            : base(name, metricName, timeAggregation, additionalProperties, metricNamespace, dimensions, skipMetricValidation)
         {
             OperatorProperty = operatorProperty;
             AlertSensitivity = alertSensitivity;

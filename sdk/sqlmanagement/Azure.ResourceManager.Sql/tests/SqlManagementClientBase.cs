@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql.Tests
         {
             return CreateClient<SqlManagementClient>(this.TestEnvironment.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new SqlManagementClientOptions()));
+                InstrumentClientOptions(new SqlManagementClientOptions()));
         }
     }
 }

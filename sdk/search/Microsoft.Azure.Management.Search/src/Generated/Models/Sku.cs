@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">The SKU of the Search service. Valid values
+        /// <param name="name">The SKU of the search service. Valid values
         /// include: 'free': Shared service. 'basic': Dedicated service with up
         /// to 3 replicas. 'standard': Dedicated service with up to 12
         /// partitions and 12 replicas. 'standard2': Similar to standard, but
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the SKU of the Search service. Valid values include:
+        /// Gets or sets the SKU of the search service. Valid values include:
         /// 'free': Shared service. 'basic': Dedicated service with up to 3
         /// replicas. 'standard': Dedicated service with up to 12 partitions
         /// and 12 replicas. 'standard2': Similar to standard, but with more

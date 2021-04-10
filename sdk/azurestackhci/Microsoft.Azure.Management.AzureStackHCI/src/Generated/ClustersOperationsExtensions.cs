@@ -29,9 +29,9 @@ namespace Microsoft.Azure.Management.AzureStackHCI
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Cluster> List(this IClustersOperations operations)
+            public static IPage<Cluster> ListBySubscription(this IClustersOperations operations)
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.AzureStackHCI
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Cluster>> ListAsync(this IClustersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Cluster>> ListBySubscriptionAsync(this IClustersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -263,9 +263,9 @@ namespace Microsoft.Azure.Management.AzureStackHCI
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Cluster> ListNext(this IClustersOperations operations, string nextPageLink)
+            public static IPage<Cluster> ListBySubscriptionNext(this IClustersOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -280,9 +280,9 @@ namespace Microsoft.Azure.Management.AzureStackHCI
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Cluster>> ListNextAsync(this IClustersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Cluster>> ListBySubscriptionNextAsync(this IClustersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/virtualMachines", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -130,6 +131,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/capture", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -218,6 +220,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(vmName, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -306,6 +309,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath(vmName, true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -471,6 +475,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendQuery("$expand", "instanceView", true);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -554,6 +559,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/instanceView", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -858,6 +864,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/providers/Microsoft.Compute/virtualMachines", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -931,6 +938,7 @@ namespace Azure.ResourceManager.Compute
                 uri.AppendQuery("statusOnly", statusOnly, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -992,6 +1000,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/vmSizes", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1156,6 +1165,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/reapply", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1456,9 +1466,9 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/reimage", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
             if (parameters != null)
             {
+                request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
                 content.JsonWriter.WriteObjectValue(parameters);
                 request.Content = content;
@@ -1688,6 +1698,7 @@ namespace Azure.ResourceManager.Compute
             uri.AppendPath("/runCommand", false);
             uri.AppendQuery("api-version", "2019-12-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -1770,6 +1781,7 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1846,6 +1858,7 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1922,6 +1935,7 @@ namespace Azure.ResourceManager.Compute
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

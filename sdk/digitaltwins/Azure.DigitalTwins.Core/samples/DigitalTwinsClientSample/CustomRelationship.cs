@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Text.Json.Serialization;
-using Azure.DigitalTwins.Core.Serialization;
 
 namespace Azure.DigitalTwins.Core.Samples
 {
@@ -12,16 +11,16 @@ namespace Azure.DigitalTwins.Core.Samples
     /// </summary>
     internal class CustomRelationship
     {
-        [JsonPropertyName("$relationshipId")]
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipId)]
         public string Id { get; set; }
 
-        [JsonPropertyName("$targetId")]
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipTargetId)]
         public string TargetId { get; set; }
 
-        [JsonPropertyName("$sourceId")]
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipSourceId)]
         public string SourceId { get; set; }
 
-        [JsonPropertyName("$relationshipName")]
+        [JsonPropertyName(DigitalTwinsJsonPropertyNames.RelationshipName)]
         public string Name { get; set; }
 
         [JsonPropertyName("Prop1")]

@@ -27,11 +27,10 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
         public void TestComputeNodeCertificateReferencesAreReadOnly()
         {
-            using (BatchClient batchClient = ClientUnitTestCommon.CreateDummyClient())
+            using BatchClient batchClient = ClientUnitTestCommon.CreateDummyClient();
+            var protoComputeNode = new Protocol.Models.ComputeNode()
             {
-                var protoComputeNode = new Protocol.Models.ComputeNode()
-                    {
-                        CertificateReferences = new List<Protocol.Models.CertificateReference>
+                CertificateReferences = new List<Protocol.Models.CertificateReference>
                             {
                                 new Protocol.Models.CertificateReference(
                                     thumbprint: "1234",
@@ -43,29 +42,28 @@
                                             Protocol.Models.CertificateVisibility.Task
                                         })
                             }
-                    };
+            };
 
-                ComputeNode computeNode = batchClient.PoolOperations.GetComputeNode(
-                    "dummy",
-                    "dummy",
-                    additionalBehaviors: InterceptorFactory.CreateGetComputeNodeRequestInterceptor(protoComputeNode));
+            ComputeNode computeNode = batchClient.PoolOperations.GetComputeNode(
+                "dummy",
+                "dummy",
+                additionalBehaviors: InterceptorFactory.CreateGetComputeNodeRequestInterceptor(protoComputeNode));
 
-                CertificateReference computeNodeCertificateReference = computeNode.CertificateReferences.First();
+            CertificateReference computeNodeCertificateReference = computeNode.CertificateReferences.First();
 
-                // reads are allowed
-                this.testOutputHelper.WriteLine("{0}", computeNodeCertificateReference.StoreLocation);
-                this.testOutputHelper.WriteLine("{0}", computeNodeCertificateReference.StoreName);
-                this.testOutputHelper.WriteLine("{0}", computeNodeCertificateReference.Thumbprint);
-                this.testOutputHelper.WriteLine("{0}", computeNodeCertificateReference.ThumbprintAlgorithm);
-                this.testOutputHelper.WriteLine("{0}", computeNodeCertificateReference.Visibility);
+            // reads are allowed
+            this.testOutputHelper.WriteLine(computeNodeCertificateReference.StoreLocation.ToString());
+            this.testOutputHelper.WriteLine(computeNodeCertificateReference.StoreName);
+            this.testOutputHelper.WriteLine(computeNodeCertificateReference.Thumbprint);
+            this.testOutputHelper.WriteLine(computeNodeCertificateReference.ThumbprintAlgorithm);
+            this.testOutputHelper.WriteLine(computeNodeCertificateReference.Visibility.ToString());
 
-                // writes are foribdden
-                Assert.Throws<InvalidOperationException>(() => { computeNodeCertificateReference.StoreLocation = CertStoreLocation.CurrentUser; });
-                Assert.Throws<InvalidOperationException>(() => { computeNodeCertificateReference.StoreName = "x"; });
-                Assert.Throws<InvalidOperationException>(() => { computeNodeCertificateReference.Thumbprint = "y"; });
-                Assert.Throws<InvalidOperationException>(() => { computeNodeCertificateReference.ThumbprintAlgorithm = "z"; });
-                Assert.Throws<InvalidOperationException>(() => { computeNodeCertificateReference.Visibility = CertificateVisibility.None; });
-            }
+            // writes are foribdden
+            Assert.Throws<InvalidOperationException>(() => { computeNodeCertificateReference.StoreLocation = CertStoreLocation.CurrentUser; });
+            Assert.Throws<InvalidOperationException>(() => { computeNodeCertificateReference.StoreName = "x"; });
+            Assert.Throws<InvalidOperationException>(() => { computeNodeCertificateReference.Thumbprint = "y"; });
+            Assert.Throws<InvalidOperationException>(() => { computeNodeCertificateReference.ThumbprintAlgorithm = "z"; });
+            Assert.Throws<InvalidOperationException>(() => { computeNodeCertificateReference.Visibility = CertificateVisibility.None; });
         }
     }
 }

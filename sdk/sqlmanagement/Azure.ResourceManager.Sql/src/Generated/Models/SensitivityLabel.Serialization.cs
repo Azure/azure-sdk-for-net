@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("labelName"))
@@ -100,11 +105,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("isDisabled"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             isDisabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("rank"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             rank = property0.Value.GetString().ToSensitivityLabelRank();
                             continue;
                         }

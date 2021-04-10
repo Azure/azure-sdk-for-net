@@ -62,6 +62,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/servicePrincipals", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -139,6 +140,7 @@ namespace Azure.Graph.Rbac
             }
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -184,7 +186,7 @@ namespace Azure.Graph.Rbac
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string objectId, ServicePrincipalBase parameters)
+        internal HttpMessage CreateUpdateRequest(string objectId, ServicePrincipalUpdateParameters parameters)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -197,6 +199,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(objectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -209,7 +212,7 @@ namespace Azure.Graph.Rbac
         /// <param name="parameters"> Parameters to update a service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string objectId, ServicePrincipalBase parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string objectId, ServicePrincipalUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -236,7 +239,7 @@ namespace Azure.Graph.Rbac
         /// <param name="parameters"> Parameters to update a service principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="parameters"/> is null. </exception>
-        public Response Update(string objectId, ServicePrincipalBase parameters, CancellationToken cancellationToken = default)
+        public Response Update(string objectId, ServicePrincipalUpdateParameters parameters, CancellationToken cancellationToken = default)
         {
             if (objectId == null)
             {
@@ -271,6 +274,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(objectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -331,6 +335,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath(objectId, true);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -402,6 +407,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/owners", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -473,6 +479,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/keyCredentials", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -544,6 +551,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/keyCredentials", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -619,6 +627,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/passwordCredentials", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -690,6 +699,7 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/passwordCredentials", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(parameters);
@@ -761,9 +771,10 @@ namespace Azure.Graph.Rbac
             uri.AppendPath("/", false);
             uri.AppendPath(tenantID, true);
             uri.AppendPath("/", false);
-            uri.AppendRaw(nextLink, false);
+            uri.AppendRawNextLink(nextLink, false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -830,6 +841,7 @@ namespace Azure.Graph.Rbac
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 
@@ -906,6 +918,7 @@ namespace Azure.Graph.Rbac
             uri.Reset(endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 

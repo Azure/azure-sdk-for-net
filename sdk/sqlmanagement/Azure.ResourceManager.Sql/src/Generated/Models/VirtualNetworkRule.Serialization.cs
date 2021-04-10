@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("virtualNetworkSubnetId"))
@@ -67,11 +72,21 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("ignoreMissingVnetServiceEndpoint"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             ignoreMissingVnetServiceEndpoint = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("state"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             state = new VirtualNetworkRuleState(property0.Value.GetString());
                             continue;
                         }

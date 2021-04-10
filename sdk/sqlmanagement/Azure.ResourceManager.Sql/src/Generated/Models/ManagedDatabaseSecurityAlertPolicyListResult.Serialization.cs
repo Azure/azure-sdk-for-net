@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedDatabaseSecurityAlertPolicyListResult
+    internal partial class ManagedDatabaseSecurityAlertPolicyListResult
     {
         internal static ManagedDatabaseSecurityAlertPolicyListResult DeserializeManagedDatabaseSecurityAlertPolicyListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedDatabaseSecurityAlertPolicy> array = new List<ManagedDatabaseSecurityAlertPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

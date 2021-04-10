@@ -64,21 +64,6 @@ namespace Microsoft.Azure.Management.Reservations
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IQuotaOperations.
-        /// </summary>
-        public virtual IQuotaOperations Quota { get; private set; }
-
-        /// <summary>
-        /// Gets the IQuotaRequestStatusOperations.
-        /// </summary>
-        public virtual IQuotaRequestStatusOperations QuotaRequestStatus { get; private set; }
-
-        /// <summary>
-        /// Gets the IAutoQuotaIncreaseOperations.
-        /// </summary>
-        public virtual IAutoQuotaIncreaseOperations AutoQuotaIncrease { get; private set; }
-
-        /// <summary>
         /// Gets the IReservationOperations.
         /// </summary>
         public virtual IReservationOperations Reservation { get; private set; }
@@ -92,6 +77,26 @@ namespace Microsoft.Azure.Management.Reservations
         /// Gets the IOperationOperations.
         /// </summary>
         public virtual IOperationOperations Operation { get; private set; }
+
+        /// <summary>
+        /// Gets the ICalculateExchangeOperations.
+        /// </summary>
+        public virtual ICalculateExchangeOperations CalculateExchange { get; private set; }
+
+        /// <summary>
+        /// Gets the IExchangeOperations.
+        /// </summary>
+        public virtual IExchangeOperations Exchange { get; private set; }
+
+        /// <summary>
+        /// Gets the IQuotaOperations.
+        /// </summary>
+        public virtual IQuotaOperations Quota { get; private set; }
+
+        /// <summary>
+        /// Gets the IQuotaRequestStatusOperations.
+        /// </summary>
+        public virtual IQuotaRequestStatusOperations QuotaRequestStatus { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AzureReservationAPIClient class.
@@ -334,12 +339,13 @@ namespace Microsoft.Azure.Management.Reservations
         /// </summary>
         private void Initialize()
         {
-            Quota = new QuotaOperations(this);
-            QuotaRequestStatus = new QuotaRequestStatusOperations(this);
-            AutoQuotaIncrease = new AutoQuotaIncreaseOperations(this);
             Reservation = new ReservationOperations(this);
             ReservationOrder = new ReservationOrderOperations(this);
             Operation = new OperationOperations(this);
+            CalculateExchange = new CalculateExchangeOperations(this);
+            Exchange = new ExchangeOperations(this);
+            Quota = new QuotaOperations(this);
+            QuotaRequestStatus = new QuotaRequestStatusOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -419,7 +425,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "reservedResourceType");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -608,7 +614,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2020-10-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

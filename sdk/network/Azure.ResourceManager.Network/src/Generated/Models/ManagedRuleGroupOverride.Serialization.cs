@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("rules"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedRuleOverride> array = new List<ManagedRuleOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

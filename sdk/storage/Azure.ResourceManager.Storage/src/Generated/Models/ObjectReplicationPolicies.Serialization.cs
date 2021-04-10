@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ObjectReplicationPolicies
+    internal partial class ObjectReplicationPolicies
     {
         internal static ObjectReplicationPolicies DeserializeObjectReplicationPolicies(JsonElement element)
         {
@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ObjectReplicationPolicy> array = new List<ObjectReplicationPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

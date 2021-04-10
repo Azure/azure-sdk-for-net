@@ -36,11 +36,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("checksFailedPercent"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     checksFailedPercent = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("roundTripTimeMs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     roundTripTimeMs = property.Value.GetSingle();
                     continue;
                 }

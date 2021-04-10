@@ -215,6 +215,9 @@ namespace Microsoft.Azure.ServiceBus.Amqp
                 case TimeoutException _:
                     return new ServiceBusTimeoutException(message, aggregateException);
 
+                case InvalidOperationException ex when ex.Message.IndexOf("connection is closing", StringComparison.OrdinalIgnoreCase) != -1:
+                    return new ServiceBusException(true, aggregateException);
+
                 case InvalidOperationException _ when connectionError:
                     return new ServiceBusCommunicationException(message, aggregateException);
             }

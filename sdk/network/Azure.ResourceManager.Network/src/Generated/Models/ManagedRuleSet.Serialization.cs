@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("ruleGroupOverrides"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedRuleGroupOverride> array = new List<ManagedRuleGroupOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

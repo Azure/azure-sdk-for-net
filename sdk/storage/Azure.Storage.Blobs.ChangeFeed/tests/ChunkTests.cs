@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Internal.Avro;
 using Moq;
@@ -16,15 +16,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class ChunkTests : ChangeFeedTestBase
     {
-        public ChunkTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ChunkTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         /// <summary>
         /// Tests Chunk.HasNext() when the underlying AvroReader.HasNext() returns true.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task HasNext_True()
         {
             // Arrange
@@ -69,11 +69,10 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             avroReader.Verify(r => r.HasNext());
         }
 
-
         /// <summary>
         /// Tests Chunk.HasNext() when the underlying AvroReader.HasNext() returns false.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task HasNext_False()
         {
             // Arrange
@@ -121,7 +120,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Chunk.Next() and the BlobChangeFeedEvent and BlobChangeFeedEventData constructors.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task Next()
         {
             // Arrange
@@ -138,7 +137,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             string metadataVersion = "1";
 
             string api = "PutBlob";
-            Guid clientRequestId = Guid.NewGuid();
+            string clientRequestId = $"Azure-Storage-Powershell-{Guid.NewGuid()}";
             Guid requestId = Guid.NewGuid();
             ETag etag = new ETag("0x8D75EF45A3B8617");
             string contentType = "contentType";

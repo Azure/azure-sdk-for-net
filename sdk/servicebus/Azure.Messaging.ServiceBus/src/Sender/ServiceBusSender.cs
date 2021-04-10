@@ -33,35 +33,36 @@ namespace Azure.Messaging.ServiceBus
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
         ///
-        public string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
+        public virtual string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
         ///   The path of the entity that the sender is connected to, specific to the
         ///   Service Bus namespace that contains it.
         /// </summary>
         ///
-        public string EntityPath { get; }
+        public virtual string EntityPath { get; }
 
         /// <summary>
-        ///   Indicates whether or not this <see cref="ServiceBusSender"/> has been disposed.
+        ///   Indicates whether or not this <see cref="ServiceBusSender"/> has been closed.
         /// </summary>
         ///
         /// <value>
-        ///   <c>true</c> if the client is disposed; otherwise, <c>false</c>.
+        /// <c>true</c> if the sender is closed; otherwise, <c>false</c>.
         /// </value>
-        ///
-        public bool IsDisposed { get; private set; } = false;
+        public virtual bool IsClosed
+        {
+            get => _closed;
+            private set => _closed = value;
+        }
+
+        /// <summary>Indicates whether or not this instance has been closed.</summary>
+        private volatile bool _closed;
 
         /// <summary>
         ///   The instance of <see cref="ServiceBusEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
         internal ServiceBusEventSource Logger { get; set; } = ServiceBusEventSource.Log;
-
-        /// <summary>
-        /// In the case of a via-sender, the message is sent to <see cref="EntityPath"/> via <see cref="ViaEntityPath"/>; null otherwise.
-        /// </summary>
-        public string ViaEntityPath { get; }
 
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
@@ -114,15 +115,13 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
-                options = options?.Clone() ?? new ServiceBusSenderOptions();
+                options = options ?? new ServiceBusSenderOptions();
                 EntityPath = entityPath;
-                ViaEntityPath = options.ViaQueueOrTopicName;
                 Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
                 _connection = connection;
                 _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
                 _innerSender = _connection.CreateTransportSender(
                     entityPath,
-                    ViaEntityPath,
                     _retryPolicy,
                     Identifier);
                 _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
@@ -147,12 +146,16 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Sends a message to the associated entity of Service Bus.
         /// </summary>
-        /// <param name="message"></param>
-        ///
+        /// <param name="message">The message to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
+        /// <exception cref="ServiceBusException">
+        ///   The message exceeds the maximum size allowed, as determined by the Service Bus service.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
+        ///   For more information on service limits, see
+        ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
         public virtual async Task SendMessageAsync(
             ServiceBusMessage message,
             CancellationToken cancellationToken = default)
@@ -174,14 +177,24 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
+        /// <exception cref="ServiceBusException">
+        ///   The set of messages exceeds the maximum size allowed in a single batch, as determined by the Service Bus service.
+        ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
+        ///   For more information on service limits, see
+        ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
         public virtual async Task SendMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messages, nameof(messages));
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSender));
-            IList<ServiceBusMessage> messageList = messages.ToList();
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            IReadOnlyList<ServiceBusMessage> messageList = messages switch
+            {
+                IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
+                _ => messages.ToList()
+            };
+
             if (messageList.Count == 0)
             {
                 return;
@@ -209,7 +222,7 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageComplete(Identifier);
         }
 
-        private async Task ApplyPlugins(IList<ServiceBusMessage> messages)
+        private async Task ApplyPlugins(IReadOnlyList<ServiceBusMessage> messages)
         {
             foreach (ServiceBusPlugin plugin in _plugins)
             {
@@ -233,7 +246,10 @@ namespace Azure.Messaging.ServiceBus
 
         private DiagnosticScope CreateDiagnosticScope(IEnumerable<ServiceBusMessage> messages, string activityName)
         {
-            InstrumentMessages(messages);
+            foreach (ServiceBusMessage message in messages)
+            {
+                _scopeFactory.InstrumentMessage(message);
+            }
 
             // create a new scope for the specified operation
             DiagnosticScope scope = _scopeFactory.CreateScope(
@@ -242,32 +258,6 @@ namespace Azure.Messaging.ServiceBus
 
             scope.SetMessageData(messages);
             return scope;
-        }
-
-        /// <summary>
-        ///   Performs the actions needed to instrument a set of messages.
-        /// </summary>
-        ///
-        /// <param name="messages">The messages to instrument.</param>
-        ///
-        private void InstrumentMessages(IEnumerable<ServiceBusMessage> messages)
-        {
-            foreach (ServiceBusMessage message in messages)
-            {
-                if (!message.Properties.ContainsKey(DiagnosticProperty.DiagnosticIdAttribute))
-                {
-                    using DiagnosticScope messageScope = _scopeFactory.CreateScope(
-                        DiagnosticProperty.MessageActivityName,
-                        DiagnosticProperty.SenderKind);
-                    messageScope.Start();
-
-                    Activity activity = Activity.Current;
-                    if (activity != null)
-                    {
-                        message.Properties[DiagnosticProperty.DiagnosticIdAttribute] = activity.Id;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -308,7 +298,7 @@ namespace Azure.Messaging.ServiceBus
             CreateMessageBatchOptions options,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             options = options?.Clone() ?? new CreateMessageBatchOptions();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CreateMessageBatchStart(Identifier);
@@ -316,7 +306,7 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 TransportMessageBatch transportBatch = await _innerSender.CreateMessageBatchAsync(options, cancellationToken).ConfigureAwait(false);
-                batch = new ServiceBusMessageBatch(transportBatch);
+                batch = new ServiceBusMessageBatch(transportBatch, _scopeFactory);
             }
             catch (Exception ex)
             {
@@ -343,7 +333,12 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(messageBatch, nameof(messageBatch));
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            if (messageBatch.Count == 0)
+            {
+                return;
+            }
+
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
@@ -392,17 +387,15 @@ namespace Azure.Messaging.ServiceBus
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(message, nameof(message));
-            long[] sequenceNumbers = await ScheduleMessagesAsync(
+            IReadOnlyList<long> sequenceNumbers = await ScheduleMessagesAsync(
                 new ServiceBusMessage[] { message },
                 scheduledEnqueueTime,
                 cancellationToken)
             .ConfigureAwait(false);
-            // if there isn't one sequence number in the array, an
+            // if there isn't one sequence number in the list, an
             // exception should have been thrown by this point.
             return sequenceNumbers[0];
         }
-
-
 
         /// <summary>
         /// Schedules a set of messages to appear on Service Bus at a later time.
@@ -419,15 +412,26 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.</remarks>
         ///
         /// <returns>The sequence number of the message that was scheduled.</returns>
-        public virtual async Task<long[]> ScheduleMessagesAsync(
+        public virtual async Task<IReadOnlyList<long>> ScheduleMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
             DateTimeOffset scheduledEnqueueTime,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(messages, nameof(messages));
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotNull(messages, nameof(messages));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var messageList = messages.ToList();
+
+            IReadOnlyList<ServiceBusMessage> messageList = messages switch
+            {
+                IReadOnlyList<ServiceBusMessage> alreadyList => alreadyList,
+                _ => messages.ToList()
+            };
+
+            if (messageList.Count == 0)
+            {
+                return Array.Empty<long>();
+            }
+
             await ApplyPlugins(messageList).ConfigureAwait(false);
             Logger.ScheduleMessagesStart(
                 Identifier,
@@ -439,7 +443,7 @@ namespace Azure.Messaging.ServiceBus
                 DiagnosticProperty.ScheduleActivityName);
             scope.Start();
 
-            long[] sequenceNumbers = null;
+            IReadOnlyList<long> sequenceNumbers = null;
             try
             {
                 foreach (ServiceBusMessage message in messageList)
@@ -457,7 +461,6 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ScheduleMessagesComplete(Identifier);
-            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumbers);
             return sequenceNumbers;
         }
 
@@ -483,19 +486,32 @@ namespace Azure.Messaging.ServiceBus
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSender));
+            Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusSender));
+            Argument.AssertNotNull(sequenceNumbers, nameof(sequenceNumbers));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            var sequenceNumberList = sequenceNumbers.ToArray();
-            Logger.CancelScheduledMessagesStart(Identifier, sequenceNumberList);
+
+            // the sequence numbers MUST be in array form for them to be encoded correctly
+            long[] sequenceArray = sequenceNumbers switch
+            {
+                long[] alreadyArray => alreadyArray,
+                _ => sequenceNumbers.ToArray()
+            };
+
+            if (sequenceArray.Length == 0)
+            {
+                return;
+            }
+
+            Logger.CancelScheduledMessagesStart(Identifier, sequenceArray);
+
             using DiagnosticScope scope = _scopeFactory.CreateScope(
                 DiagnosticProperty.CancelActivityName,
                 DiagnosticProperty.ClientKind);
-
-            scope.AddAttribute(DiagnosticProperty.SequenceNumbersAttribute, sequenceNumbers);
             scope.Start();
+
             try
             {
-                await _innerSender.CancelScheduledMessagesAsync(sequenceNumberList, cancellationToken).ConfigureAwait(false);
+                await _innerSender.CancelScheduledMessagesAsync(sequenceArray, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -510,15 +526,14 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />.
         /// </summary>
-        ///
-        /// <returns>A task to be resolved on when the operation has completed.</returns>
-        ///
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
-        public virtual async ValueTask DisposeAsync()
+        /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
+        /// request to cancel the operation.</param>
+        public virtual async Task CloseAsync(
+            CancellationToken cancellationToken = default)
         {
-            IsDisposed = true;
+            IsClosed = true;
 
-            Logger.ClientDisposeStart(typeof(ServiceBusSender), Identifier);
+            Logger.ClientCloseStart(typeof(ServiceBusSender), Identifier);
 
             try
             {
@@ -526,12 +541,22 @@ namespace Azure.Messaging.ServiceBus
             }
             catch (Exception ex)
             {
-                Logger.ClientDisposeException(typeof(ServiceBusSender), Identifier, ex);
+                Logger.ClientCloseException(typeof(ServiceBusSender), Identifier, ex);
                 throw;
             }
 
-            Logger.ClientDisposeComplete(typeof(ServiceBusSender), Identifier);
+            Logger.ClientCloseComplete(typeof(ServiceBusSender), Identifier);
         }
+
+        /// <summary>
+        ///   Performs the task needed to clean up resources used by the <see cref="ServiceBusSender" />.
+        ///   This is equivalent to calling <see cref="CloseAsync"/> with the default <see cref="LinkCloseMode"/>.
+        /// </summary>
+        ///
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "This signature must match the IAsyncDisposable interface.")]
+        public virtual async ValueTask DisposeAsync() =>
+            await CloseAsync().ConfigureAwait(false);
 
         /// <summary>
         ///   Determines whether the specified <see cref="System.Object" /> is equal to this instance.

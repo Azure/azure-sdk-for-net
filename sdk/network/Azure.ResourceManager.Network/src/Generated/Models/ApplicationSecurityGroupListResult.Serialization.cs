@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationSecurityGroupListResult
+    internal partial class ApplicationSecurityGroupListResult
     {
         internal static ApplicationSecurityGroupListResult DeserializeApplicationSecurityGroupListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationSecurityGroup> array = new List<ApplicationSecurityGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -1,10 +1,10 @@
 # Generated code configuration
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c81039d056cc5aa0a0025f5b9e5446a7c194bd1f/specification/appconfiguration/resource-manager/readme.md
+require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d302c82f32daec0feb68cd7d68d45ba898b67ee7/specification/appconfiguration/resource-manager/readme.md
 ```
 
 ## Swagger workarounds

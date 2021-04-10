@@ -1,120 +1,166 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/prebuilt/receipt/analyze?includeTextDetails=true",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyze?includeTextDetails=true",
       "RequestMethod": "POST",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Content-Length": "108935",
         "Content-Type": "application/pdf",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-8158911e4a9b2b45b08e68d58d50563e-daf79e5718067a41-00",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "5c63a3cf7538b7995f6236d8f6291bae",
+        "traceparent": "00-a0e8f712d404b2479c9f25ecb1b9acce-0181a0e37dbbd048-00",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "b042092feed43c981ded68466d5079d0",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "5c508b38-2bd3-44a5-bccb-2edf1edda7cb",
+        "apim-request-id": "5b0a0c5a-1c30-438b-b3d9-3d0b86eac953",
         "Content-Length": "0",
-        "Date": "Fri, 07 Aug 2020 02:14:55 GMT",
-        "Operation-Location": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/prebuilt/receipt/analyzeResults/5c508b38-2bd3-44a5-bccb-2edf1edda7cb",
+        "Date": "Wed, 24 Mar 2021 21:47:14 GMT",
+        "Operation-Location": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/5b0a0c5a-1c30-438b-b3d9-3d0b86eac953",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "391"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "99"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/prebuilt/receipt/analyzeResults/5c508b38-2bd3-44a5-bccb-2edf1edda7cb",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/5b0a0c5a-1c30-438b-b3d9-3d0b86eac953",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "9d7db6601703b6d2523796898ee85a22",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "510b7727852c62d58361328a5b8d5b92",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "4ea312eb-59e6-4d97-82f9-8fde1a27f5d6",
+        "apim-request-id": "c50a9229-d6e7-421e-83a4-318824e51284",
+        "Content-Length": "109",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:14:56 GMT",
+        "Date": "Wed, 24 Mar 2021 21:47:14 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "83"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "35"
       },
       "ResponseBody": {
-        "status": "running",
-        "createdDateTime": "2020-08-07T02:14:56Z",
-        "lastUpdatedDateTime": "2020-08-07T02:14:56Z"
+        "status": "notStarted",
+        "createdDateTime": "2021-03-24T21:47:14Z",
+        "lastUpdatedDateTime": "2021-03-24T21:47:14Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/prebuilt/receipt/analyzeResults/5c508b38-2bd3-44a5-bccb-2edf1edda7cb",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/5b0a0c5a-1c30-438b-b3d9-3d0b86eac953",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "a6d6188907fc2ced7d0b3bc0802c76b6",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "15a14d64e5ac7c57a6d8c3c8ba359635",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "38c9e3e1-7758-42ae-996c-e652811f5f8c",
+        "apim-request-id": "32e5a78e-3960-4165-9bc8-842e742998b0",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:14:57 GMT",
+        "Date": "Wed, 24 Mar 2021 21:47:15 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "121"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
       },
       "ResponseBody": {
         "status": "running",
-        "createdDateTime": "2020-08-07T02:14:56Z",
-        "lastUpdatedDateTime": "2020-08-07T02:14:56Z"
+        "createdDateTime": "2021-03-24T21:47:14Z",
+        "lastUpdatedDateTime": "2021-03-24T21:47:15Z"
       }
     },
     {
-      "RequestUri": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/formrecognizer/v2.0/prebuilt/receipt/analyzeResults/5c508b38-2bd3-44a5-bccb-2edf1edda7cb",
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/5b0a0c5a-1c30-438b-b3d9-3d0b86eac953",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-AI.FormRecognizer/3.0.0-dev.20200806.1",
-          "(.NET Core 4.6.28516.03; Microsoft Windows 10.0.18363 )"
-        ],
-        "x-ms-client-request-id": "9c48e201036cb76fd1ac0a00df102876",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "f0f16203b17faafb34e02c72bc0ee090",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "485ae7e5-3cbb-48b5-9261-711c35fe84ad",
+        "apim-request-id": "f76b4fb2-7c6b-4338-bdc6-9d0c1e0af89d",
+        "Content-Length": "106",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 07 Aug 2020 02:14:59 GMT",
+        "Date": "Wed, 24 Mar 2021 21:47:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-        "Transfer-Encoding": "chunked",
-        "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "144"
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "18"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-24T21:47:14Z",
+        "lastUpdatedDateTime": "2021-03-24T21:47:15Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/5b0a0c5a-1c30-438b-b3d9-3d0b86eac953",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "1fe1d59264ae4123208faa53c20ca74e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "b662874d-6a61-40c6-8823-4737c7183ba4",
+        "Content-Length": "106",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Mar 2021 21:47:17 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "14"
+      },
+      "ResponseBody": {
+        "status": "running",
+        "createdDateTime": "2021-03-24T21:47:14Z",
+        "lastUpdatedDateTime": "2021-03-24T21:47:15Z"
+      }
+    },
+    {
+      "RequestUri": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/formrecognizer/v2.1-preview.3/prebuilt/receipt/analyzeResults/5b0a0c5a-1c30-438b-b3d9-3d0b86eac953",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.FormRecognizer/3.1.0-alpha.20210324.1 (.NET Framework 4.8.4300.0; Microsoft Windows 10.0.19042 )",
+        "x-ms-client-request-id": "f987fdcb6b9bb31251f7e0ccb9e4c098",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8f7a5b36-08fc-41c1-9844-94f8b8207ba6",
+        "Content-Length": "33712",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 24 Mar 2021 21:47:18 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "x-content-type-options": "nosniff",
+        "x-envoy-upstream-service-time": "27"
       },
       "ResponseBody": {
         "status": "succeeded",
-        "createdDateTime": "2020-08-07T02:14:56Z",
-        "lastUpdatedDateTime": "2020-08-07T02:14:59Z",
+        "createdDateTime": "2021-03-24T21:47:14Z",
+        "lastUpdatedDateTime": "2021-03-24T21:47:18Z",
         "analyzeResult": {
-          "version": "2.0.0",
+          "version": "2.1.0",
           "readResults": [
             {
               "page": 1,
@@ -122,7 +168,6 @@
               "width": 8.5,
               "height": 11,
               "unit": "inch",
-              "language": "en",
               "lines": [
                 {
                   "text": "Company A Invoice",
@@ -179,7 +224,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Invoice For:",
@@ -222,7 +273,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Address:",
@@ -251,7 +308,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Bilbo Baggins",
@@ -294,7 +357,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "123 Hobbit Lane",
@@ -351,7 +420,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "567 Main St.",
@@ -408,7 +483,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Redmond, WA",
@@ -451,7 +532,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Redmond, WA",
@@ -494,7 +581,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "555-555-5555",
@@ -523,7 +616,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "555-555-5555",
@@ -552,7 +651,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Item",
@@ -581,7 +686,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Quantity",
@@ -610,7 +721,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Price",
@@ -639,7 +756,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "A",
@@ -668,7 +791,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "1",
@@ -697,7 +826,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "10.99",
@@ -726,7 +861,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "B",
@@ -755,7 +896,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "2",
@@ -784,7 +931,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "14.67",
@@ -813,7 +966,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "C",
@@ -842,7 +1001,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "4",
@@ -871,7 +1036,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "15.66",
@@ -900,7 +1071,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "D",
@@ -929,7 +1106,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "1",
@@ -958,7 +1141,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "12.00",
@@ -987,7 +1176,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "E",
@@ -1016,7 +1211,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "4",
@@ -1045,7 +1246,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "10.00",
@@ -1074,7 +1281,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "F",
@@ -1103,7 +1316,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "6",
@@ -1132,7 +1351,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "12.00",
@@ -1161,7 +1386,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "G",
@@ -1190,7 +1421,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "8",
@@ -1219,7 +1456,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "22.00",
@@ -1248,7 +1491,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Subtotal: 300.00",
@@ -1291,7 +1540,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Tax: 30.00",
@@ -1334,7 +1589,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Tip: 100.00",
@@ -1377,7 +1638,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Total: 430.00",
@@ -1420,7 +1687,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Signature: ____Bilbo Baggins__________",
@@ -1477,17 +1750,22 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 }
               ]
             },
             {
               "page": 2,
               "angle": 0,
-              "width": 8.4967,
-              "height": 10.9967,
-              "unit": "inch",
-              "language": "en"
+              "width": 8.5,
+              "height": 11,
+              "unit": "inch"
             },
             {
               "page": 3,
@@ -1495,7 +1773,6 @@
               "width": 8.5,
               "height": 11,
               "unit": "inch",
-              "language": "en",
               "lines": [
                 {
                   "text": "Company B Invoice",
@@ -1552,7 +1829,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Invoice For:",
@@ -1595,7 +1878,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Address:",
@@ -1624,7 +1913,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Frodo Baggins",
@@ -1667,7 +1962,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "123 Hobbit Lane",
@@ -1724,7 +2025,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "567 Main St.",
@@ -1781,7 +2088,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Redmond, WA",
@@ -1824,7 +2137,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Redmond, WA",
@@ -1867,7 +2186,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "555-555-5555",
@@ -1896,7 +2221,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "555-555-5555",
@@ -1925,7 +2256,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Item",
@@ -1954,7 +2291,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Quantity",
@@ -1983,7 +2326,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Price",
@@ -2012,7 +2361,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "A",
@@ -2041,7 +2396,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "10",
@@ -2070,7 +2431,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "100.99",
@@ -2099,7 +2466,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "B",
@@ -2128,7 +2501,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "20",
@@ -2157,7 +2536,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "140.67",
@@ -2186,7 +2571,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "C",
@@ -2215,7 +2606,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "40",
@@ -2244,7 +2641,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "150.66",
@@ -2273,7 +2676,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "D",
@@ -2302,7 +2711,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "10",
@@ -2331,7 +2746,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "120.00",
@@ -2360,7 +2781,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "E",
@@ -2389,7 +2816,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "40",
@@ -2418,7 +2851,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "100.00",
@@ -2447,7 +2886,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "F",
@@ -2476,7 +2921,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "60",
@@ -2505,7 +2956,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "120.00",
@@ -2534,7 +2991,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "G",
@@ -2563,7 +3026,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "80",
@@ -2592,7 +3061,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "220.00",
@@ -2621,7 +3096,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Subtotal: 3000.00",
@@ -2664,7 +3145,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Tax: 300.00",
@@ -2707,7 +3194,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Tip: 1000.00",
@@ -2750,7 +3243,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Total: 4300.00",
@@ -2793,7 +3292,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 },
                 {
                   "text": "Signature: ____Frodo Baggins__________",
@@ -2850,7 +3355,13 @@
                       ],
                       "confidence": 1
                     }
-                  ]
+                  ],
+                  "appearance": {
+                    "style": {
+                      "name": "other",
+                      "confidence": 1
+                    }
+                  }
                 }
               ]
             }
@@ -2863,105 +3374,255 @@
                 1
               ],
               "fields": {
-                "ReceiptType": {
-                  "type": "string",
-                  "valueString": "Itemized",
-                  "confidence": 0.99
-                },
-                "MerchantName": {
-                  "type": "string",
-                  "valueString": "Bilbo Baggins",
-                  "text": "Bilbo Baggins",
-                  "boundingBox": [
-                    6.0164,
-                    1.4503,
-                    6.8967,
-                    1.4503,
-                    6.8967,
-                    1.5931,
-                    6.0164,
-                    1.5931
-                  ],
-                  "page": 1,
-                  "confidence": 0.985,
-                  "elements": [
-                    "#/readResults/0/lines/3/words/0",
-                    "#/readResults/0/lines/3/words/1"
-                  ]
-                },
-                "MerchantAddress": {
-                  "type": "string",
-                  "valueString": "123 Hobbit Lane 567 Main St. Redmond, WA Redmond, WA",
-                  "text": "123 Hobbit Lane 567 Main St. Redmond, WA Redmond, WA",
-                  "boundingBox": [
-                    0.8852,
-                    1.6707,
-                    7.1006,
-                    1.6707,
-                    7.1006,
-                    2.1975,
-                    0.8852,
-                    2.1975
-                  ],
-                  "page": 1,
-                  "confidence": 0.99,
-                  "elements": [
-                    "#/readResults/0/lines/4/words/0",
-                    "#/readResults/0/lines/4/words/1",
-                    "#/readResults/0/lines/4/words/2",
-                    "#/readResults/0/lines/5/words/0",
-                    "#/readResults/0/lines/5/words/1",
-                    "#/readResults/0/lines/5/words/2",
-                    "#/readResults/0/lines/6/words/0",
-                    "#/readResults/0/lines/6/words/1",
-                    "#/readResults/0/lines/7/words/0",
-                    "#/readResults/0/lines/7/words/1"
-                  ]
-                },
-                "MerchantPhoneNumber": {
-                  "type": "phoneNumber",
-                  "valuePhoneNumber": "\u002B15555555555",
-                  "text": "555-555-5555",
-                  "boundingBox": [
-                    6.0105,
-                    2.1187,
-                    6.9371,
-                    2.1187,
-                    6.9371,
-                    2.2254,
-                    6.0105,
-                    2.2254
-                  ],
-                  "page": 1,
-                  "confidence": 0.99,
-                  "elements": [
-                    "#/readResults/0/lines/8/words/0"
-                  ]
-                },
                 "Items": {
                   "type": "array",
                   "valueArray": [
                     {
                       "type": "object",
                       "valueObject": {
-                        "Name": {
-                          "type": "string",
-                          "valueString": "F",
-                          "text": "F",
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 1,
+                          "text": "1",
                           "boundingBox": [
-                            1.0943,
-                            4.2661,
-                            1.1497,
-                            4.2661,
-                            1.1497,
-                            4.3717,
-                            1.0943,
-                            4.3717
+                            3.2589,
+                            3.2116,
+                            3.3202,
+                            3.2116,
+                            3.3202,
+                            3.3176,
+                            3.2589,
+                            3.3176
                           ],
                           "page": 1,
-                          "confidence": 0.965,
+                          "confidence": 0.971,
                           "elements": [
-                            "#/readResults/0/lines/28/words/0"
+                            "#/readResults/0/lines/14/words/0"
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 10.99,
+                          "text": "10.99",
+                          "boundingBox": [
+                            5.4232,
+                            3.2108,
+                            5.7784,
+                            3.2108,
+                            5.7784,
+                            3.319,
+                            5.4232,
+                            3.319
+                          ],
+                          "page": 1,
+                          "confidence": 0.952,
+                          "elements": [
+                            "#/readResults/0/lines/15/words/0"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 2,
+                          "text": "2",
+                          "boundingBox": [
+                            3.2541,
+                            3.4241,
+                            3.3199,
+                            3.4241,
+                            3.3199,
+                            3.531,
+                            3.2541,
+                            3.531
+                          ],
+                          "page": 1,
+                          "confidence": 0.971,
+                          "elements": [
+                            "#/readResults/0/lines/17/words/0"
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 14.67,
+                          "text": "14.67",
+                          "boundingBox": [
+                            5.4232,
+                            3.4241,
+                            5.7789,
+                            3.4241,
+                            5.7789,
+                            3.5323,
+                            5.4232,
+                            3.5323
+                          ],
+                          "page": 1,
+                          "confidence": 0.954,
+                          "elements": [
+                            "#/readResults/0/lines/18/words/0"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 4,
+                          "text": "4",
+                          "boundingBox": [
+                            3.2486,
+                            3.6351,
+                            3.3244,
+                            3.6351,
+                            3.3244,
+                            3.7413,
+                            3.2486,
+                            3.7413
+                          ],
+                          "page": 1,
+                          "confidence": 0.971,
+                          "elements": [
+                            "#/readResults/0/lines/20/words/0"
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 15.66,
+                          "text": "15.66",
+                          "boundingBox": [
+                            5.4232,
+                            3.6341,
+                            5.78,
+                            3.6341,
+                            5.78,
+                            3.7423,
+                            5.4232,
+                            3.7423
+                          ],
+                          "page": 1,
+                          "confidence": 0.958,
+                          "elements": [
+                            "#/readResults/0/lines/21/words/0"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 1,
+                          "text": "1",
+                          "boundingBox": [
+                            3.2589,
+                            3.845,
+                            3.3202,
+                            3.845,
+                            3.3202,
+                            3.951,
+                            3.2589,
+                            3.951
+                          ],
+                          "page": 1,
+                          "confidence": 0.971,
+                          "elements": [
+                            "#/readResults/0/lines/23/words/0"
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 12,
+                          "text": "12.00",
+                          "boundingBox": [
+                            5.4232,
+                            3.8441,
+                            5.7809,
+                            3.8441,
+                            5.7809,
+                            3.9523,
+                            5.4232,
+                            3.9523
+                          ],
+                          "page": 1,
+                          "confidence": 0.957,
+                          "elements": [
+                            "#/readResults/0/lines/24/words/0"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 4,
+                          "text": "4",
+                          "boundingBox": [
+                            3.2486,
+                            4.0556,
+                            3.3244,
+                            4.0556,
+                            3.3244,
+                            4.1617,
+                            3.2486,
+                            4.1617
+                          ],
+                          "page": 1,
+                          "confidence": 0.971,
+                          "elements": [
+                            "#/readResults/0/lines/26/words/0"
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 10,
+                          "text": "10.00",
+                          "boundingBox": [
+                            5.4232,
+                            4.0546,
+                            5.781,
+                            4.0546,
+                            5.781,
+                            4.1627,
+                            5.4232,
+                            4.1627
+                          ],
+                          "page": 1,
+                          "confidence": 0.961,
+                          "elements": [
+                            "#/readResults/0/lines/27/words/0"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 6,
+                          "text": "6",
+                          "boundingBox": [
+                            3.2534,
+                            4.2646,
+                            3.3226,
+                            4.2646,
+                            3.3226,
+                            4.3727,
+                            3.2534,
+                            4.3727
+                          ],
+                          "page": 1,
+                          "confidence": 0.971,
+                          "elements": [
+                            "#/readResults/0/lines/29/words/0"
                           ]
                         },
                         "TotalPrice": {
@@ -2979,7 +3640,7 @@
                             4.3727
                           ],
                           "page": 1,
-                          "confidence": 0.947,
+                          "confidence": 0.549,
                           "elements": [
                             "#/readResults/0/lines/30/words/0"
                           ]
@@ -2989,7 +3650,7 @@
                     {
                       "type": "object",
                       "valueObject": {
-                        "TotalPrice": {
+                        "Price": {
                           "type": "number",
                           "valueNumber": 22,
                           "text": "22.00",
@@ -3004,14 +3665,104 @@
                             4.5827
                           ],
                           "page": 1,
-                          "confidence": 0.936,
+                          "confidence": 0.394,
                           "elements": [
                             "#/readResults/0/lines/33/words/0"
+                          ]
+                        },
+                        "Quantity": {
+                          "type": "number",
+                          "valueNumber": 8,
+                          "text": "8",
+                          "boundingBox": [
+                            3.2514,
+                            4.4746,
+                            3.3224,
+                            4.4746,
+                            3.3224,
+                            4.5827,
+                            3.2514,
+                            4.5827
+                          ],
+                          "page": 1,
+                          "confidence": 0.97,
+                          "elements": [
+                            "#/readResults/0/lines/32/words/0"
                           ]
                         }
                       }
                     }
                   ]
+                },
+                "MerchantAddress": {
+                  "type": "string",
+                  "valueString": "567 Main St. Redmond, WA",
+                  "text": "567 Main St. Redmond, WA",
+                  "boundingBox": [
+                    0.8852,
+                    1.846,
+                    1.8537,
+                    1.846,
+                    1.8537,
+                    2.1975,
+                    0.8852,
+                    2.1975
+                  ],
+                  "page": 1,
+                  "confidence": 0.97,
+                  "elements": [
+                    "#/readResults/0/lines/5/words/0",
+                    "#/readResults/0/lines/5/words/1",
+                    "#/readResults/0/lines/5/words/2",
+                    "#/readResults/0/lines/7/words/0",
+                    "#/readResults/0/lines/7/words/1"
+                  ]
+                },
+                "MerchantName": {
+                  "type": "string",
+                  "valueString": "Bilbo Baggins",
+                  "text": "Bilbo Baggins",
+                  "boundingBox": [
+                    6.0164,
+                    1.4503,
+                    6.8967,
+                    1.4503,
+                    6.8967,
+                    1.5931,
+                    6.0164,
+                    1.5931
+                  ],
+                  "page": 1,
+                  "confidence": 0.661,
+                  "elements": [
+                    "#/readResults/0/lines/3/words/0",
+                    "#/readResults/0/lines/3/words/1"
+                  ]
+                },
+                "MerchantPhoneNumber": {
+                  "type": "phoneNumber",
+                  "valuePhoneNumber": "\u002B15555555555",
+                  "text": "555-555-5555",
+                  "boundingBox": [
+                    6.0105,
+                    2.1187,
+                    6.9371,
+                    2.1187,
+                    6.9371,
+                    2.2254,
+                    6.0105,
+                    2.2254
+                  ],
+                  "page": 1,
+                  "confidence": 0.987,
+                  "elements": [
+                    "#/readResults/0/lines/8/words/0"
+                  ]
+                },
+                "ReceiptType": {
+                  "type": "string",
+                  "valueString": "Itemized",
+                  "confidence": 0.994
                 },
                 "Subtotal": {
                   "type": "number",
@@ -3028,12 +3779,32 @@
                     5.0131
                   ],
                   "page": 1,
-                  "confidence": 0.99,
+                  "confidence": 0.983,
                   "elements": [
                     "#/readResults/0/lines/34/words/1"
                   ]
                 },
-                "Total": {
+                "Tax": {
+                  "type": "number",
+                  "valueNumber": 30,
+                  "text": "30.00",
+                  "boundingBox": [
+                    5.836,
+                    5.1245,
+                    6.2022,
+                    5.1245,
+                    6.2022,
+                    5.2333,
+                    5.836,
+                    5.2333
+                  ],
+                  "page": 1,
+                  "confidence": 0.987,
+                  "elements": [
+                    "#/readResults/0/lines/35/words/1"
+                  ]
+                },
+                "Tip": {
                   "type": "number",
                   "valueNumber": 100,
                   "text": "100.00",
@@ -3048,9 +3819,29 @@
                     5.4533
                   ],
                   "page": 1,
-                  "confidence": 0.99,
+                  "confidence": 0.942,
                   "elements": [
                     "#/readResults/0/lines/36/words/1"
+                  ]
+                },
+                "Total": {
+                  "type": "number",
+                  "valueNumber": 430,
+                  "text": "430.00",
+                  "boundingBox": [
+                    5.942,
+                    5.5645,
+                    6.3987,
+                    5.5645,
+                    6.3987,
+                    5.6733,
+                    5.942,
+                    5.6733
+                  ],
+                  "page": 1,
+                  "confidence": 0.981,
+                  "elements": [
+                    "#/readResults/0/lines/37/words/1"
                   ]
                 }
               }
@@ -3070,109 +3861,195 @@
                 3
               ],
               "fields": {
-                "ReceiptType": {
-                  "type": "string",
-                  "valueString": "Itemized",
-                  "confidence": 0.99
-                },
-                "MerchantName": {
-                  "type": "string",
-                  "valueString": "Frodo Baggins",
-                  "text": "Frodo Baggins",
-                  "boundingBox": [
-                    6.0164,
-                    1.4506,
-                    6.9506,
-                    1.4506,
-                    6.9506,
-                    1.5931,
-                    6.0164,
-                    1.5931
-                  ],
-                  "page": 3,
-                  "confidence": 0.98,
-                  "elements": [
-                    "#/readResults/2/lines/3/words/0",
-                    "#/readResults/2/lines/3/words/1"
-                  ]
-                },
-                "MerchantAddress": {
-                  "type": "string",
-                  "valueString": "123 Hobbit Lane 567 Main St. Redmond, WA Redmond, WA",
-                  "text": "123 Hobbit Lane 567 Main St. Redmond, WA Redmond, WA",
-                  "boundingBox": [
-                    0.8852,
-                    1.6707,
-                    7.1006,
-                    1.6707,
-                    7.1006,
-                    2.1975,
-                    0.8852,
-                    2.1975
-                  ],
-                  "page": 3,
-                  "confidence": 0.99,
-                  "elements": [
-                    "#/readResults/2/lines/4/words/0",
-                    "#/readResults/2/lines/4/words/1",
-                    "#/readResults/2/lines/4/words/2",
-                    "#/readResults/2/lines/5/words/0",
-                    "#/readResults/2/lines/5/words/1",
-                    "#/readResults/2/lines/5/words/2",
-                    "#/readResults/2/lines/6/words/0",
-                    "#/readResults/2/lines/6/words/1",
-                    "#/readResults/2/lines/7/words/0",
-                    "#/readResults/2/lines/7/words/1"
-                  ]
-                },
-                "MerchantPhoneNumber": {
-                  "type": "phoneNumber",
-                  "valuePhoneNumber": "\u002B15555555555",
-                  "text": "555-555-5555",
-                  "boundingBox": [
-                    6.0105,
-                    2.1187,
-                    6.9371,
-                    2.1187,
-                    6.9371,
-                    2.2254,
-                    6.0105,
-                    2.2254
-                  ],
-                  "page": 3,
-                  "confidence": 0.99,
-                  "elements": [
-                    "#/readResults/2/lines/8/words/0"
-                  ]
-                },
                 "Items": {
                   "type": "array",
                   "valueArray": [
                     {
                       "type": "object",
                       "valueObject": {
-                        "Name": {
-                          "type": "string",
-                          "valueString": "E",
-                          "text": "E",
+                        "Price": {
+                          "type": "number",
+                          "valueNumber": 10,
+                          "text": "10",
                           "boundingBox": [
-                            1.0943,
-                            4.0561,
-                            1.153,
-                            4.0561,
-                            1.153,
-                            4.1614,
-                            1.0943,
-                            4.1614
+                            3.2589,
+                            3.2108,
+                            3.4067,
+                            3.2108,
+                            3.4067,
+                            3.319,
+                            3.2589,
+                            3.319
                           ],
                           "page": 3,
-                          "confidence": 0.935,
+                          "confidence": 0.487,
                           "elements": [
-                            "#/readResults/2/lines/25/words/0"
+                            "#/readResults/2/lines/14/words/0"
                           ]
                         },
-                        "Quantity": {
+                        "TotalPrice": {
                           "type": "number",
+                          "valueNumber": 100.99,
+                          "text": "100.99",
+                          "boundingBox": [
+                            5.4232,
+                            3.2108,
+                            5.8617,
+                            3.2108,
+                            5.8617,
+                            3.319,
+                            5.4232,
+                            3.319
+                          ],
+                          "page": 3,
+                          "confidence": 0.929,
+                          "elements": [
+                            "#/readResults/2/lines/15/words/0"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Price": {
+                          "type": "number",
+                          "valueNumber": 20,
+                          "text": "20",
+                          "boundingBox": [
+                            3.2541,
+                            3.4241,
+                            3.4067,
+                            3.4241,
+                            3.4067,
+                            3.5323,
+                            3.2541,
+                            3.5323
+                          ],
+                          "page": 3,
+                          "confidence": 0.277,
+                          "elements": [
+                            "#/readResults/2/lines/17/words/0"
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 140.67,
+                          "text": "140.67",
+                          "boundingBox": [
+                            5.4232,
+                            3.4241,
+                            5.8622,
+                            3.4241,
+                            5.8622,
+                            3.5323,
+                            5.4232,
+                            3.5323
+                          ],
+                          "page": 3,
+                          "confidence": 0.929,
+                          "elements": [
+                            "#/readResults/2/lines/18/words/0"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Price": {
+                          "type": "number",
+                          "valueNumber": 40,
+                          "text": "40",
+                          "boundingBox": [
+                            3.2486,
+                            3.6341,
+                            3.4067,
+                            3.6341,
+                            3.4067,
+                            3.7423,
+                            3.2486,
+                            3.7423
+                          ],
+                          "page": 3,
+                          "confidence": 0.544,
+                          "elements": [
+                            "#/readResults/2/lines/20/words/0"
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 150.66,
+                          "text": "150.66",
+                          "boundingBox": [
+                            5.4232,
+                            3.6341,
+                            5.8634,
+                            3.6341,
+                            5.8634,
+                            3.7423,
+                            5.4232,
+                            3.7423
+                          ],
+                          "page": 3,
+                          "confidence": 0.922,
+                          "elements": [
+                            "#/readResults/2/lines/21/words/0"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Price": {
+                          "type": "number",
+                          "valueNumber": 10,
+                          "text": "10",
+                          "boundingBox": [
+                            3.2589,
+                            3.8441,
+                            3.4067,
+                            3.8441,
+                            3.4067,
+                            3.9523,
+                            3.2589,
+                            3.9523
+                          ],
+                          "page": 3,
+                          "confidence": 0.395,
+                          "elements": [
+                            "#/readResults/2/lines/23/words/0"
+                          ]
+                        },
+                        "TotalPrice": {
+                          "type": "number",
+                          "valueNumber": 120,
+                          "text": "120.00",
+                          "boundingBox": [
+                            5.4232,
+                            3.8441,
+                            5.8642,
+                            3.8441,
+                            5.8642,
+                            3.9523,
+                            5.4232,
+                            3.9523
+                          ],
+                          "page": 3,
+                          "confidence": 0.958,
+                          "elements": [
+                            "#/readResults/2/lines/24/words/0"
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "valueObject": {
+                        "Price": {
+                          "type": "number",
+                          "valueNumber": 40,
                           "text": "40",
                           "boundingBox": [
                             3.2486,
@@ -3185,7 +4062,7 @@
                             4.1627
                           ],
                           "page": 3,
-                          "confidence": 0,
+                          "confidence": 0.547,
                           "elements": [
                             "#/readResults/2/lines/26/words/0"
                           ]
@@ -3205,7 +4082,7 @@
                             4.1627
                           ],
                           "page": 3,
-                          "confidence": 0.721,
+                          "confidence": 0.924,
                           "elements": [
                             "#/readResults/2/lines/27/words/0"
                           ]
@@ -3215,24 +4092,24 @@
                     {
                       "type": "object",
                       "valueObject": {
-                        "Name": {
-                          "type": "string",
-                          "valueString": "F",
-                          "text": "F",
+                        "Price": {
+                          "type": "number",
+                          "valueNumber": 60,
+                          "text": "60",
                           "boundingBox": [
-                            1.0943,
-                            4.2661,
-                            1.1497,
-                            4.2661,
-                            1.1497,
-                            4.3717,
-                            1.0943,
-                            4.3717
+                            3.2534,
+                            4.2646,
+                            3.4067,
+                            4.2646,
+                            3.4067,
+                            4.3727,
+                            3.2534,
+                            4.3727
                           ],
                           "page": 3,
-                          "confidence": 0.912,
+                          "confidence": 0.396,
                           "elements": [
-                            "#/readResults/2/lines/28/words/0"
+                            "#/readResults/2/lines/29/words/0"
                           ]
                         },
                         "TotalPrice": {
@@ -3250,7 +4127,7 @@
                             4.3727
                           ],
                           "page": 3,
-                          "confidence": 0.967,
+                          "confidence": 0.961,
                           "elements": [
                             "#/readResults/2/lines/30/words/0"
                           ]
@@ -3260,24 +4137,24 @@
                     {
                       "type": "object",
                       "valueObject": {
-                        "Name": {
-                          "type": "string",
-                          "valueString": "G",
-                          "text": "G",
+                        "Price": {
+                          "type": "number",
+                          "valueNumber": 80,
+                          "text": "80",
                           "boundingBox": [
-                            1.0877,
+                            3.2514,
                             4.4746,
-                            1.1735,
+                            3.4067,
                             4.4746,
-                            1.1735,
+                            3.4067,
                             4.5827,
-                            1.0877,
+                            3.2514,
                             4.5827
                           ],
                           "page": 3,
-                          "confidence": 0.903,
+                          "confidence": 0.966,
                           "elements": [
-                            "#/readResults/2/lines/31/words/0"
+                            "#/readResults/2/lines/32/words/0"
                           ]
                         },
                         "TotalPrice": {
@@ -3295,7 +4172,7 @@
                             4.5827
                           ],
                           "page": 3,
-                          "confidence": 0.959,
+                          "confidence": 0.954,
                           "elements": [
                             "#/readResults/2/lines/33/words/0"
                           ]
@@ -3303,6 +4180,55 @@
                       }
                     }
                   ]
+                },
+                "MerchantAddress": {
+                  "type": "string",
+                  "valueString": "567 Main St. Redmond, WA",
+                  "text": "567 Main St. Redmond, WA",
+                  "boundingBox": [
+                    0.8852,
+                    1.846,
+                    1.8537,
+                    1.846,
+                    1.8537,
+                    2.1975,
+                    0.8852,
+                    2.1975
+                  ],
+                  "page": 3,
+                  "confidence": 0.962,
+                  "elements": [
+                    "#/readResults/2/lines/5/words/0",
+                    "#/readResults/2/lines/5/words/1",
+                    "#/readResults/2/lines/5/words/2",
+                    "#/readResults/2/lines/7/words/0",
+                    "#/readResults/2/lines/7/words/1"
+                  ]
+                },
+                "MerchantPhoneNumber": {
+                  "type": "phoneNumber",
+                  "valuePhoneNumber": "\u002B15555555555",
+                  "text": "555-555-5555",
+                  "boundingBox": [
+                    6.0105,
+                    2.1187,
+                    6.9371,
+                    2.1187,
+                    6.9371,
+                    2.2254,
+                    6.0105,
+                    2.2254
+                  ],
+                  "page": 3,
+                  "confidence": 0.987,
+                  "elements": [
+                    "#/readResults/2/lines/8/words/0"
+                  ]
+                },
+                "ReceiptType": {
+                  "type": "string",
+                  "valueString": "Itemized",
+                  "confidence": 0.989
                 },
                 "Subtotal": {
                   "type": "number",
@@ -3319,12 +4245,32 @@
                     5.0131
                   ],
                   "page": 3,
-                  "confidence": 0.99,
+                  "confidence": 0.982,
                   "elements": [
                     "#/readResults/2/lines/34/words/1"
                   ]
                 },
-                "Total": {
+                "Tax": {
+                  "type": "number",
+                  "valueNumber": 300,
+                  "text": "300.00",
+                  "boundingBox": [
+                    5.836,
+                    5.1245,
+                    6.2887,
+                    5.1245,
+                    6.2887,
+                    5.2333,
+                    5.836,
+                    5.2333
+                  ],
+                  "page": 3,
+                  "confidence": 0.987,
+                  "elements": [
+                    "#/readResults/2/lines/35/words/1"
+                  ]
+                },
+                "Tip": {
                   "type": "number",
                   "valueNumber": 1000,
                   "text": "1000.00",
@@ -3339,9 +4285,29 @@
                     5.4533
                   ],
                   "page": 3,
-                  "confidence": 0.985,
+                  "confidence": 0.789,
                   "elements": [
                     "#/readResults/2/lines/36/words/1"
+                  ]
+                },
+                "Total": {
+                  "type": "number",
+                  "valueNumber": 4300,
+                  "text": "4300.00",
+                  "boundingBox": [
+                    5.942,
+                    5.5645,
+                    6.4825,
+                    5.5645,
+                    6.4825,
+                    5.6733,
+                    5.942,
+                    5.6733
+                  ],
+                  "page": 3,
+                  "confidence": 0.98,
+                  "elements": [
+                    "#/readResults/2/lines/37/words/1"
                   ]
                 }
               }
@@ -3353,7 +4319,7 @@
   ],
   "Variables": {
     "FORM_RECOGNIZER_API_KEY": "Sanitized",
-    "FORM_RECOGNIZER_ENDPOINT": "https://mariari-westus2-formrecognizer.cognitiveservices.azure.com/",
-    "RandomSeed": "1609237194"
+    "FORM_RECOGNIZER_ENDPOINT": "https://camaiaor-formrec-eastus.cognitiveservices.azure.com/",
+    "RandomSeed": "156614949"
   }
 }

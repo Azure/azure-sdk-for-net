@@ -2,24 +2,33 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure
 {
     /// <summary>
     /// Represents an HTTP ETag.
     /// </summary>
+    [JsonConverter(typeof(ETagConverter))]
     public readonly struct ETag : IEquatable<ETag>
     {
         private const char QuoteCharacter = '"';
         private const string QuoteString = "\"";
-
-        private readonly string _value;
+        private const string WeakETagPrefix = "W/\"";
+        private const string DefaultFormat = "G";
+        private const string HeaderFormat = "H";
+        private readonly string? _value;
 
         /// <summary>
         /// Creates a new instance of <see cref="ETag"/>.
         /// </summary>
         /// <param name="etag">The string value of the ETag.</param>
-        public ETag(string etag) => _value = etag;
+        public ETag(string etag)
+        {
+            _value = etag;
+        }
 
         /// <summary>
         /// Compares equality of two <see cref="ETag"/> instances.
@@ -65,16 +74,45 @@ namespace Azure
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return _value?.GetHashCode() ?? 0;
+            return _value.GetHashCodeOrdinal();
         }
 
         /// <summary>
         ///
         /// </summary>
         /// <returns>The string representation of this <see cref="ETag"/>.</returns>
-        public override string ToString()
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => ToString("G");
+
+        /// <summary>
+        /// Returns the string representation of the <see cref="ETag"/>.
+        /// </summary>
+        /// <param name="format">A format string. Valid values are "G" for standard format and "H" for header format.</param>
+        /// <returns>The formatted string representation of this <see cref="ETag"/>. This includes outer quotes and the W/ prefix in the case of weak ETags.</returns>
+        /// <example>
+        /// <code>
+        /// ETag tag = ETag.Parse("\"sometag\"");
+        /// Console.WriteLine(tag.ToString("G"));
+        /// // Displays: sometag
+        /// Console.WriteLine(tag.ToString("H"));
+        /// // Displays: "sometag"
+        /// </code>
+        /// </example>
+        public string ToString(string format)
         {
-            return _value ?? "<null>";
+            if (_value == null)
+            {
+                return string.Empty;
+            }
+
+            var _needsQuoateWrap = !IsValidQuotedFormat(_value);
+
+            return format switch
+            {
+                HeaderFormat => _needsQuoateWrap ?  $"{QuoteString}{_value}{QuoteString}" : _value,
+                DefaultFormat => _value,
+                _ => throw new ArgumentException("Invalid format string.")
+            };
         }
 
         internal static ETag Parse(string value)
@@ -83,17 +121,24 @@ namespace Azure
             {
                 return All;
             }
-            else if (value.StartsWith("W/", StringComparison.Ordinal))
+            else if (!IsValidQuotedFormat(value))
             {
-                throw new NotSupportedException("Weak ETags are not supported.");
-            }
-            else if (!value.StartsWith(QuoteString, StringComparison.Ordinal) ||
-                     !value.EndsWith(QuoteString, StringComparison.Ordinal))
-            {
-                throw new ArgumentException("The value should be equal to * or be wrapped in quotes", nameof(value));
+                throw new ArgumentException("The value should be equal to * , be wrapped in quotes, or be wrapped in quotes prefixed by W/", nameof(value));
             }
 
-            return new ETag(value.Trim(QuoteCharacter));
+            if (value.StartsWith(WeakETagPrefix, StringComparison.Ordinal))
+            {
+                return new ETag(value);
+            }
+            else
+            {
+                return new ETag(value.Trim(QuoteCharacter));
+            }
+        }
+
+        private static bool IsValidQuotedFormat(string value) {
+            return (value.StartsWith(QuoteString, StringComparison.Ordinal) || value.StartsWith(WeakETagPrefix, StringComparison.Ordinal)) &&
+                value.EndsWith(QuoteString, StringComparison.Ordinal) || value == All._value;
         }
     }
 }

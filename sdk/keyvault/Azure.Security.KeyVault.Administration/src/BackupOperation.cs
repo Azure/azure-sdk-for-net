@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
@@ -12,26 +13,27 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// A long-running operation for <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.
     /// </summary>
-    public class BackupOperation : Operation<Uri>
+    public class BackupOperation : Operation<BackupResult>
     {
         /// <summary>
         /// The number of seconds recommended by the service to delay before checking on completion status.
         /// </summary>
-        private readonly int? _retryAfterSeconds;
+        internal int? _retryAfterSeconds;
         private readonly KeyVaultBackupClient _client;
         private Response _response;
         private FullBackupDetailsInternal _value;
         private readonly string _id;
+        private RequestFailedException _requestFailedException;
 
         /// <summary>
         /// Creates an instance of a BackupOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
         ///  <see cref="WaitForCompletionAsync(CancellationToken)"/>, or <see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/> must be called
         /// to re-populate the details of this operation.
         /// </summary>
-        /// <param name="id">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        /// <param name="id">The <see cref="Id" /> from a previous <see cref="BackupOperation" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
-        public BackupOperation(string id, KeyVaultBackupClient client)
+        public BackupOperation(KeyVaultBackupClient client, string id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(client, nameof(client));
@@ -45,7 +47,7 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.</param>
-        internal BackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<ServiceFullBackupHeaders> response)
+        internal BackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullBackupHeaders> response)
         {
             _client = client;
             _response = response;
@@ -71,13 +73,16 @@ namespace Azure.Security.KeyVault.Administration
             _client = client;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BackupOperation" /> for mocking. </summary>
+        protected BackupOperation() {}
+
         /// <summary>
-        /// The start time of the restore operation.
+        /// The start time of the backup operation.
         /// </summary>
         public DateTimeOffset? StartTime => _value?.StartTime;
 
         /// <summary>
-        /// The end time of the restore operation.
+        /// The end time of the backup operation.
         /// </summary>
         public DateTimeOffset? EndTime => _value?.EndTime;
 
@@ -88,7 +93,7 @@ namespace Azure.Security.KeyVault.Administration
         /// Gets the <see cref="FullBackupDetailsInternal"/> of the backup operation.
         /// You should await <see cref="WaitForCompletionAsync(CancellationToken)"/> before attempting to use a key in this pending state.
         /// </summary>
-        public override Uri Value
+        public override BackupResult Value
         {
             get
             {
@@ -97,17 +102,17 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     throw new InvalidOperationException("The operation is not complete.");
                 }
-                if (EndTime.HasValue && _value.Error != null)
+                if (_requestFailedException != null)
                 {
-                    throw new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
+                    throw _requestFailedException;
                 }
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
-                return new Uri(_value.AzureStorageBlobContainerUri);
+                return new BackupResult(new Uri(_value.AzureStorageBlobContainerUri), _value.StartTime.Value, _value.EndTime.Value);
             }
         }
 
         /// <inheritdoc/>
-        public override bool HasCompleted => EndTime.HasValue;
+        public override bool HasCompleted => _value?.EndTime.HasValue ?? false;
 
         /// <inheritdoc/>
         public override bool HasValue => _response != null && _value?.Error == null && HasCompleted;
@@ -116,38 +121,53 @@ namespace Azure.Security.KeyVault.Administration
         public override Response GetRawResponse() => _response;
 
         /// <inheritdoc/>
-        public override Response UpdateStatus(CancellationToken cancellationToken = default)
+        public override Response UpdateStatus(CancellationToken cancellationToken = default) =>
+            UpdateStatusAsync(false, cancellationToken).EnsureCompleted();
+
+        /// <inheritdoc/>
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
+            await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken = default)
         {
             if (!HasCompleted)
             {
-                Response<FullBackupDetailsInternal> response = _client.GetBackupDetails(Id, cancellationToken);
-                _value = response.Value;
-                _response = response.GetRawResponse();
+                try
+                {
+                    Response<FullBackupDetailsInternal> response = async ?
+                        await _client.GetBackupDetailsAsync(Id, cancellationToken).ConfigureAwait(false)
+                        : _client.GetBackupDetails(Id, cancellationToken);
+
+                    _value = response.Value;
+                    _response = response.GetRawResponse();
+                }
+                catch (RequestFailedException ex)
+                {
+                    _requestFailedException = ex;
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    _requestFailedException = new RequestFailedException("Unexpected failure", ex);
+                    throw _requestFailedException;
+                }
+                if (_value != null && _value.EndTime.HasValue && _value.Error != null)
+                {
+                    _requestFailedException = new RequestFailedException($"{_value.Error.Message}\nInnerError: {_value.Error.InnerError}\nCode: {_value.Error.Code}");
+                    throw _requestFailedException;
+                }
             }
 
             return GetRawResponse();
         }
 
         /// <inheritdoc/>
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default)
-        {
-            if (!HasCompleted)
-            {
-                Response<FullBackupDetailsInternal> response = await _client.GetBackupDetailsAsync(Id, cancellationToken).ConfigureAwait(false);
-                _value = response.Value;
-                _response = response.GetRawResponse();
-            }
-
-            return GetRawResponse();
-        }
-
-        /// <inheritdoc/>
-        public override ValueTask<Response<Uri>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<BackupResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             _retryAfterSeconds.HasValue ? this.DefaultWaitForCompletionAsync(TimeSpan.FromSeconds(_retryAfterSeconds.Value), cancellationToken) :
                 this.DefaultWaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response<Uri>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        public override ValueTask<Response<BackupResult>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
                 this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

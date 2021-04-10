@@ -18,6 +18,12 @@ namespace Azure.ResourceManager.Resources
     public partial class ResourcesMoveResourcesOperation : Operation<Response>, IOperationSource<Response>
     {
         private readonly ArmOperationHelpers<Response> _operation;
+
+        /// <summary> Initializes a new instance of ResourcesMoveResourcesOperation for mocking. </summary>
+        protected ResourcesMoveResourcesOperation()
+        {
+        }
+
         internal ResourcesMoveResourcesOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<Response>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ResourcesMoveResourcesOperation");

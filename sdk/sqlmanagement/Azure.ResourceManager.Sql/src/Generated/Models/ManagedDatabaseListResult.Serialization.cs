@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedDatabaseListResult
+    internal partial class ManagedDatabaseListResult
     {
         internal static ManagedDatabaseListResult DeserializeManagedDatabaseListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ManagedDatabase> array = new List<ManagedDatabase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

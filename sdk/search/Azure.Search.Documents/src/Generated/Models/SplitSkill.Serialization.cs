@@ -18,8 +18,15 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultLanguageCode))
             {
-                writer.WritePropertyName("defaultLanguageCode");
-                writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                if (DefaultLanguageCode != null)
+                {
+                    writer.WritePropertyName("defaultLanguageCode");
+                    writer.WriteStringValue(DefaultLanguageCode.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("defaultLanguageCode");
+                }
             }
             if (Optional.IsDefined(TextSplitMode))
             {
@@ -74,7 +81,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SplitSkill DeserializeSplitSkill(JsonElement element)
         {
-            Optional<SplitSkillLanguage> defaultLanguageCode = default;
+            Optional<SplitSkillLanguage?> defaultLanguageCode = default;
             Optional<TextSplitMode> textSplitMode = default;
             Optional<int?> maximumPageLength = default;
             string odataType = default;
@@ -87,11 +94,21 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("defaultLanguageCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        defaultLanguageCode = null;
+                        continue;
+                    }
                     defaultLanguageCode = new SplitSkillLanguage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("textSplitMode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     textSplitMode = new TextSplitMode(property.Value.GetString());
                     continue;
                 }

@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 
@@ -38,18 +39,35 @@ namespace Azure.Storage.Blobs.Models
             bool async,
             CancellationToken cancellationToken)
         {
+            Response<ListContainersSegmentResponse> response;
 
-            Response<BlobContainersSegment> response = await _client.GetBlobContainersInternal(
-                    continuationToken,
-                    _traits,
-                    _states,
-                    _prefix,
-                    pageSizeHint,
-                    async,
-                    cancellationToken).ConfigureAwait(false);
+            if (async)
+            {
+                response = await _client.GetBlobContainersInternal(
+                    continuationToken: continuationToken,
+                    traits: _traits,
+                    states: _states,
+                    prefix: _prefix,
+                    pageSizeHint: pageSizeHint,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                response = _client.GetBlobContainersInternal(
+                    continuationToken: continuationToken,
+                    traits: _traits,
+                    states: _states,
+                    prefix: _prefix,
+                    pageSizeHint: pageSizeHint,
+                    async: async,
+                    cancellationToken: cancellationToken)
+                    .EnsureCompleted();
+            }
 
             return Page<BlobContainerItem>.FromValues(
-                response.Value.BlobContainerItems.ToArray(),
+                response.Value.ContainerItems.ToBlobContainerItems(),
                 response.Value.NextMarker,
                 response.GetRawResponse());
         }
@@ -69,14 +87,11 @@ namespace Azure.Storage.Blobs
         /// <returns>ListContainersIncludeType values</returns>
         internal static IEnumerable<ListContainersIncludeType> AsIncludeItems(BlobContainerTraits traits, BlobContainerStates states)
         {
-            // Remove this line
-            Debug.Assert(states == BlobContainerStates.None);
             var items = new List<ListContainersIncludeType>();
-            // Uncomment when feature is re-enabled.
-            //if ((states & BlobContainerStates.Deleted) == BlobContainerStates.Deleted)
-            //{
-            //    items.Add(ListContainersIncludeType.Deleted);
-            //}
+            if ((states & BlobContainerStates.Deleted) == BlobContainerStates.Deleted)
+            {
+                items.Add(ListContainersIncludeType.Deleted);
+            }
             if ((traits & BlobContainerTraits.Metadata) == BlobContainerTraits.Metadata)
             {
                 items.Add(ListContainersIncludeType.Metadata);

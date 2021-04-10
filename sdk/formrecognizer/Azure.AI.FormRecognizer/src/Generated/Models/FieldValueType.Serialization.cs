@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.AI.FormRecognizer.Models
 {
-    internal static class FieldValueTypeExtensions
+    internal static partial class FieldValueTypeExtensions
     {
         public static string ToSerialString(this FieldValueType value) => value switch
         {
@@ -21,6 +21,9 @@ namespace Azure.AI.FormRecognizer.Models
             FieldValueType.Int64 => "integer",
             FieldValueType.List => "array",
             FieldValueType.Dictionary => "object",
+            FieldValueType.SelectionMark => "selectionMark",
+            FieldValueType.Gender => "gender",
+            FieldValueType.Country => "country",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.")
         };
 
@@ -34,6 +37,9 @@ namespace Azure.AI.FormRecognizer.Models
             if (string.Equals(value, "integer", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Int64;
             if (string.Equals(value, "array", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.List;
             if (string.Equals(value, "object", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Dictionary;
+            if (string.Equals(value, "selectionMark", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.SelectionMark;
+            if (string.Equals(value, "gender", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Gender;
+            if (string.Equals(value, "country", StringComparison.InvariantCultureIgnoreCase)) return FieldValueType.Country;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FieldValueType value.");
         }
     }

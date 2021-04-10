@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EHNamespaceListResult
+    internal partial class EHNamespaceListResult
     {
         internal static EHNamespaceListResult DeserializeEHNamespaceListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<EHNamespace> array = new List<EHNamespace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

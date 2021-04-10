@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class CloudError
+    [JsonConverter(typeof(CloudErrorConverter))]
+    public partial class CloudError
     {
         internal static CloudError DeserializeCloudError(JsonElement element)
         {
@@ -23,6 +26,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("code"))
@@ -42,6 +50,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         }
                         if (property0.NameEquals("details"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             List<CloudError> array = new List<CloudError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
@@ -55,6 +68,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new CloudError(code, message, target.Value, Optional.ToList(details));
+        }
+
+        internal partial class CloudErrorConverter : JsonConverter<CloudError>
+        {
+            public override void Write(Utf8JsonWriter writer, CloudError model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override CloudError Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeCloudError(document.RootElement);
+            }
         }
     }
 }

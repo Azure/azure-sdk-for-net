@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("hops"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ConnectivityHop> array = new List<ConnectivityHop>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -36,31 +41,61 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("connectionStatus"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     connectionStatus = new ConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("avgLatencyInMs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     avgLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minLatencyInMs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxLatencyInMs"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("probesSent"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     probesSent = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("probesFailed"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     probesFailed = property.Value.GetInt32();
                     continue;
                 }

@@ -104,13 +104,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='targetExportPlatforms'>
         /// List of platforms the trained model is intending exporting to.
         /// </param>
+        /// <param name='options'>
+        /// Additional project creation options.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), CreateProjectOptions options = default(CreateProjectOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get a specific project.
@@ -432,9 +435,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The list of image ids to update. Limited to 64.
         /// </param>
         /// <param name='metadata'>
-        /// The metadata to be updated to the specified images. Limited to 50
-        /// key-value pairs per image. The length of key is limited to 256. The
-        /// length of value is limited to 512.
+        /// The metadata to be updated to the specified images. Limited to 10
+        /// key-value pairs per image. The length of key is limited to 128. The
+        /// length of value is limited to 256.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -852,7 +855,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// </param>
         /// <param name='platform'>
         /// The target platform. Possible values include: 'CoreML',
-        /// 'TensorFlow', 'DockerFile', 'ONNX', 'VAIDK'
+        /// 'TensorFlow', 'DockerFile', 'ONNX', 'VAIDK', 'OpenVino'
         /// </param>
         /// <param name='flavor'>
         /// The flavor of the target platform. Possible values include:

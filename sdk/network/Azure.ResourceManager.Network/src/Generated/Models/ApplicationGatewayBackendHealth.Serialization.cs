@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("backendAddressPools"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationGatewayBackendHealthPool> array = new List<ApplicationGatewayBackendHealthPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

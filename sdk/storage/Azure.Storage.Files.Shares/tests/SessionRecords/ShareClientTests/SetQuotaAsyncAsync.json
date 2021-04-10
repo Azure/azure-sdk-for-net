@@ -1,4 +1,4 @@
-{
+﻿{
   "Entries": [
     {
       "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-d3d805d2-4a32-998d-19f8-2709cd1d7d48?restype=share",
@@ -13,14 +13,15 @@
         "x-ms-client-request-id": "3f77600c-2a5c-44c1-7954-246c9702ab22",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:51 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 201,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Thu, 05 Mar 2020 21:48:50 GMT",
-        "ETag": "\u00220x8D7C14EFE8680CA\u0022",
+        "ETag": "\"0x8D7C14EFE8680CA\"",
         "Last-Modified": "Thu, 05 Mar 2020 21:48:51 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -28,12 +29,12 @@
         ],
         "x-ms-client-request-id": "3f77600c-2a5c-44c1-7954-246c9702ab22",
         "x-ms-request-id": "c9ef6e9a-f01a-0012-3c37-f3e9eb000000",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
     {
-      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-d3d805d2-4a32-998d-19f8-2709cd1d7d48?restype=share\u0026comp=properties",
+      "RequestUri": "http://seanstagetest.file.core.windows.net/test-share-d3d805d2-4a32-998d-19f8-2709cd1d7d48?restype=share&comp=properties",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -46,14 +47,15 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:48:51 GMT",
         "x-ms-return-client-request-id": "true",
         "x-ms-share-quota": "1024",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Length": "0",
         "Date": "Thu, 05 Mar 2020 21:48:50 GMT",
-        "ETag": "\u00220x8D7C14EFE937C42\u0022",
+        "ETag": "\"0x8D7C14EFE937C42\"",
         "Last-Modified": "Thu, 05 Mar 2020 21:48:51 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -61,7 +63,7 @@
         ],
         "x-ms-client-request-id": "6cfc6a4d-3da5-d0eb-d1dd-e7d3dfa489f6",
         "x-ms-request-id": "c9ef6e9c-f01a-0012-3d37-f3e9eb000000",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -78,7 +80,8 @@
         "x-ms-client-request-id": "2d1f53a3-3f06-3e7d-62ea-4c048b32f04e",
         "x-ms-date": "Thu, 05 Mar 2020 21:48:52 GMT",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 200,
@@ -86,7 +89,7 @@
         "Access-Control-Allow-Origin": "*",
         "Content-Length": "0",
         "Date": "Thu, 05 Mar 2020 21:48:50 GMT",
-        "ETag": "\u00220x8D7C14EFE937C42\u0022",
+        "ETag": "\"0x8D7C14EFE937C42\"",
         "Last-Modified": "Thu, 05 Mar 2020 21:48:51 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
@@ -97,7 +100,7 @@
         "x-ms-has-legal-hold": "false",
         "x-ms-request-id": "c9ef6e9d-f01a-0012-3e37-f3e9eb000000",
         "x-ms-share-quota": "1024",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     },
@@ -115,7 +118,8 @@
         "x-ms-date": "Thu, 05 Mar 2020 21:48:52 GMT",
         "x-ms-delete-snapshots": "include",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04",
+        "Accept": "application/xml"
       },
       "RequestBody": null,
       "StatusCode": 202,
@@ -128,7 +132,7 @@
         ],
         "x-ms-client-request-id": "8b2f061d-5c85-bdf0-253b-39a240d70e29",
         "x-ms-request-id": "c9ef6e9f-f01a-0012-4037-f3e9eb000000",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": []
     }

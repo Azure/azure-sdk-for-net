@@ -132,6 +132,42 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await queueClient.CloseAsync();
                 }
             });
+
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
+            {
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
+                try
+                {
+                    await this.OnMessageAsyncUnregisterHandlerLongTimeoutTestCase(
+                        queueClient.InnerSender,
+                        queueClient.InnerReceiver,
+                        maxConcurrentCalls,
+                        autoComplete,
+                        messageCount);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
+
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
+            {
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
+                try
+                {
+                    await this.OnMessageAsyncUnregisterHandlerShortTimeoutTestCase(
+                        queueClient.InnerSender,
+                        queueClient.InnerReceiver,
+                        maxConcurrentCalls,
+                        autoComplete,
+                        messageCount);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
     }
 }

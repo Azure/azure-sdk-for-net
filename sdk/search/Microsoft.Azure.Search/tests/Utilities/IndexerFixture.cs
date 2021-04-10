@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
     using System.Collections.Generic;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Index = Microsoft.Azure.Search.Models.Index;
 
     public class IndexerFixture : SearchServiceFixture
     {
@@ -16,8 +17,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
         //
         // ASSUMPTION: Change tracking has already been enabled on the database with ALTER DATABASE ... SET CHANGE_TRACKING = ON
         // and it has been enabled on the table with ALTER TABLE ... ENABLE CHANGE_TRACKING
-        public const string AzureSqlReadOnlyConnectionString =
-            "Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;"; // [SuppressMessage("Microsoft.Security", "CS001:SecretInline")]
+        public const string AzureSqlReadOnlyConnectionString = null;
 
         public const string AzureSqlTestTableName = "GeoNamesRI";
 
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             searchClient.Indexes.Create(index);
 
-            var dataSource = 
+            var dataSource =
                 DataSource.AzureSql(
                     name: DataSourceName,
                     sqlConnectionString: AzureSqlReadOnlyConnectionString,

@@ -27,8 +27,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// Initializes a new instance of the Export class.
         /// </summary>
         /// <param name="platform">Platform of the export. Possible values
-        /// include: 'CoreML', 'TensorFlow', 'DockerFile', 'ONNX',
-        /// 'VAIDK'</param>
+        /// include: 'CoreML', 'TensorFlow', 'DockerFile', 'ONNX', 'VAIDK',
+        /// 'OpenVino'</param>
         /// <param name="status">Status of the export. Possible values include:
         /// 'Exporting', 'Failed', 'Done'</param>
         /// <param name="downloadUri">URI used to download the model. If VNET
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 
         /// <summary>
         /// Gets platform of the export. Possible values include: 'CoreML',
-        /// 'TensorFlow', 'DockerFile', 'ONNX', 'VAIDK'
+        /// 'TensorFlow', 'DockerFile', 'ONNX', 'VAIDK', 'OpenVino'
         /// </summary>
         [JsonProperty(PropertyName = "platform")]
         public string Platform { get; private set; }

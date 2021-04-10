@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     /// Task runs again when the Compute Node starts up. The Job is not marked
     /// as complete until all Job Release Tasks have completed. The Job Release
     /// Task runs in the background. It does not occupy a scheduling slot; that
-    /// is, it does not count towards the maxTasksPerNode limit specified on
+    /// is, it does not count towards the taskSlotsPerNode limit specified on
     /// the Pool.
     /// </remarks>
     public partial class JobReleaseTask

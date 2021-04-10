@@ -1,16 +1,15 @@
 # Azure.AI.FormRecognizer
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code.
 
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
 ``` yaml
-input-file:
-    -  https://github.com/Azure/azure-rest-api-specs/blob/40008a6fae4c614cfed5f401a635462eb4e93a93/specification/cognitiveservices/data-plane/FormRecognizer/stable/v2.0/FormRecognizer.json
+tag: release_2_1_preview.3
+require:
+    - https://github.com/Azure/azure-rest-api-specs/blob/5a260d47021d8278c26dd6f946f4e6b97e0cd023/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
 ```
-
-
 
 
 ### Make AnalyzeResult.readResult optional
@@ -32,6 +31,14 @@ directive:
     $.properties.readResults["x-nullable"] = true;
     $.properties.pageResults["x-nullable"] = true;
     $.properties.documentResults["x-nullable"] = true;
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.ReadResult
+  transform: >
+    $.properties.selectionMarks["x-nullable"] = true;
 ```
 
 ``` yaml

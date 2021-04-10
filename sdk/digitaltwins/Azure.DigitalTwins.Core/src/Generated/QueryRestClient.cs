@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public QueryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-05-31-preview")
+        public QueryRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-10-31")
         {
             endpoint ??= new Uri("https://digitaltwins-name.digitaltwins.azure.net");
             if (apiVersion == null)
@@ -41,7 +41,7 @@ namespace Azure.DigitalTwins.Core
             _pipeline = pipeline;
         }
 
-        internal HttpMessage CreateQueryTwinsRequest(QuerySpecification querySpecification)
+        internal HttpMessage CreateQueryTwinsRequest(QuerySpecification querySpecification, QueryOptions queryTwinsOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,77 +51,16 @@ namespace Azure.DigitalTwins.Core
             uri.AppendPath("/query", false);
             uri.AppendQuery("api-version", apiVersion, true);
             request.Uri = uri;
+            if (queryTwinsOptions?.MaxItemsPerPage != null)
+            {
+                request.Headers.Add("max-items-per-page", queryTwinsOptions.MaxItemsPerPage.Value);
+            }
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(querySpecification);
             request.Content = content;
             return message;
-        }
-
-        /// <summary>
-        /// Executes a query that allows traversing relationships and filtering by property values.
-        /// Status codes:
-        /// 200 (OK): Success.
-        /// 400 (Bad Request): The request is invalid.
-        /// </summary>
-        /// <param name="querySpecification"> The query specification to execute. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
-        public async Task<ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders>> QueryTwinsAsync(QuerySpecification querySpecification, CancellationToken cancellationToken = default)
-        {
-            if (querySpecification == null)
-            {
-                throw new ArgumentNullException(nameof(querySpecification));
-            }
-
-            using var message = CreateQueryTwinsRequest(querySpecification);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new QueryQueryTwinsHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        QueryResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QueryResult.DeserializeQueryResult(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        /// Executes a query that allows traversing relationships and filtering by property values.
-        /// Status codes:
-        /// 200 (OK): Success.
-        /// 400 (Bad Request): The request is invalid.
-        /// </summary>
-        /// <param name="querySpecification"> The query specification to execute. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="querySpecification"/> is null. </exception>
-        public ResponseWithHeaders<QueryResult, QueryQueryTwinsHeaders> QueryTwins(QuerySpecification querySpecification, CancellationToken cancellationToken = default)
-        {
-            if (querySpecification == null)
-            {
-                throw new ArgumentNullException(nameof(querySpecification));
-            }
-
-            using var message = CreateQueryTwinsRequest(querySpecification);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new QueryQueryTwinsHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        QueryResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QueryResult.DeserializeQueryResult(document.RootElement);
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw _clientDiagnostics.CreateRequestFailedException(message.Response);
-            }
         }
     }
 }

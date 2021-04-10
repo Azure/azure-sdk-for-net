@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(AzureBlobFSReadSettingsConverter))]
     public partial class AzureBlobFSReadSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -31,10 +34,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("wildcardFileName");
                 writer.WriteObjectValue(WildcardFileName);
             }
+            if (Optional.IsDefined(FileListPath))
+            {
+                writer.WritePropertyName("fileListPath");
+                writer.WriteObjectValue(FileListPath);
+            }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery");
                 writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
+            }
+            if (Optional.IsDefined(PartitionRootPath))
+            {
+                writer.WritePropertyName("partitionRootPath");
+                writer.WriteObjectValue(PartitionRootPath);
+            }
+            if (Optional.IsDefined(DeleteFilesAfterCompletion))
+            {
+                writer.WritePropertyName("deleteFilesAfterCompletion");
+                writer.WriteObjectValue(DeleteFilesAfterCompletion);
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
@@ -66,7 +84,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> recursive = default;
             Optional<object> wildcardFolderPath = default;
             Optional<object> wildcardFileName = default;
+            Optional<object> fileListPath = default;
             Optional<bool> enablePartitionDiscovery = default;
+            Optional<object> partitionRootPath = default;
+            Optional<object> deleteFilesAfterCompletion = default;
             Optional<object> modifiedDatetimeStart = default;
             Optional<object> modifiedDatetimeEnd = default;
             string type = default;
@@ -77,31 +98,91 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("recursive"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     recursive = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("wildcardFolderPath"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     wildcardFolderPath = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("wildcardFileName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     wildcardFileName = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("fileListPath"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    fileListPath = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("enablePartitionDiscovery"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     enablePartitionDiscovery = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("partitionRootPath"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    partitionRootPath = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("deleteFilesAfterCompletion"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    deleteFilesAfterCompletion = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("modifiedDatetimeStart"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     modifiedDatetimeStart = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("modifiedDatetimeEnd"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     modifiedDatetimeEnd = property.Value.GetObject();
                     continue;
                 }
@@ -112,13 +193,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("maxConcurrentConnections"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxConcurrentConnections = property.Value.GetObject();
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(enablePartitionDiscovery), modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
+            return new AzureBlobFSReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
+        }
+
+        internal partial class AzureBlobFSReadSettingsConverter : JsonConverter<AzureBlobFSReadSettings>
+        {
+            public override void Write(Utf8JsonWriter writer, AzureBlobFSReadSettings model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override AzureBlobFSReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAzureBlobFSReadSettings(document.RootElement);
+            }
         }
     }
 }

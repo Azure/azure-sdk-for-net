@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -36,11 +37,14 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// knowledgebase.</param>
         /// <param name="urls">List of existing URLs to be refreshed. The
         /// content will be extracted again and re-indexed.</param>
-        public UpdateKbContentsDTO(string name = default(string), IList<UpdateQnaDTO> qnaList = default(IList<UpdateQnaDTO>), IList<string> urls = default(IList<string>))
+        /// <param name="defaultAnswer">Default answer sent to user if no good
+        /// match is found in the KB.</param>
+        public UpdateKbContentsDTO(string name = default(string), IList<UpdateQnaDTO> qnaList = default(IList<UpdateQnaDTO>), IList<string> urls = default(IList<string>), string defaultAnswer = default(string))
         {
             Name = name;
             QnaList = qnaList;
             Urls = urls;
+            DefaultAnswer = defaultAnswer;
             CustomInit();
         }
 
@@ -69,5 +73,42 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         [JsonProperty(PropertyName = "urls")]
         public IList<string> Urls { get; set; }
 
+        /// <summary>
+        /// Gets or sets default answer sent to user if no good match is found
+        /// in the KB.
+        /// </summary>
+        [JsonProperty(PropertyName = "defaultAnswer")]
+        public string DefaultAnswer { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (QnaList != null)
+            {
+                foreach (var element in QnaList)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (DefaultAnswer != null)
+            {
+                if (DefaultAnswer.Length > 300)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "DefaultAnswer", 300);
+                }
+                if (DefaultAnswer.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "DefaultAnswer", 1);
+                }
+            }
+        }
     }
 }

@@ -85,17 +85,17 @@ namespace Microsoft.Azure.Management.Cdn
             }
             if (resourceGroupName != null)
             {
-                if (resourceGroupName.Length > 90)
+                if (resourceGroupName.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
                 }
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
             if (Client.SubscriptionId == null)
@@ -285,17 +285,17 @@ namespace Microsoft.Azure.Management.Cdn
             }
             if (resourceGroupName != null)
             {
-                if (resourceGroupName.Length > 90)
+                if (resourceGroupName.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
                 }
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
             if (policyName == null)
@@ -547,17 +547,17 @@ namespace Microsoft.Azure.Management.Cdn
             }
             if (resourceGroupName != null)
             {
-                if (resourceGroupName.Length > 90)
+                if (resourceGroupName.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
                 }
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
             if (policyName == null)
@@ -751,17 +751,17 @@ namespace Microsoft.Azure.Management.Cdn
             }
             if (resourceGroupName != null)
             {
-                if (resourceGroupName.Length > 90)
+                if (resourceGroupName.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
                 }
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
             if (policyName == null)
@@ -1019,17 +1019,17 @@ namespace Microsoft.Azure.Management.Cdn
             }
             if (resourceGroupName != null)
             {
-                if (resourceGroupName.Length > 90)
+                if (resourceGroupName.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
                 }
                 if (resourceGroupName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
                 }
             }
             if (policyName == null)

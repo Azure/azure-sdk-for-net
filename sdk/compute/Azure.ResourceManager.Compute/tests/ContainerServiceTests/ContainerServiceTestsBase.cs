@@ -1,12 +1,12 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -38,12 +38,13 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             var publicKeys = new ContainerServiceSshPublicKey(DefaultSshPublicKey);
 
-            var agentPoolProfiles = new ContainerServiceAgentPoolProfile(DefaultAgentPoolProfileName,1, DefaultVmSize, agentPoolDnsPrefix){
+            var agentPoolProfiles = new ContainerServiceAgentPoolProfile(DefaultAgentPoolProfileName, 1, DefaultVmSize, agentPoolDnsPrefix)
+            {
             };
 
             return new ContainerService(m_location)
             {
-                Tags ={ { "RG", "rg" }, { "testTag", "1" } },
+                Tags = { { "RG", "rg" }, { "testTag", "1" } },
                 AgentPoolProfiles = { agentPoolProfiles },
                 // Todo: DiagnosticsProfile will be available in GA
                 //DiagnosticsProfile = new ContainerServiceDiagnosticsProfile
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 //    }
                 //},
 
-                LinuxProfile = new ContainerServiceLinuxProfile(DefaultLinuxAdminUsername, new ContainerServiceSshConfiguration( new[] { publicKeys })
+                LinuxProfile = new ContainerServiceLinuxProfile(DefaultLinuxAdminUsername, new ContainerServiceSshConfiguration(new[] { publicKeys })
                 {
                 }),
                 MasterProfile = new ContainerServiceMasterProfile(masterDnsPrefix)
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Tests
             };
         }
 
-        protected async Task<(ContainerService, ContainerService)> CreateContainerService_NoAsyncTracking(
+        protected async Task<(ContainerService GetResponse, ContainerService InputContainerService)> CreateContainerService_NoAsyncTracking(
             string rgName,
             string csName,
             string masterDnsPrefix,
@@ -76,15 +77,15 @@ namespace Azure.ResourceManager.Compute.Tests
         {
             try
             {
-                var getTwoServiceOpera =await CreateContainerServiceAndGetOperationResponse(
+                var getTwoServiceOpera = await CreateContainerServiceAndGetOperationResponse(
                     rgName,
                     csName,
                     masterDnsPrefix,
                     agentPoolDnsPrefix,
                     //out inputContainerService,
                     containerServiceCustomizer);
-                var createOrUpdateResponse = getTwoServiceOpera.Item1;
-                var inputContainerService = getTwoServiceOpera.Item2;
+                var createOrUpdateResponse = getTwoServiceOpera.CreateOrUpdateResponse;
+                var inputContainerService = getTwoServiceOpera.InputContainerService;
                 var getResponse = await ContainerServicesOperations.GetAsync(rgName, csName);
                 ValidateContainerService(createOrUpdateResponse, getResponse);
                 return (getResponse, inputContainerService);
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var createOrUpdateResponse = await WaitForCompletionAsync(await ContainerServicesOperations.StartCreateOrUpdateAsync(rgName, vmssName, inputContainerService));
         }
 
-        private async Task<(ContainerService, ContainerService)> CreateContainerServiceAndGetOperationResponse(
+        private async Task<(ContainerService CreateOrUpdateResponse, ContainerService InputContainerService)> CreateContainerServiceAndGetOperationResponse(
             string rgName,
             string csName,
             string masterDnsPrefix,
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Tests
 
             ValidateContainerService(inputContainerService, createOrUpdateResponse.Value);
 
-            return (createOrUpdateResponse,inputContainerService);
+            return (createOrUpdateResponse, inputContainerService);
             ;
         }
 

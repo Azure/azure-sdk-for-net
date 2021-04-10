@@ -1,6 +1,14 @@
 # Release History
+## 14.1.0-beta.1 (Unreleased)
 
-## 13.1.0-preview.1 (Unreleased)
+
+## 14.0.0 (2020-09-10)
+### Features
+- **[Breaking]** Removed proprty `MaxTasksPerNode` on CloudPool and added property `TaskSlotsPerNode`. Using this property `CloudTasks`
+in a `CloudJob` can consume a dynamic amount of slots allowing for more fine-grained control over resource consumption.
+- **[Breaking]** Changed the return type of `GetJobTaskCounts` operations to return a `TaskCountsResult` object, which is a complex object containing the previous
+`TaskCounts` object and a new `TaskSlotCounts` object providing similar information in the context of slots being used.
+- Added property `RequiredSlots` to CloudTask allowing user to specify how many slots on a node they should take up.
 
 
 ## 13.0.0 (2020-03-01)
@@ -98,7 +106,7 @@ This version of the Batch .NET client library targets version 2018-08-01.7.0 of 
 ## 9.0.0
 ### Features
 - Added the ability to see what version of the Azure Batch Node Agent is running on each of the VMs in a pool, via the new `NodeAgentInformation` property on `ComputeNode`.
-- Added the ability to specify a `Filter` on the `Result` of a task. See [here](https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch) for more details.
+- Added the ability to specify a `Filter` on the `Result` of a task. See [here](https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch) for more details.
   - This enables the often requested scenario of performing a server-side query to find all tasks which failed.
 - **[Breaking]** Added a default retry policy to `BatchClient`.
   - Note that this policy may not be sufficient for every case. If the old behavior (a `BatchClient` that doesn't perform any retries) is desired, the default policy can be removed from a `BatchClient` with `client.CustomBehaviors = client.CustomBehaviors.Where(behavior => !(behavior is RetryPolicyProvider)).ToList()`.

@@ -23,21 +23,41 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("code"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     code = property.Value.GetString().ToRollingUpgradeStatusCode();
                     continue;
                 }
                 if (property.NameEquals("startTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastAction"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastAction = property.Value.GetString().ToRollingUpgradeActionType();
                     continue;
                 }
                 if (property.NameEquals("lastActionTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastActionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

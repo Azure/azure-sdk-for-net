@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         public static PartitionLoadBalancerEventSource Log { get; } = new PartitionLoadBalancerEventSource();
 
         /// <summary>
-        ///   Prevents an instance of the <see cref="PartitionLoadBalancerEventSource"/> class from being created
+        ///   Prevents an instance of the <see cref="PartitionLoadBalancerEventSource" /> class from being created
         ///   outside the scope of this library.
         /// </summary>
         ///

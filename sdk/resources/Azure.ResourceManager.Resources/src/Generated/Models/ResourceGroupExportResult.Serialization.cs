@@ -20,11 +20,21 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("template"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     template = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("error"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);
                     continue;
                 }

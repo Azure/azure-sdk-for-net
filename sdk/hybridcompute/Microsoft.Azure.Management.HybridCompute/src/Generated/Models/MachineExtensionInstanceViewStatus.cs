@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         /// <param name="message">The detailed status message, including for
         /// alerts and error messages.</param>
         /// <param name="time">The time of the status.</param>
-        public MachineExtensionInstanceViewStatus(string code = default(string), StatusLevelTypes? level = default(StatusLevelTypes?), string displayStatus = default(string), string message = default(string), System.DateTime? time = default(System.DateTime?))
+        public MachineExtensionInstanceViewStatus(string code = default(string), string level = default(string), string displayStatus = default(string), string message = default(string), System.DateTime? time = default(System.DateTime?))
         {
             Code = code;
             Level = level;
@@ -55,36 +55,36 @@ namespace Microsoft.Azure.Management.HybridCompute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the status code.
+        /// Gets the status code.
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        public string Code { get; private set; }
 
         /// <summary>
-        /// Gets or sets the level code. Possible values include: 'Info',
-        /// 'Warning', 'Error'
+        /// Gets the level code. Possible values include: 'Info', 'Warning',
+        /// 'Error'
         /// </summary>
         [JsonProperty(PropertyName = "level")]
-        public StatusLevelTypes? Level { get; set; }
+        public string Level { get; private set; }
 
         /// <summary>
-        /// Gets or sets the short localizable label for the status.
+        /// Gets the short localizable label for the status.
         /// </summary>
         [JsonProperty(PropertyName = "displayStatus")]
-        public string DisplayStatus { get; set; }
+        public string DisplayStatus { get; private set; }
 
         /// <summary>
-        /// Gets or sets the detailed status message, including for alerts and
-        /// error messages.
+        /// Gets the detailed status message, including for alerts and error
+        /// messages.
         /// </summary>
         [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
         /// <summary>
-        /// Gets or sets the time of the status.
+        /// Gets the time of the status.
         /// </summary>
         [JsonProperty(PropertyName = "time")]
-        public System.DateTime? Time { get; set; }
+        public System.DateTime? Time { get; private set; }
 
     }
 }

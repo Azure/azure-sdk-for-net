@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(IntegrationRuntimeReferenceConverter))]
     public partial class IntegrationRuntimeReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -53,6 +56,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("parameters"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -63,6 +71,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             return new IntegrationRuntimeReference(type, referenceName, Optional.ToDictionary(parameters));
+        }
+
+        internal partial class IntegrationRuntimeReferenceConverter : JsonConverter<IntegrationRuntimeReference>
+        {
+            public override void Write(Utf8JsonWriter writer, IntegrationRuntimeReference model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override IntegrationRuntimeReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeIntegrationRuntimeReference(document.RootElement);
+            }
         }
     }
 }

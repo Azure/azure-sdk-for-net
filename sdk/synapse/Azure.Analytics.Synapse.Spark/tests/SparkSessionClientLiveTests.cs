@@ -1,14 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Analytics.Synapse.Spark.Models;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
 using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using Azure.Analytics.Synapse.Spark;
+using Azure.Analytics.Synapse.Spark.Models;
+using Azure.Analytics.Synapse.Tests;
+using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.Spark.Tests
 {
@@ -19,92 +21,103 @@ namespace Azure.Analytics.Synapse.Spark.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    public class SparkSessionClientLiveTests : SparkClientTestBase
+    public class SparkSessionClientLiveTests : RecordedTestBase<SynapseTestEnvironment>
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SparkSessionClientLiveTests"/> class.
-        /// </summary>
-        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
         public SparkSessionClientLiveTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        private SparkSessionClient CreateClient()
+        {
+            return InstrumentClient(new SparkSessionClient(
+                new Uri(TestEnvironment.EndpointUrl),
+                TestEnvironment.SparkPoolName,
+                TestEnvironment.Credential,
+                options: InstrumentClientOptions(new SparkClientOptions())
+            ));
         }
 
         /// <summary>
         /// Verifies that the <see cref="SparkSessionClient" /> is able to connect to the
         /// Azure Synapse Analytics service and perform operations.
         /// </summary>
-        [Test]
-        [Ignore("This test case cannot pass due to backend limitations for service principals.")]
+        [RecordedTest]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - This test case cannot pass due to backend limitations for service principals.")]
         public async Task TestSparkSessionJob()
         {
-            // Start the Spark session
-            SparkSessionOptions createParams = this.CreateSparkSessionRequestParameters();
-            SparkSession sessionCreateResponse = (await SparkSessionClient.CreateSparkSessionAsync(createParams)).Value;
+            SparkSessionClient client = CreateClient();
 
-            // Poll the spark session initialization until it is successful.
-            SparkSession getSessionResponse = await this.PollSparkSessionAsync(sessionCreateResponse);
+            // Start the Spark session
+            SparkSessionOptions createParams = SparkTestUtilities.CreateSparkSessionRequestParameters(Recording);
+            SparkSessionOperation sessionOperation = await client.StartCreateSparkSessionAsync(createParams);
+            SparkSession sessionCreateResponse = await sessionOperation.WaitForCompletionAsync();
 
             // Verify the Spark session completes successfully
-            Assert.True("idle".Equals(getSessionResponse.State, StringComparison.OrdinalIgnoreCase) && getSessionResponse.Result == SparkSessionResultType.Succeeded,
+            Assert.True("idle".Equals(sessionCreateResponse.State, StringComparison.OrdinalIgnoreCase) && sessionCreateResponse.Result == SparkSessionResultType.Succeeded,
                 string.Format(
                     "Session: {0} did not return success. Current job state: {1}. Actual result: {2}. Error (if any): {3}",
-                    getSessionResponse.Id,
-                    getSessionResponse.State,
-                    getSessionResponse.Result,
-                    string.Join(", ", getSessionResponse.Errors ?? new List<SparkServiceError>())
+                    sessionCreateResponse.Id,
+                    sessionCreateResponse.State,
+                    sessionCreateResponse.Result,
+                    string.Join(", ", sessionCreateResponse.Errors ?? new List<SparkServiceError>())
                 )
             );
 
             // Execute Spark statement in the session
-            SparkStatement createStatementResponse = (await SparkSessionClient.CreateSparkStatementAsync(
-                getSessionResponse.Id,
-                new SparkStatementOptions
-                {
+            var sparkStatementOptions = new SparkStatementOptions {
                     Kind = SparkStatementLanguageType.Spark,
                     Code = @"print(""Hello world\n"")"
-                })).Value;
-
-            SparkStatement getStatementResponse = await this.PollSparkSessionStatementAsync(
-                getSessionResponse.Id,
-                createStatementResponse);
-
-            Assert.NotNull(getSessionResponse);
+            };
+            SparkStatementOperation statementOperation = await client.StartCreateSparkStatementAsync(sessionCreateResponse.Id, sparkStatementOptions);
+            SparkStatement createStatementResponse = await statementOperation.WaitForCompletionAsync();
+            Assert.NotNull(createStatementResponse);
 
             // Verify the Spark statement completes successfully
-            Assert.True("ok".Equals(getStatementResponse.State, StringComparison.OrdinalIgnoreCase),
+            Assert.True("ok".Equals(createStatementResponse.State, StringComparison.OrdinalIgnoreCase),
                 string.Format(
                     "Spark statement: {0} did not return success. Current job state: {1}. Error (if any): {2}",
-                    getStatementResponse.Id,
-                    getStatementResponse.State,
-                    getStatementResponse.Output.ErrorValue)
+                    createStatementResponse.Id,
+                    createStatementResponse.State,
+                    createStatementResponse.Output.ErrorValue)
             );
 
             // Verify the output
-            Dictionary<string, string> outputData = JsonSerializer.Deserialize<Dictionary<string, string>>(getStatementResponse.Output.Data as string);
+            Dictionary<string, string> outputData = JsonSerializer.Deserialize<Dictionary<string, string>>(createStatementResponse.Output.Data as string);
             Assert.Equals("Hello world", outputData["text/plain"]);
 
             // Get the list of Spark statements and check that the executed statement exists
-            Response<SparkStatementCollection> listStatementResponse = await SparkSessionClient.GetSparkStatementsAsync(sessionCreateResponse.Id);
+            Response<SparkStatementCollection> listStatementResponse = await client.GetSparkStatementsAsync(sessionCreateResponse.Id);
 
             Assert.NotNull(listStatementResponse.Value);
             Assert.IsTrue(listStatementResponse.Value.Statements.Any(stmt => stmt.Id == createStatementResponse.Id));
 
             // Get the list of Spark session and check that the created session exists
-            List<SparkSession> listSessionResponse = await this.ListSparkSessionsAsync();
+            List<SparkSession> listSessionResponse = await SparkTestUtilities.ListSparkSessionsAsync(client);
 
             Assert.NotNull(listSessionResponse);
             Assert.IsTrue(listSessionResponse.Any(session => session.Id == sessionCreateResponse.Id));
         }
 
-        [Test]
+        [RecordedTest]
         public async Task TestGetSparkSession()
         {
-            SparkSessionCollection sparkSessions = (await SparkSessionClient.GetSparkSessionsAsync()).Value;
+            SparkSessionClient client = CreateClient();
+
+            SparkSessionCollection sparkSessions = (await client.GetSparkSessionsAsync()).Value;
             foreach (SparkSession expectedSparkSession in sparkSessions.Sessions)
             {
-                SparkSession actualSparkSession = await SparkSessionClient.GetSparkSessionAsync(expectedSparkSession.Id);
+                SparkSession actualSparkSession = await client.GetSparkSessionAsync(expectedSparkSession.Id);
                 ValidateSparkSession(expectedSparkSession, actualSparkSession);
             }
+        }
+
+        internal void ValidateSparkSession(SparkSession expectedSparkSession, SparkSession actualSparkSession)
+        {
+            Assert.AreEqual(expectedSparkSession.Name, actualSparkSession.Name);
+            Assert.AreEqual(expectedSparkSession.Id, actualSparkSession.Id);
+            Assert.AreEqual(expectedSparkSession.AppId, actualSparkSession.AppId);
+            Assert.AreEqual(expectedSparkSession.SubmitterId, actualSparkSession.SubmitterId);
+            Assert.AreEqual(expectedSparkSession.ArtifactId, actualSparkSession.ArtifactId);
         }
     }
 }

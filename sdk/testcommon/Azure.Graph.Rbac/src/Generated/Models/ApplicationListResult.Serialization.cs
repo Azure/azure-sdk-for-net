@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Graph.Rbac.Models
 {
-    public partial class ApplicationListResult
+    internal partial class ApplicationListResult
     {
         internal static ApplicationListResult DeserializeApplicationListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<Application> array = new List<Application>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

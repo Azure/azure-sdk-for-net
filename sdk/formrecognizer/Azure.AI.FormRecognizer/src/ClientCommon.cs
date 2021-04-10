@@ -70,5 +70,15 @@ namespace Azure.AI.FormRecognizer
                 ? await diagnostics.CreateRequestFailedExceptionAsync(response, errorMessage, errorCode, errorInfo).ConfigureAwait(false)
                 : diagnostics.CreateRequestFailedException(response, errorMessage, errorCode, errorInfo);
         }
+
+        public static RecognizedFormCollection ConvertPrebuiltOutputToRecognizedForms(AnalyzeResult analyzeResult)
+        {
+            List<RecognizedForm> forms = new List<RecognizedForm>();
+            for (int i = 0; i < analyzeResult.DocumentResults.Count; i++)
+            {
+                forms.Add(new RecognizedForm(analyzeResult.DocumentResults[i], analyzeResult.PageResults, analyzeResult.ReadResults, default));
+            }
+            return new RecognizedFormCollection(forms);
+        }
     }
 }

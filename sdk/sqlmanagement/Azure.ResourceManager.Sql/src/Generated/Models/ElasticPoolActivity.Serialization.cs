@@ -77,15 +77,30 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("endTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             endTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("errorCode"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             errorCode = property0.Value.GetInt32();
                             continue;
                         }
@@ -96,6 +111,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("errorSeverity"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             errorSeverity = property0.Value.GetInt32();
                             continue;
                         }
@@ -106,26 +126,51 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("operationId"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             operationId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("percentComplete"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             percentComplete = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("requestedDatabaseDtuMax"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             requestedDatabaseDtuMax = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("requestedDatabaseDtuMin"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             requestedDatabaseDtuMin = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("requestedDtu"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             requestedDtu = property0.Value.GetInt32();
                             continue;
                         }
@@ -136,6 +181,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("requestedStorageLimitInGB"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             requestedStorageLimitInGB = property0.Value.GetInt64();
                             continue;
                         }
@@ -151,6 +201,11 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("startTime"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
@@ -161,21 +216,41 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         if (property0.NameEquals("requestedStorageLimitInMB"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             requestedStorageLimitInMB = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("requestedDatabaseDtuGuarantee"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             requestedDatabaseDtuGuarantee = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("requestedDatabaseDtuCap"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             requestedDatabaseDtuCap = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("requestedDtuGuarantee"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             requestedDtuGuarantee = property0.Value.GetInt32();
                             continue;
                         }

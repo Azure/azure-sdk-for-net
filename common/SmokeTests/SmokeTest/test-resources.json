@@ -32,42 +32,22 @@
         "keyVaultName": "[format('kv-smk-{0}', parameters('baseName'))]",
         "iotHubName": "[format('iot-smoke-{0}', parameters('baseName'))]",
         "eventHubNamespaceName": "[format('eh-smoke-{0}', parameters('baseName'))]",
-        "eventHubName": "myeventhub",
-        "eventHubAuthorizationRuleName": "RootManageSharedAccessKey",
+        "eventHubName": "smoketest",
+        "eventHubsKeyName": "RootManageSharedAccessKey",
+        "eventHubsAuthRuleResourceId": "[resourceId('Microsoft.EventHub/namespaces/authorizationRules', variables('eventHubNamespaceName'), variables('eventHubsKeyName'))]",
         "storageAccountName": "[format('stsmoke{0}', parameters('baseName'))]"
     },
     "resources": [
         {
-            "type": "Microsoft.EventHub/namespaces",
-            "apiVersion": "2018-01-01-preview",
+            "apiVersion": "2015-08-01",
             "name": "[variables('eventHubNamespaceName')]",
+            "type": "Microsoft.EventHub/Namespaces",
             "location": "[parameters('location')]",
             "sku": {
-                "name": "Basic",
-                "tier": "Basic",
-                "capacity": 1
+              "name": "Standard",
+              "tier": "Standard"
             },
             "properties": {
-                "zoneRedundant": false,
-                "isAutoInflateEnabled": false,
-                "maximumThroughputUnits": 0,
-                "kafkaEnabled": false
-            }
-        },
-        {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "name": "sample-IotHubConnectionString",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri":"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/samples/iothub-connect-to-eventhubs/sample-resources.json",
-                    "contentVersion":"1.0.0.0"
-                },
-                "parameters": {
-                    "hubname": {"value": "[variables('iotHubName')]" },
-                    "location": {"value": "[parameters('location')]" }
-                }
             }
         },
         {
@@ -175,22 +155,6 @@
             }
         },
         {
-            "type": "Microsoft.EventHub/namespaces/AuthorizationRules",
-            "apiVersion": "2017-04-01",
-            "name": "[format('{0}/{1}', variables('eventHubNamespaceName'), variables('eventHubAuthorizationRuleName'))]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubNamespaceName'))]"
-            ],
-            "properties": {
-                "rights": [
-                    "Listen",
-                    "Manage",
-                    "Send"
-                ]
-            }
-        },
-        {
             "type": "Microsoft.EventHub/namespaces/eventhubs",
             "apiVersion": "2017-04-01",
             "name": "[format('{0}/{1}', variables('eventHubNamespaceName'), variables('eventHubName'))]",
@@ -224,23 +188,6 @@
             }
         },
         {
-            "type": "Microsoft.EventHub/namespaces/eventhubs/authorizationRules",
-            "apiVersion": "2017-04-01",
-            "name": "[concat(variables('eventHubNamespaceName'), '/myeventhub/Test')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('eventHubNamespaceName'), 'myeventhub')]",
-                "[resourceId('Microsoft.EventHub/namespaces', variables('eventHubNamespaceName'))]"
-            ],
-            "properties": {
-                "rights": [
-                    "Manage",
-                    "Listen",
-                    "Send"
-                ]
-            }
-        },
-        {
             "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
             "apiVersion": "2019-06-01",
             "name": "[concat(variables('storageAccountName'), '/default/mycontainer')]",
@@ -250,6 +197,25 @@
             ],
             "properties": {
                 "publicAccess": "None"
+            }
+        },
+        { /* TODO: Remove this once file URIs are supported. See https://github.com/Azure/azure-sdk-for-net/pull/17524#discussion_r543362690 */
+            "apiVersion": "2019-11-04",
+            "type": "Microsoft.Devices/IotHubs",
+            "name": "[variables('iotHubName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "eventHubEndpoints": {
+                    "events": {
+                        "retentionTimeInDays": 1,
+                        "partitionCount": "4"
+                    }
+                },
+                "features": "None"
+            },
+            "sku": {
+                "name": "B1",
+                "capacity": "5"
             }
         }
     ],
@@ -274,17 +240,25 @@
             "type": "string",
             "value": "[reference(variables('keyVaultName')).vaultUri]"
         },
-        "EVENT_HUBS_CONNECTION_STRING": {
+        "EVENT_HUBS_NAMESPACE_CONNECTION_STRING": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.EventHub/namespaces/eventhubs/authorizationRules', variables('eventHubNamespaceName'),  variables('eventHubName'), 'Test'), '2017-04-01').primaryConnectionString]"
+            "value": "[listkeys(variables('eventHubsAuthRuleResourceId'), '2015-08-01').primaryConnectionString]"
+        },
+        "EVENT_HUBS_TESTHUB_NAME": {
+            "type": "string",
+            "value": "[variables('eventHubName')]"
         },
         "BLOB_CONNECTION_STRING": {
             "type": "string",
             "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';AccountKey=', listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value, ';EndpointSuffix=', parameters('storageEndpointSuffix'))]"
         },
-        "IOTHUB_CONNECTION_STRING": {
+        "IOTHUB_CONNECTION_STRING": { /* TODO: Remove this once file URIs are supported. See https://github.com/Azure/azure-sdk-for-net/pull/17524#discussion_r543362690 */
             "type": "string",
-            "value": "[reference('sample-IotHubConnectionString').outputs.IoTHubConnectionString.value]"
+            "value": "[concat('HostName=', reference(resourceId('Microsoft.Devices/IoTHubs', variables('iotHubName')), providers('Microsoft.Devices', 'IoTHubs').apiVersions[0]).hostName, ';SharedAccessKeyName=iothubowner;SharedAccessKey=', listKeys(resourceId('Microsoft.Devices/IotHubs', variables('iotHubName')), providers('Microsoft.Devices', 'IoTHubs').apiVersions[0]).value[0].primaryKey)]"
+        },
+        "IoTHubName": { /* TODO: Remove this once file URIs are supported. See https://github.com/Azure/azure-sdk-for-net/pull/17524#discussion_r543362690 */
+            "type": "string",
+            "value": "[variables('iotHubName')]"
         }
     }
 }

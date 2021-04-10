@@ -1,30 +1,25 @@
 # Microsoft.Azure.Synapse
 
-Run `dotnet msbuild /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code.
 
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
-```yaml
-repo: https://github.com/Azure/azure-rest-api-specs/blob/fdf4bbfd7a73b28960d3a62490440345d6f2e8e3
-```
-
 ``` yaml
+tag: package-spark-2019-11-01-preview
+require:
+    - https://github.com/Azure/azure-rest-api-specs/blob/f953424dd168e71373bc52edb9713d2d86a14ada/specification/synapse/data-plane/readme.md
+namespace: Azure.Analytics.Synapse.Spark
 public-clients: true
-input-file:
-    - $(repo)/specification/synapse/data-plane/Microsoft.Synapse/preview/2019-11-01-preview/sparkJob.json
+credential-types: TokenCredential
+credential-scopes: https://dev.azuresynapse.net/.default
 ```
 
-## Swagger workarounds
-
-### Add nullable annotations
+### Make Endpoint type as Uri
 
 ``` yaml
 directive:
   from: swagger-document
-  where: $.definitions.SparkBatchJob
-  transform: >
-    $.properties.appId["x-nullable"] = true;
-    $.properties.appInfo["x-nullable"] = true;
-    $.properties.log["x-nullable"] = true;
-````
+  where: $.parameters.Endpoint
+  transform: $.format = "url"
+```

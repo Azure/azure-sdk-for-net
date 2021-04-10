@@ -4,8 +4,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Storage.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Compute.Tests
                 createWithManagedDisks: hasManagedDisks,
                 createWithPublicIpAddress: false,
                 subnet: vmssSubnet);
-            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Item1;
-            inputVMScaleSet = getTwoVirtualMachineScaleSet.Item2;
+            VirtualMachineScaleSet vmScaleSet = getTwoVirtualMachineScaleSet.Response;
+            inputVMScaleSet = getTwoVirtualMachineScaleSet.Input;
 
             VirtualMachineScaleSetVMInstanceView vmInstanceViewResponse =
                 await VirtualMachineScaleSetVMsOperations.GetInstanceViewAsync(rgName, vmScaleSet.Name, "0");

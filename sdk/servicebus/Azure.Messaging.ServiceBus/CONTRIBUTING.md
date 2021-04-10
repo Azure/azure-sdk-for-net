@@ -50,7 +50,7 @@ The Live tests read information from the following environment variables:
   The connection string to an existing Service Bus namespace to use for testing.  If specified, this namespace will be used as the basis for the test run, with queues, topics, and subscriptions dynamically managed by the tests.  When the run is complete, the namespace will be left in the state that it was in before the test run took place.  If not specified, a new namespace will be dynamically created for the test run and removed at the end of the run.
   
 - `AZURE_TEST_MODE` _**(optional)**_\
-  This is used for the Service Bus management client tests, which use the HTTP recording framework.  By default tests are run in playback mode. To change the mode this value may be set to one of the following values: `Live`, `Playback`, `Record`.
+  This is used for the Service Bus administration client tests, which use the HTTP recording framework.  By default tests are run in playback mode. To change the mode this value may be set to one of the following values: `Live`, `Playback`, `Record`.
 
 - `AZURE_AUTHORITY_HOST` _**(optional)**_\
   The name of the Azure Authority to use for authenticating resource management operations.  The default for this is appropriate for use with the Azure public cloud; when testing in other cloud instances, this may be needed.

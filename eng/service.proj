@@ -1,27 +1,43 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <PropertyGroup>
+    <SDKType Condition="'$(SDKType)' == ''">all</SDKType>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == '' and '$(Scope)' != ''">$(Scope)</ServiceDirectory>
     <ServiceDirectory Condition="'$(ServiceDirectory)' == ''">*</ServiceDirectory>
     <IncludeTests Condition="'$(IncludeTests)' == ''">true</IncludeTests>
     <IncludeSrc Condition="'$(IncludeSrc)' == ''">true</IncludeSrc>
     <IncludeSamples Condition="'$(IncludeSamples)' == ''">true</IncludeSamples>
+    <IncludePerf Condition="'$(IncludePerf)' == ''">true</IncludePerf>
+    <IncludeStress Condition="'$(IncludeStress)' == ''">true</IncludeStress>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
+    <TraversalGlobalProperties>
+      CodeCoverageDirectory=$([System.IO.Path]::GetFullPath("$(CodeCoverageDirectory)", "$(MSBuildThisFileDirectory)..\sdk"));
+    </TraversalGlobalProperties>
   </PropertyGroup>
 
   <ItemGroup>
-    <ExcludeMgmtLib Include="..\sdk\*\Microsoft.*.Management.*\**\*.csproj;..\sdk\*mgmt*\**\*.csproj;" />
+    <MgmtExcludePaths Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj" />
     <TestProjects Include="..\sdk\$(ServiceDirectory)\**\tests\**\*.csproj" />
     <SamplesProjects Include="..\sdk\$(ServiceDirectory)\**\samples\**\*.csproj" />
+    <PerfProjects Include="..\sdk\$(ServiceDirectory)\**\perf\**\*.csproj" />
+    <StressProjects Include="..\sdk\$(ServiceDirectory)\**\stress\**\*.csproj" />
     <SampleApplications Include="..\samples\**\*.csproj" />
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects)"/>
-    <ProjectReference Include="@(TestProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeTests)' == 'true'" />
-    <ProjectReference Include="@(SamplesProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamples)' == 'true'" />
-    <ProjectReference Include="@(SampleApplications)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
-    <ProjectReference Include="@(SrcProjects)" Exclude="@(ExcludeMgmtLib)" Condition="'$(IncludeSrc)' == 'true'" />
+    <ProjectReference Include="@(TestProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeTests)' == 'true'" />
+    <ProjectReference Include="@(SamplesProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamples)' == 'true'" />
+    <ProjectReference Include="@(PerfProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludePerf)' == 'true'" />
+    <ProjectReference Include="@(StressProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeStress)' == 'true'" />
+    <ProjectReference Include="@(SampleApplications)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSamplesApplications)' == 'true'"/>
+    <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
 
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
+
+  <!-- Remove all projects except the ones included by the SDKType filter -->
+  <ItemGroup Condition="'$(SDKType)' != 'all'">
+    <ProjectsToRemove Include="@(ProjectReference)" Exclude="@(ProjectsToIncludeBySDKType)" />
+    <ProjectReference Remove="@(ProjectsToRemove)" />
+  </ItemGroup>
 
   <Target Name="CheckProjects" AfterTargets="Build">
     <!-- If scope is set this likely came from a call to build.proj and in cases where there is only mgmt projects we don't want to error so skip this extra check -->
@@ -35,5 +51,10 @@
              BuildInParallel="$(BuildInParallel)"
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />
+  </Target>
+
+  <Target Name="FinalBuildReferencesOutput" BeforeTargets="Build" Condition="'$(SDKType)' != 'all'">
+    <Message Text="Final Build References:" Importance="high"/>
+    <Message Text="  %(ProjectReference.Identity)" Importance="high"/>
   </Target>
 </Project>

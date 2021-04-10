@@ -3,19 +3,25 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20200706.4
+      ref: refs/tags/azure-sdk-build-tools_20200916.1
 
 parameters:
 - name: Artifacts
   type: object
   default: []
+- name: TestPipeline
+  type: boolean
+  default: false
 - name: ArtifactName
   type: string
   default: packages
+- name: SDKType
+  type: string
+  default: all
 - name: ServiceDirectory
   type: string
   default: not-specified
-- name: ServiceToBuild
+- name: ServiceToTest
   type: string
   default: ''
 - name: TargetDocRepoOwner
@@ -24,24 +30,65 @@ parameters:
 - name: TargetDocRepoName
   type: string
   default: azure-docs-sdk-dotnet
+- name: TestSetupSteps
+  type: stepList
+  default: []
+- name: TestTimeoutInMinutes
+  type: number
+  default: 60
+- name: MatrixConfigs
+  type: object
+  default:
+    - Name: NET_ci_test_base
+      Path: eng/pipelines/templates/stages/platform-matrix.json
+      Selection: sparse
+      NonSparseParameters: AdditionalTestArguments
+      GenerateVMJobs: true
+- name: AdditionalMatrixConfigs
+  type: object
+  default: []
+- name: MatrixFilters
+  type: object
+  default: []
+- name: MatrixReplace
+  type: object
+  default: []
+
+variables:
+  - template: ../variables/globals.yml
 
 stages:
   - stage: Build
     jobs:
-    - template: ../jobs/archetype-sdk-client.yml
+    - template: /eng/pipelines/templates/jobs/ci.yml
       parameters:
-        ServiceToBuild: ${{ coalesce(parameters.ServiceToBuild, parameters.ServiceDirectory) }}
-        ServiceDirectory: ${{parameters.ServiceDirectory}}
-        Artifacts: ${{parameters.Artifacts}}
+        SDKType: ${{ parameters.SDKType }}
+        ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+        Artifacts: ${{ parameters.Artifacts }}
+        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+          TestPipeline: true
         ArtifactName: packages
+        TestSetupSteps: ${{ parameters.TestSetupSteps }}
+        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+        MatrixConfigs:
+          - ${{ each config in parameters.MatrixConfigs }}:
+            -  ${{ config }}
+          - ${{ each config in parameters.AdditionalMatrixConfigs }}:
+            -  ${{ config }}
+        MatrixFilters: ${{ parameters.MatrixFilters }}
+        MatrixReplace: ${{ parameters.MatrixReplace }}
 
   # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
   - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
     - template: archetype-net-release.yml
       parameters:
-        ServiceDirectory: ${{parameters.ServiceDirectory}}
+        SDKType: ${{ parameters.SDKType }}
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
         DependsOn: Build
-        Artifacts: ${{parameters.Artifacts}}
+        Artifacts: ${{ parameters.Artifacts }}
+        ${{ if eq(parameters.ServiceDirectory, 'template') }}:
+          TestPipeline: true
         ArtifactName: packages
-        TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
-        TargetDocRepoName: ${{parameters.TargetDocRepoName}} 
+        TargetDocRepoOwner: ${{ parameters.TargetDocRepoOwner }}
+        TargetDocRepoName: ${{ parameters.TargetDocRepoName }}

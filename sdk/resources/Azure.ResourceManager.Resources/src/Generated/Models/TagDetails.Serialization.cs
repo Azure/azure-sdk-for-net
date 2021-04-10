@@ -33,11 +33,21 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("count"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     count = TagCount.DeserializeTagCount(property.Value);
                     continue;
                 }
                 if (property.NameEquals("values"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<TagValue> array = new List<TagValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -1,11 +1,72 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 4.17.1
+###  Feature Additions
+- Fixed potential MI type missing issue by using system assigned MI as default
+
+## Version 4.17.0
+###  Feature Additions
+- Fixed FactoryIdentity property Type can not be null issue
+
+## Version 4.16.0
+###  Feature Additions
+- Added Amazon S3 Compatible and Oracle Cloud Storage connectors
+- Updated AzureDataExplorer LinkedService servicePrincipalId, servicePrincipalKey, tenant properties from required to optional
+- Added accountKind property to AzureBlobStorage LinkedService
+- Added AAD auth to CosmosDb LinkedService
+- Added authHeaders to HTTP/REST/OData LinkedService
+- Added MultiFactor auth to SFTP LinkedService
+- Added UAMI to Identity
+- Added privateEndpointConnection apis to DataFactory
+
+## Version 4.15.0
+###  Feature Additions
+- Added WebActivity support for Service Principal
+- Added PipelineEndpoint with version and DataPathAssignments fields in AzureMLExecutePipeline
+- Added pipeline policy and Elapsed Time Metric
+- Fixed WebActivity dynamic authentication
+
+## Version 4.14.0
+###  Feature Additions
+- Added encryption property for Customer Managed Key
+- Added custom events trigger definition
+- Added Policy property into Databricks linkedService
+- Added managed identity support for authentication in Databricks linkedService
+- Added admin property in Custom Activity typeProperties
+- Added dualStandbyPairName property in IntegrationRuntimeSsisCatalogInfo to support SSISDB failover
+- Added managedVirtualNetwork reference to IR
+
+## Version 4.13.0
+###  Feature Additions
+- Added publicNetworkAccess property to datafactory
+- Added logSettings property into CopyActivity
+- Added connectionProperties property into Concur linkedService
+- Added authenticationType and sessionToken properties into AmazonS3 linkedService
+- Added support for more frequency types for TumblingWindowTrigger
+- Set computeType, coreCount to object type to allow expressions
+- Change property PartitionOption type to object for NetezzaSource, OracleSource, SapHanaSource, SapTableSource, SqlDWSource, SqlMISource, SqlServerSource, SqlSource, TeradataSource. 
+
+## Version 4.12.0
+###  Feature Additions
+- Added logLevel/enableReliableLogging to LogStorageSettings
+- Support Tar GZip compression type in Data Factory
+- Added maxRowPerFile/fileNamePrefix to tabular format settings
+- Added support for AzureDatabricks delta lake
+- Update Rest Sink properties
+- Added support lzo in orc format
+- Added MongoDbAtlas Source Connector in DataFactory
+
 ## Version 4.11.0
 ###  Feature Additions
 - Added support for Trigger Run Cancel API
 - Added column delimiter for SAP Table/open hub
 - Added azureCloudType for Aad Auth
 - Added snapshot to Azure File Storage linked service
+- Support HDFS for delete activity and deleteFilesAfterCompletion feature in copy activity
+- Added support for managed Virtual Network and managed private endpoint CRUD APIs
+- Added Support for Query EC List API
+- Added more options on XML and CosmosDbSqlApi copy source
+- Fix bug: Added AzureFileStorageWriteSettings
 
 ## Version 4.10.0
 ###  Feature Additions
@@ -229,7 +290,7 @@ AzureBlobStorageWriteSettings, AzureBlobFSWriteSettings, AzureDataLakeStoreWrite
 
 ## Version 1.0.0
 ### Feature Additions
-* Azure Data Factory new capabilities now fall under General Availability SLA. ADF has made cloud data integration easier than ever before. Build, schedule and manage data integration at scale wherever your data lives, in cloud or on-premises, with enterprise-grade security. Accelerate your data integration projects with over 70 data source connectors available, please refer to https://docs.microsoft.com/en-us/azure/data-factory/copy-activity-overview. Transform raw data into finished, shaped data that is ready for consumption by BI tools or custom applications. Easily lift your SQL Server Integration Services (SSIS) packages to Azure and let ADF manage your resources for you so you can increase productivity and lower TCO, please refer to https://docs.microsoft.com/en-us/sql/integration-services/lift-shift/ssis-azure-lift-shift-ssis-packages-overview?view=sql-server-2017. Meet your security and compliance needs while taking advantage of extensive capabilities and paying only for what you use. The ADF GA SDK changes include the following:
+* Azure Data Factory new capabilities now fall under General Availability SLA. ADF has made cloud data integration easier than ever before. Build, schedule and manage data integration at scale wherever your data lives, in cloud or on-premises, with enterprise-grade security. Accelerate your data integration projects with over 70 data source connectors available, please refer to https://docs.microsoft.com/azure/data-factory/copy-activity-overview. Transform raw data into finished, shaped data that is ready for consumption by BI tools or custom applications. Easily lift your SQL Server Integration Services (SSIS) packages to Azure and let ADF manage your resources for you so you can increase productivity and lower TCO, please refer to https://docs.microsoft.com/sql/integration-services/lift-shift/ssis-azure-lift-shift-ssis-packages-overview?view=sql-server-2017. Meet your security and compliance needs while taking advantage of extensive capabilities and paying only for what you use. The ADF GA SDK changes include the following:
         -    The API 'removeNode’ on IR has been removed and replaced with DELETE API on IR node.
         -    The API 'POST pipelineRuns’ was renamed to 'POST queryPipelineRuns’ and 'PipelineRunFilterParameters’ was renamed to 'RunFilterParameters’.
         -    The API 'GET activityRuns’ using pipeline run id has been replaced with 'POST queryActivityRuns’. It also takes RunFilterParameters object in the body to provide more options to query and order the result.

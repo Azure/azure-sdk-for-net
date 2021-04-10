@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("info"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     info = property.Value.GetObject();
                     continue;
                 }

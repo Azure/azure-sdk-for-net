@@ -3,27 +3,27 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Moq;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Core;
 using System.Threading;
+using Azure.Core.TestFramework;
 
 namespace Azure.Storage.Blobs.ChangeFeed.Tests
 {
     public class ShardTests : ChangeFeedTestBase
     {
-        public ShardTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public ShardTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
         /// <summary>
         /// Tests creating a Shard with a ShardCursor, and then calling Shard.GetCursor().
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task GetCursor()
         {
             // Arrange
@@ -70,7 +70,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>(),
                 It.IsAny<long>(),
                 It.IsAny<CancellationToken>()))
-                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
+                .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
             ShardFactory shardFactory = new ShardFactory(
                 containerClient.Object,
@@ -82,7 +82,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 shardPath,
                 shardCursor)
                 .ConfigureAwait(false);
-
 
             ShardCursor cursor = shard.GetCursor();
 
@@ -125,7 +124,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task HasNext_False()
         {
             // Arrange
@@ -172,7 +171,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>(),
                 It.IsAny<long>(),
                 It.IsAny<CancellationToken>()))
-                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
+                .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
             chunks["chunk5"].Setup(r => r.HasNext()).Returns(false);
 
@@ -224,7 +223,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task HasNext_ChunksLeft()
         {
             // Arrange
@@ -271,7 +270,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>(),
                 It.IsAny<long>(),
                 It.IsAny<CancellationToken>()))
-                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
+                .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
             ShardFactory shardFactory = new ShardFactory(
                 containerClient.Object,
@@ -319,7 +318,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// <summary>
         /// Tests Shard.HasNext().
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task HasNext_CurrentChunkHasNext()
         {
             // Arrange
@@ -366,7 +365,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>(),
                 It.IsAny<long>(),
                 It.IsAny<CancellationToken>()))
-                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
+                .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
             chunks["chunk5"].Setup(r => r.HasNext()).Returns(true);
 
@@ -420,7 +419,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         /// We call ShardFactory.BuildShard() with a ShardCursor, to create the Shard,
         /// Shard.Next() 4 times, Shard.GetCursor(), and then Shard.Next 4 times.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task Next()
         {
             // Arrange
@@ -482,7 +481,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 It.IsAny<long>(),
                 It.IsAny<long>(),
                 It.IsAny<CancellationToken>()))
-                .Returns((bool _, string path, long _, long _, CancellationToken _) => Task.FromResult(chunks[path].Object));
+                .Returns((bool _, string path, long __, long ___, CancellationToken ____) => Task.FromResult(chunks[path].Object));
 
             chunks["chunk2"].SetupSequence(r => r.HasNext())
                 .Returns(true)
@@ -504,7 +503,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             for (int i = 0; i < chunkCount; i++)
             {
-
                 chunks[$"chunk{2 + i}"].SetupSequence(r => r.Next(
                     It.IsAny<bool>(),
                     default))

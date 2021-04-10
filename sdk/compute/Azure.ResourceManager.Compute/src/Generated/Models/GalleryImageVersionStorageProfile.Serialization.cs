@@ -42,22 +42,37 @@ namespace Azure.ResourceManager.Compute.Models
         internal static GalleryImageVersionStorageProfile DeserializeGalleryImageVersionStorageProfile(JsonElement element)
         {
             Optional<GalleryArtifactVersionSource> source = default;
-            Optional<GalleryDiskImage> osDiskImage = default;
+            Optional<GalleryOSDiskImage> osDiskImage = default;
             Optional<IList<GalleryDataDiskImage>> dataDiskImages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     source = GalleryArtifactVersionSource.DeserializeGalleryArtifactVersionSource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osDiskImage"))
                 {
-                    osDiskImage = GalleryDiskImage.DeserializeGalleryDiskImage(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<GalleryDataDiskImage> array = new List<GalleryDataDiskImage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

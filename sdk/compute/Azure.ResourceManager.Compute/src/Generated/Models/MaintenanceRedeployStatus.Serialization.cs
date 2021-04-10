@@ -26,31 +26,61 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("isCustomerInitiatedMaintenanceAllowed"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isCustomerInitiatedMaintenanceAllowed = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("preMaintenanceWindowStartTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     preMaintenanceWindowStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("preMaintenanceWindowEndTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     preMaintenanceWindowEndTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("maintenanceWindowStartTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maintenanceWindowStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("maintenanceWindowEndTime"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maintenanceWindowEndTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastOperationResultCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     lastOperationResultCode = property.Value.GetString().ToMaintenanceOperationResultCodeTypes();
                     continue;
                 }

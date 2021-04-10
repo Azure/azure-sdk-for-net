@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitPeeringListResult
+    internal partial class ExpressRouteCircuitPeeringListResult
     {
         internal static ExpressRouteCircuitPeeringListResult DeserializeExpressRouteCircuitPeeringListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ExpressRouteCircuitPeering> array = new List<ExpressRouteCircuitPeering>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

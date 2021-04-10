@@ -60,10 +60,20 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
                 if (property.NameEquals("properties"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             provisioningState = property0.Value.GetString().ToProvisioningStateDR();
                             continue;
                         }
@@ -79,11 +89,21 @@ namespace Azure.ResourceManager.EventHubs.Models
                         }
                         if (property0.NameEquals("role"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             role = property0.Value.GetString().ToRoleDisasterRecovery();
                             continue;
                         }
                         if (property0.NameEquals("pendingReplicationOperationsCount"))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
                             pendingReplicationOperationsCount = property0.Value.GetInt64();
                             continue;
                         }

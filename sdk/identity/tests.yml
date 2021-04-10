@@ -1,16 +1,42 @@
 trigger: none
 
+resources:
+  containers:
+    - container: 'ubuntu_netcore_keyring'
+      image: 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:689585'
+      endpoint: 'azsdkengsys'
+      options: -ti --cap-add=IPC_LOCK
+
 extends:
-  template: ../../eng/pipelines/templates/jobs/archetype-sdk-tests.yml
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
-    ServiceDirectory: identity    
+    TimeoutInMinutes: 120
+    AdditionalMatrixConfigs:
+      - Name: identity_container
+        Path: sdk/identity/platform-matrix.json
+        Selection: sparse
+        GenerateContainerJobs: true
+    ServiceDirectory: identity
     PreSteps:
+      - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
+        displayName: Install Azure PowerShell module
+        condition: and(succeededOrFailed(), startsWith(variables['Agent.JobName'], 'ubuntu_keyring_container'))
+      - script: |
+          set -x
+          export $(dbus-launch)
+          gnome-keyring-daemon --start --daemonize --components=secrets
+          echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_ADDRESS]$DBUS_SESSION_BUS_ADDRESS"
+          echo "##vso[task.setvariable variable=DBUS_SESSION_BUS_PID]$DBUS_SESSION_BUS_PID"
+          echo "##vso[task.setvariable variable=GNOME_KEYRING_CONTROL]$GNOME_KEYRING_CONTROL"
+        condition: and(succeededOrFailed(), startsWith(variables['Agent.JobName'], 'ubuntu_keyring_container'))
       - pwsh: |
           [System.Convert]::FromBase64String($env:PFX_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/test.pfx -AsByteStream
           Set-Content -Path $(Agent.TempDirectory)/test.pem -Value $env:PEM_CONTENTS
+          [System.Convert]::FromBase64String($env:SNI_CONTENTS) | Set-Content -Path $(Agent.TempDirectory)/testsni.pfx -AsByteStream
         env:
           PFX_CONTENTS: $(net-identity-spcert-pfx)
           PEM_CONTENTS: $(net-identity-spcert-pem)
+          SNI_CONTENTS: $(net-identity-spcert-sni)
     EnvVars:
       AZURE_IDENTITY_TEST_TENANTID: $(net-identity-tenantid)
       AZURE_IDENTITY_TEST_USERNAME: $(net-identity-username)
@@ -20,3 +46,4 @@ extends:
       IDENTITY_SP_CLIENT_SECRET: $(net-identity-sp-clientsecret)
       IDENTITY_SP_CERT_PFX: $(Agent.TempDirectory)/test.pfx
       IDENTITY_SP_CERT_PEM: $(Agent.TempDirectory)/test.pem
+      IDENTITY_SP_CERT_SNI: $(Agent.TempDirectory)/testsni.pfx

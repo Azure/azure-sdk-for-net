@@ -806,7 +806,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobGetTaskCountsBatchRequest : Protocol.BatchRequest<
         JobGetTaskCountsOptions,
-        AzureOperationResponse<TaskCounts, JobGetTaskCountsHeaders>>
+        AzureOperationResponse<TaskCountsResult, JobGetTaskCountsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobGetTaskCountsBatchRequest" /> class.

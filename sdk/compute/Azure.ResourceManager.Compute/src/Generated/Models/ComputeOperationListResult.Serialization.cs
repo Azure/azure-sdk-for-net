@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeOperationListResult
+    internal partial class ComputeOperationListResult
     {
         internal static ComputeOperationListResult DeserializeComputeOperationListResult(JsonElement element)
         {
@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ComputeOperationValue> array = new List<ComputeOperationValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary>
-    /// Represents a line of text recognized from the input document.
+    /// Represents a line of text  and its appearance.
     /// </summary>
     public class FormLine : FormElement
     {
@@ -14,6 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
             : base(new FieldBoundingBox(textLine.BoundingBox), pageNumber, textLine.Text)
         {
             Words = ConvertWords(textLine.Words, pageNumber);
+            Appearance = textLine.Appearance;
         }
 
         /// <summary>
@@ -33,6 +34,11 @@ namespace Azure.AI.FormRecognizer.Models
         /// A list of the words that make up the line.
         /// </summary>
         public IReadOnlyList<FormWord> Words { get; }
+
+        /// <summary>
+        /// An object representing the appearance of the text line.
+        /// </summary>
+        public TextAppearance Appearance { get; }
 
         private static IReadOnlyList<FormWord> ConvertWords(IReadOnlyList<TextWord> textWords, int pageNumber)
         {

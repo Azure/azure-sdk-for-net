@@ -201,6 +201,8 @@ namespace Azure.Core.Tests
             }
 
             public override int ReadTimeout { get; set; }
+
+            public override bool CanTimeout { get; } = true;
         }
 
         private class ReadTrackingStream : TestReadStream
@@ -244,7 +246,6 @@ namespace Azure.Core.Tests
                 return left;
             }
 
-
             public override void Close()
             {
                 IsClosed = true;
@@ -252,7 +253,6 @@ namespace Azure.Core.Tests
             }
 
             public bool IsClosed { get; set; }
-
         }
 
         private abstract class TestReadStream: Stream

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyRuleGroupListResult
+    internal partial class FirewallPolicyRuleGroupListResult
     {
         internal static FirewallPolicyRuleGroupListResult DeserializeFirewallPolicyRuleGroupListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<FirewallPolicyRuleGroup> array = new List<FirewallPolicyRuleGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

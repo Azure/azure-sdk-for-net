@@ -57,11 +57,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("action"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     action = FirewallPolicyFilterRuleAction.DeserializeFirewallPolicyFilterRuleAction(property.Value);
                     continue;
                 }
                 if (property.NameEquals("ruleConditions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<FirewallPolicyRuleCondition> array = new List<FirewallPolicyRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -82,6 +92,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("priority"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     priority = property.Value.GetInt32();
                     continue;
                 }

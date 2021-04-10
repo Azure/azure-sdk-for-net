@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// <summary>
     /// Represents a Template Spec artifact.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("TemplateSpecArtifact")]
     public partial class TemplateSpecArtifact
     {
         /// <summary>

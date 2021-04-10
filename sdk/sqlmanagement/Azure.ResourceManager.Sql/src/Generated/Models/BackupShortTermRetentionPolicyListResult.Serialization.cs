@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class BackupShortTermRetentionPolicyListResult
+    internal partial class BackupShortTermRetentionPolicyListResult
     {
         internal static BackupShortTermRetentionPolicyListResult DeserializeBackupShortTermRetentionPolicyListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<BackupShortTermRetentionPolicy> array = new List<BackupShortTermRetentionPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

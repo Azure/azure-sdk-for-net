@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("display"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.NameEquals("operation"))

@@ -17,7 +17,7 @@ It is **recommended** that you move to one or more of the new packages.
 The Microsoft Azure Key Vault SDK for .NET allows you to build secure Azure applications that can access secrets, keys, and certificates that a encrypted at rest with hardware security modules.
 
 This directory contains the open source subset of the .NET SDK. For documentation of the 
-complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http://azure.microsoft.com/en-us/develop/net/).
+complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](https://azure.microsoft.com/develop/net/).
 
 ## Features
 
@@ -38,9 +38,9 @@ complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](http:
 
 ## Getting Started
 
-The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](http://azure.microsoft.com/en-us/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
+The complete Microsoft Azure SDK can be downloaded from the [Microsoft Azure Downloads Page](https://azure.microsoft.com/downloads/?sdk=net) and ships with support for building deployment packages, integrating with tooling, rich command line tooling, and more.
 
-Please review [Get started with Azure Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/key-vault-get-started) if you are not familiar with Azure Key Vault.
+Please review [Get started with Azure Key Vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started) if you are not familiar with Azure Key Vault.
 
 For the best development experience, developers should use the official Microsoft NuGet packages for libraries. NuGet packages are regularly updated with new functionality and hotfixes. 
 
@@ -60,7 +60,7 @@ For the best development experience, developers should use the official Microsof
 
 ## Versioning Information
 
-- The Key Vault SDK uses [the semantic versioning scheme.](http://semver.org/)
+- The Key Vault SDK uses [the semantic versioning scheme.](https://semver.org/)
 
 ## Target Frameworks
 
@@ -80,13 +80,13 @@ Tests for the Azure Key Vault SDK are run in the same manner as the rest of the 
 
 ## Samples
 
-Code samples for the Azure Key Vault SDK are available on [Azure Code Samples](https://azure.microsoft.com/en-us/resources/samples/?sort=0&service=key-vault&platform=dotnet).
+Code samples for the Azure Key Vault SDK are available on [Azure Code Samples](https://azure.microsoft.com/resources/samples/?sort=0&service=key-vault&platform=dotnet).
 
 ## Additional Documentation
 
-* [Azure Key Vault General Documentation](https://docs.microsoft.com/en-us/azure/key-vault/)
-* [Azure Key Vault REST API Reference](https://docs.microsoft.com/en-us/rest/api/keyvault/)
-* [Azure Key Vault SDK for .NET Documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/key-vault?view=azure-dotnet)
+* [Azure Key Vault General Documentation](https://docs.microsoft.com/azure/key-vault/)
+* [Azure Key Vault REST API Reference](https://docs.microsoft.com/rest/api/keyvault/)
+* [Azure Key Vault SDK for .NET Documentation](https://docs.microsoft.com/dotnet/api/overview/azure/key-vault?view=azure-dotnet)
   
 ## Contributing
 

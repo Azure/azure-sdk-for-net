@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -52,16 +51,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxFailedItemsPerBatch");
                 }
             }
-            if (Optional.IsCollectionDefined(Configuration))
+            if (Optional.IsDefined(IndexingParametersConfiguration))
             {
                 writer.WritePropertyName("configuration");
-                writer.WriteStartObject();
-                foreach (var item in Configuration)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(IndexingParametersConfiguration);
             }
             writer.WriteEndObject();
         }
@@ -71,7 +64,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<int?> batchSize = default;
             Optional<int?> maxFailedItems = default;
             Optional<int?> maxFailedItemsPerBatch = default;
-            Optional<IDictionary<string, object>> configuration = default;
+            Optional<IndexingParametersConfiguration> configuration = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchSize"))
@@ -106,16 +99,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("configuration"))
                 {
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
                     }
-                    configuration = dictionary;
+                    configuration = Models.IndexingParametersConfiguration.DeserializeIndexingParametersConfiguration(property.Value);
                     continue;
                 }
             }
-            return new IndexingParameters(Optional.ToNullable(batchSize), Optional.ToNullable(maxFailedItems), Optional.ToNullable(maxFailedItemsPerBatch), Optional.ToDictionary(configuration));
+            return new IndexingParameters(Optional.ToNullable(batchSize), Optional.ToNullable(maxFailedItems), Optional.ToNullable(maxFailedItemsPerBatch), configuration.Value);
         }
     }
 }

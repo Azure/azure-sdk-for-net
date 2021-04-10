@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
@@ -16,9 +15,10 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 {
     [ClientTestFixture(
         CertificateClientOptions.ServiceVersion.V7_0,
-        CertificateClientOptions.ServiceVersion.V7_1)]
+        CertificateClientOptions.ServiceVersion.V7_1,
+        CertificateClientOptions.ServiceVersion.V7_2)]
     [NonParallelizable]
-    public class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
+    public abstract class CertificatesTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         protected readonly TimeSpan PollingInterval = TimeSpan.FromSeconds(5);
         private readonly CertificateClientOptions.ServiceVersion _serviceVersion;
@@ -35,20 +35,23 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         private KeyVaultTestEventListener _listener;
 
-        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        public CertificatesTestBase(bool isAsync, CertificateClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, mode ?? RecordedTestUtilities.GetModeFromEnvironment())
         {
             _serviceVersion = serviceVersion;
         }
 
-        internal CertificateClient GetClient(TestRecording recording = null)
+        internal CertificateClient GetClient()
         {
-            recording ??= Recording;
-
             CertificateClientOptions options = new CertificateClientOptions(_serviceVersion)
             {
                 Diagnostics =
                 {
-                    IsLoggingContentEnabled = Debugger.IsAttached,
+                    IsLoggingContentEnabled = Debugger.IsAttached || Mode == RecordedTestMode.Live,
+                    LoggedHeaderNames =
+                    {
+                        "x-ms-request-id",
+                    },
                 }
             };
 
@@ -56,7 +59,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                 (new CertificateClient(
                     new Uri(TestEnvironment.KeyVaultUrl),
                     TestEnvironment.Credential,
-                    recording.InstrumentClientOptions(options)));
+                    InstrumentClientOptions(options)));
         }
 
         public override void StartTestRecording()
@@ -199,16 +202,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
         }
 
-        protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation)
+        protected async Task<KeyVaultCertificateWithPolicy> WaitForCompletion(CertificateOperation operation, TimeSpan? pollingInterval = null)
         {
             using CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(1));
-            TimeSpan pollingInterval = TimeSpan.FromSeconds((Mode == RecordedTestMode.Playback) ? 0 : 1);
+            pollingInterval = Mode == RecordedTestMode.Playback ? TimeSpan.Zero : pollingInterval ?? TimeSpan.FromSeconds(1);
 
             try
             {
                 if (IsAsync)
                 {
-                    await operation.WaitForCompletionAsync(pollingInterval, cts.Token);
+                    await operation.WaitForCompletionAsync(pollingInterval.Value, cts.Token);
                 }
                 else
                 {
@@ -216,7 +219,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
                     {
                         operation.UpdateStatus(cts.Token);
 
-                        await Task.Delay(pollingInterval, cts.Token);
+                        await Task.Delay(pollingInterval.Value, cts.Token);
                     }
                 }
             }

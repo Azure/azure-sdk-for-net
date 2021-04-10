@@ -1,35 +1,36 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f14a6f95ee39fa469196c652363a02b0-3cfc266513535943-00",
+        "traceparent": "00-549091db5942d94fb1e34be04e2ed81e-63dac1ae70067041-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
         ],
-        "x-ms-client-request-id": "bbd241b8e2683b7fdabbf2fbfd6e3e06",
+        "x-ms-client-request-id": "2e06a47d97e1b1c0db25e1a75ce1cc66",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:39 GMT",
+        "Date": "Wed, 20 Jan 2021 21:26:29 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "b56e062d-5d1d-41a3-adc1-9a457d5f1771",
+        "x-ms-activity-id": "20e92e29-08b7-4ab1-9efe-0969737c1d51",
         "x-ms-client-request-id": [
-          "bbd241b8e2683b7fdabbf2fbfd6e3e06",
-          "bbd241b8e2683b7fdabbf2fbfd6e3e06"
+          "2e06a47d97e1b1c0db25e1a75ce1cc66",
+          "2e06a47d97e1b1c0db25e1a75ce1cc66"
         ],
-        "x-ms-request-id": "247a852a-ae0d-4fc3-9b4c-892411a5682b",
+        "x-ms-request-id": "af18e665-dcb2-44c9-b349-4850b37b4307",
         "x-ms-response-time-ms": "55"
       },
       "ResponseBody": {
@@ -37,422 +38,442 @@
         "total": 20,
         "sessions": [
           {
-            "id": 2,
-            "appId": "application_1576225874089_0001",
+            "id": 183,
+            "appId": "application_1608586656965_0001",
             "appInfo": {
-              "driverLogUrl": "http://008b79baa75e493ba50798a50e751b9d03116310046:8042/node/containerlogs/container_1576225874089_0001_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://008b79baa75e493ba50798a50e751b9d04071d71770:8088/proxy/application_1576225874089_0001/"
+              "driverLogUrl": "http://500951c00f5544ccad5f2894b3d22edb00117434489:8042/node/containerlogs/container_1608586656965_0001_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0001/",
+              "isSessionTimedOut": "false"
             },
             "state": "killed",
             "log": [
               "\t final status: UNDEFINED",
-              "\t tracking URL: http://008b79baa75e493ba50798a50e751b9d04071d71770:8088/proxy/application_1576225874089_0001/",
+              "\t tracking URL: http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0001/",
               "\t user: trusted-service-user",
-              "19/12/13 08:31:59 INFO ShutdownHookManager: Shutdown hook called",
-              "19/12/13 08:31:59 INFO ShutdownHookManager: Deleting directory /tmp/spark-13f31a03-7633-4467-bf81-3fe3309fb856",
-              "19/12/13 08:31:59 INFO ShutdownHookManager: Deleting directory /tmp/spark-40fe5680-835f-462d-bcbb-c8fffa1bbe6f",
-              "19/12/13 08:31:59 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "19/12/13 08:31:59 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "19/12/13 08:31:59 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "20/12/21 21:38:02 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/21 21:38:02 INFO ShutdownHookManager: Deleting directory /tmp/spark-5454be09-6939-4f0f-b7ac-6d70de72e567",
+              "20/12/21 21:38:02 INFO ShutdownHookManager: Deleting directory /tmp/spark-1b6dae59-f5c0-4151-a6ca-5fa197fbb0c4",
+              "20/12/21 21:38:02 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/21 21:38:02 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/21 21:38:02 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
               "\nYARN Diagnostics: "
             ]
           },
           {
-            "id": 6,
-            "appId": "application_1577261347028_0001",
+            "id": 185,
+            "appId": "application_1608586656965_0002",
             "appInfo": {
-              "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad039fdf58075:8042/node/containerlogs/container_1577261347028_0001_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0001/"
-            },
-            "state": "dead",
-            "log": [
-              "\t final status: UNDEFINED",
-              "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0001/",
-              "\t user: trusted-service-user",
-              "19/12/25 08:09:25 INFO ShutdownHookManager: Shutdown hook called",
-              "19/12/25 08:09:25 INFO ShutdownHookManager: Deleting directory /tmp/spark-3f94f2c6-cc2f-4497-833b-3c40c96cfb2e",
-              "19/12/25 08:09:25 INFO ShutdownHookManager: Deleting directory /tmp/spark-4070576f-39e7-4003-b73e-878a2e176454",
-              "19/12/25 08:09:25 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "19/12/25 08:09:25 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "19/12/25 08:09:25 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-              "\nYARN Diagnostics: "
-            ]
-          },
-          {
-            "id": 7,
-            "appId": "application_1577261347028_0002",
-            "appInfo": {
-              "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad00453758611:8042/node/containerlogs/container_1577261347028_0002_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0002/"
+              "driverLogUrl": "http://500951c00f5544ccad5f2894b3d22edb002b1f03295:8042/node/containerlogs/container_1608586656965_0002_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0002/",
+              "isSessionTimedOut": "false"
             },
             "state": "killed",
             "log": [
               "\t final status: UNDEFINED",
-              "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0002/",
+              "\t tracking URL: http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0002/",
               "\t user: trusted-service-user",
-              "19/12/25 08:16:47 INFO ShutdownHookManager: Shutdown hook called",
-              "19/12/25 08:16:47 INFO ShutdownHookManager: Deleting directory /tmp/spark-5829aff6-088b-4496-afc5-147214d18c51",
-              "19/12/25 08:16:47 INFO ShutdownHookManager: Deleting directory /tmp/spark-e4f0d452-bbb4-4719-b2d1-fe34dc28d4f9",
-              "19/12/25 08:16:47 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "19/12/25 08:16:47 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "19/12/25 08:16:47 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "20/12/21 21:46:07 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/21 21:46:07 INFO ShutdownHookManager: Deleting directory /tmp/spark-c5872a4a-162f-47d4-9bba-8ad9de06ea7f",
+              "20/12/21 21:46:07 INFO ShutdownHookManager: Deleting directory /tmp/spark-bc1763ca-fdc1-4c52-9837-79dd8eb0ca8c",
+              "20/12/21 21:46:07 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/21 21:46:07 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/21 21:46:07 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
               "\nYARN Diagnostics: "
             ]
           },
           {
-            "id": 8,
-            "appId": "application_1577261347028_0003",
+            "id": 187,
+            "appId": "application_1608586656965_0003",
             "appInfo": {
-              "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad032f0488094:8042/node/containerlogs/container_1577261347028_0003_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0003/"
-            },
-            "state": "error",
-            "log": [
-              "\t final status: UNDEFINED",
-              "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0003/",
-              "\t user: trusted-service-user",
-              "19/12/25 08:29:49 INFO ShutdownHookManager: Shutdown hook called",
-              "19/12/25 08:29:49 INFO ShutdownHookManager: Deleting directory /tmp/spark-de484530-d317-4435-8145-c82ade1aebdb",
-              "19/12/25 08:29:49 INFO ShutdownHookManager: Deleting directory /tmp/spark-2d468982-7533-4d5a-a601-73d568abc9b1",
-              "19/12/25 08:29:49 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "19/12/25 08:29:49 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "19/12/25 08:29:49 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-              "\nYARN Diagnostics: "
-            ]
-          },
-          {
-            "id": 9,
-            "appId": "application_1577261347028_0004",
-            "appInfo": {
-              "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad017a7497707:8042/node/containerlogs/container_1577261347028_0004_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0004/"
+              "driverLogUrl": "http://500951c00f5544ccad5f2894b3d22edb002b1f03295:8042/node/containerlogs/container_1608586656965_0003_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0003/",
+              "isSessionTimedOut": "false"
             },
             "state": "killed",
             "log": [
               "\t final status: UNDEFINED",
-              "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0004/",
+              "\t tracking URL: http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0003/",
               "\t user: trusted-service-user",
-              "19/12/25 09:11:39 INFO ShutdownHookManager: Shutdown hook called",
-              "19/12/25 09:11:39 INFO ShutdownHookManager: Deleting directory /tmp/spark-298699c6-1a19-43f4-b0e7-77ff38765146",
-              "19/12/25 09:11:39 INFO ShutdownHookManager: Deleting directory /tmp/spark-bdf130b2-b3c9-4ff0-9205-d8e9bbc6489d",
-              "19/12/25 09:11:39 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "19/12/25 09:11:39 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "19/12/25 09:11:39 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "20/12/21 21:53:00 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/21 21:53:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-a3f0e885-4a53-4895-9541-9e5ae84f2572",
+              "20/12/21 21:53:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-d052ec1d-099f-4ccd-8523-e4e2147c7ba6",
+              "20/12/21 21:53:00 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/21 21:53:00 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/21 21:53:00 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
               "\nYARN Diagnostics: "
             ]
           },
           {
-            "id": 10,
-            "appId": "application_1577261347028_0005",
+            "id": 189,
+            "appId": "application_1608669834111_0001",
             "appInfo": {
-              "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad017a7497707:8042/node/containerlogs/container_1577261347028_0005_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0005/"
-            },
-            "state": "error",
-            "log": [
-              "\t final status: UNDEFINED",
-              "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0005/",
-              "\t user: trusted-service-user",
-              "19/12/25 10:06:26 INFO ShutdownHookManager: Shutdown hook called",
-              "19/12/25 10:06:26 INFO ShutdownHookManager: Deleting directory /tmp/spark-56d5b827-6412-4628-a521-a8caa8ad5c3e",
-              "19/12/25 10:06:26 INFO ShutdownHookManager: Deleting directory /tmp/spark-df53ebea-f06c-486a-a903-db2f7806843d",
-              "19/12/25 10:06:27 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "19/12/25 10:06:27 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "19/12/25 10:06:27 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-              "\nYARN Diagnostics: "
-            ]
-          },
-          {
-            "id": 11,
-            "appId": "application_1577261347028_0006",
-            "appInfo": {
-              "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad0358bf44418:8042/node/containerlogs/container_1577261347028_0006_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0006/"
-            },
-            "state": "error",
-            "log": [
-              "\t final status: UNDEFINED",
-              "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0006/",
-              "\t user: trusted-service-user",
-              "19/12/25 10:07:05 INFO ShutdownHookManager: Shutdown hook called",
-              "19/12/25 10:07:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-57dae334-2360-4782-9ed5-4dace6dc8e1f",
-              "19/12/25 10:07:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-c5c5be5d-c63d-4cac-8d7a-dea35ce2278f",
-              "19/12/25 10:07:05 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "19/12/25 10:07:05 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "19/12/25 10:07:05 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-              "\nYARN Diagnostics: "
-            ]
-          },
-          {
-            "id": 34,
-            "appId": "application_1582083768945_0003",
-            "appInfo": {
-              "driverLogUrl": "http://3024a670da1f4cc38f1f3560864f4d8604113d45195:8042/node/containerlogs/container_1582083768945_0003_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://3024a670da1f4cc38f1f3560864f4d8601071373522:8088/proxy/application_1582083768945_0003/"
-            },
-            "state": "error",
-            "log": [
-              "\t final status: UNDEFINED",
-              "\t tracking URL: http://3024a670da1f4cc38f1f3560864f4d8601071373522:8088/proxy/application_1582083768945_0003/",
-              "\t user: trusted-service-user",
-              "20/02/19 03:54:36 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/19 03:54:36 INFO ShutdownHookManager: Deleting directory /tmp/spark-82194c9f-17d1-4b83-a6df-112f812edfda",
-              "20/02/19 03:54:36 INFO ShutdownHookManager: Deleting directory /tmp/spark-e92ea88c-8603-4ae7-84ca-b40198ebae2e",
-              "20/02/19 03:54:36 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/19 03:54:36 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/19 03:54:36 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-              "\nYARN Diagnostics: "
-            ]
-          },
-          {
-            "id": 43,
-            "appId": "application_1582721346528_0001",
-            "appInfo": {
-              "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37004bf001189:8042/node/containerlogs/container_1582721346528_0001_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0001/"
-            },
-            "state": "error",
-            "log": [
-              "\t final status: UNDEFINED",
-              "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0001/",
-              "\t user: trusted-service-user",
-              "20/02/26 12:49:18 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/26 12:49:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-582cc476-8e5a-40a3-a62f-a243142b1482",
-              "20/02/26 12:49:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-772512fd-dcfa-4642-ad14-786d4adaf96b",
-              "20/02/26 12:49:18 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/26 12:49:18 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/26 12:49:18 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-              "\nYARN Diagnostics: "
-            ]
-          },
-          {
-            "id": 44,
-            "appId": "application_1582721346528_0002",
-            "appInfo": {
-              "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37004bf001189:8042/node/containerlogs/container_1582721346528_0002_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0002/"
-            },
-            "state": "error",
-            "log": [
-              "\t final status: UNDEFINED",
-              "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0002/",
-              "\t user: trusted-service-user",
-              "20/02/26 13:00:50 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/26 13:00:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-9965e88e-6be2-4ca3-934a-42ea892b3bc0",
-              "20/02/26 13:00:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-032cd2e4-f7a8-4ed6-9990-6ee26b79c56c",
-              "20/02/26 13:00:50 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/26 13:00:50 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/26 13:00:50 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-              "\nYARN Diagnostics: "
-            ]
-          },
-          {
-            "id": 45,
-            "appId": "application_1582721346528_0003",
-            "appInfo": {
-              "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37004bf001189:8042/node/containerlogs/container_1582721346528_0003_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0003/"
-            },
-            "state": "error",
-            "log": [
-              "\t final status: UNDEFINED",
-              "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0003/",
-              "\t user: trusted-service-user",
-              "20/02/26 13:24:19 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/26 13:24:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-ef65ba0c-16bb-4f15-89c3-574fd62060c5",
-              "20/02/26 13:24:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-12b9d723-511b-4148-bb90-2f9713afdf4c",
-              "20/02/26 13:24:19 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/26 13:24:19 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/26 13:24:19 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-              "\nYARN Diagnostics: "
-            ]
-          },
-          {
-            "id": 46,
-            "appId": "application_1582721346528_0004",
-            "appInfo": {
-              "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37004bf001189:8042/node/containerlogs/container_1582721346528_0004_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0004/"
-            },
-            "state": "error",
-            "log": [
-              "\t final status: UNDEFINED",
-              "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0004/",
-              "\t user: trusted-service-user",
-              "20/02/26 13:32:27 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/26 13:32:27 INFO ShutdownHookManager: Deleting directory /tmp/spark-4e0480e3-2240-4f3d-a55e-7cefa30cf7dd",
-              "20/02/26 13:32:27 INFO ShutdownHookManager: Deleting directory /tmp/spark-aef49187-6e10-4c1c-876d-efe62cbb67f8",
-              "20/02/26 13:32:27 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/26 13:32:27 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/26 13:32:27 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-              "\nYARN Diagnostics: "
-            ]
-          },
-          {
-            "id": 47,
-            "appId": "application_1582721346528_0005",
-            "appInfo": {
-              "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37000b9a60506:8042/node/containerlogs/container_1582721346528_0005_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0005/"
-            },
-            "state": "error",
-            "log": [
-              "\t final status: UNDEFINED",
-              "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0005/",
-              "\t user: trusted-service-user",
-              "20/02/26 13:35:50 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/26 13:35:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-9ced194a-7983-4496-8693-b7da925d645f",
-              "20/02/26 13:35:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-c6a899cd-049d-4aee-8ad4-5a588e466800",
-              "20/02/26 13:35:50 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/26 13:35:50 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/26 13:35:50 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-              "\nYARN Diagnostics: "
-            ]
-          },
-          {
-            "id": 48,
-            "appId": "application_1582721346528_0006",
-            "appInfo": {
-              "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37003c1491642:8042/node/containerlogs/container_1582721346528_0006_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0006/"
-            },
-            "state": "error",
-            "log": [
-              "\t final status: UNDEFINED",
-              "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0006/",
-              "\t user: trusted-service-user",
-              "20/02/26 13:38:50 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/26 13:38:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-0433623f-ef0c-493b-93a9-9588507f53a4",
-              "20/02/26 13:38:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-0dbc3f4d-e5af-43b3-9585-0ea51ff02b6e",
-              "20/02/26 13:38:50 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/26 13:38:50 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/26 13:38:50 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-              "\nYARN Diagnostics: "
-            ]
-          },
-          {
-            "id": 49,
-            "appId": "application_1582770999899_0001",
-            "appInfo": {
-              "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef00417f90807:8042/node/containerlogs/container_1582770999899_0001_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0001/"
+              "driverLogUrl": "http://c00a6cc075214078965ddf802ed0843b000a7143814:8042/node/containerlogs/container_1608669834111_0001_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0001/",
+              "isSessionTimedOut": "false"
             },
             "state": "killed",
             "log": [
               "\t final status: UNDEFINED",
-              "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0001/",
+              "\t tracking URL: http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0001/",
               "\t user: trusted-service-user",
-              "20/02/27 02:36:51 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/27 02:36:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-b1ace93c-cd17-4893-b509-511dac50cb32",
-              "20/02/27 02:36:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-fdc5c58b-8359-481a-a6a7-7fa64112672a",
-              "20/02/27 02:36:51 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/27 02:36:51 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/27 02:36:51 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "20/12/22 20:44:15 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/22 20:44:15 INFO ShutdownHookManager: Deleting directory /tmp/spark-de168901-f868-42a3-ba7b-7c96fe616751",
+              "20/12/22 20:44:15 INFO ShutdownHookManager: Deleting directory /tmp/spark-df3d9823-0877-4e04-9ee8-a62f51a17873",
+              "20/12/22 20:44:15 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/22 20:44:15 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/22 20:44:15 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
               "\nYARN Diagnostics: "
             ]
           },
           {
-            "id": 50,
-            "appId": "application_1582770999899_0002",
+            "id": 191,
+            "appId": "application_1608669834111_0002",
             "appInfo": {
-              "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef00417f90807:8042/node/containerlogs/container_1582770999899_0002_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0002/"
+              "driverLogUrl": "http://c00a6cc075214078965ddf802ed0843b0043cd62655:8042/node/containerlogs/container_1608669834111_0002_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0002/",
+              "isSessionTimedOut": "false"
             },
-            "state": "error",
+            "state": "killed",
             "log": [
               "\t final status: UNDEFINED",
-              "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0002/",
+              "\t tracking URL: http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0002/",
               "\t user: trusted-service-user",
-              "20/02/27 02:43:32 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/27 02:43:32 INFO ShutdownHookManager: Deleting directory /tmp/spark-f86b4a4c-dcec-49f7-a18a-ab89e59feb2f",
-              "20/02/27 02:43:32 INFO ShutdownHookManager: Deleting directory /tmp/spark-f1eb01ba-c9e7-4b04-907e-8a452dd61b6f",
-              "20/02/27 02:43:32 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/27 02:43:32 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/27 02:43:32 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "20/12/22 20:51:52 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/22 20:51:52 INFO ShutdownHookManager: Deleting directory /tmp/spark-eb204652-19f5-4f44-bc5a-4efd80499af2",
+              "20/12/22 20:51:52 INFO ShutdownHookManager: Deleting directory /tmp/spark-9ca6fa14-2b2b-419e-9428-f841d5fb2aa0",
+              "20/12/22 20:51:52 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/22 20:51:52 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/22 20:51:52 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
               "\nYARN Diagnostics: "
             ]
           },
           {
-            "id": 51,
-            "appId": "application_1582770999899_0003",
+            "id": 193,
+            "appId": "application_1608669834111_0003",
             "appInfo": {
-              "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef001b6d10128:8042/node/containerlogs/container_1582770999899_0003_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0003/"
+              "driverLogUrl": "http://c00a6cc075214078965ddf802ed0843b0012b249652:8042/node/containerlogs/container_1608669834111_0003_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0003/",
+              "isSessionTimedOut": "false"
             },
-            "state": "error",
+            "state": "killed",
             "log": [
               "\t final status: UNDEFINED",
-              "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0003/",
+              "\t tracking URL: http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0003/",
               "\t user: trusted-service-user",
-              "20/02/27 02:54:55 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/27 02:54:55 INFO ShutdownHookManager: Deleting directory /tmp/spark-97f232e3-86d7-4324-92aa-2741a6220350",
-              "20/02/27 02:54:55 INFO ShutdownHookManager: Deleting directory /tmp/spark-7e75314e-ef8d-4d94-9e9e-b2202080c05d",
-              "20/02/27 02:54:55 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/27 02:54:55 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/27 02:54:55 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "20/12/22 20:59:18 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/22 20:59:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-58aeee52-83c6-4824-a65a-162d0c5e89f4",
+              "20/12/22 20:59:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-194db094-b842-4a6e-aba4-4d53d59bb5b8",
+              "20/12/22 20:59:18 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/22 20:59:18 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/22 20:59:18 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
               "\nYARN Diagnostics: "
             ]
           },
           {
-            "id": 52,
-            "appId": "application_1582770999899_0004",
+            "id": 195,
+            "appId": "application_1608747708498_0002",
             "appInfo": {
-              "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8042/node/containerlogs/container_1582770999899_0004_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0004/"
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c60044d467959:8042/node/containerlogs/container_1608747708498_0002_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0002/",
+              "isSessionTimedOut": "false"
             },
-            "state": "dead",
+            "state": "killed",
             "log": [
               "\t final status: UNDEFINED",
-              "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0004/",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0002/",
               "\t user: trusted-service-user",
-              "20/02/27 03:06:18 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/27 03:06:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-be8f21d0-dbb3-4c77-ae12-a0b65961ed74",
-              "20/02/27 03:06:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-5d5a6b27-8aba-4d48-ab7a-b652ee820922",
-              "20/02/27 03:06:18 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/27 03:06:18 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/27 03:06:18 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "20/12/23 18:27:18 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 18:27:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-444c268f-8a40-4e76-8029-56a435f3ae67",
+              "20/12/23 18:27:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-c1035a7f-2e11-440d-a498-c270ccf78784",
+              "20/12/23 18:27:18 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 18:27:18 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 18:27:18 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
               "\nYARN Diagnostics: "
             ]
           },
           {
-            "id": 53,
-            "appId": "application_1582770999899_0005",
+            "id": 197,
+            "appId": "application_1608747708498_0004",
             "appInfo": {
-              "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef00417f90807:8042/node/containerlogs/container_1582770999899_0005_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0005/"
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0004_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0004/",
+              "isSessionTimedOut": "false"
             },
-            "state": "error",
+            "state": "killed",
             "log": [
               "\t final status: UNDEFINED",
-              "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0005/",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0004/",
               "\t user: trusted-service-user",
-              "20/02/27 03:13:51 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/27 03:13:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-874f6de2-32c5-40f3-b96e-bf965a970868",
-              "20/02/27 03:13:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-a7726951-3c1c-4f91-9480-e554126696ce",
-              "20/02/27 03:13:51 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/27 03:13:51 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/27 03:13:51 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "20/12/23 18:43:19 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 18:43:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-d3700583-836e-427e-8465-94e9de41d30a",
+              "20/12/23 18:43:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-53c28901-f127-4839-9115-3bc16caf8bca",
+              "20/12/23 18:43:19 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 18:43:19 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 18:43:19 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
               "\nYARN Diagnostics: "
             ]
           },
           {
-            "id": 54,
-            "appId": "application_1582770999899_0006",
+            "id": 199,
+            "appId": "application_1608747708498_0006",
             "appInfo": {
-              "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef001b6d10128:8042/node/containerlogs/container_1582770999899_0006_01_000001/trusted-service-user",
-              "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0006/"
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0006_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0006/",
+              "isSessionTimedOut": "false"
             },
-            "state": "error",
+            "state": "killed",
             "log": [
               "\t final status: UNDEFINED",
-              "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0006/",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0006/",
               "\t user: trusted-service-user",
-              "20/02/27 03:39:05 INFO ShutdownHookManager: Shutdown hook called",
-              "20/02/27 03:39:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-2e61a99f-1f01-45b8-a8db-324cc4453ab0",
-              "20/02/27 03:39:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-68cf840b-3e84-4d7d-89cf-f17f5cb6b80e",
-              "20/02/27 03:39:05 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-              "20/02/27 03:39:05 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-              "20/02/27 03:39:05 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "20/12/23 18:56:11 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 18:56:11 INFO ShutdownHookManager: Deleting directory /tmp/spark-fd734d77-16f4-4adf-9503-e3359a42e637",
+              "20/12/23 18:56:11 INFO ShutdownHookManager: Deleting directory /tmp/spark-37d2ee03-3d3e-4d66-a388-c79d82be9a43",
+              "20/12/23 18:56:11 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 18:56:11 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 18:56:11 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "id": 201,
+            "appId": "application_1608747708498_0008",
+            "appInfo": {
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0008_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0008/",
+              "isSessionTimedOut": "false"
+            },
+            "state": "killed",
+            "log": [
+              "\t final status: UNDEFINED",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0008/",
+              "\t user: trusted-service-user",
+              "20/12/23 19:09:50 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 19:09:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-0e0317d9-7c13-4ff5-b9c1-3029dbd527ee",
+              "20/12/23 19:09:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-54c77bfb-8081-43fe-a0fa-8b1f71da5bff",
+              "20/12/23 19:09:50 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 19:09:50 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 19:09:50 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "id": 203,
+            "appId": "application_1608747708498_0010",
+            "appInfo": {
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600027257673:8042/node/containerlogs/container_1608747708498_0010_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0010/",
+              "isSessionTimedOut": "false"
+            },
+            "state": "killed",
+            "log": [
+              "\t final status: UNDEFINED",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0010/",
+              "\t user: trusted-service-user",
+              "20/12/23 19:23:00 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 19:23:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-cdbe03fc-eb04-4c27-b83e-3c4ddec13f8f",
+              "20/12/23 19:23:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-c78effb8-1287-4505-b963-ac658f53d093",
+              "20/12/23 19:23:00 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 19:23:00 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 19:23:00 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "id": 205,
+            "appId": "application_1608747708498_0012",
+            "appInfo": {
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0012_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0012/",
+              "isSessionTimedOut": "false"
+            },
+            "state": "killed",
+            "log": [
+              "\t final status: UNDEFINED",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0012/",
+              "\t user: trusted-service-user",
+              "20/12/23 19:35:43 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 19:35:43 INFO ShutdownHookManager: Deleting directory /tmp/spark-5f3954eb-dc1f-4f80-b356-d1abca34bb41",
+              "20/12/23 19:35:43 INFO ShutdownHookManager: Deleting directory /tmp/spark-4f38763f-78fd-49c7-88b8-a920d7dfe9c6",
+              "20/12/23 19:35:43 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 19:35:43 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 19:35:43 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "id": 208,
+            "appId": "application_1608747708498_0015",
+            "appInfo": {
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0015_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0015/",
+              "isSessionTimedOut": "false"
+            },
+            "state": "killed",
+            "log": [
+              "\t final status: UNDEFINED",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0015/",
+              "\t user: trusted-service-user",
+              "20/12/23 19:58:24 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 19:58:24 INFO ShutdownHookManager: Deleting directory /tmp/spark-81c1cf49-3385-465a-ae5c-ff98b6c317f8",
+              "20/12/23 19:58:24 INFO ShutdownHookManager: Deleting directory /tmp/spark-3188d30d-6ef2-481b-8073-86b8e18a87ed",
+              "20/12/23 19:58:24 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 19:58:24 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 19:58:24 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "id": 209,
+            "appId": "application_1608747708498_0016",
+            "appInfo": {
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600027257673:8042/node/containerlogs/container_1608747708498_0016_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0016/",
+              "isSessionTimedOut": "false"
+            },
+            "state": "killed",
+            "log": [
+              "\t final status: UNDEFINED",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0016/",
+              "\t user: trusted-service-user",
+              "20/12/23 19:59:05 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 19:59:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-d2d9bb33-73b8-406b-aeee-9691a95cbd33",
+              "20/12/23 19:59:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-d85a4804-6f39-4f2b-836b-091492e6fa3b",
+              "20/12/23 19:59:05 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 19:59:05 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 19:59:05 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "id": 212,
+            "appId": "application_1608747708498_0019",
+            "appInfo": {
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0019_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0019/",
+              "isSessionTimedOut": "false"
+            },
+            "state": "killed",
+            "log": [
+              "\t final status: UNDEFINED",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0019/",
+              "\t user: trusted-service-user",
+              "20/12/23 20:22:46 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 20:22:46 INFO ShutdownHookManager: Deleting directory /tmp/spark-9dda2a5a-2f8d-4a91-a0b8-e489763c05a0",
+              "20/12/23 20:22:46 INFO ShutdownHookManager: Deleting directory /tmp/spark-39291258-8e8e-40eb-b50b-8c0d0f7fc0a9",
+              "20/12/23 20:22:46 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 20:22:46 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 20:22:46 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "id": 213,
+            "appId": "application_1608747708498_0020",
+            "appInfo": {
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600027257673:8042/node/containerlogs/container_1608747708498_0020_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0020/",
+              "isSessionTimedOut": "false"
+            },
+            "state": "killed",
+            "log": [
+              "\t final status: UNDEFINED",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0020/",
+              "\t user: trusted-service-user",
+              "20/12/23 20:23:28 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 20:23:28 INFO ShutdownHookManager: Deleting directory /tmp/spark-aee65abf-b14e-4bf4-a240-abad78ff547b",
+              "20/12/23 20:23:28 INFO ShutdownHookManager: Deleting directory /tmp/spark-8d5d6136-d75f-46e9-b198-fabc825fb895",
+              "20/12/23 20:23:28 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 20:23:28 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 20:23:28 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "id": 216,
+            "appId": "application_1608747708498_0023",
+            "appInfo": {
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0023_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0023/",
+              "isSessionTimedOut": "false"
+            },
+            "state": "killed",
+            "log": [
+              "\t final status: UNDEFINED",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0023/",
+              "\t user: trusted-service-user",
+              "20/12/23 20:42:51 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 20:42:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-e58e9b9d-0faa-4b54-986f-1db24f4742e9",
+              "20/12/23 20:42:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-896d9075-febe-4483-9b7b-5d6b315d753b",
+              "20/12/23 20:42:51 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 20:42:51 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 20:42:51 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "id": 217,
+            "appId": "application_1608747708498_0024",
+            "appInfo": {
+              "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0024_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0024/",
+              "isSessionTimedOut": "false"
+            },
+            "state": "killed",
+            "log": [
+              "\t final status: UNDEFINED",
+              "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0024/",
+              "\t user: trusted-service-user",
+              "20/12/23 20:43:31 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/23 20:43:31 INFO ShutdownHookManager: Deleting directory /tmp/spark-86742e43-3ef1-43c8-91c2-77e41cf2fedd",
+              "20/12/23 20:43:31 INFO ShutdownHookManager: Deleting directory /tmp/spark-2262aac2-d5de-4917-a1d7-d58a980dbcdc",
+              "20/12/23 20:43:31 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/23 20:43:31 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/23 20:43:31 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "id": 220,
+            "appId": "application_1609347533689_0003",
+            "appInfo": {
+              "driverLogUrl": "http://ff9d9706f86b4e46844285427033bf690012a643066:8042/node/containerlogs/container_1609347533689_0003_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://ff9d9706f86b4e46844285427033bf6900360a84551:8088/proxy/application_1609347533689_0003/",
+              "isSessionTimedOut": "false"
+            },
+            "state": "killed",
+            "log": [
+              "\t final status: UNDEFINED",
+              "\t tracking URL: http://ff9d9706f86b4e46844285427033bf6900360a84551:8088/proxy/application_1609347533689_0003/",
+              "\t user: trusted-service-user",
+              "20/12/30 17:09:33 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/30 17:09:33 INFO ShutdownHookManager: Deleting directory /tmp/spark-255dfc9f-c5ec-49ab-ad6c-8a0dc8bc95f1",
+              "20/12/30 17:09:33 INFO ShutdownHookManager: Deleting directory /tmp/spark-52419227-6a12-41fa-9d59-7a8017bd2a6a",
+              "20/12/30 17:09:33 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/30 17:09:33 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/30 17:09:33 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+              "\nYARN Diagnostics: "
+            ]
+          },
+          {
+            "id": 221,
+            "appId": "application_1609347533689_0004",
+            "appInfo": {
+              "driverLogUrl": "http://ff9d9706f86b4e46844285427033bf6900360a84551:8042/node/containerlogs/container_1609347533689_0004_01_000001/trusted-service-user",
+              "sparkUiUrl": "http://ff9d9706f86b4e46844285427033bf6900360a84551:8088/proxy/application_1609347533689_0004/",
+              "isSessionTimedOut": "false"
+            },
+            "state": "killed",
+            "log": [
+              "\t final status: UNDEFINED",
+              "\t tracking URL: http://ff9d9706f86b4e46844285427033bf6900360a84551:8088/proxy/application_1609347533689_0004/",
+              "\t user: trusted-service-user",
+              "20/12/30 17:10:28 INFO ShutdownHookManager: Shutdown hook called",
+              "20/12/30 17:10:28 INFO ShutdownHookManager: Deleting directory /tmp/spark-ed4f798a-6b8d-4c7f-9655-0db5464a9fc6",
+              "20/12/30 17:10:28 INFO ShutdownHookManager: Deleting directory /tmp/spark-a80e154e-03f2-4d4b-b1f7-823078696dfe",
+              "20/12/30 17:10:28 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+              "20/12/30 17:10:28 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+              "20/12/30 17:10:28 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
               "\nYARN Diagnostics: "
             ]
           }
@@ -460,1329 +481,1369 @@
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/2",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/183",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9bdd5f9ee8f25f4c8300e5bbb6b3c68b-ba1975f00f5fbf40-00",
+        "traceparent": "00-7a1305060e279f4b8e010a2c2fdd3d1c-1a5eb11506c7594a-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
         ],
-        "x-ms-client-request-id": "260f1fd56d816115e3a0cb338aa4a696",
+        "x-ms-client-request-id": "cb0dfe70c5c6f68b7ec8bce163499629",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:39 GMT",
+        "Date": "Wed, 20 Jan 2021 21:26:30 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "3eda6ed4-78c2-4309-b1f4-f2d5a3dcef75",
+        "x-ms-activity-id": "f6f806d5-8c73-4e16-a956-5e01dae48a9d",
         "x-ms-client-request-id": [
-          "260f1fd56d816115e3a0cb338aa4a696",
-          "260f1fd56d816115e3a0cb338aa4a696"
+          "cb0dfe70c5c6f68b7ec8bce163499629",
+          "cb0dfe70c5c6f68b7ec8bce163499629"
         ],
-        "x-ms-job-cluster": "http://171.1.155.13:8998/",
-        "x-ms-job-clusterrequested-on": "12/13/2019 8:29:10 AM \u002B00:00",
-        "x-ms-job-ended-on": "12/13/2019 9:12:57 AM \u002B00:00",
-        "x-ms-job-internal-id": "2",
-        "x-ms-job-livysubmission-on": "12/13/2019 8:31:43 AM \u002B00:00",
-        "x-ms-job-queued-on": "12/13/2019 8:31:00 AM \u002B00:00",
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59428/",
+        "x-ms-job-clusterrequested-on": "12/21/2020 9:36:25 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/21/2020 9:38:43 PM \u002B00:00",
+        "x-ms-job-internal-id": "183",
+        "x-ms-job-livysubmission-on": "12/21/2020 9:37:52 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/21/2020 9:37:51 PM \u002B00:00",
         "x-ms-job-result": "Cancelled",
-        "x-ms-job-scheduled-on": "12/13/2019 8:29:10 AM \u002B00:00",
+        "x-ms-job-scheduled-on": "12/21/2020 9:36:24 PM \u002B00:00",
         "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "12/13/2019 8:29:09 AM \u002B00:00",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/21/2020 9:36:22 PM \u002B00:00",
         "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "a8fe3c79-4733-4b40-ad95-8c9fef0deb52",
-        "x-ms-response-time-ms": "16"
+        "x-ms-request-id": "cf9c791b-6944-4b09-9edd-3135cb523b5e",
+        "x-ms-response-time-ms": "23"
       },
       "ResponseBody": {
-        "id": 2,
-        "appId": "application_1576225874089_0001",
+        "id": 183,
+        "appId": "application_1608586656965_0001",
         "appInfo": {
-          "driverLogUrl": "http://008b79baa75e493ba50798a50e751b9d03116310046:8042/node/containerlogs/container_1576225874089_0001_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://008b79baa75e493ba50798a50e751b9d04071d71770:8088/proxy/application_1576225874089_0001/"
+          "driverLogUrl": "http://500951c00f5544ccad5f2894b3d22edb00117434489:8042/node/containerlogs/container_1608586656965_0001_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0001/",
+          "isSessionTimedOut": "false"
         },
         "state": "killed",
         "log": [
           "\t final status: UNDEFINED",
-          "\t tracking URL: http://008b79baa75e493ba50798a50e751b9d04071d71770:8088/proxy/application_1576225874089_0001/",
+          "\t tracking URL: http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0001/",
           "\t user: trusted-service-user",
-          "19/12/13 08:31:59 INFO ShutdownHookManager: Shutdown hook called",
-          "19/12/13 08:31:59 INFO ShutdownHookManager: Deleting directory /tmp/spark-13f31a03-7633-4467-bf81-3fe3309fb856",
-          "19/12/13 08:31:59 INFO ShutdownHookManager: Deleting directory /tmp/spark-40fe5680-835f-462d-bcbb-c8fffa1bbe6f",
-          "19/12/13 08:31:59 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "19/12/13 08:31:59 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "19/12/13 08:31:59 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "20/12/21 21:38:02 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/21 21:38:02 INFO ShutdownHookManager: Deleting directory /tmp/spark-5454be09-6939-4f0f-b7ac-6d70de72e567",
+          "20/12/21 21:38:02 INFO ShutdownHookManager: Deleting directory /tmp/spark-1b6dae59-f5c0-4151-a6ca-5fa197fbb0c4",
+          "20/12/21 21:38:02 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/21 21:38:02 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/21 21:38:02 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
           "\nYARN Diagnostics: "
         ]
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/6",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/185",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-e6068c5ed65dca4a882cf4f4e9d49a8e-b517a03122d4994b-00",
+        "traceparent": "00-0e49b91d4d2cfe49a9247d07ffd5ec58-70f6bb7b2631ca40-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
         ],
-        "x-ms-client-request-id": "5acf011e4ad7f676d28d58c6633f49f2",
+        "x-ms-client-request-id": "fb121cea62b84b579a40dd715f994a38",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:39 GMT",
+        "Date": "Wed, 20 Jan 2021 21:26:30 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "e8505e78-26b3-46b0-8768-a5be1d320bed",
+        "x-ms-activity-id": "3706be69-0b34-4680-9046-746a531c2c56",
         "x-ms-client-request-id": [
-          "5acf011e4ad7f676d28d58c6633f49f2",
-          "5acf011e4ad7f676d28d58c6633f49f2"
+          "fb121cea62b84b579a40dd715f994a38",
+          "fb121cea62b84b579a40dd715f994a38"
         ],
-        "x-ms-job-cluster": "http://171.4.176.47:8998/",
-        "x-ms-job-clusterrequested-on": "12/25/2019 8:07:26 AM \u002B00:00",
-        "x-ms-job-ended-on": "12/25/2019 8:40:15 AM \u002B00:00",
-        "x-ms-job-internal-id": "6",
-        "x-ms-job-livysubmission-on": "12/25/2019 8:09:18 AM \u002B00:00",
-        "x-ms-job-queued-on": "12/25/2019 8:09:17 AM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "12/25/2019 8:07:26 AM \u002B00:00",
-        "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "12/25/2019 8:07:25 AM \u002B00:00",
-        "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "f6ba7ec7-2a5b-4c69-a0a1-e5056adc42e8",
-        "x-ms-response-time-ms": "14"
-      },
-      "ResponseBody": {
-        "id": 6,
-        "appId": "application_1577261347028_0001",
-        "appInfo": {
-          "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad039fdf58075:8042/node/containerlogs/container_1577261347028_0001_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0001/"
-        },
-        "state": "dead",
-        "log": [
-          "\t final status: UNDEFINED",
-          "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0001/",
-          "\t user: trusted-service-user",
-          "19/12/25 08:09:25 INFO ShutdownHookManager: Shutdown hook called",
-          "19/12/25 08:09:25 INFO ShutdownHookManager: Deleting directory /tmp/spark-3f94f2c6-cc2f-4497-833b-3c40c96cfb2e",
-          "19/12/25 08:09:25 INFO ShutdownHookManager: Deleting directory /tmp/spark-4070576f-39e7-4003-b73e-878a2e176454",
-          "19/12/25 08:09:25 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "19/12/25 08:09:25 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "19/12/25 08:09:25 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-          "\nYARN Diagnostics: "
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/7",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-2bdef3aa78e56f45862c099ed4d26f80-9002dce0974d3e47-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "d7e01a4efaa04a362c70d7c8174bb036",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:39 GMT",
-        "Server": [
-          "Kestrel",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "1dab8725-2554-4c8b-ad36-68114650a6f1",
-        "x-ms-client-request-id": [
-          "d7e01a4efaa04a362c70d7c8174bb036",
-          "d7e01a4efaa04a362c70d7c8174bb036"
-        ],
-        "x-ms-job-cluster": "http://171.4.176.47:8998/",
-        "x-ms-job-clusterrequested-on": "12/25/2019 8:16:41 AM \u002B00:00",
-        "x-ms-job-ended-on": "12/25/2019 8:49:30 AM \u002B00:00",
-        "x-ms-job-internal-id": "7",
-        "x-ms-job-livysubmission-on": "12/25/2019 8:16:43 AM \u002B00:00",
-        "x-ms-job-queued-on": "12/25/2019 8:16:43 AM \u002B00:00",
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59428/",
+        "x-ms-job-clusterrequested-on": "12/21/2020 9:46:00 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/21/2020 9:46:39 PM \u002B00:00",
+        "x-ms-job-internal-id": "185",
+        "x-ms-job-livysubmission-on": "12/21/2020 9:46:02 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/21/2020 9:46:02 PM \u002B00:00",
         "x-ms-job-result": "Cancelled",
-        "x-ms-job-scheduled-on": "12/25/2019 8:16:40 AM \u002B00:00",
+        "x-ms-job-scheduled-on": "12/21/2020 9:46:00 PM \u002B00:00",
         "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "12/25/2019 8:16:39 AM \u002B00:00",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/21/2020 9:45:57 PM \u002B00:00",
         "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "46bb1a92-63c7-47ef-9c75-5d6487ae0f32",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "2d2ef3d7-a12e-4d5a-8df6-a0257ec45c79",
+        "x-ms-response-time-ms": "27"
       },
       "ResponseBody": {
-        "id": 7,
-        "appId": "application_1577261347028_0002",
+        "id": 185,
+        "appId": "application_1608586656965_0002",
         "appInfo": {
-          "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad00453758611:8042/node/containerlogs/container_1577261347028_0002_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0002/"
+          "driverLogUrl": "http://500951c00f5544ccad5f2894b3d22edb002b1f03295:8042/node/containerlogs/container_1608586656965_0002_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0002/",
+          "isSessionTimedOut": "false"
         },
         "state": "killed",
         "log": [
           "\t final status: UNDEFINED",
-          "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0002/",
+          "\t tracking URL: http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0002/",
           "\t user: trusted-service-user",
-          "19/12/25 08:16:47 INFO ShutdownHookManager: Shutdown hook called",
-          "19/12/25 08:16:47 INFO ShutdownHookManager: Deleting directory /tmp/spark-5829aff6-088b-4496-afc5-147214d18c51",
-          "19/12/25 08:16:47 INFO ShutdownHookManager: Deleting directory /tmp/spark-e4f0d452-bbb4-4719-b2d1-fe34dc28d4f9",
-          "19/12/25 08:16:47 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "19/12/25 08:16:47 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "19/12/25 08:16:47 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "20/12/21 21:46:07 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/21 21:46:07 INFO ShutdownHookManager: Deleting directory /tmp/spark-c5872a4a-162f-47d4-9bba-8ad9de06ea7f",
+          "20/12/21 21:46:07 INFO ShutdownHookManager: Deleting directory /tmp/spark-bc1763ca-fdc1-4c52-9837-79dd8eb0ca8c",
+          "20/12/21 21:46:07 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/21 21:46:07 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/21 21:46:07 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
           "\nYARN Diagnostics: "
         ]
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/8",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/187",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-bfecfa745467cf4f821ee2ffd2a46531-144b4b9827a2074e-00",
+        "traceparent": "00-c8b77539ebf637429e00a141b9e9ba3a-32f90fe78daba14b-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
         ],
-        "x-ms-client-request-id": "fcdd5c15e39f8a2fa91953f3154ffea4",
+        "x-ms-client-request-id": "ff9547e58ef4b8cf1810af18dbdf4d92",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:39 GMT",
+        "Date": "Wed, 20 Jan 2021 21:26:30 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "c6fa6d8c-a9a1-4c92-95ca-96cf2d20e494",
+        "x-ms-activity-id": "3e10f982-24ce-49b8-bbbf-8000e997b843",
         "x-ms-client-request-id": [
-          "fcdd5c15e39f8a2fa91953f3154ffea4",
-          "fcdd5c15e39f8a2fa91953f3154ffea4"
+          "ff9547e58ef4b8cf1810af18dbdf4d92",
+          "ff9547e58ef4b8cf1810af18dbdf4d92"
         ],
-        "x-ms-job-cluster": "http://171.4.176.47:8998/",
-        "x-ms-job-clusterrequested-on": "12/25/2019 8:29:42 AM \u002B00:00",
-        "x-ms-job-ended-on": "12/25/2019 9:09:15 AM \u002B00:00",
-        "x-ms-job-internal-id": "8",
-        "x-ms-job-livysubmission-on": "12/25/2019 8:29:45 AM \u002B00:00",
-        "x-ms-job-queued-on": "12/25/2019 8:29:44 AM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "12/25/2019 8:29:42 AM \u002B00:00",
-        "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "12/25/2019 8:29:41 AM \u002B00:00",
-        "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "1583ef73-fa38-4478-bca8-861c22c769be",
-        "x-ms-response-time-ms": "37"
-      },
-      "ResponseBody": {
-        "id": 8,
-        "appId": "application_1577261347028_0003",
-        "appInfo": {
-          "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad032f0488094:8042/node/containerlogs/container_1577261347028_0003_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0003/"
-        },
-        "state": "error",
-        "log": [
-          "\t final status: UNDEFINED",
-          "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0003/",
-          "\t user: trusted-service-user",
-          "19/12/25 08:29:49 INFO ShutdownHookManager: Shutdown hook called",
-          "19/12/25 08:29:49 INFO ShutdownHookManager: Deleting directory /tmp/spark-de484530-d317-4435-8145-c82ade1aebdb",
-          "19/12/25 08:29:49 INFO ShutdownHookManager: Deleting directory /tmp/spark-2d468982-7533-4d5a-a601-73d568abc9b1",
-          "19/12/25 08:29:49 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "19/12/25 08:29:49 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "19/12/25 08:29:49 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-          "\nYARN Diagnostics: "
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/9",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-1bfddbec4bef5346aa24ecd5f96ee66c-2d9bd510daa23f4b-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "70e4d856cec423f5cb842d6672aede87",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:39 GMT",
-        "Server": [
-          "Kestrel",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "1c97df94-73bb-4ad4-91f4-098540b49f99",
-        "x-ms-client-request-id": [
-          "70e4d856cec423f5cb842d6672aede87",
-          "70e4d856cec423f5cb842d6672aede87"
-        ],
-        "x-ms-job-cluster": "http://171.4.176.47:8998/",
-        "x-ms-job-clusterrequested-on": "12/25/2019 9:11:32 AM \u002B00:00",
-        "x-ms-job-ended-on": "12/25/2019 10:05:23 AM \u002B00:00",
-        "x-ms-job-internal-id": "9",
-        "x-ms-job-livysubmission-on": "12/25/2019 9:11:35 AM \u002B00:00",
-        "x-ms-job-queued-on": "12/25/2019 9:11:35 AM \u002B00:00",
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59428/",
+        "x-ms-job-clusterrequested-on": "12/21/2020 9:52:53 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/21/2020 9:53:31 PM \u002B00:00",
+        "x-ms-job-internal-id": "187",
+        "x-ms-job-livysubmission-on": "12/21/2020 9:52:55 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/21/2020 9:52:55 PM \u002B00:00",
         "x-ms-job-result": "Cancelled",
-        "x-ms-job-scheduled-on": "12/25/2019 9:11:31 AM \u002B00:00",
+        "x-ms-job-scheduled-on": "12/21/2020 9:52:53 PM \u002B00:00",
         "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "12/25/2019 9:11:30 AM \u002B00:00",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/21/2020 9:52:51 PM \u002B00:00",
         "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "7cdb4e3f-c7d9-4e5e-b5e5-05967484920c",
-        "x-ms-response-time-ms": "15"
+        "x-ms-request-id": "94e93d0f-7324-4cbd-88f9-851cef8b9b16",
+        "x-ms-response-time-ms": "40"
       },
       "ResponseBody": {
-        "id": 9,
-        "appId": "application_1577261347028_0004",
+        "id": 187,
+        "appId": "application_1608586656965_0003",
         "appInfo": {
-          "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad017a7497707:8042/node/containerlogs/container_1577261347028_0004_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0004/"
+          "driverLogUrl": "http://500951c00f5544ccad5f2894b3d22edb002b1f03295:8042/node/containerlogs/container_1608586656965_0003_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0003/",
+          "isSessionTimedOut": "false"
         },
         "state": "killed",
         "log": [
           "\t final status: UNDEFINED",
-          "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0004/",
+          "\t tracking URL: http://500951c00f5544ccad5f2894b3d22edb00117434489:8088/proxy/application_1608586656965_0003/",
           "\t user: trusted-service-user",
-          "19/12/25 09:11:39 INFO ShutdownHookManager: Shutdown hook called",
-          "19/12/25 09:11:39 INFO ShutdownHookManager: Deleting directory /tmp/spark-298699c6-1a19-43f4-b0e7-77ff38765146",
-          "19/12/25 09:11:39 INFO ShutdownHookManager: Deleting directory /tmp/spark-bdf130b2-b3c9-4ff0-9205-d8e9bbc6489d",
-          "19/12/25 09:11:39 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "19/12/25 09:11:39 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "19/12/25 09:11:39 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "20/12/21 21:53:00 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/21 21:53:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-a3f0e885-4a53-4895-9541-9e5ae84f2572",
+          "20/12/21 21:53:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-d052ec1d-099f-4ccd-8523-e4e2147c7ba6",
+          "20/12/21 21:53:00 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/21 21:53:00 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/21 21:53:00 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
           "\nYARN Diagnostics: "
         ]
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/10",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/189",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-09f19d49da0cb34889df1ff774c5029d-c2163ad93328a54c-00",
+        "traceparent": "00-ff54e89b6070584d929128da9c8f730c-a7fd856a89023543-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
         ],
-        "x-ms-client-request-id": "06b022dd4d626a53ea552e86a74235dd",
+        "x-ms-client-request-id": "40bcb88ed0cf0daea6c23086e71a96e4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:39 GMT",
+        "Date": "Wed, 20 Jan 2021 21:26:30 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "850d9e98-9305-4ada-911c-28f23166498b",
+        "x-ms-activity-id": "9b3417c6-aa7d-43d0-9d03-533627e7c851",
         "x-ms-client-request-id": [
-          "06b022dd4d626a53ea552e86a74235dd",
-          "06b022dd4d626a53ea552e86a74235dd"
+          "40bcb88ed0cf0daea6c23086e71a96e4",
+          "40bcb88ed0cf0daea6c23086e71a96e4"
         ],
-        "x-ms-job-cluster": "http://171.4.176.47:8998/",
-        "x-ms-job-clusterrequested-on": "12/25/2019 10:06:20 AM \u002B00:00",
-        "x-ms-job-ended-on": "12/25/2019 10:37:15 AM \u002B00:00",
-        "x-ms-job-internal-id": "10",
-        "x-ms-job-livysubmission-on": "12/25/2019 10:06:22 AM \u002B00:00",
-        "x-ms-job-queued-on": "12/25/2019 10:06:22 AM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "12/25/2019 10:06:20 AM \u002B00:00",
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59427/",
+        "x-ms-job-clusterrequested-on": "12/22/2020 8:42:22 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/22/2020 8:45:03 PM \u002B00:00",
+        "x-ms-job-internal-id": "189",
+        "x-ms-job-livysubmission-on": "12/22/2020 8:44:06 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/22/2020 8:44:04 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/22/2020 8:42:21 PM \u002B00:00",
         "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "12/25/2019 10:06:18 AM \u002B00:00",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/22/2020 8:42:19 PM \u002B00:00",
         "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "ea205d31-b71f-482c-826a-e6ccffbe2da2",
-        "x-ms-response-time-ms": "43"
+        "x-ms-request-id": "59c3c117-d253-47bb-adeb-2574b1f06738",
+        "x-ms-response-time-ms": "25"
       },
       "ResponseBody": {
-        "id": 10,
-        "appId": "application_1577261347028_0005",
+        "id": 189,
+        "appId": "application_1608669834111_0001",
         "appInfo": {
-          "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad017a7497707:8042/node/containerlogs/container_1577261347028_0005_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0005/"
+          "driverLogUrl": "http://c00a6cc075214078965ddf802ed0843b000a7143814:8042/node/containerlogs/container_1608669834111_0001_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0001/",
+          "isSessionTimedOut": "false"
         },
-        "state": "error",
+        "state": "killed",
         "log": [
           "\t final status: UNDEFINED",
-          "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0005/",
+          "\t tracking URL: http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0001/",
           "\t user: trusted-service-user",
-          "19/12/25 10:06:26 INFO ShutdownHookManager: Shutdown hook called",
-          "19/12/25 10:06:26 INFO ShutdownHookManager: Deleting directory /tmp/spark-56d5b827-6412-4628-a521-a8caa8ad5c3e",
-          "19/12/25 10:06:26 INFO ShutdownHookManager: Deleting directory /tmp/spark-df53ebea-f06c-486a-a903-db2f7806843d",
-          "19/12/25 10:06:27 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "19/12/25 10:06:27 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "19/12/25 10:06:27 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "20/12/22 20:44:15 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/22 20:44:15 INFO ShutdownHookManager: Deleting directory /tmp/spark-de168901-f868-42a3-ba7b-7c96fe616751",
+          "20/12/22 20:44:15 INFO ShutdownHookManager: Deleting directory /tmp/spark-df3d9823-0877-4e04-9ee8-a62f51a17873",
+          "20/12/22 20:44:15 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/22 20:44:15 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/22 20:44:15 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
           "\nYARN Diagnostics: "
         ]
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/11",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/191",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-aa0c527b642c504183b18e7304a1d87c-5da14de8bccba547-00",
+        "traceparent": "00-41c6e7d588b269409f6dcba5d6d25f39-2429a41d8255c441-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
         ],
-        "x-ms-client-request-id": "3f7133724066477166b9301bb6c818fb",
+        "x-ms-client-request-id": "1bfb837d97b45b354c59e3a7b23f6fbb",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:39 GMT",
+        "Date": "Wed, 20 Jan 2021 21:26:30 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "08f1f27e-261c-410f-a829-102e70bb8f6f",
+        "x-ms-activity-id": "aa10351c-0f35-4520-beaa-b13fef150b36",
         "x-ms-client-request-id": [
-          "3f7133724066477166b9301bb6c818fb",
-          "3f7133724066477166b9301bb6c818fb"
+          "1bfb837d97b45b354c59e3a7b23f6fbb",
+          "1bfb837d97b45b354c59e3a7b23f6fbb"
         ],
-        "x-ms-job-cluster": "http://171.4.176.47:8998/",
-        "x-ms-job-clusterrequested-on": "12/25/2019 10:06:58 AM \u002B00:00",
-        "x-ms-job-ended-on": "12/25/2019 11:10:19 AM \u002B00:00",
-        "x-ms-job-internal-id": "11",
-        "x-ms-job-livysubmission-on": "12/25/2019 10:07:01 AM \u002B00:00",
-        "x-ms-job-queued-on": "12/25/2019 10:07:01 AM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "12/25/2019 10:06:58 AM \u002B00:00",
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59427/",
+        "x-ms-job-clusterrequested-on": "12/22/2020 8:51:45 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/22/2020 8:52:30 PM \u002B00:00",
+        "x-ms-job-internal-id": "191",
+        "x-ms-job-livysubmission-on": "12/22/2020 8:51:47 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/22/2020 8:51:47 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/22/2020 8:51:44 PM \u002B00:00",
         "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "12/25/2019 10:06:57 AM \u002B00:00",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/22/2020 8:51:42 PM \u002B00:00",
         "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "ed75d322-b18e-438a-ba84-bf6ee951a75b",
-        "x-ms-response-time-ms": "29"
+        "x-ms-request-id": "7fb619c0-ca4c-4631-8681-301f9d28c02c",
+        "x-ms-response-time-ms": "24"
       },
       "ResponseBody": {
-        "id": 11,
-        "appId": "application_1577261347028_0006",
+        "id": 191,
+        "appId": "application_1608669834111_0002",
         "appInfo": {
-          "driverLogUrl": "http://0756e27931b1442da8fded6fb5a384ad0358bf44418:8042/node/containerlogs/container_1577261347028_0006_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0006/"
+          "driverLogUrl": "http://c00a6cc075214078965ddf802ed0843b0043cd62655:8042/node/containerlogs/container_1608669834111_0002_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0002/",
+          "isSessionTimedOut": "false"
         },
-        "state": "error",
+        "state": "killed",
         "log": [
           "\t final status: UNDEFINED",
-          "\t tracking URL: http://0756e27931b1442da8fded6fb5a384ad022bdb15619:8088/proxy/application_1577261347028_0006/",
+          "\t tracking URL: http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0002/",
           "\t user: trusted-service-user",
-          "19/12/25 10:07:05 INFO ShutdownHookManager: Shutdown hook called",
-          "19/12/25 10:07:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-57dae334-2360-4782-9ed5-4dace6dc8e1f",
-          "19/12/25 10:07:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-c5c5be5d-c63d-4cac-8d7a-dea35ce2278f",
-          "19/12/25 10:07:05 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "19/12/25 10:07:05 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "19/12/25 10:07:05 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "20/12/22 20:51:52 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/22 20:51:52 INFO ShutdownHookManager: Deleting directory /tmp/spark-eb204652-19f5-4f44-bc5a-4efd80499af2",
+          "20/12/22 20:51:52 INFO ShutdownHookManager: Deleting directory /tmp/spark-9ca6fa14-2b2b-419e-9428-f841d5fb2aa0",
+          "20/12/22 20:51:52 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/22 20:51:52 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/22 20:51:52 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
           "\nYARN Diagnostics: "
         ]
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/34",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/193",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f8f03085abd0294d80b0b9dee194a722-17c26fa3521c934b-00",
+        "traceparent": "00-9147da50b2408c4da39a494417f296df-b188320393f0434d-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
         ],
-        "x-ms-client-request-id": "f216cb3bf79e0841847a856ea06f7c88",
+        "x-ms-client-request-id": "a7e34bf20adc1469998758325e49d0fe",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:39 GMT",
+        "Date": "Wed, 20 Jan 2021 21:26:30 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "c88d1145-435f-4f6c-9990-953f9fe2544f",
+        "x-ms-activity-id": "0377614b-130c-46b1-a3f4-6e9224b62c6c",
         "x-ms-client-request-id": [
-          "f216cb3bf79e0841847a856ea06f7c88",
-          "f216cb3bf79e0841847a856ea06f7c88"
+          "a7e34bf20adc1469998758325e49d0fe",
+          "a7e34bf20adc1469998758325e49d0fe"
         ],
-        "x-ms-job-cluster": "http://171.1.144.19:8998/",
-        "x-ms-job-clusterrequested-on": "2/19/2020 3:54:29 AM \u002B00:00",
-        "x-ms-job-ended-on": "2/19/2020 4:20:51 AM \u002B00:00",
-        "x-ms-job-internal-id": "34",
-        "x-ms-job-livysubmission-on": "2/19/2020 3:54:33 AM \u002B00:00",
-        "x-ms-job-queued-on": "2/19/2020 3:54:32 AM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/19/2020 3:54:29 AM \u002B00:00",
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59427/",
+        "x-ms-job-clusterrequested-on": "12/22/2020 8:59:10 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/22/2020 8:59:49 PM \u002B00:00",
+        "x-ms-job-internal-id": "193",
+        "x-ms-job-livysubmission-on": "12/22/2020 8:59:12 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/22/2020 8:59:12 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/22/2020 8:59:10 PM \u002B00:00",
         "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/19/2020 3:54:27 AM \u002B00:00",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/22/2020 8:59:08 PM \u002B00:00",
         "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "446acf75-e2eb-4cc1-8258-e2e27376c436",
-        "x-ms-response-time-ms": "44"
+        "x-ms-request-id": "730f4f3f-fc5d-44c1-8352-9355fa2f0b12",
+        "x-ms-response-time-ms": "25"
       },
       "ResponseBody": {
-        "id": 34,
-        "appId": "application_1582083768945_0003",
+        "id": 193,
+        "appId": "application_1608669834111_0003",
         "appInfo": {
-          "driverLogUrl": "http://3024a670da1f4cc38f1f3560864f4d8604113d45195:8042/node/containerlogs/container_1582083768945_0003_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://3024a670da1f4cc38f1f3560864f4d8601071373522:8088/proxy/application_1582083768945_0003/"
+          "driverLogUrl": "http://c00a6cc075214078965ddf802ed0843b0012b249652:8042/node/containerlogs/container_1608669834111_0003_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0003/",
+          "isSessionTimedOut": "false"
         },
-        "state": "error",
+        "state": "killed",
         "log": [
           "\t final status: UNDEFINED",
-          "\t tracking URL: http://3024a670da1f4cc38f1f3560864f4d8601071373522:8088/proxy/application_1582083768945_0003/",
+          "\t tracking URL: http://c00a6cc075214078965ddf802ed0843b0012b249652:8088/proxy/application_1608669834111_0003/",
           "\t user: trusted-service-user",
-          "20/02/19 03:54:36 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/19 03:54:36 INFO ShutdownHookManager: Deleting directory /tmp/spark-82194c9f-17d1-4b83-a6df-112f812edfda",
-          "20/02/19 03:54:36 INFO ShutdownHookManager: Deleting directory /tmp/spark-e92ea88c-8603-4ae7-84ca-b40198ebae2e",
-          "20/02/19 03:54:36 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/19 03:54:36 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/19 03:54:36 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "20/12/22 20:59:18 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/22 20:59:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-58aeee52-83c6-4824-a65a-162d0c5e89f4",
+          "20/12/22 20:59:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-194db094-b842-4a6e-aba4-4d53d59bb5b8",
+          "20/12/22 20:59:18 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/22 20:59:18 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/22 20:59:18 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
           "\nYARN Diagnostics: "
         ]
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/43",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/195",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7df818309eec294baeabf7a58af8c47b-868eff8fd3d39a47-00",
+        "traceparent": "00-7edd6901d9d8ed4988f5bcd1e15e971a-67a7c7fdb7fdb642-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
         ],
-        "x-ms-client-request-id": "3ff4504e9f3c9c20b0699fa91c37b421",
+        "x-ms-client-request-id": "589acb7a32e3f7dd8360f375ed065a67",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:40 GMT",
+        "Date": "Wed, 20 Jan 2021 21:26:30 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "3cbe3ef8-7de1-4013-87d3-3b3fe63227a1",
+        "x-ms-activity-id": "ba3d8cda-3e17-435f-acbc-d955b88e233f",
         "x-ms-client-request-id": [
-          "3ff4504e9f3c9c20b0699fa91c37b421",
-          "3ff4504e9f3c9c20b0699fa91c37b421"
+          "589acb7a32e3f7dd8360f375ed065a67",
+          "589acb7a32e3f7dd8360f375ed065a67"
         ],
-        "x-ms-job-cluster": "http://171.4.176.20:8998/",
-        "x-ms-job-clusterrequested-on": "2/26/2020 12:47:32 PM \u002B00:00",
-        "x-ms-job-ended-on": "2/26/2020 1:00:10 PM \u002B00:00",
-        "x-ms-job-internal-id": "43",
-        "x-ms-job-livysubmission-on": "2/26/2020 12:49:11 PM \u002B00:00",
-        "x-ms-job-queued-on": "2/26/2020 12:49:04 PM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/26/2020 12:47:32 PM \u002B00:00",
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 6:27:10 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 6:28:08 PM \u002B00:00",
+        "x-ms-job-internal-id": "195",
+        "x-ms-job-livysubmission-on": "12/23/2020 6:27:13 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 6:27:12 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 6:27:10 PM \u002B00:00",
         "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/26/2020 12:47:31 PM \u002B00:00",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 6:27:08 PM \u002B00:00",
         "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "bd838351-715e-4bdd-b890-654254acaf5d",
+        "x-ms-request-id": "7c283291-c1e5-4019-8a15-34d647d44711",
+        "x-ms-response-time-ms": "27"
+      },
+      "ResponseBody": {
+        "id": 195,
+        "appId": "application_1608747708498_0002",
+        "appInfo": {
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c60044d467959:8042/node/containerlogs/container_1608747708498_0002_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0002/",
+          "isSessionTimedOut": "false"
+        },
+        "state": "killed",
+        "log": [
+          "\t final status: UNDEFINED",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0002/",
+          "\t user: trusted-service-user",
+          "20/12/23 18:27:18 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 18:27:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-444c268f-8a40-4e76-8029-56a435f3ae67",
+          "20/12/23 18:27:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-c1035a7f-2e11-440d-a498-c270ccf78784",
+          "20/12/23 18:27:18 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 18:27:18 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 18:27:18 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "\nYARN Diagnostics: "
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/197",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ee2ce0fe4bab034c8684985413f17327-a22cba25a48f064b-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "9b937552ee3673071ae6812c3e02fd02",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 21:26:30 GMT",
+        "Server": [
+          "Kestrel",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-activity-id": "70ffd374-593e-442d-a463-19a4ef56867e",
+        "x-ms-client-request-id": [
+          "9b937552ee3673071ae6812c3e02fd02",
+          "9b937552ee3673071ae6812c3e02fd02"
+        ],
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 6:43:12 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 6:43:56 PM \u002B00:00",
+        "x-ms-job-internal-id": "197",
+        "x-ms-job-livysubmission-on": "12/23/2020 6:43:14 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 6:43:14 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 6:43:12 PM \u002B00:00",
+        "x-ms-job-scheduler-state": "Ended",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 6:43:10 PM \u002B00:00",
+        "x-ms-job-type": "SparkServiceSession",
+        "x-ms-request-id": "23207f7c-dae6-44ac-bb7e-2cdb6a43e563",
         "x-ms-response-time-ms": "26"
       },
       "ResponseBody": {
-        "id": 43,
-        "appId": "application_1582721346528_0001",
+        "id": 197,
+        "appId": "application_1608747708498_0004",
         "appInfo": {
-          "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37004bf001189:8042/node/containerlogs/container_1582721346528_0001_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0001/"
-        },
-        "state": "error",
-        "log": [
-          "\t final status: UNDEFINED",
-          "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0001/",
-          "\t user: trusted-service-user",
-          "20/02/26 12:49:18 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/26 12:49:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-582cc476-8e5a-40a3-a62f-a243142b1482",
-          "20/02/26 12:49:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-772512fd-dcfa-4642-ad14-786d4adaf96b",
-          "20/02/26 12:49:18 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/26 12:49:18 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/26 12:49:18 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-          "\nYARN Diagnostics: "
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/44",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-589020f2eef4274b9a368f52204b9ec5-a0972e61f76a7f47-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "db4b323d432b7a3ff169baecba03a6f7",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:40 GMT",
-        "Server": [
-          "Kestrel",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "4c240e8c-8e6d-4197-9ab2-c5a82b38f12c",
-        "x-ms-client-request-id": [
-          "db4b323d432b7a3ff169baecba03a6f7",
-          "db4b323d432b7a3ff169baecba03a6f7"
-        ],
-        "x-ms-job-cluster": "http://171.4.176.20:8998/",
-        "x-ms-job-clusterrequested-on": "2/26/2020 1:00:36 PM \u002B00:00",
-        "x-ms-job-ended-on": "2/26/2020 1:11:09 PM \u002B00:00",
-        "x-ms-job-internal-id": "44",
-        "x-ms-job-livysubmission-on": "2/26/2020 1:00:46 PM \u002B00:00",
-        "x-ms-job-queued-on": "2/26/2020 1:00:44 PM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/26/2020 1:00:35 PM \u002B00:00",
-        "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/26/2020 1:00:34 PM \u002B00:00",
-        "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "07c5690a-4edd-4d2c-9fbe-fa4f20c2997e",
-        "x-ms-response-time-ms": "27"
-      },
-      "ResponseBody": {
-        "id": 44,
-        "appId": "application_1582721346528_0002",
-        "appInfo": {
-          "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37004bf001189:8042/node/containerlogs/container_1582721346528_0002_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0002/"
-        },
-        "state": "error",
-        "log": [
-          "\t final status: UNDEFINED",
-          "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0002/",
-          "\t user: trusted-service-user",
-          "20/02/26 13:00:50 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/26 13:00:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-9965e88e-6be2-4ca3-934a-42ea892b3bc0",
-          "20/02/26 13:00:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-032cd2e4-f7a8-4ed6-9990-6ee26b79c56c",
-          "20/02/26 13:00:50 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/26 13:00:50 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/26 13:00:50 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-          "\nYARN Diagnostics: "
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/45",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-28296f72cd3be748be00c473e4a6f726-6cad76287e48924e-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "65cda73dd8d49cbfab7942355898eb4d",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:40 GMT",
-        "Server": [
-          "Kestrel",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "551deaac-0889-4f32-afeb-c2caff2e1c24",
-        "x-ms-client-request-id": [
-          "65cda73dd8d49cbfab7942355898eb4d",
-          "65cda73dd8d49cbfab7942355898eb4d"
-        ],
-        "x-ms-job-cluster": "http://171.4.176.20:8998/",
-        "x-ms-job-clusterrequested-on": "2/26/2020 1:24:12 PM \u002B00:00",
-        "x-ms-job-ended-on": "2/26/2020 1:41:10 PM \u002B00:00",
-        "x-ms-job-internal-id": "45",
-        "x-ms-job-livysubmission-on": "2/26/2020 1:24:14 PM \u002B00:00",
-        "x-ms-job-queued-on": "2/26/2020 1:24:14 PM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/26/2020 1:24:11 PM \u002B00:00",
-        "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/26/2020 1:24:11 PM \u002B00:00",
-        "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "3d869b51-a902-4f88-8376-dacb97cd4b30",
-        "x-ms-response-time-ms": "33"
-      },
-      "ResponseBody": {
-        "id": 45,
-        "appId": "application_1582721346528_0003",
-        "appInfo": {
-          "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37004bf001189:8042/node/containerlogs/container_1582721346528_0003_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0003/"
-        },
-        "state": "error",
-        "log": [
-          "\t final status: UNDEFINED",
-          "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0003/",
-          "\t user: trusted-service-user",
-          "20/02/26 13:24:19 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/26 13:24:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-ef65ba0c-16bb-4f15-89c3-574fd62060c5",
-          "20/02/26 13:24:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-12b9d723-511b-4148-bb90-2f9713afdf4c",
-          "20/02/26 13:24:19 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/26 13:24:19 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/26 13:24:19 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-          "\nYARN Diagnostics: "
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/46",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-fbd893bfaa79234b8a48a75b5497a182-7e0e1f4fcb2edf4a-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "6e3164c5a0240b5d11794dd2e433e2ad",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:40 GMT",
-        "Server": [
-          "Kestrel",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "14fdc666-7f11-4ea7-a012-3829f73447d6",
-        "x-ms-client-request-id": [
-          "6e3164c5a0240b5d11794dd2e433e2ad",
-          "6e3164c5a0240b5d11794dd2e433e2ad"
-        ],
-        "x-ms-job-cluster": "http://171.4.176.20:8998/",
-        "x-ms-job-clusterrequested-on": "2/26/2020 1:32:19 PM \u002B00:00",
-        "x-ms-job-ended-on": "2/26/2020 1:43:09 PM \u002B00:00",
-        "x-ms-job-internal-id": "46",
-        "x-ms-job-livysubmission-on": "2/26/2020 1:32:22 PM \u002B00:00",
-        "x-ms-job-queued-on": "2/26/2020 1:32:22 PM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/26/2020 1:32:19 PM \u002B00:00",
-        "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/26/2020 1:32:18 PM \u002B00:00",
-        "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "5e036b1e-023e-45a7-8779-076082a87acb",
-        "x-ms-response-time-ms": "44"
-      },
-      "ResponseBody": {
-        "id": 46,
-        "appId": "application_1582721346528_0004",
-        "appInfo": {
-          "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37004bf001189:8042/node/containerlogs/container_1582721346528_0004_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0004/"
-        },
-        "state": "error",
-        "log": [
-          "\t final status: UNDEFINED",
-          "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0004/",
-          "\t user: trusted-service-user",
-          "20/02/26 13:32:27 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/26 13:32:27 INFO ShutdownHookManager: Deleting directory /tmp/spark-4e0480e3-2240-4f3d-a55e-7cefa30cf7dd",
-          "20/02/26 13:32:27 INFO ShutdownHookManager: Deleting directory /tmp/spark-aef49187-6e10-4c1c-876d-efe62cbb67f8",
-          "20/02/26 13:32:27 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/26 13:32:27 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/26 13:32:27 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-          "\nYARN Diagnostics: "
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/47",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-98005656998aba469749f5f055d46163-d742567e93d62546-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "746ba8c24e6a644c72ae30b1000a2258",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:40 GMT",
-        "Server": [
-          "Kestrel",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "067fb48f-36b4-4d4c-ba6b-1c3d7ca683c5",
-        "x-ms-client-request-id": [
-          "746ba8c24e6a644c72ae30b1000a2258",
-          "746ba8c24e6a644c72ae30b1000a2258"
-        ],
-        "x-ms-job-cluster": "http://171.4.176.20:8998/",
-        "x-ms-job-clusterrequested-on": "2/26/2020 1:35:43 PM \u002B00:00",
-        "x-ms-job-ended-on": "2/26/2020 1:46:09 PM \u002B00:00",
-        "x-ms-job-internal-id": "47",
-        "x-ms-job-livysubmission-on": "2/26/2020 1:35:47 PM \u002B00:00",
-        "x-ms-job-queued-on": "2/26/2020 1:35:46 PM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/26/2020 1:35:43 PM \u002B00:00",
-        "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/26/2020 1:35:42 PM \u002B00:00",
-        "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "4d2eb5ed-8879-410d-9df4-54e3ee81a49b",
-        "x-ms-response-time-ms": "28"
-      },
-      "ResponseBody": {
-        "id": 47,
-        "appId": "application_1582721346528_0005",
-        "appInfo": {
-          "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37000b9a60506:8042/node/containerlogs/container_1582721346528_0005_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0005/"
-        },
-        "state": "error",
-        "log": [
-          "\t final status: UNDEFINED",
-          "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0005/",
-          "\t user: trusted-service-user",
-          "20/02/26 13:35:50 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/26 13:35:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-9ced194a-7983-4496-8693-b7da925d645f",
-          "20/02/26 13:35:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-c6a899cd-049d-4aee-8ad4-5a588e466800",
-          "20/02/26 13:35:50 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/26 13:35:50 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/26 13:35:50 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-          "\nYARN Diagnostics: "
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/48",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-9dd30cb9ae43c64ab529fbbd45bbcf98-191b1799806e4041-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "56276d7d38d19dd34ac1545b8becb777",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:40 GMT",
-        "Server": [
-          "Kestrel",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "52bc5526-dc7b-497a-9ab3-d1852c106197",
-        "x-ms-client-request-id": [
-          "56276d7d38d19dd34ac1545b8becb777",
-          "56276d7d38d19dd34ac1545b8becb777"
-        ],
-        "x-ms-job-cluster": "http://171.4.176.20:8998/",
-        "x-ms-job-clusterrequested-on": "2/26/2020 1:38:43 PM \u002B00:00",
-        "x-ms-job-ended-on": "2/26/2020 1:54:09 PM \u002B00:00",
-        "x-ms-job-internal-id": "48",
-        "x-ms-job-livysubmission-on": "2/26/2020 1:38:46 PM \u002B00:00",
-        "x-ms-job-queued-on": "2/26/2020 1:38:46 PM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/26/2020 1:38:43 PM \u002B00:00",
-        "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/26/2020 1:38:42 PM \u002B00:00",
-        "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "128cac81-9d39-448f-8c52-560a1aade0b9",
-        "x-ms-response-time-ms": "34"
-      },
-      "ResponseBody": {
-        "id": 48,
-        "appId": "application_1582721346528_0006",
-        "appInfo": {
-          "driverLogUrl": "http://e32f1ba891454e2c8934108fad734b37003c1491642:8042/node/containerlogs/container_1582721346528_0006_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0006/"
-        },
-        "state": "error",
-        "log": [
-          "\t final status: UNDEFINED",
-          "\t tracking URL: http://e32f1ba891454e2c8934108fad734b37001df758198:8088/proxy/application_1582721346528_0006/",
-          "\t user: trusted-service-user",
-          "20/02/26 13:38:50 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/26 13:38:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-0433623f-ef0c-493b-93a9-9588507f53a4",
-          "20/02/26 13:38:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-0dbc3f4d-e5af-43b3-9585-0ea51ff02b6e",
-          "20/02/26 13:38:50 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/26 13:38:50 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/26 13:38:50 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-          "\nYARN Diagnostics: "
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/49",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-cdd4ab4a8587d848a53f9543948b2247-6d21570153b7ae43-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "af729597772d76e217ccfb7570ab0a07",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:40 GMT",
-        "Server": [
-          "Kestrel",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "87ac31aa-408b-4ca5-b2ef-30deb13f48d3",
-        "x-ms-client-request-id": [
-          "af729597772d76e217ccfb7570ab0a07",
-          "af729597772d76e217ccfb7570ab0a07"
-        ],
-        "x-ms-job-cluster": "http://171.0.202.6:8998/",
-        "x-ms-job-clusterrequested-on": "2/27/2020 2:35:25 AM \u002B00:00",
-        "x-ms-job-ended-on": "2/27/2020 3:09:06 AM \u002B00:00",
-        "x-ms-job-internal-id": "49",
-        "x-ms-job-livysubmission-on": "2/27/2020 2:36:44 AM \u002B00:00",
-        "x-ms-job-queued-on": "2/27/2020 2:36:36 AM \u002B00:00",
-        "x-ms-job-result": "Cancelled",
-        "x-ms-job-scheduled-on": "2/27/2020 2:35:25 AM \u002B00:00",
-        "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/27/2020 2:35:24 AM \u002B00:00",
-        "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "710a651d-a8d9-443b-98b4-efdd06bc12f9",
-        "x-ms-response-time-ms": "14"
-      },
-      "ResponseBody": {
-        "id": 49,
-        "appId": "application_1582770999899_0001",
-        "appInfo": {
-          "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef00417f90807:8042/node/containerlogs/container_1582770999899_0001_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0001/"
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0004_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0004/",
+          "isSessionTimedOut": "false"
         },
         "state": "killed",
         "log": [
           "\t final status: UNDEFINED",
-          "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0001/",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0004/",
           "\t user: trusted-service-user",
-          "20/02/27 02:36:51 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/27 02:36:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-b1ace93c-cd17-4893-b509-511dac50cb32",
-          "20/02/27 02:36:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-fdc5c58b-8359-481a-a6a7-7fa64112672a",
-          "20/02/27 02:36:51 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/27 02:36:51 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/27 02:36:51 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "20/12/23 18:43:19 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 18:43:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-d3700583-836e-427e-8465-94e9de41d30a",
+          "20/12/23 18:43:19 INFO ShutdownHookManager: Deleting directory /tmp/spark-53c28901-f127-4839-9115-3bc16caf8bca",
+          "20/12/23 18:43:19 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 18:43:19 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 18:43:19 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
           "\nYARN Diagnostics: "
         ]
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/50",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/199",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-7c80e983a599c043aab689cb7e042882-513fad9b1e7a7f42-00",
+        "traceparent": "00-c0caa27ed7c95d4cbb60ae2099eca2fa-9a5e9879d7001b4f-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
         ],
-        "x-ms-client-request-id": "7755f4578c0c89dbd4ce2aa8faf1d985",
+        "x-ms-client-request-id": "e72de48917a4c0d76dec247c16f32693",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:40 GMT",
+        "Date": "Wed, 20 Jan 2021 21:26:31 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "e687d482-bce3-4ff2-9d8b-05dcdc22e242",
+        "x-ms-activity-id": "205ce83a-fbe5-4aa0-b824-ef5ba0c6d344",
         "x-ms-client-request-id": [
-          "7755f4578c0c89dbd4ce2aa8faf1d985",
-          "7755f4578c0c89dbd4ce2aa8faf1d985"
+          "e72de48917a4c0d76dec247c16f32693",
+          "e72de48917a4c0d76dec247c16f32693"
         ],
-        "x-ms-job-cluster": "http://171.0.202.6:8998/",
-        "x-ms-job-clusterrequested-on": "2/27/2020 2:43:26 AM \u002B00:00",
-        "x-ms-job-ended-on": "2/27/2020 2:58:43 AM \u002B00:00",
-        "x-ms-job-internal-id": "50",
-        "x-ms-job-livysubmission-on": "2/27/2020 2:43:29 AM \u002B00:00",
-        "x-ms-job-queued-on": "2/27/2020 2:43:29 AM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/27/2020 2:43:25 AM \u002B00:00",
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 6:56:05 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 6:56:48 PM \u002B00:00",
+        "x-ms-job-internal-id": "199",
+        "x-ms-job-livysubmission-on": "12/23/2020 6:56:07 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 6:56:07 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 6:56:04 PM \u002B00:00",
         "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/27/2020 2:43:25 AM \u002B00:00",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 6:56:02 PM \u002B00:00",
         "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "b465d487-ab49-4d7b-97b5-4f66c84779f1",
+        "x-ms-request-id": "e249507b-bf71-4a06-8db8-0107f9a2d6d2",
+        "x-ms-response-time-ms": "26"
+      },
+      "ResponseBody": {
+        "id": 199,
+        "appId": "application_1608747708498_0006",
+        "appInfo": {
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0006_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0006/",
+          "isSessionTimedOut": "false"
+        },
+        "state": "killed",
+        "log": [
+          "\t final status: UNDEFINED",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0006/",
+          "\t user: trusted-service-user",
+          "20/12/23 18:56:11 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 18:56:11 INFO ShutdownHookManager: Deleting directory /tmp/spark-fd734d77-16f4-4adf-9503-e3359a42e637",
+          "20/12/23 18:56:11 INFO ShutdownHookManager: Deleting directory /tmp/spark-37d2ee03-3d3e-4d66-a388-c79d82be9a43",
+          "20/12/23 18:56:11 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 18:56:11 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 18:56:11 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "\nYARN Diagnostics: "
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/201",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-bba69ee55e94b1479576d2fcd3605b21-1bedab48f43c5345-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "e8dff02c34b68bc7c3273efcb0b1b880",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 21:26:31 GMT",
+        "Server": [
+          "Kestrel",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-activity-id": "7b9dc1d2-93d8-494c-90ff-e7716322333a",
+        "x-ms-client-request-id": [
+          "e8dff02c34b68bc7c3273efcb0b1b880",
+          "e8dff02c34b68bc7c3273efcb0b1b880"
+        ],
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 7:09:42 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 7:10:27 PM \u002B00:00",
+        "x-ms-job-internal-id": "201",
+        "x-ms-job-livysubmission-on": "12/23/2020 7:09:45 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 7:09:45 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 7:09:42 PM \u002B00:00",
+        "x-ms-job-scheduler-state": "Ended",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 7:09:40 PM \u002B00:00",
+        "x-ms-job-type": "SparkServiceSession",
+        "x-ms-request-id": "4235d2b6-19bd-42e3-a661-f35e3f76e667",
+        "x-ms-response-time-ms": "23"
+      },
+      "ResponseBody": {
+        "id": 201,
+        "appId": "application_1608747708498_0008",
+        "appInfo": {
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0008_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0008/",
+          "isSessionTimedOut": "false"
+        },
+        "state": "killed",
+        "log": [
+          "\t final status: UNDEFINED",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0008/",
+          "\t user: trusted-service-user",
+          "20/12/23 19:09:50 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 19:09:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-0e0317d9-7c13-4ff5-b9c1-3029dbd527ee",
+          "20/12/23 19:09:50 INFO ShutdownHookManager: Deleting directory /tmp/spark-54c77bfb-8081-43fe-a0fa-8b1f71da5bff",
+          "20/12/23 19:09:50 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 19:09:50 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 19:09:50 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "\nYARN Diagnostics: "
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/203",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-05027e66c766624ab288ed2e1dc46260-157341cfd0925540-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "09ecf16373d83bc39dd32e4aca8b5c26",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 21:26:31 GMT",
+        "Server": [
+          "Kestrel",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-activity-id": "a45e1869-aecb-4d6e-811a-6c1cd87749f2",
+        "x-ms-client-request-id": [
+          "09ecf16373d83bc39dd32e4aca8b5c26",
+          "09ecf16373d83bc39dd32e4aca8b5c26"
+        ],
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 7:22:53 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 7:23:37 PM \u002B00:00",
+        "x-ms-job-internal-id": "203",
+        "x-ms-job-livysubmission-on": "12/23/2020 7:22:55 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 7:22:55 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 7:22:53 PM \u002B00:00",
+        "x-ms-job-scheduler-state": "Ended",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 7:22:51 PM \u002B00:00",
+        "x-ms-job-type": "SparkServiceSession",
+        "x-ms-request-id": "581396bc-15ef-4031-88d8-cfb07c6ddb4d",
+        "x-ms-response-time-ms": "25"
+      },
+      "ResponseBody": {
+        "id": 203,
+        "appId": "application_1608747708498_0010",
+        "appInfo": {
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600027257673:8042/node/containerlogs/container_1608747708498_0010_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0010/",
+          "isSessionTimedOut": "false"
+        },
+        "state": "killed",
+        "log": [
+          "\t final status: UNDEFINED",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0010/",
+          "\t user: trusted-service-user",
+          "20/12/23 19:23:00 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 19:23:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-cdbe03fc-eb04-4c27-b83e-3c4ddec13f8f",
+          "20/12/23 19:23:00 INFO ShutdownHookManager: Deleting directory /tmp/spark-c78effb8-1287-4505-b963-ac658f53d093",
+          "20/12/23 19:23:00 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 19:23:00 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 19:23:00 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "\nYARN Diagnostics: "
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/205",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-cbb4eba714e844458c22067ea9bb5674-e5ef183c39cd004e-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "4d00eec01423544c1da2247cd8db0fbc",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 21:26:31 GMT",
+        "Server": [
+          "Kestrel",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-activity-id": "db0e763a-ad74-4288-988e-0f983b580d35",
+        "x-ms-client-request-id": [
+          "4d00eec01423544c1da2247cd8db0fbc",
+          "4d00eec01423544c1da2247cd8db0fbc"
+        ],
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 7:35:36 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 7:36:20 PM \u002B00:00",
+        "x-ms-job-internal-id": "205",
+        "x-ms-job-livysubmission-on": "12/23/2020 7:35:38 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 7:35:38 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 7:35:36 PM \u002B00:00",
+        "x-ms-job-scheduler-state": "Ended",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 7:35:34 PM \u002B00:00",
+        "x-ms-job-type": "SparkServiceSession",
+        "x-ms-request-id": "7ccfe426-0708-4abd-9b33-91073d8d1902",
+        "x-ms-response-time-ms": "24"
+      },
+      "ResponseBody": {
+        "id": 205,
+        "appId": "application_1608747708498_0012",
+        "appInfo": {
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0012_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0012/",
+          "isSessionTimedOut": "false"
+        },
+        "state": "killed",
+        "log": [
+          "\t final status: UNDEFINED",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0012/",
+          "\t user: trusted-service-user",
+          "20/12/23 19:35:43 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 19:35:43 INFO ShutdownHookManager: Deleting directory /tmp/spark-5f3954eb-dc1f-4f80-b356-d1abca34bb41",
+          "20/12/23 19:35:43 INFO ShutdownHookManager: Deleting directory /tmp/spark-4f38763f-78fd-49c7-88b8-a920d7dfe9c6",
+          "20/12/23 19:35:43 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 19:35:43 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 19:35:43 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "\nYARN Diagnostics: "
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/208",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-da2e4b55e8db61428210a6cc3e99d56e-a3039826becd8e40-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "2418a3331d07b9ba2da44be2067dc037",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 21:26:31 GMT",
+        "Server": [
+          "Kestrel",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-activity-id": "9ccf0b80-a770-41d0-a95a-13ebfa50d68e",
+        "x-ms-client-request-id": [
+          "2418a3331d07b9ba2da44be2067dc037",
+          "2418a3331d07b9ba2da44be2067dc037"
+        ],
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 7:58:17 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 7:59:01 PM \u002B00:00",
+        "x-ms-job-internal-id": "208",
+        "x-ms-job-livysubmission-on": "12/23/2020 7:58:19 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 7:58:19 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 7:58:17 PM \u002B00:00",
+        "x-ms-job-scheduler-state": "Ended",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 7:58:15 PM \u002B00:00",
+        "x-ms-job-type": "SparkServiceSession",
+        "x-ms-request-id": "c909330b-f0e6-4316-89d6-84df5be83e5d",
+        "x-ms-response-time-ms": "24"
+      },
+      "ResponseBody": {
+        "id": 208,
+        "appId": "application_1608747708498_0015",
+        "appInfo": {
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0015_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0015/",
+          "isSessionTimedOut": "false"
+        },
+        "state": "killed",
+        "log": [
+          "\t final status: UNDEFINED",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0015/",
+          "\t user: trusted-service-user",
+          "20/12/23 19:58:24 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 19:58:24 INFO ShutdownHookManager: Deleting directory /tmp/spark-81c1cf49-3385-465a-ae5c-ff98b6c317f8",
+          "20/12/23 19:58:24 INFO ShutdownHookManager: Deleting directory /tmp/spark-3188d30d-6ef2-481b-8073-86b8e18a87ed",
+          "20/12/23 19:58:24 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 19:58:24 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 19:58:24 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "\nYARN Diagnostics: "
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/209",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-50781cc693496e4691f2ca3ad2bc1e83-70a780424a4fc144-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "c23c18ca6bb14e5ca597eb354e4762c2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 21:26:31 GMT",
+        "Server": [
+          "Kestrel",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-activity-id": "69484b40-3d6c-4667-8976-8d371a193f6a",
+        "x-ms-client-request-id": [
+          "c23c18ca6bb14e5ca597eb354e4762c2",
+          "c23c18ca6bb14e5ca597eb354e4762c2"
+        ],
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 7:58:59 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 7:59:43 PM \u002B00:00",
+        "x-ms-job-internal-id": "209",
+        "x-ms-job-livysubmission-on": "12/23/2020 7:59:01 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 7:59:01 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 7:58:59 PM \u002B00:00",
+        "x-ms-job-scheduler-state": "Ended",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 7:58:56 PM \u002B00:00",
+        "x-ms-job-type": "SparkServiceSession",
+        "x-ms-request-id": "f26ec0b5-04cf-41e1-bddb-b7d9eaee42ed",
+        "x-ms-response-time-ms": "24"
+      },
+      "ResponseBody": {
+        "id": 209,
+        "appId": "application_1608747708498_0016",
+        "appInfo": {
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600027257673:8042/node/containerlogs/container_1608747708498_0016_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0016/",
+          "isSessionTimedOut": "false"
+        },
+        "state": "killed",
+        "log": [
+          "\t final status: UNDEFINED",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0016/",
+          "\t user: trusted-service-user",
+          "20/12/23 19:59:05 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 19:59:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-d2d9bb33-73b8-406b-aeee-9691a95cbd33",
+          "20/12/23 19:59:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-d85a4804-6f39-4f2b-836b-091492e6fa3b",
+          "20/12/23 19:59:05 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 19:59:05 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 19:59:05 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "\nYARN Diagnostics: "
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/212",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-ea0896c874a3164c89f254b408e87194-4230928f84f17149-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "271671c33873a21e3346207fc9694d9f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 21:26:31 GMT",
+        "Server": [
+          "Kestrel",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-activity-id": "90c64023-6c65-4439-bbbb-97a1d589150e",
+        "x-ms-client-request-id": [
+          "271671c33873a21e3346207fc9694d9f",
+          "271671c33873a21e3346207fc9694d9f"
+        ],
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 8:22:40 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 8:23:23 PM \u002B00:00",
+        "x-ms-job-internal-id": "212",
+        "x-ms-job-livysubmission-on": "12/23/2020 8:22:42 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 8:22:42 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 8:22:39 PM \u002B00:00",
+        "x-ms-job-scheduler-state": "Ended",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 8:22:37 PM \u002B00:00",
+        "x-ms-job-type": "SparkServiceSession",
+        "x-ms-request-id": "c4a42d56-b6ea-4b07-b73b-d0e1fa83577b",
+        "x-ms-response-time-ms": "23"
+      },
+      "ResponseBody": {
+        "id": 212,
+        "appId": "application_1608747708498_0019",
+        "appInfo": {
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0019_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0019/",
+          "isSessionTimedOut": "false"
+        },
+        "state": "killed",
+        "log": [
+          "\t final status: UNDEFINED",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0019/",
+          "\t user: trusted-service-user",
+          "20/12/23 20:22:46 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 20:22:46 INFO ShutdownHookManager: Deleting directory /tmp/spark-9dda2a5a-2f8d-4a91-a0b8-e489763c05a0",
+          "20/12/23 20:22:46 INFO ShutdownHookManager: Deleting directory /tmp/spark-39291258-8e8e-40eb-b50b-8c0d0f7fc0a9",
+          "20/12/23 20:22:46 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 20:22:46 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 20:22:46 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "\nYARN Diagnostics: "
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/213",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-a16d3cef43e27d478136e42bd8e94a1d-7299a81f7ef3b34a-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "c0b1ede24d9ec80b46ca7f6f31856ae5",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 21:26:32 GMT",
+        "Server": [
+          "Kestrel",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-activity-id": "55b28863-8a87-4c86-9714-dbeef20bbe92",
+        "x-ms-client-request-id": [
+          "c0b1ede24d9ec80b46ca7f6f31856ae5",
+          "c0b1ede24d9ec80b46ca7f6f31856ae5"
+        ],
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 8:23:21 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 8:24:05 PM \u002B00:00",
+        "x-ms-job-internal-id": "213",
+        "x-ms-job-livysubmission-on": "12/23/2020 8:23:23 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 8:23:23 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 8:23:21 PM \u002B00:00",
+        "x-ms-job-scheduler-state": "Ended",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 8:23:19 PM \u002B00:00",
+        "x-ms-job-type": "SparkServiceSession",
+        "x-ms-request-id": "7cdd5b39-5232-42cd-9055-07f3bf5a62a2",
+        "x-ms-response-time-ms": "24"
+      },
+      "ResponseBody": {
+        "id": 213,
+        "appId": "application_1608747708498_0020",
+        "appInfo": {
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600027257673:8042/node/containerlogs/container_1608747708498_0020_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0020/",
+          "isSessionTimedOut": "false"
+        },
+        "state": "killed",
+        "log": [
+          "\t final status: UNDEFINED",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0020/",
+          "\t user: trusted-service-user",
+          "20/12/23 20:23:28 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 20:23:28 INFO ShutdownHookManager: Deleting directory /tmp/spark-aee65abf-b14e-4bf4-a240-abad78ff547b",
+          "20/12/23 20:23:28 INFO ShutdownHookManager: Deleting directory /tmp/spark-8d5d6136-d75f-46e9-b198-fabc825fb895",
+          "20/12/23 20:23:28 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 20:23:28 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 20:23:28 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "\nYARN Diagnostics: "
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/216",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5eb2ac8dd2fa1c4b8cffcef3c6b1e500-00b5f65eb161e741-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "951e8941996692c3f9998e6a4add853b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 21:26:32 GMT",
+        "Server": [
+          "Kestrel",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-activity-id": "08187acf-3d39-41e1-98d9-1cbf81469bb5",
+        "x-ms-client-request-id": [
+          "951e8941996692c3f9998e6a4add853b",
+          "951e8941996692c3f9998e6a4add853b"
+        ],
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 8:42:28 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 8:43:28 PM \u002B00:00",
+        "x-ms-job-internal-id": "216",
+        "x-ms-job-livysubmission-on": "12/23/2020 8:42:47 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 8:42:47 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 8:42:28 PM \u002B00:00",
+        "x-ms-job-scheduler-state": "Ended",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 8:42:26 PM \u002B00:00",
+        "x-ms-job-type": "SparkServiceSession",
+        "x-ms-request-id": "3bbde9d6-132c-4401-9cb1-9bc0bfea4e17",
+        "x-ms-response-time-ms": "23"
+      },
+      "ResponseBody": {
+        "id": 216,
+        "appId": "application_1608747708498_0023",
+        "appInfo": {
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0023_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0023/",
+          "isSessionTimedOut": "false"
+        },
+        "state": "killed",
+        "log": [
+          "\t final status: UNDEFINED",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0023/",
+          "\t user: trusted-service-user",
+          "20/12/23 20:42:51 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 20:42:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-e58e9b9d-0faa-4b54-986f-1db24f4742e9",
+          "20/12/23 20:42:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-896d9075-febe-4483-9b7b-5d6b315d753b",
+          "20/12/23 20:42:51 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 20:42:51 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 20:42:51 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "\nYARN Diagnostics: "
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/217",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-45efe71ffec72e4f9da2ff404f9ea3c2-79dc3a0890e65649-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "61534b4aa1957623664de0a9b8ae70ae",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 21:26:32 GMT",
+        "Server": [
+          "Kestrel",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-activity-id": "68586929-16ec-4b01-bdba-d785979f5dcd",
+        "x-ms-client-request-id": [
+          "61534b4aa1957623664de0a9b8ae70ae",
+          "61534b4aa1957623664de0a9b8ae70ae"
+        ],
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59426/",
+        "x-ms-job-clusterrequested-on": "12/23/2020 8:43:24 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/23/2020 8:44:08 PM \u002B00:00",
+        "x-ms-job-internal-id": "217",
+        "x-ms-job-livysubmission-on": "12/23/2020 8:43:26 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/23/2020 8:43:26 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/23/2020 8:43:24 PM \u002B00:00",
+        "x-ms-job-scheduler-state": "Ended",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/23/2020 8:43:22 PM \u002B00:00",
+        "x-ms-job-type": "SparkServiceSession",
+        "x-ms-request-id": "871b0ddb-ce14-45aa-8660-748af2bcc88e",
+        "x-ms-response-time-ms": "24"
+      },
+      "ResponseBody": {
+        "id": 217,
+        "appId": "application_1608747708498_0024",
+        "appInfo": {
+          "driverLogUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8042/node/containerlogs/container_1608747708498_0024_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0024/",
+          "isSessionTimedOut": "false"
+        },
+        "state": "killed",
+        "log": [
+          "\t final status: UNDEFINED",
+          "\t tracking URL: http://dd5ff6c6412e4e6ca7ff991170e0c2c600329172598:8088/proxy/application_1608747708498_0024/",
+          "\t user: trusted-service-user",
+          "20/12/23 20:43:31 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/23 20:43:31 INFO ShutdownHookManager: Deleting directory /tmp/spark-86742e43-3ef1-43c8-91c2-77e41cf2fedd",
+          "20/12/23 20:43:31 INFO ShutdownHookManager: Deleting directory /tmp/spark-2262aac2-d5de-4917-a1d7-d58a980dbcdc",
+          "20/12/23 20:43:31 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/23 20:43:31 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/23 20:43:31 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "\nYARN Diagnostics: "
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/220",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-7ae355b22685b74b8cccf7f25761206c-76e74a134c8a6d43-00",
+        "User-Agent": [
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
+        ],
+        "x-ms-client-request-id": "3f3d3adcb84a4839291fc705bfa17d69",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Jan 2021 21:26:32 GMT",
+        "Server": [
+          "Kestrel",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "x-ms-activity-id": "b0853239-5fc0-4792-aabf-1afe6b857ff0",
+        "x-ms-client-request-id": [
+          "3f3d3adcb84a4839291fc705bfa17d69",
+          "3f3d3adcb84a4839291fc705bfa17d69"
+        ],
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59425/",
+        "x-ms-job-clusterrequested-on": "12/30/2020 5:09:24 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/30/2020 5:10:22 PM \u002B00:00",
+        "x-ms-job-internal-id": "220",
+        "x-ms-job-livysubmission-on": "12/30/2020 5:09:26 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/30/2020 5:09:26 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/30/2020 5:09:24 PM \u002B00:00",
+        "x-ms-job-scheduler-state": "Ended",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/30/2020 5:09:22 PM \u002B00:00",
+        "x-ms-job-type": "SparkServiceSession",
+        "x-ms-request-id": "f5857021-c937-4e62-94a6-a1eec453390d",
         "x-ms-response-time-ms": "32"
       },
       "ResponseBody": {
-        "id": 50,
-        "appId": "application_1582770999899_0002",
+        "id": 220,
+        "appId": "application_1609347533689_0003",
         "appInfo": {
-          "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef00417f90807:8042/node/containerlogs/container_1582770999899_0002_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0002/"
+          "driverLogUrl": "http://ff9d9706f86b4e46844285427033bf690012a643066:8042/node/containerlogs/container_1609347533689_0003_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://ff9d9706f86b4e46844285427033bf6900360a84551:8088/proxy/application_1609347533689_0003/",
+          "isSessionTimedOut": "false"
         },
-        "state": "error",
+        "state": "killed",
         "log": [
           "\t final status: UNDEFINED",
-          "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0002/",
+          "\t tracking URL: http://ff9d9706f86b4e46844285427033bf6900360a84551:8088/proxy/application_1609347533689_0003/",
           "\t user: trusted-service-user",
-          "20/02/27 02:43:32 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/27 02:43:32 INFO ShutdownHookManager: Deleting directory /tmp/spark-f86b4a4c-dcec-49f7-a18a-ab89e59feb2f",
-          "20/02/27 02:43:32 INFO ShutdownHookManager: Deleting directory /tmp/spark-f1eb01ba-c9e7-4b04-907e-8a452dd61b6f",
-          "20/02/27 02:43:32 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/27 02:43:32 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/27 02:43:32 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "20/12/30 17:09:33 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/30 17:09:33 INFO ShutdownHookManager: Deleting directory /tmp/spark-255dfc9f-c5ec-49ab-ad6c-8a0dc8bc95f1",
+          "20/12/30 17:09:33 INFO ShutdownHookManager: Deleting directory /tmp/spark-52419227-6a12-41fa-9d59-7a8017bd2a6a",
+          "20/12/30 17:09:33 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/30 17:09:33 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/30 17:09:33 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
           "\nYARN Diagnostics: "
         ]
       }
     },
     {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/51",
+      "RequestUri": "https://workspacechhamosynapse.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkchhamosyna/sessions/221",
       "RequestMethod": "GET",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-b5b6308dda4aca45a8488b7c2b865f3c-069edc513ce1fd4f-00",
+        "traceparent": "00-d2e1067fdd3edb46b80d3e8b9153ab3b-4b41af9217297648-00",
         "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
+          "azsdk-net-Analytics.Synapse.Spark/1.0.0-alpha.20210120.1",
+          "(.NET 5.0.0; Darwin 19.6.0 Darwin Kernel Version 19.6.0: Tue Nov 10 00:10:30 PST 2020; root:xnu-6153.141.10~1/RELEASE_X86_64)"
         ],
-        "x-ms-client-request-id": "6b1ab8f77297062b8ab03f053d5d2d9e",
+        "x-ms-client-request-id": "e525444409319f5066a82e18b91ada4a",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:40 GMT",
+        "Date": "Wed, 20 Jan 2021 21:26:32 GMT",
         "Server": [
           "Kestrel",
           "Microsoft-HTTPAPI/2.0"
         ],
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "5ed73338-3c4d-4d73-ba35-e5ed15e69850",
+        "x-ms-activity-id": "76fe22be-1852-4cb0-aa97-a0693f57f602",
         "x-ms-client-request-id": [
-          "6b1ab8f77297062b8ab03f053d5d2d9e",
-          "6b1ab8f77297062b8ab03f053d5d2d9e"
+          "e525444409319f5066a82e18b91ada4a",
+          "e525444409319f5066a82e18b91ada4a"
         ],
-        "x-ms-job-cluster": "http://171.0.202.6:8998/",
-        "x-ms-job-clusterrequested-on": "2/27/2020 2:54:48 AM \u002B00:00",
-        "x-ms-job-ended-on": "2/27/2020 3:10:43 AM \u002B00:00",
-        "x-ms-job-internal-id": "51",
-        "x-ms-job-livysubmission-on": "2/27/2020 2:54:52 AM \u002B00:00",
-        "x-ms-job-queued-on": "2/27/2020 2:54:51 AM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/27/2020 2:54:48 AM \u002B00:00",
+        "x-ms-job-cluster": "https://vnet-593110a0-westus2-41.westus2.cloudapp.azure.com:59425/",
+        "x-ms-job-clusterrequested-on": "12/30/2020 5:10:20 PM \u002B00:00",
+        "x-ms-job-ended-on": "12/30/2020 5:11:11 PM \u002B00:00",
+        "x-ms-job-internal-id": "221",
+        "x-ms-job-livysubmission-on": "12/30/2020 5:10:22 PM \u002B00:00",
+        "x-ms-job-queued-on": "12/30/2020 5:10:22 PM \u002B00:00",
+        "x-ms-job-result": "Cancelled",
+        "x-ms-job-scheduled-on": "12/30/2020 5:10:20 PM \u002B00:00",
         "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/27/2020 2:54:47 AM \u002B00:00",
+        "x-ms-job-submitted-by-name": "00b81593-6414-45e8-98bf-c0396b2972ee",
+        "x-ms-job-submitted-on": "12/30/2020 5:10:18 PM \u002B00:00",
         "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "a26562bf-e2e1-46f8-9522-8c03b7b1df66",
-        "x-ms-response-time-ms": "28"
+        "x-ms-request-id": "d7008652-eddd-4813-9528-25710df4ff28",
+        "x-ms-response-time-ms": "24"
       },
       "ResponseBody": {
-        "id": 51,
-        "appId": "application_1582770999899_0003",
+        "id": 221,
+        "appId": "application_1609347533689_0004",
         "appInfo": {
-          "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef001b6d10128:8042/node/containerlogs/container_1582770999899_0003_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0003/"
+          "driverLogUrl": "http://ff9d9706f86b4e46844285427033bf6900360a84551:8042/node/containerlogs/container_1609347533689_0004_01_000001/trusted-service-user",
+          "sparkUiUrl": "http://ff9d9706f86b4e46844285427033bf6900360a84551:8088/proxy/application_1609347533689_0004/",
+          "isSessionTimedOut": "false"
         },
-        "state": "error",
+        "state": "killed",
         "log": [
           "\t final status: UNDEFINED",
-          "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0003/",
+          "\t tracking URL: http://ff9d9706f86b4e46844285427033bf6900360a84551:8088/proxy/application_1609347533689_0004/",
           "\t user: trusted-service-user",
-          "20/02/27 02:54:55 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/27 02:54:55 INFO ShutdownHookManager: Deleting directory /tmp/spark-97f232e3-86d7-4324-92aa-2741a6220350",
-          "20/02/27 02:54:55 INFO ShutdownHookManager: Deleting directory /tmp/spark-7e75314e-ef8d-4d94-9e9e-b2202080c05d",
-          "20/02/27 02:54:55 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/27 02:54:55 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/27 02:54:55 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-          "\nYARN Diagnostics: "
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/52",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-6f257205e994a645bd9703bff7ab2777-0e7ffc3345372247-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "97034db73f970a6bbae8da5e4c397c25",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:40 GMT",
-        "Server": [
-          "Kestrel",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "9c6eec57-5760-4660-a802-61dd06d75f59",
-        "x-ms-client-request-id": [
-          "97034db73f970a6bbae8da5e4c397c25",
-          "97034db73f970a6bbae8da5e4c397c25"
-        ],
-        "x-ms-job-cluster": "http://171.0.202.6:8998/",
-        "x-ms-job-clusterrequested-on": "2/27/2020 3:06:06 AM \u002B00:00",
-        "x-ms-job-ended-on": "2/27/2020 3:21:43 AM \u002B00:00",
-        "x-ms-job-internal-id": "52",
-        "x-ms-job-livysubmission-on": "2/27/2020 3:06:14 AM \u002B00:00",
-        "x-ms-job-queued-on": "2/27/2020 3:06:13 AM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/27/2020 3:06:06 AM \u002B00:00",
-        "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/27/2020 3:06:04 AM \u002B00:00",
-        "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "0a1caecb-a7fa-4411-bcb2-07a1a2a4d6dd",
-        "x-ms-response-time-ms": "14"
-      },
-      "ResponseBody": {
-        "id": 52,
-        "appId": "application_1582770999899_0004",
-        "appInfo": {
-          "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8042/node/containerlogs/container_1582770999899_0004_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0004/"
-        },
-        "state": "dead",
-        "log": [
-          "\t final status: UNDEFINED",
-          "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0004/",
-          "\t user: trusted-service-user",
-          "20/02/27 03:06:18 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/27 03:06:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-be8f21d0-dbb3-4c77-ae12-a0b65961ed74",
-          "20/02/27 03:06:18 INFO ShutdownHookManager: Deleting directory /tmp/spark-5d5a6b27-8aba-4d48-ab7a-b652ee820922",
-          "20/02/27 03:06:18 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/27 03:06:18 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/27 03:06:18 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-          "\nYARN Diagnostics: "
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/53",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-5b65ab2effde4a4d9adbeaa2f1799eb7-18edca348bb5e647-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "b77d75f39f91e46fc84fec5b4dd54c76",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:42 GMT",
-        "Server": [
-          "Kestrel",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "b256e54d-e054-4c07-adef-dc370bb29e7a",
-        "x-ms-client-request-id": [
-          "b77d75f39f91e46fc84fec5b4dd54c76",
-          "b77d75f39f91e46fc84fec5b4dd54c76"
-        ],
-        "x-ms-job-cluster": "http://171.0.202.6:8998/",
-        "x-ms-job-clusterrequested-on": "2/27/2020 3:13:44 AM \u002B00:00",
-        "x-ms-job-ended-on": "2/27/2020 3:29:43 AM \u002B00:00",
-        "x-ms-job-internal-id": "53",
-        "x-ms-job-livysubmission-on": "2/27/2020 3:13:47 AM \u002B00:00",
-        "x-ms-job-queued-on": "2/27/2020 3:13:47 AM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/27/2020 3:13:43 AM \u002B00:00",
-        "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/27/2020 3:13:42 AM \u002B00:00",
-        "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "5e14023d-8af3-4375-9ae8-b7865cfbac14",
-        "x-ms-response-time-ms": "27"
-      },
-      "ResponseBody": {
-        "id": 53,
-        "appId": "application_1582770999899_0005",
-        "appInfo": {
-          "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef00417f90807:8042/node/containerlogs/container_1582770999899_0005_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0005/"
-        },
-        "state": "error",
-        "log": [
-          "\t final status: UNDEFINED",
-          "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0005/",
-          "\t user: trusted-service-user",
-          "20/02/27 03:13:51 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/27 03:13:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-874f6de2-32c5-40f3-b96e-bf965a970868",
-          "20/02/27 03:13:51 INFO ShutdownHookManager: Deleting directory /tmp/spark-a7726951-3c1c-4f91-9480-e554126696ce",
-          "20/02/27 03:13:51 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/27 03:13:51 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/27 03:13:51 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
-          "\nYARN Diagnostics: "
-        ]
-      }
-    },
-    {
-      "RequestUri": "https://testsynapseworkspace.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/testsparkpool/sessions/54",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-fb241b0915f5cc40a5d2e5b2af5bcdf1-516b94420769c541-00",
-        "User-Agent": [
-          "azsdk-net-Analytics.Synapse.Spark/1.0.0-dev.20200525.1",
-          "(.NET Core 4.6.28801.04; Microsoft Windows 10.0.17763 )"
-        ],
-        "x-ms-client-request-id": "acf18ba142eeb7ee4d0fb1af97cdb951",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 25 May 2020 09:47:42 GMT",
-        "Server": [
-          "Kestrel",
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "x-ms-activity-id": "276f9581-e23b-49d8-87f6-3bc2536f9001",
-        "x-ms-client-request-id": [
-          "acf18ba142eeb7ee4d0fb1af97cdb951",
-          "acf18ba142eeb7ee4d0fb1af97cdb951"
-        ],
-        "x-ms-job-cluster": "http://171.0.202.6:8998/",
-        "x-ms-job-clusterrequested-on": "2/27/2020 3:38:58 AM \u002B00:00",
-        "x-ms-job-ended-on": "2/27/2020 3:54:43 AM \u002B00:00",
-        "x-ms-job-internal-id": "54",
-        "x-ms-job-livysubmission-on": "2/27/2020 3:39:02 AM \u002B00:00",
-        "x-ms-job-queued-on": "2/27/2020 3:39:01 AM \u002B00:00",
-        "x-ms-job-result": "Failed",
-        "x-ms-job-scheduled-on": "2/27/2020 3:38:58 AM \u002B00:00",
-        "x-ms-job-scheduler-state": "Ended",
-        "x-ms-job-submitted-by-name": "zhezhou@microsoft.com",
-        "x-ms-job-submitted-on": "2/27/2020 3:38:56 AM \u002B00:00",
-        "x-ms-job-type": "SparkServiceSession",
-        "x-ms-request-id": "fcdba4d4-0233-4cc0-a1fc-fd748f109fec",
-        "x-ms-response-time-ms": "34"
-      },
-      "ResponseBody": {
-        "id": 54,
-        "appId": "application_1582770999899_0006",
-        "appInfo": {
-          "driverLogUrl": "http://b50c2ae5022b43d0a9a8b293074617ef001b6d10128:8042/node/containerlogs/container_1582770999899_0006_01_000001/trusted-service-user",
-          "sparkUiUrl": "http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0006/"
-        },
-        "state": "error",
-        "log": [
-          "\t final status: UNDEFINED",
-          "\t tracking URL: http://b50c2ae5022b43d0a9a8b293074617ef000a6688148:8088/proxy/application_1582770999899_0006/",
-          "\t user: trusted-service-user",
-          "20/02/27 03:39:05 INFO ShutdownHookManager: Shutdown hook called",
-          "20/02/27 03:39:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-2e61a99f-1f01-45b8-a8db-324cc4453ab0",
-          "20/02/27 03:39:05 INFO ShutdownHookManager: Deleting directory /tmp/spark-68cf840b-3e84-4d7d-89cf-f17f5cb6b80e",
-          "20/02/27 03:39:05 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
-          "20/02/27 03:39:05 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
-          "20/02/27 03:39:05 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
+          "20/12/30 17:10:28 INFO ShutdownHookManager: Shutdown hook called",
+          "20/12/30 17:10:28 INFO ShutdownHookManager: Deleting directory /tmp/spark-ed4f798a-6b8d-4c7f-9655-0db5464a9fc6",
+          "20/12/30 17:10:28 INFO ShutdownHookManager: Deleting directory /tmp/spark-a80e154e-03f2-4d4b-b1f7-823078696dfe",
+          "20/12/30 17:10:28 INFO MetricsSystemImpl: Stopping azure-file-system metrics system...",
+          "20/12/30 17:10:28 INFO MetricsSystemImpl: azure-file-system metrics system stopped.",
+          "20/12/30 17:10:28 INFO MetricsSystemImpl: azure-file-system metrics system shutdown complete.",
           "\nYARN Diagnostics: "
         ]
       }
     }
   ],
   "Variables": {
-    "AZURE_SYNAPSE_SPARK_POOL_NAME": "testsparkpool",
-    "AZURE_SYNAPSE_WORKSPACE_URL": "https://testsynapseworkspace.dev.azuresynapse.net",
-    "RandomSeed": "1817300816"
+    "AZURE_SYNAPSE_SPARK_POOL_NAME": "sparkchhamosyna",
+    "AZURE_SYNAPSE_WORKSPACE_URL": "https://workspacechhamosynapse.dev.azuresynapse.net",
+    "RandomSeed": "1685212464"
   }
 }

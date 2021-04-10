@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class AzureADOnlyAuthListResult
+    internal partial class AzureADOnlyAuthListResult
     {
         internal static AzureADOnlyAuthListResult DeserializeAzureADOnlyAuthListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ServerAzureADOnlyAuthentication> array = new List<ServerAzureADOnlyAuthentication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

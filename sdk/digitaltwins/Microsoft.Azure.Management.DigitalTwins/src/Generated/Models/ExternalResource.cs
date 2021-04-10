@@ -10,13 +10,15 @@
 
 namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Definition of a Resource.
+    /// Definition of a resource.
     /// </summary>
-    public partial class ExternalResource
+    public partial class ExternalResource : IResource
     {
         /// <summary>
         /// Initializes a new instance of the ExternalResource class.

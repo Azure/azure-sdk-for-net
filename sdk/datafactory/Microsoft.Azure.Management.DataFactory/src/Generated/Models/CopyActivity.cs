@@ -65,8 +65,11 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType boolean).</param>
         /// <param name="redirectIncompatibleRowSettings">Redirect incompatible
         /// row settings when EnableSkipIncompatibleRow is true.</param>
-        /// <param name="logStorageSettings">Log storage settings customer need
-        /// to provide when enabling session log.</param>
+        /// <param name="logStorageSettings">(Deprecated. Please use
+        /// LogSettings) Log storage settings customer need to provide when
+        /// enabling session log.</param>
+        /// <param name="logSettings">Log settings customer needs provide when
+        /// enabling log.</param>
         /// <param name="preserveRules">Preserve Rules.</param>
         /// <param name="preserve">Preserve rules.</param>
         /// <param name="validateDataConsistency">Whether to enable Data
@@ -76,7 +79,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// consistency.</param>
         /// <param name="inputs">List of inputs for the activity.</param>
         /// <param name="outputs">List of outputs for the activity.</param>
-        public CopyActivity(string name, CopySource source, CopySink sink, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object translator = default(object), object enableStaging = default(object), StagingSettings stagingSettings = default(StagingSettings), object parallelCopies = default(object), object dataIntegrationUnits = default(object), object enableSkipIncompatibleRow = default(object), RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default(RedirectIncompatibleRowSettings), LogStorageSettings logStorageSettings = default(LogStorageSettings), IList<object> preserveRules = default(IList<object>), IList<object> preserve = default(IList<object>), object validateDataConsistency = default(object), SkipErrorFile skipErrorFile = default(SkipErrorFile), IList<DatasetReference> inputs = default(IList<DatasetReference>), IList<DatasetReference> outputs = default(IList<DatasetReference>))
+        public CopyActivity(string name, CopySource source, CopySink sink, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), LinkedServiceReference linkedServiceName = default(LinkedServiceReference), ActivityPolicy policy = default(ActivityPolicy), object translator = default(object), object enableStaging = default(object), StagingSettings stagingSettings = default(StagingSettings), object parallelCopies = default(object), object dataIntegrationUnits = default(object), object enableSkipIncompatibleRow = default(object), RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default(RedirectIncompatibleRowSettings), LogStorageSettings logStorageSettings = default(LogStorageSettings), LogSettings logSettings = default(LogSettings), IList<object> preserveRules = default(IList<object>), IList<object> preserve = default(IList<object>), object validateDataConsistency = default(object), SkipErrorFile skipErrorFile = default(SkipErrorFile), IList<DatasetReference> inputs = default(IList<DatasetReference>), IList<DatasetReference> outputs = default(IList<DatasetReference>))
             : base(name, additionalProperties, description, dependsOn, userProperties, linkedServiceName, policy)
         {
             Source = source;
@@ -89,6 +92,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             EnableSkipIncompatibleRow = enableSkipIncompatibleRow;
             RedirectIncompatibleRowSettings = redirectIncompatibleRowSettings;
             LogStorageSettings = logStorageSettings;
+            LogSettings = logSettings;
             PreserveRules = preserveRules;
             Preserve = preserve;
             ValidateDataConsistency = validateDataConsistency;
@@ -168,11 +172,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public RedirectIncompatibleRowSettings RedirectIncompatibleRowSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets log storage settings customer need to provide when
-        /// enabling session log.
+        /// Gets or sets (Deprecated. Please use LogSettings) Log storage
+        /// settings customer need to provide when enabling session log.
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.logStorageSettings")]
         public LogStorageSettings LogStorageSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets log settings customer needs provide when enabling log.
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.logSettings")]
+        public LogSettings LogSettings { get; set; }
 
         /// <summary>
         /// Gets or sets preserve Rules.
@@ -239,6 +249,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (LogStorageSettings != null)
             {
                 LogStorageSettings.Validate();
+            }
+            if (LogSettings != null)
+            {
+                LogSettings.Validate();
             }
             if (Inputs != null)
             {

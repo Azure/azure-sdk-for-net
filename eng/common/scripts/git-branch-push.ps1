@@ -25,7 +25,16 @@ param(
     [string] $GitUrl,
 
     [Parameter(Mandatory = $false)]
-    [string] $PushArgs = ""
+    [string] $PushArgs = "",
+
+    [Parameter(Mandatory = $false)]
+    [string] $RemoteName = "azure-sdk-fork",
+
+    [Parameter(Mandatory = $false)]
+    [boolean] $SkipCommit = $false,
+
+    [Parameter(Mandatory = $false)]
+    [boolean] $AmendCommit = $false
 )
 
 # This is necessay because of the janky git command output writing to stderr.
@@ -33,36 +42,59 @@ param(
 # would fail the first time git wrote command output.
 $ErrorActionPreference = "Continue"
 
-Write-Host "git remote add azure-sdk-fork $GitUrl"
-git remote add azure-sdk-fork $GitUrl
-if ($LASTEXITCODE -ne 0)
+if ((git remote) -contains $RemoteName)
 {
+  Write-Host "git remote get-url $RemoteName"
+  $remoteUrl = git remote get-url $RemoteName
+  if ($remoteUrl -ne $GitUrl)
+  {
+    Write-Error "Remote with name $RemoteName already exists with an incompatible url [$remoteUrl] which should be [$GitUrl]."
+    exit 1
+  }
+}
+else 
+{
+  Write-Host "git remote add $RemoteName $GitUrl"
+  git remote add $RemoteName $GitUrl
+  if ($LASTEXITCODE -ne 0)
+  {
     Write-Error "Unable to add remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
     exit $LASTEXITCODE
+  }
 }
-
-Write-Host "git fetch azure-sdk-fork"
-git fetch azure-sdk-fork
-if ($LASTEXITCODE -ne 0)
-{
-    Write-Error "Unable to fetch remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
-    exit $LASTEXITCODE
+# Checkout to $PRBranch, create new one if not exists.
+git show-ref --verify --quiet refs/heads/$PRBranchName
+if ($LASTEXITCODE -eq 0) {
+  Write-Host "git checkout $PRBranchName."
+  git checkout $PRBranchName 
+} 
+else {
+  Write-Host "git checkout -b $PRBranchName."
+  git checkout -b $PRBranchName
 }
-
-Write-Host "git checkout -b $PRBranchName"
-git checkout -b $PRBranchName
 if ($LASTEXITCODE -ne 0)
 {
     Write-Error "Unable to create branch LASTEXITCODE=$($LASTEXITCODE), see command output above."
     exit $LASTEXITCODE
 }
 
-Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit -am `"$($CommitMsg)`""
-git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit -am "$($CommitMsg)"
-if ($LASTEXITCODE -ne 0)
-{
-    Write-Error "Unable to add files and create commit LASTEXITCODE=$($LASTEXITCODE), see command output above."
-    exit $LASTEXITCODE
+if (!$SkipCommit) {
+    if ($AmendCommit) {
+        $amendOption = "--amend"
+    }
+    else {
+        $amendOption = ""
+    }
+    Write-Host "git -c user.name=`"azure-sdk`" -c user.email=`"azuresdk@microsoft.com`" commit $amendOption -am `"$($CommitMsg)`""
+    git -c user.name="azure-sdk" -c user.email="azuresdk@microsoft.com" commit $amendOption -am "$($CommitMsg)"
+    if ($LASTEXITCODE -ne 0)
+    {
+        Write-Error "Unable to add files and create commit LASTEXITCODE=$($LASTEXITCODE), see command output above."
+        exit $LASTEXITCODE
+    }
+}
+else {
+    Write-Host "Skipped applying commit"
 }
 
 # The number of retries can be increased if necessary. In theory, the number of retries
@@ -76,15 +108,16 @@ $tryNumber = 0
 do
 {
     $needsRetry = $false
-    Write-Host "git push azure-sdk-fork $PRBranchName $PushArgs"
-    git push azure-sdk-fork $PRBranchName $PushArgs
+    Write-Host "git push $RemoteName $PRBranchName $PushArgs"
+    git push $RemoteName $PRBranchName $PushArgs
     $tryNumber++
     if ($LASTEXITCODE -ne 0)
     {
         $needsRetry = $true
         Write-Host "Git push failed with LASTEXITCODE=$($LASTEXITCODE) Need to fetch and rebase: attempt number=$($tryNumber)"
-        Write-Host "git fetch azure-sdk-fork"
-        git fetch azure-sdk-fork
+ 
+        Write-Host "git fetch $RemoteName"
+        git fetch $RemoteName
         if ($LASTEXITCODE -ne 0)
         {
             Write-Error "Unable to fetch remote LASTEXITCODE=$($LASTEXITCODE), see command output above."
@@ -102,8 +135,8 @@ do
                 continue
             }
 
-            Write-Host "git reset --hard azure-sdk-fork/${PRBranchName}"
-            git reset --hard azure-sdk-fork/${PRBranchName}
+            Write-Host "git reset --hard $RemoteName/${PRBranchName}"
+            git reset --hard $RemoteName/${PRBranchName}
             if ($LASTEXITCODE -ne 0)
             {
                 Write-Error "Unable to hard reset branch LASTEXITCODE=$($LASTEXITCODE), see command output above."
@@ -118,6 +151,7 @@ do
                 Write-Error "Unable to apply diff file LASTEXITCODE=$($LASTEXITCODE), see command output above."
                 exit $LASTEXITCODE
             }
+
 
             Write-Host "git add -A"
             git add -A
@@ -145,8 +179,12 @@ do
     }
 } while($needsRetry -and $tryNumber -le $numberOfRetries)
 
-if ($LASTEXITCODE -ne 0)
+if ($LASTEXITCODE -ne 0 -or $tryNumber -gt $numberOfRetries)
 {
     Write-Error "Unable to push commit after $($tryNumber) retries LASTEXITCODE=$($LASTEXITCODE), see command output above."
+    if (0 -eq $LASTEXITCODE) 
+    {
+        exit 1
+    }
     exit $LASTEXITCODE
 }

@@ -14,12 +14,11 @@
 
             if (currentRetryCount < maxRetries)
             {
-                BatchException batchException = exception as BatchException;
-                if (batchException != null)
+                if (exception is BatchException batchException)
                 {
                     int statusCode = (int)batchException.RequestInformation.HttpStatusCode;
 
-                    if ((statusCode >= 400 && statusCode < 500 
+                    if ((statusCode >= 400 && statusCode < 500
                         && statusCode != 408 // Timeout
                         && statusCode != 429 // Too many reqeuests
                         )

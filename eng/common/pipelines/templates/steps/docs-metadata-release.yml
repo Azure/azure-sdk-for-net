@@ -3,13 +3,13 @@ parameters:
   ArtifactLocation: 'not-specified'
   PackageRepository: 'not-specified'
   ReleaseSha: 'not-specified'
-  RepoId: 'not-specified'
+  RepoId: $(Build.Repository.Name)
   WorkingDirectory: ''
   ScriptDirectory: eng/common/scripts
   TargetDocRepoName: ''
   TargetDocRepoOwner: ''
-  PRBranchName: 'smoke-test-rdme'
-  SourceBranchName: 'smoke-test'
+  PRBranchName: 'master-rdme'
+  PRLabels: 'auto-merge'
   ArtifactName: ''
   Language: ''
   DocRepoDestinationPath: '' #usually docs-ref-services/
@@ -17,22 +17,27 @@ parameters:
   GHReviewersVariable: '' 
   GHTeamReviewersVariable: '' # externally set, as eng-common does not have the identity-resolver. Run as pre-step
   OnboardingBranch: ''
+  CloseAfterOpenForTesting: false
+  SkipPackageJson: false
 
 steps:
 - pwsh: |
-    git clone https://github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
-
-    try {
-      Push-Location ${{ parameters.WorkingDirectory }}/repo
-
-      Write-Host "git checkout ${{ parameters.SourceBranchName }}"
-      git checkout ${{ parameters.SourceBranchName }}
-    } finally {
-      Pop-Location
+    if ($IsWindows) {
+      REG ADD HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem /f /v LongPathsEnabled /t REG_DWORD /d 1
+      git config --system core.longpaths true
     }
+    else {
+      Write-Host "This script is not executing on Windows, skipping registry modification."
+    }
+  displayName: Enable Long Paths if Necessary
+  
+- pwsh: |
+    git clone https://github.com/${{ parameters.TargetDocRepoOwner }}/${{ parameters.TargetDocRepoName }} ${{ parameters.WorkingDirectory }}/repo
   displayName: Clone Documentation Repository
   ignoreLASTEXITCODE: false
-
+- template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+  parameters:
+    WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo 
 - task: PowerShell@2
   displayName: 'Apply Documentation Updates From Artifact'
   inputs:
@@ -46,14 +51,14 @@ steps:
       -WorkDirectory "${{ parameters.WorkingDirectory }}"
       -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
       -Language "${{parameters.Language}}"
-      -DocRepoContentLocation ${{ parameters.DocRepoDestinationPath }}
+      -Configs "${{ parameters.CIConfigs }}"
     pwsh: true
   env:
     GH_TOKEN: $(azuresdk-github-pat)
 
 - task: PowerShell@2
   displayName: 'Update Docs.MS CI Targeted Packages'
-  condition: and(succeededOrFailed(), eq('${{ parameters.OnboardingBranch }}',''))
+  condition: and(succeededOrFailed(), eq('${{ parameters.OnboardingBranch }}',''), ne('${{ parameters.SkipPackageJson }}', true))
   inputs:
     targetType: filePath
     filePath: ${{ parameters.ScriptDirectory }}/update-docs-ci.ps1
@@ -63,29 +68,25 @@ steps:
       -RepoId ${{ parameters.RepoId }}
       -Repository ${{ parameters.PackageRepository }}
       -ReleaseSHA ${{ parameters.ReleaseSha }}
-      -CIRepository "${{ parameters.WorkingDirectory }}/repo"
+      -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
       -Configs "${{ parameters.CIConfigs }}"
     pwsh: true
   env:
     GH_TOKEN: $(azuresdk-github-pat)
 
-- template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+- template: /eng/common/pipelines/templates/steps/git-push-changes.yml
   parameters:
-    RepoName: ${{ parameters.TargetDocRepoName }}
-    RepoOwner: ${{ parameters.TargetDocRepoOwner }}
-    PRBranchName: ${{ parameters.PRBranchName }}
+    BaseRepoBranch: $(DefaultBranch)
+    BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}
     CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
-    PRTitle: "Docs.MS Release Updates for ${{ parameters.ArtifactName }}"
-    BaseBranchName: ${{ parameters.SourceBranchName }}
+    TargetRepoName: ${{ parameters.TargetDocRepoName }}
+    TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
     WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
     ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-    GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
-    GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 
 
 - ${{if ne( parameters['OnboardingBranch'], '')}}:
   - pwsh: |
       Push-Location ${{ parameters.WorkingDirectory }}/repo
-
       git reset --hard HEAD
       git remote rm azure-sdk-fork
       git checkout ${{ parameters.OnboardingBranch}}
@@ -103,21 +104,17 @@ steps:
         -RepoId ${{ parameters.RepoId }}
         -Repository ${{ parameters.PackageRepository }}
         -ReleaseSHA ${{ parameters.ReleaseSha }}
-        -CIRepository "${{ parameters.WorkingDirectory }}/repo"
+        -DocRepoLocation "${{ parameters.WorkingDirectory }}/repo"
         -Configs "${{ parameters.CIConfigs }}"
       pwsh: true
     env:
       GH_TOKEN: $(azuresdk-github-pat)
-
-  - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+  - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
     parameters:
-      RepoName: ${{ parameters.TargetDocRepoName }}
-      RepoOwner: ${{ parameters.TargetDocRepoOwner }}
-      PRBranchName: ${{ parameters.PRBranchName }}-ci
-      CommitMsg: "CI Update for release of ${{ parameters.ArtifactName }}"
-      PRTitle: "Docs.MS CI Updates for ${{ parameters.ArtifactName }}"
-      BaseBranchName: ${{ parameters.OnboardingBranch }}
+      BaseRepoBranch: ${{ parameters.OnboardingBranch}}
+      BaseRepoOwner: ${{ parameters.TargetDocRepoOwner }}
+      CommitMsg: "Update docs metadata and targeting for release of ${{ parameters.ArtifactName }}"
+      TargetRepoName: ${{ parameters.TargetDocRepoName }}
+      TargetRepoOwner: ${{ parameters.TargetDocRepoOwner }}
       WorkingDirectory: ${{ parameters.WorkingDirectory }}/repo
       ScriptDirectory: ${{ parameters.WorkingDirectory }}/${{ parameters.ScriptDirectory }}
-      GHReviewersVariable: ${{ parameters.GHReviewersVariable }}
-      GHTeamReviewersVariable: ${{ parameters.GHTeamReviewersVariable }} 

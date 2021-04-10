@@ -1,6 +1,6 @@
 # Recognize form content
 
-This sample demonstrates how to recognize tables, lines, and words in documents, without the need to train a model.
+This sample demonstrates how to recognize tables, lines, words, and selection marks like radio buttons and check boxes in forms documents, without the need to train a model.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -22,7 +22,11 @@ var client = new FormRecognizerClient(new Uri(endpoint), credential);
 To recognize the content from a given file at a URI, use the `StartRecognizeContentFromUri` method. The returned value is a collection of `FormPage` objects -- one for each page in the submitted document.
 
 ```C# Snippet:FormRecognizerSampleRecognizeContentFromUri
-FormPageCollection formPages = await client.StartRecognizeContentFromUriAsync(invoiceUri).WaitForCompletionAsync();
+Uri formUri = <formUri>;
+
+Response<FormPageCollection> response = await client.StartRecognizeContentFromUriAsync(formUri).WaitForCompletionAsync();
+FormPageCollection formPages = response.Value;
+
 foreach (FormPage page in formPages)
 {
     Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
@@ -30,17 +34,44 @@ foreach (FormPage page in formPages)
     for (int i = 0; i < page.Lines.Count; i++)
     {
         FormLine line = page.Lines[i];
-        Console.WriteLine($"    Line {i} has {line.Words.Count} word{(line.Words.Count > 1 ? "s" : "")}, and text: '{line.Text}'.");
+        Console.WriteLine($"  Line {i} has {line.Words.Count} {(line.Words.Count == 1 ? "word" : "words")}, and text: '{line.Text}'.");
+
+        if (line.Appearance != null)
+        {
+            // Check the style and style confidence to see if text is handwritten.
+            // Note that value '0.8' is used as an example.
+            if (line.Appearance.Style.Name == TextStyleName.Handwriting && line.Appearance.Style.Confidence > 0.8)
+            {
+                Console.WriteLine("The text is handwritten");
+            }
+        }
+
+        Console.WriteLine("    Its bounding box is:");
+        Console.WriteLine($"    Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
+        Console.WriteLine($"    Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
+        Console.WriteLine($"    Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
+        Console.WriteLine($"    Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
     }
 
     for (int i = 0; i < page.Tables.Count; i++)
     {
         FormTable table = page.Tables[i];
-        Console.WriteLine($"Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+        Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
         foreach (FormTableCell cell in table.Cells)
         {
             Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) contains text: '{cell.Text}'.");
         }
+    }
+
+    for (int i = 0; i < page.SelectionMarks.Count; i++)
+    {
+        FormSelectionMark selectionMark = page.SelectionMarks[i];
+        Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
+        Console.WriteLine("    Its bounding box is:");
+        Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
+        Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
+        Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
+        Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
     }
 }
 ```
@@ -50,12 +81,58 @@ foreach (FormPage page in formPages)
 To recognize the content from a file stream, use the `StartRecognizeContent` method. The returned value is a collection of `FormPage` objects -- one for each page in the submitted document.
 
 ```C# Snippet:FormRecognizerRecognizeFormContentFromFile
-using (FileStream stream = new FileStream(invoiceFilePath, FileMode.Open))
+string filePath = "filePath";
+using var stream = new FileStream(filePath, FileMode.Open);
+
+Response<FormPageCollection> response = await client.StartRecognizeContentAsync(stream).WaitForCompletionAsync();
+FormPageCollection formPages = response.Value;
+
+foreach (FormPage page in formPages)
 {
-    FormPageCollection formPages = await client.StartRecognizeContent(stream).WaitForCompletionAsync();
-    /*
-     *
-     */
+    Console.WriteLine($"Form Page {page.PageNumber} has {page.Lines.Count} lines.");
+
+    for (int i = 0; i < page.Lines.Count; i++)
+    {
+        FormLine line = page.Lines[i];
+        Console.WriteLine($"  Line {i} has {line.Words.Count} {(line.Words.Count == 1 ? "word" : "words")}, and text: '{line.Text}'.");
+
+        if (line.Appearance != null)
+        {
+            // Check the style and style confidence to see if text is handwritten.
+            // Note that value '0.8' is used as an example.
+            if (line.Appearance.Style.Name == TextStyleName.Handwriting && line.Appearance.Style.Confidence > 0.8)
+            {
+                Console.WriteLine("The text is handwritten");
+            }
+        }
+
+        Console.WriteLine("    Its bounding box is:");
+        Console.WriteLine($"    Upper left => X: {line.BoundingBox[0].X}, Y= {line.BoundingBox[0].Y}");
+        Console.WriteLine($"    Upper right => X: {line.BoundingBox[1].X}, Y= {line.BoundingBox[1].Y}");
+        Console.WriteLine($"    Lower right => X: {line.BoundingBox[2].X}, Y= {line.BoundingBox[2].Y}");
+        Console.WriteLine($"    Lower left => X: {line.BoundingBox[3].X}, Y= {line.BoundingBox[3].Y}");
+    }
+
+    for (int i = 0; i < page.Tables.Count; i++)
+    {
+        FormTable table = page.Tables[i];
+        Console.WriteLine($"  Table {i} has {table.RowCount} rows and {table.ColumnCount} columns.");
+        foreach (FormTableCell cell in table.Cells)
+        {
+            Console.WriteLine($"    Cell ({cell.RowIndex}, {cell.ColumnIndex}) contains text: '{cell.Text}'.");
+        }
+    }
+
+    for (int i = 0; i < page.SelectionMarks.Count; i++)
+    {
+        FormSelectionMark selectionMark = page.SelectionMarks[i];
+        Console.WriteLine($"  Selection Mark {i} is {selectionMark.State}.");
+        Console.WriteLine("    Its bounding box is:");
+        Console.WriteLine($"      Upper left => X: {selectionMark.BoundingBox[0].X}, Y= {selectionMark.BoundingBox[0].Y}");
+        Console.WriteLine($"      Upper right => X: {selectionMark.BoundingBox[1].X}, Y= {selectionMark.BoundingBox[1].Y}");
+        Console.WriteLine($"      Lower right => X: {selectionMark.BoundingBox[2].X}, Y= {selectionMark.BoundingBox[2].Y}");
+        Console.WriteLine($"      Lower left => X: {selectionMark.BoundingBox[3].X}, Y= {selectionMark.BoundingBox[3].Y}");
+    }
 }
 ```
 

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteServiceProviderListResult
+    internal partial class ExpressRouteServiceProviderListResult
     {
         internal static ExpressRouteServiceProviderListResult DeserializeExpressRouteServiceProviderListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ExpressRouteServiceProvider> array = new List<ExpressRouteServiceProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

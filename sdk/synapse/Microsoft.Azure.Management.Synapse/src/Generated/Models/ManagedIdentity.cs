@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// identity</param>
         /// <param name="type">The type of managed identity for the workspace.
         /// Possible values include: 'None', 'SystemAssigned'</param>
-        public ManagedIdentity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
+        public ManagedIdentity(string principalId = default(string), System.Guid? tenantId = default(System.Guid?), ResourceIdentityType? type = default(ResourceIdentityType?))
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// Gets the tenant ID of the workspace managed identity
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
-        public string TenantId { get; private set; }
+        public System.Guid? TenantId { get; private set; }
 
         /// <summary>
         /// Gets or sets the type of managed identity for the workspace.

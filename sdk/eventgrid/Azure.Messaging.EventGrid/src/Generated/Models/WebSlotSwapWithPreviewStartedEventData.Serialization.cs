@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(WebSlotSwapWithPreviewStartedEventDataConverter))]
     public partial class WebSlotSwapWithPreviewStartedEventData
     {
         internal static WebSlotSwapWithPreviewStartedEventData DeserializeWebSlotSwapWithPreviewStartedEventData(JsonElement element)
@@ -25,6 +28,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("appEventTypeDetail"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     appEventTypeDetail = AppEventTypeDetail.DeserializeAppEventTypeDetail(property.Value);
                     continue;
                 }
@@ -60,6 +68,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new WebSlotSwapWithPreviewStartedEventData(appEventTypeDetail.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+        }
+
+        internal partial class WebSlotSwapWithPreviewStartedEventDataConverter : JsonConverter<WebSlotSwapWithPreviewStartedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, WebSlotSwapWithPreviewStartedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override WebSlotSwapWithPreviewStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWebSlotSwapWithPreviewStartedEventData(document.RootElement);
+            }
         }
     }
 }

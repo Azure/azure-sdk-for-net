@@ -22,16 +22,20 @@ namespace Azure.Core.Pipeline
         /// attempting to parse them as <see cref="SearchError"/>s.
         /// </summary>
         /// <param name="content">The error content.</param>
+        /// <param name="responseHeaders">The response headers.</param>
         /// <param name="message">The error message.</param>
         /// <param name="errorCode">The error code.</param>
         /// <param name="additionalInfo">Additional error details.</param>
+#pragma warning disable CA1822 // Member can be static
+#pragma warning disable CA1801 // Remove unused parameter
         partial void ExtractFailureContent(
             string? content,
+            ResponseHeaders responseHeaders,
             ref string? message,
             ref string? errorCode,
-            #pragma warning disable CA1801 // We're not using it now - but see the TODO below
             ref IDictionary<string, string>? additionalInfo)
-            #pragma warning restore CA1801
+#pragma warning restore CA1801 // Remove unused parameter
+#pragma warning restore CA1822 // Member can be static
         {
             if (!string.IsNullOrEmpty(content))
             {
@@ -49,7 +53,7 @@ namespace Azure.Core.Pipeline
                         // TODO: #10598 - Determine the correct approach for
                         // surfacing what appear to be nested SearchError
                         // instances.
-                        Debug.Assert(!(error?.Details?.Count > 0));
+                        // Debug.Assert(!(error?.Details?.Count > 0));
                     }
                 }
                 catch (JsonException)

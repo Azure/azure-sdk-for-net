@@ -96,51 +96,101 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (property.NameEquals("generateWordParts"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     generateWordParts = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("generateNumberParts"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     generateNumberParts = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("catenateWords"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     catenateWords = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("catenateNumbers"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     catenateNumbers = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("catenateAll"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     catenateAll = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("splitOnCaseChange"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     splitOnCaseChange = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("preserveOriginal"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     preserveOriginal = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("splitOnNumerics"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     splitOnNumerics = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("stemEnglishPossessive"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     stemEnglishPossessive = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("protectedWords"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

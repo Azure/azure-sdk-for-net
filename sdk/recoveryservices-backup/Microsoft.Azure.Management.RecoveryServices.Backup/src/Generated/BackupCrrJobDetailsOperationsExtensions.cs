@@ -30,9 +30,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='azureRegion'>
             /// Azure region to hit Api
             /// </param>
-            public static JobResource Get(this IBackupCrrJobDetailsOperations operations, string azureRegion)
+            /// <param name='parameters'>
+            /// CRR Job request
+            /// </param>
+            public static JobResource Get(this IBackupCrrJobDetailsOperations operations, string azureRegion, CrrJobRequest parameters)
             {
-                return operations.GetAsync(azureRegion).GetAwaiter().GetResult();
+                return operations.GetAsync(azureRegion, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -44,12 +47,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='azureRegion'>
             /// Azure region to hit Api
             /// </param>
+            /// <param name='parameters'>
+            /// CRR Job request
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobResource> GetAsync(this IBackupCrrJobDetailsOperations operations, string azureRegion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<JobResource> GetAsync(this IBackupCrrJobDetailsOperations operations, string azureRegion, CrrJobRequest parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(azureRegion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(azureRegion, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

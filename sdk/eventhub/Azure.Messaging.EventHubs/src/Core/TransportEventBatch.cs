@@ -31,23 +31,10 @@ namespace Azure.Messaging.EventHubs.Core
         public abstract long SizeInBytes { get; }
 
         /// <summary>
-        ///   The publishing sequence number assigned to the first event in the batch at the time
-        ///   the batch was successfully published.
+        ///   The flags specifying the set of special transport features that have been opted-into.
         /// </summary>
         ///
-        /// <value>
-        ///   The sequence number of the first event in the batch, if the batch was successfully
-        ///   published by a sequence-aware producer.  If the producer was not configured to apply
-        ///   sequence numbering or if the batch has not yet been successfully published, this member
-        ///   will be <c>null</c>.
-        ///</value>
-        ///
-        /// <remarks>
-        ///   The starting published sequence number is only populated and relevant when certain features
-        ///   of the producer are enabled.  For example, it is used by idempotent publishing.
-        /// </remarks>
-        ///
-        public abstract int? StartingPublishedSequenceNumber { get; set; }
+        public abstract TransportProducerFeatures ActiveFeatures { get; }
 
         /// <summary>
         ///   The count of events contained in the batch.

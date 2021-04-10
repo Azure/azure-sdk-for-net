@@ -30,7 +30,7 @@ namespace Azure.Data.Tables.Samples
             await serviceClient.CreateTableAsync(tableName);
             var tableClient = serviceClient.GetTableClient(tableName);
 
-            #region Snippet:TablesSample5UpsertEntity
+            #region Snippet:TablesSample5UpsertEntityAsync
             var entity = new TableEntity(partitionKey, rowKey)
             {
                 {"Product", "Markers" },
@@ -42,7 +42,7 @@ namespace Azure.Data.Tables.Samples
             await tableClient.UpsertEntityAsync(entity);
             #endregion
 
-            #region Snippet:TablesSample5UpsertWithReplace
+            #region Snippet:TablesSample5UpsertWithReplaceAsync
             // Delete an entity property.
             entity.Remove("Brand");
 

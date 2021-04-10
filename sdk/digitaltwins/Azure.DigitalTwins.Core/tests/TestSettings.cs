@@ -16,7 +16,7 @@ namespace Azure.DigitalTwins.Core.Tests
     public class TestSettings
     {
         public const string AdtEnvironmentVariablesPrefix = "DIGITALTWINS";
-        public const string TestModeEnvVariable = "AZURE_DIGITALTWINS_TEST_MODE";
+        public const string TestModeEnvVariable = "AZURE_TEST_MODE";
 
         // If these environment variables exist in the environment, their values will replace (supersede) config.json values.
 
@@ -36,10 +36,8 @@ namespace Azure.DigitalTwins.Core.Tests
                 return;
             }
 
-            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-            var uri = new UriBuilder(codeBase);
-            string path = Uri.UnescapeDataString(uri.Path);
-            string workingDirectory = Path.GetDirectoryName(path);
+            string codeBase = Assembly.GetExecutingAssembly().Location;
+            string workingDirectory = Path.GetDirectoryName(codeBase);
 
             string userName = Environment.UserName;
 

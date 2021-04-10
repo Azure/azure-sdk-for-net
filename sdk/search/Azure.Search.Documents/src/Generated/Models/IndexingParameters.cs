@@ -5,31 +5,23 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents parameters for indexer execution. </summary>
     public partial class IndexingParameters
     {
-        /// <summary> Initializes a new instance of IndexingParameters. </summary>
-        public IndexingParameters()
-        {
-            Configuration = new ChangeTrackingDictionary<string, object>();
-        }
 
         /// <summary> Initializes a new instance of IndexingParameters. </summary>
         /// <param name="batchSize"> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </param>
         /// <param name="maxFailedItems"> The maximum number of items that can fail indexing for indexer execution to still be considered successful. -1 means no limit. Default is 0. </param>
         /// <param name="maxFailedItemsPerBatch"> The maximum number of items in a single batch that can fail indexing for the batch to still be considered successful. -1 means no limit. Default is 0. </param>
-        /// <param name="configuration"> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </param>
-        internal IndexingParameters(int? batchSize, int? maxFailedItems, int? maxFailedItemsPerBatch, IDictionary<string, object> configuration)
+        /// <param name="indexingParametersConfiguration"> A dictionary of indexer-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </param>
+        internal IndexingParameters(int? batchSize, int? maxFailedItems, int? maxFailedItemsPerBatch, IndexingParametersConfiguration indexingParametersConfiguration)
         {
             BatchSize = batchSize;
             MaxFailedItems = maxFailedItems;
             MaxFailedItemsPerBatch = maxFailedItemsPerBatch;
-            Configuration = configuration;
+            IndexingParametersConfiguration = indexingParametersConfiguration;
         }
 
         /// <summary> The number of items that are read from the data source and indexed as a single batch in order to improve performance. The default depends on the data source type. </summary>

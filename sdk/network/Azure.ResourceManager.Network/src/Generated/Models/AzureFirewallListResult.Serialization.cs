@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureFirewallListResult
+    internal partial class AzureFirewallListResult
     {
         internal static AzureFirewallListResult DeserializeAzureFirewallListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AzureFirewall> array = new List<AzureFirewall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

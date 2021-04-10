@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListVirtualHubsResult
+    internal partial class ListVirtualHubsResult
     {
         internal static ListVirtualHubsResult DeserializeListVirtualHubsResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<VirtualHub> array = new List<VirtualHub>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

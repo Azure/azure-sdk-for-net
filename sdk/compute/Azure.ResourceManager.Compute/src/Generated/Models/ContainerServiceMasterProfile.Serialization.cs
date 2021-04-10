@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("count"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     count = new Enum31(property.Value.GetInt32());
                     continue;
                 }

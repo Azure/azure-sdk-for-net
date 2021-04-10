@@ -79,6 +79,55 @@ namespace Azure.Storage.Sas
         public AccountSasResourceTypes ResourceTypes { get; set; }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AccountSasBuilder"/>
+        /// class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor has been deprecated. Please consider using
+        /// <see cref="AccountSasBuilder(AccountSasPermissions, DateTimeOffset, AccountSasServices, AccountSasResourceTypes)"/>
+        /// to create a Service SAS. This change does not have any impact on how
+        /// your application generates or makes use of SAS tokens.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AccountSasBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountSasBuilder"/>
+        /// class to create a Blob Container Service Sas.
+        /// </summary>
+        /// <param name="permissions">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="expiresOn">
+        /// The time at which the shared access signature becomes invalid.
+        /// This field must be omitted if it has been specified in an
+        /// associated stored access policy.
+        /// </param>
+        /// <param name="services">
+        /// Specifies the services accessible from an account level shared access
+        /// signature.
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Specifies the resource types accessible from an account level shared
+        /// access signature.
+        /// </param>
+        public AccountSasBuilder(
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasServices services,
+            AccountSasResourceTypes resourceTypes)
+        {
+            ExpiresOn = expiresOn;
+            SetPermissions(permissions);
+            Services = services;
+            ResourceTypes = resourceTypes;
+        }
+
+        /// <summary>
         /// Sets the permissions for an account SAS.
         /// </summary>
         /// <param name="permissions">

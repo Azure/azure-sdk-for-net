@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath("/ServiceAssociationLinks", false);
             uri.AppendQuery("api-version", "2020-04-01", true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

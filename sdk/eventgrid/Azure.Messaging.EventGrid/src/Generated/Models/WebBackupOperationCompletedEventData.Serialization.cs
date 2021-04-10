@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(WebBackupOperationCompletedEventDataConverter))]
     public partial class WebBackupOperationCompletedEventData
     {
         internal static WebBackupOperationCompletedEventData DeserializeWebBackupOperationCompletedEventData(JsonElement element)
@@ -25,6 +28,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("appEventTypeDetail"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     appEventTypeDetail = AppEventTypeDetail.DeserializeAppEventTypeDetail(property.Value);
                     continue;
                 }
@@ -60,6 +68,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new WebBackupOperationCompletedEventData(appEventTypeDetail.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+        }
+
+        internal partial class WebBackupOperationCompletedEventDataConverter : JsonConverter<WebBackupOperationCompletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, WebBackupOperationCompletedEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override WebBackupOperationCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeWebBackupOperationCompletedEventData(document.RootElement);
+            }
         }
     }
 }

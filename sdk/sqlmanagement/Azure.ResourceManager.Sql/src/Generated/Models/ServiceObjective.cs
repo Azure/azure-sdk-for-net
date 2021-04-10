@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents a database service objective. </summary>
-    public partial class ServiceObjective : Resource
+    public partial class ServiceObjective : ProxyResource
     {
         /// <summary> Initializes a new instance of ServiceObjective. </summary>
         public ServiceObjective()

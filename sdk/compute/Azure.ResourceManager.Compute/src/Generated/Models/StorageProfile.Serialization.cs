@@ -48,16 +48,31 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("imageReference"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     imageReference = ImageReference.DeserializeImageReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osDisk"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     osDisk = OSDisk.DeserializeOSDisk(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<DataDisk> array = new List<DataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

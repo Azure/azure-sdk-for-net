@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="sku">The Sku.</param>
         /// <param name="enabled">The sku is enabled or not.</param>
-        /// <param name="destinationToServiceLocationMap">The map of
-        /// destination location to service location.</param>
+        /// <param name="dataLocationToServiceLocationMap">The map of data
+        /// location to service location.</param>
         /// <param name="capacity">Capacity of the Sku.</param>
         /// <param name="costs">Cost of the Sku.</param>
         /// <param name="apiVersions">Api versions that support this
@@ -49,11 +49,11 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// disabled.</param>
         /// <param name="requiredFeature">Required feature to access the
         /// sku.</param>
-        public SkuInformation(Sku sku = default(Sku), bool? enabled = default(bool?), IList<DestinationToServiceLocationMap> destinationToServiceLocationMap = default(IList<DestinationToServiceLocationMap>), SkuCapacity capacity = default(SkuCapacity), IList<SkuCost> costs = default(IList<SkuCost>), IList<string> apiVersions = default(IList<string>), SkuDisabledReason? disabledReason = default(SkuDisabledReason?), string disabledReasonMessage = default(string), string requiredFeature = default(string))
+        public SkuInformation(Sku sku = default(Sku), bool? enabled = default(bool?), IList<DataLocationToServiceLocationMap> dataLocationToServiceLocationMap = default(IList<DataLocationToServiceLocationMap>), SkuCapacity capacity = default(SkuCapacity), IList<SkuCost> costs = default(IList<SkuCost>), IList<string> apiVersions = default(IList<string>), SkuDisabledReason? disabledReason = default(SkuDisabledReason?), string disabledReasonMessage = default(string), string requiredFeature = default(string))
         {
             Sku = sku;
             Enabled = enabled;
-            DestinationToServiceLocationMap = destinationToServiceLocationMap;
+            DataLocationToServiceLocationMap = dataLocationToServiceLocationMap;
             Capacity = capacity;
             Costs = costs;
             ApiVersions = apiVersions;
@@ -81,10 +81,10 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public bool? Enabled { get; private set; }
 
         /// <summary>
-        /// Gets the map of destination location to service location.
+        /// Gets the map of data location to service location.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.destinationToServiceLocationMap")]
-        public IList<DestinationToServiceLocationMap> DestinationToServiceLocationMap { get; private set; }
+        [JsonProperty(PropertyName = "properties.dataLocationToServiceLocationMap")]
+        public IList<DataLocationToServiceLocationMap> DataLocationToServiceLocationMap { get; private set; }
 
         /// <summary>
         /// Gets capacity of the Sku.

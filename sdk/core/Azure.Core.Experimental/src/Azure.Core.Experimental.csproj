@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Experimental types that might eventually move to Azure.Core</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline Experimental Extensions</AssemblyTitle>
-    <Version>0.1.0-preview.4</Version>
+    <Version>0.1.0-preview.12</Version>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -10,12 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../Azure.Core/src/Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" />
+    <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
   </ItemGroup>
 </Project>

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayListResult
+    internal partial class ApplicationGatewayListResult
     {
         internal static ApplicationGatewayListResult DeserializeApplicationGatewayListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ApplicationGateway> array = new List<ApplicationGateway>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -8,9 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
-#if EXPERIMENTAL_SPATIAL
-using Azure.Core.Spatial;
-#endif
+using Azure.Core.GeoJson;
 
 namespace Azure.Search.Documents.Models
 {
@@ -156,25 +154,23 @@ namespace Azure.Search.Documents.Models
         /// <returns>The value of the property.</returns>
         public IReadOnlyList<string> GetStringCollection(string key) => GetValue<string[]>(key);
 
-#if EXPERIMENTAL_SPATIAL
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
-        /// <see cref="PointGeometry"/> property called
+        /// <see cref="GeoPoint"/> property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
-        public PointGeometry GetPoint(string key) => GetValue<PointGeometry>(key);
+        public GeoPoint GetPoint(string key) => GetValue<GeoPoint>(key);
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s
-        /// <see cref="PointGeometry"/> collection property called
+        /// <see cref="GeoPoint"/> collection property called
         /// <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The name of the property.</param>
         /// <returns>The value of the property.</returns>
-        public IReadOnlyList<PointGeometry> GetPointCollection(string key) => GetValue<PointGeometry[]>(key);
-#endif
+        public IReadOnlyList<GeoPoint> GetPointCollection(string key) => GetValue<GeoPoint[]>(key);
 
         /// <summary>
         /// Get the value of a <see cref="SearchDocument"/>'s

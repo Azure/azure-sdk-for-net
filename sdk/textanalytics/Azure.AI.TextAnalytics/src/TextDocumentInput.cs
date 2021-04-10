@@ -25,6 +25,5 @@ namespace Azure.AI.TextAnalytics
         /// (for example, "en" for English or "es" for Spanish).
         /// </summary>
         public string Language { get; set; }
-
     }
 }

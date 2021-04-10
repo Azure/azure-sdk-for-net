@@ -51,8 +51,7 @@ namespace Storage.Tests
                 {
                     Location = "eastus2euap",
                     Kind = Kind.StorageV2,
-                    Sku = new Sku { Name = SkuName.StandardLRS },
-                    LargeFileSharesState = LargeFileSharesState.Enabled
+                    Sku = new Sku { Name = SkuName.StandardLRS }
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
 
@@ -122,14 +121,19 @@ namespace Storage.Tests
 
                 // Create storage account
                 string accountName = TestUtilities.GenerateName("sto");
-                var parameters = new StorageAccountCreateParameters
+                var createParameters = new StorageAccountCreateParameters
                 {
                     Location = "eastus2euap",
                     Kind = Kind.StorageV2,
                     Sku = new Sku { Name = SkuName.StandardLRS },
                     LargeFileSharesState = LargeFileSharesState.Enabled
                 };
-                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, createParameters);
+                var updateParameters = new StorageAccountUpdateParameters
+                {
+                    LargeFileSharesState = LargeFileSharesState.Enabled
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgName, accountName, updateParameters);
 
                 // implement case
                 try
@@ -164,7 +168,147 @@ namespace Storage.Tests
             }
         }
 
+        // create/list share Snapshot
+        // delete share Snapshot
+        [Fact]
+        public void FileShareSnapshotCreateDeleteListTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Location = "eastus2euap",
+                    Kind = Kind.StorageV2,
+                    Sku = new Sku { Name = SkuName.StandardLRS }
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+
+                // Enable share soft delete in service properties
+                FileServiceProperties properties = storageMgmtClient.FileServices.GetServiceProperties(rgName, accountName);
+                properties.ShareDeleteRetentionPolicy = new DeleteRetentionPolicy();
+                properties.ShareDeleteRetentionPolicy.Enabled = true;
+                properties.ShareDeleteRetentionPolicy.Days = 5;
+                properties = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, new FileServiceProperties(shareDeleteRetentionPolicy: properties.ShareDeleteRetentionPolicy));
+
+                // implement case
+                try
+                {
+                    // create 2 base share, delete one
+                    string shareName = TestUtilities.GenerateName("share");
+                    FileShare share = storageMgmtClient.FileShares.Create(rgName, accountName, shareName, new FileShare());
+                    string shareName2 = TestUtilities.GenerateName("share");
+                    FileShare share2 = storageMgmtClient.FileShares.Create(rgName, accountName, shareName2, new FileShare());
+                    storageMgmtClient.FileShares.Delete(rgName, accountName, shareName2);
+
+                    // create 2 share snapshots
+                    FileShare shareSnapshot1 = storageMgmtClient.FileShares.Create(rgName, accountName, shareName,
+                                                        new FileShare(),
+                                                        PutSharesExpand.Snapshots);
+                    Assert.NotNull(shareSnapshot1.SnapshotTime);
+                    FileShare shareSnapshot2 = storageMgmtClient.FileShares.Create(rgName, accountName, shareName,
+                                                        new FileShare(),
+                                                        PutSharesExpand.Snapshots);
+                    Assert.NotNull(shareSnapshot2.SnapshotTime);
+
+                    // Get single share snapsshot
+                    FileShare shareSnapshot = storageMgmtClient.FileShares.Get(rgName, accountName, shareName, GetShareExpand.Stats, shareSnapshot1.SnapshotTime.Value.ToUniversalTime().ToString("o"));
+                    Assert.Equal(shareSnapshot.SnapshotTime, shareSnapshot1.SnapshotTime);
+
+                    // List share with snapshot
+                    IPage<FileShareItem> fileShares = storageMgmtClient.FileShares.List(rgName, accountName, expand: ListSharesExpand.Snapshots);
+                    Assert.Equal(3, fileShares.Count());
+
+                    // Delete share snapshot
+                    storageMgmtClient.FileShares.Delete(rgName, accountName, shareName2, shareSnapshot2.SnapshotTime.Value.ToUniversalTime().ToString("o"));
+
+                    // List share with snapshot
+                    fileShares = storageMgmtClient.FileShares.List(rgName, accountName, expand: ListSharesExpand.Snapshots);
+                    //Assert.Equal(2, fileShares.Count());
+
+                    // List share with deleted
+                    fileShares = storageMgmtClient.FileShares.List(rgName, accountName, expand: ListSharesExpand.Deleted);
+                    Assert.Equal(2, fileShares.Count());
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
         // Get/Set File Service Properties
+        [Fact]
+        public void FileServiceTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgName = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.PremiumLRS },
+                    Kind = Kind.FileStorage,
+                    Location = "centraluseuap"
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
+
+                // implement case
+                try
+                {
+                    // Get after account create
+                    FileServiceProperties properties1 = storageMgmtClient.FileServices.GetServiceProperties(rgName, accountName);
+                    Assert.Equal(0, properties1.Cors.CorsRulesProperty.Count);
+
+                    //Set and validated
+                    FileServiceProperties properties2 = new FileServiceProperties();
+                    properties2.ProtocolSettings = new ProtocolSettings();
+                    properties2.ProtocolSettings.Smb = new SmbSetting();
+                    properties2.ProtocolSettings.Smb.Multichannel = new Multichannel(true);
+                    properties2.ProtocolSettings.Smb.Versions = "SMB2.1;SMB3.0;SMB3.1.1";
+                    properties2.ProtocolSettings.Smb.AuthenticationMethods = "NTLMv2;Kerberos";
+                    properties2.ProtocolSettings.Smb.KerberosTicketEncryption = "RC4-HMAC;AES-256";
+                    properties2.ProtocolSettings.Smb.ChannelEncryption = "AES-128-CCM;AES-128-GCM;AES-256-GCM";
+                    FileServiceProperties properties3 = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, properties2);
+                    Assert.True(properties3.ProtocolSettings.Smb.Multichannel.Enabled);
+                    Assert.Equal("SMB2.1;SMB3.0;SMB3.1.1", properties3.ProtocolSettings.Smb.Versions);
+                    Assert.Equal("NTLMv2;Kerberos", properties3.ProtocolSettings.Smb.AuthenticationMethods);
+                    Assert.Equal("RC4-HMAC;AES-256", properties3.ProtocolSettings.Smb.KerberosTicketEncryption);
+                    Assert.Equal("AES-128-CCM;AES-128-GCM;AES-256-GCM", properties3.ProtocolSettings.Smb.ChannelEncryption);
+
+                    // Get and validate
+                    FileServiceProperties properties4 = storageMgmtClient.FileServices.GetServiceProperties(rgName, accountName);
+                    Assert.True(properties3.ProtocolSettings.Smb.Multichannel.Enabled);
+                }
+                finally
+                {
+                    // clean up
+                    storageMgmtClient.StorageAccounts.Delete(rgName, accountName);
+                    resourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+        // Get/Set File Service Cors Properties
         [Fact]
         public void FileServiceCorsTest()
         {
@@ -217,7 +361,7 @@ namespace Storage.Tests
                         MaxAgeInSeconds = 2000
                     });
 
-                    FileServiceProperties properties3 = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, cors);
+                    FileServiceProperties properties3 = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, new FileServiceProperties(cors: cors));
 
                     //Validate CORS Rules
                     Assert.Equal(cors.CorsRulesProperty.Count, properties3.Cors.CorsRulesProperty.Count);
@@ -291,7 +435,7 @@ namespace Storage.Tests
                     properties.ShareDeleteRetentionPolicy = new DeleteRetentionPolicy();
                     properties.ShareDeleteRetentionPolicy.Enabled = true;
                     properties.ShareDeleteRetentionPolicy.Days = 5;
-                    properties = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, shareDeleteRetentionPolicy: properties.ShareDeleteRetentionPolicy);
+                    properties = storageMgmtClient.FileServices.SetServiceProperties(rgName, accountName, new FileServiceProperties(shareDeleteRetentionPolicy: properties.ShareDeleteRetentionPolicy));
                     Assert.True(properties.ShareDeleteRetentionPolicy.Enabled);
                     Assert.Equal(5, properties.ShareDeleteRetentionPolicy.Days);
 

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceGroupListResult
+    internal partial class ResourceGroupListResult
     {
         internal static ResourceGroupListResult DeserializeResourceGroupListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ResourceGroup> array = new List<ResourceGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

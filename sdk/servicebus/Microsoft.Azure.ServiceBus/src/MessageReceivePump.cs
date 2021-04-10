@@ -12,25 +12,28 @@ namespace Microsoft.Azure.ServiceBus
 
     sealed class MessageReceivePump
     {
+        public readonly SemaphoreSlim maxConcurrentCallsSemaphoreSlim;
+        public readonly MessageHandlerOptions registerHandlerOptions;
         readonly Func<Message, CancellationToken, Task> onMessageCallback;
         readonly string endpoint;
-        readonly MessageHandlerOptions registerHandlerOptions;
         readonly IMessageReceiver messageReceiver;
         readonly CancellationToken pumpCancellationToken;
-        readonly SemaphoreSlim maxConcurrentCallsSemaphoreSlim;
+        readonly CancellationToken runningTaskCancellationToken;
         readonly ServiceBusDiagnosticSource diagnosticSource;
 
         public MessageReceivePump(IMessageReceiver messageReceiver,
             MessageHandlerOptions registerHandlerOptions,
             Func<Message, CancellationToken, Task> callback,
             Uri endpoint,
-            CancellationToken pumpCancellationToken)
+            CancellationToken pumpCancellationToken,
+            CancellationToken runningTaskCancellationToken)
         {
             this.messageReceiver = messageReceiver ?? throw new ArgumentNullException(nameof(messageReceiver));
             this.registerHandlerOptions = registerHandlerOptions;
             this.onMessageCallback = callback;
             this.endpoint = endpoint.Authority;
             this.pumpCancellationToken = pumpCancellationToken;
+            this.runningTaskCancellationToken = runningTaskCancellationToken;
             this.maxConcurrentCallsSemaphoreSlim = new SemaphoreSlim(this.registerHandlerOptions.MaxConcurrentCalls);
             this.diagnosticSource = new ServiceBusDiagnosticSource(messageReceiver.Path, endpoint);
         }
@@ -163,7 +166,7 @@ namespace Microsoft.Azure.ServiceBus
             try
             {
                 MessagingEventSource.Log.MessageReceiverPumpUserCallbackStart(this.messageReceiver.ClientId, message);
-                await this.onMessageCallback(message, this.pumpCancellationToken).ConfigureAwait(false);
+                await this.onMessageCallback(message, this.runningTaskCancellationToken).ConfigureAwait(false);
 
                 MessagingEventSource.Log.MessageReceiverPumpUserCallbackStop(this.messageReceiver.ClientId, message);
             }

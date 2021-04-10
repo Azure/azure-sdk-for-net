@@ -7,19 +7,11 @@
 
     <!-- Use Azure.Core.Experimental's Spatial features -->
     <!-- (Note: a number of tests will need re-recording if you disable) -->
-    <UseAzureCoreExperimentalSpatial Condition="'$(UseAzureCoreExperimentalSpatial)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalSpatial>
-    <DefineConstants Condition="'$(UseAzureCoreExperimentalSpatial)' == 'true'">EXPERIMENTAL_SPATIAL;$(DefineConstants)</DefineConstants>
-
-    <!-- Use Azure.Core's ObjectSerializer features -->
-    <UseAzureCoreSerializer Condition="'$(UseAzureCoreSerializer)' == ''">true</UseAzureCoreSerializer>
-    <DefineConstants Condition="'$(UseAzureCoreSerializer)' == 'true'">EXPERIMENTAL_SERIALIZER;$(DefineConstants)</DefineConstants>
+    <UseAzureCoreExperimentalSpatial Condition="'$(UseAzureCoreExperimentalSpatial)' == ''">true</UseAzureCoreExperimentalSpatial>
 
     <!-- Use Azure.Core.Experimental's DynamicData features (stubbed out in Search for now) -->
     <UseAzureCoreExperimentalDynamic Condition="'$(UseAzureCoreExperimentalDynamic)' == ''">$(UseAzureCoreExperimental)</UseAzureCoreExperimentalDynamic>
     <DefineConstants Condition="'$(UseAzureCoreExperimentalDynamic)' == 'true'">EXPERIMENTAL_DYNAMIC;$(DefineConstants)</DefineConstants>
-
-    <UseFieldBuilder Condition="'$(UseFieldBuilder)' == '' AND '$(UseAzureCoreSerializer)' == 'true'">true</UseFieldBuilder>
-    <DefineConstants Condition="'$(UseFieldBuilder)' == 'true'">EXPERIMENTAL_FIELDBUILDER;$(DefineConstants)</DefineConstants>
 
     <!-- Use a Package or Project reference to Azure.Core.Experimental -->
     <AddExperimentalReference Condition="('$(UseAzureCoreExperimentalSpatial)' == 'true') OR ('$(UseAzureCoreExperimentalDynamic)' == 'true')">true</AddExperimentalReference>

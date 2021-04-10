@@ -40,8 +40,7 @@ namespace Storage.Tests
                 {
                     Location = "eastus2euap",
                     Kind = Kind.StorageV2,
-                    Sku = new Sku { Name = SkuName.StandardLRS },
-                    LargeFileSharesState = LargeFileSharesState.Enabled
+                    Sku = new Sku { Name = SkuName.StandardLRS }
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
 
@@ -108,8 +107,7 @@ namespace Storage.Tests
                 {
                     Location = "eastus2euap",
                     Kind = Kind.StorageV2,
-                    Sku = new Sku { Name = SkuName.StandardLRS },
-                    LargeFileSharesState = LargeFileSharesState.Enabled
+                    Sku = new Sku { Name = SkuName.StandardLRS }
                 };
                 var account = storageMgmtClient.StorageAccounts.Create(rgName, accountName, parameters);
 

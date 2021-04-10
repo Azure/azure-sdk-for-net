@@ -124,6 +124,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("protocols"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AzureFirewallNetworkRuleProtocol> array = new List<AzureFirewallNetworkRuleProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -134,6 +139,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("sourceAddresses"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -144,6 +154,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("destinationAddresses"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -154,6 +169,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("destinationPorts"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -164,6 +184,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("destinationFqdns"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -174,6 +199,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("sourceIpGroups"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -184,6 +214,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("destinationIpGroups"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

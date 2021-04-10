@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;
@@ -30,9 +31,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='azureRegion'>
             /// Azure region to hit Api
             /// </param>
-            public static IPage<JobResource> List(this IBackupCrrJobsOperations operations, string azureRegion)
+            /// <param name='parameters'>
+            /// Backup CRR Job request
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='skipToken'>
+            /// skipToken Filter.
+            /// </param>
+            public static IPage<JobResource> List(this IBackupCrrJobsOperations operations, string azureRegion, CrrJobRequest parameters, ODataQuery<JobQueryObject> odataQuery = default(ODataQuery<JobQueryObject>), string skipToken = default(string))
             {
-                return operations.ListAsync(azureRegion).GetAwaiter().GetResult();
+                return operations.ListAsync(azureRegion, parameters, odataQuery, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -44,12 +54,21 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='azureRegion'>
             /// Azure region to hit Api
             /// </param>
+            /// <param name='parameters'>
+            /// Backup CRR Job request
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='skipToken'>
+            /// skipToken Filter.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobResource>> ListAsync(this IBackupCrrJobsOperations operations, string azureRegion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<JobResource>> ListAsync(this IBackupCrrJobsOperations operations, string azureRegion, CrrJobRequest parameters, ODataQuery<JobQueryObject> odataQuery = default(ODataQuery<JobQueryObject>), string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(azureRegion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(azureRegion, parameters, odataQuery, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

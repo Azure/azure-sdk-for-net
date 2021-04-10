@@ -56,7 +56,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         {
 
             ProcessStartInfo startInfo;
-            string azureCliPath;
+            string processPath;
+            string currentPath = EnvironmentHelper.GetEnvironmentVariable("PATH");
 
 #if net452 || net461
             if (!IsUnixPlatform())
@@ -70,7 +71,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     Arguments = $"/c {GetTokenCommand} {ResourceArgumentName} {resource}"
                 };
 
-                azureCliPath = $"{EnvironmentHelper.GetEnvironmentVariable(AzureCliPath)};{_azureCliDefaultPathWindows}";
+                processPath = $"{EnvironmentHelper.GetEnvironmentVariable(AzureCliPath)};{_azureCliDefaultPathWindows};{currentPath}";
             }
             else
             {
@@ -80,14 +81,14 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     Arguments = $"-c \"{GetTokenCommand} {ResourceArgumentName} {resource}\""
                 };
 
-                azureCliPath = $"{EnvironmentHelper.GetEnvironmentVariable(AzureCliPath)}:{AzureCliDefaultPath}";
+                processPath = $"{EnvironmentHelper.GetEnvironmentVariable(AzureCliPath)}:{AzureCliDefaultPath}:{currentPath}";
             }
 
             // Default install location for Az CLI is included. If developer has installed to non-default location, the path can be specified using AzureCliPath variable.
 #if FullNetFx
-            startInfo.EnvironmentVariables["PATH"] = azureCliPath;
+            startInfo.EnvironmentVariables["PATH"] = processPath;
 #else
-            startInfo.Environment["PATH"] = azureCliPath;
+            startInfo.Environment["PATH"] = processPath;
 #endif
             return startInfo;
         }

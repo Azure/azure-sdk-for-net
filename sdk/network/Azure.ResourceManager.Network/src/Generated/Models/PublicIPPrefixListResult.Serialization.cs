@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PublicIPPrefixListResult
+    internal partial class PublicIPPrefixListResult
     {
         internal static PublicIPPrefixListResult DeserializePublicIPPrefixListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PublicIPPrefix> array = new List<PublicIPPrefix>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
+    [JsonConverter(typeof(TeradataPartitionSettingsConverter))]
     public partial class TeradataPartitionSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -42,21 +45,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (property.NameEquals("partitionColumnName"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionColumnName = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionUpperBound"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionUpperBound = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionLowerBound"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     partitionLowerBound = property.Value.GetObject();
                     continue;
                 }
             }
             return new TeradataPartitionSettings(partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+        }
+
+        internal partial class TeradataPartitionSettingsConverter : JsonConverter<TeradataPartitionSettings>
+        {
+            public override void Write(Utf8JsonWriter writer, TeradataPartitionSettings model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model);
+            }
+            public override TeradataPartitionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeTeradataPartitionSettings(document.RootElement);
+            }
         }
     }
 }

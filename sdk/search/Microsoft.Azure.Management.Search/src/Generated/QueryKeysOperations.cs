@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Search
         public SearchManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Generates a new query key for the specified Search service. You can create
+        /// Generates a new query key for the specified search service. You can create
         /// up to 50 query keys per service.
         /// <see href="https://aka.ms/search-manage" />
         /// </summary>

@@ -24,6 +24,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [SyncOnly]
+        [IgnoreOnNet5("https://github.com/Azure/azure-sdk-for-net/issues/16963")]
         public async Task CreateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -35,7 +36,7 @@ namespace Azure.Search.Documents.Tests.Samples
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 
             // Define client options to use camelCase when serializing property names.
-            SearchClientOptions options = new SearchClientOptions
+            SearchClientOptions options = new SearchClientOptions(ServiceVersion)
             {
                 Serializer = new JsonObjectSerializer(
                     new JsonSerializerOptions

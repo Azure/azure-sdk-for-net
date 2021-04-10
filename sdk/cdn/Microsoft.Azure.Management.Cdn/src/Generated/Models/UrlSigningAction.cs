@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         public UrlSigningAction()
         {
+            Parameters = new UrlSigningActionParameters();
             CustomInit();
         }
 
@@ -61,10 +62,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
             if (Parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Parameters");
-            }
-            if (Parameters != null)
-            {
-                Parameters.Validate();
             }
         }
     }

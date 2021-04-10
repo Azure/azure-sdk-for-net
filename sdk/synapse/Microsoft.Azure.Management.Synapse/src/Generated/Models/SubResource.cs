@@ -10,15 +10,12 @@
 
 namespace Microsoft.Azure.Management.Synapse.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Azure Synapse nested resource, which belongs to a factory.
+    /// Azure Synapse nested resource, which belongs to a workspace.
     /// </summary>
-    public partial class SubResource : IResource
+    public partial class SubResource : AzureEntityResource
     {
         /// <summary>
         /// Initializes a new instance of the SubResource class.
@@ -31,16 +28,16 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// <summary>
         /// Initializes a new instance of the SubResource class.
         /// </summary>
-        /// <param name="id">The resource identifier.</param>
-        /// <param name="name">The resource name.</param>
-        /// <param name="type">The resource type.</param>
-        /// <param name="etag">Etag identifies change in the resource.</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
+        /// <param name="etag">Resource Etag.</param>
         public SubResource(string id = default(string), string name = default(string), string type = default(string), string etag = default(string))
+            : base(id, name, type, etag)
         {
-            Id = id;
-            Name = name;
-            Type = type;
-            Etag = etag;
             CustomInit();
         }
 
@@ -48,30 +45,6 @@ namespace Microsoft.Azure.Management.Synapse.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets the resource identifier.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the resource type.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// Gets etag identifies change in the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; private set; }
 
     }
 }

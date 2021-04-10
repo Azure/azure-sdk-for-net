@@ -35,9 +35,37 @@ namespace Azure.Data.Tables.Sas
         /// <param name="expiresOn">The time at which the shared access signature becomes invalid.</param>
         public TableAccountSasBuilder(string rawPermissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
         {
+            Argument.AssertNotNullOrEmpty(rawPermissions, nameof(rawPermissions));
+
             ExpiresOn = expiresOn;
             Permissions = rawPermissions;
             ResourceTypes = resourceTypes;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TableAccountSasBuilder"/> based on an existing Uri containing a shared acccess signature.
+        /// </summary>
+        /// <param name="uri">The Uri to parse.</param>
+        /// <returns></returns>
+        public TableAccountSasBuilder(Uri uri)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+
+            var uriBuilder = new TableUriBuilder(uri);
+
+            if (!uriBuilder.Sas.ResourceTypes.HasValue)
+            {
+                throw new ArgumentException("Uri must contain a ResourceType value", nameof(uri));
+            }
+
+            ExpiresOn = uriBuilder.Sas.ExpiresOn;
+            Identifier = uriBuilder.Sas.Identifier;
+            IPRange = uriBuilder.Sas.IPRange;
+            Protocol = uriBuilder.Sas.Protocol;
+            StartsOn = uriBuilder.Sas.StartsOn;
+            Version = uriBuilder.Sas.Version;
+            ResourceTypes = uriBuilder.Sas.ResourceTypes.Value;
+            SetPermissions(uriBuilder.Sas.Permissions);
         }
 
         /// <summary>

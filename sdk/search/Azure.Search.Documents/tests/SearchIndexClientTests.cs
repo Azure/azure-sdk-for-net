@@ -287,6 +287,22 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task GetIndexNames()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+
+            SearchIndexClient client = resources.GetIndexClient();
+
+            bool found = false;
+            await foreach (string name in client.GetIndexNamesAsync())
+            {
+                found |= string.Equals(resources.IndexName, name, StringComparison.InvariantCultureIgnoreCase);
+            }
+
+            Assert.IsTrue(found, "Shared index name not found");
+        }
+
+        [Test]
         [SyncOnly]
         public void DeleteIndexParameterValidation()
         {
@@ -427,6 +443,46 @@ namespace Azure.Search.Documents.Tests
             IReadOnlyList<AnalyzedTokenInfo> tokens = result.Value;
 
             Assert.AreEqual(new[] { "The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog." }, tokens.Select(t => t.Token));
+        }
+
+        [Test]
+        public async Task SetScoringProfile()
+        {
+            // Testing: https://github.com/Azure/azure-sdk-for-net/issues/16570
+
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+
+            string indexName = Recording.Random.GetName();
+            string scoringProfileName = Recording.Random.GetName();
+
+            // Make sure the index, if created, is cleaned up.
+            resources.IndexName = indexName;
+
+            SearchIndex index = new SearchIndex(indexName)
+            {
+                Fields =
+                {
+                    new SimpleField("id", SearchFieldDataType.String) { IsKey = true },
+                    new SearchableField("title") { IsFilterable = true, IsSortable = false },
+                },
+                DefaultScoringProfile = scoringProfileName,
+                ScoringProfiles =
+                {
+                    new ScoringProfile(scoringProfileName)
+                    {
+                        TextWeights = new TextWeights(new Dictionary<string, double>
+                        {
+                            { "title", 2 },
+                        }),
+                    },
+                },
+            };
+
+            SearchIndexClient client = resources.GetIndexClient();
+            SearchIndex createdIndex = await client.CreateIndexAsync(index);
+
+            Assert.AreEqual(1, createdIndex.ScoringProfiles.Count);
+            Assert.AreEqual(scoringProfileName, createdIndex.ScoringProfiles[0].Name);
         }
     }
 }

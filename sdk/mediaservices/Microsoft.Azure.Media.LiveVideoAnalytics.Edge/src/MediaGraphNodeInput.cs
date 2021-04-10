@@ -35,7 +35,9 @@ namespace Microsoft.Azure.Media.LiveVideoAnalytics.Edge.Models
             return new MediaGraphNodeInput()
             {
                 NodeName = nodeName,
+#pragma warning disable CA1825 // Avoid zero-length array allocations. Not available in net452
                 OutputSelectors = new MediaGraphOutputSelector[0],
+#pragma warning restore CA1825 // Avoid zero-length array allocations
             };
         }
     }

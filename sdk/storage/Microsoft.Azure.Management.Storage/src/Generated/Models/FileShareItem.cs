@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the FileShareItem class.
         /// </summary>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.Compute/virtualMachines" or
+        /// "Microsoft.Storage/storageAccounts"</param>
         /// <param name="etag">Resource Etag.</param>
         /// <param name="lastModifiedTime">Returns the date and time the share
         /// was last modified.</param>
@@ -72,7 +72,10 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="shareUsageBytes">The approximate size of the data
         /// stored on the share. Note that this value may not include all
         /// recently created or recently resized files.</param>
-        public FileShareItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), string enabledProtocols = default(string), string rootSquash = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string accessTier = default(string), System.DateTime? accessTierChangeTime = default(System.DateTime?), string accessTierStatus = default(string), long? shareUsageBytes = default(long?))
+        /// <param name="snapshotTime">Creation time of share snapshot returned
+        /// in the response of list shares with expand param
+        /// "snapshots".</param>
+        public FileShareItem(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), System.DateTime? lastModifiedTime = default(System.DateTime?), IDictionary<string, string> metadata = default(IDictionary<string, string>), int? shareQuota = default(int?), string enabledProtocols = default(string), string rootSquash = default(string), string version = default(string), bool? deleted = default(bool?), System.DateTime? deletedTime = default(System.DateTime?), int? remainingRetentionDays = default(int?), string accessTier = default(string), System.DateTime? accessTierChangeTime = default(System.DateTime?), string accessTierStatus = default(string), long? shareUsageBytes = default(long?), System.DateTime? snapshotTime = default(System.DateTime?))
             : base(id, name, type, etag)
         {
             LastModifiedTime = lastModifiedTime;
@@ -88,6 +91,7 @@ namespace Microsoft.Azure.Management.Storage.Models
             AccessTierChangeTime = accessTierChangeTime;
             AccessTierStatus = accessTierStatus;
             ShareUsageBytes = shareUsageBytes;
+            SnapshotTime = snapshotTime;
             CustomInit();
         }
 
@@ -187,6 +191,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         public long? ShareUsageBytes { get; private set; }
 
         /// <summary>
+        /// Gets creation time of share snapshot returned in the response of
+        /// list shares with expand param "snapshots".
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.snapshotTime")]
+        public System.DateTime? SnapshotTime { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -194,13 +205,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (ShareQuota > 102400)
+            if (ShareQuota != null)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "ShareQuota", 102400);
-            }
-            if (ShareQuota < 1)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "ShareQuota", 1);
+                if (ShareQuota > 102400)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMaximum, "ShareQuota", 102400);
+                }
+                if (ShareQuota < 1)
+                {
+                    throw new ValidationException(ValidationRules.InclusiveMinimum, "ShareQuota", 1);
+                }
             }
         }
     }

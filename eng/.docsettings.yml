@@ -7,7 +7,10 @@ omitted_paths:
   - sdk/*mgmt*/*
   - sdk/*/*.Management.*/*
   - samples/*
+  - common/Perf/*
   - common/SmokeTests/*
+  - common/Stress/*
+  - sdk/*/*/perf/*
   - sdk/*/samples/*
   - sdk/*/*/samples/*
   - sdk/*/swagger/*
@@ -32,7 +35,6 @@ known_presence_issues:
   - ['sdk/batch/Microsoft.Azure.Batch/Tools','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/Tools','#5499']
   - ['sdk/cognitiveservices/AnomalyDetector','#5499']
-  - ['sdk/cognitiveservices/FormRecognizer','#5499']
   - ['sdk/cognitiveservices/Knowledge.QnAMaker','#5499']
   - ['sdk/cognitiveservices/Language.LUIS.Authoring','#5499']
   - ['sdk/cognitiveservices/Language.LUIS.Runtime','#5499']
@@ -123,9 +125,11 @@ known_presence_issues:
 known_content_issues:
   - ['README.md','Root readme']
   - ['doc/README.md','Doc readme']
+  - ['sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md', '#5499']
   - ['sdk/core/Azure.Core/README.md', '#5499']
   - ['sdk/core/Azure.Core.Experimental/README.md', '#5499']
-  - ['sdk/core/Microsoft.Extensions.Azure/README.md','#5499']
+  - ['sdk/core/Azure.Core.Amqp/README.md', '#5499']
+  - ['sdk/core/System.Memory.Data/README.md', '#5499']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
@@ -134,6 +138,7 @@ known_content_issues:
   - ['sdk/appconfiguration/README.md','azure-sdk-tools/issues/42']
   - ['sdk/appconfiguration/Azure.Data.AppConfiguration/tests/Readme.md','#5499']
   - ['sdk/storage/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/cognitiveservices/FormRecognizer/README.md','#5499']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/README.md','#5499']
   - ['sdk/cognitiveservices/Personalizer/src/README.md','#5499']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','#5499']
@@ -142,19 +147,31 @@ known_content_issues:
   - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Blobs/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Keys/README.md','azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Microsoft.Azure.WebJobs.Extensions.Clients/README.md','azure-sdk-tools/issues/404']
+  - ['sdk/extensions/Microsoft.Extensions.Azure/README.md','#5499']
+  - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', '#15423']
+  - ['sdk/eventhub/README.md','azure-sdk-tools/issues/42']
   - ['sdk/search/README.md','azure-sdk-tools/issues/42']
+  - ['sdk/search/Azure.Search.Documents/README.md','Credscan cleanup']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#5499']
   - ['sdk/formrecognizer/Azure.AI.FormRecognizer/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Blobs/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Blobs/perf/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Blobs.Batch/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Blobs.Cryptography/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Common/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Files.DataLake/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Files.DataLake/perf/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Files.Shares/README.md','#11492']
+  - ['sdk/storage/Azure.Storage.Files.Shares/perf/README.md','#11492']
   - ['sdk/storage/Azure.Storage.Queues/README.md','#11492']
   - ['sdk/synapse/Microsoft.Azure.Synapse/README.md','#11492']
   - ['sdk/tables/Azure.Data.Tables/readme.md', '#11492']
   - ['sdk/core/Azure.Core.TestFramework/README.md', '#11492']
+  - ['sdk/core/Microsoft.Azure.Core.NewtonsoftJson/README.md', '#15423']
+  - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', '#15423']
+  - ['sdk/core/Microsoft.Azure.Core.Spatial.NewtonsoftJson/README.md', '#15423']
+  - ['sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/README.md', '#15423']
 
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:

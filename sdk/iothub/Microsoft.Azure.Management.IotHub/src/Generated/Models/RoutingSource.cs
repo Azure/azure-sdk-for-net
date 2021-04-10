@@ -21,6 +21,5 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public const string TwinChangeEvents = "TwinChangeEvents";
         public const string DeviceLifecycleEvents = "DeviceLifecycleEvents";
         public const string DeviceJobLifecycleEvents = "DeviceJobLifecycleEvents";
-        public const string DigitalTwinChangeEvents = "DigitalTwinChangeEvents";
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.AI.FormRecognizer.Training
     public class CopyModelOperation : Operation<CustomFormModelInfo>
     {
         /// <summary>Provides communication with the Form Recognizer Azure Cognitive Service through its REST API.</summary>
-        private readonly ServiceRestClient _serviceClient;
+        private readonly FormRecognizerRestClient _serviceClient;
 
         /// <summary>Provides tools for exception creation in case of failure.</summary>
         private readonly ClientDiagnostics _diagnostics;
@@ -78,13 +78,17 @@ namespace Azure.AI.FormRecognizer.Training
         public override bool HasValue => _value != null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class.
+        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class which
+        /// tracks the status of the long-running operation for copying a custom model into a target Form Recognizer resource.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="targetModelId">Model ID in the target Form Recognizer resource.</param>
         /// <param name="client">The client used to check for completion.</param>
         public CopyModelOperation(string operationId, string targetModelId, FormTrainingClient client)
         {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(client, nameof(client));
+
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
             _targetModelId = targetModelId;
@@ -115,7 +119,7 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="diagnostics">The client diagnostics for exception creation in case of failure.</param>
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="targetModelId">Model ID in the target Form Recognizer resource.</param>
-        internal CopyModelOperation(ServiceRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, string targetModelId)
+        internal CopyModelOperation(FormRecognizerRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, string targetModelId)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
@@ -138,6 +142,14 @@ namespace Azure.AI.FormRecognizer.Training
             _modelId = substrs[substrs.Length - 3];
 
             Id = string.Join("/", substrs, substrs.Length - 3, 3);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CopyModelOperation"/> class. This constructor
+        /// is intended to be used for mocking only.
+        /// </summary>
+        protected CopyModelOperation()
+        {
         }
 
         /// <summary>

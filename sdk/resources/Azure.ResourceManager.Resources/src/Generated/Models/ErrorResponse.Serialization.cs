@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("details"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -49,6 +54,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("additionalInfo"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

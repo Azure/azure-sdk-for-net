@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Resources;
-using Azure.Management.Storage.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Compute.Tests
             var storageAccountOutput = await CreateStorageAccount(rg1Name, storageAccountName);
 
             var returnTwovm = await CreateVM(rg1Name, asName, storageAccountOutput, imageRef);
-            var vm1 = returnTwovm.Item1;
-            inputVM1 = returnTwovm.Item2;
+            var vm1 = returnTwovm.Response;
+            inputVM1 = returnTwovm.Input;
             returnTwovm = await CreateVM(rg2Name, asName, storageAccountOutput, imageRef);
-            var vm2 = returnTwovm.Item1;
-            inputVM2 = returnTwovm.Item2;
+            var vm2 = returnTwovm.Response;
+            inputVM2 = returnTwovm.Input;
             var listResponse = await (VirtualMachinesOperations.ListAllAsync()).ToEnumerableAsync();
             Assert.True(listResponse.Count() >= 2);
             //Assert.Null(listResponse.NextPageLink);
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.Compute.Tests
             StorageAccount storageAccountOutput = await CreateStorageAccount(resourceGroup1Name, storageAccountName);
 
             var returnTwovm = await CreateVM(resourceGroup1Name, availabilitySetName, storageAccountOutput, imageRef);
-            var vm1 = returnTwovm.Item1;
-            inputVM1 = returnTwovm.Item2;
+            var vm1 = returnTwovm.Response;
+            inputVM1 = returnTwovm.Input;
             returnTwovm = await CreateVM(resourceGroup2Name, availabilitySetName, storageAccountOutput, imageRef);
-            var vm2 = returnTwovm.Item1;
-            inputVM2 = returnTwovm.Item2;
+            var vm2 = returnTwovm.Response;
+            inputVM2 = returnTwovm.Input;
             var listResponse = await (VirtualMachinesOperations.ListByLocationAsync(DefaultLocation)).ToEnumerableAsync();
             Assert.True(listResponse.Count() >= 2);
             //Assert.Null(listResponse.NextPageLink);

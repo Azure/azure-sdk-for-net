@@ -1,28 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net461;net5.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <StartupObject>SmokeTest.Program</StartupObject>
   </PropertyGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-
   <ItemGroup>
-    <PackageReference Include="Azure.Core" Version="1.4.0-dev.*" />
-    <PackageReference Include="Azure.Identity" Version="1.2.0-dev.*" />
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.1.0-dev.*" />
-    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.1.0-dev.*" />
-    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.1.0-dev.*" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.5.0-dev.*" />
-    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.4.3" />
+    <!-- Add an OverrideDailyVersion attribute to prevent the Update-Dependencies script from overwriting it with a daily build version -->
+    <PackageReference Include="Azure.Core" Version="1.10.0" />
+    <PackageReference Include="Azure.Identity" Version="1.4.0-beta.4" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.3.1" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.3.1" />
+    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.2.0-beta.4" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.9.0-beta.1" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.4.11" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.20.1" />
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.10.0" />
-  </ItemGroup>
 
+    <!-- This is needed to resolve a build conflict and force the correct version -->
+    <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
+  </ItemGroup>
   <!-- Sample: IoT Hub Connection String Translation -->
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\..\samples\iothub-connect-to-eventhubs\**\*.cs" Link="Samples\IoTHubConnection\SharedSource\%(Filename)%(Extension)" />

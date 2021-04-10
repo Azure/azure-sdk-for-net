@@ -9,11 +9,12 @@ using System;
 
 namespace Azure.AI.FormRecognizer
 {
-    internal static class FormContentTypeExtensions
+    internal static partial class FormContentTypeExtensions
     {
         public static string ToSerialString(this FormContentType value) => value switch
         {
             FormContentType.Pdf => "application/pdf",
+            FormContentType.Bmp => "image/bmp",
             FormContentType.Jpeg => "image/jpeg",
             FormContentType.Png => "image/png",
             FormContentType.Tiff => "image/tiff",
@@ -23,6 +24,7 @@ namespace Azure.AI.FormRecognizer
         public static FormContentType ToFormContentType(this string value)
         {
             if (string.Equals(value, "application/pdf", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Pdf;
+            if (string.Equals(value, "image/bmp", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Bmp;
             if (string.Equals(value, "image/jpeg", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Jpeg;
             if (string.Equals(value, "image/png", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Png;
             if (string.Equals(value, "image/tiff", StringComparison.InvariantCultureIgnoreCase)) return FormContentType.Tiff;

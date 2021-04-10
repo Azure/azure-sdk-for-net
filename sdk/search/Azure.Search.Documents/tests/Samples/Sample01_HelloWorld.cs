@@ -330,10 +330,9 @@ namespace Azure.Search.Documents.Tests.Samples
                     Parameters = new IndexingParameters
                     {
                         // Tell the indexer to parse each blob as a separate JSON document.
-                        // See https://docs.microsoft.com/azure/search/search-howto-index-json-blobs for details.
-                        Configuration =
+                        IndexingParametersConfiguration = new IndexingParametersConfiguration
                         {
-                            ["parsingMode"] = "json"
+                            ParsingMode = BlobIndexerParsingMode.Json
                         }
                     },
                     SkillsetName = skillsetName
@@ -357,8 +356,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
                 // Query for hotels with an ocean view.
                 SearchResults<Hotel> results = await searchClient.SearchAsync<Hotel>("ocean view");
-                /*@@*/
-                bool found = false;
+                /*@@*/ bool found = false;
                 await foreach (SearchResult<Hotel> result in results.GetResultsAsync())
                 {
                     Hotel hotel = result.Document;

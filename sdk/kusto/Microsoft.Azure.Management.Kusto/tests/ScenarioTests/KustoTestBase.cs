@@ -19,22 +19,23 @@ namespace Kusto.Tests.ScenarioTests
         private const string ObjectIdKey = "ObjectId";
         private const string LocationKey = "location";
         private const string SubIdKey = "SubId";
-        public string eventHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest";
-        public string storageAccountForEventGridResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.Storage/storageAccounts/foreventgridtest";
-        public string iotHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/OferTestGroup/providers/Microsoft.Devices/IotHubs/ofertestiot";
+        public string eventHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns/eventhubs/testclientseh";
+        public string storageAccountForEventGridResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Storage/storageAccounts/testclients";
+        public string iotHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/test-clients-rg/providers/Microsoft.Devices/IotHubs/test-clients-iot";
         public string clientIdForPrincipal = "713c3475-5021-4f3b-a650-eaa9a83f25a4";
-        public string dBprincipalMail = "oflipman@microsoft.com";
+        public string dBprincipalMail = "astauben@microsoft.com";
         public string consumerGroupName = "$Default";
         public readonly string tableName = "MyTest";
-        public readonly string resourceGroupForTest = "ofertestgroup";
-        public readonly string clusterForEventGridTest = "ofertestforclient";
+        public readonly string resourceGroupForTest = "test-clients-rg";
+        public readonly string clusterForEventGridTest = "eventgridclienttest";
         public readonly string databaseForEventGridTest = "databasetest";
-        public readonly string sharedAccessPolicyNameForIotHub = "read";
-        public readonly string clusterForKeyVaultPropertiesTest = "ofertestforclient";
-        public readonly string KeyNameForKeyVaultPropertiesTest = "TestClientKey";
-        public readonly string KeyVersionForKeyVaultPropertiesTest = "4d294ee7ce964d8bb6d04c1245276e93";
-        public readonly string KeyVaultUriForKeyVaultPropertiesTest = "https://testforclient.vault.azure.net/";
+        public readonly string sharedAccessPolicyNameForIotHub = "registryRead";
+        public readonly string clusterForKeyVaultPropertiesTest = "eventgridclienttest";
+        public readonly string KeyNameForKeyVaultPropertiesTest = "clientstestkey";
+        public readonly string KeyVersionForKeyVaultPropertiesTest = "6fd57d53ad6b4b53bacb062c98c761a0";
+        public readonly string KeyVaultUriForKeyVaultPropertiesTest = "https://clientstestkv.vault.azure.net/";
 
+        
         public string tenantId { get; set; }
         public string location { get; set; }
         public string subscriptionId { get; set; }
@@ -144,7 +145,7 @@ namespace Kusto.Tests.ScenarioTests
             var leaderClusterResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Kusto/Clusters/{clusterName}";
             attachedDatabaseConfiguration = new AttachedDatabaseConfiguration(location: this.location, databaseName: databaseName, clusterResourceId: leaderClusterResourceId, defaultPrincipalsModificationKind: defaultPrincipalsModificationKind);
 
-            keyVaultProperties = new KeyVaultProperties(KeyNameForKeyVaultPropertiesTest, KeyVersionForKeyVaultPropertiesTest, KeyVaultUriForKeyVaultPropertiesTest);
+            keyVaultProperties = new KeyVaultProperties(KeyNameForKeyVaultPropertiesTest, KeyVaultUriForKeyVaultPropertiesTest, KeyVersionForKeyVaultPropertiesTest);
         }
 
         private DatabasePrincipal GetDatabasePrincipalList(string userEmail, string role)

@@ -26,7 +26,7 @@ await sender.SendMessageAsync(message);
 
 // create a session receiver that we can use to receive the message. Since we don't specify a
 // particular session, we will get the next available session from the service.
-ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(queueName);
+ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(queueName);
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -34,22 +34,17 @@ Console.WriteLine(receivedMessage.SessionId);
 
 // we can also set arbitrary session state using this receiver
 // the state is specific to the session, and not any particular message
-await receiver.SetSessionStateAsync(Encoding.UTF8.GetBytes("some state"));
+await receiver.SetSessionStateAsync(new BinaryData("some state"));
 
 // the state can be retrieved for the session as well
-byte[] state = await receiver.GetSessionStateAsync();
+BinaryData state = await receiver.GetSessionStateAsync();
 ```
 
 ### Receive from a specific session
 
 ```C# Snippet:ServiceBusReceiveFromSpecificSession
 // create a receiver specifying a particular session
-ServiceBusSessionReceiver receiver = await client.CreateSessionReceiverAsync(
-    queueName,
-    new ServiceBusSessionReceiverOptions
-    {
-        SessionId = "Session2"
-    });
+ServiceBusSessionReceiver receiver = await client.AcceptSessionAsync(queueName, "Session2");
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -60,4 +55,4 @@ Console.WriteLine(receivedMessage.SessionId);
 
 To see the full example source, see:
 
-* [Sample03_SendReceiveSessions.cs](../tests/Samples/Sample03_SendReceiveSessions.cs)
+* [Sample03_SendReceiveSessions.cs](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample03_SendReceiveSessions.cs)

@@ -54,6 +54,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("asn"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     asn = property.Value.GetInt64();
                     continue;
                 }
@@ -64,11 +69,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("peerWeight"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     peerWeight = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("bgpPeeringAddresses"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<IPConfigurationBgpPeeringAddress> array = new List<IPConfigurationBgpPeeringAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

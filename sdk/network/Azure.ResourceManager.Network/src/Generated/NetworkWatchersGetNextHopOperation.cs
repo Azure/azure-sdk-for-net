@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkWatchersGetNextHopOperation : Operation<NextHopResult>, IOperationSource<NextHopResult>
     {
         private readonly ArmOperationHelpers<NextHopResult> _operation;
+
+        /// <summary> Initializes a new instance of NetworkWatchersGetNextHopOperation for mocking. </summary>
+        protected NetworkWatchersGetNextHopOperation()
+        {
+        }
+
         internal NetworkWatchersGetNextHopOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             _operation = new ArmOperationHelpers<NextHopResult>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "NetworkWatchersGetNextHopOperation");

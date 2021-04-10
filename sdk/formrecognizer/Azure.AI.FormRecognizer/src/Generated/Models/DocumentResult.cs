@@ -41,19 +41,27 @@ namespace Azure.AI.FormRecognizer.Models
 
         /// <summary> Initializes a new instance of DocumentResult. </summary>
         /// <param name="docType"> Document type. </param>
+        /// <param name="modelId"> Model identifier. </param>
         /// <param name="pageRange"> First and last page number where the document is found. </param>
+        /// <param name="docTypeConfidence"> Predicted document type confidence. </param>
         /// <param name="fields"> Dictionary of named field values. </param>
-        internal DocumentResult(string docType, IReadOnlyList<int> pageRange, IReadOnlyDictionary<string, FieldValue_internal> fields)
+        internal DocumentResult(string docType, Guid? modelId, IReadOnlyList<int> pageRange, float? docTypeConfidence, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
             DocType = docType;
+            ModelId = modelId;
             PageRange = pageRange;
+            DocTypeConfidence = docTypeConfidence;
             Fields = fields;
         }
 
         /// <summary> Document type. </summary>
         public string DocType { get; }
+        /// <summary> Model identifier. </summary>
+        public Guid? ModelId { get; }
         /// <summary> First and last page number where the document is found. </summary>
         public IReadOnlyList<int> PageRange { get; }
+        /// <summary> Predicted document type confidence. </summary>
+        public float? DocTypeConfidence { get; }
         /// <summary> Dictionary of named field values. </summary>
         public IReadOnlyDictionary<string, FieldValue_internal> Fields { get; }
     }

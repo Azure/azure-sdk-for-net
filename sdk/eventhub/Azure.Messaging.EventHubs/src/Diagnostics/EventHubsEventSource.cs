@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
 using Azure.Messaging.EventHubs.Consumer;
@@ -919,6 +918,158 @@ namespace Azure.Messaging.EventHubs.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(45, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that the idempotent publishing of events has started.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionId">The identifier of a partition used for idempotent publishing.</param>
+        ///
+        [Event(46, Level = EventLevel.Informational, Message = "Impotently publishing events for Event Hub: {0} (Partition Id: '{1}').")]
+        public virtual void IdempotentPublishStart(string eventHubName,
+                                                   string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(46, eventHubName ?? string.Empty, partitionId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that the idempotent publishing of events has acquired the synchronization primitive.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionId">The identifier of a partition used for idempotent publishing.</param>
+        ///
+        [Event(47, Level = EventLevel.Verbose, Message = "Impotently publishing for Event Hub: {0} (Partition Id: '{1}') has acquired the partition synchronization primitive.")]
+        public virtual void IdempotentSynchronizationAcquire(string eventHubName,
+                                                             string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(47, eventHubName ?? string.Empty, partitionId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that the idempotent publishing of events has released the synchronization primitive.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionId">The identifier of a partition used for idempotent publishing.</param>
+        ///
+        [Event(48, Level = EventLevel.Verbose, Message = "Impotently publishing for Event Hub: {0} (Partition Id: '{1}') has released the partition synchronization primitive.")]
+        public virtual void IdempotentSynchronizationRelease(string eventHubName,
+                                                             string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(48, eventHubName ?? string.Empty, partitionId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that the idempotent publishing of events has released the synchronization primitive.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionId">The identifier of a partition used for idempotent publishing.</param>
+        /// <param name="startSequenceNumber">The starting sequence number used for publishing.</param>
+        /// <param name="endSequenceNumber">The ending sequence number of partition state used for publishing.</param>
+        ///
+        [Event(49, Level = EventLevel.Verbose, Message = "Impotently publishing for Event Hub: {0} (Partition Id: '{1}') is publishing events with the sequence number range from '{2}` to '{3}'.")]
+        public virtual void IdempotentSequencePublish(string eventHubName,
+                                                      string partitionId,
+                                                      long startSequenceNumber,
+                                                      long endSequenceNumber)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(49, eventHubName ?? string.Empty, partitionId ?? string.Empty, startSequenceNumber, endSequenceNumber);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that the idempotent publishing of events has released the synchronization primitive.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionId">The identifier of a partition used for idempotent publishing.</param>
+        /// <param name="oldSequenceNumber">The sequence number of partition state before the update.</param>
+        /// <param name="newSequenceNumber">The sequence number of partition state after the update.</param>
+        ///
+        [Event(50, Level = EventLevel.Verbose, Message = "Impotently publishing for Event Hub: {0} (Partition Id: '{1}') has updated the tracked sequence number from '{2}` to '{3}'.")]
+        public virtual void IdempotentSequenceUpdate(string eventHubName,
+                                                     string partitionId,
+                                                     long oldSequenceNumber,
+                                                     long newSequenceNumber)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(50, eventHubName ?? string.Empty, partitionId ?? string.Empty, oldSequenceNumber, newSequenceNumber);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that the idempotent publishing of events has completed.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionId">The identifier of a partition used for idempotent publishing.</param>
+        ///
+        [Event(51, Level = EventLevel.Informational, Message = "Completed idempotent publishing events for Event Hub: {0} (Partition Id: '{1}').")]
+        public virtual void IdempotentPublishComplete(string eventHubName,
+                                                      string partitionId)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(51, eventHubName ?? string.Empty, partitionId ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that an exception was encountered while idempotent publishing events.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionId">The identifier of a partition used for idempotent publishing.</param>
+        /// <param name="errorMessage">The message for the exception that occurred.</param>
+        ///
+        [Event(52, Level = EventLevel.Error, Message = "An exception occurred while idempotent publishing events for Event Hub: {0} (Partition Id: '{1}'). Error Message: '{2}'")]
+        public virtual void IdempotentPublishError(string eventHubName,
+                                                   string partitionId,
+                                                   string errorMessage)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(52, eventHubName ?? string.Empty, partitionId ?? string.Empty, errorMessage ?? string.Empty);
+            }
+        }
+
+        /// <summary>
+        ///   Indicates that the idempotent publishing state for a partition has been initialized.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub being published to.</param>
+        /// <param name="partitionId">The identifier of a partition used for idempotent publishing.</param>
+        /// <param name="producerGroupId">The identifier of the producer group associated with the partition.</param>
+        /// <param name="ownerLevel">The owner level associated with the partition.</param>
+        /// <param name="lastPublishedSequence">The sequence number last published to the partition for the producer group.</param>
+        ///
+        [Event(53, Level = EventLevel.Informational, Message = "Initializing idempotent publishing state for Event Hub: {0} (Partition Id: '{1}'). Producer Group Id: '{2}', Owner Level: '{3}', Last Published Sequence: '{4}'.")]
+        public virtual void IdempotentPublishInitializeState(string eventHubName,
+                                                             string partitionId,
+                                                             long producerGroupId,
+                                                             short ownerLevel,
+                                                             long lastPublishedSequence)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(53, eventHubName ?? string.Empty, partitionId ?? string.Empty, producerGroupId, ownerLevel, lastPublishedSequence);
             }
         }
 

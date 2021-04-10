@@ -46,11 +46,21 @@ namespace Azure.Graph.Rbac.Models
             {
                 if (property.NameEquals("accountEnabled"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     accountEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("alternativeNames"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -76,11 +86,21 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("appRoleAssignmentRequired"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     appRoleAssignmentRequired = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("appRoles"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AppRole> array = new List<AppRole>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -106,6 +126,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("keyCredentials"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<KeyCredential> array = new List<KeyCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -121,6 +146,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("oauth2Permissions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<OAuth2Permission> array = new List<OAuth2Permission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -131,6 +161,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("passwordCredentials"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PasswordCredential> array = new List<PasswordCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -151,6 +186,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("replyUrls"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -166,6 +206,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("servicePrincipalNames"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -181,6 +226,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("tags"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -201,6 +251,11 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("deletionTimestamp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     deletionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

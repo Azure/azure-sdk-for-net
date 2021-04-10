@@ -46,6 +46,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("constantBoostBeyondRange"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     constantBoostBeyondRange = property.Value.GetBoolean();
                     continue;
                 }

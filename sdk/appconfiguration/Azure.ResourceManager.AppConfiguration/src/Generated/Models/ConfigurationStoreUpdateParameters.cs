@@ -27,5 +27,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> The encryption settings of the configuration store. </summary>
         public EncryptionProperties Encryption { get; set; }
+        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.AzureStackHCI
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<OperationList>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AvailableOperations>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.AzureStackHCI
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<OperationList>();
+            var _result = new AzureOperationResponse<AvailableOperations>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.AzureStackHCI
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<OperationList>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<AvailableOperations>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

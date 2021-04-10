@@ -10,15 +10,13 @@
 
 namespace Microsoft.Azure.Management.DigitalTwins.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// DigitalTwinsInstance endpoint resource.
     /// </summary>
-    public partial class DigitalTwinsEndpointResource : IResource
+    public partial class DigitalTwinsEndpointResource : ExternalResource
     {
         /// <summary>
         /// Initializes a new instance of the DigitalTwinsEndpointResource
@@ -35,7 +33,11 @@ namespace Microsoft.Azure.Management.DigitalTwins.Models
         /// </summary>
         /// <param name="properties">DigitalTwinsInstance endpoint resource
         /// properties.</param>
-        public DigitalTwinsEndpointResource(DigitalTwinsEndpointResourceProperties properties = default(DigitalTwinsEndpointResourceProperties))
+        /// <param name="id">The resource identifier.</param>
+        /// <param name="name">Extension resource name.</param>
+        /// <param name="type">The resource type.</param>
+        public DigitalTwinsEndpointResource(DigitalTwinsEndpointResourceProperties properties, string id = default(string), string name = default(string), string type = default(string))
+            : base(id, name, type)
         {
             Properties = properties;
             CustomInit();

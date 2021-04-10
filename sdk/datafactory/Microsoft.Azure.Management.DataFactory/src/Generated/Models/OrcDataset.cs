@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
         /// <param name="orcCompressionCodec">Possible values include: 'none',
-        /// 'zlib', 'snappy'</param>
+        /// 'zlib', 'snappy', 'lzo'</param>
         public OrcDataset(LinkedServiceReference linkedServiceName, DatasetLocation location, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), string orcCompressionCodec = default(string))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
@@ -75,7 +75,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public DatasetLocation Location { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'none', 'zlib', 'snappy'
+        /// Gets or sets possible values include: 'none', 'zlib', 'snappy',
+        /// 'lzo'
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.orcCompressionCodec")]
         public string OrcCompressionCodec { get; set; }

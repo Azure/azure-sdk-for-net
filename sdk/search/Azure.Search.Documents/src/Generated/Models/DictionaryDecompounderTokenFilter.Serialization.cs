@@ -73,21 +73,41 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("minWordSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minWordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("minSubwordSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     minSubwordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxSubwordSize"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     maxSubwordSize = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("onlyLongestMatch"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     onlyLongestMatch = property.Value.GetBoolean();
                     continue;
                 }

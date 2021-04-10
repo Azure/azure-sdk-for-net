@@ -1,46 +1,47 @@
 {
   "Entries": [
     {
-      "RequestUri": "http://seansoftdeletecanary.file.core.windows.net/test-share-037ec6fd-3387-3f10-bc67-c4b9edc6dda7?restype=share\u0026comp=undelete",
+      "RequestUri": "https://seansoftdeletecanary.file.core.windows.net/test-share-3fe25fa9-03f2-61ac-4fe2-1833d0df66bc?restype=share\u0026comp=undelete",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/xml",
         "Authorization": "Sanitized",
-        "traceparent": "00-c7ef8c224628aa44aca1bf405b012b38-a26ab1005b825042-00",
+        "traceparent": "00-e7156b1184079b47800e9d30fd02dc47-f9e0e9338dc5e343-00",
         "User-Agent": [
-          "azsdk-net-Storage.Files.Shares/12.3.0-dev.20200513.1",
-          "(.NET Core 4.6.28619.01; Microsoft Windows 10.0.18362 )"
+          "azsdk-net-Storage.Files.Shares/12.7.0-alpha.20210126.1",
+          "(.NET 5.0.2; Microsoft Windows 10.0.19042)"
         ],
-        "x-ms-client-request-id": "fa3aa7f6-08aa-f186-8a80-05def88cd35c",
-        "x-ms-date": "Wed, 13 May 2020 20:14:42 GMT",
-        "x-ms-deleted-share-name": "test-share-037ec6fd-3387-3f10-bc67-c4b9edc6dda7",
+        "x-ms-client-request-id": "c9e020a3-3ddb-2e99-1ea8-2e1ef11ce22d",
+        "x-ms-date": "Tue, 26 Jan 2021 19:35:54 GMT",
+        "x-ms-deleted-share-name": "test-share-3fe25fa9-03f2-61ac-4fe2-1833d0df66bc",
         "x-ms-deleted-share-version": "01D60F8BB59A4652",
         "x-ms-return-client-request-id": "true",
-        "x-ms-version": "2019-12-12"
+         "x-ms-version": "2020-08-04"
       },
       "RequestBody": null,
       "StatusCode": 404,
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/xml",
-        "Date": "Wed, 13 May 2020 20:14:41 GMT",
+        "Date": "Tue, 26 Jan 2021 19:35:54 GMT",
         "Server": [
           "Windows-Azure-File/1.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-client-request-id": "fa3aa7f6-08aa-f186-8a80-05def88cd35c",
+        "x-ms-client-request-id": "c9e020a3-3ddb-2e99-1ea8-2e1ef11ce22d",
         "x-ms-error-code": "ShareNotFound",
-        "x-ms-request-id": "9792fa71-b01a-002c-5163-291a8e000000",
-        "x-ms-version": "2019-12-12"
+        "x-ms-request-id": "1a048aa5-001a-004b-211a-f40a72000000",
+         "x-ms-version": "2020-08-04"
       },
       "ResponseBody": [
         "\uFEFF\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\u003CError\u003E\u003CCode\u003EShareNotFound\u003C/Code\u003E\u003CMessage\u003EThe specified share does not exist.\n",
-        "RequestId:9792fa71-b01a-002c-5163-291a8e000000\n",
-        "Time:2020-05-13T20:14:41.6451697Z\u003C/Message\u003E\u003C/Error\u003E"
+        "RequestId:1a048aa5-001a-004b-211a-f40a72000000\n",
+        "Time:2021-01-26T19:35:55.0162479Z\u003C/Message\u003E\u003C/Error\u003E"
       ]
     }
   ],
   "Variables": {
-    "RandomSeed": "773856933",
-    "Storage_TestConfigSoftDelete": "SoftDeleteTenant\nseansoftdeletecanary\nU2FuaXRpemVk\nhttp://seansoftdeletecanary.blob.core.windows.net\nhttp://seansoftdeletecanary.file.core.windows.net\nhttp://seansoftdeletecanary.queue.core.windows.net\nhttp://seansoftdeletecanary.table.core.windows.net\n\n\n\n\nhttp://seansoftdeletecanary-secondary.blob.core.windows.net\nhttp://seansoftdeletecanary-secondary.file.core.windows.net\nhttp://seansoftdeletecanary-secondary.queue.core.windows.net\nhttp://seansoftdeletecanary-secondary.table.core.windows.net\n\nSanitized\n\n\nCloud\nBlobEndpoint=http://seansoftdeletecanary.blob.core.windows.net/;QueueEndpoint=http://seansoftdeletecanary.queue.core.windows.net/;FileEndpoint=http://seansoftdeletecanary.file.core.windows.net/;BlobSecondaryEndpoint=http://seansoftdeletecanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=http://seansoftdeletecanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=http://seansoftdeletecanary-secondary.file.core.windows.net/;AccountName=seansoftdeletecanary;AccountKey=Sanitized\n"
+    "RandomSeed": "285444546",
+    "Storage_TestConfigSoftDelete": "SoftDeleteTenant\nseansoftdeletecanary\nU2FuaXRpemVk\nhttps://seansoftdeletecanary.blob.core.windows.net\nhttps://seansoftdeletecanary.file.core.windows.net\nhttps://seansoftdeletecanary.queue.core.windows.net\nhttps://seansoftdeletecanary.table.core.windows.net\n\n\n\n\nhttps://seansoftdeletecanary-secondary.blob.core.windows.net\nhttps://seansoftdeletecanary-secondary.file.core.windows.net\nhttps://seansoftdeletecanary-secondary.queue.core.windows.net\nhttps://seansoftdeletecanary-secondary.table.core.windows.net\n68390a19-a643-458b-b726-408abf67b4fc\nSanitized\n72f988bf-86f1-41af-91ab-2d7cd011db47\nhttps://login.microsoftonline.com/\nCloud\nBlobEndpoint=https://seansoftdeletecanary.blob.core.windows.net/;QueueEndpoint=https://seansoftdeletecanary.queue.core.windows.net/;FileEndpoint=https://seansoftdeletecanary.file.core.windows.net/;BlobSecondaryEndpoint=https://seansoftdeletecanary-secondary.blob.core.windows.net/;QueueSecondaryEndpoint=https://seansoftdeletecanary-secondary.queue.core.windows.net/;FileSecondaryEndpoint=https://seansoftdeletecanary-secondary.file.core.windows.net/;AccountName=seansoftdeletecanary;AccountKey=Sanitized\n"
   }
 }

@@ -391,7 +391,7 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<Models.TaskCounts, Models.JobGetTaskCountsHeaders>> GetJobTaskCounts(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public Task<AzureOperationResponse<Models.TaskCountsResult, Models.JobGetTaskCountsHeaders>> GetJobTaskCounts(string jobId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new JobGetTaskCountsBatchRequest(this._client, cancellationToken);
 

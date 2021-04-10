@@ -63,7 +63,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// type to process. Possible values include:
         /// 'Microsoft.Storage.BlobCreated',
         /// 'Microsoft.Storage.BlobRenamed'</param>
-        public EventGridDataConnection(string storageAccountResourceId, string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), bool? ignoreFirstRecord = default(bool?), string blobStorageEventType = default(string))
+        /// <param name="provisioningState">The provisioned state of the
+        /// resource. Possible values include: 'Running', 'Creating',
+        /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
+        public EventGridDataConnection(string storageAccountResourceId, string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), bool? ignoreFirstRecord = default(bool?), string blobStorageEventType = default(string), string provisioningState = default(string))
             : base(id, name, type, location)
         {
             StorageAccountResourceId = storageAccountResourceId;
@@ -74,6 +77,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             DataFormat = dataFormat;
             IgnoreFirstRecord = ignoreFirstRecord;
             BlobStorageEventType = blobStorageEventType;
+            ProvisioningState = provisioningState;
             CustomInit();
         }
 
@@ -140,6 +144,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.blobStorageEventType")]
         public string BlobStorageEventType { get; set; }
+
+        /// <summary>
+        /// Gets the provisioned state of the resource. Possible values
+        /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
+        /// 'Moving'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

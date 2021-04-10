@@ -4,6 +4,7 @@ trigger:
   branches:
     include:
     - master
+    - main
     - hotfix/*
     - release/*
   paths:
@@ -14,6 +15,7 @@ pr:
   branches:
     include:
     - master
+    - main
     - feature/*
     - hotfix/*
     - release/*
@@ -27,5 +29,11 @@ extends:
     ServiceDirectory: eventgrid
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Messaging.EventGrid
+      safeName: AzureMessagingEventGrid
     - name: Microsoft.Azure.EventGrid
       safeName: MicrosoftAzureEventGrid
+    - name: Microsoft.Azure.WebJobs.Extensions.EventGrid
+      safeName: MicrosoftAzureWebJobsExtensionsEventGrid
+    - name: Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
+      safeName: MicrosoftAzureMessagingEventGridCloudNativeCloudEvents

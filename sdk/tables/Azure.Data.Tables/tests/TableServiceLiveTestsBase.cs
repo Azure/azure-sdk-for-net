@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Data.Tables.Tests
 {
@@ -20,7 +21,6 @@ namespace Azure.Data.Tables.Tests
     /// </remarks>
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
-
         public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode recordedTestMode) : base(isAsync, recordedTestMode)
         {
             _endpointType = endpointType;
@@ -51,6 +51,16 @@ namespace Azure.Data.Tables.Tests
         protected string ServiceUri;
         protected string AccountName;
         protected string AccountKey;
+        protected string ConnectionString;
+        private readonly Dictionary<string, string> _cosmosIgnoreTests = new Dictionary<string, string>
+        {
+            {"GetAccessPoliciesReturnsPolicies", "GetAccessPolicy is currently not supported by Cosmos endpoints."},
+            {"GetPropertiesReturnsProperties", "GetProperties is currently not supported by Cosmos endpoints."},
+            {"GetTableServiceStatsReturnsStats", "GetStatistics is currently not supported by Cosmos endpoints."},
+            {"ValidateSasCredentialsWithRowKeyAndPartitionKeyRanges", "Shared access signature with PartitionKey or RowKey are not supported"},
+            {"ValidateAccountSasCredentialsWithPermissions", "SAS for account operations not supported"},
+            {"ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported"},
+        };
 
         /// <summary>
         /// Creates a <see cref="TableServiceClient" /> with the endpoint and API key provided via environment
@@ -59,58 +69,54 @@ namespace Azure.Data.Tables.Tests
         [SetUp]
         public async Task TablesTestSetup()
         {
-            service = _endpointType switch
+            // Bail out before attempting the setup if this test is in the CosmosIgnoreTests set.
+            if (_endpointType == TableEndpointType.CosmosTable && _cosmosIgnoreTests.TryGetValue(TestContext.CurrentContext.Test.Name, out var ignoreReason))
             {
+                Assert.Ignore(ignoreReason);
+            }
 
-                TableEndpointType.Storage => InstrumentClient(new TableServiceClient(
-                    new Uri(TestEnvironment.StorageUri),
-                    new TableSharedKeyCredential(TestEnvironment.StorageAccountName, TestEnvironment.PrimaryStorageAccountKey),
-                    Recording.InstrumentClientOptions(new TableClientOptions()))),
-
-                TableEndpointType.CosmosTable => InstrumentClient(new TableServiceClient(
-                    new Uri(TestEnvironment.CosmosUri),
-                    new TableSharedKeyCredential(TestEnvironment.CosmosAccountName, TestEnvironment.PrimaryCosmosAccountKey),
-                    Recording.InstrumentClientOptions(new TableClientOptions()))),
-
-                _ => throw new NotSupportedException("Unknown endpoint type")
-
-            };
-
-            ServiceUri ??= _endpointType switch
+            ServiceUri = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.StorageUri,
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosUri,
                 _ => throw new NotSupportedException("Unknown endpoint type")
             };
 
-            AccountName ??= _endpointType switch
+            AccountName = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.StorageAccountName,
                 TableEndpointType.CosmosTable => TestEnvironment.CosmosAccountName,
                 _ => throw new NotSupportedException("Unknown endpoint type")
             };
 
-            AccountKey ??= _endpointType switch
+            AccountKey = _endpointType switch
             {
                 TableEndpointType.Storage => TestEnvironment.PrimaryStorageAccountKey,
                 TableEndpointType.CosmosTable => TestEnvironment.PrimaryCosmosAccountKey,
                 _ => throw new NotSupportedException("Unknown endpoint type")
             };
 
+            service = InstrumentClient(new TableServiceClient(
+                new Uri(ServiceUri),
+                new TableSharedKeyCredential(AccountName, AccountKey),
+                InstrumentClientOptions(new TableClientOptions())));
+
             tableName = Recording.GenerateAlphaNumericId("testtable", useOnlyLowercase: true);
 
             await CosmosThrottleWrapper(async () => await service.CreateTableAsync(tableName).ConfigureAwait(false));
 
-            client = service.GetTableClient(tableName);
+            client = InstrumentClient(service.GetTableClient(tableName));
         }
-
 
         [TearDown]
         public async Task TablesTeardown()
         {
             try
             {
-                await service.DeleteTableAsync(tableName);
+                if (service != null)
+                {
+                    await service.DeleteTableAsync(tableName);
+                }
             }
             catch { }
         }
@@ -123,7 +129,6 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<TableEntity> CreateTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
@@ -138,7 +143,7 @@ namespace Azure.Data.Tables.Tests
                         {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
                         {Int64TypePropertyName, long.Parse(number)},
                         {DoubleTypePropertyName, double.Parse($"{number}.0")},
-                        {DoubleDecimalTypePropertyName, n + 0.1},
+                        {DoubleDecimalTypePropertyName, n + 0.5},
                         {IntTypePropertyName, n},
                     };
             }).ToList();
@@ -152,7 +157,6 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<TableEntity> CreateDictionaryTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
@@ -167,7 +171,7 @@ namespace Azure.Data.Tables.Tests
                         {BinaryTypePropertyName, new byte[]{ 0x01, 0x02, 0x03, 0x04, 0x05 }},
                         {Int64TypePropertyName, long.Parse(number)},
                         {DoubleTypePropertyName, (double)n},
-                        {DoubleDecimalTypePropertyName, n + 0.1},
+                        {DoubleDecimalTypePropertyName, n + 0.5},
                         {IntTypePropertyName, n},
                     });
             }).ToList();
@@ -181,7 +185,6 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<TestEntity> CreateCustomTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
@@ -210,14 +213,13 @@ namespace Azure.Data.Tables.Tests
         /// <returns></returns>
         protected static List<ComplexEntity> CreateComplexTableEntities(string partitionKeyValue, int count)
         {
-
             // Create some entities.
             return Enumerable.Range(1, count).Select(n =>
             {
                 return new ComplexEntity(partitionKeyValue, string.Format("{0:0000}", n))
                 {
                     String = string.Format("{0:0000}", n),
-                    Binary = new byte[] { 0x01, 0x02, (byte)n },
+                    Binary = new BinaryData(new byte[] { 0x01, 0x02, (byte)n }),
                     BinaryPrimitive = new byte[] { 0x01, 0x02, (byte)n },
                     Bool = n % 2 == 0,
                     BoolPrimitive = n % 2 == 0,
@@ -226,11 +228,11 @@ namespace Azure.Data.Tables.Tests
                     DateTimeAsString = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n).ToString("o"),
                     DateTimeN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                     DateTimeOffsetN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
-                    Double = n + ((double)n / 100),
+                    Double = n + 0.5,
                     DoubleInteger = double.Parse($"{n.ToString()}.0"),
-                    DoubleN = n + ((double)n / 100),
-                    DoublePrimitive = n + ((double)n / 100),
-                    DoublePrimitiveN = n + ((double)n / 100),
+                    DoubleN = n + 0.5,
+                    DoublePrimitive = n + 0.5,
+                    DoublePrimitiveN = n + 0.5,
                     Guid = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
                     GuidN = new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}"),
                     Int32 = n,
@@ -268,6 +270,27 @@ namespace Azure.Data.Tables.Tests
                         await Task.Delay(delay);
                         delay *= 2;
                     }
+                }
+            }
+        }
+
+        protected async Task<TResult> RetryUntilExpectedResponse<TResult>(Func<Task<TResult>> action, Func<TResult, bool> equalityAction, int initialDelay)
+        {
+            int retryCount = 0;
+            int delay = initialDelay;
+            while (true)
+            {
+                var actual = await action().ConfigureAwait(false);
+
+                if (++retryCount > 3 || equalityAction(actual))
+                {
+                    return actual;
+                }
+                // Disable retry throttling in Playback mode.
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(delay);
+                    delay *= 2;
                 }
             }
         }
@@ -316,7 +339,7 @@ namespace Azure.Data.Tables.Tests
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
         }
 
         public class SimpleTestEntity : ITableEntity
@@ -325,7 +348,7 @@ namespace Azure.Data.Tables.Tests
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
             public DateTimeOffset? Timestamp { get; set; }
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
         }
 
         public class ComplexEntity : ITableEntity
@@ -383,9 +406,9 @@ namespace Azure.Data.Tables.Tests
 
             public bool BoolPrimitive { get; set; } = false;
 
-            public Byte[] Binary { get; set; } = new Byte[] { 1, 2, 3, 4 };
+            public BinaryData Binary { get; set; } = new BinaryData(new byte[] { 1, 2, 3, 4 });
 
-            public Byte[] BinaryNull { get; set; } = null;
+            public BinaryData BinaryNull { get; set; } = null;
 
             public byte[] BinaryPrimitive { get; set; } = new byte[] { 1, 2, 3, 4 };
 
@@ -454,7 +477,7 @@ namespace Azure.Data.Tables.Tests
 
             public DateTimeOffset? Timestamp { get; set; }
 
-            public string ETag { get; set; }
+            public ETag ETag { get; set; }
 
             public static void AssertEquality(ComplexEntity a, ComplexEntity b)
             {
@@ -483,9 +506,9 @@ namespace Azure.Data.Tables.Tests
                 Assert.AreEqual(a.BinaryPrimitive.GetValue(0), b.BinaryPrimitive.GetValue(0));
                 Assert.AreEqual(a.BinaryPrimitive.GetValue(1), b.BinaryPrimitive.GetValue(1));
                 Assert.AreEqual(a.BinaryPrimitive.GetValue(2), b.BinaryPrimitive.GetValue(2));
-                Assert.AreEqual(a.Binary.GetValue(0), b.Binary.GetValue(0));
-                Assert.AreEqual(a.Binary.GetValue(1), b.Binary.GetValue(1));
-                Assert.AreEqual(a.Binary.GetValue(2), b.Binary.GetValue(2));
+                Assert.AreEqual(a.Binary.ToArray().GetValue(0), b.Binary.ToArray().GetValue(0));
+                Assert.AreEqual(a.Binary.ToArray().GetValue(1), b.Binary.ToArray().GetValue(1));
+                Assert.AreEqual(a.Binary.ToArray().GetValue(2), b.Binary.ToArray().GetValue(2));
                 Assert.AreEqual(a.BoolPrimitive, b.BoolPrimitive);
                 Assert.AreEqual(a.BoolPrimitiveN, b.BoolPrimitiveN);
                 Assert.AreEqual(a.BoolPrimitiveNull, b.BoolPrimitiveNull);
@@ -499,6 +522,28 @@ namespace Azure.Data.Tables.Tests
                 Assert.AreEqual(a.DateTimeN, b.DateTimeN);
                 Assert.AreEqual(a.DateTimeNull, b.DateTimeNull);
             }
+        }
+
+        public class EnumEntity : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public Foo MyFoo { get; set; }
+            public NullableFoo? MyNullableFoo { get; set; }
+        }
+
+        public enum Foo
+        {
+            One,
+            Two
+        }
+
+        public enum NullableFoo
+        {
+            One,
+            Two
         }
     }
 }

@@ -13,6 +13,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Experimental", "..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj", "{32F92309-FF56-4E48-81FF-ADC7318F6DA5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial.NewtonsoftJson", "..\core\Microsoft.Azure.Core.Spatial.NewtonsoftJson\src\Microsoft.Azure.Core.Spatial.NewtonsoftJson.csproj", "{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.NewtonsoftJson", "..\core\Microsoft.Azure.Core.NewtonsoftJson\src\Microsoft.Azure.Core.NewtonsoftJson.csproj", "{CB1DED0F-0E3E-4370-9351-58E025BFEAB4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Core.Spatial", "..\core\Microsoft.Azure.Core.Spatial\src\Microsoft.Azure.Core.Spatial.csproj", "{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Search.Documents.Perf", "Azure.Search.Documents\perf\Azure.Search.Documents.Perf\Azure.Search.Documents.Perf.csproj", "{CA130CB5-4B52-4B86-8208-C4DD7F1DED69}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{9969AF35-D032-4555-B129-C014B2621FFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +49,26 @@ Global
 		{32F92309-FF56-4E48-81FF-ADC7318F6DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32F92309-FF56-4E48-81FF-ADC7318F6DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32F92309-FF56-4E48-81FF-ADC7318F6DA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A3FECA-1696-4EDD-ABA1-30F1E3D6CE1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB1DED0F-0E3E-4370-9351-58E025BFEAB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB1DED0F-0E3E-4370-9351-58E025BFEAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB1DED0F-0E3E-4370-9351-58E025BFEAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB1DED0F-0E3E-4370-9351-58E025BFEAB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25A7E209-D5D2-41F1-AFE9-E860D6294EF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA130CB5-4B52-4B86-8208-C4DD7F1DED69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA130CB5-4B52-4B86-8208-C4DD7F1DED69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA130CB5-4B52-4B86-8208-C4DD7F1DED69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA130CB5-4B52-4B86-8208-C4DD7F1DED69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9969AF35-D032-4555-B129-C014B2621FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9969AF35-D032-4555-B129-C014B2621FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9969AF35-D032-4555-B129-C014B2621FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9969AF35-D032-4555-B129-C014B2621FFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

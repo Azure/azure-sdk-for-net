@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("access"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     access = new Access(property.Value.GetString());
                     continue;
                 }

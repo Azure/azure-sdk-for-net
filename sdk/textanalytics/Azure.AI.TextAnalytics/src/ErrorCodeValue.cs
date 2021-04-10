@@ -15,6 +15,8 @@ namespace Azure.AI.TextAnalytics.Models
         /// <summary> internalServerError. </summary>
         InternalServerError,
         /// <summary> serviceUnavailable. </summary>
-        ServiceUnavailable
+        ServiceUnavailable,
+        /// <summary> notFound. </summary>
+        NotFound
     }
 }

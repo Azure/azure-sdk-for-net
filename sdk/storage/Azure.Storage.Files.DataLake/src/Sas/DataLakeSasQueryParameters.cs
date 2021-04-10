@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace Azure.Storage.Sas
@@ -86,24 +88,32 @@ namespace Azure.Storage.Sas
             string contentDisposition = default,
             string contentEncoding = default,
             string contentLanguage = default,
-            string contentType = default)
+            string contentType = default,
+            string authorizedAadObjectId = default,
+            string unauthorizedAadObjectId = default,
+            string correlationId = default,
+            int? directoryDepth = default)
             : base(
-                version,
-                services,
-                resourceTypes,
-                protocol,
-                startsOn,
-                expiresOn,
-                ipRange,
-                identifier,
-                resource,
-                permissions,
-                signature,
-                cacheControl,
-                contentDisposition,
-                contentEncoding,
-                contentLanguage,
-                contentType)
+                version: version,
+                services: services,
+                resourceTypes: resourceTypes,
+                protocol: protocol,
+                startsOn: startsOn,
+                expiresOn: expiresOn,
+                ipRange: ipRange,
+                identifier: identifier,
+                resource: resource,
+                permissions: permissions,
+                signature: signature,
+                cacheControl: cacheControl,
+                contentDisposition: contentDisposition,
+                contentEncoding: contentEncoding,
+                contentLanguage: contentLanguage,
+                contentType: contentType,
+                authorizedAadObjectId: authorizedAadObjectId,
+                unauthorizedAadObjectId: unauthorizedAadObjectId,
+                correlationId: correlationId,
+                directoryDepth: directoryDepth)
         {
             KeyProperties = new UserDelegationKeyProperties
             {

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class MessagingRegionsListResult
+    internal partial class MessagingRegionsListResult
     {
         internal static MessagingRegionsListResult DeserializeMessagingRegionsListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<MessagingRegions> array = new List<MessagingRegions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

@@ -18,9 +18,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         ///   Provides the invalid test cases for the constructor tests.
         /// </summary>
         ///
-        public static IEnumerable<object[]> ConstructorExpandedArgumentInvalidCases()
+        public static IEnumerable<object[]> ConstructorTokenCredentialArgumentInvalidCases()
         {
-            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
 
             yield return new object[] { null, credential.Object };
             yield return new object[] { "", credential.Object };
@@ -29,12 +29,40 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         }
 
         /// <summary>
+        ///   Provides the invalid test cases for the constructor tests.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> ConstructorSharedKeyCredentialArgumentInvalidCases()
+        {
+            var credential = new AzureNamedKeyCredential("name", "value");
+
+            yield return new object[] { null, credential };
+            yield return new object[] { "", credential };
+            yield return new object[] { "FakeNamespace", null };
+            yield return new object[] { "sb://fakenamspace.com", credential };
+        }
+
+        /// <summary>
+        ///   Provides the invalid test cases for the constructor tests.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> ConstructorSasCredentialArgumentInvalidCases()
+        {
+            var credential = new AzureSasCredential(new SharedAccessSignature("amqps://fake.namespace.com", "name", "value").Value);
+
+            yield return new object[] { null, credential };
+            yield return new object[] { "", credential };
+            yield return new object[] { "FakeNamespace", null };
+            yield return new object[] { "sb://fakenamspace.com", credential };
+        }
+
+        /// <summary>
         ///   Provides test cases for the constructor tests.
         /// </summary>
         ///
         public static IEnumerable<object[]> ConstructorCreatesDefaultOptionsCases()
         {
-            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
 
             yield return new object[] { new ReadableOptionsMock(fakeConnection), "simple connection string" };
@@ -48,13 +76,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         ///
         public static IEnumerable<object[]> ConstructorClonesOptionsCases()
         {
-            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
 
             var options = new ServiceBusClientOptions
             {
                 TransportType = ServiceBusTransportType.AmqpWebSockets,
-                Proxy = Mock.Of<IWebProxy>()
+                WebProxy = Mock.Of<IWebProxy>()
             };
 
             yield return new object[] { new ReadableOptionsMock(fakeConnection, options), options, "connection string" };
@@ -119,9 +147,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         [TestCase("SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]")]
         [TestCase("Endpoint=value.com;SharedAccessKey=[value];EntityPath=[value]")]
         [TestCase("Endpoint=value.com;SharedAccessKeyName=[value];EntityPath=[value]")]
-        public void ConstructorValidatesConnectionString(string connectionString)
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value]")]
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value];EntityPath=[value]")]
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessSignature=[sas];EntityPath=[value]")]
+        [TestCase("HostName=value.azure-devices.net;SharedAccessKey=[value];SharedAccessSignature=[sas];EntityPath=[value]")]
+        public void ConstructorValidatesConnectionStringForMissingInformation(string connectionString)
         {
-            Assert.That(() => new ServiceBusClient(connectionString), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new ServiceBusClient(connectionString), Throws.ArgumentException.And.Message.StartsWith(Resources.MissingConnectionInformation));
         }
 
         /// <summary>
@@ -130,11 +162,50 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         /// </summary>
         ///
         [Test]
-        [TestCaseSource(nameof(ConstructorExpandedArgumentInvalidCases))]
-        public void ConstructorValidatesExpandedArguments(string fullyQualifiedNamespace,
-                                                          TokenCredential credential)
+
+        [TestCase("Endpoint=value.azure-devices.net;SharedAccessKeyName=[value];SharedAccessKey=[value];SharedAccessSignature=[sas]")]
+        public void ConstructorValidatesConnectionStringForDuplicateAuthorization(string connectionString)
+        {
+            Assert.That(() => new ServiceBusClient(connectionString), Throws.ArgumentException.And.Message.StartsWith(Resources.OnlyOneSharedAccessAuthorizationMayBeSpecified));
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(ConstructorTokenCredentialArgumentInvalidCases))]
+        public void ConstructorValidatesTokenCredentialArguments(string fullyQualifiedNamespace,
+                                                                 TokenCredential credential)
         {
             Assert.That(() => new ServiceBusClient(fullyQualifiedNamespace, credential), Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(ConstructorSharedKeyCredentialArgumentInvalidCases))]
+        public void ConstructorValidatesSharedKeyArguments(string fullyQualifiedNamespace,
+                                                           object credential)
+        {
+            Assert.That(() => new ServiceBusClient(fullyQualifiedNamespace, (AzureNamedKeyCredential)credential), Throws.InstanceOf<ArgumentException>());
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(ConstructorSasCredentialArgumentInvalidCases))]
+        public void ConstructorValidatesSasArguments(string fullyQualifiedNamespace,
+                                                     object credential)
+        {
+            Assert.That(() => new ServiceBusClient(fullyQualifiedNamespace, (AzureSasCredential)credential), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -153,7 +224,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
             Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(defaultOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options.WebProxy, Is.EqualTo(defaultOptions.WebProxy), $"The { constructorDescription } constructor should have the correct proxy.");
         }
 
         /// <summary>
@@ -172,7 +243,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
             Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
-            Assert.That(options.Proxy, Is.EqualTo(constructorOptions.Proxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options.WebProxy, Is.EqualTo(constructorOptions.WebProxy), $"The { constructorDescription } constructor should have the correct proxy.");
         }
 
         /// <summary>
@@ -184,7 +255,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         public void ConstructorWithConnectionStringValidatesOptions()
         {
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
-            var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
+            var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, WebProxy = Mock.Of<IWebProxy>() };
 
             Assert.That(() => new ServiceBusClient(fakeConnection, invalidOptions), Throws.InstanceOf<ArgumentException>(), "The connection string constructor should validate client options");
         }
@@ -195,10 +266,37 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         /// </summary>
         ///
         [Test]
-        public void ConstructorWithExpandedArgumentsValidatesOptions()
+        public void ConstructorWithTokenCredentialArgumentsValidatesOptions()
         {
-            var token = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>(), "{namespace}.servicebus.windows.net");
-            var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, Proxy = Mock.Of<IWebProxy>() };
+            var token = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, WebProxy = Mock.Of<IWebProxy>() };
+            Assert.That(() => new ServiceBusClient("fullyQualifiedNamespace", Mock.Of<TokenCredential>(), invalidOptions), Throws.InstanceOf<ArgumentException>(), "The expanded argument constructor should validate client options");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorWithSharedKeyCredentialArgumentsValidatesOptions()
+        {
+            var token = new AzureNamedKeyCredential("key", "value");
+            var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, WebProxy = Mock.Of<IWebProxy>() };
+            Assert.That(() => new ServiceBusClient("fullyQualifiedNamespace", Mock.Of<TokenCredential>(), invalidOptions), Throws.InstanceOf<ArgumentException>(), "The expanded argument constructor should validate client options");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void ConstructorWithSasCredentialArgumentsValidatesOptions()
+        {
+            var signature = new SharedAccessSignature("sb://fake.thing.com", "fakeKey", "fakeValue");
+            var token = new AzureSasCredential(signature.Value);
+            var invalidOptions = new ServiceBusClientOptions { TransportType = ServiceBusTransportType.AmqpTcp, WebProxy = Mock.Of<IWebProxy>() };
             Assert.That(() => new ServiceBusClient("fullyQualifiedNamespace", Mock.Of<TokenCredential>(), invalidOptions), Throws.InstanceOf<ArgumentException>(), "The expanded argument constructor should validate client options");
         }
 
@@ -240,7 +338,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             ServiceBusClient client = new ServiceBusClient(fakeConnection);
             Assert.AreEqual("not-real.servicebus.windows.net", client.FullyQualifiedNamespace);
             Assert.IsNotNull(client.Identifier);
-            Assert.IsFalse(client.IsDisposed);
+            Assert.IsFalse(client.IsClosed);
         }
 
         /// <summary>
@@ -261,6 +359,12 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
             public ReadableOptionsMock(string fullyQualifiedNamespace,
                                        TokenCredential credential,
+                                       ServiceBusClientOptions clientOptions = default) : base(fullyQualifiedNamespace, credential, clientOptions)
+            {
+            }
+
+            internal ReadableOptionsMock(string fullyQualifiedNamespace,
+                                       AzureNamedKeyCredential credential,
                                        ServiceBusClientOptions clientOptions = default) : base(fullyQualifiedNamespace, credential, clientOptions)
             {
             }

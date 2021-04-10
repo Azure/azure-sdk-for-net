@@ -3,6 +3,7 @@ trigger:
   branches:
     include:
     - master
+    - main
     - hotfix/*
     - release/*
   paths:
@@ -13,13 +14,16 @@ pr:
   branches:
     include:
     - master
+    - main
     - feature/*
     - hotfix/*
     - release/*
   paths:
     include:
+    - common/Perf/
+    - common/PerfStressShared/
+    - common/Stress/
     - sdk/template/
-    - eng/common/
 
 extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml

@@ -5,11 +5,14 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(KeyVaultKeyNearExpiryEventDataConverter))]
     public partial class KeyVaultKeyNearExpiryEventData
     {
         internal static KeyVaultKeyNearExpiryEventData DeserializeKeyVaultKeyNearExpiryEventData(JsonElement element)
@@ -50,16 +53,39 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("nbf"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     nbf = property.Value.GetSingle();
                     continue;
                 }
                 if (property.NameEquals("exp"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     exp = property.Value.GetSingle();
                     continue;
                 }
             }
             return new KeyVaultKeyNearExpiryEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp));
+        }
+
+        internal partial class KeyVaultKeyNearExpiryEventDataConverter : JsonConverter<KeyVaultKeyNearExpiryEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, KeyVaultKeyNearExpiryEventData model, JsonSerializerOptions options)
+            {
+                throw new NotImplementedException();
+            }
+            public override KeyVaultKeyNearExpiryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeKeyVaultKeyNearExpiryEventData(document.RootElement);
+            }
         }
     }
 }

@@ -1,7 +1,10 @@
+pr: none
+
 trigger:
   branches:
     include:
     - master
+    - main
   paths:
     include:
     - eng/containers/
@@ -10,9 +13,9 @@ pool:
   vmImage: 'ubuntu-18.04'
 
 variables:
-  dockerfile: ./eng/containers/UbuntuNetCore2Keyring/Dockerfile
+  dockerfile: ./eng/containers/UbuntuNetCoreKeyring/Dockerfile
   containerRegistry: 'azsdkengsys'
-  imageRepository: 'dotnet/ubuntu_netcore2_keyring'
+  imageRepository: 'dotnet/ubuntu_netcore_keyring'
   imageTag: $(build.buildid)
 
 steps:

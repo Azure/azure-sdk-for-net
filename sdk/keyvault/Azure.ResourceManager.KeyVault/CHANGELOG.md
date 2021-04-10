@@ -2,6 +2,8 @@
 
 ## 1.0.0-preview.2 (Unreleased)
 
+- Accept header added to all requests.
+- Collections are now always initialized and collection properties are readonly by default.
 
 ## 1.0.0-preview.1
 

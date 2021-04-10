@@ -4,6 +4,7 @@
       "RequestUri": "https://management.azure.com/subscriptions/b9f138a1-1d64-4108-8413-9ea3be1c1b2d/tagNames/csmtg935/tagValues/csmtgv4768?api-version=2019-10-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
+        "Accept": "application/json",
         "Authorization": "Sanitized",
         "traceparent": "00-81b5e55b2f21704c8e60e1595c7ac4e1-99f2514bc9c4e743-00",
         "User-Agent": [

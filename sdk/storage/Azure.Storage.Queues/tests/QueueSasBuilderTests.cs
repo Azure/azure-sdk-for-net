@@ -21,7 +21,7 @@ namespace Azure.Storage.Queues.Test
         {
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueSasBuilder_ToSasQueryParameters_VersionTest()
         {
             // Arrange
@@ -47,7 +47,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueSasBuilder_ToSasQueryParameters_NoVersionTest()
         {
             // Arrange
@@ -73,7 +73,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(signature, sasQueryParameters.Signature);
         }
 
-        [Test]
+        [RecordedTest]
         public void QueueSasBuilder_NullSharedKeyCredentialTest()
         {
             // Arrange
@@ -85,7 +85,7 @@ namespace Azure.Storage.Queues.Test
             Assert.Throws<ArgumentNullException>(() => queueSasBuilder.ToSasQueryParameters(null), "sharedKeyCredential");
         }
 
-        [Test]
+        [RecordedTest]
         public void ToSasQueryParameters_IdentifierTest()
         {
             // Arrange
@@ -109,7 +109,7 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual(constants.Sas.Version, sasQueryParameters.Version);
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2019_12_12)]
         [TestCase("FTPUCALXDWR")]
         [TestCase("rwdxlacuptf")]
@@ -138,7 +138,7 @@ namespace Azure.Storage.Queues.Test
             await queueClient.GetPropertiesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AccountPermissionsRawPermissions_InvalidPermission()
         {
             // Arrange
@@ -157,7 +157,7 @@ namespace Azure.Storage.Queues.Test
                 new ArgumentException("e is not a valid SAS permission"));
         }
 
-        [Test]
+        [RecordedTest]
         [TestCase("PUAR")]
         [TestCase("raup")]
         public async Task QueuePermissionsRawPermissions(string permissionsString)
@@ -189,7 +189,7 @@ namespace Azure.Storage.Queues.Test
             await sasQueueClient.PeekMessagesAsync();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task QueuePermissionsRawPermissions_Invalid()
         {
             // Arrange
@@ -208,6 +208,53 @@ namespace Azure.Storage.Queues.Test
                     rawPermissions: "ptsdfsd",
                     normalize: true),
                 new ArgumentException("s is not a valid SAS permission"));
+        }
+
+        [RecordedTest]
+        public void QueueUriBuilder_LocalDockerUrl_PortTest()
+        {
+            // Arrange
+            // BlobEndpoint from https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator#connect-to-the-emulator-account-using-the-well-known-account-name-and-key
+            var uriString = "http://docker_container:10000/devstoreaccount1/sharename";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new QueueUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("http", fileUriBuilder.Scheme);
+            Assert.AreEqual("docker_container", fileUriBuilder.Host);
+            Assert.AreEqual("devstoreaccount1", fileUriBuilder.AccountName);
+            Assert.AreEqual("sharename", fileUriBuilder.QueueName);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(10000, fileUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        public void QueueUriBuilder_CustomUri_AccountShareFileTest()
+        {
+            // Arrange
+            var uriString = "https://www.mycustomname.com/queuename";
+            var originalUri = new UriBuilder(uriString);
+
+            // Act
+            var fileUriBuilder = new QueueUriBuilder(originalUri.Uri);
+            Uri newUri = fileUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", fileUriBuilder.Scheme);
+            Assert.AreEqual("www.mycustomname.com", fileUriBuilder.Host);
+            Assert.AreEqual(String.Empty, fileUriBuilder.AccountName);
+            Assert.AreEqual("queuename", fileUriBuilder.QueueName);
+            Assert.IsNull(fileUriBuilder.Sas);
+            Assert.AreEqual("", fileUriBuilder.Query);
+            Assert.AreEqual(443, fileUriBuilder.Port);
+
+            Assert.AreEqual(originalUri, newUri);
         }
 
         private QueueSasBuilder BuildQueueSasBuilder(TestConstants constants, string queueName, bool includeVersion)

@@ -52,7 +52,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// This value should be between 20972032 (20 MiB + 512 bytes for the
         /// VHD footer) and 35183298347520 bytes (32 TiB + 512 bytes for the
         /// VHD footer).</param>
-        public CreationData(string createOption, string storageAccountId = default(string), ImageDiskReference imageReference = default(ImageDiskReference), ImageDiskReference galleryImageReference = default(ImageDiskReference), string sourceUri = default(string), string sourceResourceId = default(string), string sourceUniqueId = default(string), long? uploadSizeBytes = default(long?))
+        /// <param name="logicalSectorSize">Logical sector size in bytes for
+        /// Ultra disks. Supported values are 512 ad 4096. 4096 is the
+        /// default.</param>
+        public CreationData(string createOption, string storageAccountId = default(string), ImageDiskReference imageReference = default(ImageDiskReference), ImageDiskReference galleryImageReference = default(ImageDiskReference), string sourceUri = default(string), string sourceResourceId = default(string), string sourceUniqueId = default(string), long? uploadSizeBytes = default(long?), int? logicalSectorSize = default(int?))
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -62,6 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             SourceResourceId = sourceResourceId;
             SourceUniqueId = sourceUniqueId;
             UploadSizeBytes = uploadSizeBytes;
+            LogicalSectorSize = logicalSectorSize;
             CustomInit();
         }
 
@@ -129,6 +133,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "uploadSizeBytes")]
         public long? UploadSizeBytes { get; set; }
+
+        /// <summary>
+        /// Gets or sets logical sector size in bytes for Ultra disks.
+        /// Supported values are 512 ad 4096. 4096 is the default.
+        /// </summary>
+        [JsonProperty(PropertyName = "logicalSectorSize")]
+        public int? LogicalSectorSize { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -33,21 +33,41 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (property.NameEquals("desiredState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     desiredState = property.Value.GetString().ToAutomaticTuningOptionModeDesired();
                     continue;
                 }
                 if (property.NameEquals("actualState"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     actualState = property.Value.GetString().ToAutomaticTuningOptionModeActual();
                     continue;
                 }
                 if (property.NameEquals("reasonCode"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     reasonCode = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("reasonDesc"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     reasonDesc = property.Value.GetString().ToAutomaticTuningDisabledReason();
                     continue;
                 }

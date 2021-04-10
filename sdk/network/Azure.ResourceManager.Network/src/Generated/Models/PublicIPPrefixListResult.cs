@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Response for ListPublicIpPrefixes API service call. </summary>
-    public partial class PublicIPPrefixListResult
+    internal partial class PublicIPPrefixListResult
     {
         /// <summary> Initializes a new instance of PublicIPPrefixListResult. </summary>
         internal PublicIPPrefixListResult()

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateEndpointListResult
+    internal partial class PrivateEndpointListResult
     {
         internal static PrivateEndpointListResult DeserializePrivateEndpointListResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<PrivateEndpoint> array = new List<PrivateEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

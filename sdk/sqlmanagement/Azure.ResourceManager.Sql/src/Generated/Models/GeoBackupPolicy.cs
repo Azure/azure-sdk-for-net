@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A database geo backup policy. </summary>
-    public partial class GeoBackupPolicy : Resource
+    public partial class GeoBackupPolicy : ProxyResource
     {
         /// <summary> Initializes a new instance of GeoBackupPolicy. </summary>
         /// <param name="state"> The state of the geo backup policy. </param>

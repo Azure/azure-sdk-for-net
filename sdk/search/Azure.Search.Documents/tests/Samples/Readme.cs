@@ -48,36 +48,6 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
         }
 
-        [Test]
-        [SyncOnly]
-        public void FirstQuery()
-        {
-            #region Snippet:Azure_Search_Tests_Samples_Readme_FirstQuery
-            // We'll connect to the Azure Cognitive Search public sandbox and send a
-            // query to its "nycjobs" index built from a public dataset of available jobs
-            // in New York.
-            string serviceName = "azs-playground";
-            string indexName = "nycjobs";
-            string apiKey = "252044BE3886FE4A8E3BAA4F595114BB";
-
-            // Create a SearchClient to send queries
-            Uri serviceEndpoint = new Uri($"https://{serviceName}.search.windows.net/");
-            AzureKeyCredential credential = new AzureKeyCredential(apiKey);
-            SearchClient client = new SearchClient(serviceEndpoint, indexName, credential);
-
-            // Let's get the top 5 jobs related to Microsoft
-            SearchResults<SearchDocument> response = client.Search<SearchDocument>("Microsoft", new SearchOptions { Size = 5 });
-            foreach (SearchResult<SearchDocument> result in response.GetResults())
-            {
-                // Print out the title and job description (we'll see below how to
-                // use C# objects to make accessing these fields much easier)
-                string title = (string)result.Document["business_title"];
-                string description = (string)result.Document["job_description"];
-                Console.WriteLine($"{title}\n{description}\n");
-            }
-            #endregion Snippet:Azure_Search_Tests_Samples_Readme_FirstQuery
-        }
-
 #if EXPERIMENTAL_DYNAMIC
         [Test]
 #endif
@@ -192,7 +162,6 @@ namespace Azure.Search.Documents.Tests.Samples
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Options
         }
 
-#if EXPERIMENTAL_FIELDBUILDER // This won't condition the README.md file, which will require manual effort.
         [Test]
         [SyncOnly]
         public async Task CreateIndex()
@@ -229,7 +198,6 @@ namespace Azure.Search.Documents.Tests.Samples
 
             resources.IndexName = index.Name;
         }
-#endif
 
         [Test]
         [SyncOnly]
@@ -338,6 +306,5 @@ namespace Azure.Search.Documents.Tests.Samples
                 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Troubleshooting
             }
         }
-
     }
 }

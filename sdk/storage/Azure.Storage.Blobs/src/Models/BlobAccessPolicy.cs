@@ -5,14 +5,34 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
-    /// An Access policy for Blob Containers
+    /// An Access policy for Blob Containers.
     /// </summary>
+    [CodeGenModel("AccessPolicy")]
     public partial class BlobAccessPolicy
     {
+        /// <summary>
+        /// the date-time the policy is active.
+        /// </summary>
+        [CodeGenMember("Start")]
+        public DateTimeOffset? PolicyStartsOn { get; set; }
+
+        /// <summary>
+        /// the date-time the policy expires.
+        /// </summary>
+        [CodeGenMember("Expiry")]
+        public DateTimeOffset? PolicyExpiresOn { get; set; }
+
+        /// <summary>
+        /// The permissions for the acl policy.
+        /// </summary>
+        [CodeGenMember("Permission")]
+        public string Permissions { get; set; }
+
         /// <summary>
         /// The date-time the policy is active.
         /// This value is non-nullable, please use <see cref="PolicyStartsOn"/>.
@@ -23,8 +43,8 @@ namespace Azure.Storage.Blobs.Models
             get
             {
                 return PolicyStartsOn == default ?
-                    StartsOn :
-                    (DateTimeOffset)PolicyStartsOn;
+                    new DateTimeOffset() :
+                    PolicyStartsOn.Value;
             }
             set
             {
@@ -42,8 +62,8 @@ namespace Azure.Storage.Blobs.Models
             get
             {
                 return PolicyExpiresOn == default ?
-                    ExpiresOn :
-                    (DateTimeOffset)PolicyExpiresOn;
+                    new DateTimeOffset() :
+                    PolicyExpiresOn.Value;
             }
             set
             {

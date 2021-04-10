@@ -4,7 +4,9 @@
 using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
-using Azure.Management.Resources;
+using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage;
 using Azure.ResourceManager.TestFramework;
 
 namespace Azure.ResourceManager.EventHubs.Tests
@@ -23,6 +25,9 @@ namespace Azure.ResourceManager.EventHubs.Tests
         public ConsumerGroupsOperations ConsumerGroupsOperations { get; set; }
         public DisasterRecoveryConfigsOperations DisasterRecoveryConfigsOperations { get; set; }
         public ResourceGroupsOperations ResourceGroupsOperations { get; set; }
+        public StorageManagementClient StorageManagementClient { get; set; }
+        public NetworkManagementClient NetworkManagementClient { get; set; }
+
         protected EventHubsManagementClientBase(bool isAsync)
              : base(isAsync)
         {
@@ -42,13 +47,30 @@ namespace Azure.ResourceManager.EventHubs.Tests
             ConsumerGroupsOperations = EventHubsManagementClient.ConsumerGroups;
             DisasterRecoveryConfigsOperations = EventHubsManagementClient.DisasterRecoveryConfigs;
             Operations = EventHubsManagementClient.Operations;
+
+            StorageManagementClient = GetStorageManagementClient();
+            NetworkManagementClient = GetNetworkManagementClient();
         }
 
         internal EventHubsManagementClient GetEventHubManagementClient()
         {
             return CreateClient<EventHubsManagementClient>(this.SubscriptionId,
                 TestEnvironment.Credential,
-                Recording.InstrumentClientOptions(new EventHubsManagementClientOptions()));
+                InstrumentClientOptions(new EventHubsManagementClientOptions()));
+        }
+
+        internal StorageManagementClient GetStorageManagementClient()
+        {
+            return CreateClient<StorageManagementClient>(this.SubscriptionId,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new StorageManagementClientOptions()));
+        }
+
+        internal NetworkManagementClient GetNetworkManagementClient()
+        {
+            return CreateClient<NetworkManagementClient>(this.SubscriptionId,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(new NetworkManagementClientOptions()));
         }
 
         public async Task<string> GetLocation()

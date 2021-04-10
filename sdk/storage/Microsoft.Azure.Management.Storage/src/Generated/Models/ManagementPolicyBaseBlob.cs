@@ -34,11 +34,16 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="tierToArchive">The function to tier blobs to archive
         /// storage. Support blobs currently at Hot or Cool tier</param>
         /// <param name="delete">The function to delete the blob</param>
-        public ManagementPolicyBaseBlob(DateAfterModification tierToCool = default(DateAfterModification), DateAfterModification tierToArchive = default(DateAfterModification), DateAfterModification delete = default(DateAfterModification))
+        /// <param name="enableAutoTierToHotFromCool">This property enables
+        /// auto tiering of a blob from cool to hot on a blob access. This
+        /// property requires
+        /// tierToCool.daysAfterLastAccessTimeGreaterThan.</param>
+        public ManagementPolicyBaseBlob(DateAfterModification tierToCool = default(DateAfterModification), DateAfterModification tierToArchive = default(DateAfterModification), DateAfterModification delete = default(DateAfterModification), bool? enableAutoTierToHotFromCool = default(bool?))
         {
             TierToCool = tierToCool;
             TierToArchive = tierToArchive;
             Delete = delete;
+            EnableAutoTierToHotFromCool = enableAutoTierToHotFromCool;
             CustomInit();
         }
 
@@ -66,6 +71,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "delete")]
         public DateAfterModification Delete { get; set; }
+
+        /// <summary>
+        /// Gets or sets this property enables auto tiering of a blob from cool
+        /// to hot on a blob access. This property requires
+        /// tierToCool.daysAfterLastAccessTimeGreaterThan.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableAutoTierToHotFromCool")]
+        public bool? EnableAutoTierToHotFromCool { get; set; }
 
         /// <summary>
         /// Validate the object.

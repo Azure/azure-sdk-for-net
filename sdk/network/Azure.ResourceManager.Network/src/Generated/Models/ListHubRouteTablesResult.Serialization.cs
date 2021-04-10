@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ListHubRouteTablesResult
+    internal partial class ListHubRouteTablesResult
     {
         internal static ListHubRouteTablesResult DeserializeListHubRouteTablesResult(JsonElement element)
         {
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<HubRouteTable> array = new List<HubRouteTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {

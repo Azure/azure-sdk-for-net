@@ -30,10 +30,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiAppServicesFailure,
             MsiAzureVmSuccess,
             MsiUserAssignedIdentityAzureVmSuccess,
+            MsiServiceFabricSuccess,
+            MsiUserAssignedIdentityServiceFabricSuccess,
             MsiAppJsonParseFailure,
             MsiMissingToken,
             MsiAppServicesIncorrectRequest,
-            MsiAzureVmTimeout,
+            MsiAzureVmImdsTimeout,
             MsiUnresponsive,
             MsiThrottled,
             MsiTransientServerError
@@ -41,20 +43,23 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
         private readonly MsiTestType _msiTestType;
 
+        private const string _azureVmImdsInstanceEndpoint = "http://169.254.169.254/metadata/instance";
+        private const string _azureVmImdsTokenEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
+
         internal MockMsi(MsiTestType msiTestType)
         {
             _msiTestType = msiTestType;
         }
 
         /// <summary>
-        /// Returns a response based on the response type. 
+        /// Returns a response based on the response type.
         /// </summary>
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            // HitCount is updated when this method gets called. This allows for testing of cache and retry logic. 
+            // HitCount is updated when this method gets called. This allows for testing of cache and retry logic.
             HitCount++;
 
             HttpResponseMessage responseMessage = null;
@@ -93,6 +98,11 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     break;
 
                 case MsiTestType.MsiAppServicesSuccess:
+                    if (!request.Headers.Contains(MsiAccessTokenProvider.AppServicesHeader))
+                    {
+                        throw new Exception("Did not see expected header for App Services MSI");
+                    }
+
                     responseMessage = new HttpResponseMessage
                     {
                         Content = new StringContent(TokenHelper.GetMsiAppServicesTokenResponse(),
@@ -102,6 +112,12 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     break;
 
                 case MsiTestType.MsiAzureVmSuccess:
+                    // don't throw on first request (probe)
+                    if (HitCount > 1 && !request.Headers.Contains(MsiAccessTokenProvider.AzureVMImdsHeader))
+                    {
+                        throw new Exception("Did not see expected header for Azure VM IMDS");
+                    }
+
                     responseMessage = new HttpResponseMessage
                     {
                         Content = new StringContent(TokenHelper.GetMsiAzureVmTokenResponse(),
@@ -110,7 +126,27 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     };
                     break;
 
+                case MsiTestType.MsiServiceFabricSuccess:
+                    if (!request.Headers.Contains(MsiAccessTokenProvider.ServiceFabricHeader))
+                    {
+                        throw new Exception("Did not see expected header for Service Fabric MSI");
+                    }
+
+                    responseMessage = new HttpResponseMessage
+                    {
+                        // Service Fabric response similar to IMDS
+                        Content = new StringContent(TokenHelper.GetMsiAzureVmTokenResponse(),
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
                 case MsiTestType.MsiUserAssignedIdentityAppServicesSuccess:
+                    if (!request.Headers.Contains(MsiAccessTokenProvider.AppServicesHeader))
+                    {
+                        throw new Exception("Did not see expected header for App Services MSI");
+                    }
+
                     responseMessage = new HttpResponseMessage
                     {
                         Content = new StringContent(TokenHelper.GetManagedIdentityAppServicesTokenResponse(),
@@ -120,8 +156,29 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     break;
 
                 case MsiTestType.MsiUserAssignedIdentityAzureVmSuccess:
+                    // don't throw on first request (probe)
+                    if (HitCount > 1 && !request.Headers.Contains(MsiAccessTokenProvider.AzureVMImdsHeader))
+                    {
+                        throw new Exception("Did not see expected header for Azure VM IMDS");
+                    }
+
                     responseMessage = new HttpResponseMessage
                     {
+                        Content = new StringContent(TokenHelper.GetManagedIdentityAzureVmTokenResponse(),
+                            Encoding.UTF8,
+                            Constants.JsonContentType)
+                    };
+                    break;
+
+                case MsiTestType.MsiUserAssignedIdentityServiceFabricSuccess:
+                    if (!request.Headers.Contains(MsiAccessTokenProvider.ServiceFabricHeader))
+                    {
+                        throw new Exception("Did not see expected header for Service Fabric MSI");
+                    }
+
+                    responseMessage = new HttpResponseMessage
+                    {
+                        // Service Fabric response similar to IMDS
                         Content = new StringContent(TokenHelper.GetManagedIdentityAzureVmTokenResponse(),
                             Encoding.UTF8,
                             Constants.JsonContentType)
@@ -138,16 +195,20 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                     };
                     break;
 
-                case MsiTestType.MsiAzureVmTimeout:
-                    var start = DateTime.Now;
-                    while(DateTime.Now - start < TimeSpan.FromSeconds(MsiAccessTokenProvider.AzureVmImdsProbeTimeoutInSeconds + 10))
+                case MsiTestType.MsiAzureVmImdsTimeout:
+                    if (request.RequestUri.AbsoluteUri.StartsWith(_azureVmImdsInstanceEndpoint))
                     {
-                        if (cancellationToken.IsCancellationRequested)
+                        var start = DateTime.Now;
+                        while (DateTime.Now - start < TimeSpan.FromSeconds(MsiAccessTokenProvider.AzureVmImdsProbeTimeoutInSeconds + 10))
                         {
-                            throw new TaskCanceledException();
+                            if (cancellationToken.IsCancellationRequested)
+                            {
+                                throw new TaskCanceledException();
+                            }
                         }
+                        throw new Exception("Test fail");
                     }
-                    throw new Exception("Test fail");
+                    break;
 
                 case MsiTestType.MsiUnresponsive:
                 case MsiTestType.MsiThrottled:
@@ -167,7 +228,20 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                         // give error based on test type
                         if (_msiTestType == MsiTestType.MsiUnresponsive)
                         {
-                            throw new HttpRequestException();
+                            if (request.RequestUri.AbsoluteUri.StartsWith(_azureVmImdsInstanceEndpoint))
+                            {
+                                responseMessage = new HttpResponseMessage
+                                {
+                                    Content = new StringContent(TokenHelper.GetInstanceMetadataResponse(),
+                                    Encoding.UTF8,
+                                    Constants.JsonContentType)
+                                };
+                            }
+                            else if (Environment.GetEnvironmentVariable(Constants.MsiAppServiceEndpointEnv) != null
+                                || request.RequestUri.AbsoluteUri.StartsWith(_azureVmImdsTokenEndpoint))
+                            {
+                                throw new HttpRequestException();
+                            }
                         }
                         else
                         {

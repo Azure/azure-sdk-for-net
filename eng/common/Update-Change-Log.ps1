@@ -1,4 +1,4 @@
-﻿# Note: This script will add or replace version title in change log
+# Note: This script will add or replace version title in change log
 
 # Parameter description
 # Version : Version to add or replace in change log
@@ -12,7 +12,8 @@ param (
   [Parameter(Mandatory = $true)]
   [String]$ChangeLogPath,
   [String]$Unreleased = $True,
-  [String]$ReplaceVersion = $False
+  [String]$ReplaceVersion = $False,
+  [String]$ReleaseDate
 )
 
 
@@ -46,8 +47,12 @@ function Get-VersionTitle($Version, $Unreleased)
    # Generate version title
    $newVersionTitle = "## $Version $UNRELEASED_TAG"
    if ($Unreleased -eq $False) {
-      $releaseDate = Get-Date -Format "(yyyy-MM-dd)"
-      $newVersionTitle = "## $Version $releaseDate"
+      $actualReleaseDate = $ReleaseDate;
+
+      if (!$actualReleaseDate) {
+         $actualReleaseDate = Get-Date -Format "yyyy-MM-dd"
+      }
+      $newVersionTitle = "## $Version ($actualReleaseDate)"
    }
    return $newVersionTitle
 }
@@ -95,7 +100,7 @@ function Get-NewChangeLog( [System.Collections.ArrayList]$ChangelogLines, $Versi
       exit(0)
    }
 
-   if (($ReplaceVersion -eq $True) -and ($Unreleased -eq $False) -and $CurrentTitle.Contains($version) -and (-not $CurrentTitle.Contains($UNRELEASED_TAG))) {
+   if (($ReplaceVersion -eq $True) -and ($Unreleased -eq $False) -and $CurrentTitle.Contains($version) -and (-not $CurrentTitle.Contains($UNRELEASED_TAG)) -and (-not $ReleaseDate)) {
       Write-Host "Version is already present in change log with a release date."
       exit(0)
    }

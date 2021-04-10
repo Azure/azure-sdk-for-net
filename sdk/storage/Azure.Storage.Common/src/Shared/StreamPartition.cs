@@ -35,10 +35,10 @@ namespace Azure.Storage
 
         public Task DisposalTask { get; }
 
-#pragma warning disable IDE0069 // Disposable fields should be disposed // disposed in DisposalTask
+#pragma warning disable IDE0069, CA2213 // Disposable fields should be disposed // disposed in DisposalTask
         //ManualResetEventSlim disposalTaskCompletionSource;
         private SemaphoreSlim _disposalTaskCompletionSource;
-#pragma warning restore IDE0069 // Disposable fields should be disposed
+#pragma warning restore IDE0069, CA2213 // Disposable fields should be disposed
 
         public StreamPartition(ReadOnlyMemory<byte> buffer, long parentPosition, int count, Action disposeAction, CancellationToken ct)
         {
@@ -86,7 +86,7 @@ namespace Azure.Storage
             }
         }
 
-        private bool _disposedValue = false; // To detect redundant calls
+        private bool _disposedValue; // To detect redundant calls
 
         public override void Flush()
         {

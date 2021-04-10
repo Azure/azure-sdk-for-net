@@ -30,11 +30,21 @@ namespace Azure.Graph.Rbac.Models
                 }
                 if (property.NameEquals("isDefault"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isDefault = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("isVerified"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     isVerified = property.Value.GetBoolean();
                     continue;
                 }

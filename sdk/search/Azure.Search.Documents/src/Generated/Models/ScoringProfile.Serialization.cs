@@ -42,8 +42,15 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             if (Optional.IsDefined(FunctionAggregation))
             {
-                writer.WritePropertyName("functionAggregation");
-                writer.WriteStringValue(FunctionAggregation.Value.ToSerialString());
+                if (FunctionAggregation != null)
+                {
+                    writer.WritePropertyName("functionAggregation");
+                    writer.WriteStringValue(FunctionAggregation.Value.ToSerialString());
+                }
+                else
+                {
+                    writer.WriteNull("functionAggregation");
+                }
             }
             writer.WriteEndObject();
         }
@@ -53,7 +60,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             Optional<TextWeights> text = default;
             Optional<IList<ScoringFunction>> functions = default;
-            Optional<ScoringFunctionAggregation> functionAggregation = default;
+            Optional<ScoringFunctionAggregation?> functionAggregation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -73,6 +80,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("functions"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<ScoringFunction> array = new List<ScoringFunction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -83,6 +95,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (property.NameEquals("functionAggregation"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        functionAggregation = null;
+                        continue;
+                    }
                     functionAggregation = property.Value.GetString().ToScoringFunctionAggregation();
                     continue;
                 }

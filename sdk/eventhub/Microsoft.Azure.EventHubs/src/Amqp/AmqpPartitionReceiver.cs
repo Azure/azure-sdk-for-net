@@ -99,6 +99,15 @@ namespace Microsoft.Azure.EventHubs.Amqp
                     {
                         throw AmqpExceptionHelper.ToMessagingContract(amqpException.Error);
                     }
+                    catch (Exception ex)
+                    {
+                        if (AmqpExceptionHelper.TryTranslateToRetriableException(ex, out var retriableEx))
+                        {
+                            throw retriableEx;
+                        }
+
+                        throw;
+                    }
                 }
                 catch (Exception ex)
                 {

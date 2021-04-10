@@ -8,17 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
-using Azure.Management.Network.Models;
-using Azure.Management.Resources;
-using Azure.Management.Resources.Models;
-using Azure.Management.Storage.Models;
+using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Storage.Models;
 using NUnit.Framework;
 //using Newtonsoft.Json.Linq;
 using CM = Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
-    public class VMScaleSetTestsBase :VMTestBase
+    public class VMScaleSetTestsBase : VMTestBase
     {
         public VMScaleSetTestsBase(bool isAsync)
         : base(isAsync)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Tests
         protected VirtualMachineScaleSetExtension GetVmssServiceFabricExtension()
         {
             VirtualMachineScaleSetExtension sfExtension = new VirtualMachineScaleSetExtension(
-                null, "vmsssfext01", "ServiceFabricNode", null, "Microsoft.Azure.ServiceFabric", null,"1.0",true,"{}","{}",null,null);
+                null, "vmsssfext01", "ServiceFabricNode", null, "Microsoft.Azure.ServiceFabric", null, "1.0", true, "{}", "{}", null, null);
 
             return sfExtension;
         }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var vmScaleSet = new VirtualMachineScaleSet(m_location)
             {
                 Location = m_location,
-                Tags ={ { "RG", "rg" }, { "testTag", "1" } },
+                Tags = { { "RG", "rg" }, { "testTag", "1" } },
                 Sku = new CM.Sku()
                 {
                     Capacity = 2,
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Compute.Tests
             return vmScaleSet;
         }
 
-        public async Task<(VirtualMachineScaleSet, VirtualMachineScaleSet)> CreateVMScaleSet_NoAsyncTracking(
+        public async Task<(VirtualMachineScaleSet Response, VirtualMachineScaleSet Input)> CreateVMScaleSet_NoAsyncTracking(
             string rgName,
             string vmssName,
             StorageAccount storageAccount,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute.Tests
                                                                                      automaticRepairsPolicy: automaticRepairsPolicy);
 
                 var getResponse = await VirtualMachineScaleSetsOperations.GetAsync(rgName, vmssName);
-                return (getResponse, createOrUpdateResponse.Item2);
+                return (getResponse, createOrUpdateResponse.InputScaleSet);
             }
             catch
             {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var patchResponse = await WaitForCompletionAsync(await VirtualMachineScaleSetsOperations.StartUpdateAsync(rgName, vmssName, inputVMScaleSet));
         }
 
-        private async Task<(VirtualMachineScaleSet, VirtualMachineScaleSet)> CreateVMScaleSetAndGetOperationResponse(
+        private async Task<(VirtualMachineScaleSet ResponseScaleSet, VirtualMachineScaleSet InputScaleSet)> CreateVMScaleSetAndGetOperationResponse(
             string rgName,
             string vmssName,
             StorageAccount storageAccount,
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Compute.Tests
                 osDisk.Caching = CachingTypes.ReadOnly;
                 osDisk.DiffDiskSettings = new DiffDiskSettings
                 {
-                    Option ="Local",
+                    Option = "Local",
                     //TODO the value of "Placement" may not be given
                     //Placement = DiffDiskPlacement.CacheDisk
                 };
@@ -434,9 +434,8 @@ namespace Azure.ResourceManager.Compute.Tests
 
             ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse, createWithManagedDisks, ppgId: ppgId);
 
-            return (createOrUpdateResponse,inputVMScaleSet);
+            return (createOrUpdateResponse, inputVMScaleSet);
         }
-
 
         protected void ValidateVMScaleSetInstanceView(VirtualMachineScaleSet vmScaleSet,
             VirtualMachineScaleSetInstanceView vmScaleSetInstanceView)
@@ -670,7 +669,6 @@ namespace Azure.ResourceManager.Compute.Tests
 
             if (ppgId != null)
             {
-
                 Assert.AreEqual(ppgId.ToLower(), vmScaleSetOut.ProximityPlacementGroup.Id.ToLower());
             }
         }

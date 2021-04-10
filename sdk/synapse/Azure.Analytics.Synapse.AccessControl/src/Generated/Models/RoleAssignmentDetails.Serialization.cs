@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,8 +16,10 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
         internal static RoleAssignmentDetails DeserializeRoleAssignmentDetails(JsonElement element)
         {
             Optional<string> id = default;
-            Optional<string> roleId = default;
-            Optional<string> principalId = default;
+            Optional<Guid> roleDefinitionId = default;
+            Optional<Guid> principalId = default;
+            Optional<string> scope = default;
+            Optional<string> principalType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -24,18 +27,38 @@ namespace Azure.Analytics.Synapse.AccessControl.Models
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("roleId"))
+                if (property.NameEquals("roleDefinitionId"))
                 {
-                    roleId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    roleDefinitionId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    principalId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("scope"))
+                {
+                    scope = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("principalType"))
+                {
+                    principalType = property.Value.GetString();
                     continue;
                 }
             }
-            return new RoleAssignmentDetails(id.Value, roleId.Value, principalId.Value);
+            return new RoleAssignmentDetails(id.Value, Optional.ToNullable(roleDefinitionId), Optional.ToNullable(principalId), scope.Value, principalType.Value);
         }
     }
 }
