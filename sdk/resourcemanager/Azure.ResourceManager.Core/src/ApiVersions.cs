@@ -185,5 +185,24 @@ namespace Azure.ResourceManager.Core
                 _nonLoadedResourceToApiVersion[resourceType.ToString()] = apiVersion;
             }
         }
+
+        internal ApiVersions Clone()
+        {
+            ApiVersions copy = new ApiVersions(_clientOptions);
+            copy.ProviderOperations = ProviderOperations;
+
+            copy._loadedResourceToApiVersions = new Dictionary<string, PropertyWrapper>();
+            foreach (var property in _loadedResourceToApiVersions)
+            {
+                copy._loadedResourceToApiVersions.Add(property.Key, property.Value);
+            }
+
+            copy._nonLoadedResourceToApiVersion = new Dictionary<string, string>();
+            foreach (var property in _nonLoadedResourceToApiVersion)
+            {
+                copy._nonLoadedResourceToApiVersion.Add(property.Key, property.Value);
+            }
+            return copy;
+        }
     }
 }

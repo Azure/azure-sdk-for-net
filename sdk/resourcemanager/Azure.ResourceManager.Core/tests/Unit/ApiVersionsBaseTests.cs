@@ -253,5 +253,20 @@ namespace Azure.ResourceManager.Core.Tests
             FakeResourceApiVersions right = ConvertFromString(rightString);
             Assert.IsFalse(left < right);
         }
+
+        [TestCase]
+        public void ValidateClone()
+        {
+            var options = new ArmClientOptions();
+            var apiVersions1 = new ApiVersions(options);
+            var apiVersions2 = apiVersions1.Clone();
+
+            Assert.IsFalse(ReferenceEquals(apiVersions1, apiVersions2));
+            Assert.AreEqual(apiVersions1.TryGetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}"), apiVersions2.TryGetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}"));
+
+            apiVersions1.SetApiVersion("{Microsoft.Resources/subscriptions/resourceGroups}", "1500-10-10");
+            Assert.IsFalse(ReferenceEquals(apiVersions1, apiVersions2));
+            Assert.AreNotEqual(apiVersions1, apiVersions2);
+        }
     }
 }

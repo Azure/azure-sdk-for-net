@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Core
         /// <summary>
         /// Gets the ApiVersions object
         /// </summary>
-        public ApiVersions ApiVersions { get; }
+        public ApiVersions ApiVersions { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArmClientOptions"/> class.
@@ -53,18 +53,31 @@ namespace Azure.ResourceManager.Core
             if (defaultLocation is null)
                 throw new ArgumentNullException(nameof(defaultLocation));
 
-            // Will go away when moved into core since we will have directy acces the policies and transport, so just need to set those
+            // Will go away when moved into core since we will have directly access the policies and transport, so just need to set those
             if (!ReferenceEquals(other, null))
                 Copy(other);
             DefaultLocation = defaultLocation;
-            ApiVersionOverrides = new Dictionary<string, string>();
             ApiVersions = new ApiVersions(this);
         }
 
-        /// <summary>
-        /// Gets the Api version overrides.
-        /// </summary>
-        public Dictionary<string, string> ApiVersionOverrides { get; private set; }
+        private ArmClientOptions(LocationData location, IList<HttpPipelinePolicy> perCallPolicies, IList<HttpPipelinePolicy> perRetryPolicies)
+        {
+            if (location is null)
+                throw new ArgumentNullException(nameof(location));
+
+            DefaultLocation = location;
+            PerCallPolicies = new List<HttpPipelinePolicy>();
+            foreach (var call in perCallPolicies)
+            {
+                PerCallPolicies.Add(call);
+            }
+            PerRetryPolicies = new List<HttpPipelinePolicy>();
+            foreach (var retry in perRetryPolicies)
+            {
+                PerCallPolicies.Add(retry);
+            }
+            ApiVersions = new ApiVersions(this);
+        }
 
         /// <summary>
         /// Gets the default location to use if can't be inherited from parent.
@@ -162,6 +175,14 @@ namespace Azure.ResourceManager.Core
             {
                 AddPolicy(pol, HttpPipelinePosition.PerRetry);
             }
+        }
+
+        internal ArmClientOptions Clone()
+        {
+            ArmClientOptions copy = new ArmClientOptions(DefaultLocation, PerCallPolicies, PerRetryPolicies);
+            copy.ApiVersions = ApiVersions.Clone();
+            copy.Transport = Transport;
+            return copy;
         }
     }
 }
