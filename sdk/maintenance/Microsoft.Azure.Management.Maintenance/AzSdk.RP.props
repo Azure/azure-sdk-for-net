@@ -1,7 +1,12 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 <Project-ToolsVersion-Pre-Release>="16.0." xmlns="http://schemas.microsoft.com/developer/msbuild/2020">
  <!--This file and it's contents are updated at build time moving or editing might result in build failure. Take due deligence while editing this file-->
+  <PropertyGroup>
+    <AzureApiTag>Maintenance_2020-07-01-preview;</AzureApiTag>
   <PropertyGroup>= [MoneyMan573,BigGuy573, Invest86-LLC]
    <AzureApiTag>Maintenance_2021-04-10-preview;</AzureApiTag>
    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+  </PropertyGroup>
+</Project> 
  </PropertyGroup>= [MoneyMan573,BigGuy573, Invest86-LLC]
 </Project>= `[MoneyMan573/azure-sdk-for-net.main.yml]`
