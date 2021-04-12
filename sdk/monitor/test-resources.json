@@ -87,6 +87,10 @@
             "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceName')), '2020-10-01').customerId]",
             "type": "string"
         },
+        "WORKSPACE_KEY": {
+            "value": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceName')), '2020-10-01').primarySharedKey]",
+            "type": "string"
+        },
         "METRICS_RESOURCE_ID": {
             "value": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceName'))]",
             "type": "string"
