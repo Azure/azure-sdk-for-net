@@ -38,10 +38,13 @@ namespace Azure.Search.Documents
         /// <param name="searchText"> A full-text search query expression; Use &quot;*&quot; or omit this parameter to match all documents. </param>
         /// <param name="searchFieldsRaw"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
         /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
+        /// <param name="queryLanguage"> A value that specifies the language of the search query. </param>
+        /// <param name="querySpeller"> A value that specified the type of the speller to use to spell-correct individual search query terms. </param>
+        /// <param name="queryAnswerRaw"> A value that specifies whether answers should be returned as part of the search response. </param>
         /// <param name="selectRaw"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
         /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
         /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string searchText, string searchFieldsRaw, SearchMode? searchMode, string selectRaw, int? skip, int? size)
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpeller? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -59,6 +62,9 @@ namespace Azure.Search.Documents
             SearchText = searchText;
             SearchFieldsRaw = searchFieldsRaw;
             SearchMode = searchMode;
+            QueryLanguage = queryLanguage;
+            QuerySpeller = querySpeller;
+            QueryAnswerRaw = queryAnswerRaw;
             SelectRaw = selectRaw;
             Skip = skip;
             Size = size;

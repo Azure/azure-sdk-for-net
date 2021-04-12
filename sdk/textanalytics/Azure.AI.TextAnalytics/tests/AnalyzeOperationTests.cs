@@ -194,14 +194,14 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(0, operation.ActionsFailed);
             Assert.AreEqual(0, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(0, operation.TotalActions);
+            Assert.AreEqual(0, operation.ActionsTotal);
 
             await operation.WaitForCompletionAsync(PollingInterval);
 
             Assert.AreEqual(0, operation.ActionsFailed);
             Assert.AreEqual(4, operation.ActionsSucceeded);
             Assert.AreEqual(0, operation.ActionsInProgress);
-            Assert.AreEqual(4, operation.TotalActions);
+            Assert.AreEqual(4, operation.ActionsTotal);
             Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
             Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
             Assert.AreNotEqual(new DateTimeOffset(), operation.ExpiresOn);

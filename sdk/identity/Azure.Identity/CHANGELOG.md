@@ -1,5 +1,8 @@
 # Release History
 
+## 1.4.0-beta.6 (Unreleased)
+
+
 ## 1.4.0-beta.5 (2021-04-06)
 
 ### Acknowledgments
@@ -15,7 +18,8 @@ Thank you to our developer community members who helped to make Azure Identity b
 ### Fixes and improvements
 
 - When logging is enabled, the log output from MSAL is also logged.
-- Fixed an issue where an account credential fails to load from the cache when EnableGuestTenantAuthentication is true and the account found in the cache has multiple matching tenantIds.
+- Fixed an issue where an account credential fails to load from the cache when EnableGuestTenantAuthentication is true and the account found in the cache has multiple matching tenantIds ([#18276](https://github.com/Azure/azure-sdk-for-net/issues/18276)).
+- Fixed deadlock issue in `InteractiveBrowserCredential` when running in a UI application ([#18418](https://github.com/Azure/azure-sdk-for-net/issues/18418)).
 
 ### Breaking Changes
 
@@ -48,14 +52,6 @@ Thank you to our developer community members who helped to make Azure Identity b
 - Fixed issue in `HttpExtensions` causing the omission of content headers on requests ([#17448](https://github.com/Azure/azure-sdk-for-net/issues/17448))
 - Made `EnvironmentCredential` to account for both null and empty string when checking for the presense of the environment variables ([#18031](https://github.com/Azure/azure-sdk-for-net/issues/18031))
 
-## 1.4.0-beta.1 (2020-10-15)
-
-### New Features
-
-- Redesigned Application Authentication APIs
-  - Adds `TokenCache` and `TokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
-  - Adds `TokenCache` property to options for credentials supporting token cache configuration.
-
 ## 1.3.0 (2020-11-12)
 
 ### New Features
@@ -85,6 +81,14 @@ Thank you to our developer community members who helped to make Azure Identity b
   - Removed properties `AuthenticationRecord` and `DisableAutomaticAuthentication` from `DeviceCodeCredentialOptions` and `InteractiveBrowserCredentialOptions`
   - Removed properties `AllowUnencryptedCache`and `AuthenticationRecord` from `SharedTokenCacheCredentialOptions`
   - Removed methods `Authenticate` and `AuthenticateAsync` from `DeviceCodeCredential`, `InteractiveBrowserCredential` and `UsernamePasswordCredential`
+
+## 1.4.0-beta.1 (2020-10-15)
+
+### New Features
+
+- Redesigned Application Authentication APIs
+  - Adds `TokenCache` and `TokenCache` classes to give more user control over how the tokens are cached and how the cache is persisted.
+  - Adds `TokenCache` property to options for credentials supporting token cache configuration.
 
 ## 1.3.0-beta.2 (2020-10-07)
 

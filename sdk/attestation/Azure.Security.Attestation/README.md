@@ -26,7 +26,7 @@ dotnet add package Azure.Security.Attestation --prerelease
 ```
 
 ### Authenticate the client
-In order to interact with the Microsoft Azure Attestation service, you'll need to create an instance of the [Attestation Client][key_client_class] class. You need a **attestation instance url**, which you may see as "DNS Name" in the portal,
+In order to interact with the Microsoft Azure Attestation service, you'll need to create an instance of the [Attestation Client][attestation_client] or [Attestation Administration Client][attestation_admin_client] class. You need a **attestation instance url**, which you may see as "DNS Name" in the portal,
  and **client secret credentials (client id, client secret, tenant id)** to instantiate a client object.
 
 Client secret credential authentication is being used in this getting started section but you can find more ways to authenticate with [Azure identity][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below,
@@ -89,9 +89,17 @@ SGX or TPM attestation is the process of validating evidence collected from
 a trusted execution environment to ensure that it meets both the Azure baseline for that environment and customer defined policies applied to that environment.
 
 ### Attestation token signing certificate discovery and validation
-Most responses from the MAA service are expressed in the form of a JSON Web Token. This token will be signed by a signing certificate
-issued by the MAA service for the specified instance. If the MAA service instance is running in a region where the service runs in an SGX enclave, then
-the certificate issued by the server can be verified using the [oe_verify_attestation_certificate() API](https://openenclave.github.io/openenclave/api/enclave_8h_a3b75c5638360adca181a0d945b45ad86.html). 
+One of the core operational guarantees of the Azure Attestation Service is that the service operates "operationally out of the TCB". In other words, there is no way that a Microsoft operator could tamper with the operation of the service, or corrupt data sent from the client. To ensure this guarantee, the core of the attestation service runs in an Intel(tm) SGX enclave.
+
+To allow customers to verify that operations were actually performed inside the enclave, most responses from the Attestation Service are encoded in a [JSON Web Token][json_web_token], which is signed by a key held within the attestation service's enclave.
+
+This token will be signed by a signing certificate issued by the MAA service for the specified instance. 
+
+If the MAA service instance is running in a region where the service runs in an SGX enclave, then
+the certificate issued by the server can be verified using the [oe_verify_attestation_certificate API](https://openenclave.github.io/openenclave/api/enclave_8h_a3b75c5638360adca181a0d945b45ad86.html). 
+
+
+The [`AttestationResponse`][attestation_response] object contains two main properties: [`Token`][attestation_response_token] and [`Value`][attestation_response_value]. The `Token` property contains the complete token returned by the attestation service, the `Value` property contains the body of the JSON Web Token response.
 
 ### Policy Management
 Each attestation service instance has a policy applied to it which defines additional criteria which the customer has defined.
@@ -116,7 +124,11 @@ Currently, MAA supports the following Trusted Execution environments:
 ### Runtime Data and Inittime Data
 RuntimeData refers to data which is presented to the Intel SGX Quote generation logic or the `oe_get_report`/`oe_get_evidence` APIs. The Azure Attestation service will validate that the first 32 bytes of the `report_data` field in the SGX Quote/OE Report/OE Evidence matches the SHA256 hash of the RuntimeData.
 
-InitTime data refers to data which is used to configure the SGX enclave being attested.
+InitTime data refers to data which is used to configure the SGX enclave being attested. 
+
+> Note that InitTime data is not supported on Azure [DCsv2-Series](https://docs.microsoft.com/azure/virtual-machines/dcv2-series) virtual machines.
+
+### Validating responses from the attestation service.
 
 
 ### Thread safety
@@ -159,7 +171,7 @@ This example assumes that you have an existing `AttestationClient` object which 
 // Collect quote and runtime data from OpenEnclave enclave.
 
 var attestationResult = client.AttestSgxEnclave(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false).Value;
-Assert.AreEqual(binaryRuntimeData, attestationResult.DeprecatedEnclaveHeldData);
+Assert.AreEqual(binaryRuntimeData, attestationResult.EnclaveHeldData);
 // VERIFY ATTESTATIONRESULT.
 // Encrypt Data using DeprecatedEnclaveHeldData
 // Send to enclave.
@@ -181,23 +193,46 @@ The `GetPolicy` method retrieves an attestation policy from the service. The `at
 var client = new AttestationAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
 
 var policyResult = await client.GetPolicyAsync(AttestationType.SgxEnclave);
-var result = policyResult.Value.AttestationPolicy;
+var result = policyResult.Value;
 ```
 
 ### Set an attestation policy for a specified attestation type.
+
+If the attestation service instance is running in Isolated mode, the SetPolicy API needs to provide a signing certificate (and private key) which can be used to validate that the caller is authorized to modify policy on the attestation instance. If the service instance is running in AAD mode, then the signing certificate and key are optional.
+
+Under the covers, the SetPolicy APIs create a [JSON Web Token][json_web_token] based on the policy document and signing information which is sent to the attestation service.
+
 ```C# Snippet:SetPolicy
 string attestationPolicy = "version=1.0; authorizationrules{=> permit();}; issuancerules{};";
 
-var policyTokenSigner = TestEnvironment.PolicyCertificate0;
+X509Certificate2 policyTokenCertificate = new X509Certificate2(<Attestation Policy Signing Certificate>);
+AsymmetricAlgorithm policyTokenKey = <Attestation Policy Signing Key>;
 
-AttestationToken policySetToken = new SecuredAttestationToken(
-    new StoredAttestationPolicy { AttestationPolicy = Base64Url.EncodeString(attestationPolicy), },
-    TestEnvironment.PolicySigningKey0,
-    policyTokenSigner);
+var setResult = client.SetPolicy(AttestationType.SgxEnclave, attestationPolicy, new TokenSigningKey(policyTokenKey, policyTokenCertificate));
+```
 
-var setResult = client.SetPolicy(AttestationType.SgxEnclave, policySetToken);
-```Python
-things = client.list_things()
+Clients need to be able to verify that the attestation policy document was not modified before the policy document was received by the attestation service's enclave.
+
+There are two properties provided in the [PolicyResult][attestation_policy_result] that can be used to verify that the service received the policy document:
+- [`PolicySigner`][attestation_policy_result_signer] - if the `SetPolicy` call included a signing certificate, this will be the certificate provided at the time of the `SetPolicy` call. If no policy signer was set, this will be null. 
+- [`PolicyTokenHash`][attestation_policy_result_token_hash] - this is the hash of the [JSON Web Token][json_web_token] sent to the service.
+
+To verify the hash, clients can generate an attestation token and verify the hash generated from that token:
+
+```C# Snippet:VerifySigningHash
+// The SetPolicyAsync API will create an AttestationToken signed with the TokenSigningKey to transmit the policy.
+// To verify that the policy specified by the caller was received by the service inside the enclave, we
+// verify that the hash of the policy document returned from the Attestation Service matches the hash
+// of an attestation token created locally.
+TokenSigningKey signingKey = new TokenSigningKey(<Customer provided signing key>, <Customer provided certificate>)
+var policySetToken = new AttestationToken(
+    new StoredAttestationPolicy { AttestationPolicy = attestationPolicy },
+    signingKey);
+
+using var shaHasher = SHA256Managed.Create();
+var attestationPolicyHash = shaHasher.ComputeHash(Encoding.UTF8.GetBytes(policySetToken.ToString()));
+
+Debug.Assert(attestationPolicyHash.SequenceEqual(setResult.Value.PolicyTokenHash));
 ```
 
 ### Retrieve Token Certificates
@@ -230,15 +265,24 @@ See [CONTRIBUTING.md][contributing] for details on building, testing, and contri
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [API_reference]: https://docs.microsoft.com/dotnet/api/azure.security.attestation?view=azure-dotnet-preview
+[attestation_admin_client]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationadministrationclient
+[attestation_client]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationclient
+[attestation_response]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1
+[attestation_response_token]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1.token
+[attestation_response_value]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.attestationresponse-1.value
+[attestation_policy_result]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult
+[attestation_policy_result_signer]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult.policysigner
+[attestation_policy_result_token_hash]: https://docs.microsoft.com/dotnet/api/azure.security.attestation.policyresult.policytokenhash
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/identity/Azure.Identity
 [azure_sub]: https://azure.microsoft.com/free/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
+[json_web_token]: https://tools.ietf.org/html/rfc7519
 [JWK]: https://tools.ietf.org/html/rfc7517
 [base64url_encoding]: https://tools.ietf.org/html/rfc4648#section-5
 [nuget]: https://www.nuget.org/
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md#defaultazurecredential
-[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/CONTRIBUTING.md
+[contributing]: https://github.com/Azure/azure-sdk-for-net/blob/master/CONTRIBUTING.md
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftemplate%2FAzure.Template%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fattestation%2FAzure.Security.Attestation%2FREADME.png)

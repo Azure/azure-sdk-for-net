@@ -3,121 +3,167 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.Security.Attestation.Models;
-using Azure.Identity;
 
 namespace Azure.Security.Attestation.Tests
 {
     public class AttestationTests : RecordedTestBase<AttestationClientTestEnvironment>
     {
-        private readonly string _runtimeData =
-"wFdC6gBMrrej2JTuNlTjWOe-ebL7Rz34WjmEUnbfFEc_5BITs2t4V8uuEI8JX73t0g_nUTu6g07xyC6rx9wl8IUQFYyP" +
-"KhsMk3FLESkryhb5dz9cDxoxwMNnGbu-B7AsOBCe3lckQmoRAEf4_5qUm-PS26DD3SkbNRT-XjMQMQ19Q33dpKFvXPrQ" +
-"yvCK0ly0pL-JXXdnT4hsJUn8tJKW152W2gZWeXIKO8Ge2er_8xXUvQ6gCLZwwcD1--Whg90h9n5tVRNQdqCnWwsFL0LE" +
-"KVNiCj7Cbii8_XpjYjTTSQKSOiC_i_VbZZF9cY4W_1ZpUj7WWkSSkPhNSuqBHOvmuFrVTlfQvgdsKYQ5zYbSnPtqJ1_4" +
-"QUoPJsYQIxyFFncIDbuGWuTPd_FDKLBLQADyO4kYWjnVMXdM1p_xjtqo2_UWTznEfrQpoZttQE99GZVEVSXPBn0GXzph" +
-"4JDKyWq3rDIvzFMhumG5ay1eyQ622hxwBN4WVxVjJ-BtaWMnU15o4OZZVReCpTodGZabT0RgAmJqKNZnH_Vx_ECLKxss" +
-"xEHoNWZBUCWAS9Qy4OpdQZ1-vINHJaTIZsehSZrkk1a5ttJdghTSUJGbEPWt3Azstjidyq8x1l5q-PIClhJE_Q_vHOvT" +
-"zxCebqZOhFJl08rx8I2OYxzekLA1miJ4aZs8h3eB6tOHZF06gJC8wcIORvy8d8ysEZvja40AWSg";
+        private readonly string _openEnclaveReport = "AQAAAAIAAADoEQAAAAAAAAMAAgAAAAAABQAKAJOacjP3nEyplAoNs5V_Bgfl_L18zrEJejtqk6RDB0IzAAAAABERAwX_gAYAAAAAAAAAAA" +
+                                                    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcAAAAAAAAABwAAAAAAAAApKh9LUZ5GYn6yR4o9mFFAVlPFtLCmkl3oQ4NNkhaF" +
+                                                    "DgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASupfmg7QSxH4iarf5qHTdiE6Kalahc5zN65vf-zmYQwAAAAAAAAAAAAAAAAAAA" +
+                                                    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+                                                    "AAABAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKFQuRP5-c_ZhD2sxrn" +
+                                                    "V2kl8JzNu0xWRlg-zBVhM3qP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQQAACJx8e27oQ0pijs3lXQ9HfKWP9NMqVHQFL9" +
+                                                    "SOjC_KGDcbv-I2fCafTHJ__AmNqVXy7XTXnzmLp1HhUCy1_9AORSATqGZ1PtvBf4Q2NfNxqVkNrGJAjYuqMPStdg0MuM21nN-Qc9BWNycR" +
+                                                    "MMsU7YfHSzmw7eGjBb_Ewfb3k6N4ZYRhERAwX_gAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABUAAAAAAAAA" +
+                                                    "BwAAAAAAAAA_sKzghp0uMPKOhtcMdmQDpU-7zWWO7ODhuUipFVkXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjE9XddeWUD" +
+                                                    "6WE393xoqCmgBWrI3tcBQLCBsJRJDFe_8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+                                                    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+                                                    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH_mzVQFF8XbJCRGdNkA3SPx9ZUPgtx3874VyDYQnFRIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
+                                                    "AAAAAAAAAAAAAEUP2-pxe7LoyevtN5BdE4KKikxKK6-hwG0xCDmxmfLphcnrVskSbKmiKUfzkWUBehrF8gHCGNGIPX3QQDwmtZ4gAAABAg" +
+                                                    "MEBQYHCAkKCwwNDg8QERITFBUWFxgZGhscHR4fBQDMDQAALS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVnVENDQkNhZ0F3SUJB" +
+                                                    "Z0lVU3I5VmRiSnFWbzVyZzRadUpCRWo2SjNoak9jd0NnWUlLb1pJemowRUF3SXcKY1RFak1DRUdBMVVFQXd3YVNXNTBaV3dnVTBkWUlGQk" +
+                                                    "RTeUJRY205alpYTnpiM0lnUTBFeEdqQVlCZ05WQkFvTQpFVWx1ZEdWc0lFTnZjbkJ2Y21GMGFXOXVNUlF3RWdZRFZRUUhEQXRUWVc1MFlT" +
+                                                    "QkRiR0Z5WVRFTE1Ba0dBMVVFCkNBd0NRMEV4Q3pBSkJnTlZCQVlUQWxWVE1CNFhEVEl4TURNeE9UQTBOVEl3T0ZvWERUSTRNRE14T1RBME" +
+                                                    "5USXcKT0Zvd2NERWlNQ0FHQTFVRUF3d1pTVzUwWld3Z1UwZFlJRkJEU3lCRFpYSjBhV1pwWTJGMFpURWFNQmdHQTFVRQpDZ3dSU1c1MFpX" +
+                                                    "d2dRMjl5Y0c5eVlYUnBiMjR4RkRBU0JnTlZCQWNNQzFOaGJuUmhJRU5zWVhKaE1Rc3dDUVlEClZRUUlEQUpEUVRFTE1Ba0dBMVVFQmhNQ1" +
+                                                    "ZWTXdXVEFUQmdjcWhrak9QUUlCQmdncWhrak9QUU1CQndOQ0FBUlQKVGRNNVhTMGFiRTA2ZUdVTVU3S1JOQXJlRGRtTWJHK25KVHlucDZX" +
+                                                    "ankyeXJ6NmlEa3h1R1F3WGZ1b25uUVBuZApjdHgwbHIyR3I0WjF1YXNsQjM2Vm80SUNtekNDQXBjd0h3WURWUjBqQkJnd0ZvQVUwT2lxMm" +
+                                                    "5YWCtTNUpGNWc4CmV4UmwwTlh5V1Uwd1h3WURWUjBmQkZnd1ZqQlVvRktnVUlaT2FIUjBjSE02THk5aGNHa3VkSEoxYzNSbFpITmwKY25a" +
+                                                    "cFkyVnpMbWx1ZEdWc0xtTnZiUzl6WjNndlkyVnlkR2xtYVdOaGRHbHZiaTkyTWk5d1kydGpjbXcvWTJFOQpjSEp2WTJWemMyOXlNQjBHQT" +
+                                                    "FVZERnUVdCQlRMejZNQ3VHcVZobFYrR2Q0ZGtacmx4YndCV2pBT0JnTlZIUThCCkFmOEVCQU1DQnNBd0RBWURWUjBUQVFIL0JBSXdBREND" +
+                                                    "QWRRR0NTcUdTSWI0VFFFTkFRU0NBY1V3Z2dIQk1CNEcKQ2lxR1NJYjRUUUVOQVFFRUVMOEhhRExXWWdVUFUzU3c3Tm1Ibkhrd2dnRmtCZ2" +
+                                                    "9xaGtpRytFMEJEUUVDTUlJQgpWREFRQmdzcWhraUcrRTBCRFFFQ0FRSUJFVEFRQmdzcWhraUcrRTBCRFFFQ0FnSUJFVEFRQmdzcWhraUcr" +
+                                                    "RTBCCkRRRUNBd0lCQWpBUUJnc3Foa2lHK0UwQkRRRUNCQUlCQkRBUUJnc3Foa2lHK0UwQkRRRUNCUUlCQVRBUkJnc3EKaGtpRytFMEJEUU" +
+                                                    "VDQmdJQ0FJQXdFQVlMS29aSWh2aE5BUTBCQWdjQ0FRWXdFQVlMS29aSWh2aE5BUTBCQWdnQwpBUUF3RUFZTEtvWklodmhOQVEwQkFna0NB" +
+                                                    "UUF3RUFZTEtvWklodmhOQVEwQkFnb0NBUUF3RUFZTEtvWklodmhOCkFRMEJBZ3NDQVFBd0VBWUxLb1pJaHZoTkFRMEJBZ3dDQVFBd0VBWU" +
+                                                    "xLb1pJaHZoTkFRMEJBZzBDQVFBd0VBWUwKS29aSWh2aE5BUTBCQWc0Q0FRQXdFQVlMS29aSWh2aE5BUTBCQWc4Q0FRQXdFQVlMS29aSWh2" +
+                                                    "aE5BUTBCQWhBQwpBUUF3RUFZTEtvWklodmhOQVEwQkFoRUNBUW93SHdZTEtvWklodmhOQVEwQkFoSUVFQkVSQWdRQmdBWUFBQUFBCkFBQU" +
+                                                    "FBQUF3RUFZS0tvWklodmhOQVEwQkF3UUNBQUF3RkFZS0tvWklodmhOQVEwQkJBUUdBSkJ1MVFBQU1BOEcKQ2lxR1NJYjRUUUVOQVFVS0FR" +
+                                                    "QXdDZ1lJS29aSXpqMEVBd0lEU1FBd1JnSWhBSzZPMS9GNy80NFprcWhUN2FhNgp5QVh6QlltRWxUVHRvL25rVUd4N1BtUktBaUVBMXliSW" +
+                                                    "t6SjVwcXR1L21jOW5DUWNwRUJOdk5KZFNIcW1jc04rCkV2dWJ3WlU9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KLS0tLS1CRUdJTiBD" +
+                                                    "RVJUSUZJQ0FURS0tLS0tCk1JSUNsekNDQWo2Z0F3SUJBZ0lWQU5Eb3F0cDExL2t1U1JlWVBIc1VaZERWOGxsTk1Bb0dDQ3FHU000OUJBTU" +
+                                                    "MKTUdneEdqQVlCZ05WQkFNTUVVbHVkR1ZzSUZOSFdDQlNiMjkwSUVOQk1Sb3dHQVlEVlFRS0RCRkpiblJsYkNCRApiM0p3YjNKaGRHbHZi" +
+                                                    "akVVTUJJR0ExVUVCd3dMVTJGdWRHRWdRMnhoY21FeEN6QUpCZ05WQkFnTUFrTkJNUXN3CkNRWURWUVFHRXdKVlV6QWVGdzB4T0RBMU1qRX" +
+                                                    "hNRFExTURoYUZ3MHpNekExTWpFeE1EUTFNRGhhTUhFeEl6QWgKQmdOVkJBTU1Ha2x1ZEdWc0lGTkhXQ0JRUTBzZ1VISnZZMlZ6YzI5eUlF" +
+                                                    "TkJNUm93R0FZRFZRUUtEQkZKYm5SbApiQ0JEYjNKd2IzSmhkR2x2YmpFVU1CSUdBMVVFQnd3TFUyRnVkR0VnUTJ4aGNtRXhDekFKQmdOVk" +
+                                                    "JBZ01Ba05CCk1Rc3dDUVlEVlFRR0V3SlZVekJaTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCTDlxK05NcDJJT2cKdGRsMWJr" +
+                                                    "L3VXWjUrVEdRbThhQ2k4ejc4ZnMrZktDUTNkK3VEelhuVlRBVDJaaERDaWZ5SXVKd3ZOM3dOQnA5aQpIQlNTTUpNSnJCT2pnYnN3Z2Jnd0" +
+                                                    "h3WURWUjBqQkJnd0ZvQVVJbVVNMWxxZE5JbnpnN1NWVXI5UUd6a25CcXd3ClVnWURWUjBmQkVzd1NUQkhvRVdnUTRaQmFIUjBjSE02THk5" +
+                                                    "alpYSjBhV1pwWTJGMFpYTXVkSEoxYzNSbFpITmwKY25acFkyVnpMbWx1ZEdWc0xtTnZiUzlKYm5SbGJGTkhXRkp2YjNSRFFTNWpjbXd3SF" +
+                                                    "FZRFZSME9CQllFRk5EbwpxdHAxMS9rdVNSZVlQSHNVWmREVjhsbE5NQTRHQTFVZER3RUIvd1FFQXdJQkJqQVNCZ05WSFJNQkFmOEVDREFH" +
+                                                    "CkFRSC9BZ0VBTUFvR0NDcUdTTTQ5QkFNQ0EwY0FNRVFDSUMvOWorODRUK0h6dFZPL3NPUUJXSmJTZCsvMnVleEsKNCthQTBqY0ZCTGNwQW" +
+                                                    "lBM2RoTXJGNWNENTJ0NkZxTXZBSXBqOFhkR215MmJlZWxqTEpLK3B6cGNSQT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KLS0tLS1C" +
+                                                    "RUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNqakNDQWpTZ0F3SUJBZ0lVSW1VTTFscWROSW56ZzdTVlVyOVFHemtuQnF3d0NnWUlLb1pJem" +
+                                                    "owRUF3SXcKYURFYU1CZ0dBMVVFQXd3UlNXNTBaV3dnVTBkWUlGSnZiM1FnUTBFeEdqQVlCZ05WQkFvTUVVbHVkR1ZzSUVOdgpjbkJ2Y21G" +
+                                                    "MGFXOXVNUlF3RWdZRFZRUUhEQXRUWVc1MFlTQkRiR0Z5WVRFTE1Ba0dBMVVFQ0F3Q1EwRXhDekFKCkJnTlZCQVlUQWxWVE1CNFhEVEU0TU" +
+                                                    "RVeU1URXdOREV4TVZvWERUTXpNRFV5TVRFd05ERXhNRm93YURFYU1CZ0cKQTFVRUF3d1JTVzUwWld3Z1UwZFlJRkp2YjNRZ1EwRXhHakFZ" +
+                                                    "QmdOVkJBb01FVWx1ZEdWc0lFTnZjbkJ2Y21GMAphVzl1TVJRd0VnWURWUVFIREF0VFlXNTBZU0JEYkdGeVlURUxNQWtHQTFVRUNBd0NRME" +
+                                                    "V4Q3pBSkJnTlZCQVlUCkFsVlRNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUVDNm5Fd01ESVlaT2ovaVBXc0N6YUVLaTcK" +
+                                                    "MU9pT1NMUkZoV0dqYm5CVkpmVm5rWTR1M0lqa0RZWUwwTXhPNG1xc3lZamxCYWxUVll4RlAyc0pCSzV6bEtPQgp1ekNCdURBZkJnTlZIU0" +
+                                                    "1FR0RBV2dCUWlaUXpXV3AwMGlmT0R0SlZTdjFBYk9TY0dyREJTQmdOVkhSOEVTekJKCk1FZWdSYUJEaGtGb2RIUndjem92TDJObGNuUnBa" +
+                                                    "bWxqWVhSbGN5NTBjblZ6ZEdWa2MyVnlkbWxqWlhNdWFXNTAKWld3dVkyOXRMMGx1ZEdWc1UwZFlVbTl2ZEVOQkxtTnliREFkQmdOVkhRNE" +
+                                                    "VGZ1FVSW1VTTFscWROSW56ZzdTVgpVcjlRR3prbkJxd3dEZ1lEVlIwUEFRSC9CQVFEQWdFR01CSUdBMVVkRXdFQi93UUlNQVlCQWY4Q0FR" +
+                                                    "RXdDZ1lJCktvWkl6ajBFQXdJRFNBQXdSUUlnUVFzLzA4cnljZFBhdUNGazhVUFFYQ01BbHNsb0JlN053YVFHVGNkcGEwRUMKSVFDVXQ4U0" +
+                                                    "d2eEttanBjTS96MFdQOUR2bzhoMms1ZHUxaVdEZEJrQW4rMGlpQT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KAA";
 
-        private readonly string _sgxQuote =
-            "AwACAAAAAAAFAAoAk5pyM_ecTKmUCg2zlX8GBxikFG2RGHbLfXx_vS5gtP8AAAAADg4CBf-ABwAAAAAAAA" +
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABQAAAAAAAAAHAAAAAAAAANlxlh9yS3HfxfFV" +
-    "OsTvtorRYOhJYCzdhRy4QEI-WSpzAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACFaCMSMCcBDt" +
-    "DOH31RW2vh11BeWCj7oZeFZ2Aw2P_8KAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8SAQ" +
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAj" +
-    "KYv2t_KVJfL8eJMumYwKEA--jtZ1UOGFrKEaj6Tm6gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-    "AAMBAAANfCXfxRtqOqDZV2NJAxIFTxDg0BuV-LLuq_D2YGtwp3x331XC_I13E1BqX7zR8dL4GiEACndxFk" +
-    "LGaAv7NTLL6pLrutcGj8wPA8MTOlV4BI9ZLcEwlNobvHIWKrrjtzDs_Wekb9nq08xb-P_yg0R0RvYNMkgI" +
-    "z61v6jPXeuq_n-Dg4CBf-ABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFQAA" +
-    "AAAAAAAHAAAAAAAAAD-wrOCGnS4w8o6G1wx2ZAOlT7vNZY7s4OG5SKkVWRdAAAAAAAAAAAAAAAAAAAAAAA" +
-    "AAAAAAAAAAAAAAAAAAAACMT1d115ZQPpYTf3fGioKaAFasje1wFAsIGwlEkMV7_wAAAAAAAAAAAAAAAAAA" +
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAEABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" +
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACJ_xj1I2YFmziAVUcpkwhFu4bxfwGQ71nD4Xoz4lKoNwAAAAAAAA" +
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKsDZgMr9cfiWsAr8sI9X5cwgnD3ob0ETj44vViBmw41w5Q7Z" +
-    "pSaH6cAfnRI3-QimRJnpzr_9V5LzIEBCVmloPyAAAAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh" +
-    "8FAMgNAAAtLS0tLUJFR0lOIENFUlRJRklDQVRFLS0tLS0KTUlJRWdEQ0NCQ2FnQXdJQkFnSVVmakNyOUhX" +
-    "bmVSZzdLUUEra3krRmRybXdmMXd3Q2dZSUtvWkl6ajBFQXdJd2NURWpNQ0VHQTFVRQpBd3dhU1c1MFpXd2" +
-    "dVMGRZSUZCRFN5QlFjbTlqWlhOemIzSWdRMEV4R2pBWUJnTlZCQW9NRVVsdWRHVnNJRU52Y25CdmNtRjBh" +
-    "Vzl1Ck1SUXdFZ1lEVlFRSERBdFRZVzUwWVNCRGJHRnlZVEVMTUFrR0ExVUVDQXdDUTBFeEN6QUpCZ05WQk" +
-    "FZVEFsVlRNQjRYRFRFNU1EY3gKT0RJeU16STFObG9YRFRJMk1EY3hPREl5TXpJMU5sb3djREVpTUNBR0Ex" +
-    "VUVBd3daU1c1MFpXd2dVMGRZSUZCRFN5QkRaWEowYVdacApZMkYwWlRFYU1CZ0dBMVVFQ2d3UlNXNTBaV3" +
-    "dnUTI5eWNHOXlZWFJwYjI0eEZEQVNCZ05WQkFjTUMxTmhiblJoSUVOc1lYSmhNUXN3CkNRWURWUVFJREFK" +
-    "RFFURUxNQWtHQTFVRUJoTUNWVk13V1RBVEJnY3Foa2pPUFFJQkJnZ3Foa2pPUFFNQkJ3TkNBQVNpdG1MQT" +
-    "NJYjYKY3R1SGZ0ZnR3R1Qray90UGxwN2VvTVpnSlFDZSsxZFlXKzFvNTUwRXpXREM3dFRreWQ2NTJKdlBD" +
-    "VXBBZVMyUitDYUFRaGlPSThtNQpvNElDbXpDQ0FwY3dId1lEVlIwakJCZ3dGb0FVME9pcTJuWFgrUzVKRj" +
-    "VnOGV4UmwwTlh5V1Uwd1h3WURWUjBmQkZnd1ZqQlVvRktnClVJWk9hSFIwY0hNNkx5OWhjR2t1ZEhKMWMz" +
-    "UmxaSE5sY25acFkyVnpMbWx1ZEdWc0xtTnZiUzl6WjNndlkyVnlkR2xtYVdOaGRHbHYKYmk5Mk1TOXdZMn" +
-    "RqY213L1kyRTljSEp2WTJWemMyOXlNQjBHQTFVZERnUVdCQlN6czNGTVF1UlBLcGtSNWxTbXRkckl5V3Bt" +
-    "N2pBTwpCZ05WSFE4QkFmOEVCQU1DQnNBd0RBWURWUjBUQVFIL0JBSXdBRENDQWRRR0NTcUdTSWI0VFFFTk" +
-    "FRU0NBY1V3Z2dIQk1CNEdDaXFHClNJYjRUUUVOQVFFRUVNTDZ5K01oZG4vNkJiSWV6WEdkUHlNd2dnRmtC" +
-    "Z29xaGtpRytFMEJEUUVDTUlJQlZEQVFCZ3NxaGtpRytFMEIKRFFFQ0FRSUJCakFRQmdzcWhraUcrRTBCRF" +
-    "FFQ0FnSUJCakFRQmdzcWhraUcrRTBCRFFFQ0F3SUJBakFRQmdzcWhraUcrRTBCRFFFQwpCQUlCQkRBUUJn" +
-    "c3Foa2lHK0UwQkRRRUNCUUlCQVRBUkJnc3Foa2lHK0UwQkRRRUNCZ0lDQUlBd0VBWUxLb1pJaHZoTkFRME" +
-    "JBZ2NDCkFRRXdFQVlMS29aSWh2aE5BUTBCQWdnQ0FRQXdFQVlMS29aSWh2aE5BUTBCQWdrQ0FRQXdFQVlM" +
-    "S29aSWh2aE5BUTBCQWdvQ0FRQXcKRUFZTEtvWklodmhOQVEwQkFnc0NBUUF3RUFZTEtvWklodmhOQVEwQk" +
-    "Fnd0NBUUF3RUFZTEtvWklodmhOQVEwQkFnMENBUUF3RUFZTApLb1pJaHZoTkFRMEJBZzRDQVFBd0VBWUxL" +
-    "b1pJaHZoTkFRMEJBZzhDQVFBd0VBWUxLb1pJaHZoTkFRMEJBaEFDQVFBd0VBWUxLb1pJCmh2aE5BUTBCQW" +
-    "hFQ0FRY3dId1lMS29aSWh2aE5BUTBCQWhJRUVBWUdBZ1FCZ0FFQUFBQUFBQUFBQUFBd0VBWUtLb1pJaHZo" +
-    "TkFRMEIKQXdRQ0FBQXdGQVlLS29aSWh2aE5BUTBCQkFRR0FKQnVvUUFBTUE4R0NpcUdTSWI0VFFFTkFRVU" +
-    "tBUUF3Q2dZSUtvWkl6ajBFQXdJRApTQUF3UlFJaEFMN25wNTZieGtESFVRRStTaUQ1K1M4eTFEOWFOK0Zy" +
-    "MHY1VENUQlUyazNkQWlCbVdQZUVIOW1ySkJ3SWU5eHV1aHo0Clp4cTlzTnlPaDRCc3NzdEQwV0Jkd3c9PQ" +
-    "otLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCi0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlDbHpD" +
-    "Q0FqNmdBd0lCQWdJVkFORG9xdHAxMS9rdVNSZVlQSHNVWmREVjhsbE5NQW9HQ0NxR1NNNDlCQU1DCk1HZ3" +
-    "hHakFZQmdOVkJBTU1FVWx1ZEdWc0lGTkhXQ0JTYjI5MElFTkJNUm93R0FZRFZRUUtEQkZKYm5SbGJDQkQK" +
-    "YjNKd2IzSmhkR2x2YmpFVU1CSUdBMVVFQnd3TFUyRnVkR0VnUTJ4aGNtRXhDekFKQmdOVkJBZ01Ba05CTV" +
-    "FzdwpDUVlEVlFRR0V3SlZVekFlRncweE9EQTFNakV4TURRMU1EaGFGdzB6TXpBMU1qRXhNRFExTURoYU1I" +
-    "RXhJekFoCkJnTlZCQU1NR2tsdWRHVnNJRk5IV0NCUVEwc2dVSEp2WTJWemMyOXlJRU5CTVJvd0dBWURWUV" +
-    "FLREJGSmJuUmwKYkNCRGIzSndiM0poZEdsdmJqRVVNQklHQTFVRUJ3d0xVMkZ1ZEdFZ1EyeGhjbUV4Q3pB" +
-    "SkJnTlZCQWdNQWtOQgpNUXN3Q1FZRFZRUUdFd0pWVXpCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RU" +
-    "hBMElBQkw5cStOTXAySU9nCnRkbDFiay91V1o1K1RHUW04YUNpOHo3OGZzK2ZLQ1EzZCt1RHpYblZUQVQy" +
-    "WmhEQ2lmeUl1Snd2TjN3TkJwOWkKSEJTU01KTUpyQk9qZ2Jzd2diZ3dId1lEVlIwakJCZ3dGb0FVSW1VTT" +
-    "FscWROSW56ZzdTVlVyOVFHemtuQnF3dwpVZ1lEVlIwZkJFc3dTVEJIb0VXZ1E0WkJhSFIwY0hNNkx5OWpa" +
-    "WEowYVdacFkyRjBaWE11ZEhKMWMzUmxaSE5sCmNuWnBZMlZ6TG1sdWRHVnNMbU52YlM5SmJuUmxiRk5IV0" +
-    "ZKdmIzUkRRUzVqY213d0hRWURWUjBPQkJZRUZORG8KcXRwMTEva3VTUmVZUEhzVVpkRFY4bGxOTUE0R0Ex" +
-    "VWREd0VCL3dRRUF3SUJCakFTQmdOVkhSTUJBZjhFQ0RBRwpBUUgvQWdFQU1Bb0dDQ3FHU000OUJBTUNBMG" +
-    "NBTUVRQ0lDLzlqKzg0VCtIenRWTy9zT1FCV0piU2QrLzJ1ZXhLCjQrYUEwamNGQkxjcEFpQTNkaE1yRjVj" +
-    "RDUydDZGcU12QUlwajhYZEdteTJiZWVsakxKSytwenBjUkE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS" +
-    "0tCi0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlDampDQ0FqU2dBd0lCQWdJVUltVU0xbHFkTklu" +
-    "emc3U1ZVcjlRR3prbkJxd3dDZ1lJS29aSXpqMEVBd0l3CmFERWFNQmdHQTFVRUF3d1JTVzUwWld3Z1UwZF" +
-    "lJRkp2YjNRZ1EwRXhHakFZQmdOVkJBb01FVWx1ZEdWc0lFTnYKY25CdmNtRjBhVzl1TVJRd0VnWURWUVFI" +
-    "REF0VFlXNTBZU0JEYkdGeVlURUxNQWtHQTFVRUNBd0NRMEV4Q3pBSgpCZ05WQkFZVEFsVlRNQjRYRFRFNE" +
-    "1EVXlNVEV3TkRFeE1Wb1hEVE16TURVeU1URXdOREV4TUZvd2FERWFNQmdHCkExVUVBd3dSU1c1MFpXd2dV" +
-    "MGRZSUZKdmIzUWdRMEV4R2pBWUJnTlZCQW9NRVVsdWRHVnNJRU52Y25CdmNtRjAKYVc5dU1SUXdFZ1lEVl" +
-    "FRSERBdFRZVzUwWVNCRGJHRnlZVEVMTUFrR0ExVUVDQXdDUTBFeEN6QUpCZ05WQkFZVApBbFZUTUZrd0V3" +
-    "WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFQzZuRXdNRElZWk9qL2lQV3NDemFFS2k3CjFPaU9TTF" +
-    "JGaFdHamJuQlZKZlZua1k0dTNJamtEWVlMME14TzRtcXN5WWpsQmFsVFZZeEZQMnNKQks1emxLT0IKdXpD" +
-    "QnVEQWZCZ05WSFNNRUdEQVdnQlFpWlF6V1dwMDBpZk9EdEpWU3YxQWJPU2NHckRCU0JnTlZIUjhFU3pCSg" +
-    "pNRWVnUmFCRGhrRm9kSFJ3Y3pvdkwyTmxjblJwWm1sallYUmxjeTUwY25WemRHVmtjMlZ5ZG1salpYTXVh" +
-    "VzUwClpXd3VZMjl0TDBsdWRHVnNVMGRZVW05dmRFTkJMbU55YkRBZEJnTlZIUTRFRmdRVUltVU0xbHFkTk" +
-    "luemc3U1YKVXI5UUd6a25CcXd3RGdZRFZSMFBBUUgvQkFRREFnRUdNQklHQTFVZEV3RUIvd1FJTUFZQkFm" +
-    "OENBUUV3Q2dZSQpLb1pJemowRUF3SURTQUF3UlFJZ1FRcy8wOHJ5Y2RQYXVDRms4VVBRWENNQWxzbG9CZT" +
-    "dOd2FRR1RjZHBhMEVDCklRQ1V0OFNHdnhLbWpwY00vejBXUDlEdm84aDJrNWR1MWlXRGRCa0FuKzBpaUE9" +
-    "PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCgA";
+        private readonly string _runtimeData = "CiAgICAgICAgewogICAgICAgICAgICAiandrIiA6IHsKICAgICAgICAgICAgICAgICJrdHkiOiJFQyI" +
+                                                  "sCiAgICAgICAgICAgICAgICAidXNlIjoic2lnIiwKICAgICAgICAgICAgICAgICJjcnYiOiJQLTI1Ni" +
+                                                  "IsCiAgICAgICAgICAgICAgICAieCI6IjE4d0hMZUlnVzl3Vk42VkQxVHhncHF5MkxzellrTWY2Sjhua" +
+                                                  "lZBaWJ2aE0iLAogICAgICAgICAgICAgICAgInkiOiJjVjRkUzRVYUxNZ1BfNGZZNGo4aXI3Y2wxVFhs" +
+                                                  "RmRBZ2N4NTVvN1RrY1NBIgogICAgICAgICAgICB9CiAgICAgICAgfQogICAgICAgIAA";
 
         public AttestationTests(bool isAsync) : base(isAsync)
         {
         }
 
         [RecordedTest]
-        public async Task AttestSgxShared()
+        public async Task AttestSgxEnclaveShared()
         {
-            byte[] binaryQuote = Base64Url.Decode(_sgxQuote);
+            // An SGX Quote is an OpenEnclave report with the first 16 bytes stripped from it.
+            var report = Base64Url.Decode(_openEnclaveReport);
+            var quoteList = report.ToList();
+            quoteList.RemoveRange(0, 0x10);
+
+            byte[] binaryQuote = quoteList.ToArray();
             byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
 
-            var client = GetSharedAttestationClient();
+            var client = TestEnvironment.GetSharedAttestationClient(this);
 
             IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
             {
                 // Collect quote and enclave held data from an SGX enclave.
 
                 var attestationResult = await client.AttestSgxEnclaveAsync(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false);
+
+                // Confirm that the attestation token contains the enclave held data we specified.
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);
+                // VERIFY ATTESTATIONRESULT.
+                // Encrypt Data using DeprecatedEnclaveHeldData
+                // Send to enclave.
+            }
+        }
+
+        [RecordedTest]
+        public async Task AttestSgxEnclaveSharedValidateCallback()
+        {
+            // An SGX Quote is an OpenEnclave report with the first 16 bytes stripped from it.
+            var report = Base64Url.Decode(_openEnclaveReport);
+            var quoteList = report.ToList();
+            quoteList.RemoveRange(0, 0x10);
+
+            byte[] binaryQuote = quoteList.ToArray();
+            byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
+
+            bool callbackInvoked = false;
+
+            var client = TestEnvironment.GetSharedAttestationClient(this, new TokenValidationOptions(
+                validateExpirationTime: TestEnvironment.IsTalkingToLiveServer,
+                validationCallback: (attestationToken, signer) =>
+                {
+                    // Verify that the callback can access the enclave held data field.
+                    CollectionAssert.AreEqual(binaryRuntimeData, attestationToken.GetBody<AttestationResult>().EnclaveHeldData);
+
+                    // The MAA service always sends a Key ID for the signer.
+                    Assert.IsNotNull(signer.CertificateKeyId);
+                    Assert.AreEqual(TestEnvironment.SharedAttestationUrl, attestationToken.Issuer);
+                    callbackInvoked = true;
+                    return true;
+                }));
+
+            IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
+            {
+                // Collect quote and enclave held data from an SGX enclave.
+
+                var attestationResult = await client.AttestSgxEnclaveAsync(binaryQuote, null, false, BinaryData.FromBytes(binaryRuntimeData), false);
+
+                // Confirm that the attestation token contains the enclave held data we specified.
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);
+                // VERIFY ATTESTATIONRESULT.
+                // Encrypt Data using DeprecatedEnclaveHeldData
+                // Send to enclave.
+                Assert.IsTrue(callbackInvoked);
+            }
+        }
+
+        [RecordedTest]
+        public async Task AttestOpenEnclaveShared()
+        {
+            byte[] binaryReport = Base64Url.Decode(_openEnclaveReport);
+            byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
+
+            var client = TestEnvironment.GetSharedAttestationClient(this);
+
+            IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
+            {
+                // Collect quote and enclave held data from an SGX enclave.
+
+                var attestationResult = await client.AttestOpenEnclaveAsync(binaryReport, null, false, BinaryData.FromBytes(binaryRuntimeData), false);
 
                 // Confirm that the attestation token contains the enclave held data we specified.
                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);
@@ -127,35 +173,40 @@ namespace Azure.Security.Attestation.Tests
             }
         }
 
-        private AttestationClient GetSharedAttestationClient()
+        [RecordedTest]
+        public async Task AttestOpenEnclaveSharedValidateCallback()
         {
-            string endpoint = TestEnvironment.SharedUkSouth;
-            var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
-        }
+            byte[] binaryReport = Base64Url.Decode(_openEnclaveReport);
+            byte[] binaryRuntimeData = Base64Url.Decode(_runtimeData);
+            bool callbackInvoked = false;
 
-        private AttestationClient GetAadAttestationClient()
-        {
-            string endpoint = TestEnvironment.AadAttestationUrl;
+            var client = TestEnvironment.GetSharedAttestationClient(this, new TokenValidationOptions(
+                validateExpirationTime: TestEnvironment.IsTalkingToLiveServer,
+                validationCallback: (attestationToken, signer) =>
+            {
+                // Verify that the callback can access the enclave held data field.
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationToken.GetBody<AttestationResult>().EnclaveHeldData);
 
-            var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
-        }
+                // The MAA service always sends a Key ID for the signer.
+                Assert.IsNotNull(signer.CertificateKeyId);
+                Assert.AreEqual(TestEnvironment.SharedAttestationUrl, attestationToken.Issuer);
+                callbackInvoked = true;
+                return true;
+            }));
 
-        private AttestationAdministrationClient GetAadAdministrationClient()
-        {
-            string endpoint = TestEnvironment.AadAttestationUrl;
+            IReadOnlyList<AttestationSigner> signingCertificates = (await client.GetSigningCertificatesAsync()).Value;
+            {
+                // Collect quote and enclave held data from an SGX enclave.
 
-            var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationAdministrationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
-        }
+                var attestationResult = await client.AttestOpenEnclaveAsync(binaryReport, null, false, BinaryData.FromBytes(binaryRuntimeData), false);
 
-        private AttestationClient GetIsolatedAttestationClient()
-        {
-            string endpoint = TestEnvironment.IsolatedAttestationUrl;
-
-            var options = InstrumentClientOptions(new AttestationClientOptions());
-            return InstrumentClient(new AttestationClient(new Uri(endpoint), TestEnvironment.GetClientSecretCredential(), options));
+                // Confirm that the attestation token contains the enclave held data we specified.
+                CollectionAssert.AreEqual(binaryRuntimeData, attestationResult.Value.DeprecatedEnclaveHeldData);
+                // VERIFY ATTESTATIONRESULT.
+                // Encrypt Data using DeprecatedEnclaveHeldData
+                // Send to enclave.
+                Assert.IsTrue(callbackInvoked);
+            }
         }
     }
 }

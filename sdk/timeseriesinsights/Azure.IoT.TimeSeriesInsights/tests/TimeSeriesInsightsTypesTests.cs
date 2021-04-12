@@ -41,8 +41,10 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var variableNamePrefix = "numericVariableName";
             variables.Add(Recording.GenerateAlphaNumericId(variableNamePrefix), numericVariable);
 
-            var type = new TimeSeriesType(timeSeriesTypesName, variables);
-            type.Id = timeSeriesTypeId;
+            var type = new TimeSeriesType(timeSeriesTypesName, variables)
+            {
+                Id = timeSeriesTypeId
+            };
             timeSeriesTypes.Add(type);
 
             // Act and Assert
@@ -68,8 +70,10 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var variableNamePrefix = "categoricalVariableName";
             variables.Add(Recording.GenerateAlphaNumericId(variableNamePrefix), categoricalVariable);
 
-            var type = new TimeSeriesType(timeSeriesTypesName, variables);
-            type.Id = timeSeriesTypeId;
+            var type = new TimeSeriesType(timeSeriesTypesName, variables)
+            {
+                Id = timeSeriesTypeId
+            };
             timeSeriesTypes.Add(type);
 
             // Act and Assert
@@ -97,10 +101,12 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             var variableNamePrefix = "aggregateVariable";
             variables.Add(Recording.GenerateAlphaNumericId(variableNamePrefix), aggregateVariable);
 
-            foreach (var property in timeSeriesTypesProperties)
+            foreach (KeyValuePair<string, string> property in timeSeriesTypesProperties)
             {
-                var type = new TimeSeriesType(property.Key, variables);
-                type.Id = property.Value;
+                var type = new TimeSeriesType(property.Key, variables)
+                {
+                    Id = property.Value
+                };
                 timeSeriesTypes.Add(type);
                 numOfTypesCreated++;
             }
@@ -109,7 +115,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             try
             {
                 // Get all Time Series types in the environment
-                AsyncPageable<TimeSeriesType> getAllTypesResponse = client.GetTimeSeriesTypesAsync();
+                AsyncPageable<TimeSeriesType> getAllTypesResponse = client.Types.GetTypesAsync();
 
                 await foreach (TimeSeriesType tsiType in getAllTypesResponse)
                 {
@@ -117,12 +123,13 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 }
 
                 // Create Time Series types
-                Response<TimeSeriesOperationError[]> createTypesResult = await client
-                    .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
+                Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
+                    .Types
+                    .CreateOrReplaceAsync(timeSeriesTypes)
                     .ConfigureAwait(false);
 
                 // Assert that the result error array does not contain any object that is set
-                createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
+                createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
                 Response<TimeSeriesTypeOperationResult[]> getTypesByNamesResult;
 
                 // This retry logic was added as the TSI types are not immediately available after creation
@@ -130,7 +137,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 {
                     // Get the created types by names
                     getTypesByNamesResult = await client
-                        .GetTimeSeriesTypesByNamesAsync(timeSeriesTypesProperties.Keys)
+                        .Types
+                        .GetByNameAsync(timeSeriesTypesProperties.Keys)
                         .ConfigureAwait(false);
 
                     getTypesByNamesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
@@ -147,16 +155,17 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 }, MaxNumberOfRetries, s_retryDelay);
 
                 // Update variables with adding a new variable
-                foreach (var type in timeSeriesTypes)
+                foreach (TimeSeriesType type in timeSeriesTypes)
                 {
                     type.Description = "Description";
                 }
 
-                Response<TimeSeriesOperationError[]> updateTypesResult = await client
-                    .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
+                Response<TimeSeriesTypeOperationResult[]> updateTypesResult = await client
+                    .Types
+                    .CreateOrReplaceAsync(timeSeriesTypes)
                     .ConfigureAwait(false);
 
-                updateTypesResult.Value.Should().OnlyContain((errorResult) => errorResult == null);
+                updateTypesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error == null);
                 updateTypesResult.Value.Length.Should().Be(timeSeriesTypes.Count);
 
                 // This retry logic was added as the TSI types are not immediately available after creation
@@ -164,7 +173,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 {
                     // Get type by Id
                     Response<TimeSeriesTypeOperationResult[]> getTypeByIdResult = await client
-                        .GetTimeSeriesTypesByIdAsync(timeSeriesTypesProperties.Values)
+                        .Types
+                        .GetByIdAsync(timeSeriesTypesProperties.Values)
                         .ConfigureAwait(false);
 
                     getTypeByIdResult.Value.Length.Should().Be(numOfTypesCreated);
@@ -185,7 +195,8 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 try
                 {
                     Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
-                        .DeleteTimeSeriesTypesbyIdAsync(timeSeriesTypesProperties.Values)
+                        .Types
+                        .DeleteByIdAsync(timeSeriesTypesProperties.Values)
                         .ConfigureAwait(false);
 
                     // Assert that the response array does not have any error object set
@@ -202,23 +213,26 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         private static async Task TestTimeSeriesTypeWhereErrorIsExpected(TimeSeriesInsightsClient client, List<TimeSeriesType> timeSeriesTypes, string timeSeriesTypesName)
         {
             // create numeric type and expect failure due to invalid input expression
-            Response<TimeSeriesOperationError[]> createTypesResult = await client
-                .CreateOrReplaceTimeSeriesTypesAsync(timeSeriesTypes)
+            Response<TimeSeriesTypeOperationResult[]> createTypesResult = await client
+                .Types
+                .CreateOrReplaceAsync(timeSeriesTypes)
                 .ConfigureAwait(false);
 
             // Assert that the result error array does not contain an error
-            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult != null);
+            createTypesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error != null);
 
             // Get the type by name and expect error
-            var getTypesByNamesResult = await client
-                .GetTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
+            Response<TimeSeriesTypeOperationResult[]> getTypesByNamesResult = await client
+                .Types
+                .GetByNameAsync(new string[] { timeSeriesTypesName })
                 .ConfigureAwait(false);
             getTypesByNamesResult.Value.Should().OnlyContain((errorResult) => errorResult.Error != null);
 
             // Delete the type by name and expect error
             Response<TimeSeriesOperationError[]> deleteTypesResponse = await client
-                       .DeleteTimeSeriesTypesByNamesAsync(new string[] { timeSeriesTypesName })
-                       .ConfigureAwait(false);
+                .Types
+                .DeleteByNameAsync(new string[] { timeSeriesTypesName })
+                .ConfigureAwait(false);
 
             // Response is null even when type does not exist.
             deleteTypesResponse.Value.Should().OnlyContain((errorResult) => errorResult == null);
